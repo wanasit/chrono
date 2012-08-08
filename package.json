@@ -7,8 +7,6 @@
       "url" : "https://github.com/berryboy/chrono.git"
     },
   "version": "0.0.1",
+  "directories" : { "parser" : "./parser", "test" : "./test" },
   "main": "./chrono",
-  "dependencies": {
-    "uglify-js": "latest"
-  }
 }

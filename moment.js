@@ -1,9 +1,3 @@
-// moment.js
-// version : 1.6.2
-// author : Tim Wood
-// license : MIT
-// momentjs.com
-
 (function (Date, undefined) {
 
     var moment,
