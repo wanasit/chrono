@@ -1,5 +1,5 @@
 /*
-  CNParser, is base object of every chrono parser. The parser must provides these following method  
+  Parser, is base object of every chrono parser. The parser must provides these following method  
     
     - (public) exec()         : Parse the text for one matching index. This method may return a pasring result, or NULL.
         
@@ -86,7 +86,12 @@
   		//Extract the result
   		var matchedIndex = index + searchingIndex;
   		var result  = this.extract(text, matchedIndex);
-  		if(result){ searchingResults.push(result); }
+  		if(result){ 
+  		  
+  		  if(result.start.hour === undefined)
+  		    result.startDate = moment(result.startDate).sod().hours(12).toDate();
+  		  searchingResults.push(result); 
+  		}
   		
   		//Move on
   		searchingText = searchingText.substr(index + 1);

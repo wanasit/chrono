@@ -1,0 +1,270 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QUnit Test Suite</title>  
+    
+		<link rel="stylesheet" href="./qunit-git.css" type="text/css"></link>
+		<script type="text/javascript" src="./qunit-git.js"></script> 
+		<script type="text/javascript" src="./jquery-1.7.1.min.js"></script> 
+		
+		<!-- Your project file goes here -->  
+		<script type="text/javascript" src="../moment.js"></script>  
+		<script type="text/javascript" src="../chrono.js"></script>  
+		
+		<script type="text/javascript" src="../parsers/ParseResult.js"></script>  
+		<script type="text/javascript" src="../parsers/Parser.js"></script>  
+		<script type="text/javascript" src="../parsers/IntegratedParser.js"></script>  
+		
+		<script type="text/javascript" src="../parsers/DayOfWeekParser.js"></script> 
+		<script type="text/javascript" src="../parsers/InternationalStandardParser.js"></script> 
+		
+    <script type="text/javascript">
+			
+			test("Test - Module Status", function() {
+				ok(chrono, 				'Load: chrono');
+				ok(chrono.Parser, 'Load: chrono.Parser');
+			});
+			
+			test("Test - Base Parser", function() {
+				
+				var parser = chrono.Parser('0123456789');
+				
+				ok(parser, 'Create Parser');
+				ok(!parser.finished(), 'Init Value');
+				
+				for(var i=0; i<11; i++){
+					
+					var result = parser.exec();
+					ok(!result);
+				}
+				
+				ok(parser.finished());
+				ok(parser.results());
+				ok(parser.results().length == 0);
+			});
+			
+			test("Test - Override Base Parser", function() {
+				
+				var parser = chrono.Parser('01234-pattern-01234-pattern');
+				ok(parser, 'Create Parser');
+				ok(!parser.finished(), 'Init Value');
+				
+				//
+				var extract_called = 0;
+				var expected_result = new chrono.ParseResult({ start:{} });
+				parser.pattern = function () { return /pattern/ }
+				parser.extract = function(text, index) {
+					
+					if(extract_called == 0){
+						
+						ok(index == 6, 'matched index0:' + index);
+					}
+					else if(extract_called == 1){
+						
+						ok(index == 20, 'matched index1:' + index);
+					}
+					
+					extract_called++;
+					return expected_result;
+				}
+				
+				for(var i=0; i<3; i++){
+					
+					var result = parser.exec();
+					
+					if(result)
+						ok(result == expected_result, result);
+				}
+				
+				ok(extract_called == 2);
+				
+				ok(parser.finished(),'Finished');
+				
+				ok(parser.results());
+				ok(parser.results().length == 2);
+				ok(parser.results()[0] == expected_result);
+				ok(parser.results()[1] == expected_result);
+			});
+			
+			test("Test - Day of Week Parser", function() {
+				
+				var text = "Let's finish this before this Monday.";
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,6,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "Tuesday.";
+				var parser = chrono.parsers.DayOfWeekParser(text);
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+				
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,7,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Friday.";
+				var parser = chrono.parsers.DayOfWeekParser(text);
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+				
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+			});
+			
+			test("Test - International Standard Parser", function() {
+				
+				var text = "Let's finish this before this 2012-8-9.";
+				var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,9,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "2012-8-7";
+				var parser = chrono.parsers.InternationalStandardParser(text);
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+				
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,7,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "2012-8-10";
+				var parser = chrono.parsers.InternationalStandardParser(text);
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+				
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+			});
+			
+			test("Test - Integrated Parser", function() {
+				
+				var text = "Let's finish this before this Monday.";
+				var parser = chrono.IntegratedParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,6,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Let's finish this before this 2012-8-9.";
+				var parser = chrono.IntegratedParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,9,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+			});
+			
+			
+			
+			
+			
+		</script>  
+		
+</head>  
+<body>  
+    <h1 id="qunit-header">QUnit Test Suite</h1>  
+    <h2 id="qunit-banner"></h2>  
+    <div id="qunit-testrunner-toolbar"></div>  
+    <h2 id="qunit-userAgent"></h2>  
+    <ol id="qunit-tests"></ol>  
+</body>  
+</html>  
