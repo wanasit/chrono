@@ -39,12 +39,20 @@
     module.exports = chrono;
   }
   
-  chrono.parse = function() {
-      
+  chrono.parse = function(text, referrenceDate, option) {
+    
+    var parser = this.IntegratedParser(text, referrenceDate, option);
+    parser.execAll();
+    
+    return parser.results();
   }
   
-  chrono.parseDate = function() {
+  chrono.parseDate = function(text, referrenceDate, option) {
     
+    var results = this.parse(text, referrenceDate, option);
+    
+    if(results.length >= 1) return results[0].startDate;
+    else return null;
   }
   
 })();

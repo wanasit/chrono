@@ -62,7 +62,7 @@
     
     if(result.end){
       
-      this.end = new DateCompoents(result.end)
+      this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
     }
     
