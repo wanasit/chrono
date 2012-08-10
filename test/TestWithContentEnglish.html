@@ -19,6 +19,7 @@
 		<script type="text/javascript" src="../parsers/EN/DayOfWeekParser.js"></script> 
 		<script type="text/javascript" src="../parsers/EN/InternationalStandardParser.js"></script> 
 		<script type="text/javascript" src="../parsers/EN/MonthNameLittleEndianParser.js"></script> 
+		<script type="text/javascript" src="../parsers/EN/MonthNameMiddleEndianParser.js"></script> 
 		
     <script type="text/javascript">
 			
@@ -147,6 +148,153 @@
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 			});
+			
+			test("Test - Middle Endian with Month's name", function() {
+				
+				var text = "Today is August 10, 2012";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "Today is August 10";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				
+				var text = "Today is August 10 2555 BE";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Today is January 10";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,0,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "Today is August 10-12, 2012";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.end, JSON.stringify(result.start) )
+					ok(result.end.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.end.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.end.day == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Today is  August 10 to 12 2012";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.end, JSON.stringify(result.start) )
+					ok(result.end.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.end.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.end.day == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Today is August 10 - 12";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					
+					ok(result.end, JSON.stringify(result.start) )
+					ok(result.end.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.end.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.end.day == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+			});
+			
+			
+			
+			
+			
 			
 		</script>  
 		
