@@ -71,7 +71,7 @@
     
     /**
      * Parser.exec - Parse the text for one matching index.
-     * @return { CNParser or NULL} 
+     * @return { CNResult or NULL} 
      */
     parser.exec = function(){
       if(searchingFinished) return null;
@@ -88,8 +88,19 @@
   		var result  = this.extract(text, matchedIndex);
   		if(result){ 
   		  
+  		  if(searchingResults.length > 0){
+  		   var oldResult = searchingResults[searchingResults.length - 1];
+  		   var overlapResult = CheckOverlapResult(text, oldResult, result);
+  		   
+  		   result = overlapResult || result;
+  		  }
+  		  
   		  if(result.start.hour === undefined)
   		    result.startDate = moment(result.startDate).sod().hours(12).toDate();
+        
+        if(result.end && result.end.hour === undefined)
+    		  result.endDate = moment(result.endDate).sod().hours(12).toDate();
+
   		  searchingResults.push(result); 
   		}
   		
@@ -107,6 +118,51 @@
   	}
   	
   	return parser;
+  }
+  
+  
+  /**
+   * CheckOverlapResult
+   *  Check whether two parsing result is overlapped as 'start-end' date.
+   *  If the results are overlapped, this function will merged them into one.
+   *
+   * @param  { String }   text - Orginal text
+   * @param  { CNResult } result1
+   * @param  { CNResult } result2
+   * @return { CNResult } 
+   */
+  function CheckOverlapResult(text, result1, result2){
+    
+    if(result1.end || result1.end) return null;
+    var begin = result1.index + result1.text.length;
+    var end   = result2.index; 
+    var textBetween = text.substring(begin,end);
+    var OVERLAP_PATTERN = /\s*(to|\-)\s*/i;
+    
+    if(!textBetween.match(OVERLAP_PATTERN)) return null;
+    var mergedText = result1.text + textBetween + result2.text;
+    
+    if(moment(result2.startDate).diff(moment(result1.startDate)) > 0){ 
+        
+      return new chrono.ParseResult({
+        referenceDate:result1.ref,
+        index :result1.index,
+        start :result1.start,
+        end   :result2.start,
+        text:mergedText,
+      });
+    }
+    else{
+      
+      return new chrono.ParseResult({
+        referenceDate:result1.ref,
+        index :result1.index,
+        start :result2.start,
+        end   :result1.start,
+        text  :mergedText,
+      });
+    }
+    
   }
   
   chrono.Parser = Parser;

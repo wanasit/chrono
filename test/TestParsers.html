@@ -52,7 +52,7 @@
 				
 				//
 				var extract_called = 0;
-				var expected_result = new chrono.ParseResult({ start:{} });
+				var expected_result = new chrono.ParseResult({ start:{}, text:'', index:0 });
 				parser.pattern = function () { return /pattern/ }
 				parser.extract = function(text, index) {
 					
@@ -110,7 +110,7 @@
 				
 				
 				var text = "Tuesday.";
-				var parser = chrono.parsers.DayOfWeekParser(text);
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
 				ok(parser, parser)
 				
 				parser.execAll();
@@ -129,7 +129,7 @@
 				}
 				
 				var text = "Friday.";
-				var parser = chrono.parsers.DayOfWeekParser(text);
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
 				ok(parser, parser)
 				
 				parser.execAll();
