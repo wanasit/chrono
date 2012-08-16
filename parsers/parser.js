@@ -123,9 +123,58 @@
      * @param  { CNResult } result
      * @return { CNResult } 
      */
-    parser.extractDate = function(text, result){
-
+    parser.extractTime = function(text, result){
       
+      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,2})((\.|\:)([0-9]{1,2})((\.|\:)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      
+      if(text.length <= result.index + result.text.length) return null;
+      text = text.substr(result.index + result.text.length);
+      
+      var matchedTokens = text.match(SUFFIX_PATTERN);
+      if( !matchedTokens || text.indexOf(matchedTokens[0]) != 0) return null;
+      
+      var minute = 0;
+      var second = 0;
+      var hour = matchedTokens[2];
+      hour = parseInt(hour);
+      
+      if(matchedTokens[10]){
+        //AM & PM  
+        if(hour > 12) return null;
+        if(matchedTokens[10].toLowerCase() == "pm"){
+         hour += 12;
+        }
+      }
+      
+      if(matchedTokens[5]){
+        
+        minute = matchedTokens[5];
+        minute = parseInt(minute);
+        if(second >= 60) return null;
+      }
+      
+      if(matchedTokens[8]){
+        
+        second = matchedTokens[8];
+        second = parseInt(second);
+        if(second >= 60) return null;
+      }
+      
+      result.text = result.text + matchedTokens[0];
+      
+      if(result.start.hour == undefined){
+        result.start.hour = hour;
+        result.start.minute = minute;
+        result.start.second = second;
+      }
+      
+      if(result.end && result.end.hour == undefined){
+        result.end.hour = hour;
+        result.end.minute = minute;
+        result.end.second = second;
+      }
+      
+      return new chrono.ParseResult(result);
     }
     
     
@@ -153,6 +202,11 @@
   		   var overlapResult = this.checkOverlapResult(text, oldResult, result);
   		   
   		   result = overlapResult || result;
+  		  }
+  		  
+  		  if(result.start.hour === undefined || result.end.hour === undefined){
+  		    var timedResult = this.extractTime(text, result);
+  		    result = timedResult || result; 
   		  }
   		  
   		  if(result.start.hour === undefined)

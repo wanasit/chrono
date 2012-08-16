@@ -31,8 +31,11 @@
       var matchedTokens = text.substr(index).match(PATTERN);
   		if(matchedTokens == null)return;
   		
+  		
   		var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[5].length);
   		var orginalText = text;
+  		index += matchedTokens[1].length;
+  		
   		var date = null;
   		var years = matchedTokens[4];
   		
