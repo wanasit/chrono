@@ -16,6 +16,12 @@
     - (protected**) extract(text, index) : This method will be called after detected matched pattern 
                                           to create a parsing result from text at index. 
                                        : The parser should OVERRIDE this method.
+    
+    - (protected**) checkOverlapResult(text, result1, result2) :
+                                      Check whether two parsing result are overlapped each other as 'start-end' date.
+                                      If they do, this function will merged them into one.
+                                   : The parser may not need to override this method
+                                    
   
 */
 
@@ -69,6 +75,60 @@
      */
     parser.finished = function(){ return searchingFinished; }
     
+    
+    /**
+     * Parser.checkOverlapResult
+     * @param  { String }   text - Orginal text
+     * @param  { CNResult } result1
+     * @param  { CNResult } result2
+     * @return { CNResult } 
+     */
+    parser.checkOverlapResult = function(text, result1, result2){
+
+      if(result1.end || result2.end) return null;
+      var begin = result1.index + result1.text.length;
+      var end   = result2.index; 
+      var textBetween = text.substring(begin,end);
+      var OVERLAP_PATTERN = /\s*(to|\-)\s*/i;
+
+      if(!textBetween.match(OVERLAP_PATTERN)) return null;
+      var mergedText = result1.text + textBetween + result2.text;
+      
+      if(moment(result2.startDate).diff(moment(result1.startDate)) > 0){ 
+        
+        return new chrono.ParseResult({
+          referenceDate:result1.ref,
+          index :result1.index,
+          start :result1.start,
+          end   :result2.start,
+          text:mergedText,
+        });
+      }
+      else{
+
+        return new chrono.ParseResult({
+          referenceDate:result1.ref,
+          index :result1.index,
+          start :result2.start,
+          end   :result1.start,
+          text  :mergedText,
+        });
+      }
+
+    }
+    
+    /**
+     * Parser.extractDate
+     * @param  { String }   text - Orginal text
+     * @param  { CNResult } result
+     * @return { CNResult } 
+     */
+    parser.extractDate = function(text, result){
+
+      
+    }
+    
+    
     /**
      * Parser.exec - Parse the text for one matching index.
      * @return { CNResult or NULL} 
@@ -90,7 +150,7 @@
   		  
   		  if(searchingResults.length > 0){
   		   var oldResult = searchingResults[searchingResults.length - 1];
-  		   var overlapResult = CheckOverlapResult(text, oldResult, result);
+  		   var overlapResult = this.checkOverlapResult(text, oldResult, result);
   		   
   		   result = overlapResult || result;
   		  }
@@ -121,49 +181,6 @@
   }
   
   
-  /**
-   * CheckOverlapResult
-   *  Check whether two parsing result is overlapped as 'start-end' date.
-   *  If the results are overlapped, this function will merged them into one.
-   *
-   * @param  { String }   text - Orginal text
-   * @param  { CNResult } result1
-   * @param  { CNResult } result2
-   * @return { CNResult } 
-   */
-  function CheckOverlapResult(text, result1, result2){
-    
-    if(result1.end || result1.end) return null;
-    var begin = result1.index + result1.text.length;
-    var end   = result2.index; 
-    var textBetween = text.substring(begin,end);
-    var OVERLAP_PATTERN = /\s*(to|\-)\s*/i;
-    
-    if(!textBetween.match(OVERLAP_PATTERN)) return null;
-    var mergedText = result1.text + textBetween + result2.text;
-    
-    if(moment(result2.startDate).diff(moment(result1.startDate)) > 0){ 
-        
-      return new chrono.ParseResult({
-        referenceDate:result1.ref,
-        index :result1.index,
-        start :result1.start,
-        end   :result2.start,
-        text:mergedText,
-      });
-    }
-    else{
-      
-      return new chrono.ParseResult({
-        referenceDate:result1.ref,
-        index :result1.index,
-        start :result2.start,
-        end   :result1.start,
-        text  :mergedText,
-      });
-    }
-    
-  }
   
   chrono.Parser = Parser;
 })();

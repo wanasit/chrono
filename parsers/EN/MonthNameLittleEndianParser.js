@@ -34,7 +34,7 @@
       originalText = text;
       
       var matchedTokens = text.match(regFullPattern);
-      if(matchedTokens){
+      if(matchedTokens &&  text.indexOf(matchedTokens[0]) == 0){
         //Full Pattern with years
         text = matchedTokens[0];
         text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
@@ -129,6 +129,30 @@
         });
 			}
     };
+    
+    //Check case.. dd MM - dd MM , YYYY
+    var _checkOverlapResult = parser.checkOverlapResult;
+    parser.checkOverlapResult = function(text, result1, result2){
+    
+      var result = _checkOverlapResult(text, result1, result2);
+      if(result){
+    
+        if(result1.text.match(regFullPattern) && !result2.text.match(regFullPattern)){
+          result2.start.year = result1.start.year;
+          result2 = new chrono.ParseResult(result2);
+        }
+    
+        if(result2.text.match(regFullPattern) && !result1.text.match(regFullPattern)){
+          result1.start.year = result2.start.year;
+          result1 = new chrono.ParseResult(result1);
+        }
+    
+        result = _checkOverlapResult(text, result1, result2);
+      }
+    
+      return result;
+    }
+    
     
   	return parser;
   }
