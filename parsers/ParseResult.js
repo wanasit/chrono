@@ -35,39 +35,39 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  function DateComponents(components, referenceDate) {
+  function DateComponents(components) {
     this.year = components.year;
     this.month = components.month;
     this.day = components.day;
     this.hour = components.hour;
     this.minute = components.minute;
     this.second = components.second;
-    this.referenceDate = referenceDate || new Date();
     
     this.date = function() { 
       var dateMoment = moment();
-      var refMoment = moment(referenceDate);
-      dateMoment.year(typeof this.year != 'number' ? refMoment.year() : this.year);
-      dateMoment.month(typeof this.month != 'number' ? refMoment.month() : this.month);
-      dateMoment.date(typeof this.day != 'number' ? refMoment.day() : this.day);
-      dateMoment.hours(typeof this.hour != 'number' ? refMoment.hours() : this.hour);
-      dateMoment.minutes(typeof this.minute != 'number' ? refMoment.minutes() : this.minute);
-      dateMoment.seconds(typeof this.second != 'number' ? refMoment.seconds() : this.second);
+      dateMoment.year(this.year);
+      dateMoment.month(this.month);
+      dateMoment.date(this.day);
+      dateMoment.hours(this.hour);
+      dateMoment.minutes(this.minute);
+      dateMoment.seconds(this.second);
       return dateMoment.toDate();
     }
   }
   
   function ParseResult(result){
     
-    this.start = new DateComponents(result.start, result.referenceDate)
+    this.start = new DateComponents(result.start)
     this.startDate = this.start.date();
     
     if(result.end){
       
-      this.end = new DateComponents(result.end, result.referenceDate)
+      this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
     }
     
+    
+    this.referenceDate = result.referenceDate;
     this.index = result.index;
     this.text = result.text;
     this.sentence = result.sentence;
