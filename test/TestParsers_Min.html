@@ -9,15 +9,8 @@
 		<script type="text/javascript" src="./jquery-1.7.1.min.js"></script> 
 		
 		<!-- Your project file goes here -->  
-		<script type="text/javascript" src="../moment.js"></script>  
-		<script type="text/javascript" src="../chrono.js"></script>  
-		
-		<script type="text/javascript" src="../parsers/ParseResult.js"></script>  
-		<script type="text/javascript" src="../parsers/Parser.js"></script>  
-		<script type="text/javascript" src="../parsers/IntegratedParser.js"></script>  
-		
-		<script type="text/javascript" src="../parsers/EN/DayOfWeekParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/InternationalStandardParser.js"></script> 
+		<script type="text/javascript" src="../chrono.min.js"></script>  
+
 		
     <script type="text/javascript">
 			
@@ -88,7 +81,6 @@
 				ok(parser.results()[0] == expected_result);
 				ok(parser.results()[1] == expected_result);
 			});
-			
 			test("Test - Day of Week Parser", function() {
 				
 				var text = "Let's finish this before this Monday.";

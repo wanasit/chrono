@@ -80,6 +80,6 @@
   
   chrono.DateComponents = DateComponents;
   chrono.ParseResult = ParseResult;
-})()
+})();
 
 
