@@ -1,4 +1,4 @@
 chrono
 ======
 
-Javascript natural language date parser. 
+A natural language date parser in Javascript.
