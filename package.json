@@ -1,17 +1,16 @@
 {
-  "name": "chrono",
+  "name": "chrono-node",
   "description": "A natural language date parser in Javascript",
   "homepage": "http://github.com/berryboy/chrono",
-  "repository":{ 
+  "repository": { 
       "type" : "git",
-      "url" : "https://github.com/berryboy/chrono.git"
+      "url"  : "https://github.com/berryboy/chrono.git"
     },
   "version": "0.0.1",
-  "directories" : 
-    { 
+  "directories" : { 
       "parser"        : "./parser", 
       "test-nodeunit" : "./test-nodeunit",
-      "test-qunit"    : "./test-qunit",
+      "test-qunit"    : "./test-qunit"
     },
-  "main": "./chrono",
+  "main": "./chrono"
 }

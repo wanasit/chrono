@@ -102,6 +102,7 @@
           start :result1.start,
           end   :result2.start,
           text:mergedText,
+          referenceDate :ref,
         });
       }
       else{
@@ -112,6 +113,7 @@
           start :result2.start,
           end   :result1.start,
           text  :mergedText,
+          referenceDate :ref,
         });
       }
 
