@@ -199,6 +199,8 @@
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2012,7,10,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				var text = "The Deadline is 10 to 12 August 2012";
@@ -216,6 +218,8 @@
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2012,7,10,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				var text = "The Deadline is 10 - 12 August";
@@ -233,6 +237,8 @@
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2012,7,10,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				
@@ -253,7 +259,6 @@
 					var expectMoment = moment(new Date(2012,7,10,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 					
-					
 					ok(result.end, JSON.stringify(result.start) )
 					ok(result.end.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.end.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
@@ -262,6 +267,8 @@
 					var resultMoment = moment(result.endDate);
 					var expectMoment = moment(new Date(2012,8,12,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				var text = "The Deadline is 10 August to 12 Sep";
@@ -289,6 +296,8 @@
 					var resultMoment = moment(result.endDate);
 					var expectMoment = moment(new Date(2012,8,12,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				
@@ -317,6 +326,8 @@
 					var resultMoment = moment(result.endDate);
 					var expectMoment = moment(new Date(2012,8,12,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				
@@ -345,6 +356,8 @@
 					var resultMoment = moment(result.endDate);
 					var expectMoment = moment(new Date(2013,8,12,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+					ok(result.referenceDate)
 				}
 				
 				
@@ -718,6 +731,8 @@
 				}
 				
 			});
+			
+			
       
 			
 			
