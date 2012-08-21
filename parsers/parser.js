@@ -206,7 +206,7 @@
   		   result = overlapResult || result;
   		  }
   		  
-  		  if(result.start.hour === undefined || result.end.hour === undefined){
+  		  if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
   		    var timedResult = this.extractTime(text, result);
   		    result = timedResult || result; 
   		  }
