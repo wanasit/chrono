@@ -8,8 +8,8 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var regFullPattern = /(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
-  var regShortPattern = /(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})([^0-9]|$)/i;
+  var regFullPattern = /(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)?\s*(,)?\s*(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
+  var regShortPattern = /(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)?\s*(,)?\s*(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})([^0-9]|$)/i;
   	
   function MonthNameMiddleEndianParser(text, ref, opt){
     
@@ -39,15 +39,16 @@
         var text = matchedTokens[0];
         originalText = text;
         
-  			text = text.replace(matchedTokens[1], matchedTokens[1]+' ');
-  			if(matchedTokens[2]) text = text.replace(matchedTokens[2],'');
-  			if(matchedTokens[7]) text = text.replace(matchedTokens[7],'');
-  			if(matchedTokens[8]) text = text.replace(',','');
-  			if(matchedTokens[10]){
-  				var years = matchedTokens[9];
+        text = text.replace(matchedTokens[1], '');
+  			text = text.replace(matchedTokens[3], matchedTokens[3]+' ');
+  			if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
+  			if(matchedTokens[9]) text = text.replace(matchedTokens[9],'');
+  			if(matchedTokens[10]) text = text.replace(',','');
+  			if(matchedTokens[12]){
+  				var years = matchedTokens[11];
   				years = ' ' + (parseInt(years) - 543);
-  				text = text.replace(matchedTokens[10], '');
-  				text = text.replace(matchedTokens[9], years);
+  				text = text.replace(matchedTokens[12], '');
+  				text = text.replace(matchedTokens[11], years);
   			}
 
   			date  = moment(text,'MMMM DD YYYY');
@@ -59,11 +60,12 @@
 			  if(!matchedTokens) return null;
 			  
 			  //Short Pattern (without years)
-  			text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
+  			text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[9].length);
   			originalText = text;
   			
-  			text = text.replace(matchedTokens[1], matchedTokens[1]+' ');
-  			if(matchedTokens[2]) text = text.replace(matchedTokens[2],'');
+  			text = text.replace(matchedTokens[1], '');
+  			text = text.replace(matchedTokens[3], matchedTokens[3]+' ');
+  			if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
   			
   			date = moment(text,'MMMM DD');
   			if(!date) return null;
@@ -80,18 +82,18 @@
   			}
 			}
 			
-			if(matchedTokens[2]){
+			if(matchedTokens[4]){
 			  
-			  var endDay = parseInt(matchedTokens[6]);
-			  var startDay = parseInt(matchedTokens[3]);
+			  var endDay = parseInt(matchedTokens[8]);
+			  var startDay = parseInt(matchedTokens[5]);
 			  var endDate = date.clone();
 			  
 			  date.date(startDay);
 			  endDate.date(endDay);
 			  
 			  //Check leap day or impossible date
-        if(date.format('D') != matchedTokens[3]) return null;
-        if(endDate.format('D') != matchedTokens[6]) return null;
+        if(date.format('D') != matchedTokens[5]) return null;
+        if(endDate.format('D') != matchedTokens[8]) return null;
         
         return new chrono.ParseResult({
           referenceDate:ref,
@@ -111,7 +113,7 @@
         
 			}else{
 			  
-			  if(date.format('D') != matchedTokens[6]) return null;
+			  if(date.format('D') != matchedTokens[8]) return null;
 
         return new chrono.ParseResult({
           referenceDate:ref,

@@ -892,6 +892,41 @@
 			});
 			
 			
+			test("Test - Wiki-Text 1", function() {
+				
+				var text = 'October 7, 2011, of which details were not revealed out of respect to Jobs\'s family.[239] Apple announced on the same day that they had no plans for a public service, but were encouraging "well-wishers" to send their remembrance messages to an email address created to receive such messages.[240] Sunday, October 16, 2011';
+
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 2, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2011, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 9, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.index == 0, 'Wrong index')
+					ok(result.text == 'October 7, 2011', result.text )
+				}
+				
+				var result = results[1];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2011, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 9, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 16, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.text == 'Sunday, October 16, 2011', result.text )
+				}
+				
+				
+			});
+			
+      
+			
+			
 			
 		</script>  
 		

@@ -6,7 +6,7 @@
       "type" : "git",
       "url"  : "https://github.com/berryboy/chrono.git"
     },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "directories" : { 
       "parser"        : "./parser", 
       "test-nodeunit" : "./test-nodeunit",

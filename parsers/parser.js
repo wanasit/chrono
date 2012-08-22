@@ -89,7 +89,7 @@
       var begin = result1.index + result1.text.length;
       var end   = result2.index; 
       var textBetween = text.substring(begin,end);
-      var OVERLAP_PATTERN = /\s*(to|\-)\s*/i;
+      var OVERLAP_PATTERN = /^\s*(to|\-)\s*$/i;
 
       if(!textBetween.match(OVERLAP_PATTERN)) return null;
       var mergedText = result1.text + textBetween + result2.text;
