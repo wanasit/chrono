@@ -42,7 +42,7 @@ You can parse strings containing a natural language date using the `chrono.parse
         
 ### Reference Date
 
-Today's "Friday" is difference from last month's "Friday". The meaning of mentioned dates are depended on when were they mentioned. Chrono let you define the reference date using `chrono.parse(text,ref)` and `chrono.parseDate(text,ref)`.    
+Today's "Friday" is difference from last month's "Friday". The meaning of mentioned dates are depended on when they were mentioned. Chrono let you define the reference date using `chrono.parse(text,ref)` and `chrono.parseDate(text,ref)`.    
 
     > chrono.parseDate('Friday', new Date(2012,7,23)); 
     Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
@@ -50,7 +50,7 @@ Today's "Friday" is difference from last month's "Friday". The meaning of mentio
     > chrono.parseDate('Friday', new Date(2012,7,1)); 
     Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
 
-### Reference
+### Text
         
 Chrono is also designed to handle a long text. `chrono.parse` will return a array of every date mentioned in the input text. `chrono.parseDate` will return the first one.
   
