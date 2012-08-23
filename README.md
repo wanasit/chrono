@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/berryboy/chrono.png)](http://travis-ci.org/berryboy/chrono)
 Chrono
 ======
 
