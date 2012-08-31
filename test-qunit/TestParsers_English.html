@@ -171,7 +171,7 @@
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
-				var text = "The Deadline is 10 January";
+				var text = "The Deadline is Tuesday, 10 January";
 				var results = chrono.parse(text, new Date(2012,7,10));
 				
 				ok(results.length == 1, JSON.stringify( results ) )
@@ -183,9 +183,11 @@
 					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					
+					ok(result.text == 'Tuesday, 10 January', result.text)
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2013,0,10,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
 				}
 				
 				
@@ -357,7 +359,6 @@
 					ok(result.end.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.end.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 					ok(result.end.day == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-					
 					var resultMoment = moment(result.endDate);
 					var expectMoment = moment(new Date(2013,8,12,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
@@ -436,6 +437,25 @@
 					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,0,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "The Deadline is Tuesday, January 10";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.text == 'Tuesday, January 10', result.text)
 					
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2013,0,10,12));
@@ -735,6 +755,29 @@
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 1000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
+				
+				var text = "The Deadline is Aug 16 2012 22:48:58 xx";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 16, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.hour == 22, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+					ok(result.start.minute == 48, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+					ok(result.start.second == 58, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+					
+					ok(result.text == 'Aug 16 2012 22:48:58', result.text )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,16,22,48,58));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 1000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
 			});
 			
 			
@@ -890,43 +933,7 @@
 				}
 				
 			});
-			
-			
-			test("Test - Wiki-Text 1", function() {
-				
-				var text = 'October 7, 2011, of which details were not revealed out of respect to Jobs\'s family.[239] Apple announced on the same day that they had no plans for a public service, but were encouraging "well-wishers" to send their remembrance messages to an email address created to receive such messages.[240] Sunday, October 16, 2011';
-
-				var results = chrono.parse(text, new Date(2012,7,10));
-				
-				ok(results.length == 2, JSON.stringify( results ) )
-
-				var result = results[0];
-				if(result){
-					ok(result.start, JSON.stringify(result.start) )
-					ok(result.start.year == 2011, 'Test Result - (Year) ' + JSON.stringify(result.start) )
-					ok(result.start.month == 9, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-					
-					ok(result.index == 0, 'Wrong index')
-					ok(result.text == 'October 7, 2011', result.text )
-				}
-				
-				var result = results[1];
-				if(result){
-					ok(result.start, JSON.stringify(result.start) )
-					ok(result.start.year == 2011, 'Test Result - (Year) ' + JSON.stringify(result.start) )
-					ok(result.start.month == 9, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 16, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-					
-					ok(result.text == 'Sunday, October 16, 2011', result.text )
-				}
-				
-				
-			});
-			
-      
-			
-			
+						
 			
 		</script>  
 		

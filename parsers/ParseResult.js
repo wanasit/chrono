@@ -44,10 +44,10 @@
     this.second = components.second;
     
     this.date = function() { 
-      var dateMoment = moment();
-      dateMoment.year(this.year);
-      dateMoment.month(this.month);
-      dateMoment.date(this.day);
+      var dateMoment = moment(new Date(this.year,this.month,this.day));
+      //dateMoment.year(this.year);
+      //dateMoment.month(this.month);
+      //dateMoment.date(this.day);
       dateMoment.hours(this.hour);
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);

@@ -1,6 +1,12 @@
 /*
   
+  The parser for parsing US's date format that begin with month's name.
   
+  EX. 
+    - January 13
+    - January 13, 2012
+    - January 13 - 15, 2012
+    - Tuesday, January 13, 2012
 */
 
 (function () {
@@ -8,8 +14,8 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var regFullPattern = /(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)?\s*(,)?\s*(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
-  var regShortPattern = /(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)?\s*(,)?\s*(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})([^0-9]|$)/i;
+  var regFullPattern  = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
+  var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})([^0-9]|$)/i;
   	
   function MonthNameMiddleEndianParser(text, ref, opt){
     
