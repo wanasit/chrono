@@ -1,7 +1,7 @@
 <!DOCTYPE html>  
 <html>  
 <head>  
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>QUnit Test Suite</title>  
     
 		<link rel="stylesheet" href="./qunit-git.css" type="text/css"></link>
@@ -96,7 +96,6 @@
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
-
 				
 				var text = "主な株主（2012年９月3日現在）";
 				var results = chrono.parse(text, new Date(2012,7,10));
@@ -139,10 +138,26 @@
 				}
 				
 				
+				var text = "平成18年6月1日午前11時から帝国ホテルで行われた、";
+				var results = chrono.parse(text, new Date(2012,7,10));
 				
-				
-				
-				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+				  
+					ok(result.text == "平成18年6月1日午前11時", result.text )
+					
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2007, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 1, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.hour == 11, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2007,5,1,11));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
 			});
 			
 		</script>  

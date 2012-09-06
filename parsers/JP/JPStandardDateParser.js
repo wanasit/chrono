@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(同|([0-9０-９]{2,4})年)?\s*([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+  var PATTERN = /(同|((平成)?([0-9０-９]{2,4}))年)?\s*([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
   
   function cleanZengakuNumber(str){
 		
@@ -39,8 +39,8 @@
     
     opt = opt || {};
     ref = ref || new Date();
-    var parser = chrono.Parser(text, ref, opt);
-    
+    var parser = chrono.parsers.JPGeneralDateParser(text, ref, opt);
+		
     parser.pattern = function() { return PATTERN; }
     
     parser.extract = function(full_text,index){ 
@@ -63,29 +63,36 @@
   		var date = null;
   		text = matchedTokens[0];
   		
-  		var months = matchedTokens[3];
+  		var months = matchedTokens[5];
   		months = cleanZengakuNumber(months);
   		months = parseInt(months);
       if(!months || months == NaN) return null;
       
-  		var days = matchedTokens[4];
+  		var days = matchedTokens[6];
   		days = cleanZengakuNumber(days);
   		days = parseInt(days);
   		if(!days || days == NaN) return null;
 
-  		var years = matchedTokens[2];
+  		var years = matchedTokens[4];
   		if(years){
   		  years = cleanZengakuNumber(years);
     		years = parseInt(years);
   		}
   		
   		if(years && years !== NaN){
-
+				
+				if(matchedTokens[3]=='平成'){
+					years = years + 1989;
+				}
+				else if(years < 100){
+					years = years + 2000;
+				}
+				
   			var dateText = years + '-'+months+'-'+days;
   			date = moment(dateText, 'YYYY-MM-DD');
-
-  			if(date.format('YYYY-M-D') != dateText) date = null;
-
+				
+  			if(date.format('YYYY-M-D') != dateText)
+					return null;
   		}else{
 
   			var dateText = months+'-'+days;

@@ -152,7 +152,7 @@
         
         minute = matchedTokens[5];
         minute = parseInt(minute);
-        if(second >= 60) return null;
+        if(minute >= 60) return null;
       }
       
       if(matchedTokens[8]){

@@ -74,7 +74,61 @@
       return result;
     };
     
-  	return parser;
+  	
+		var baseExtractTime = parser.extractTime;
+		parser.extractTime = function(text, result){
+      
+			//Western - Time
+			var baseResult = baseExtractTime.call(this, text, result);
+			if(baseResult) return baseResult;
+			
+      var SUFFIX_PATTERN = /\s*(午前|午後)?\s*([0-9]{1,2})時?(([0-9]{1,2})分)?/i;
+      
+      if(text.length <= result.index + result.text.length) return null;
+      text = text.substr(result.index + result.text.length);
+      
+      var matchedTokens = text.match(SUFFIX_PATTERN);
+      if( !matchedTokens || text.indexOf(matchedTokens[0]) != 0) return null;
+      
+      var minute = 0;
+      var second = 0;
+      var hour = matchedTokens[2];
+      hour = parseInt(hour);
+      
+      if(matchedTokens[1]){
+        //AM & PM  
+        if(hour > 12) return null;
+        if(matchedTokens[1] == "午後"){
+         hour += 12;
+        }
+      }
+      
+      if(matchedTokens[4]){
+        
+        minute = matchedTokens[4];
+        minute = parseInt(minute);
+        if(minute >= 60) return null;
+      }
+      
+      result.text = result.text + matchedTokens[0];
+      
+      if(result.start.hour == undefined){
+        result.start.hour = hour;
+        result.start.minute = minute;
+        result.start.second = second;
+      }
+      
+      if(result.end && result.end.hour == undefined){
+        result.end.hour = hour;
+        result.end.minute = minute;
+        result.end.second = second;
+      }
+      
+      return new chrono.ParseResult(result);
+    }
+		
+		
+		return parser;
   }
   
   chrono.parsers.JPGeneralDateParser = JPGeneralDateParser;
