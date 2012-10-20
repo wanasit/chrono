@@ -17,6 +17,11 @@
                                           to create a parsing result from text at index. 
                                        : The parser should OVERRIDE this method.
     
+    - (protected**) extractTime(text, result) : This method will be called for every result of extract() 
+                                                that doesn't have time component. 
+                                         : The parser may not need to override this method
+    
+    
     - (protected**) checkOverlapResult(text, result1, result2) :
                                       Check whether two parsing result are overlapped each other as 'start-end' date.
                                       If they do, this function will merged them into one.
@@ -127,7 +132,8 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,2})((\.|\:)([0-9]{1,2})((\.|\:)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,2})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to)?\s*([0-9]{1,2})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
@@ -170,7 +176,59 @@
         result.start.second = second;
       }
       
-      if(result.end && result.end.hour == undefined){
+      
+      text = text.substr(matchedTokens[0].length);
+      var matchedTokens = text.match(TO_SUFFIX_PATTERN)
+      if( !matchedTokens || text.indexOf(matchedTokens[0]) != 0) {
+        
+        //Time in POINT format.
+        // Return
+        if(result.end && result.end.hour == undefined){
+          result.end.hour = hour;
+          result.end.minute = minute;
+          result.end.second = second;
+        }
+
+        return new chrono.ParseResult(result);
+      }
+      
+      //Time in RANGE format. 
+      // Calculate the END point...
+      var minute = 0;
+      var second = 0;
+      var hour = matchedTokens[2];
+      hour = parseInt(hour);
+      
+      if(matchedTokens[10]){
+        //AM & PM  
+        if(hour > 12) return null;
+        if(matchedTokens[10].toLowerCase() == "pm"){
+         hour += 12;
+        }
+      }
+      
+      if(matchedTokens[5]){
+        
+        minute = matchedTokens[5];
+        minute = parseInt(minute);
+        if(minute >= 60) return null;
+      }
+      
+      if(matchedTokens[8]){
+        
+        second = matchedTokens[8];
+        second = parseInt(second);
+        if(second >= 60) return null;
+      }
+      
+      result.text = result.text + matchedTokens[0];
+      
+      if(!result.end){
+        result.end = JSON.parse(JSON.stringify(result.start));
+        result.end.hour = hour;
+        result.end.minute = minute;
+        result.end.second = second;
+      }else{
         result.end.hour = hour;
         result.end.minute = minute;
         result.end.second = second;

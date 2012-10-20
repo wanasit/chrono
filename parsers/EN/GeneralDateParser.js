@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago)(\W|$)/i;
+  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object
@@ -43,7 +43,7 @@
   		}
 
   		var text = matchedTokens[0].toLowerCase();
-  		text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[4].length);
+  		text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
 
   		var date = null;
   		var lowercase_text = text.toLowerCase();
@@ -55,10 +55,13 @@
   			date = moment(ref).clone().add('d',-1);
       else if(lowercase_text.match('last'))
   		  date = moment(ref).clone().add('d',-1);
-  		else {
+  		else if(lowercase_text.match('ago')){
   		  var days_ago = matchedTokens[2];
   		  days_ago = parseInt(days_ago);
   		  date = moment(ref).clone().add('d',-days_ago);
+  		}else{
+  		  date = moment(ref).clone();
+  		  text = '';
   		}
   		  
       var result = new chrono.ParseResult({

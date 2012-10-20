@@ -14,9 +14,11 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
+  
   var regFullPattern  = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
-  var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})([^0-9]|$)/i;
-  	
+  var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?([^0-9]|$)/i;
+  
+
   function MonthNameMiddleEndianParser(text, ref, opt){
     
     opt = opt || {};
@@ -66,7 +68,7 @@
 			  if(!matchedTokens) return null;
 			  
 			  //Short Pattern (without years)
-  			text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[9].length);
+  			text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
   			originalText = text;
   			
   			text = text.replace(matchedTokens[1], '');
@@ -157,6 +159,24 @@
       return result;
     }
     
+    
+    //Override for day of the week suffix - MM dd (Thuesday) 
+    var baseExtractTime = parser.extractTime;
+		parser.extractTime = function(text, result){
+      
+      var DAY_OF_WEEK_SUFFIX_PATTERN = /(\,|\(|\s)*(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(\,|\)|\s)*/i;
+      
+      if(text.length <= result.index + result.text.length) return null;
+        
+      var suffix_text = text.substr(result.index + result.text.length);
+      var matchedTokens = suffix_text.match(DAY_OF_WEEK_SUFFIX_PATTERN);
+      if( matchedTokens && suffix_text.indexOf(matchedTokens[0]) == 0){
+        result.text = result.text + matchedTokens[0];
+      }
+      
+			return baseExtractTime.call(this, text, result);
+    }
+		
   	return parser;
   }
   
