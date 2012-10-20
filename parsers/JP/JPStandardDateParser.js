@@ -28,7 +28,7 @@
   
   
   /**
-   * GeneralDateParser - Create a parser object
+   * JPStandardDateParser - Create a parser object
    *
    * @param  { String }           text - Orginal text to be parsed
    * @param  { Date, Optional }   ref  - Referenced date
@@ -125,6 +125,25 @@
       result = resultWithTime || result;      
       return result;
     };
+    
+    
+    //Override for day of the week suffix - MM dd () 
+    var baseExtractTime = parser.extractTime;
+  	parser.extractTime = function(text, result){
+
+      var DAY_OF_WEEK_SUFFIX_PATTERN = /(\,|\(|（|\s)*(月|火|水|木|金|土|日)(曜日|曜)?\s*(\,|）|\))/i;
+
+      if(text.length <= result.index + result.text.length) return null;
+
+      var suffix_text = text.substr(result.index + result.text.length);
+      var matchedTokens = suffix_text.match(DAY_OF_WEEK_SUFFIX_PATTERN);
+      if( matchedTokens && suffix_text.indexOf(matchedTokens[0]) == 0){
+        result.text = result.text + matchedTokens[0];
+      }
+
+  		return baseExtractTime.call(this, text, result);
+    }
+    
     
   	return parser;
   }
