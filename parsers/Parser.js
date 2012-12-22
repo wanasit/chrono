@@ -237,6 +237,38 @@
       return new chrono.ParseResult(result);
     }
     
+    /**
+     * Parser.extractConcordance
+     * @param  { String }   text - Orginal text
+     * @param  { CNResult } result
+     * @return { CNResult } 
+     */
+    parser.extractConcordance = function(text, result) {
+      
+      var conLength =  30;
+      
+      preText = text.substr(0, result.index)
+      preText = preText.replace(/(\r\n|\n|\r)/gm," ");
+    	preText = preText.replace(/(\s+)/gm," ");
+    	
+    	if(preText.length > conLength)
+    	  preText = '...' + preText.substr( preText.length - conLength +3, conLength-3)
+    	else
+        preText = preText.substr( 0, conLength)
+        
+      posText = text.substr(result.index+result.text.length)
+      posText = posText.replace(/(\r\n|\n|\r)/gm," ");
+    	posText = posText.replace(/(\s+)/gm," ");
+    	
+    	if(posText.length > conLength)
+    	  posText = posText.substr(0, conLength - 3)+'...';
+    	else
+    	  posText = posText.substr(0, conLength)
+      
+      result.concordance = preText + result.text + posText;
+      return new chrono.ParseResult(result);
+    }
+    
     
     /**
      * Parser.exec - Parse the text for one matching index.
@@ -274,7 +306,9 @@
         
         if(result.end && result.end.hour === undefined)
     		  result.endDate = moment(result.endDate).sod().hours(12).toDate();
-
+        
+        this.extractConcordance(text, result);
+        
   		  searchingResults.push(result); 
   		}
   		

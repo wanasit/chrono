@@ -70,7 +70,7 @@
     this.referenceDate = result.referenceDate;
     this.index = result.index;
     this.text = result.text;
-    this.sentence = result.sentence;
+    this.concordance = result.concordance;
     
     if(result.timezoneOffset){
      this.timezoneOffset = result.timezoneOffset;

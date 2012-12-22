@@ -151,6 +151,82 @@
 				
 			});
 			
+			test("Test - Day of Week Parser + Concordance Checking", function() {
+				
+				var text = "Let's finish this before this Monday.";
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.concordance == "Let's finish this before this Monday.", 'Test Result - (Concordance) ' 
+					  + JSON.stringify(result.concordance) +'/'+text)
+					
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,6,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "The latest and best tweets on #monday. Read what people are saying and join the conversation.";
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.concordance == "...latest and best tweets on #monday. Read what people are sayi...", 'Test Result - (Concordance) ' 
+					  + JSON.stringify(result.concordance)  +'/'+text)
+					
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,6,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "First Monday is one of the first openly accessible,\n"+
+				  "peer–reviewed journals on the Internet, solely devoted to the Internet.";
+				  
+				var parser = chrono.parsers.DayOfWeekParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.concordance == "First Monday is one of the first openly...", 'Test Result - (Concordance) ' 
+					  + JSON.stringify(result.concordance)  +'/'+text)
+					
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2012,7,6,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+
+			});
+      
+			
+			
 			test("Test - International Standard Parser", function() {
 				
 				var text = "Let's finish this before this 2012-8-9.";
