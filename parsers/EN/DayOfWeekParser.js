@@ -55,23 +55,28 @@
       
       if(offset === undefined) return null;
       
-  		var date = moment(ref).clone();
-  		
-  		if(prefix){
-  			
-  			prefix = prefix.toLowerCase();
-  			
-  			if(prefix == 'last')
-  				date.day(offset - 7)
-  			else if(prefix == 'next')
-  			  date.day(offset + 7)
-  			else if(prefix== 'this')
-  			  date.day(offset);
-  		}
-  		else{
-  			date.day(offset);
-  		}
-  		
+      var date = moment(ref).clone();
+      
+      if(prefix){
+        
+        prefix = prefix.toLowerCase();
+        
+        if(prefix == 'last')
+          date.day(offset - 7)
+        else if(prefix == 'next')
+          date.day(offset + 7)
+        else if(prefix== 'this')
+          date.day(offset);
+      }
+      else{
+        var ref_offset = date.day();
+
+        if(offset > ref_offset)
+          date.day(offset);
+        else
+          date.day(offset+7);
+      }
+      
       return new chrono.ParseResult({
         referenceDate:ref,
         text:text,
