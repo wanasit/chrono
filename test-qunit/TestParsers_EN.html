@@ -25,9 +25,54 @@
 		
     <script type="text/javascript">
 			
+			test("Test - International Standard Parser", function() {
+				
+				var text = "Let's finish this before this 2013-2-7.";
+				var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
 
-      
-			
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 1, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,1,7,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "Let's finish this before this 2013-02-07.";
+				var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+				var result = parser.results()[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 1, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,1,7,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				var text = "Let's finish this before this 2013-02-29.";
+				var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+				ok(parser, parser)
+				
+				parser.execAll();
+				ok(parser.results().length == 0, JSON.stringify( parser.results() ) )
+			});
 			
 			test("Test - Slash", function() {
 				
@@ -824,7 +869,6 @@
 				}
 				
 			});
-			
 			
 			test("Test - General", function() {
 				
