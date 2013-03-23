@@ -236,6 +236,28 @@
 				}
 				
 				
+				
+				var text = "The Deadline is Tue, 10 January";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.text == 'Tue, 10 January', result.text)
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,0,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+					
+				}
+        
+				
+				
 				var text = "The Deadline is 10-12 August 2012";
 				var results = chrono.parse(text, new Date(2012,7,10));
 				
@@ -501,6 +523,26 @@
 					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					
 					ok(result.text == 'Tuesday, January 10', result.text)
+					
+					var resultMoment = moment(result.startDate);
+					var expectMoment = moment(new Date(2013,0,10,12));
+					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+				}
+				
+				
+				var text = "The Deadline is Tue, January 10";
+				var results = chrono.parse(text, new Date(2012,7,10));
+				
+				ok(results.length == 1, JSON.stringify( results ) )
+
+				var result = results[0];
+				if(result){
+					ok(result.start, JSON.stringify(result.start) )
+					ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+					ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					
+					ok(result.text == 'Tue, January 10', result.text)
 					
 					var resultMoment = moment(result.startDate);
 					var expectMoment = moment(new Date(2013,0,10,12));
