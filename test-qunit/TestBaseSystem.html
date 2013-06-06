@@ -123,10 +123,10 @@
 					ok(result.start, JSON.stringify(result.start) )
 					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 14, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					
 					var resultMoment = moment(result.startDate);
-					var expectMoment = moment(new Date(2012,7,7,12));
+					var expectMoment = moment(new Date(2012,7,14,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
@@ -187,13 +187,13 @@
 					ok(result.start, JSON.stringify(result.start) )
 					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 13, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					ok(result.concordance == "...latest and best tweets on #monday. Read what people are sayi...", 'Test Result - (Concordance) ' 
 					  + JSON.stringify(result.concordance)  +'/'+text)
 					
 					
 					var resultMoment = moment(result.startDate);
-					var expectMoment = moment(new Date(2012,7,6,12));
+					var expectMoment = moment(new Date(2012,7,13,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
@@ -212,13 +212,13 @@
 					ok(result.start, JSON.stringify(result.start) )
 					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 13, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					ok(result.concordance == "First Monday is one of the first openly...", 'Test Result - (Concordance) ' 
 					  + JSON.stringify(result.concordance)  +'/'+text)
 					
 					
 					var resultMoment = moment(result.startDate);
-					var expectMoment = moment(new Date(2012,7,6,12));
+					var expectMoment = moment(new Date(2012,7,13,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				

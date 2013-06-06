@@ -115,10 +115,10 @@
 					ok(result.start, JSON.stringify(result.start) )
 					ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 					ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-					ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+					ok(result.start.day == 14, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 					
 					var resultMoment = moment(result.startDate);
-					var expectMoment = moment(new Date(2012,7,7,12));
+					var expectMoment = moment(new Date(2012,7,14,12));
 					ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 				}
 				
