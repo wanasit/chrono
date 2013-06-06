@@ -42,10 +42,12 @@
     parser_dirs = parser_dirs.filter(function(name) { return !name.match(/\./ ) })
     for(var i in parser_dirs){
       var dirname = parser_dirs[i];
+			if(typeof(dirname) == 'function') continue;
       var parser_files = fs.readdirSync( __dirname + '/parsers/'+dirname);
       
       for(var j in parser_files){
         var filename = parser_files[j];
+				if(typeof(filename) == 'function') continue;
         if(!filename.match(/\.js$/)) continue;
         eval(fs.readFileSync(__dirname + '/parsers/'+dirname+'/'+filename)+'');
       }
