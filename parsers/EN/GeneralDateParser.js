@@ -37,33 +37,33 @@
       }
       
       var matchedTokens = full_text.substr(index).match(PATTERN);
-  		if(matchedTokens == null){
-  			finished = true;
-  			return;
-  		}
-
-  		var text = matchedTokens[0].toLowerCase();
-  		text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
-
-  		var date = null;
-  		var lowercase_text = text.toLowerCase();
-  		if(lowercase_text == 'today')
-  			date = moment(ref).clone();
-  		else if(lowercase_text == 'tomorrow')
-  			date = moment(ref).clone().add('d',1);
-  		else if(lowercase_text == 'yesterday')
-  			date = moment(ref).clone().add('d',-1);
+      if(matchedTokens == null){
+        finished = true;
+        return;
+      }
+      
+      var text = matchedTokens[0].toLowerCase();
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
+      
+      var date = null;
+      var lowercase_text = text.toLowerCase();
+      if(lowercase_text == 'today')
+        date = moment(ref).clone();
+      else if(lowercase_text == 'tomorrow')
+        date = moment(ref).clone().add('d',1);
+      else if(lowercase_text == 'yesterday')
+        date = moment(ref).clone().add('d',-1);
       else if(lowercase_text.match('last'))
-  		  date = moment(ref).clone().add('d',-1);
-  		else if(lowercase_text.match('ago')){
-  		  var days_ago = matchedTokens[2];
-  		  days_ago = parseInt(days_ago);
-  		  date = moment(ref).clone().add('d',-days_ago);
-  		}else{
-  		  date = moment(ref).clone();
-  		  text = '';
-  		}
-  		  
+        date = moment(ref).clone().add('d',-1);
+      else if(lowercase_text.match('ago')){
+        var days_ago = matchedTokens[2];
+        days_ago = parseInt(days_ago);
+        date = moment(ref).clone().add('d',-days_ago);
+      }else{
+        date = moment(ref).clone();
+        text = '';
+      }
+        
       var result = new chrono.ParseResult({
         referenceDate:ref,
         text:text,
@@ -86,6 +86,7 @@
           result.start.hour = 0;
           result.start.minute = 0;
           result.start.second = 0;
+          result.start.impliedComponents = ['hour','minute','second'];
           result = new chrono.ParseResult(result);
           
         }else if(resultWithTime.start.hour < 12){ //Today's 0am - 12am

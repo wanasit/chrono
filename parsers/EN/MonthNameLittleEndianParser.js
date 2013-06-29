@@ -23,12 +23,9 @@
       
       var results = this.results();
       var lastResult = results[results.length -1];
-      if( lastResult ){
-        //Duplicate...
-        if( index < lastResult.index + lastResult.text.length )
-          return null;
-      }
+      if( lastResult ){ if( index < lastResult.index + lastResult.text.length ) return null; }
       
+      var impliedComponents = [];
       var date = null;
       text = text.substr(index);
       originalText = text;
@@ -57,107 +54,89 @@
         text = text.replace(matchedTokens[10], ' ' + years);
         date = moment(text,'DD MMMM YYYY');
         if(!date) return null;
-			}
-			else{
-			  
-			  matchedTokens = text.match(regShortPattern);
-			  if(!matchedTokens) return null;
-			  
-			  //Short Pattern (without years)
-			  var text = matchedTokens[0];
-  			text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
-  			originalText = text;
-  			if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
-        if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
-        
-  			date  = moment(text,'DD MMMM');
-  			if(!date) return null;
-  			
-  			//Find the most appropriated year
-  			date.year(moment(ref).year());
-  			var nextYear = date.clone().add('y',1);
-  			var lastYear = date.clone().add('y',-1);
-  			if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
-  				date = nextYear;
-  			}
-  			else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
-  				date = lastYear;
-  			}
-			}
-			// Text text can be 'range' value. Such as '12 - 13 January 2012'
-			if(matchedTokens[7]){
-			  var endDay = parseInt(matchedTokens[7]);
-			  var startDay = parseInt(matchedTokens[3]);
-			  var endDate = date.clone();
-			  
-			  date.date(startDay);
-			  endDate.date(endDay);
-			  
-			  //Check leap day or impossible date
-        if(date.format('D') != matchedTokens[3]) return null;
-        if(endDate.format('D') != matchedTokens[7]) return null;
-        
-        return new chrono.ParseResult({
-          referenceDate:ref,
-          text:originalText,
-          index:index,
-          start:{
-            day:date.date(),
-            month:date.month(),
-            year:date.year()
-          },
-          end:{
-            day:endDate.date(),
-            month:endDate.month(),
-            year:endDate.year()
-          }
-        });
-			}
-			else{
-			  //Check leap day or impossible date
-        if(date.format('D') != matchedTokens[3]) return null;
-
-        return new chrono.ParseResult({
-          referenceDate:ref,
-          text:originalText,
-          index:index,
-          start:{
-            day:date.date(),
-            month:date.month(),
-            year:date.year()
-          }
-        });
-			}
-    };
+    }else{
     
-    //Check case.. dd MM - dd MM , YYYY
-    var _checkOverlapResult = parser.checkOverlapResult;
-    parser.checkOverlapResult = function(text, result1, result2){
+      matchedTokens = text.match(regShortPattern);
+      if(!matchedTokens) return null;
     
-      var result = _checkOverlapResult(text, result1, result2);
-      if(result){
-    
-        if(result1.text.match(regFullPattern) && !result2.text.match(regFullPattern)){
-          result2.start.year = result1.start.year;
-          result2 = new chrono.ParseResult(result2);
-        }
-    
-        if(result2.text.match(regFullPattern) && !result1.text.match(regFullPattern)){
-          result1.start.year = result2.start.year;
-          result1 = new chrono.ParseResult(result1);
-        }
-    
-        result = _checkOverlapResult(text, result1, result2);
-      }
-    
-      return result;
-    }
-    
-    
-    //Override for day of the week suffix - MM dd (Thuesday) 
-    var baseExtractTime = parser.extractTime;
-		parser.extractTime = function(text, result){
+      //Short Pattern (without years)
+      var text = matchedTokens[0];
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
+      originalText = text;
+      if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
+      if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
       
+      date  = moment(text,'DD MMMM');
+      if(!date) return null;
+      
+      //Find the most appropriated year
+      impliedComponents.push('year')
+      date.year(moment(ref).year());
+      var nextYear = date.clone().add('y',1);
+      var lastYear = date.clone().add('y',-1);
+      if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
+      	date = nextYear;
+      }
+      else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
+      	date = lastYear;
+      }
+    }
+    // Text text can be 'range' value. Such as '12 - 13 January 2012'
+    if(matchedTokens[7]){
+      var endDay = parseInt(matchedTokens[7]);
+      var startDay = parseInt(matchedTokens[3]);
+      var endDate = date.clone();
+      
+      date.date(startDay);
+      endDate.date(endDay);
+      
+      //Check leap day or impossible date
+      if(date.format('D') != matchedTokens[3]) return null;
+      if(endDate.format('D') != matchedTokens[7]) return null;
+      
+      return new chrono.ParseResult({
+        referenceDate:ref,
+        text:originalText,
+        index:index,
+        start:{
+          day:date.date(),
+          month:date.month(),
+          year:date.year(),
+          impliedComponents: impliedComponents
+        },
+        end:{
+          day:endDate.date(),
+          month:endDate.month(),
+          year:endDate.year(),
+          impliedComponents: impliedComponents
+        }
+      });
+    }
+    else{
+      //Check leap day or impossible date
+      if(date.format('D') != matchedTokens[3]) return null;
+    
+      return new chrono.ParseResult({
+        referenceDate:ref,
+        text:originalText,
+        index:index,
+        start:{
+          day:date.date(),
+          month:date.month(),
+          year:date.year(),
+          impliedComponents: impliedComponents
+        }
+      });
+  	}
+  };
+  
+  
+  
+  
+  //Override for day of the week suffix - MM dd (Thuesday) 
+  var baseExtractTime = parser.extractTime;
+  parser.extractTime = function(text, result){
+    
       var DAY_OF_WEEK_SUFFIX_PATTERN = /(\,|\(|\s)*(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(\,|\)|\s)*/i;
       
       if(text.length <= result.index + result.text.length) return null;
@@ -168,7 +147,7 @@
         result.text = result.text + matchedTokens[0];
       }
       
-			return baseExtractTime.call(this, text, result);
+      return baseExtractTime.call(this, text, result);
     }
     
   	return parser;

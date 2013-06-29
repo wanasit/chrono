@@ -3,29 +3,32 @@
   
   DateCompoents {
     
-    @attrbuite {Integer} year
-    @attrbuite {Integer} month
-    @attrbuite {Integer} day
-		@attrbuite {Integer} hour
-		@attrbuite {Integer} minute
-		@attrbuite {Integer} second
-		
-		@method { Date } date 
+    @attribute {Integer} year
+    @attribute {Integer} month
+    @attribute {Integer} day
+    @attribute {Integer} hour
+    @attribute {Integer} minute
+    @attribute {Integer} second
+    
+    @method { Date } date 
+    
+    @attribute { Array<String> } impliedComponents
   }
   
   ParseResult {
     
-    @attrbuite {DateCompoents} start
-    @attrbuite {Date} startDate
+    @attribute {DateCompoents} start
+    @attribute {Date} startDate
     
-    @attrbuite {DateCompoents, Optional} end
-    @attrbuite {Date, Optional} endDate
-  
-    @attrbuite { Date } referenceDate
-    @attrbuite { Integer } index
-    @attrbuite { String } text
-    @attrbuite { String } sentence
-    @attrbuite { Number, Optional} timezoneOffset 
+    @attribute {DateCompoents, Optional} end
+    @attribute {Date, Optional} endDate
+    
+    
+    @attribute { Date } referenceDate
+    @attribute { Integer } index
+    @attribute { String } text
+    @attribute { String } sentence
+    @attribute { Number, Optional} timezoneOffset 
   }
   
 */
@@ -43,11 +46,12 @@
     this.minute = components.minute;
     this.second = components.second;
     
+    if(components.impliedComponents && components.impliedComponents.length > 0){
+      this.impliedComponents = components.impliedComponents
+    }
+    
     this.date = function() { 
       var dateMoment = moment(new Date(this.year,this.month,this.day));
-      //dateMoment.year(this.year);
-      //dateMoment.month(this.month);
-      //dateMoment.date(this.day);
       dateMoment.hours(this.hour);
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
@@ -65,7 +69,6 @@
       this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
     }
-    
     
     this.referenceDate = result.referenceDate;
     this.index = result.index;

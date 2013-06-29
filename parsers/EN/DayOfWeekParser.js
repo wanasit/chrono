@@ -39,19 +39,19 @@
       }
       
       var matchedTokens = text.substr(index).match(PATTERN);
-  		if(matchedTokens == null){
-  			finished = true;
-  			return;
-  		}
+      if(matchedTokens == null){
+        finished = true;
+        return;
+      }
 
-  		var text = matchedTokens[0];
-  		text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[4].length);
-
-  		var prefix = matchedTokens[2];
-  		var dayOfWeek = matchedTokens[3];
+      var text = matchedTokens[0];
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[4].length);
+      
+      var prefix = matchedTokens[2];
+      var dayOfWeek = matchedTokens[3];
       
       dayOfWeek = dayOfWeek.toLowerCase();
-  		var offset = DAYS_OFFSET[dayOfWeek];
+      var offset = DAYS_OFFSET[dayOfWeek];
       
       if(offset === undefined) return null;
       

@@ -22,7 +22,7 @@
                                          : The parser may not need to override this method
     
     
-    - (protected**) checkOverlapResult(text, result1, result2) :
+    - (protected**) mergeOverlapResult(text, result1, result2) :
                                       Check whether two parsing result are overlapped each other as 'start-end' date.
                                       If they do, this function will merged them into one.
                                    : The parser may not need to override this method
@@ -82,15 +82,19 @@
     
     
     /**
-     * Parser.checkOverlapResult
+     * Parser.mergeOverlapResult
      * @param  { String }   text - Orginal text
      * @param  { CNResult } result1
      * @param  { CNResult } result2
      * @return { CNResult } 
      */
-    parser.checkOverlapResult = function(text, result1, result2){
-
+    parser.mergeOverlapResult = function(text, result1, result2){
+      
       if(result1.end || result2.end) return null;
+      if(result2.index < result1.index){
+        var tmp = result1; result1 = result2; result2 = tmp;
+      }
+      
       var begin = result1.index + result1.text.length;
       var end   = result2.index; 
       var textBetween = text.substring(begin,end);
@@ -99,7 +103,27 @@
       if(!textBetween.match(OVERLAP_PATTERN)) return null;
       var mergedText = result1.text + textBetween + result2.text;
       
-      if(moment(result2.startDate).diff(moment(result1.startDate)) > 0){ 
+      var impliedComponents1 = result1.start.impliedComponents || [];
+      var impliedComponents2 = result2.start.impliedComponents || [];
+
+      impliedComponents1.forEach(function(component) {
+        if(!result2.start.impliedComponents || result2.start.impliedComponents.indexOf(component) < 0){
+          result1.start[component] = result2.start[component]
+          var index = result1.start.impliedComponents.indexOf(component);
+          result1.start.impliedComponents.splice(index, 1);
+        } 
+      });
+      
+      impliedComponents2.forEach(function(component) {
+        if(!result1.start.impliedComponents || result1.start.impliedComponents.indexOf(component) < 0){
+          result2.start[component] = result1.start[component]
+          var index = result1.start.impliedComponents.indexOf(component);
+          result2.start.impliedComponents.splice(index, 1);
+        }
+      });
+      
+      
+      if(moment(result2.start.date()).diff(moment(result1.start.date())) > 0){ 
         
         return new chrono.ParseResult({
           referenceDate:result1.ref,
@@ -291,7 +315,7 @@
   		  
   		  if(searchingResults.length > 0){
   		   var oldResult = searchingResults[searchingResults.length - 1];
-  		   var overlapResult = this.checkOverlapResult(text, oldResult, result);
+  		   var overlapResult = this.mergeOverlapResult(text, oldResult, result);
   		   
   		   result = overlapResult || result;
   		  }

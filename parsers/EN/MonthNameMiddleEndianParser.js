@@ -37,6 +37,7 @@
           return null;
       }
       
+      var impliedComponents = [];
       var date = null;
       text = text.substr(index);
       originalText = text;
@@ -79,6 +80,7 @@
   			if(!date) return null;
   			
   			//Find the most appropriated year
+  			impliedComponents.push('year')
   			date.year(moment(ref).year());
   			var nextYear = date.clone().add('y',1);
   			var lastYear = date.clone().add('y',-1);
@@ -110,12 +112,14 @@
           start:{
             day:date.date(),
             month:date.month(),
-            year:date.year()
+            year:date.year(),
+            impliedComponents: impliedComponents
           },
           end:{
             day:endDate.date(),
             month:endDate.month(),
-            year:endDate.year()
+            year:endDate.year(),
+            impliedComponents: impliedComponents
           }
         });
         
@@ -130,34 +134,14 @@
           start:{
             day:date.date(),
             month:date.month(),
-            year:date.year()
+            year:date.year(),
+            impliedComponents: impliedComponents
           }
         });
-			}
+      }
     };
     
-    //Check case.. MM dd - MM dd, YYYY
-    var _checkOverlapResult = parser.checkOverlapResult;
-    parser.checkOverlapResult = function(text, result1, result2){
     
-      var result = _checkOverlapResult(text, result1, result2);
-      if(result){
-    
-        if(result1.text.match(regFullPattern) && !result2.text.match(regFullPattern)){
-          result2.start.year = result1.start.year;
-          result2 = new chrono.ParseResult(result2);
-        }
-    
-        if(result2.text.match(regFullPattern) && !result1.text.match(regFullPattern)){
-          result1.start.year = result2.start.year;
-          result1 = new chrono.ParseResult(result1);
-        }
-    
-        result = _checkOverlapResult(text, result1, result2);
-      }
-    
-      return result;
-    }
     
     
     //Override for day of the week suffix - MM dd (Thuesday) 
