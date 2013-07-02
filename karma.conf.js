@@ -11,6 +11,7 @@ files = [
   QUNIT,
   QUNIT_ADAPTER,
   'moment.js',
+  'chrono.min.js',
   'chrono.js',
   'parsers/*.js',
   'parsers/*/*.js',
