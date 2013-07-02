@@ -60,6 +60,39 @@ test("Test - Email 1", function() {
 		//ok(result.index == 0, 'Index : '+result.index)
 		//ok(result.text == 'October 7, 2011', 'Text :'+ result.text )
 	}
+	
 });
 
+
+test("Test - Email 2", function() {
+	
+	var text =　"Date：July 12th(Fri), 2013 18:15〜20:00\nPlace： CO-OP Chuo Refectory, Hongo Campus (Free)\nMap: Please refer to attached leaflet.";
+	
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, 'Unexpected Count' )
+	ok(results.length == 1, JSON.stringify( results ))
+
+	var result = results[0];
+	if(result){
+		ok(result.start.year == 2013);
+		ok(result.start.month == 6);
+		ok(result.start.day   == 12); 
+		ok(result.start.hour   == 18);
+		ok(result.start.minute   == 15);
+		
+		ok(result.end.year == 2013)
+		ok(result.end.month == 6)
+		ok(result.end.day   == 12) 
+		ok(result.end.hour   == 20)
+		ok(result.end.minute   == 0)
+		
+		//ok(result.index == 0, 'Index : '+result.index)
+		//ok(result.text == 'October 7, 2011', 'Text :'+ result.text )
+	}
+	
+});
+
+
+　
 

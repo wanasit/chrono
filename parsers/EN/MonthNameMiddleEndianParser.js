@@ -152,9 +152,39 @@
       
       if(text.length <= result.index + result.text.length) return null;
         
-      var suffix_text = text.substr(result.index + result.text.length);
+      var suffix_text = text.substr(result.index + result.text.length, 15);
       var matchedTokens = suffix_text.match(DAY_OF_WEEK_SUFFIX_PATTERN);
       if( matchedTokens && suffix_text.indexOf(matchedTokens[0]) == 0){
+        result.text = result.text + matchedTokens[0];
+      }
+      
+      if(!result.start.impliedComponents || result.start.impliedComponents.indexOf('year') < 0)
+        return baseExtractTime.call(this, text, result);
+      
+      //MM dd (Thuesday), YYYY
+      var YEAR_SUFFIX_PATTERN = /(\s*[0-9]{4})(\s*BE)?/i;
+      
+      if(text.length <= result.index + result.text.length) return null;
+      
+      var suffix_text = text.substr(result.index + result.text.length, 15);
+      var matchedTokens = suffix_text.match(YEAR_SUFFIX_PATTERN);
+      if( matchedTokens && suffix_text.indexOf(matchedTokens[0]) == 0){
+        
+        var years = matchedTokens[1];
+        years = parseInt(years);
+        
+        if(years < 100){ 
+          if(years > 20) years = null; //01 - 20
+          else years = years + 2000;
+        }
+        else if(matchedTokens[2]){ //BC
+          years = years - 543;
+        }
+        
+        var index = result.start.impliedComponents.indexOf('year');
+        result.start.impliedComponents.splice(index, 1);
+        result.start.year = years;
+        
         result.text = result.text + matchedTokens[0];
       }
       

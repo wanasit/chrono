@@ -1139,20 +1139,20 @@ test("Test - General", function() {
 	ok(results.length == 1, JSON.stringify( results ) )
 
 	var result = results[0];
-	if(result){
-		ok(result.start, JSON.stringify(result.start) )
-		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
-		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-		ok(result.start.hour === 12, 'Test Result - (hour) ' + JSON.stringify(result.start) )
-		ok(result.start.minute === 00, 'Test Result - (hour) ' + JSON.stringify(result.start) )
-		
-		ok(result.text == '12:00', result.text )
-		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,10,12,00));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
-	}
+  if(result){
+    ok(result.start, JSON.stringify(result.start) )
+    ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+    ok(result.start.hour === 12, 'Test Result - (hour) ' + JSON.stringify(result.start) )
+    ok(result.start.minute === 00, 'Test Result - (hour) ' + JSON.stringify(result.start) )
+    
+    ok(result.text == '12:00', result.text )
+    
+    var resultMoment = moment(result.startDate);
+    var expectMoment = moment(new Date(2012,7,10,12,00));
+    ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+  }
 	
 });
 			
