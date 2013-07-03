@@ -8,13 +8,26 @@ A natural language date parser in Javascript.
 
 ### Node.js
 
-    npm install chrono-node
+```
+npm install chrono-node
+```
 
 ### Browser
 
-    <script src="https://raw.github.com/berryboy/chrono/master/chrono.min.js"></script>
+Chrono requires Moment.js , you need to download Moment.js with Bower.  
+
+```
+bower install
+```
+
+```html
+<script src="./components/moment/moment.js"></script>
+<script src="./chrono.min.js"></script>
+```
 
 ## USAGE
+
+You may read the tests in this repo to see how to use.
 
 ### Basic
 

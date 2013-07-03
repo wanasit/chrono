@@ -32,7 +32,7 @@
   else{
     //Node JS
     var fs = require('fs');
-    var moment = require('./moment');
+    var moment = require('moment');
     
     eval(fs.readFileSync(__dirname + '/parsers/ParseResult.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/Parser.js')+'');

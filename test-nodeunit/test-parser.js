@@ -1,5 +1,5 @@
 var util = require('util');
-var moment = require('../moment');
+var moment = require('moment');
 var chrono = require('../chrono');
 
 exports.MonthNameLittleEndian = function(test){
