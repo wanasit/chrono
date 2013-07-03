@@ -8,8 +8,9 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /((this|last|next)\s*)?(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)(\W|$)/i;
-  var DAYS_OFFSET = { 'sunday': 0, 'monday': 1,'tuesday': 2,'wednesday': 3,'thursday': 4,'friday': 5,'saturday': 6,}
+  var PATTERN = /(\W|^)((\,|\(|\（)\s*)?((this|last|next)\s*)?(Sunday|Sun|Monday|Mon|Tuesday|Wednesday|Wed|Thursday|Thur|Friday|Fri|Saturday|Sat)(\s*(\,|\)|\）))?(\W|$)/i;
+  var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
+  'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
   
   /**
@@ -45,10 +46,11 @@
       }
 
       var text = matchedTokens[0];
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[4].length);
+      index = index + matchedTokens[1].length;
+      text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[9].length - matchedTokens[1].length);
       
-      var prefix = matchedTokens[2];
-      var dayOfWeek = matchedTokens[3];
+      var prefix = matchedTokens[5];
+      var dayOfWeek = matchedTokens[6];
       
       dayOfWeek = dayOfWeek.toLowerCase();
       var offset = DAYS_OFFSET[dayOfWeek];
@@ -84,7 +86,8 @@
         start:{
           day:date.date(),
           month:date.month(),
-          year:date.year()
+          year:date.year(),
+          impliedComponents: ['year', 'month', 'day'],
         }
       })
     };

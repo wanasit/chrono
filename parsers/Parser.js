@@ -90,46 +90,73 @@
      */
     parser.mergeOverlapResult = function(text, result1, result2){
       
-      if(result1.end || result2.end) return null;
       if(result2.index < result1.index){
         var tmp = result1; result1 = result2; result2 = tmp;
       }
       
       var begin = result1.index + result1.text.length;
       var end   = result2.index; 
+      if(end < begin &&  result1.index < result2.index && begin < result2.index + result2.text.length){
+        var mergedIndex = result1.index;
+        var mergedText = text.substring(result1.index, result2.index+result2.text.length);
+        var impliedComponents1 = result1.start.impliedComponents || [];
+        var impliedComponents2 = result2.start.impliedComponents || [];
+        
+        if(impliedComponents1.length < impliedComponents2.length){
+          var tmp = result1; result1 = result2; result2 = tmp;
+          impliedComponents1 = result1.start.impliedComponents || [];
+          impliedComponents2 = result2.start.impliedComponents || [];
+        }
+        
+        if(impliedComponents1.indexOf('day') < 0 || impliedComponents1.indexOf('month') < 0 || impliedComponents1.indexOf('year') < 0)
+          return;
+        
+        
+        return new chrono.ParseResult({
+          referenceDate:result1.ref,
+          index :mergedIndex,
+          start :result2.start,
+          end   :result2.end,
+          text:mergedText,
+          referenceDate :result1.referenceDate,
+        });
+      }
+      
       var textBetween = text.substring(begin,end);
+      
       var OVERLAP_PATTERN = /^\s*(to|\-)\s*$/i;
-
       if(!textBetween.match(OVERLAP_PATTERN)) return null;
       var mergedText = result1.text + textBetween + result2.text;
       
+      var components1 = new Object(result1.start);
+      var components2 = new Object(result2.start);
       var impliedComponents1 = result1.start.impliedComponents || [];
       var impliedComponents2 = result2.start.impliedComponents || [];
-
+      
       impliedComponents1.forEach(function(component) {
-        if(!result2.start.impliedComponents || result2.start.impliedComponents.indexOf(component) < 0){
-          result1.start[component] = result2.start[component]
-          var index = result1.start.impliedComponents.indexOf(component);
-          result1.start.impliedComponents.splice(index, 1);
+        if(!components2.impliedComponents || components2.impliedComponents.indexOf(component) < 0){
+          components1[component] = components2[component]
+          var index = components1.impliedComponents.indexOf(component);
+          components1.impliedComponents.splice(index, 1);
         } 
       });
-      
+
       impliedComponents2.forEach(function(component) {
-        if(!result1.start.impliedComponents || result1.start.impliedComponents.indexOf(component) < 0){
-          result2.start[component] = result1.start[component]
-          var index = result1.start.impliedComponents.indexOf(component);
-          result2.start.impliedComponents.splice(index, 1);
+        if(!components1.impliedComponents || components1.impliedComponents.indexOf(component) < 0){
+          components2[component] = components1[component]
+          var index = components2.impliedComponents.indexOf(component);
+          components2.impliedComponents.splice(index, 1);
         }
       });
       
       
-      if(moment(result2.start.date()).diff(moment(result1.start.date())) > 0){ 
+      if(moment(components2.date()).diff(moment(components1.date())) > 0){ 
         
         return new chrono.ParseResult({
           referenceDate:result1.ref,
           index :result1.index,
-          start :result1.start,
-          end   :result2.start,
+          start :components1,
+          end   :components2,
           text:mergedText,
           referenceDate :result1.referenceDate,
         });
@@ -139,8 +166,8 @@
         return new chrono.ParseResult({
           referenceDate:result1.ref,
           index :result1.index,
-          start :result2.start,
-          end   :result1.start,
+          start :components2,
+          end   :components1,
           text  :mergedText,
           referenceDate :result1.referenceDate,
         });
@@ -156,8 +183,8 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,2})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
-      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to)?\s*([0-9]{1,2})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
@@ -170,19 +197,15 @@
       var hour = matchedTokens[2];
       hour = parseInt(hour);
       
-      if(matchedTokens[10]){
-        //AM & PM  
-        if(hour > 12) return null;
-        if(matchedTokens[10].toLowerCase() == "pm"){
-         hour += 12;
-        }
-      }
-      
       if(matchedTokens[5]){
         
         minute = matchedTokens[5];
         minute = parseInt(minute);
         if(minute >= 60) return null;
+        
+      }else if(hour > 100){
+        minute = hour%100;
+        hour   = (hour - minute)/100;
       }
       
       if(matchedTokens[8]){
@@ -191,6 +214,15 @@
         second = parseInt(second);
         if(second >= 60) return null;
       }
+      
+      if(matchedTokens[10]){
+        //AM & PM  
+        if(hour > 12) return null;
+        if(matchedTokens[10].toLowerCase() == "pm"){
+         hour += 12;
+        }
+      }
+      
       
       result.text = result.text + matchedTokens[0];
       
@@ -215,7 +247,6 @@
 
         return new chrono.ParseResult(result);
       }
-      
       //Time in RANGE format. 
       // Calculate the END point...
       var minute = 0;
@@ -223,26 +254,31 @@
       var hour = matchedTokens[2];
       hour = parseInt(hour);
       
+      if(matchedTokens[5]){
+        
+        minute = matchedTokens[5];
+        minute = parseInt(minute);
+        if(minute >= 60) return null;
+        
+      }else if(hour > 100){
+        
+        minute = hour%100;
+        hour   = (hour - minute)/100;
+      }
+
+      if(matchedTokens[8]){
+        
+        second = matchedTokens[8];
+        second = parseInt(second);
+        if(second >= 60) return null;
+      }
+      
       if(matchedTokens[10]){
         //AM & PM  
         if(hour > 12) return null;
         if(matchedTokens[10].toLowerCase() == "pm"){
          hour += 12;
         }
-      }
-      
-      if(matchedTokens[5]){
-        
-        minute = matchedTokens[5];
-        minute = parseInt(minute);
-        if(minute >= 60) return null;
-      }
-      
-      if(matchedTokens[8]){
-        
-        second = matchedTokens[8];
-        second = parseInt(second);
-        if(second >= 60) return null;
       }
       
       result.text = result.text + matchedTokens[0];

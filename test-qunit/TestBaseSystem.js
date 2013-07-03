@@ -165,6 +165,7 @@ test("Test - Day of Week Parser + Concordance Checking", function() {
 		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 13, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.text == 'monday', 'Test Result - (TEXT) ' +  result.text)
 		ok(result.concordance == "...latest and best tweets on #monday. Read what people are sayi...", 'Test Result - (Concordance) ' 
 		  + JSON.stringify(result.concordance)  +'/'+text)
 		

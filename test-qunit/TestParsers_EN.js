@@ -978,6 +978,34 @@ test("Test - Date + Time", function() {
 		ok(Math.abs(resultMoment.diff(expectMoment)) < 1000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
 	}
 	
+	
+	var text = "monday 4/29/2013 630-930am";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 3, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 29, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.hour == 6, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+		ok(result.start.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+		
+		ok(result.end.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+  	ok(result.end.month == 3, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+  	ok(result.end.day == 29, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+  	ok(result.end.hour == 9, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+  	ok(result.end.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.end) )
+  	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
+		
+		ok(result.text == 'monday 4/29/2013 630-930am', result.text )
+		
+		var resultMoment = moment(result.startDate);
+		var expectMoment = moment(new Date(2013,3,29,6,30,0));
+		ok(Math.abs(resultMoment.diff(expectMoment)) < 1000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+	}
 });
 
 test("Test - General", function() {
@@ -1153,6 +1181,10 @@ test("Test - General", function() {
     var expectMoment = moment(new Date(2012,7,10,12,00));
     ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
   }
+	
+	
+	
+	
 	
 });
 			

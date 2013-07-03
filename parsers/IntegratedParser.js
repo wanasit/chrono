@@ -35,7 +35,7 @@
 			var currenParser = parsers[currentParserIndex];
 			var result = currenParser.exec();
 
-			if(result) insertResult (results, result);
+			if(result) this.insertResult (results, result);
 			
 			if(currenParser.finished()){
 				currentParserIndex++;
@@ -43,52 +43,64 @@
 			return result;
   	}
   	
+  	
+  	parser.insertResult = function(results, newResult){
+
+  		//Find the place in the array that this result is belong to
+  		// Change to binary search later.
+  		var index = 0;
+  		while(index < results.length && results[index].index < newResult.index) index++;
+
+  		if(index < results.length){
+
+  			//Checking conflict with other results on the RIGHT side
+  			var overlapped_index = index;
+  			while(overlapped_index < results.length && results[overlapped_index].index < newResult.index + newResult.text.length)
+  			{
+    			//Try to merge the result first...
+          var mergedResult = this.mergeOverlapResult(text, results[overlapped_index], newResult);
+          if( mergedResult ) newResult = mergedResult;
+          
+          //Comapare length
+  				// If old value is longer, discard the newResult. 
+  				// SKIP the remaining operation
+  				if( !mergedResult && results[overlapped_index].text.length >= newResult.text.length) return;
+  				
+    			overlapped_index++;
+  			}
+
+  			results.splice(index,overlapped_index-index);
+  		}
+
+  		if(index-1 >= 0){
+
+        //Checking conflict with other results on the LEFT side
+  			var oldResult = results[index-1];
+  			if(newResult.index < (oldResult.index + oldResult.text.length)){
+          
+          //Try to merge the result first...
+          var mergedResult = this.mergeOverlapResult(text, oldResult, newResult);
+          if( mergedResult ) newResult = mergedResult;
+          
+  				//Comapare length
+  				// If old value is longer, discard the newResult.
+  				// If new value is longer, discard the oldResult.
+  				if( !mergedResult && oldResult.text.length >= newResult.text.length) return;
+  				else{
+  					results.splice(index-1,1);
+  					index = index-1;
+  				}
+  			}
+  		}
+
+  		results.splice(index,0,newResult);
+  		return results;
+  	}
+  	
+  	
   	return parser;
   }
   
-  function insertResult(results, newResult){
-		
-		//Find the place in the array that this result is belong to
-		// Change to binary search later.
-		var index = 0;
-		while(index < results.length && results[index].index < newResult.index) index++;
-		
-		if(index < results.length){
-			
-			//Checking conflict with other results on the RIGHT side
-			var overlapped_index = index;
-			while(overlapped_index < results.length && results[overlapped_index].index < newResult.index + newResult.text.length)
-			{
-  			//Comapare length
-				// If old value is longer, discard the newResult. 
-				// SKIP the remaining operation
-				if( results[overlapped_index].text.length >= newResult.text.length) return;
-  			overlapped_index++;
-			}
-			
-			results.splice(index,overlapped_index-index);
-		}
-
-		if(index-1 >= 0){
-      
-      //Checking conflict with other results on the LEFT side
-			var oldResult = results[index-1];
-			if(newResult.index < (oldResult.index + oldResult.text.length)){
-
-				//Comapare length
-				// If old value is longer, discard the newResult.
-				// If new value is longer, discard the oldResult.
-				if(oldResult.text.length >= newResult.text.length) return;
-				else{
-					results.splice(index-1,1);
-					index = index-1;
-				}
-			}
-		}
-
-		results.splice(index,0,newResult);
-		return results;
-	}
   
   chrono.IntegratedParser = IntegratedParser;
   
