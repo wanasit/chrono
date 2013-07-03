@@ -1,4 +1,4 @@
-cat ./moment.js >> tmp
+
 cat ./chrono.js >> tmp
 cat ./parsers/ParseResult.js >> tmp
 cat ./parsers/Parser.js >> tmp

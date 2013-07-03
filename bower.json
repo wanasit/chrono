@@ -1,0 +1,13 @@
+{
+  "name": "chrono",
+  "version": "0.0.3",
+  "main": "chrono.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "moment": "~2.0.0"
+  }
+}
