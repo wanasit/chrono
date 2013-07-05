@@ -42,6 +42,7 @@
         return;
       }
       
+      var impliedComponents = null;
       var text = matchedTokens[0].toLowerCase();
       text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
       
@@ -60,6 +61,7 @@
         days_ago = parseInt(days_ago);
         date = moment(ref).clone().add('d',-days_ago);
       }else{
+        impliedComponents = ['year', 'month', 'day'];
         date = moment(ref).clone();
         text = '';
       }
@@ -71,7 +73,8 @@
         start:{
           day:date.date(),
           month:date.month(),
-          year:date.year()
+          year:date.year(),
+          impliedComponents: impliedComponents,
         }
       })
       

@@ -44,7 +44,6 @@
         finished = true;
         return;
       }
-
       var text = matchedTokens[0];
       index = index + matchedTokens[1].length;
       text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[9].length - matchedTokens[1].length);
