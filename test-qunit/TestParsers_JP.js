@@ -16,9 +16,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,10,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -36,9 +36,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,9,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,9,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 });
@@ -60,9 +60,9 @@ test("Test - Standard", function() {
 		ok(result.start.month == 2, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 31, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,2,31,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,2,31,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -81,9 +81,9 @@ test("Test - Standard", function() {
 		ok(result.start.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 3, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,8,3,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,8,3,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "初めて動画が投稿されたのは同年4月23日である";
@@ -101,9 +101,9 @@ test("Test - Standard", function() {
 		ok(result.start.month == 3, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 23, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,3,23,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,3,23,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -123,8 +123,8 @@ test("Test - Standard", function() {
 		ok(result.start.day == 1, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		ok(result.start.hour == 11, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2007,5,1,11));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2007,5,1,11));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 });

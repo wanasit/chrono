@@ -16,9 +16,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,10,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -37,9 +37,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 11, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,11,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,11,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
   
 	var text = "ไปทำงานเมื่อวานนี้";
@@ -57,9 +57,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,9,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,9,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -78,9 +78,9 @@ test("Test - General", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 5, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,5,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,5,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -103,9 +103,9 @@ test("Test - Month Name Little Endian", function() {
 		ok(result.start.month == 2, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 28, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(1989,2,28,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(1989,2,28,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -125,9 +125,9 @@ test("Test - Month Name Little Endian", function() {
 		ok(result.start.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 22, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,8,22,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,8,22,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "ไปญี่ปุ่นวันที่ 22 - 30 ก.ย.";
@@ -145,9 +145,9 @@ test("Test - Month Name Little Endian", function() {
 		ok(result.start.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 22, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,8,22,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,8,22,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 		
 		
 		ok(result.end, JSON.stringify(result.end) )
@@ -155,9 +155,9 @@ test("Test - Month Name Little Endian", function() {
 		ok(result.end.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.end.day == 30, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.endDate);
-		var expectMoment = moment(new Date(2012,8,30,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.endDate);
+		var expectDate = (new Date(2012,8,30,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 		
 	}
 	
@@ -182,9 +182,9 @@ test("Test - Day of Week",function() {
 		ok(result.start.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 4, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,8,4,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,8,4,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -203,9 +203,9 @@ test("Test - Day of Week",function() {
 		ok(result.start.month == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 11, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,8,11,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,8,11,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -224,9 +224,9 @@ test("Test - Day of Week",function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 28, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,28,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,28,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 })

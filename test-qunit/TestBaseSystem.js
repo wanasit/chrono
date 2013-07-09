@@ -82,9 +82,9 @@ test("Test - Day of Week Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,6,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,6,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -102,9 +102,9 @@ test("Test - Day of Week Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 14, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,14,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,14,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "Friday.";
@@ -121,9 +121,9 @@ test("Test - Day of Week Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,10,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 });
@@ -147,9 +147,9 @@ test("Test - Day of Week Parser + Concordance Checking", function() {
 		  + JSON.stringify(result.concordance) +'/'+text)
 		
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,6,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,6,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "The latest and best tweets on #monday. Read what people are saying and join the conversation.";
@@ -170,9 +170,9 @@ test("Test - Day of Week Parser + Concordance Checking", function() {
 		  + JSON.stringify(result.concordance)  +'/'+text)
 		
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,13,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,13,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -195,9 +195,9 @@ test("Test - Day of Week Parser + Concordance Checking", function() {
 		  + JSON.stringify(result.concordance)  +'/'+text)
 		
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,13,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,13,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 
@@ -219,9 +219,9 @@ test("Test - International Standard Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,9,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,9,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	
@@ -239,9 +239,9 @@ test("Test - International Standard Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,7,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,7,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "2012-8-10";
@@ -258,9 +258,9 @@ test("Test - International Standard Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,10,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 });
@@ -281,9 +281,9 @@ test("Test - Integrated Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,6,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,6,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 	var text = "Let's finish this before this 2012-8-9.";
@@ -300,9 +300,9 @@ test("Test - Integrated Parser", function() {
 		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
-		var resultMoment = moment(result.startDate);
-		var expectMoment = moment(new Date(2012,7,9,12));
-		ok(Math.abs(resultMoment.diff(expectMoment)) < 100000, 'Test result.startDate ' + resultMoment +'/' +expectMoment)
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,9,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
 });
