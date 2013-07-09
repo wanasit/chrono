@@ -1,5 +1,5 @@
 // chrono.js
-// version : 0.0.3
+// version : 0.0.4
 // author : Wanasit T.
 // license : MIT
 (function () {
@@ -26,7 +26,7 @@
   
   if(typeof exports == 'undefined'){
     //Browser Code
-    var moment = window.moment;
+    var moment = moment || window.moment;
     window.chrono = chrono;
   }
   else{
