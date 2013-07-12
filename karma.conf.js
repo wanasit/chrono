@@ -15,6 +15,8 @@ files = [
   'chrono.js',
   'parsers/*.js',
   'parsers/*/*.js',
+  'improvers/*.js',
+  'improvers/*/*.js',
   'test-qunit/Test*.js',
 ];
 

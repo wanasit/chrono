@@ -6,14 +6,16 @@
   
   var chrono = {}
   chrono.parsers = {};
-  chrono.importantdays = {};
-
+  chrono.improvers = {};
+  
   chrono.parse = function(text, referrenceDate, option) {
     
     var parser = this.IntegratedParser(text, referrenceDate, option);
     parser.execAll();
     
-    return parser.results();
+    var results = this.IntegratedImprove(text, parser.results());
+    
+    return results;
   }
   
   chrono.parseDate = function(text, referrenceDate, option) {
@@ -34,24 +36,31 @@
     var fs = require('fs');
     var moment = require('./moment');
     
+    function loadModuleDirs(dir){
+      
+      var module_dirs = fs.readdirSync(__dirname+'/'+dir);
+      module_dirs = module_dirs.filter(function(name) { return !name.match(/\./ ) })
+      for(var i in module_dirs){
+        var dirname = module_dirs[i];
+        if(typeof(dirname) == 'function') continue;
+        var parser_files = fs.readdirSync( __dirname +'/'+dir + '/' + dirname);
+
+        for(var j in parser_files){
+          var filename = parser_files[j];
+          if(typeof(filename) == 'function') continue;
+          if(!filename.match(/\.js$/)) continue;
+          eval(fs.readFileSync(__dirname + '/'+dir+'/'+dirname+'/'+filename)+'');
+        }
+      }
+    }
+      
     eval(fs.readFileSync(__dirname + '/parsers/ParseResult.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/Parser.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/IntegratedParser.js')+'');
+    loadModuleDirs('parsers');
     
-    var parser_dirs = fs.readdirSync(__dirname+'/parsers');
-    parser_dirs = parser_dirs.filter(function(name) { return !name.match(/\./ ) })
-    for(var i in parser_dirs){
-      var dirname = parser_dirs[i];
-			if(typeof(dirname) == 'function') continue;
-      var parser_files = fs.readdirSync( __dirname + '/parsers/'+dirname);
-      
-      for(var j in parser_files){
-        var filename = parser_files[j];
-				if(typeof(filename) == 'function') continue;
-        if(!filename.match(/\.js$/)) continue;
-        eval(fs.readFileSync(__dirname + '/parsers/'+dirname+'/'+filename)+'');
-      }
-    }
+    eval(fs.readFileSync(__dirname + '/improvers/IntegratedImprove.js')+'');
+    loadModuleDirs('improvers');
     module.exports = chrono;
   }
   
