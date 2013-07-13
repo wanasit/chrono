@@ -6,9 +6,10 @@
       "type" : "git",
       "url"  : "https://github.com/berryboy/chrono.git"
     },
-  "version": "0.0.5",
+  "version": "0.1.0",
   "directories" : { 
-      "parser"        : "./parser", 
+      "improvers"     : "./improvers", 
+      "parsers"       : "./parsers", 
       "test-nodeunit" : "./test-nodeunit",
       "test-qunit"    : "./test-qunit"
     },
