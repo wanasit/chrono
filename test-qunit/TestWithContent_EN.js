@@ -119,9 +119,21 @@ test("Test - Email 2", function() {
 });
 
 
-
-
-
+test("Test - Email 3", function() {
+	
+	var text =　"Hey, 11:15pm at hq works great. I'm at if you need it. See you tomorrow!";
+	
+	var results = chrono.parse(text, new Date(2013,3,30, 22, 04));
+	
+	var result = results[0];
+	if(result){
+		ok(result.start.year == 2013);
+		ok(result.start.month == 4);
+		ok(result.start.day   == 1); 
+		ok(result.start.hour   == 23);
+		ok(result.start.minute   == 15);
+	}
+});
 
 　
 
