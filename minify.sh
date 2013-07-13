@@ -7,6 +7,8 @@ cat ./parsers/IntegratedParser.js >> tmp
 cat ./parsers/EN/* >> tmp
 cat ./parsers/TH/* >> tmp
 cat ./parsers/JP/* >> tmp
+cat ./improvers/IntegratedImprove.js >> tmp
+cat ./improvers/ALL/* >> tmp
 echo '})()' >> tmp
 
 uglifyjs -o ./chrono.min.js < tmp
