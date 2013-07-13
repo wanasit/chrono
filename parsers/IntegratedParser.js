@@ -57,14 +57,10 @@
   			var overlapped_index = index;
   			while(overlapped_index < results.length && results[overlapped_index].index < newResult.index + newResult.text.length)
   			{
-    			//Try to merge the result first...
-          var mergedResult = this.mergeOverlapResult(text, results[overlapped_index], newResult);
-          if( mergedResult ) newResult = mergedResult;
-          
           //Comapare length
   				// If old value is longer, discard the newResult. 
   				// SKIP the remaining operation
-  				if( !mergedResult && results[overlapped_index].text.length >= newResult.text.length) return;
+  				if(results[overlapped_index].text.length >= newResult.text.length) return;
   				
     			overlapped_index++;
   			}
@@ -78,14 +74,10 @@
   			var oldResult = results[index-1];
   			if(newResult.index < (oldResult.index + oldResult.text.length)){
           
-          //Try to merge the result first...
-          var mergedResult = this.mergeOverlapResult(text, oldResult, newResult);
-          if( mergedResult ) newResult = mergedResult;
-          
   				//Comapare length
   				// If old value is longer, discard the newResult.
   				// If new value is longer, discard the oldResult.
-  				if( !mergedResult && oldResult.text.length >= newResult.text.length) return;
+  				if( oldResult.text.length >= newResult.text.length) return;
   				else{
   					results.splice(index-1,1);
   					index = index-1;

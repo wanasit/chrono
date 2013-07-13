@@ -1024,7 +1024,7 @@ test("Test - Date + Time", function() {
   	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
 		
 		ok(result.text == 'monday 4/29/2013 630-930am', result.text )
-		
+		ok(result.concordance )
 		var resultDate = result.startDate;
 		var expectDate = new Date(2013,3,29,6,30,0);
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, 'Test result.startDate ' + resultDate +'/' +expectDate)

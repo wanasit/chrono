@@ -58,9 +58,9 @@
     eval(fs.readFileSync(__dirname + '/parsers/Parser.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/IntegratedParser.js')+'');
     loadModuleDirs('parsers');
-    
     eval(fs.readFileSync(__dirname + '/improvers/IntegratedImprove.js')+'');
     loadModuleDirs('improvers');
+    
     module.exports = chrono;
   }
   
