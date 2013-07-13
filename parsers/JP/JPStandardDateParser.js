@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(同|((平成)?([0-9０-９]{2,4}))年)?\s*([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+  var PATTERN = /((同|((平成)?([0-9０-９]{2,4})))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
   
   function cleanZengakuNumber(str){
 		
@@ -63,17 +63,17 @@
   		var date = null;
   		text = matchedTokens[0];
   		
-  		var months = matchedTokens[5];
+  		var months = matchedTokens[6];
   		months = cleanZengakuNumber(months);
   		months = parseInt(months);
       if(!months || months == NaN) return null;
       
-  		var days = matchedTokens[6];
+  		var days = matchedTokens[7];
   		days = cleanZengakuNumber(days);
   		days = parseInt(days);
   		if(!days || days == NaN) return null;
 
-  		var years = matchedTokens[4];
+  		var years = matchedTokens[5];
   		if(years){
   		  years = cleanZengakuNumber(years);
     		years = parseInt(years);
@@ -81,7 +81,7 @@
   		
   		if(years && years !== NaN){
 				
-				if(matchedTokens[3]=='平成'){
+				if(matchedTokens[4]=='平成'){
 					years = years + 1989;
 				}
 				else if(years < 100){

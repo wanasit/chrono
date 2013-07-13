@@ -1,5 +1,5 @@
 
-test("Test - General", function() {
+test("Test - General (JP)", function() {
 	
 	var text = "今日感じたことを忘れずに";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -43,7 +43,7 @@ test("Test - General", function() {
 	
 });
 
-test("Test - Standard", function() {
+test("Test - Standard (JP)", function() {
 	
 	var text = "主な株主（2012年3月31日現在）";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -94,7 +94,7 @@ test("Test - Standard", function() {
 	var result = results[0];
 	if(result){
 	  
-		ok(result.text == "4月23日", result.text )
+		ok(result.text == "同年4月23日", result.text )
 		
 		ok(result.start, JSON.stringify(result.start) )
 		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
@@ -106,6 +106,27 @@ test("Test - Standard", function() {
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
+	var text = "初めて動画が投稿されたのは同 4月23日である";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+	if(result){
+	  
+		ok(result.text == "4月23日", result.text )
+		
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 3, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 23, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,3,23,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+
 	
 	var text = "平成18年6月1日午前11時から帝国ホテルで行われた、";
 	var results = chrono.parse(text, new Date(2012,7,10));
