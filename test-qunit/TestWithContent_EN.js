@@ -97,8 +97,8 @@ test("Test - Email 2", function() {
 	
 	var results = chrono.parse(text, new Date(2013,7,10));
 	
-	ok(results.length == 1, 'Unexpected Count' )
-	ok(results.length == 1, JSON.stringify( results ))
+	//ok(results.length == 1, 'Unexpected Count' )
+	//ok(results.length == 1, JSON.stringify( results ))
 
 	var result = results[0];
 	if(result){
@@ -113,6 +113,8 @@ test("Test - Email 2", function() {
 		ok(result.end.day   == 29) 
 		ok(result.end.hour   == 9)
 		ok(result.end.minute   == 30)
+		
+		ok(result.text == 'Mon Apr 29, 2013 6:30am ? 9:30am', result.text)
 	}
 });
 

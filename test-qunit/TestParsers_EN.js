@@ -1023,7 +1023,6 @@ test("Test - Date + Time", function() {
   	ok(result.end.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.end) )
   	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
 		
-		ok(result.text == 'monday 4/29/2013 630-930am', result.text )
 		ok(result.concordance )
 		var resultDate = result.startDate;
 		var expectDate = new Date(2013,3,29,6,30,0);
