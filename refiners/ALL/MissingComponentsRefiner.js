@@ -6,7 +6,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  function MissingComponentsImprove (text, results, opt) {
+  function MissingComponentsRefine (text, results, opt) {
     
     if(results.length < 2) return results;
     
@@ -44,6 +44,10 @@
     return results;
   }
   
-  chrono.improvers.MissingComponentsImprove = MissingComponentsImprove;
+  chrono.refiners.MissingComponentsRefiner = {
+    refine: MissingComponentsRefine,
+    order: 500
+  }
+  
 })();
 

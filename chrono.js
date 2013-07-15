@@ -6,14 +6,12 @@
   
   var chrono = {}
   chrono.parsers = {};
-  chrono.improvers = {};
+  chrono.refiners = {};
   
   chrono.parse = function(text, referrenceDate, option) {
     
-    var parser = this.IntegratedParser(text, referrenceDate, option);
-    parser.execAll();
-    
-    var results = this.IntegratedImprove(text, parser.results());
+    var results = this.integratedParse(text, referrenceDate, option);
+    var results = this.integratedRefine(text, results);
     
     return results;
   }
@@ -56,10 +54,10 @@
       
     eval(fs.readFileSync(__dirname + '/parsers/ParseResult.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/Parser.js')+'');
-    eval(fs.readFileSync(__dirname + '/parsers/IntegratedParser.js')+'');
+    eval(fs.readFileSync(__dirname + '/parsers/IntegratedParsing.js')+'');
     loadModuleDirs('parsers');
-    eval(fs.readFileSync(__dirname + '/improvers/IntegratedImprove.js')+'');
-    loadModuleDirs('improvers');
+    eval(fs.readFileSync(__dirname + '/refiners/IntegratedRefinement.js')+'');
+    loadModuleDirs('refiners');
     
     module.exports = chrono;
   }

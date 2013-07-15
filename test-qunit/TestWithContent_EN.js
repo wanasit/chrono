@@ -135,5 +135,40 @@ test("Test - Email 3", function() {
 	}
 });
 
+
+test("Test - Email 4", function() {
+	
+	var text =　"Begin forwarded message:\nFrom> Date: April 30, 2013, 20:38:26 EDT\nTo:\nSubject: Re: Advice\n\nThanks! Friday lunch would be wonderful--12:30?";
+	
+	var results = chrono.parse(text, new Date(2013,3,30, 22, 04));
+
+	ok(results.length==3, results)
+	
+	var result = results[0];
+	if(result){
+		ok(result.text == 'April 30, 2013, 20:38:26', result.text +' != '+'April 30, 2013, 20:38:26')
+	}
+	
+	
+	var result = results[1];
+	if(result){
+		ok(result.text == 'Friday', result.text +'!= Friday')
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 4, result.start.month);
+		ok(result.start.day    == 3, result.start.day); 
+		ok(result.start.hour   == 12);
+		ok(result.start.minute == 30);
+	}
+	
+	var result = results[2];
+	if(result){
+    ok(result.text == '12:30', result.text +'!= 12:30')
+	}
+});
+
+
+
+
+
 　
 

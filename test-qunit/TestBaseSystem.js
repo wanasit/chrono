@@ -265,16 +265,14 @@ test("Test - International Standard Parser", function() {
 	
 });
 
-test("Test - Integrated Parser", function() {
+test("Test - Integrated Parsing", function() {
 	
 	var text = "Let's finish this before this Monday.";
-	var parser = chrono.IntegratedParser(text, new Date(2012,7,8));
-	ok(parser, parser)
-	
-	parser.execAll();
-	ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+	var results = chrono.integratedParse(text, new Date(2012,7,8));
+  
+  ok(results.length == 1, JSON.stringify( results ) )
 
-	var result = parser.results()[0];
+	var result = results[0];
 	if(result){
 		ok(result.start, JSON.stringify(result.start) )
 		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
@@ -287,13 +285,10 @@ test("Test - Integrated Parser", function() {
 	}
 	
 	var text = "Let's finish this before this 2012-8-9.";
-	var parser = chrono.IntegratedParser(text, new Date(2012,7,8));
-	ok(parser, parser)
-	
-	parser.execAll();
-	ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+	var results = chrono.integratedParse(text, new Date(2012,7,8));
 
-	var result = parser.results()[0];
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
 	if(result){
 		ok(result.start, JSON.stringify(result.start) )
 		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
