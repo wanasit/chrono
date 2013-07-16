@@ -35,26 +35,28 @@
   		var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[5].length);
   		var orginalText = text;
   		index += matchedTokens[1].length;
-  		
-  		var date = null;
-  		var years = matchedTokens[4];
-  		
-  		years = parseInt(years);
-  		if(years < 100){
-  		  if(years > 50){
-  		    years = years + 2500 - 543; //BE
-  		  }else{
-  		    years = years + 2000; //AD
-  		  }
-  			
-  			text = matchedTokens[2] +'/'+ matchedTokens[3] + '/' +years;
-			}
-			
-      date = moment(text,'MM/DD/YYYY');
-      if(!date || (date.format('D') != matchedTokens[3])) {
-        date = moment(text,'DD/MM/YYYY');
-        
-        if(!date || (date.format('D') != matchedTokens[2])) return null;
+      
+      var date = null;
+      var years = matchedTokens[4];
+      var month = matchedTokens[2];
+      var day   = matchedTokens[3];
+      
+      month = parseInt(month);
+      day = parseInt(day);
+      years = parseInt(years);
+      if(years < 100){
+        if(years > 50){
+          years = years + 2500 - 543; //BE
+        }else{
+          years = years + 2000; //AD
+        }
+      }
+      
+      text = month+'/'+day+'/'+years
+      date = moment(text,'M/D/YYYY');
+      if(!date || (date.date() != day)) {
+        date = moment(text,'D/M/YYYY');
+        if(!date || (date.date() != month)) return null;
       }
       
       return new chrono.ParseResult({

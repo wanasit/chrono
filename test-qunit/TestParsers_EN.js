@@ -131,6 +131,25 @@ test("Test - Slash", function() {
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 		
 	}
+	
+	var text = "The Deadline is 05/06/13";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 4, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2013,4,6,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+	
+	
   
 });
 
