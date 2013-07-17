@@ -40,6 +40,8 @@
           result.start[component] = refResult.start[component]
         } 
       }); 
+      
+      result.start.impliedComponents = impliedComponents;
     }
     return results;
   }
