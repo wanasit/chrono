@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(\W|^)([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4}|[0-9]{2})(\W|$)/i;
+  var PATTERN = /(\W|^)(Sun|Sunday|Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thur|Thursday|Fri|Friday|Sat|Saturday)?\s*\,?\s*([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4}|[0-9]{2})(\W|$)/i;
   
   function SlashParser(text, ref, opt){
     
@@ -32,14 +32,14 @@
   		if(matchedTokens == null)return;
   		
   		
-  		var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[5].length);
-  		var orginalText = text;
-  		index += matchedTokens[1].length;
+      var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[6].length);
+      var orginalText = text;
+      index += matchedTokens[1].length;
       
       var date = null;
-      var years = matchedTokens[4];
-      var month = matchedTokens[2];
-      var day   = matchedTokens[3];
+      var years = matchedTokens[5];
+      var month = matchedTokens[3];
+      var day   = matchedTokens[4];
       
       month = parseInt(month);
       day = parseInt(day);

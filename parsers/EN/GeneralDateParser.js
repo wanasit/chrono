@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*)(\W|$)/i;
+  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|(^|\s)[^A-Za-z]*(AM|PM))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object
@@ -44,7 +44,7 @@
       
       var impliedComponents = null;
       var text = matchedTokens[0].toLowerCase();
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[7].length);
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[9].length);
       
       var date = null;
       var lowercase_text = text.toLowerCase();
@@ -61,6 +61,7 @@
         days_ago = parseInt(days_ago);
         date = moment(ref).clone().add('d',-days_ago);
       }else{
+        while(full_text.charAt(index) == ' ') index++;
         impliedComponents = ['year', 'month', 'day'];
         date = moment(ref).clone();
         text = '';

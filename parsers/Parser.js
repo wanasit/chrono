@@ -183,7 +183,7 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /\s*(at|,)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /\s*(at|from|,)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to|\W)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
@@ -218,8 +218,11 @@
       if(matchedTokens[10]){
         //AM & PM  
         if(hour > 12) return null;
+        if(matchedTokens[10].toLowerCase() == "am"){
+          if(hour == 12) hour = 0;
+        }
         if(matchedTokens[10].toLowerCase() == "pm"){
-         hour += 12;
+          if(hour != 12) hour += 12;
         }
       }
       
@@ -276,15 +279,22 @@
       if(matchedTokens[10]){
         //AM & PM  
         if(hour > 12) return null;
+        if(matchedTokens[10].toLowerCase() == "am"){
+          if(hour == 12) {
+            hour = 0;
+            if(!result.end) result.end = new chrono.DateComponents(result.start);
+            result.end.day += 1;
+          }
+        }
         if(matchedTokens[10].toLowerCase() == "pm"){
-         hour += 12;
+          if(hour != 12) hour += 12;
         }
       }
       
       result.text = result.text + matchedTokens[0];
       
       if(!result.end){
-        result.end = JSON.parse(JSON.stringify(result.start));
+        result.end = new chrono.DateComponents(result.start);
         result.end.hour = hour;
         result.end.minute = minute;
         result.end.second = second;
