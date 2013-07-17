@@ -168,6 +168,36 @@ test("Test - Email 4", function() {
 
 
 
+test("Test - Email 5", function() {
+	
+	var text =　"Lets pencil in Tuesday at kings fish house at 12?";
+	var results = chrono.parse(text, new Date(2013, 4, 30, 19, 22));
+
+	ok(results.length==1, results)
+	
+	var result = results[0];
+	if(result){
+		ok(result.text == 'Tuesday', result.text +' != '+'Tuesday')
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 5, result.start.month);
+		ok(result.start.day    == 4, result.start.day);
+	}
+	
+	var text =　"@gmail.com> wrote: yes. my friday looks good. same location?";
+	var results = chrono.parse(text, new Date(2013, 5, 6, 9, 2));
+
+	ok(results.length==1, results)
+	
+	var result = results[0];
+	if(result){
+		ok(result.text == 'friday', result.text +' != '+'Tuesday')
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 5, result.start.month);
+		ok(result.start.day    == 7, result.start.day);
+	}
+	
+});
+
 
 
 　

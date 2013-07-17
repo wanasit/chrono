@@ -183,8 +183,8 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /\s*(at)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
-      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /\s*(at|,)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to|\W)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);

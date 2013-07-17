@@ -1265,5 +1265,27 @@ test("Test - General", function() {
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
   }
 	
+	
+	var text = "The Deadline is 11:00pm    ";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+  if(result){
+    ok(result.start, JSON.stringify(result.start) )
+    ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+    ok(result.start.hour === 23, 'Test Result - (hour) ' + JSON.stringify(result.start) )
+    ok(result.start.minute === 00, 'Test Result - (hour) ' + JSON.stringify(result.start) )
+    
+    ok(result.text == '11:00pm', result.text )
+    
+    var resultDate = (result.startDate);
+    var expectDate = (new Date(2012,7,10,23,00));
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+  }
+	
 });
 			
