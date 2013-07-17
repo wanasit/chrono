@@ -211,6 +211,19 @@ test("Test - Email 5", function() {
 		ok(result.start.minute    == 30, result.start.day);
 	}
 	
+	var text =　"6 PM on 7/26";
+	var results = chrono.parse(text, new Date(2013, 3, 6, 9, 2));
+  
+	var result = results[0];
+	if(result){
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 6, result.start);
+		ok(result.start.day    == 26, result.start);
+		ok(result.start.hour  == 18, result.start);
+		ok(result.start.minute    == 00, result.start);
+	}
+	
+	
 });
 
 

@@ -224,8 +224,10 @@
         if(matchedTokens[10].toLowerCase() == "pm"){
           if(hour != 12) hour += 12;
         }
+        
+        result.start.meridiem = matchedTokens[10].toLowerCase();
       }
-      
+      if(hour >= 12) result.start.meridiem = 'pm';
       
       result.text = result.text + matchedTokens[0];
       
@@ -289,7 +291,21 @@
         if(matchedTokens[10].toLowerCase() == "pm"){
           if(hour != 12) hour += 12;
         }
+        
+        if(!result.start.meridiem){
+          if(matchedTokens[10].toLowerCase() == "am"){
+            if(result.start.hour == 12) result.start.hour = 0;
+          }
+          if(matchedTokens[10].toLowerCase() == "pm"){
+            if(result.start.hour != 12) result.start.hour += 12;
+          }
+          
+          result.start.meridiem = matchedTokens[10].toLowerCase();
+          result.start.impliedComponents = result.start.impliedComponents || [];
+          result.start.impliedComponents.push('meridiem');
+        }
       }
+      
       
       result.text = result.text + matchedTokens[0];
       
@@ -303,6 +319,9 @@
         result.end.minute = minute;
         result.end.second = second;
       }
+      
+      if(matchedTokens[10]) result.end.meridiem = matchedTokens[10].toLowerCase();
+      if(hour >= 12) result.end.meridiem = 'pm';
       
       return new chrono.ParseResult(result);
     }

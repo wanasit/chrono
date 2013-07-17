@@ -46,6 +46,9 @@
     this.minute = components.minute;
     this.second = components.second;
     
+    if(components.meridiem)
+      this.meridiem = components.meridiem.toLowerCase(); // am/pm
+    
     if(components.impliedComponents && components.impliedComponents.length > 0){
       this.impliedComponents = components.impliedComponents
     }

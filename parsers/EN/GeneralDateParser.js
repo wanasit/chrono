@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|(^|\s)[^A-Za-z]*(AM|PM))(\W|$)/i;
+  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|([0-9]{1,2})\s*(AM|PM))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object

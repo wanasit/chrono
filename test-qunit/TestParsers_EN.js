@@ -1102,6 +1102,28 @@ test("Test - Date + Time", function() {
   	ok(result.end.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.end) )
   	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
   }
+  
+  var text = "7/2/2013 1-230 pm";
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  
+  var result = results[0];
+  if(result){
+    ok(result.start, JSON.stringify(result.start) )
+    ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 6, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 2, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+    ok(result.start.hour == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+    ok(result.start.minute == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+    ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+    
+    ok(result.end.year  == 2013, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+  	ok(result.end.month == 6, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+  	ok(result.end.day   == 2, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+    ok(result.end.hour == 14, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+  	ok(result.end.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.end) )
+  	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
+  }
 });
 
 test("Test - General", function() {
@@ -1390,9 +1412,19 @@ test("Test - General2", function() {
   var result = chrono.parse(text)[0];
   ok(result.text == text, result.text)
   
+  var text = "6 pm";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
   var text = "11.1pm";
   var result = chrono.parse(text)[0];
   ok(result.text == text, result.text)
+  
+  var text = "that I need to know or am I covered?";
+  var result = chrono.parse(text);
+  ok(result.length == 0, result)
+  
+  
   
   /*
   */
