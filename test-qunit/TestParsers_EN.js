@@ -1288,4 +1288,50 @@ test("Test - General", function() {
   }
 	
 });
-			
+
+test("Test - General2", function() {
+  
+  var text = "monday 4/29/2013 630-930am";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "wednesday 5/1/2013 1115am";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "friday 5/3/2013 1230pm";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "sunday 5/6/2013  750am-910am";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "monday 5/13/2013 630-930am";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "wednesday 5/15/2013 1030am";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "friday 6/21/2013 2:30";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "tuesday 7/2/2013 1-230 pm";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "Monday, 6/24/2013, 7:00pm - 8:30pm";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "Thursday6/20/2013 from 7:00 PM to 10:00 PM";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  /*
+  */
+  
+});
