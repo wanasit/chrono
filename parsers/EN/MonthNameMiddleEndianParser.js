@@ -59,7 +59,8 @@
   				text = text.replace(matchedTokens[12], '');
   				text = text.replace(matchedTokens[11], years);
   			}
-
+        
+        text = text.replace(matchedTokens[8],parseInt(matchedTokens[8])+'');
   			date  = moment(text,'MMMM DD YYYY');
         if(!date) return null;
 			}
@@ -125,7 +126,7 @@
         
 			}else{
 			  
-			  if(date.format('D') != matchedTokens[8]) return null;
+			  if(date.format('D') != parseInt(matchedTokens[8]) + '') return null;
 
         return new chrono.ParseResult({
           referenceDate:ref,

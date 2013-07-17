@@ -1408,6 +1408,11 @@ test("Test - General2", function() {
   var result = chrono.parse(text)[0];
   ok(result.text == text, result.text)
   
+  var text = "Wednesday, July 03, 2013 2pm";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  
   var text = "6pm";
   var result = chrono.parse(text)[0];
   ok(result.text == text, result.text)
