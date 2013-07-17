@@ -196,6 +196,21 @@ test("Test - Email 5", function() {
 		ok(result.start.day    == 7, result.start.day);
 	}
 	
+	var text =　"Great! I have your call confirmed for Mon, 5/20 at 4:30pm. You can reach at ";
+	var results = chrono.parse(text, new Date(2013, 3, 6, 9, 2));
+
+	ok(results.length==1, results)
+	
+	var result = results[0];
+	if(result){
+		ok(result.text == 'Mon, 5/20 at 4:30pm', result.text +' != '+'Mon, 5/20 at 4:30pm')
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 4, result.start.month);
+		ok(result.start.day    == 20, result.start.day);
+		ok(result.start.hour  == 16, result.start.month);
+		ok(result.start.minute    == 30, result.start.day);
+	}
+	
 });
 
 
