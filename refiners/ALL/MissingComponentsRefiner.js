@@ -33,7 +33,6 @@
       
       if(!result.start.hour) impliedComponents.push('hour')
       if(!result.start.minute) impliedComponents.push('minute')
-      if(!result.start.second) impliedComponents.push('second')
       
       impliedComponents.forEach(function(component) {
         if(refImpliedComponents.indexOf(component) < 0 && refResult.start[component]){
