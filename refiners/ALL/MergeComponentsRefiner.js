@@ -22,14 +22,19 @@
         continue;
       }
       
-      if(result.start.hour === undefined && refResult.start.hour !== undefined){
-        if(refResult.start.hour === undefined && result.start.hour !== undefined) {
+      if(result.start.hour === undefined){
+        if(refResult.start.hour === undefined) { 
           new_results.push(result);
           continue;
         }
         var dateComponents = new Object(result.start);
         var timeComponents = new Object(refResult.start);
       }else{
+        if(refResult.start.hour !== undefined) { 
+          new_results.push(result);
+          continue;
+        }
+        
         var timeComponents = new Object(result.start);
         var dateComponents= new Object(refResult.start);
       }

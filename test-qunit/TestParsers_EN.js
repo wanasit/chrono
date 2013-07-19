@@ -1497,6 +1497,31 @@ test("Test - Date + Time", function() {
     ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
   }
   
+  var text = "Tuesday, Jul 9, 5:30pm - 6:00pm (EDT) > Wednesday, Jul 10, 12:00";
+  var results = chrono.parse(text, new Date(2012,7,10));
+  ok(results.length == 2, JSON.stringify( results ) )
+  
+  var result = results[0];
+  if(result){
+    ok(result.start, JSON.stringify(result) )
+    ok(result.text == 'Tuesday, Jul 9, 5:30pm - 6:00pm (EDT)', JSON.stringify(result) )
+    ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 6, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+    ok(result.start.hour == 17, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+    ok(result.start.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+    ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+    
+    ok(result.end.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.end.month == 6, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.end.day == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+    ok(result.end.hour == 18, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+    ok(result.end.minute == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+    ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+  }
+  
+  
+  
 });
 
 test('Test - Timezone', function() {
