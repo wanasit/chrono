@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|([0-9]{1,2})\s*(AM|PM))(\W|$)/i;
+  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|([0-9]{1,2}\s*\W?\s*)?([0-9]{1,2})\s*(AM|PM))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object
@@ -44,14 +44,16 @@
       
       var impliedComponents = null;
       var text = matchedTokens[0].toLowerCase();
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[9].length);
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
       
       var date = null;
       var lowercase_text = text.toLowerCase();
       if(lowercase_text == 'today')
         date = moment(ref).clone();
-      else if(lowercase_text == 'tomorrow')
-        date = moment(ref).clone().add('d',1);
+      else if(lowercase_text == 'tomorrow'){
+        if(moment(ref).hour() < 4) date = moment(ref).clone().hour(6);
+        else date = moment(ref).clone().add('d',1);
+      }
       else if(lowercase_text == 'yesterday')
         date = moment(ref).clone().add('d',-1);
       else if(lowercase_text.match('last'))
