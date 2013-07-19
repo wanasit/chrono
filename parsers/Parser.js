@@ -326,6 +326,40 @@
       return new chrono.ParseResult(result);
     }
     
+    
+    parser.extractTimezone = function(text, result) {
+      
+      var PATTERN = /^\s*(GMT|UTC)(\+|\-)(\d{1,2})(\d{2})/;
+      if(text.length <= result.index + result.text.length) return null;
+      text = text.substr(result.index + result.text.length);
+      
+      var matchedTokens = text.match(PATTERN);
+      if(matchedTokens){
+        var timezoneOffset = parseInt(matchedTokens[3])*60 + parseInt(matchedTokens[4])
+        var timezoneOffset = parseInt(matchedTokens[2] + timezoneOffset)*(-1);
+        if(result.end) result.end.timezoneOffset = timezoneOffset;
+        result.start.timezoneOffset = timezoneOffset;
+        result.text += matchedTokens[0];
+        text = text.substr(matchedTokens[0].length);
+      }
+      
+      var PATTERN = /^\s*\(?([A-Z]{3,4})\)?/;
+      var matchedTokens = text.match(PATTERN);
+      if(matchedTokens){
+        var timezoneAbbr = matchedTokens[1];
+        if(result.start.timezoneOffset === undefined){
+          //var timezoneOffset = ??
+          //if(result.end) result.end.timezoneOffset = timezoneOffset;
+          //result.start.timezoneOffset = timezoneOffset;
+          //result.text += matchedTokens[0];
+        }
+        
+        result.text += matchedTokens[0];
+      }
+      
+      return result;
+    }
+    
     /**
      * Parser.extractConcordance
      * @param  { String }   text - Orginal text
@@ -388,6 +422,11 @@
   		  if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
   		    var timedResult = this.extractTime(text, result);
   		    result = timedResult || result; 
+  		  }
+  		  
+  		  if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
+  		    var resultWithTimezone = this.extractTimezone(text, result);
+  		    result = resultWithTimezone || result; 
   		  }
   		  
   		  if(result.start.hour === undefined)

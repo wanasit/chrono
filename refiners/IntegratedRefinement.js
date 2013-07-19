@@ -13,12 +13,15 @@
     var orderedRefiners = {};
     for(var name in chrono.refiners){
       var refiner = chrono.refiners[name];
-      orderedRefiners[refiner.order] = refiner;
+      var order = refiner.order || 0;
+      orderedRefiners[order] = orderedRefiners[order] || [];
+      orderedRefiners[order].push(refiner);
     }
     
     for(var order in orderedRefiners){
-      var refiner = orderedRefiners[order];
-      results = refiner.refine(text, results, opt);
+      orderedRefiners[order].forEach(function(refiner) {
+        results = refiner.refine(text, results, opt);
+      })
     }
     
     return results;

@@ -45,6 +45,7 @@
     this.hour = components.hour;
     this.minute = components.minute;
     this.second = components.second;
+    this.timezoneOffset = components.timezoneOffset;
     
     if(components.meridiem)
       this.meridiem = components.meridiem.toLowerCase(); // am/pm
@@ -58,6 +59,12 @@
       dateMoment.hours(this.hour);
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
+      
+      if(this.timezoneOffset){
+        var timezoneOffset = this.timezoneOffset - new Date().getTimezoneOffset();
+        dateMoment.add('minutes', timezoneOffset);
+      }
+      
       return dateMoment.toDate();
     }
   }
