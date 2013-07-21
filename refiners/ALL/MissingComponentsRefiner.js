@@ -41,6 +41,28 @@
       }); 
       
       result.start.impliedComponents = impliedComponents;
+      
+      //Tune day of week
+      if(impliedComponents.indexOf('day') >= 0 && 
+        impliedComponents.indexOf('month') >= 0 &&
+        result.start.dayOfWeek !== undefined && impliedComponents.indexOf('dayOfWeek') < 0){
+        
+        var date = moment(result.start.date());
+        date.day(result.start.dayOfWeek)
+        result.start.day = date.date();
+        result.start.month = date.month();
+      }
+      
+      if(result.start.dayOfWeek === undefined || impliedComponents.indexOf('dayOfWeek') >= 0){
+        
+        var date = moment(result.start.date());
+        result.start.dayOfWeek = date.day();
+        
+        if(impliedComponents.indexOf('dayOfWeek') < 0){
+          result.start.impliedComponents.push('dayOfWeek')
+        }
+      }
+      
     }
     return results;
   }

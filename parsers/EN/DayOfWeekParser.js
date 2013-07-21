@@ -88,7 +88,7 @@
           month:date.month(),
           year:date.year(),
           dayOfWeek: offset,
-          impliedComponents: [],
+          impliedComponents: ['day','month','year'],
         }
       })
     };

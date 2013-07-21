@@ -229,10 +229,10 @@ test("Test - Email 5", function() {
 	var result = results[1];
 	if(result){
 		ok(result.start.year == 2013);
-		ok(result.start.month  == 5, result.start);
-		ok(result.start.day    == 22, result.start);
-		ok(result.start.hour   == 15, result.start);
-		ok(result.start.minute == 00, result.start);
+		ok(result.start.month  == 5, JSON.stringify(result.start));
+		ok(result.start.day    == 22, JSON.stringify(result.start));
+		ok(result.start.hour   == 15, JSON.stringify(result.start));
+		ok(result.start.minute == 00, JSON.stringify(result.start));
 	}
 });
 
