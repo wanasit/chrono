@@ -220,6 +220,7 @@ test("Test - Little Endian with Month's name", function() {
 		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 		ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.dayOfWeek == 2, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		
 		ok(result.text == 'Tuesday, 10 January', result.text)
 		var resultDate = (result.startDate);
@@ -578,7 +579,7 @@ test("Test - Middle Endian with Month's name", function() {
 		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 		ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-		
+    ok(result.start.dayOfWeek == 2, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		ok(result.text == 'Tuesday, January 10', result.text)
 		
 		var resultDate = (result.startDate);
@@ -598,6 +599,7 @@ test("Test - Middle Endian with Month's name", function() {
 		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 		ok(result.start.month == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.dayOfWeek == 2, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		ok(result.start.impliedComponents, 'Implied Components - ' + JSON.stringify(result.start.impliedComponents) )
 		
 		ok(result.text == 'Tue, January 10', result.text)
@@ -875,6 +877,7 @@ test("Test - Date + Time", function() {
 		ok(result.start.hour == 10, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
 		ok(result.start.minute == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
 		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+		ok(result.start.dayOfWeek == 5, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		
 		ok(result.text == 'Friday at 10 am', result.text )
 		
@@ -898,7 +901,7 @@ test("Test - Date + Time", function() {
 		ok(result.start.hour == 10, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
 		ok(result.start.minute == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
 		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
-		
+		ok(result.start.dayOfWeek == 5, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		ok(result.text == 'Friday at 10am', result.text )
 		
 		var resultDate = (result.startDate);
@@ -920,7 +923,7 @@ test("Test - Date + Time", function() {
 		ok(result.start.hour == 10, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
 		ok(result.start.minute == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
 		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
-		
+		ok(result.start.dayOfWeek == 1, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		ok(result.text == 'Monday at 10 am', result.text )
 		
 		var resultDate = (result.startDate);
@@ -966,7 +969,7 @@ test("Test - Date + Time", function() {
 		ok(result.start.hour == 9, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
 		ok(result.start.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
 		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
-		
+		ok(result.start.dayOfWeek == 5, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		ok(result.text == 'last Friday at 9.30', result.text )
 		
 		var resultDate = (result.startDate);
@@ -997,7 +1000,6 @@ test("Test - Date + Time", function() {
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
-	
 	var text = "The Deadline is Aug 16 2012 22:48:58 xx";
 	var results = chrono.parse(text, new Date(2012,7,10));
 	
@@ -1020,6 +1022,24 @@ test("Test - Date + Time", function() {
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
 	
+	var text = "On Jun 26, 2013, at 12:40 AM";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 26, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.hour == 0, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+		ok(result.start.minute == 40, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+		
+		ok(result.text == 'Jun 26, 2013, at 12:40 AM', result.text )
+	}
+	
+	
 	
 	var text = "monday 4/29/2013 630-930am";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -1034,6 +1054,7 @@ test("Test - Date + Time", function() {
 		ok(result.start.hour == 6, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
 		ok(result.start.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
 		ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+		ok(result.start.dayOfWeek == 1, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		
 		ok(result.end.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.end) )
   	ok(result.end.month == 3, 'Test Result - (Month) ' + JSON.stringify(result.end) )
@@ -1041,6 +1062,7 @@ test("Test - Date + Time", function() {
   	ok(result.end.hour == 9, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
   	ok(result.end.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.end) )
   	ok(result.end.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.end) )
+		ok(result.end.dayOfWeek == 1, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
 		
 		ok(result.concordance )
 		var resultDate = result.startDate;
@@ -1064,6 +1086,7 @@ test("Test - Date + Time", function() {
     ok(result.start.hour == 12, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
     ok(result.start.minute == 30, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
     ok(result.start.second == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+    ok(result.start.dayOfWeek == 2, 'Test Result - (Day of Week) ' + JSON.stringify(result.start) )
   }
   
   var text = "tuesday 6/25/2013 12:30 am";

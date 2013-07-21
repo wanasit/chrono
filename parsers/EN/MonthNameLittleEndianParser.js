@@ -8,6 +8,9 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
+  var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
+    'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
+  
   var regFullPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-)?\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\s*[0-9]{2,4})(\s*BE)?(\W|$)/i;
   var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-)?\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\W|$)/i;  
 
@@ -27,6 +30,7 @@
       
       var impliedComponents = [];
       var date = null;
+      var dayOfWeek = null;
       text = text.substr(index);
       originalText = text;
       
@@ -54,80 +58,85 @@
         text = text.replace(matchedTokens[10], ' ' + years);
         date = moment(text,'DD MMMM YYYY');
         if(!date) return null;
-    }else{
-    
-      matchedTokens = text.match(regShortPattern);
-      if(!matchedTokens) return null;
-    
-      //Short Pattern (without years)
-      var text = matchedTokens[0];
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
-      originalText = text;
-      if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
-      if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
-      
-      date  = moment(text,'DD MMMM');
-      if(!date) return null;
-      
-      //Find the most appropriated year
-      impliedComponents.push('year')
-      date.year(moment(ref).year());
-      var nextYear = date.clone().add('y',1);
-      var lastYear = date.clone().add('y',-1);
-      if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
-      	date = nextYear;
-      }
-      else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
-      	date = lastYear;
-      }
-    }
-    // Text text can be 'range' value. Such as '12 - 13 January 2012'
-    if(matchedTokens[7]){
-      var endDay = parseInt(matchedTokens[7]);
-      var startDay = parseInt(matchedTokens[3]);
-      var endDate = date.clone();
-      
-      date.date(startDay);
-      endDate.date(endDay);
-      
-      //Check leap day or impossible date
-      if(date.format('D') != matchedTokens[3]) return null;
-      if(endDate.format('D') != matchedTokens[7]) return null;
-      
-      return new chrono.ParseResult({
-        referenceDate:ref,
-        text:originalText,
-        index:index,
-        start:{
-          day:date.date(),
-          month:date.month(),
-          year:date.year(),
-          impliedComponents: impliedComponents
-        },
-        end:{
-          day:endDate.date(),
-          month:endDate.month(),
-          year:endDate.year(),
-          impliedComponents: impliedComponents
+      }else{
+        
+        matchedTokens = text.match(regShortPattern);
+        if(!matchedTokens) return null;
+        
+        //Short Pattern (without years)
+        var text = matchedTokens[0];
+        text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
+        originalText = text;
+        if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
+        if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
+        
+        date  = moment(text,'DD MMMM');
+        if(!date) return null;
+        
+        //Find the most appropriated year
+        impliedComponents.push('year')
+        date.year(moment(ref).year());
+        var nextYear = date.clone().add('y',1);
+        var lastYear = date.clone().add('y',-1);
+        if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
+        	date = nextYear;
         }
-      });
-    }
-    else{
-      //Check leap day or impossible date
-      if(date.format('D') != matchedTokens[3]) return null;
-    
-      return new chrono.ParseResult({
-        referenceDate:ref,
-        text:originalText,
-        index:index,
-        start:{
-          day:date.date(),
-          month:date.month(),
-          year:date.year(),
-          impliedComponents: impliedComponents
+        else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){	
+        	date = lastYear;
         }
-      });
-  	}
+      }
+      
+      //Day of week
+      if(matchedTokens[2]) dayOfWeek =  DAYS_OFFSET[matchedTokens[2].toLowerCase()]
+      
+      // Text text can be 'range' value. Such as '12 - 13 January 2012'
+      if(matchedTokens[7]){
+        var endDay = parseInt(matchedTokens[7]);
+        var startDay = parseInt(matchedTokens[3]);
+        var endDate = date.clone();
+        
+        date.date(startDay);
+        endDate.date(endDay);
+        
+        //Check leap day or impossible date
+        if(date.format('D') != matchedTokens[3]) return null;
+        if(endDate.format('D') != matchedTokens[7]) return null;
+        
+        return new chrono.ParseResult({
+          referenceDate:ref,
+          text:originalText,
+          index:index,
+          start:{
+            day:date.date(),
+            month:date.month(),
+            year:date.year(),
+            dayOfWeek: dayOfWeek,
+            impliedComponents: impliedComponents
+          },
+          end:{
+            day:endDate.date(),
+            month:endDate.month(),
+            year:endDate.year(),
+            impliedComponents: impliedComponents
+          }
+        });
+      }
+      else{
+        //Check leap day or impossible date
+        if(date.format('D') != matchedTokens[3]) return null;
+        return new chrono.ParseResult({
+          referenceDate:ref,
+          text:originalText,
+          index:index,
+          start:{
+            day:date.date(),
+            month:date.month(),
+            year:date.year(),
+            dayOfWeek: dayOfWeek,
+            impliedComponents: impliedComponents
+          }
+        });
+      }
   };
   
   //Override for day of the week suffix - MM dd (Thuesday) 

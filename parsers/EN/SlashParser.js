@@ -8,6 +8,9 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
+  var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
+    'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
+  
   var PATTERN = /(\W|^)(Sun|Sunday|Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thur|Thursday|Fri|Friday|Sat|Saturday)?\s*\,?\s*([0-9]{1,2})\/([0-9]{1,2})(\/([0-9]{4}|[0-9]{2}))?(\W|$)/i;
   
   function SlashParser(text, ref, opt){
@@ -34,12 +37,18 @@
   		
       var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[7].length);
       var orginalText = text;
+      
       index += matchedTokens[1].length;
       
       var date = null;
       var years = matchedTokens[6] || moment(ref).year() + '';
       var month = matchedTokens[3];
       var day   = matchedTokens[4];
+      
+      
+      //Day of week
+      var dayOfWeek = null;
+      if(matchedTokens[2]) dayOfWeek =  DAYS_OFFSET[matchedTokens[2].toLowerCase()]
       
       month = parseInt(month);
       day = parseInt(day);
@@ -66,7 +75,8 @@
         start:{
           day:date.date(),
           month:date.month(),
-          year:date.year()
+          year:date.year(),
+          dayOfWeek: dayOfWeek,
         }
       })
     };

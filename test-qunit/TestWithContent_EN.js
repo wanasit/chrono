@@ -223,7 +223,17 @@ test("Test - Email 5", function() {
 		ok(result.start.minute    == 00, result.start);
 	}
 	
-	
+	var text =　"Date: Wed, Jun 19, 2013 at 12:43 AM\nSubject: Mixology Class\n...is holding mixology classes at Roon this Saturday from 3 to 5 PM.";
+	var results = chrono.parse(text, new Date(2013, 5, 19, 9, 2));
+  
+	var result = results[1];
+	if(result){
+		ok(result.start.year == 2013);
+		ok(result.start.month  == 5, result.start);
+		ok(result.start.day    == 22, result.start);
+		ok(result.start.hour   == 15, result.start);
+		ok(result.start.minute == 00, result.start);
+	}
 });
 
 

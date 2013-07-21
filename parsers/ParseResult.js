@@ -46,6 +46,7 @@
     this.minute = components.minute;
     this.second = components.second;
     this.timezoneOffset = components.timezoneOffset;
+    this.dayOfWeek = components.dayOfWeek;
     
     if(components.meridiem)
       this.meridiem = components.meridiem.toLowerCase(); // am/pm
@@ -54,15 +55,22 @@
       this.impliedComponents = components.impliedComponents
     }
     
-    this.date = function() { 
+    this.isCertain = function(component) {
+      return this.impliedComponents ? this.impliedComponents.indexOf(component) < 0 : true;
+    }
+    
+    this.date = function(timezoneOffset) { 
+      
+      timezoneOffset = timezoneOffset || new Date().getTimezoneOffset()
+      timezoneOffset -= this.timezoneOffset || new Date().getTimezoneOffset();
+      
       var dateMoment = moment(new Date(this.year,this.month,this.day));
       dateMoment.hours(this.hour);
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
       
       if(this.timezoneOffset){
-        var timezoneOffset = this.timezoneOffset - new Date().getTimezoneOffset();
-        dateMoment.add('minutes', timezoneOffset);
+        dateMoment.add('minutes', -timezoneOffset);
       }
       
       return dateMoment.toDate();
@@ -75,7 +83,6 @@
     this.startDate = this.start.date();
     
     if(result.end){
-      
       this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
     }

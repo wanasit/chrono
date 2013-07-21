@@ -58,7 +58,8 @@
         start:{
           day:date.date(),
           month:date.month(),
-          year:date.year()
+          year:date.year(),
+          dayOfWeek:date.day()
         }
       })
     };

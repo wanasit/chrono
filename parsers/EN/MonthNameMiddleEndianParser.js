@@ -14,6 +14,8 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
+  var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
+    'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
   var regFullPattern  = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?(,)?(\s*[0-9]{4})(\s*BE)?/i;
   var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?(Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|Sep|September|Oct|October|Nov|November|Dec|December)\s*(([0-9]{1,2})(st|nd|rd|th)?\s*(to|\-)\s*)?([0-9]{1,2})(st|nd|rd|th)?([^0-9]|$)/i;
@@ -39,6 +41,7 @@
       
       var impliedComponents = [];
       var date = null;
+      var dayOfWeek = null;
       text = text.substr(index);
       originalText = text;
       
@@ -93,16 +96,20 @@
   			}
 			}
 			
-			if(matchedTokens[4]){
-			  
-			  var endDay = parseInt(matchedTokens[8]);
-			  var startDay = parseInt(matchedTokens[5]);
-			  var endDate = date.clone();
-			  
-			  date.date(startDay);
-			  endDate.date(endDay);
-			  
-			  //Check leap day or impossible date
+			//Day of week
+			
+      if(matchedTokens[2]) dayOfWeek =  DAYS_OFFSET[matchedTokens[2].toLowerCase()]
+      
+      if(matchedTokens[4]){
+        
+        var endDay = parseInt(matchedTokens[8]);
+        var startDay = parseInt(matchedTokens[5]);
+        var endDate = date.clone();
+        
+        date.date(startDay);
+        endDate.date(endDay);
+        
+        //Check leap day or impossible date
         if(date.format('D') != matchedTokens[5]) return null;
         if(endDate.format('D') != matchedTokens[8]) return null;
         
@@ -114,6 +121,7 @@
             day:date.date(),
             month:date.month(),
             year:date.year(),
+            dayOfWeek:dayOfWeek,
             impliedComponents: impliedComponents
           },
           end:{
@@ -125,8 +133,8 @@
         });
         
 			}else{
-			  
-			  if(date.format('D') != parseInt(matchedTokens[8]) + '') return null;
+        
+        if(date.format('D') != parseInt(matchedTokens[8]) + '') return null;
 
         return new chrono.ParseResult({
           referenceDate:ref,
@@ -136,6 +144,7 @@
             day:date.date(),
             month:date.month(),
             year:date.year(),
+            dayOfWeek:dayOfWeek,
             impliedComponents: impliedComponents
           }
         });
@@ -152,11 +161,14 @@
       var DAY_OF_WEEK_SUFFIX_PATTERN = /(\,|\(|\s)*(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)(\,|\)|\s)*/i;
       
       if(text.length <= result.index + result.text.length) return null;
-        
+      
       var suffix_text = text.substr(result.index + result.text.length, 15);
       var matchedTokens = suffix_text.match(DAY_OF_WEEK_SUFFIX_PATTERN);
       if( matchedTokens && suffix_text.indexOf(matchedTokens[0]) == 0){
         result.text = result.text + matchedTokens[0];
+        
+        var dayOfWeek = DAYS_OFFSET[matchedTokens[2].toLowerCase()]
+        result.start.dayOfWeek = dayOfWeek;
       }
       
       if(!result.start.impliedComponents || result.start.impliedComponents.indexOf('year') < 0)

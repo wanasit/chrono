@@ -31,8 +31,8 @@
       var impliedComponents = result.start.impliedComponents || [];
       var refImpliedComponents = refResult.start.impliedComponents || [];
       
-      if(!result.start.hour) impliedComponents.push('hour')
-      if(!result.start.minute) impliedComponents.push('minute')
+      if(result.start.hour === undefined) impliedComponents.push('hour')
+      if(result.start.minute === undefined) impliedComponents.push('minute')
       
       impliedComponents.forEach(function(component) {
         if(refImpliedComponents.indexOf(component) < 0 && refResult.start[component]){
