@@ -183,14 +183,14 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
-      var TO_SUFFIX_PATTERN = /\s*(\-|\~|\〜|to|\W)?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /^\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var TO_SUFFIX_PATTERN = /^\s*(\-|\~|\〜|to|\W)\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
       
       var matchedTokens = text.match(SUFFIX_PATTERN);
-      if( !matchedTokens || text.indexOf(matchedTokens[0]) != 0) return null;
+      if( !matchedTokens ) return null;
       
       var minute = 0;
       var second = 0;
@@ -240,7 +240,7 @@
       
       text = text.substr(matchedTokens[0].length);
       var matchedTokens = text.match(TO_SUFFIX_PATTERN)
-      if( !matchedTokens || text.indexOf(matchedTokens[0]) != 0) {
+      if( !matchedTokens ) {
         
         //Time in POINT format.
         // Return

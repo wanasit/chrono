@@ -11,7 +11,7 @@
   var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
-  var PATTERN = /(\W|^)(Sun|Sunday|Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thur|Thursday|Fri|Friday|Sat|Saturday)?\s*\,?\s*([0-9]{1,2})\/([0-9]{1,2})(\/([0-9]{4}|[0-9]{2}))?(\W|$)/i;
+  var PATTERN = /(\W|^)(Sun|Sunday|Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thur|Thursday|Fri|Friday|Sat|Saturday)?\s*\,?\s*([0-9]{1,2})[\/\.]([0-9]{1,2})([\/\.]([0-9]{4}|[0-9]{2}))?(\W|$)/i;
   
   function SlashParser(text, ref, opt){
     
