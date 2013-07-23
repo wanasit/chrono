@@ -173,7 +173,7 @@ test("Test - Email 5", function() {
 	var text =　"Lets pencil in Tuesday at kings fish house at 12?";
 	var results = chrono.parse(text, new Date(2013, 4, 30, 19, 22));
 
-	ok(results.length==1, results)
+	ok(results.length==2, JSON.stringify(results))
 	
 	var result = results[0];
 	if(result){
@@ -181,6 +181,12 @@ test("Test - Email 5", function() {
 		ok(result.start.year == 2013);
 		ok(result.start.month  == 5, result.start.month);
 		ok(result.start.day    == 4, result.start.day);
+	}
+	
+	var result = results[1];
+	if(result){
+		ok(result.text == 'at 12', result.text +' != '+'at 12')
+		ok(result.start.hour == 12, result.start.day);
 	}
 	
 	var text =　"@gmail.com> wrote: yes. my friday looks good. same location?";
@@ -199,7 +205,7 @@ test("Test - Email 5", function() {
 	var text =　"Great! I have your call confirmed for Mon, 5/20 at 4:30pm. You can reach at ";
 	var results = chrono.parse(text, new Date(2013, 3, 6, 9, 2));
 
-	ok(results.length==1, results)
+	ok(results.length==1, JSON.stringify(results))
 	
 	var result = results[0];
 	if(result){

@@ -183,7 +183,7 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /^\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
+      var SUFFIX_PATTERN = /^\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       var TO_SUFFIX_PATTERN = /^\s*(\-|\~|\〜|to|\W)\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       
       if(text.length <= result.index + result.text.length) return null;
@@ -195,7 +195,15 @@
       var minute = 0;
       var second = 0;
       var hour = matchedTokens[2];
-      hour = parseInt(hour);
+      if(hour.toLowerCase() == 'noon'){
+        result.start.meridiem = 'pm'
+        hour = 12;
+      }else if(hour.toLowerCase() == 'midnight'){
+        result.start.meridiem = 'am'
+        hour = 0;
+      }
+      else
+        hour = parseInt(hour);
       
       if(matchedTokens[5]){
         

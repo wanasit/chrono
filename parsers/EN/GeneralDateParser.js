@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|([0-9]{1,2}\s*\W?\s*)?([0-9]{1,2})\s*(AM|PM))(\W|$)/i;
+  var PATTERN = /(today|tonight|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{1,2}).*|([0-9]{1,2}\s*\W?\s*)?([0-9]{1,2})\s*(AM|PM)|at\s*([0-9]{1,2}|noon|midnight))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object
@@ -44,12 +44,13 @@
       
       var impliedComponents = null;
       var text = matchedTokens[0].toLowerCase();
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[11].length);
       
       var date = null;
       var lowercase_text = text.toLowerCase();
-      if(lowercase_text == 'today')
+      if(lowercase_text == 'today' || lowercase_text == 'tonight'){
         date = moment(ref).clone();
+      }
       else if(lowercase_text == 'tomorrow'){
         if(moment(ref).hour() < 4) date = moment(ref).clone().hour(6);
         else date = moment(ref).clone().add('d',1);
@@ -95,12 +96,20 @@
           result.start.impliedComponents = ['hour','minute','second'];
           result = new chrono.ParseResult(result);
           
-        }else if(resultWithTime.start.hour < 12){ //Today's 0am - 12am
+        }else if(resultWithTime.start.hour < 6){ //Today's 0am - 12am
           
           date.add('d',1);
           result.start.day = date.date()
           result.start.month = date.month()
           result.start.year = date.year()
+          result = new chrono.ParseResult(result);
+          
+        }else if(resultWithTime.start.hour < 12 && !resultWithTime.start.meridiem){ //Today's 0am - 12am
+          
+          result.start.hour = resultWithTime.start.hour + 12;
+          result.start.meridiem = 'pm';
+          result.start.impliedComponents = result.start.impliedComponents || [];
+          result.start.impliedComponents.push('meridiem')
           result = new chrono.ParseResult(result);
         }
       }

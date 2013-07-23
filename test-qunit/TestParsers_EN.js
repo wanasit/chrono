@@ -1616,9 +1616,49 @@ test("Test - General2", function() {
   var result = chrono.parse(text);
   ok(result.length == 0, result)
   
+  var text = "at 12";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "at noon";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  ok(result.start.hour == 12, JSON.stringify(result.start))
+  ok(result.start.hour == 12, JSON.stringify(result.start))
+  
+  var text = "at midnight";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  
+  var text = "tonight";
+  var result = chrono.parse(text, new Date(2012, 1, 1))[0];
+  ok(result.text == text, result.text)
+  ok(result.start.hour == 0, result.text)
+  ok(result.start.year == 2012, result.text)
+  ok(result.start.month == 1, result.text)
+  ok(result.start.day == 2, result.text)
+  
+  var text = "tonight 8pm";
+  var result = chrono.parse(text, new Date(2012, 1, 1))[0];
+  ok(result.text == text, result.text)
+  ok(result.start.hour  == 20, result.text)
+  ok(result.start.year  == 2012, result.text)
+  ok(result.start.month == 1, result.text)
+  ok(result.start.day   == 1, result.text)
+  ok(result.start.meridiem   == 'pm', result.text)
+  
+  var text = "tonight at 8";
+  var result = chrono.parse(text, new Date(2012, 1, 1))[0];
+  ok(result.text == text, result.text)
+  ok(result.start.hour  == 20, result.text)
+  ok(result.start.year  == 2012, result.text)
+  ok(result.start.month == 1, result.text)
+  ok(result.start.day   == 1, result.text)
+  ok(result.start.meridiem   == 'pm', result.text)
   
   
-  /*
-  */
-  
+  var text = "thurs";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  ok(result.start.dayOfWeek == 4, result.text)
 });
