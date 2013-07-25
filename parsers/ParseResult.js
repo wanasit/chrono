@@ -61,17 +61,15 @@
     
     this.date = function(timezoneOffset) { 
       
-      timezoneOffset = timezoneOffset || new Date().getTimezoneOffset()
-      timezoneOffset -= this.timezoneOffset || new Date().getTimezoneOffset();
+      if(timezoneOffset === undefined || timezoneOffset === null)
+        timezoneOffset = new Date().getTimezoneOffset()
+      timezoneOffset -= (this.timezoneOffset || new Date().getTimezoneOffset());
       
       var dateMoment = moment(new Date(this.year,this.month,this.day));
       dateMoment.hours(this.hour);
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
-      
-      if(this.timezoneOffset){
-        dateMoment.add('minutes', -timezoneOffset);
-      }
+      dateMoment.add('minutes', timezoneOffset);
       
       return dateMoment.toDate();
     }
