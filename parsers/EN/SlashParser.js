@@ -38,6 +38,8 @@
       var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[7].length);
       var orginalText = text;
       
+      if(text.match(/^\d.\d$/)) return;
+      
       index += matchedTokens[1].length;
       
       var date = null;

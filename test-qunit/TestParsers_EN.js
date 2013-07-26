@@ -1268,7 +1268,10 @@ test("Test - Date + Time", function() {
   }
   
   
-  
+  var text = "Chrono version 1.1";
+  var results = chrono.parse(text, new Date(2012,7,10));
+  ok(results.length == 0, JSON.stringify( results ) )
+
 });
 
 test('Test - Timezone', function() {
