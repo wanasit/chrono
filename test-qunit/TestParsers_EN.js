@@ -1289,6 +1289,35 @@ test('Test - Timezone', function() {
   //Sat Jul 20 2013 15:59:00 GMT+0900 (JST)
 });
 
+test("Test - DateOnly", function() {
+	
+	var text = "The Deadline is 23th";
+	var results = chrono.parse(text, new Date(2012,7,10));
+	
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 23, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		
+		ok(result.index == 16, 'Wrong index')
+		ok(result.text == '23th', result.text )
+		
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,23,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+	
+	
+	var text = "The Deadline is 32th";
+	var results = chrono.parse(text, new Date(2012,7,10));	
+	ok(results.length == 0, JSON.stringify( results ) )
+
+});
+
 
 test("Test - General", function() {
 	
