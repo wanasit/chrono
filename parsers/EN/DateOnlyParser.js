@@ -11,7 +11,7 @@
   
   function DateOnlyParser(text, ref, opt){
     
-    var PATTERN = /(\W|^)([0-9]{1,2})(th|rd|nd|st)(\W|$)/i;
+    var PATTERN = /(\W|^)(the\s*)?([0-9]{1,2})(th|rd|nd|st)(\W|$)/i;
     opt = opt || {};
     ref = ref || new Date();
     var parser = chrono.Parser(text, ref, opt);
@@ -36,10 +36,10 @@
       }
       
       var text = matchedTokens[0];
-      text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[1].length - matchedTokens[4].length);
+      text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[1].length - matchedTokens[5].length);
       index = index + matchedTokens[1].length;
       
-      var day = matchedTokens[2];
+      var day = matchedTokens[3];
       day = parseInt(day);
       
       var date = moment(ref);

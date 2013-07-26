@@ -8,7 +8,7 @@
   if(typeof chrono == 'undefined')
     throw 'Cannot find the chrono main module';
   
-  var PATTERN = /(today|tonight|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{2}).*|([0-9]{1,2}\s*\W?\s*)?([0-9]{1,2})\s*(AM|PM)|at\s*([0-9]{1,2}|noon|midnight))(\W|$)/i;
+  var PATTERN = /(today|tonight|tomorrow|yesterday|last\s*night|([1-9]+)\s*day(s)\s*ago|([0-9]{1,2})(\.|\:|\：)([0-9]{2}).*|([0-9]{1,2}\s*\W?\s*)?([0-9]{1,2})\s*(AM|PM)|at\s*([0-9]{1,2}|noon|midnight)|(noon|midnight))(\W|$)/i;
   
   /**
    * GeneralDateParser - Create a parser object
@@ -44,7 +44,7 @@
       
       var impliedComponents = null;
       var text = matchedTokens[0].toLowerCase();
-      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[11].length);
+      text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[12].length);
       
       var date = null;
       var lowercase_text = text.toLowerCase();

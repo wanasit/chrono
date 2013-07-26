@@ -1693,4 +1693,28 @@ test("Test - General2", function() {
   var result = chrono.parse(text)[0];
   ok(result.text == text, result.text)
   ok(result.start.dayOfWeek == 4, result.text)
+  
+  
+  var text = "thurs";
+  var result = chrono.parse(text)[0];
+  ok(result.text == text, result.text)
+  ok(result.start.dayOfWeek == 4, result.text)
+  
+  
+  var text = "the 17th";
+  var result = chrono.parse(text, new Date(2013,6,10,3,33))[0];
+  ok(result.text == text, result.text)
+  ok(result.start.month == 6, result.text)
+  ok(result.start.day == 17, JSON.stringify(result))
+  
+  var text = "confirmed for noon on the 17th.";
+  var result = chrono.parse(text, new Date(2013,6,10,3,33))[0];
+  ok(result.text == 'noon on the 17th', result.text)
+  ok(result.start.month == 6, result.text)
+  ok(result.start.day == 17, JSON.stringify(result))
+  ok(result.start.hour == 12, JSON.stringify(result))
+  ok(result.start.impliedComponents.indexOf('hour') < 0, JSON.stringify(result))
+  ok(result.start.impliedComponents.indexOf('minute') < 0, JSON.stringify(result))
+  ok(result.start.impliedComponents.indexOf('month') >= 0, JSON.stringify(result))
+  
 });
