@@ -1717,4 +1717,17 @@ test("Test - General2", function() {
   ok(result.start.impliedComponents.indexOf('minute') < 0, JSON.stringify(result))
   ok(result.start.impliedComponents.indexOf('month') >= 0, JSON.stringify(result))
   
+  var text = "tuesday the 25th at 9am";
+  
+  var result = chrono.parse(text, new Date(2013,5,22,3,33))[0];
+  ok(result.text == text, result.text)
+  ok(result.start.hour == 9, JSON.stringify(result))
+  ok(result.start.meridiem == 'am', JSON.stringify(result))
+  
+  
+  var text = "june 24th";
+  var result = chrono.parse(text)[0];
+  ok(result.start.isCertain('year') == false, result.text)
+  ok(result.start.isCertain('day') == true, result.text)
+  ok(result.start.isCertain('dayOfWeek') == false, result.text)
 });

@@ -56,7 +56,8 @@
     }
     
     this.isCertain = function(component) {
-      return this.impliedComponents ? this.impliedComponents.indexOf(component) < 0 : true;
+      return (this[component] !== undefined && this[component] !== null) 
+        && (this.impliedComponents ? this.impliedComponents.indexOf(component) < 0 : true);
     }
     
     this.date = function(timezoneOffset) { 

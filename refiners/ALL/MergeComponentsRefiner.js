@@ -41,6 +41,7 @@
       dateComponents.hour  = timeComponents.hour;
       dateComponents.minute = timeComponents.minute;
       dateComponents.second = timeComponents.second;
+      dateComponents.meridiem = timeComponents.meridiem;
       dateComponents.impliedComponents = dateComponents.impliedComponents || [];
       result.start = new chrono.DateComponents(dateComponents);
       
