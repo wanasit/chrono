@@ -419,12 +419,13 @@
       var matchedIndex = index + searchingIndex;
       var result  = this.extract(text, matchedIndex);
       
-      if(!result){ //Move on
+      if(!result){ // Failed to extract the date result, MOVE ON
         searchingText = searchingText.substr(index + 1);
         searchingIndex = matchedIndex + 1;
         return null;
       }
       
+      // Try merging overlap results
       if(searchingResults.length > 0){
        var oldResult = searchingResults[searchingResults.length - 1];
        var overlapResult = this.mergeOverlapResult(text, oldResult, result);
@@ -432,26 +433,22 @@
        result = overlapResult || result;
       }
       
+      // Try extracting time infomation
       if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
         var timedResult = this.extractTime(text, result);
         result = timedResult || result; 
       }
       
+      // Try extracting timezone infomation
       if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
         var resultWithTimezone = this.extractTimezone(text, result);
         result = resultWithTimezone || result; 
       }
       
-      if(result.start.hour === undefined)
-        result.startDate = moment(result.startDate).startOf('day').hours(12).toDate();
-      
-      if(result.end && result.end.hour === undefined)
-        result.endDate = moment(result.endDate).startOf('day').hours(12).toDate();
-      
+      // Extract Concordance
       this.extractConcordance(text, result);
       
       searchingResults.push(result); 
-      
       searchingText  = text.substr(result.index + result.text.length + 1);
       searchingIndex = result.index + result.text.length + 1;
       return result;

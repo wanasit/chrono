@@ -66,6 +66,43 @@ test("Test - Override Base Parser", function() {
 	ok(parser.results()[1] == expected_result);
 });
 
+test("Test - Create Custom Parser", function() {
+	
+	var text = '01234-pattern-01234-pattern';
+	var extract_called = 0;
+  
+	chrono.parsers.TestCustomParser = function(text, ref, opt) {
+	  var parser = chrono.Parser(text, ref, opt);
+	  parser.pattern = function () { return /pattern/ }
+  	parser.extract = function(text, index) {
+  	  
+      var expected_result = new chrono.ParseResult({ start:{}, text:'pattern', index:0 });
+      
+  		if(extract_called == 0){
+  			ok(index == 6, 'matched index0:' + index);
+  			expected_result.index = 6
+  		}
+  		else if(extract_called == 1){
+        
+  			ok(index == 20, 'matched index1:' + index);
+  			expected_result.index = 20
+  		}
+
+  		extract_called++;
+  		return new Object(expected_result);
+  	}
+  	
+  	return parser;
+	} 
+	
+	var results = chrono.parse(text)
+	ok(results.length == 2, JSON.stringify(results));
+	ok(results[0] && results[0].index == 6);
+	ok(results[1] && results[1].index == 20);
+	delete chrono.parsers.TestCustomParser;
+});
+
+
 test("Test - Day of Week Parser", function() {
 	
 	var text = "Let's finish this before this Monday.";

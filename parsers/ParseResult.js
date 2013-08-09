@@ -67,7 +67,11 @@
       timezoneOffset -= (this.timezoneOffset || new Date().getTimezoneOffset());
       
       var dateMoment = moment(new Date(this.year,this.month,this.day));
-      dateMoment.hours(this.hour);
+      
+      //If there is only date representation, move the represent time to 12 AM
+      if(this.hour === undefined || this.hour === null) dateMoment.hours(12);
+      else dateMoment.hours(this.hour);
+      
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
       dateMoment.add('minutes', timezoneOffset);
@@ -81,9 +85,12 @@
     this.start = new DateComponents(result.start)
     this.startDate = this.start.date();
     
+    
+    
     if(result.end){
       this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
+      
     }
     
     this.referenceDate = result.referenceDate;
