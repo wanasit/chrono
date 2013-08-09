@@ -183,6 +183,11 @@ test("Test - Slash", function() {
 		var expectDate = (new Date(2013,1,7,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
+	
+	//Should not parse date directly from URLs
+	var text = "http://blog.evernote.com/blog/2013/07/11/save-the-date-the-evernote-conference-is-back/";
+  var results = chrono.parse(text);
+	ok(results.length == 0, JSON.stringify( results ) )
 });
 
 test("Test - Little Endian with Month's name", function() {
@@ -1725,9 +1730,6 @@ test("Test - General2", function() {
   ok(result.start.meridiem == 'am', JSON.stringify(result))
   
   
-  var text = "june 24th";
-  var result = chrono.parse(text)[0];
-  ok(result.start.isCertain('year') == false, result.text)
-  ok(result.start.isCertain('day') == true, result.text)
-  ok(result.start.isCertain('dayOfWeek') == false, result.text)
+  
+  
 });

@@ -32,8 +32,8 @@
       }
       
       var matchedTokens = text.substr(index).match(PATTERN);
-  		if(matchedTokens == null)return;
-  		
+  		if(matchedTokens == null) return;
+  		if(matchedTokens[1] == '/' || matchedTokens[7] == '/') return;
   		
       var text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[7].length);
       var orginalText = text;
