@@ -409,49 +409,52 @@
       if(searchingFinished) return null;
       
       //Search for the pattern
-  		var index  = searchingText.search( this.pattern() );
-  		if(index < 0) {
-  		  searchingFinished = true;
-  		  return null; 
-  		}
-  		
-  		//Extract the result
-  		var matchedIndex = index + searchingIndex;
-  		var result  = this.extract(text, matchedIndex);
-  		if(result){ 
-  		  
-  		  if(searchingResults.length > 0){
-  		   var oldResult = searchingResults[searchingResults.length - 1];
-  		   var overlapResult = this.mergeOverlapResult(text, oldResult, result);
-  		   
-  		   result = overlapResult || result;
-  		  }
-  		  
-  		  if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
-  		    var timedResult = this.extractTime(text, result);
-  		    result = timedResult || result; 
-  		  }
-  		  
-  		  if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
-  		    var resultWithTimezone = this.extractTimezone(text, result);
-  		    result = resultWithTimezone || result; 
-  		  }
-  		  
-  		  if(result.start.hour === undefined)
-  		    result.startDate = moment(result.startDate).startOf('day').hours(12).toDate();
-        
-        if(result.end && result.end.hour === undefined)
-    		  result.endDate = moment(result.endDate).startOf('day').hours(12).toDate();
-        
-        this.extractConcordance(text, result);
-        
-  		  searchingResults.push(result); 
-  		}
-  		
-  		//Move on
-  		searchingText = searchingText.substr(index + 1);
-  		searchingIndex = matchedIndex + 1;
-  		return result;
+      var index  = searchingText.search( this.pattern() );
+      if(index < 0) {
+        searchingFinished = true;
+        return null; 
+      }
+      
+      //Extract the result
+      var matchedIndex = index + searchingIndex;
+      var result  = this.extract(text, matchedIndex);
+      
+      if(!result){ //Move on
+        searchingText = searchingText.substr(index + 1);
+        searchingIndex = matchedIndex + 1;
+        return null;
+      }
+      
+      if(searchingResults.length > 0){
+       var oldResult = searchingResults[searchingResults.length - 1];
+       var overlapResult = this.mergeOverlapResult(text, oldResult, result);
+       
+       result = overlapResult || result;
+      }
+      
+      if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
+        var timedResult = this.extractTime(text, result);
+        result = timedResult || result; 
+      }
+      
+      if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
+        var resultWithTimezone = this.extractTimezone(text, result);
+        result = resultWithTimezone || result; 
+      }
+      
+      if(result.start.hour === undefined)
+        result.startDate = moment(result.startDate).startOf('day').hours(12).toDate();
+      
+      if(result.end && result.end.hour === undefined)
+        result.endDate = moment(result.endDate).startOf('day').hours(12).toDate();
+      
+      this.extractConcordance(text, result);
+      
+      searchingResults.push(result); 
+      
+      searchingText  = text.substr(result.index + result.text.length + 1);
+      searchingIndex = result.index + result.text.length + 1;
+      return result;
   	}
   	
   	/**

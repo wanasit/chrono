@@ -29,7 +29,7 @@ test("Test - Override Base Parser", function() {
 	
 	//
 	var extract_called = 0;
-	var expected_result = new chrono.ParseResult({ start:{}, text:'', index:0 });
+	var expected_result = new chrono.ParseResult({ start:{}, text:'pattern', index:0 });
 	parser.pattern = function () { return /pattern/ }
 	parser.extract = function(text, index) {
 		

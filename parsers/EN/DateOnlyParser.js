@@ -20,14 +20,6 @@
     
     parser.extract = function(text,index){ 
       
-      var results = this.results();
-      var lastResult = results[results.length -1];
-      if( lastResult ){
-        //Duplicate...
-        if( index < lastResult.index + lastResult.text.length )
-          return null;
-      }
-      
       var matchedTokens = text.substr(index).match(PATTERN);
       if(text.substr(index-1).search(PATTERN) == 0) return; //Replicate
       if(matchedTokens == null){

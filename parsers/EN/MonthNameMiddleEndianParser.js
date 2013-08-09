@@ -31,14 +31,6 @@
     
     parser.extract = function(text,index){ 
       
-      var results = this.results();
-      var lastResult = results[results.length -1];
-      if( lastResult ){
-        //Duplicate...
-        if( index < lastResult.index + lastResult.text.length )
-          return null;
-      }
-      
       var impliedComponents = [];
       var date = null;
       var dayOfWeek = null;

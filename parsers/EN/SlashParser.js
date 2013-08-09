@@ -23,14 +23,6 @@
     
     parser.extract = function(text,index){ 
       
-      var results = this.results();
-      var lastResult = results[results.length -1];
-      if( lastResult ){
-        //Duplicate...
-        if( index < lastResult.index + lastResult.text.length )
-          return null;
-      }
-      
       var matchedTokens = text.substr(index).match(PATTERN);
   		if(matchedTokens == null) return;
   		if(matchedTokens[1] == '/' || matchedTokens[7] == '/') return;

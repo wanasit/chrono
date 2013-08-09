@@ -28,14 +28,6 @@
     
     parser.extract = function(full_text,index){ 
       
-      var results = this.results();
-      var lastResult = results[results.length -1];
-      if( lastResult ){
-        //Duplicate...
-        if( index < lastResult.index + lastResult.text.length )
-          return null;
-      }
-      
       var matchedTokens = full_text.substr(index).match(PATTERN);
       if(matchedTokens == null){
         finished = true;
