@@ -85,12 +85,9 @@
     this.start = new DateComponents(result.start)
     this.startDate = this.start.date();
     
-    
-    
     if(result.end){
       this.end = new DateComponents(result.end)
       this.endDate = this.end.date();
-      
     }
     
     this.referenceDate = result.referenceDate;

@@ -81,7 +81,7 @@ test("Test - Create Custom Parser", function() {
   		if(extract_called == 0){
   			ok(index == 6, 'matched index0:' + index);
   			expected_result.index = 6
-  		}
+  		} 
   		else if(extract_called == 1){
         
   			ok(index == 20, 'matched index1:' + index);

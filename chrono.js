@@ -20,7 +20,7 @@
     
     var results = this.parse(text, referrenceDate, option);
     
-    if(results.length >= 1) return results[0].startDate;
+    if(results.length >= 1) return results[0].start.date();
     else return null;
   }
   
