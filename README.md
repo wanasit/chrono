@@ -103,8 +103,58 @@ Chrono provides very detailed parsing results as objects of class `chrono.ParseR
 
 * `year`,`month`,`day`, `dayOfWeek`, `hour`, `minute`, `second` : The datected components
 * `impliedComponents (array)` : The components that are not explicitly mentioned 
-* `date ( function() )` : Return a javascript Date
+* `date ( function )` : Return a javascript Date
 
+## Customize Chrono
+
+### Parser
+
+Parser is a module for low-level parsing. Each parser is designed to handle a single specific date format.
+In Chrono's parsing process, a number of parsers will be used togather to produce the results. 
+You should define new type of parsers for supporting new date formats or languages.
+
+Chrono create parser objects by [factory method](http://javascript.info/tutorial/factory-constructor-pattern) pattern.
+To add a new type of parser, declare a new factory function in `chrono.parsers`. 
+Within that function:
+
+* Create an object from `chrono.Parser()` 
+* Override the object's `pattern` and `extract` methods 
+* Return the object
+
+```javascript
+chrono.parsers.ChrismasParser = function(text, ref, opt) {
+  
+  // Create a chrono's base parser
+  var parser = chrono.Parser(text, ref, opt); 
+  
+  // Extend the parser with our pattern
+  parser.pattern = function () { return /Christmas/i } // Provide search pattern
+  parser.extract = function(text, index) { 
+    // Chrono will find all indexes of the text that match our pattern.
+    // We need to check and return the result 
+    var mentioned_text = text.substr(index).match(/Christmas/i)[0];
+    return new chrono.ParseResult({
+      referenceDate : ref,
+      text : mentioned_text,
+      index: index,
+      start: {
+        day: 25, month: 11, // It's 25 December
+        year: ref.getFullYear() // But we don't sure about the 'year' 
+        impliedComponents: ['year'] 
+      }
+    });
+  }
+
+  return parser;
+}
+
+...
+
+// Lets chrono merge and refine our result (See. '2.30 AM')
+> chrono.parseDate("I'll arrive at 2.30AM on Christmas night")
+Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
+
+```
 
 
 
