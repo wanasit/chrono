@@ -87,5 +87,27 @@ Chrono is designed to work with long text (notes, emails, articles, etc).
       ....
 ```
 
+### Parsing Result 
+
+Chrono provides very detailed parsing results as objects of class `chrono.ParseResult`.
+
+* `start (chrono.DateComponents)` : The parsing result as a [DateComponents](#date-components) object
+* `startDate (Date)` : The parsing result as a javascript Date object
+* `end (chrono.DateComponents)` `endDate (Date)` : Similar to `start` and `startDate` (Optional)
+* `index (int)`   : The location within the input text of this result  
+* `text (string)` : The mentioned words within the input text of this result 
+* `concordance (string)` : The context of mentioned words within the input text (up to 30 characters)
+* `referenceDate (Date)` : The [reference date](#reference-date) of this result
+
+#### Date Components
+
+* `year`,`month`,`day`, `dayOfWeek`, `hour`, `minute`, `second` : The datected components
+* `impliedComponents (array)` : The components that are not explicitly mentioned 
+* `date ( function() )` : Return a javascript Date
+
+
+
+
+
 
 
