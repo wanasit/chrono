@@ -34,6 +34,10 @@
       
       index += matchedTokens[1].length;
       
+      // MM/dd -> OK
+      // MM.dd -> NG
+      if(!matchedTokens[6] && matchedTokens[0].indexOf('/') < 0) return;
+
       var date = null;
       var years = matchedTokens[6] || moment(ref).year() + '';
       var month = matchedTokens[3];
@@ -47,6 +51,9 @@
       month = parseInt(month);
       day = parseInt(day);
       years = parseInt(years);
+      if(month < 1 || month > 12) return null;
+      if(day < 1 || day > 31) return null;
+
       if(years < 100){
         if(years > 50){
           years = years + 2500 - 543; //BE

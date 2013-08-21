@@ -56,7 +56,9 @@
         days_ago = parseInt(days_ago);
         date = moment(ref).clone().add('d',-days_ago);
       }else{
+        if(full_text.charAt(index-1).match(/\d/)) return null;
         while(full_text.charAt(index) == ' ') index++;
+        
         impliedComponents = ['year', 'month', 'day'];
         date = moment(ref).clone();
         text = '';

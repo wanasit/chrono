@@ -216,6 +216,8 @@
         hour   = (hour - minute)/100;
       }
       
+
+
       if(matchedTokens[8]){
         
         second = matchedTokens[8];
@@ -236,7 +238,8 @@
         result.start.meridiem = matchedTokens[10].toLowerCase();
       }
       if(hour >= 12) result.start.meridiem = 'pm';
-      
+      if(hour > 24) return null;
+
       result.text = result.text + matchedTokens[0];
       
       if(result.start.hour == undefined){

@@ -1730,6 +1730,18 @@ test("Test - General2", function() {
   ok(result.start.meridiem == 'am', JSON.stringify(result))
   
   
+  var text = "6358fe2310> *5.0* / 5 Outstanding";
+  var result = chrono.parse(text);
+  ok(result.length == 0, JSON.stringify(result) )
+  
+  var text = "6358fe2310> *1.5* / 5 Outstanding";
+  var result = chrono.parse(text);
+  ok(result.length == 0, JSON.stringify(result) )
+
+  
+  var text = "Total: $1,194.09 [image: View Reservation";
+  var result = chrono.parse(text);
+  ok(result.length == 0, JSON.stringify(result) )
   
   
 });
