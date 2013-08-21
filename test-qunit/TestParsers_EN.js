@@ -1743,5 +1743,8 @@ test("Test - General2", function() {
   var result = chrono.parse(text);
   ok(result.length == 0, JSON.stringify(result) )
   
-  
+  var text = "...Thursday, December 15, 2011 Best Available Rate "
+  var result = chrono.parse(text);
+  ok(result.length == 1, JSON.stringify(result) )
+  ok(result[0].start.year == 2011, JSON.stringify(result) )
 });
