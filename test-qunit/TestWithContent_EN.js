@@ -242,6 +242,13 @@ test("Test - Email 5", function() {
 	}
 });
 
+test("Test - Email 6", function() {
+
+	var text = "13.228.8470 Off 713.228.4147 Fax 909 Texas Avenue Suite 1314 Houston, TX 77002 www.syncrasy.com Sales: 713.228.4407"
+	var results = chrono.parse(text);
+	ok(results.length == 0, JSON.stringify(results.length))
+})
+
 
 
 　
