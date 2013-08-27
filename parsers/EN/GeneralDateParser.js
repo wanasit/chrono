@@ -57,6 +57,8 @@
         date = moment(ref).clone().add('d',-days_ago);
       }else{
         if(full_text.charAt(index-1).match(/\d/)) return null;
+        if(full_text.match(/\d+(\.\d+)%/)) return null;
+        
         while(full_text.charAt(index) == ' ') index++;
         
         impliedComponents = ['year', 'month', 'day'];

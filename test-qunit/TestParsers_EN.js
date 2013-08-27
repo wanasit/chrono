@@ -157,11 +157,14 @@ test("Test - Slash", function() {
 
 	var result = results[0];
 	if(result){
+		ok(result.text == '05.06.2013', JSON.stringify(result.text) )
 		ok(result.start, JSON.stringify(result.start) )
 		ok(result.start.year == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
 		ok(result.start.month == 4, 'Test Result - (Month) ' + JSON.stringify(result.start) )
 		ok(result.start.day == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 		
+		ok(result.end == null, JSON.stringify(result))
+
 		var resultDate = (result.startDate);
 		var expectDate = (new Date(2013,4,6,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
@@ -1729,22 +1732,26 @@ test("Test - General2", function() {
   ok(result.start.hour == 9, JSON.stringify(result))
   ok(result.start.meridiem == 'am', JSON.stringify(result))
   
-  
+
+  var text = '12.53%'
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
+
   var text = "6358fe2310> *5.0* / 5 Outstanding";
-  var result = chrono.parse(text);
-  ok(result.length == 0, JSON.stringify(result) )
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
   
   var text = "6358fe2310> *1.5* / 5 Outstanding";
-  var result = chrono.parse(text);
-  ok(result.length == 0, JSON.stringify(result) )
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
 
   
   var text = "Total: $1,194.09 [image: View Reservation";
-  var result = chrono.parse(text);
-  ok(result.length == 0, JSON.stringify(result) )
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
   
   var text = "...Thursday, December 15, 2011 Best Available Rate "
-  var result = chrono.parse(text);
-  ok(result.length == 1, JSON.stringify(result) )
-  ok(result[0].start.year == 2011, JSON.stringify(result) )
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify(results) )
+  ok(results[0].start.year == 2011, JSON.stringify(results) )
 });
