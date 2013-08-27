@@ -11,8 +11,8 @@
   var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
-  var regFullPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-)?\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\s*[0-9]{2,4})(\s*BE)?(\W|$)/i;
-  var regShortPattern = /((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-)?\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\W|$)/i;  
+  var regFullPattern = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\s*[0-9]{2,4})(\s*BE)?(\W|$)/i;
+  var regShortPattern = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\W|$)/i;  
 
   function MonthNameLittleEndianParser(text, ref, opt){
     
@@ -34,24 +34,26 @@
       if(matchedTokens &&  text.indexOf(matchedTokens[0]) == 0){
         //Full Pattern with years
         text = matchedTokens[0];
-        text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[12].length);
+        text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[13].length - matchedTokens[1].length);
+        index = index + matchedTokens[1].length;
+
         originalText = text;
-        if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
         if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
+        if(matchedTokens[6]) text = text.replace(matchedTokens[6],'');
         
-        var years = matchedTokens[10];
+        var years = matchedTokens[11];
         years = parseInt(years);
         if(years < 100){ 
           if(years > 20) years = null; //01 - 20
           else years = years + 2000;
         }
-        else if(matchedTokens[11]){ //BC
-          text = text.replace(matchedTokens[11], '');
+        else if(matchedTokens[12]){ //BC
+          text = text.replace(matchedTokens[12], '');
           years = years - 543;
         }
         
         //
-        text = text.replace(matchedTokens[10], ' ' + years);
+        text = text.replace(matchedTokens[11], ' ' + years);
         date = moment(text,'DD MMMM YYYY');
         if(!date) return null;
       }else{
@@ -61,10 +63,12 @@
         
         //Short Pattern (without years)
         var text = matchedTokens[0];
-        text = matchedTokens[0].substr(0, matchedTokens[0].length - matchedTokens[10].length);
+        text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[11].length - matchedTokens[1].length);
+        index = index + matchedTokens[1].length;
+        
         originalText = text;
-        if(matchedTokens[4]) text = text.replace(matchedTokens[4],'');
         if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
+        if(matchedTokens[6]) text = text.replace(matchedTokens[6],'');
         
         date  = moment(text,'DD MMMM');
         if(!date) return null;
@@ -83,20 +87,20 @@
       }
       
       //Day of week
-      if(matchedTokens[2]) dayOfWeek =  DAYS_OFFSET[matchedTokens[2].toLowerCase()]
+      if(matchedTokens[3]) dayOfWeek =  DAYS_OFFSET[matchedTokens[3].toLowerCase()]
       
       // Text text can be 'range' value. Such as '12 - 13 January 2012'
-      if(matchedTokens[7]){
-        var endDay = parseInt(matchedTokens[7]);
-        var startDay = parseInt(matchedTokens[3]);
+      if(matchedTokens[8]){
+        var endDay = parseInt(matchedTokens[8]);
+        var startDay = parseInt(matchedTokens[4]);
         var endDate = date.clone();
         
         date.date(startDay);
         endDate.date(endDay);
         
         //Check leap day or impossible date
-        if(date.format('D') != matchedTokens[3]) return null;
-        if(endDate.format('D') != matchedTokens[7]) return null;
+        if(date.format('D') != matchedTokens[4]) return null;
+        if(endDate.format('D') != matchedTokens[8]) return null;
         
         return new chrono.ParseResult({
           referenceDate:ref,
@@ -119,7 +123,7 @@
       }
       else{
         //Check leap day or impossible date
-        if(date.format('D') != matchedTokens[3]) return null;
+        if(date.format('D') != matchedTokens[4]) return null;
         return new chrono.ParseResult({
           referenceDate:ref,
           text:originalText,

@@ -1745,6 +1745,12 @@ test("Test - General2", function() {
   var results = chrono.parse(text);
   ok(results.length == 0, JSON.stringify(results) )
 
+
+  var text = "174 November 1,2001- March 31,2002";
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify(results) )
+  ok(results[0].text == 'November 1,2001- March 31,2002', JSON.stringify(results) )
+  
   
   var text = "Total: $1,194.09 [image: View Reservation";
   var results = chrono.parse(text);

@@ -50,7 +50,7 @@
         text = text.replace(matchedTokens[4], matchedTokens[4]+' ');
   			if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
   			if(matchedTokens[10]) text = text.replace(matchedTokens[10],'');
-  			if(matchedTokens[11]) text = text.replace(',','');
+  			if(matchedTokens[11]) text = text.replace(',',' ');
   			if(matchedTokens[13]){
   				var years = matchedTokens[12];
   				years = ' ' + (parseInt(years) - 543);
