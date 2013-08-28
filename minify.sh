@@ -1,6 +1,7 @@
 echo '(function(){' > tmp
 cat ./moment.js >> tmp
 cat ./chrono.js >> tmp
+cat ./timezone.js >> tmp
 cat ./parsers/ParseResult.js >> tmp
 cat ./parsers/Parser.js >> tmp
 cat ./parsers/IntegratedParsing.js >> tmp

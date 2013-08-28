@@ -51,7 +51,8 @@
         }
       }
     }
-      
+    
+    eval(fs.readFileSync(__dirname + '/timezone.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/ParseResult.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/Parser.js')+'');
     eval(fs.readFileSync(__dirname + '/parsers/IntegratedParsing.js')+'');

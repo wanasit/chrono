@@ -29,7 +29,7 @@ test("Test - Override Base Parser", function() {
 	
 	//
 	var extract_called = 0;
-	var expected_result = new chrono.ParseResult({ start:{}, text:'pattern', index:0 });
+	var expected_result = new chrono.ParseResult({ start:{day:1, month:1, year: 2012}, text:'pattern', index:0 });
 	parser.pattern = function () { return /pattern/ }
 	parser.extract = function(text, index) {
 		
@@ -76,7 +76,7 @@ test("Test - Create Custom Parser", function() {
 	  parser.pattern = function () { return /pattern/ }
   	parser.extract = function(text, index) {
   	  
-      var expected_result = new chrono.ParseResult({ start:{}, text:'pattern', index:0 });
+      var expected_result = new chrono.ParseResult({ start:{day:1, month:1, year: 2012}, text:'pattern', index:0 });
       
   		if(extract_called == 0){
   			ok(index == 6, 'matched index0:' + index);
