@@ -8,19 +8,19 @@
   chrono.parsers = {};
   chrono.refiners = {};
   
-  chrono.parse = function(text, referrenceDate, option) {
+  chrono.parse = function(text, referrenceDate) {
     
-    var results = this.integratedParse(text, referrenceDate, option);
+    var results = this.integratedParse(text, referrenceDate);
     var results = this.integratedRefine(text, results);
     
     return results;
   }
   
-  chrono.parseDate = function(text, referrenceDate, option) {
+  chrono.parseDate = function(text, referrenceDate, timezoneOffset) {
     
-    var results = this.parse(text, referrenceDate, option);
+    var results = this.parse(text, referrenceDate);
     
-    if(results.length >= 1) return results[0].start.date();
+    if(results.length >= 1) return results[0].start.date(timezoneOffset);
     else return null;
   }
   

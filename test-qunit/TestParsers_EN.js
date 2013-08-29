@@ -1284,17 +1284,61 @@ test("Test - Date + Time", function() {
 
 test('Test - Timezone', function() {
   
-  var expected = "Thu, 18 Jul 2013 11:33:14 GMT";
-  var text = "Thu Jul 18 2013 20:33:14 GMT+0900 (JST)";
+  var expected = "Thu Aug 29 2013 18:43:10 GMT+0900 (JST)";
+  var text = "Thursday, 29 August 2013, 09:43:10 GMT";
   
   var results = chrono.parse(text);
   ok(results.length == 1, JSON.stringify( results ) )
   ok(results[0].text == text, results[0].text);
   ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
     results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+  var expected = 'Thu Aug 29 2013 18:24:03 GMT+0900 (JST)';
+  var text = 'Thursday, 29 August 2013, 05:24:03 EDT'; //(GMT -4)
   
-  //Fri 19 Jul 2013 11:59 PM PDT (UTC -0700).
-  //Sat Jul 20 2013 15:59:00 GMT+0900 (JST)
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
+  var expected = 'Thu Aug 29 2013 18:54:48 GMT+0900 (JST)';
+  var text = 'Thursday, 29 August 2013, 04:54:48 EST';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
+  var expected = 'Thu Aug 29 2013 18:54:48 GMT+0900 (JST)';
+  var text = 'Thursday, 29 August 2013, 04:54:48 EST';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
+  var text = "It's 29 August 2013, 06.22 in New York"; //GMT -5
+  var results = chrono.parse(text, new Date());
+  var resultDate = results[0].start.date(-240);
+
+  var expected = 'Thu Aug 29 2013 19:22:00 GMT+0900 (JST)';
+  ok(resultDate.getTime() == new Date(expected).getTime(), 
+    resultDate +' != '+ new Date(expected));
+
 });
 
 test("Test - DateOnly", function() {

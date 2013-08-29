@@ -13,6 +13,7 @@ files = [
   'moment.js',
   'chrono.min.js',
   'chrono.js',
+  'timezone.js',
   'parsers/*.js',
   'parsers/*/*.js',
   'refiners/*.js',

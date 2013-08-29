@@ -62,9 +62,12 @@
     
     this.date = function(timezoneOffset) { 
       
-      if(timezoneOffset === undefined || timezoneOffset === null)
-        timezoneOffset = new Date().getTimezoneOffset()
-      timezoneOffset -= (this.timezoneOffset || new Date().getTimezoneOffset());
+      if(this.timezoneOffset === undefined || this.timezoneOffset === null){
+        if(timezoneOffset === undefined || timezoneOffset === null)
+          timezoneOffset =- new Date().getTimezoneOffset()
+      }else{
+        timezoneOffset = this.timezoneOffset;
+      }
       
       var dateMoment = moment(new Date(this.year,this.month,this.day));
       
@@ -74,8 +77,9 @@
       
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
-      dateMoment.add('minutes', timezoneOffset);
-      
+
+      dateMoment.add('minutes', -timezoneOffset - new Date().getTimezoneOffset());
+      //console.log(timezoneOffset)
       return dateMoment.toDate();
     }
   }

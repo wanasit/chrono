@@ -146,7 +146,8 @@ test("Test - Email 4", function() {
 	
 	var result = results[0];
 	if(result){
-		ok(result.text == 'April 30, 2013, 20:38:26 EDT', result.text +' != '+'April 30, 2013, 20:38:26')
+		ok(result.text == 'April 30, 2013, 20:38:26 EDT', 
+			result.text +' != '+'April 30, 2013, 20:38:26 EDT')
 	}
 	
 	

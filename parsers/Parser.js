@@ -355,18 +355,18 @@
         text = text.substr(matchedTokens[0].length);
       }
       
-      var PATTERN = /^\s*\(?([A-Z]{3,4})\)?/;
+      var PATTERN = /^\s*\(?([A-Z]{1,4})\)?(\W|$)/;
       var matchedTokens = text.match(PATTERN);
-      if(matchedTokens){
+      if(matchedTokens && chrono.timezoneMap[matchedTokens[1]] !== undefined){
         var timezoneAbbr = matchedTokens[1];
+        var timezoneOffset = chrono.timezoneMap[timezoneAbbr];
+
         if(result.start.timezoneOffset === undefined){
-          //var timezoneOffset = ??
-          //if(result.end) result.end.timezoneOffset = timezoneOffset;
-          //result.start.timezoneOffset = timezoneOffset;
-          //result.text += matchedTokens[0];
+          result.start.timezoneOffset = timezoneOffset;
         }
         
-        result.text += matchedTokens[0];
+        result.text += matchedTokens[0].substring(0, matchedTokens[0].length 
+          - matchedTokens[2].length);
       }
       
       return result;
