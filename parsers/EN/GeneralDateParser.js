@@ -82,6 +82,7 @@
       var resultWithTime = parser.extractTime(full_text,result);
       result = resultWithTime || result;
 
+      if(result.text.replace(/\s/g,'').length == 0) return null; 
       if(lowercase_text.match('night')){
         
         if(!resultWithTime){ // Midnight

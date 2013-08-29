@@ -1776,7 +1776,15 @@ test("Test - General2", function() {
   ok(result.start.hour == 9, JSON.stringify(result))
   ok(result.start.meridiem == 'am', JSON.stringify(result))
   
+  var text = ' 0.5 '
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
 
+
+  var text = ' 35.49 '
+  var results = chrono.parse(text);
+  ok(results.length == 0, JSON.stringify(results) )
+  
   var text = '12.53%'
   var results = chrono.parse(text);
   ok(results.length == 0, JSON.stringify(results) )
