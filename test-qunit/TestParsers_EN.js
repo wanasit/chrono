@@ -1769,12 +1769,19 @@ test("Test - General2", function() {
   ok(result.start.impliedComponents.indexOf('minute') < 0, JSON.stringify(result))
   ok(result.start.impliedComponents.indexOf('month') >= 0, JSON.stringify(result))
   
+
+  var text = "Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013";
+  var result = chrono.parse(text, new Date(2013,5,22,3,33))[0];
+  ok(result.text == '02.07.2013', result.text)
+
+
   var text = "tuesday the 25th at 9am";
   
   var result = chrono.parse(text, new Date(2013,5,22,3,33))[0];
   ok(result.text == text, result.text)
   ok(result.start.hour == 9, JSON.stringify(result))
   ok(result.start.meridiem == 'am', JSON.stringify(result))
+
   
   var text = ' 0.5 '
   var results = chrono.parse(text);
