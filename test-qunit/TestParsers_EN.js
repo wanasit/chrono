@@ -1333,7 +1333,7 @@ test('Test - Timezone', function() {
 
   var text = "It's 29 August 2013, 06.22 in New York"; //GMT -5
   var results = chrono.parse(text, new Date());
-  var resultDate = results[0].start.date(-240);
+  var resultDate = results[0].start.date(240);
 
   var expected = 'Thu Aug 29 2013 19:22:00 GMT+0900 (JST)';
   ok(resultDate.getTime() == new Date(expected).getTime(), 
@@ -1342,11 +1342,11 @@ test('Test - Timezone', function() {
 
   var text = "It's 29 August 2013, 06.22 in Local"; //GMT -5
   var results = chrono.parse(text, new Date());
-  var resultDate = results[0].start.date(-new Date().getTimezoneOffset());
+  var resultDate = results[0].start.date(new Date().getTimezoneOffset());
   var resultDate2 = results[0].start.date();
   ok(resultDate.getTime() == resultDate2.getTime(), 
     resultDate +' != '+ resultDate2);
-  
+
 });
 
 test("Test - DateOnly", function() {

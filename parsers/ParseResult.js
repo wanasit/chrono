@@ -64,7 +64,7 @@
       
       if(this.timezoneOffset === undefined || this.timezoneOffset === null){
         if(timezoneOffset === undefined || timezoneOffset === null)
-          timezoneOffset =- new Date().getTimezoneOffset()
+          timezoneOffset = new Date().getTimezoneOffset()
       }else{
         timezoneOffset = this.timezoneOffset;
       }
@@ -78,7 +78,7 @@
       dateMoment.minutes(this.minute);
       dateMoment.seconds(this.second);
 
-      dateMoment.add('minutes', -timezoneOffset - new Date().getTimezoneOffset());
+      dateMoment.add('minutes', timezoneOffset - new Date().getTimezoneOffset());
       //console.log(timezoneOffset)
       return dateMoment.toDate();
     }

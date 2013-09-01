@@ -359,10 +359,11 @@
       var matchedTokens = text.match(PATTERN);
       if(matchedTokens && chrono.timezoneMap[matchedTokens[1]] !== undefined){
         var timezoneAbbr = matchedTokens[1];
-        var timezoneOffset = chrono.timezoneMap[timezoneAbbr];
+        var timezoneOffset =- chrono.timezoneMap[timezoneAbbr];
 
         if(result.start.timezoneOffset === undefined){
           result.start.timezoneOffset = timezoneOffset;
+          if(result.end) result.end.timezoneOffset = timezoneOffset;
         }
         
         result.text += matchedTokens[0].substring(0, matchedTokens[0].length 
