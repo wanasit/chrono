@@ -1339,6 +1339,14 @@ test('Test - Timezone', function() {
   ok(resultDate.getTime() == new Date(expected).getTime(), 
     resultDate +' != '+ new Date(expected));
 
+
+  var text = "It's 29 August 2013, 06.22 in Local"; //GMT -5
+  var results = chrono.parse(text, new Date());
+  var resultDate = results[0].start.date(-new Date().getTimezoneOffset());
+  var resultDate2 = results[0].start.date();
+  ok(resultDate.getTime() == resultDate2.getTime(), 
+    resultDate +' != '+ resultDate2);
+  
 });
 
 test("Test - DateOnly", function() {
