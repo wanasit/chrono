@@ -11,7 +11,7 @@
   var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
-  var regFullPattern = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\s*[0-9]{2,4})(\s*BE)?(\W|$)/i;
+  var regPattern  = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)((\s*[0-9]{2,4})(\s*BE)?)?(\W|$)/i;
   var regShortPattern = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)(\W|$)/i;  
 
   function MonthNameLittleEndianParser(text, ref, opt){
@@ -20,56 +20,58 @@
     ref = ref || new Date();
     var parser = chrono.Parser(text, ref, opt);
     
-    parser.pattern = function() { return regShortPattern; }
+    parser.pattern = function() { return regPattern; }
     
     parser.extract = function(text,index){ 
       
       var impliedComponents = [];
       var date = null;
       var dayOfWeek = null;
-      text = text.substr(index);
-      originalText = text;
       
-      var matchedTokens = text.match(regFullPattern);
-      if(matchedTokens &&  text.indexOf(matchedTokens[0]) == 0){
-        //Full Pattern with years
-        text = matchedTokens[0];
-        text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[13].length - matchedTokens[1].length);
-        index = index + matchedTokens[1].length;
+      text = text.substr(index);
+      var originalText = text;
+      var remainingText = text;
+      
+      var matchedTokens = text.match(regPattern);
+      text = matchedTokens[0];
+      text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[14].length - matchedTokens[1].length);
+      index = index + matchedTokens[1].length;
 
-        originalText = text;
-        if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
-        if(matchedTokens[6]) text = text.replace(matchedTokens[6],'');
-        
-        var years = matchedTokens[11];
+      var remainingText = remainingText.substr(matchedTokens[1].length + text.length);
+      var originalText = text;
+
+      if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
+      if(matchedTokens[6]) text = text.replace(matchedTokens[6],'');
+
+      var years = null
+      if(matchedTokens[11]){
+        years = matchedTokens[12];
         years = parseInt(years);
+
         if(years < 100){ 
-          if(years > 20) years = null; //01 - 20
-          else years = years + 2000;
+
+          //This should be TIME not YEAR
+          if(remainingText.match(/\s*(:|am|pm)/i) != null){
+            text = text.replace(matchedTokens[11], '');
+            originalText = originalText.replace(matchedTokens[11], '');
+            years = null;
+          }else{
+            if(years > 20) years = null; //01 - 20
+            else years = years + 2000;
+          }
         }
-        else if(matchedTokens[12]){ //BC
-          text = text.replace(matchedTokens[12], '');
+        else if(matchedTokens[13]){ //BC
+          text = text.replace(matchedTokens[13], '');
           years = years - 543;
         }
-        
-        //
-        text = text.replace(matchedTokens[11], ' ' + years);
+      }
+
+      if(years){
+        text = matchedTokens[4] + ' ' + matchedTokens[10] + ' ' + years;
         date = moment(text,'DD MMMM YYYY');
         if(!date) return null;
       }else{
-        
-        matchedTokens = text.match(regShortPattern);
-        if(!matchedTokens) return null;
-        
-        //Short Pattern (without years)
-        var text = matchedTokens[0];
-        text = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[11].length - matchedTokens[1].length);
-        index = index + matchedTokens[1].length;
-        
-        originalText = text;
-        if(matchedTokens[5]) text = text.replace(matchedTokens[5],'');
-        if(matchedTokens[6]) text = text.replace(matchedTokens[6],'');
-        
+        text  = matchedTokens[4] + ' ' + matchedTokens[10];
         date  = moment(text,'DD MMMM');
         if(!date) return null;
         

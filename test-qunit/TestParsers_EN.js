@@ -1827,4 +1827,12 @@ test("Test - General2", function() {
   var results = chrono.parse(text);
   ok(results.length == 1, JSON.stringify(results) )
   ok(results[0].start.year == 2011, JSON.stringify(results) )
+
+
+  var text = "SUN 15SEP 11:05 AM - 12:50 PM"
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify(results) )
+  ok(results[0].text.length == 29, JSON.stringify(results) )
+
+
 });
