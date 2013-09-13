@@ -1833,6 +1833,12 @@ test("Test - General2", function() {
   var results = chrono.parse(text);
   ok(results.length == 1, JSON.stringify(results) )
   ok(results[0].text.length == 29, JSON.stringify(results) )
-
-
+  
+  
+  var text = "FRI 13SEP 1:29 PM - FRI 13SEP 3:29 PM"
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify(results) )
+  ok(results[0].start.hour == 13, JSON.stringify(results) )
+  ok(results[0].end.hour == 15, JSON.stringify(results) )
+  
 });

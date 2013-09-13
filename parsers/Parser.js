@@ -430,14 +430,6 @@
         return null;
       }
       
-      // Try merging overlap results
-      if(searchingResults.length > 0){
-       var oldResult = searchingResults[searchingResults.length - 1];
-       var overlapResult = this.mergeOverlapResult(text, oldResult, result);
-       
-       result = overlapResult || result;
-      }
-      
       // Try extracting time infomation
       if(result.start.hour === undefined || (result.end && result.end.hour === undefined)){
         var timedResult = this.extractTime(text, result);
@@ -448,6 +440,14 @@
       if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
         var resultWithTimezone = this.extractTimezone(text, result);
         result = resultWithTimezone || result; 
+      }
+      
+      // Try merging overlap results
+      if(searchingResults.length > 0){
+       var oldResult = searchingResults[searchingResults.length - 1];
+       var overlapResult = this.mergeOverlapResult(text, oldResult, result);
+       
+       result = overlapResult || result;
       }
       
       // Extract Concordance
