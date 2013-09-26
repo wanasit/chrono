@@ -1847,6 +1847,7 @@ test("Test - General2", function() {
   ok(results.length == 1, JSON.stringify(results) )
   ok(results[0].start.hour == 9, JSON.stringify(results) )
   ok(results[0].end.hour == 17, JSON.stringify(results) )
+  ok(results[0].end.meridiem == 'pm', JSON.stringify(results))
   ok(results[0].startDate.getTime() == new Date(2013, 4, 20, 9, 0).getTime(), JSON.stringify(results) )
   ok(results[0].endDate.getTime() == new Date(2013, 4, 20, 17, 0).getTime(), JSON.stringify(results) )
 

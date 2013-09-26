@@ -82,6 +82,27 @@
       //console.log(timezoneOffset)
       return dateMoment.toDate();
     }
+
+    this.assign = function(component, value) {
+      this[component] = value;
+      if(this.impliedComponents && this.impliedComponents.indexOf(component) >= 0){
+        var index = this.impliedComponents.indexOf(component);
+        this.impliedComponents.splice(index, 1);
+      }
+    }
+
+    this.imply = function(component, value) {
+      this[component] = value;
+      if(!this.impliedComponents) this.impliedComponents = [];
+      if(this.impliedComponents.indexOf(component) < 0){
+        this.impliedComponents.push(component);
+      }
+    }
+
+    //Checking Value
+    if(this.isCertain('hour') && this.hour > 12){
+      this.assign('meridiem', 'pm'); 
+    }
   }
   
   function ParseResult(result){
