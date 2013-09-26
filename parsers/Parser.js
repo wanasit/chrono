@@ -133,22 +133,17 @@
       var impliedComponents1 = result1.start.impliedComponents || [];
       var impliedComponents2 = result2.start.impliedComponents || [];
       
-      impliedComponents1.forEach(function(component) {
-        if(!components2.impliedComponents || components2.impliedComponents.indexOf(component) < 0){
-          components1[component] = components2[component]
-          var index = components1.impliedComponents.indexOf(component);
-          components1.impliedComponents.splice(index, 1);
+      impliedComponents1.forEach(function(unknown_component) {
+        if(components2.isCertain(unknown_component)){
+          components1.assign(unknown_component, components2[unknown_component]);
         } 
       });
 
-      impliedComponents2.forEach(function(component) {
-        if(!components1.impliedComponents || components1.impliedComponents.indexOf(component) < 0){
-          components2[component] = components1[component]
-          var index = components2.impliedComponents.indexOf(component);
-          components2.impliedComponents.splice(index, 1);
+      impliedComponents2.forEach(function(unknown_component) {
+        if(components1.isCertain(unknown_component)){
+          components2.assign(unknown_component, components1[unknown_component]);
         }
       });
-      
       
       if(moment(components2.date()).diff(moment(components1.date())) > 0){ 
         
@@ -184,8 +179,7 @@
     parser.extractTime = function(text, result){
       
       var SUFFIX_PATTERN = /^\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?(\W|$)/i;
-      var TO_SUFFIX_PATTERN = /^\s*(\-|\~|\〜|to|\?)\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
-      
+
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
       
@@ -249,9 +243,10 @@
         result.start.second = second;
       }
       
-      
+      var TO_SUFFIX_PATTERN = /^\s*(\-|\~|\〜|to|\?)\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
       text = text.substr(matchedTokens[0].length - matchedTokens[11].length);
-      var matchedTokens = text.match(TO_SUFFIX_PATTERN)
+      matchedTokens = text.match(TO_SUFFIX_PATTERN)
+      
       if( !matchedTokens ) {
         
         //Time in POINT format.
@@ -312,9 +307,7 @@
             if(result.start.hour != 12) result.start.hour += 12;
           }
           
-          result.start.meridiem = matchedTokens[10].toLowerCase();
-          result.start.impliedComponents = result.start.impliedComponents || [];
-          result.start.impliedComponents.push('meridiem');
+          result.start.imply('meridiem', matchedTokens[10].toLowerCase())
         }
       }
       

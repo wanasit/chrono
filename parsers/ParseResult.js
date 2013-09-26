@@ -1,6 +1,4 @@
-/*
-  Parser, is base object of every chrono parser. The parser must provides these following method  
-  
+/* 
   DateCompoents {
     
     @attribute {Integer} year
@@ -9,8 +7,13 @@
     @attribute {Integer} hour
     @attribute {Integer} minute
     @attribute {Integer} second
+    @attribute {Integer} timezoneOffset
+    @attribute {String}  dayOfWeek
+    @attribute {String}  meridiem
     
-    @method { Date } date 
+    @method {Date} date() 
+    @method {void} assign(String, Value) 
+    @method {void} imply(String, Value)
     
     @attribute { Array<String> } impliedComponents
   }
@@ -39,10 +42,10 @@
     throw 'Cannot find the chrono main module';
   
   function DateComponents(components) {
-    this.year = components.year;
-    this.month = components.month;
-    this.day = components.day;
-    this.hour = components.hour;
+    this.year   = components.year;
+    this.month  = components.month;
+    this.day    = components.day;
+    this.hour   = components.hour;
     this.minute = components.minute;
     this.second = components.second;
     this.timezoneOffset = components.timezoneOffset;
