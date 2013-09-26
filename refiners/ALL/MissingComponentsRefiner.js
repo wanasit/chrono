@@ -41,6 +41,7 @@
       }); 
       
       result.start.impliedComponents = impliedComponents;
+      result.startDate = result.start.date();
       
       //Tune day of week
       if(impliedComponents.indexOf('day') >= 0 && 
@@ -51,6 +52,7 @@
         date.day(result.start.dayOfWeek)
         result.start.day = date.date();
         result.start.month = date.month();
+        result.startDate = result.start.date();
       }
       
       if(result.start.dayOfWeek === undefined || impliedComponents.indexOf('dayOfWeek') >= 0){
@@ -61,6 +63,8 @@
         if(impliedComponents.indexOf('dayOfWeek') < 0){
           result.start.impliedComponents.push('dayOfWeek')
         }
+        
+        result.startDate = result.start.date();
       }
       
     }
