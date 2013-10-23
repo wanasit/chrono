@@ -6,7 +6,7 @@
       "type" : "git",
       "url"  : "https://github.com/berryboy/chrono.git"
     },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "directories" : { 
       "improvers"     : "./improvers", 
       "parsers"       : "./parsers", 
