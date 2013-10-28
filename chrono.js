@@ -4,7 +4,19 @@
 // license : MIT
 (function () {
   
-  var chrono = {}
+  var chrono = function(){
+    for(var attr in chrono){
+      this[attr] = chrono[attr]
+    }
+
+    this.parsers = {}
+    for(var p in chrono.parsers) this.parsers[p] = chrono.parsers[p];
+
+    this.refiners = {}
+    for(var r in chrono.refiners) this.refiners[r] = chrono.refiners[r];
+  }
+
+  chrono.timezoneMap = {};
   chrono.parsers = {};
   chrono.refiners = {};
   

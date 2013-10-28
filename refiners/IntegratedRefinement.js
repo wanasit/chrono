@@ -11,8 +11,8 @@
   function integratedRefine (text, results, opt) {
     
     var orderedRefiners = {};
-    for(var name in chrono.refiners){
-      var refiner = chrono.refiners[name];
+    for(var name in this.refiners){
+      var refiner = this.refiners[name];
       var order = refiner.order || 0;
       orderedRefiners[order] = orderedRefiners[order] || [];
       orderedRefiners[order].push(refiner);

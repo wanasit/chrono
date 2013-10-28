@@ -338,3 +338,29 @@ test("Test - Integrated Parsing", function() {
 	}
 	
 });
+
+
+test("Test - Obj Instanciate", function() {
+
+	var _chrono = new chrono();
+
+	ok(_chrono, 'Init: chrono');
+	ok(_chrono.parse, 'Init: chrono.parse');
+	ok(typeof(_chrono.parse) === 'function', 'Init: chrono.parse');
+
+
+	var results = _chrono.parse('2012-8-7')
+	ok(results, JSON.stringify(results));
+	ok(results.length > 0, JSON.stringify(results));
+
+	// Try delete a parser
+	delete _chrono.parsers.InternationalStandardParser
+	results = _chrono.parse('2012-8-7')
+	ok(results, JSON.stringify(results));
+	ok(results.length === 0, JSON.stringify(results));
+
+	// Delete a parser doesn't effect the global parsing
+	results = chrono.parse('2012-8-7')
+	ok(results, JSON.stringify(results));
+	ok(results.length > 0, JSON.stringify(results));
+});
