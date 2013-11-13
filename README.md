@@ -17,7 +17,7 @@ Chrono supports a number of date and time formats, including :
 
 ### Browser
 
-    <script src="https://rawgithub.com/berryboy/chrono/master/chrono.min.js"></script>
+    <script src="https://rawgithub.com/wanasit/chrono/master/chrono.min.js"></script>
 
 ## USAGE
 
