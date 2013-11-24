@@ -363,4 +363,12 @@ test("Test - Obj Instanciate", function() {
 	results = chrono.parse('2012-8-7')
 	ok(results, JSON.stringify(results));
 	ok(results.length > 0, JSON.stringify(results));
+
+
+	// Try update the timezone
+	_chrono.timezoneMap['CST'] = 1000
+	ok(_chrono.timezoneMap['CST'] != chrono.timezoneMap['CST'], chrono.timezoneMap['CST']);
+
+
+
 });

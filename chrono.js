@@ -14,6 +14,9 @@
 
     this.refiners = {}
     for(var r in chrono.refiners) this.refiners[r] = chrono.refiners[r];
+
+    this.timezoneMap = {}
+    for(var r in chrono.timezoneMap) this.timezoneMap[r] = chrono.timezoneMap[r];
   }
 
   chrono.timezoneMap = {};
