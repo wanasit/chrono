@@ -5,6 +5,7 @@ cat ./timezone.js >> tmp
 cat ./parsers/ParseResult.js >> tmp
 cat ./parsers/Parser.js >> tmp
 cat ./parsers/IntegratedParsing.js >> tmp
+cat ./parsers/DE/* >> tmp
 cat ./parsers/EN/* >> tmp
 cat ./parsers/TH/* >> tmp
 cat ./parsers/JP/* >> tmp

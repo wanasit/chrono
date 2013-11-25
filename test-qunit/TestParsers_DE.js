@@ -66,6 +66,28 @@ test("Test - All-numeric form parser", function() {
 		var expectDate = (new Date(2003,0,7,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
+
+
+	var text = "Let's finish this before this 30.11.2013.";
+	var parser = chrono.parsers.DEAllNumericFormParser(text, new Date(2012,7,8));
+	ok(parser, parser)
+	
+	parser.execAll();
+	ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+	var result = parser.results()[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year  == 2013, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 10, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day   == 30, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		
+		ok(result.text   == '30.11.2013', 'Test Result - (Text) ' + JSON.stringify(result.text) )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2013,10,30,12));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
 	
 });
 
@@ -115,6 +137,6 @@ test("Test - Month name little endian parser", function() {
 		var expectDate = (new Date(2012,4,20,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
-	
+
 });
 
