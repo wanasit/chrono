@@ -368,7 +368,23 @@ test("Test - Obj Instanciate", function() {
 	// Try update the timezone
 	_chrono.timezoneMap['CST'] = 1000
 	ok(_chrono.timezoneMap['CST'] != chrono.timezoneMap['CST'], chrono.timezoneMap['CST']);
-
-
-
 });
+
+
+test("Test - Obj Instanciate 2", function() {
+
+	var c1 = new chrono();
+	c1.timezoneMap['CST'] = 1000;
+
+	var c2 = new chrono();
+	c2.timezoneMap['CST'] = -1000;
+
+	//Set different timezones
+	ok(c1.timezoneMap['CST'] != c2.timezoneMap['CST'], c1.timezoneMap['CST']);
+
+	var date1 = c1.parseDate('Today 1.00 AM (CST)');
+	var date2 = c2.parseDate('Today 1.00 AM (CST)');
+	ok(date1.getTime() != date2.getTime(), date1);
+	
+});
+

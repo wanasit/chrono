@@ -45,6 +45,9 @@
    */
   function Parser(text, ref, opt){
     
+    opt = opt || {};
+    
+    var timezoneMap    = opt.timezoneMap || chrono.timezoneMap;
     var searchingIndex = 0;
     var searchingText = text;
     var searchingFinished = false;
@@ -350,9 +353,9 @@
       
       var PATTERN = /^\s*\(?([A-Z]{1,4})\)?(\W|$)/;
       var matchedTokens = text.match(PATTERN);
-      if(matchedTokens && chrono.timezoneMap[matchedTokens[1]] !== undefined){
+      if(matchedTokens && timezoneMap[matchedTokens[1]] !== undefined){
         var timezoneAbbr = matchedTokens[1];
-        var timezoneOffset =- chrono.timezoneMap[timezoneAbbr];
+        var timezoneOffset =- timezoneMap[timezoneAbbr];
 
         if(result.start.timezoneOffset === undefined){
           result.start.timezoneOffset = timezoneOffset;

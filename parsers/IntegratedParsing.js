@@ -13,6 +13,8 @@
     ref = ref || new Date();
     parserTypes = parserTypes || Object.keys(this.parsers);
     
+    opt.timezoneMap = opt.timezoneMap || this.timezoneMap;
+    
     var currentParserIndex = 0;
     var parsers = [];
     var results = [];
