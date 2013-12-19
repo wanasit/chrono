@@ -388,3 +388,32 @@ test("Test - Obj Instanciate 2", function() {
 	
 });
 
+
+test("Test - Obj Instanciate 3", function() {
+
+	var _chrono = new chrono();
+	var result = _chrono.parseDate('Thursday', new Date(2013,11,2))
+	var expectDate = new Date(2013, 11, 5, 12);
+
+	ok(result.getTime() == expectDate.getTime(), result);
+
+	_chrono.refiners.PreferPastLastWeekRefiner = {
+  		refine: function(text, results) {
+
+  			results.forEach(function(result){
+  				if(result.start.isCertain('dayOfWeek') && !result.start.isCertain('day')){
+  					result.start.imply('day', result.start.day - 7)
+  				}
+  			})
+
+  			return results;
+  		}
+	}
+
+	var result = _chrono.parseDate('Thursday', new Date(2013,11,2))
+	var expectDate = new Date(2013, 10, 28, 12);
+	ok(result.getTime() == expectDate.getTime(), result);
+
+});
+
+

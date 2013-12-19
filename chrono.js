@@ -23,10 +23,18 @@
   chrono.parsers = {};
   chrono.refiners = {};
   
-  chrono.parse = function(text, referrenceDate) {
+  chrono.parse = function(text, referrenceDate, option) {
     
-    var results = this.integratedParse(text, referrenceDate);
-    var results = this.integratedRefine(text, results);
+    option = option || {}
+
+    if(typeof(referrenceDate) === 'string'){
+      var _ref = moment(referrenceDate).zone(referrenceDate);
+      option.timezoneOffset = _ref.zone();
+      referrenceDate        = _ref.toDate();
+    }
+
+    var results = this.integratedParse(text, referrenceDate, option);
+    var results = this.integratedRefine(text, results, option);
     
     return results;
   }

@@ -436,7 +436,19 @@
       if(result.start.timezoneOffset === undefined || (result.end && result.end.timezoneOffset === undefined)){
         var resultWithTimezone = this.extractTimezone(text, result);
         result = resultWithTimezone || result; 
+        
+        if(opt.timezoneOffset){ //Fallback to opt.timezoneOffset
+          if(result.start.timezoneOffset === undefined){
+            result.start.timezoneOffset = opt.timezoneOffset;
+          }
+  
+          if(result.end && result.end.timezoneOffset === undefined){
+            result.end.timezoneOffset = opt.timezoneOffset;
+          }
+        }
       }
+
+      
       
       // Try merging overlap results
       if(searchingResults.length > 0){
