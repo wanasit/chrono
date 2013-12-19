@@ -1282,6 +1282,64 @@ test('Test - Timezone', function() {
     results[0].start.date() +' != '+ new Date(expected));
 
 
+  var expected = 'Fri Dec 20 2013 06:30:00 GMT+0900 (JST)';
+  var text = 'Thu Dec 19 2013 16:30:00 GMT-0500 (EST)';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+  var expected = 'Fri Dec 20 2013 06:30:00 GMT+0900 (JST)';
+  var text = 'Thu Dec 19 2013 16:30:00 -0500 (EST)';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
+  var expected = 'Fri Dec 20 2013 06:30:00 GMT+0900 (JST)';
+  var text = 'Thu Dec 19 2013 16:30:00 -0500';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+  var expected = 'Thu Dec 19 2013 20:30:00 GMT+0900 (JST)';
+  var text = 'Thu Dec 19 2013 16:30:00 +0500';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
+  var expected = 'Thu Dec 19 2013 20:30:00 GMT+0900 (JST)';
+  var text = 'Thu Dec 19 2013 16:30:00 +05:00';
+
+  var results = chrono.parse(text);
+  ok(results.length == 1, JSON.stringify( results ) )
+  ok(results[0].text == text, results[0].text);
+  ok(results[0].start.date().getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+  ok(results[0].start.date(540).getTime() == new Date(expected).getTime(), 
+    results[0].start.date() +' != '+ new Date(expected));
+
+
   var expected = 'Thu Aug 29 2013 18:54:48 GMT+0900 (JST)';
   var text = 'Thursday, 29 August 2013, 04:54:48 EST';
 
@@ -1303,7 +1361,7 @@ test('Test - Timezone', function() {
     resultDate +' != '+ new Date(expected));
 
 
-  var text = "It's 29 August 2013, 06.22 in Local"; //GMT -5
+  var text = "It's 29 August 2013, 06.22 in Local"; 
   var results = chrono.parse(text, new Date());
   var resultDate = results[0].start.date(new Date().getTimezoneOffset());
   var resultDate2 = results[0].start.date();

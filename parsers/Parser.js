@@ -276,6 +276,7 @@
         if(minute >= 60) return null;
         
       }else if(hour > 100){
+        if(!matchedTokens[10]) return null;
         
         minute = hour%100;
         hour   = (hour - minute)/100;
@@ -337,12 +338,13 @@
     
     parser.extractTimezone = function(text, result) {
       
-      var PATTERN = /^\s*(GMT|UTC)(\+|\-)(\d{1,2})(\d{2})/;
+      var PATTERN = /^\s*(GMT|UTC)?(\+|\-)(\d{1,2}):?(\d{2})/;
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
-      
+
       var matchedTokens = text.match(PATTERN);
       if(matchedTokens){
+
         var timezoneOffset = parseInt(matchedTokens[3])*60 + parseInt(matchedTokens[4])
         var timezoneOffset = parseInt(matchedTokens[2] + timezoneOffset)*(-1);
         if(result.end) result.end.timezoneOffset = timezoneOffset;
