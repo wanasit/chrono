@@ -65,12 +65,15 @@
     
     this.date = function(timezoneOffset) { 
       
-      if(this.timezoneOffset === undefined || this.timezoneOffset === null){
-        if(timezoneOffset === undefined || timezoneOffset === null)
-          timezoneOffset = new Date().getTimezoneOffset()
-      }else{
+      if(timezoneOffset === undefined || timezoneOffset === null){
         timezoneOffset = this.timezoneOffset;
+      }else{
+        if(this.isCertain('timezoneOffset')) 
+          timezoneOffset = this.timezoneOffset;
       }
+
+      if(timezoneOffset === undefined || timezoneOffset === null)
+        timezoneOffset = new Date().getTimezoneOffset()
       
       var dateMoment = moment(new Date(this.year,this.month,this.day));
       

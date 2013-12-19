@@ -441,11 +441,11 @@
         
         if(opt.timezoneOffset){ //Fallback to opt.timezoneOffset
           if(result.start.timezoneOffset === undefined){
-            result.start.timezoneOffset = opt.timezoneOffset;
+            result.start.imply('timezoneOffset', opt.timezoneOffset);
           }
   
           if(result.end && result.end.timezoneOffset === undefined){
-            result.end.timezoneOffset = opt.timezoneOffset;
+            result.end.imply('timezoneOffset', opt.timezoneOffset);
           }
         }
       }
