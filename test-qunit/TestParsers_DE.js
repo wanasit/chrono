@@ -140,3 +140,39 @@ test("Test - Month name little endian parser", function() {
 
 });
 
+
+test("Test - Weekday parsing", function() {
+	var refDate = new Date(2014, 0, 3);
+	
+	testWeekDayParsing("Der Termin ist diesen Montag.", refDate, 2013, 11, 30);
+	testWeekDayParsing("Der Termin ist nächsten Montag.", refDate, 2014, 0, 6);
+	testWeekDayParsing("Das wäre der nächste Montag.",	refDate, 2014, 0, 6);
+	testWeekDayParsing("Der Termin war letzten Montag.", refDate, 2013, 11, 23);
+
+	testWeekDayParsing("Der Termin ist diesen Donnerstag.", refDate, 2014, 0, 2);
+	testWeekDayParsing("Der Termin ist nächsten Donnerstag.", refDate, 2014, 0, 9);
+	testWeekDayParsing("Das wäre der nächste Donnerstag.",	refDate, 2014, 0, 9);
+	testWeekDayParsing("Der Termin war letzten Donnerstag.", refDate, 2013, 11, 26);
+
+	testWeekDayParsing("Der Termin ist diesen Freitag.", refDate, 2014, 0, 3);
+	testWeekDayParsing("Der Termin ist nächsten Freitag.", refDate, 2014, 0, 10);
+	testWeekDayParsing("Das wäre der nächste Freitag.",	refDate, 2014, 0, 10);
+	testWeekDayParsing("Der Termin war letzten Freitag.", refDate, 2013, 11, 27);
+});
+
+var testWeekDayParsing = function(stringToBeParsed, referenceDate, expectedYear, expectedMonth, expectedDate) {
+	var parser = chrono.parsers.DEDayOfWeekParser(stringToBeParsed, referenceDate);
+	ok(parser, parser)
+	
+	parser.execAll();
+	ok(parser.results().length == 1, JSON.stringify( parser.results() ) )
+
+	var result = parser.results()[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		console.log(result.start.date().toISOString())
+		ok(result.start.year  == expectedYear, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == expectedMonth, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day   == expectedDate, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+	}
+}
