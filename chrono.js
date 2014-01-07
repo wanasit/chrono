@@ -49,13 +49,13 @@
   
   if(typeof exports == 'undefined'){
     //Browser Code
-    var moment = moment || window.moment;
+    moment = moment || window.moment;
     window.chrono = chrono;
   }
   else{
     //Node JS
+    if(typeof moment == 'undefined') eval("var moment = require('./moment');");
     var fs = require('fs');
-    var moment = require('./moment');
     
     function loadModuleDirs(dir){
       
