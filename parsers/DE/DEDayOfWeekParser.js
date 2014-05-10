@@ -55,6 +55,7 @@
 
       var prefix = matchedTokens[5];
       var dayOfWeek = matchedTokens[6];
+      if (dayOfWeek == 'do') return null;
 
       dayOfWeek = dayOfWeek.toLowerCase();
       var offset = DAYS_OFFSET[dayOfWeek];
