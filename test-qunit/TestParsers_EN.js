@@ -1399,8 +1399,7 @@ test("Test - DateOnly", function() {
 
 });
 
-test("Test - ... ago", function() {
-
+test("Test - Date & Time ago", function() {
 
 	var text = "5 days ago, we did something";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -1440,10 +1439,83 @@ test("Test - ... ago", function() {
 		var expectDate = (new Date(2012,6,31,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
-	
+
+	var text = "5 minutes ago";
+	var results = chrono.parse(text, new Date(2012,7,10,12,14));
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+		ok(result.index == 0, 'Wrong index')
+		ok(result.text == '5 minutes ago', result.text )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,12,9));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+	var text = "15 minute ago";
+	var results = chrono.parse(text, new Date(2012,7,10,12,14));
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+		ok(result.index == 0, 'Wrong index')
+		ok(result.text == '15 minute ago', result.text )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,11,59));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+
+	var text = "   1 hour ago";
+	var results = chrono.parse(text, new Date(2012,7,10,12,14));
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+		ok(result.index == 3, 'Wrong index')
+		ok(result.text == '1 hour ago', result.text )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,11,14));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+
+	var text = "   12 hours ago";
+	var results = chrono.parse(text, new Date(2012,7,10,12,14));
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+		ok(result.index == 3, 'Wrong index')
+		ok(result.text == '12 hours ago', result.text )
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2012,7,10,0,14));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
 
 })
-
 
 test("Test - General", function() {
 
