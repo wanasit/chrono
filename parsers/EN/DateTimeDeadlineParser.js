@@ -8,9 +8,9 @@
     throw 'Cannot find the chrono main module';
 
 
-  function DateTimeAgoParser(text, ref, opt){
+  function DateTimeDeadlineParser(text, ref, opt){
 
-    var PATTERN = /(\W|^)(?:within\s*)?([0-9]+)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
+    var PATTERN = /(\W|^)(within|in)\s*([0-9]+)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
     opt = opt || {};
     ref = ref || new Date();
     var parser = chrono.Parser(text, ref, opt);
@@ -30,15 +30,15 @@
       text  = matchedTokens[0].substr(matchedTokens[1].length, matchedTokens[0].length - matchedTokens[1].length);
       index = index + matchedTokens[1].length;
 
-      var num = matchedTokens[2];
+      var num = matchedTokens[3];
       num = parseInt(num);
 
       var date = moment(ref);
-      if (matchedTokens[3].match(/day/)) {
+      if (matchedTokens[4].match(/day/)) {
 
         impliedComponents = []
-        date.add('d',-num);
-
+        date.add('d', num);
+        
         return new chrono.ParseResult({
           referenceDate:ref,
           text:text,
@@ -47,18 +47,19 @@
             day:date.date(),
             month:date.month(),
             year:date.year(),
+            impliedComponents: [ ],
           }
         })
       }
 
 
-      if (matchedTokens[3].match(/hour/)) {
+      if (matchedTokens[4].match(/hour/)) {
 
-        date.add('h',-num);
+        date.add('h',num);
 
-      } else if (matchedTokens[3].match(/minute/)) {
+      } else if (matchedTokens[4].match(/minute/)) {
 
-        date.add('m',-num);
+        date.add('m',num);
       }
 
       return new chrono.ParseResult({
@@ -79,6 +80,6 @@
     return parser;
   }
 
-  chrono.parsers.DateTimeAgoParser = DateTimeAgoParser;
+  chrono.parsers.DateTimeDeadlineParser = DateTimeDeadlineParser;
 
 })();
