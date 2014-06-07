@@ -106,7 +106,7 @@ test("Test - Slash", function() {
 	}
 
 
-  var text = "The Deadline is 1/10/56 - 3/10/56";
+  	var text = "The Deadline is 1/10/56 - 3/10/56";
 	var results = chrono.parse(text, new Date(2012,7,10));
 
 	ok(results.length == 1, JSON.stringify( results ) )
@@ -153,10 +153,27 @@ test("Test - Slash", function() {
 	//Should not parse date directly from URLs
 	var text = "http://blog.evernote.com/blog/2013/07/11/save-the-date-the-evernote-conference-is-back/";
   	var results = chrono.parse(text);
-		ok(results.length == 0, JSON.stringify( results ) )
-	});
+	ok(results.length == 0, JSON.stringify( results ) )
 
-	test("Test - Little Endian with Month's name", function() {
+});
+
+test("Test - Little Endian with Month's name", function() {
+
+	var text = "12th of July at 19:00";
+	var results = chrono.parse(text, new Date(2014,6,7));
+	ok(results.length == 1, JSON.stringify( results ) )
+	var result = results[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year == 2014, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month == 6, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.text == '12th of July at 19:00', result.text)
+
+		var resultDate = (result.startDate);
+		var expectDate = (new Date(2014,6,12,19));
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
 
 	var text = "The Deadline is 10 August 2012";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -174,7 +191,6 @@ test("Test - Slash", function() {
 		var expectDate = (new Date(2012,7,10,12));
 		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
 	}
-
 
 	var text = "The Deadline is 10 August";
 	var results = chrono.parse(text, new Date(2012,7,10));
@@ -493,8 +509,6 @@ test("Test - Slash", function() {
 
 		ok(result.referenceDate)
 	}
-
-
 
 });
 
