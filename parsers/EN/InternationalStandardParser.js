@@ -10,14 +10,6 @@
   
   var PATTERN = /([0-9]{4})\-([0-9]{1,2})\-([0-9]{1,2})(\W|$)/i;
   
-  /**
-   * InternationalStandartParser - Create a parser object
-   *
-   * @param  { String }           text - Orginal text to be parsed
-   * @param  { Date, Optional }   ref  - Referenced date
-   * @param  { Object, Optional } opt  - Parsing option
-   * @return { CNParser } 
-   */
   function InternationalStandardParser(text, ref, opt){
     
     opt = opt || {};

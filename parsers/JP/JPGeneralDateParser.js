@@ -10,14 +10,6 @@
   
   var PATTERN = /(今日|昨日|明日|([1-9]+)\s*日前)(\W|$)/i;
   
-  /**
-   * GeneralDateParser - Create a parser object
-   *
-   * @param  { String }           text - Orginal text to be parsed
-   * @param  { Date, Optional }   ref  - Referenced date
-   * @param  { Object, Optional } opt  - Parsing option
-   * @return { CNParser } 
-   */
   function JPGeneralDateParser(text, ref, opt){
     
     opt = opt || {};

@@ -13,15 +13,6 @@
   var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thurs':4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
-  
-  /**
-   * DayOfWeekParser - Create a parser object
-   *
-   * @param  { String }           text - Orginal text to be parsed
-   * @param  { Date, Optional }   ref  - Referenced date
-   * @param  { Object, Optional } opt  - Parsing option
-   * @return { CNParser } 
-   */
   function DayOfWeekParser(text, ref, opt){
     
     opt = opt || {};

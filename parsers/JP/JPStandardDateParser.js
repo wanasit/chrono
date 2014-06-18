@@ -26,15 +26,6 @@
 		return cleanStr;
 	}
   
-  
-  /**
-   * JPStandardDateParser - Create a parser object
-   *
-   * @param  { String }           text - Orginal text to be parsed
-   * @param  { Date, Optional }   ref  - Referenced date
-   * @param  { Object, Optional } opt  - Parsing option
-   * @return { CNParser } 
-   */
   function JPStandardDateParser(text, ref, opt){
     
     opt = opt || {};
