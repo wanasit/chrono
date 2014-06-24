@@ -1889,6 +1889,45 @@ test("Test - General", function() {
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
   }
 
+	var text = "The Deadline is Tues";
+	var results = chrono.parse(text, new Date(2014,5,23));
+
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+  if(result){
+    ok(result.start, JSON.stringify(result.start) )
+    ok(result.start.year == 2014, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 24, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+    ok(result.text == 'Tues', result.text )
+
+    var resultDate = (result.startDate);
+    var expectDate = (new Date(2014,5,24,12,00));
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+  }
+
+	var text = "The Deadline is Tue";
+	var results = chrono.parse(text, new Date(2014,5,23));
+
+	ok(results.length == 1, JSON.stringify( results ) )
+
+	var result = results[0];
+  if(result){
+    ok(result.start, JSON.stringify(result.start) )
+    ok(result.start.year == 2014, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+    ok(result.start.month == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+    ok(result.start.day == 24, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+    ok(result.text == 'Tue', result.text )
+
+    var resultDate = (result.startDate);
+    var expectDate = (new Date(2014,5,24,12,00));
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+  }
+
+
 });
 
 test("Test - General2", function() {
