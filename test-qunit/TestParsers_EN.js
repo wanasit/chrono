@@ -2140,4 +2140,10 @@ test("Test - General2", function() {
   ok(results[0].startDate.getTime() == new Date(2013, 4, 20, 9, 0).getTime(), JSON.stringify(results) )
   ok(results[0].endDate.getTime() == new Date(2013, 4, 20, 17, 0).getTime(), JSON.stringify(results) )
 
+  var text = "2014-07-07T04:00:00Z"
+  var results = chrono.parse(text);
+
+  ok(results.length == 1, JSON.stringify(results) )
+  ok(results[0].text == '2014-07-07T04:00:00Z', JSON.stringify(results) )
+ 
 });

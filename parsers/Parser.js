@@ -181,7 +181,7 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /^\s*,?\s*(at|from)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?(\W|$)/i;
+      var SUFFIX_PATTERN = /^\s*,?\s*(at|from|T)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,3}))?)?(\s*(AM|PM))?(\W|$|Z)/i;
 
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
