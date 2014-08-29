@@ -46,6 +46,62 @@ test("Test - International Standard Parser", function() {
 
 	parser.execAll();
 	ok(parser.results().length == 0, JSON.stringify( parser.results() ) )
+
+
+
+	var text = "Let's finish this before this 2013-02-29.";
+	var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+	ok(parser, parser)
+
+	parser.execAll();
+	ok(parser.results().length == 0, JSON.stringify( parser.results() ) )
+
+
+	var text = "1994-11-05T13:15:30Z";
+	var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+	ok(parser, parser)
+
+	parser.execAll();
+	ok(parser.results().length == 1, JSON.stringify( parser.results() ))
+	var result = parser.results()[0];
+	if(result){
+
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year   == 1994, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month  == 10, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day    == 5, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.hour   == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+		ok(result.start.minute == 15, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+		ok(result.text == '1994-11-05T13:15:30Z', result.text)
+
+		var resultDate = (result.startDate);
+		var expectDate = new Date('1994-11-05T13:15:30Z');
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+
+	var text = "1994-11-05T13:15:30Z";
+	var parser = chrono.parsers.InternationalStandardParser(text, new Date(2012,7,8));
+	ok(parser, parser)
+
+	parser.execAll();
+	ok(parser.results().length == 1, JSON.stringify( parser.results() ))
+	var result = parser.results()[0];
+	if(result){
+		ok(result.start, JSON.stringify(result.start) )
+		ok(result.start.year   == 1994, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+		ok(result.start.month  == 10, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+		ok(result.start.day    == 5, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+		ok(result.start.hour   == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+		ok(result.start.minute == 15, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+
+		var resultDate = (result.startDate);
+		var expectDate = new Date('1994-11-05T13:15:30Z');
+		ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+	}
+
+
+
 });
 
 test("Test - Slash", function() {

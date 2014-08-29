@@ -181,7 +181,7 @@
      */
     parser.extractTime = function(text, result){
       
-      var SUFFIX_PATTERN = /^\s*,?\s*(at|from|T)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,3}))?)?(\s*(AM|PM))?(\W|$|Z)/i;
+      var SUFFIX_PATTERN = /^\s*,?\s*(at|from|T)?\s*,?\s*([0-9]{1,4}|noon|midnight)((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,3}))?)?(\s*(AM|PM))?(Z)?(\W|$)/i;
 
       if(text.length <= result.index + result.text.length) return null;
       text = text.substr(result.index + result.text.length);
@@ -237,8 +237,13 @@
       if(hour >= 12) result.start.meridiem = 'pm';
       if(hour > 24) return null;
 
+
+      if (matchedTokens[11]) {
+        result.start.assign('timezoneOffset', 0);
+      }
+
       result.text = result.text + matchedTokens[0].substr(0, 
-        matchedTokens[0].length - matchedTokens[11].length);
+        matchedTokens[0].length - matchedTokens[12].length);
       
       if(result.start.hour == undefined){
         result.start.hour = hour;
@@ -246,8 +251,9 @@
         result.start.second = second;
       }
       
+      text = text.substr(matchedTokens[0].length - matchedTokens[12].length);
+
       var TO_SUFFIX_PATTERN = /^\s*(\-|\~|\〜|to|\?)\s*([0-9]{1,4})((\.|\:|\：)([0-9]{1,2})((\.|\:|\：)([0-9]{1,2}))?)?(\s*(AM|PM))?/i;
-      text = text.substr(matchedTokens[0].length - matchedTokens[11].length);
       matchedTokens = text.match(TO_SUFFIX_PATTERN)
       
       if( !matchedTokens ) {
@@ -315,6 +321,8 @@
         }
       }
       
+      
+
       
       result.text = result.text + matchedTokens[0];
       
