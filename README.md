@@ -1,13 +1,13 @@
 Chrono
 ======
 
-A natural language date parser in Javascript. It is designed to extract date informations from any given text. 
+A natural language date parser in Javascript. It is designed to extract date information from any given text. 
 
 Chrono supports a number of date and time formats, including :
 
-* Today, Tomorrow, Yesterday, last Friday, etc
+* Today, Tomorrow, Yesterday, Last Friday, etc
 * 10/13/2013
-* this Friday from 13:00 - 16.00
+* This Friday from 13:00 - 16.00
 * Saturday, 17 August 2013 - Monday, 19 August 2013
 * Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
 
@@ -54,9 +54,9 @@ Thu Sep 12 2013 12:00:00 GMT+0900 (JST)
 
 ### Reference Date
 
-Today's "Friday" is difference from last month's "Friday". 
-The meaning of mentioned dates are depended on when they were mentioned. 
-Chrono let you define the reference date using `chrono.parse(text,ref)` and `chrono.parseDate(text,ref)`.    
+Today's "Friday" is different from last month's "Friday". 
+The meaning of the referenced dates depends on when they are mentioned. 
+Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
 
 ```javascript
 
@@ -113,7 +113,7 @@ Parser is a module for low-level parsing. Each parser is designed to handle a si
 In Chrono's parsing process, a number of parsers will be used togather to produce the results. 
 You should define new type of parsers for supporting new date formats or languages.
 
-Chrono create parser objects by [factory method](http://javascript.info/tutorial/factory-constructor-pattern) pattern.
+Chrono creates parser objects by [factory method](http://javascript.info/tutorial/factory-constructor-pattern) pattern.
 To add a new type of parser, declare a new factory function in `chrono.parsers`. 
 Within that function:
 
@@ -134,12 +134,12 @@ chrono.parsers.ChrismasParser = function(text, ref, opt) {
     // We need to check and return the result 
     var mentioned_text = text.substr(index).match(/Christmas/i)[0];
     return new chrono.ParseResult({
-      referenceDate : ref,
-      text : mentioned_text,
+      referenceDate: ref,
+      text: mentioned_text,
       index: index,
       start: {
         day: 25, month: 11, // It's 25 December
-        year: ref.getFullYear() // But we don't sure about the 'year' 
+        year: ref.getFullYear() // But we aren't sure about the 'year' 
         impliedComponents: ['year'] 
       }
     });
