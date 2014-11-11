@@ -27,6 +27,7 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.4",
     "karma-qunit": "~0.1.1",
-    "uglify-js": "~2.4.1"
+    "uglify-js": "~2.4.1",
+    "nodeunit": "0.9.0"
   }
 }
