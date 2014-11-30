@@ -10,24 +10,17 @@ module.exports = function(config) {
 
     // frameworks to use
     frameworks: ['qunit'],
-    
+
     // list of files / patterns to load in the browser
     files: [
-      'moment.js',
-      'chrono.min.js',
       'chrono.js',
-      'timezone.js',
-      'parsers/*.js',
-      'parsers/*/*.js',
-      'refiners/*.js',
-      'refiners/*/*.js',
-      'test-qunit/Test*.js',
+      'test-qunit/test*.js',
     ],
 
 
     // list of files to exclude
     exclude: [
-      
+
     ],
 
 

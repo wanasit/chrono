@@ -1,0 +1,88 @@
+var moment = require('moment');
+
+function ParsedResult(result){
+    result = result || {};
+    this.index = result.index;
+    this.text  = result.text;
+    this.tags = result.tags || {};
+    this.start = new ParsedComponents(result.start)
+    if(result.end){
+        this.end = new ParsedComponents(result.end)
+    }
+}
+
+ParsedResult.prototype.clone = function() {
+    var result = new ParsedResult(this);
+    result.tags = JSON.parse(JSON.stringify(this.tags));
+    result.start = this.start.clone();
+    if (this.end) {
+        result.end = this.end.clone();
+    }
+}
+
+
+function ParsedComponents (components){
+
+    this.knownValues = {};
+    this.impliedValues = {};
+
+    if (components) {
+        for (key in components) {
+            this.knownValues[key] = components[key];
+        }
+    }
+
+    this.imply('hour', 12);
+    this.imply('minute', 0);
+    this.imply('second', 0);
+}
+
+ParsedComponents.prototype.clone = function () {
+    var component = new ParsedComponents();
+    component.knownValues = JSON.parse(JSON.stringify(this.knownValues));
+    component.impliedValues = JSON.parse(JSON.stringify(this.impliedValues));
+    return component;
+}
+
+ParsedComponents.prototype.get = function(component, value) {
+    if (component in this.knownValues) return this.knownValues[component];
+    if (component in this.impliedValues) return this.impliedValues[component];
+};
+
+ParsedComponents.prototype.assign = function(component, value) {
+    this.knownValues[component] = value;
+    delete this.impliedValues[component];
+};
+
+ParsedComponents.prototype.imply = function(component, value) {
+    if (component in this.knownValues) return;
+    this.impliedValues[component] = value;
+};
+
+ParsedComponents.prototype.isCertain = function(component) {
+    return component in this.knownValues;
+};
+
+ParsedComponents.prototype.date = function() {
+
+    var dateMoment = moment();
+
+    dateMoment.set('year', this.get('year'));
+    dateMoment.set('month', this.get('month')-1);
+    dateMoment.set('date', this.get('day'));
+    dateMoment.set('hour', this.get('hour'));
+    dateMoment.set('minute', this.get('minute'));
+    dateMoment.set('second', this.get('second'));
+    
+    // Javascript Date Object return minus timezone offset
+    var currentTimezoneOffset = -new Date().getTimezoneOffset();
+    var targetTimezoneOffset = this.isCertain('timezoneOffset') ? 
+        this.get('timezoneOffset') : currentTimezoneOffset;
+
+    var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
+    dateMoment.add(-adjustTimezoneOffset, 'minutes');
+    return dateMoment.toDate();
+};
+
+exports.ParsedComponents = ParsedComponents;
+exports.ParsedResult = ParsedResult;

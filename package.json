@@ -7,27 +7,32 @@
     "url": "https://github.com/berryboy/chrono.git"
   },
   "license": "MIT",
-  "version": "0.1.10",
+  "version": "1.0.0",
   "directories": {
-    "refiners": "./refiners",
-    "parsers": "./parsers",
-    "test-nodeunit": "./test-nodeunit",
+    "source": "./src",
     "test-qunit": "./test-qunit"
   },
   "main": "./chrono",
   "devDependencies": {
-    "qunitjs": "~1.12.0",
-    "karma-script-launcher": "~0.1.0",
+    "browserify": "^6.3.3",
+    "karma": "~0.10.4",
+    "karma-browserify": "^1.0.0",
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
-    "karma-html2js-preprocessor": "~0.1.0",
-    "karma-jasmine": "~0.1.3",
-    "karma-requirejs": "~0.1.0",
-    "karma-coffee-preprocessor": "~0.1.0",
-    "karma-phantomjs-launcher": "~0.1.0",
-    "karma": "~0.10.4",
     "karma-qunit": "~0.1.1",
-    "uglify-js": "~2.4.1",
-    "nodeunit": "0.9.0"
+    "karma-script-launcher": "~0.1.0",
+    "minifyify": "^4.4.0",
+    "qunitjs": "~1.12.0",
+    "uglify-js": "~2.4.1"
+  },
+  "scripts": {
+    "make-bundle": "browserify src/chrono.js -d --s chrono -o chrono.js",
+    "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
+    "make": "npm run make-bundle & npm run make-minify",
+    "watch": "watchify src/chrono.js -dv --s chrono -o chrono.js",
+    "karma": "karma start"
+  },
+  "dependencies": {
+    "moment": "^2.8.4"
   }
 }

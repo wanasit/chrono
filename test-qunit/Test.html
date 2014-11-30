@@ -1,61 +1,27 @@
-<!DOCTYPE html>  
-<html>  
-<head>  
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>QUnit Test Suite</title>  
-    
-		<link rel="stylesheet" href="./qunit-git.css" type="text/css"></link>
-		<script type="text/javascript" src="./qunit-git.js"></script> 
-		<script type="text/javascript" src="./jquery-1.7.1.min.js"></script> 
-		
-		<!-- Your project file goes here -->  
-		<script type="text/javascript" src="../moment.js"></script>  
-		<script type="text/javascript" src="../chrono.js"></script>  
-		<script type="text/javascript" src="../timezone.js"></script>  
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QUnit Test Suite</title>
 
-		<script type="text/javascript" src="../parsers/ParseResult.js"></script>  
-		<script type="text/javascript" src="../parsers/Parser.js"></script>  
-		<script type="text/javascript" src="../parsers/IntegratedParsing.js"></script>  
-		
-		<script type="text/javascript" src="../parsers/EN/DateOnlyParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/DayOfWeekParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/GeneralDateParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/SlashParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/InternationalStandardParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/MonthNameLittleEndianParser.js"></script> 
-		<script type="text/javascript" src="../parsers/EN/MonthNameMiddleEndianParser.js"></script>
-		
-		<script type="text/javascript" src="../parsers/JP/JPGeneralDateParser.js"></script> 
-		<script type="text/javascript" src="../parsers/JP/JPStandardDateParser.js"></script>
-		
-		<script type="text/javascript" src="../parsers/TH/THGeneralDateParser.js"></script> 
-		<script type="text/javascript" src="../parsers/TH/THDayOfWeekParser.js"></script> 
-		<script type="text/javascript" src="../parsers/TH/THMonthNameLittleEndianParser.js"></script>
+    <!-- QUnit -->
+	<link rel="stylesheet" href="./qunit/qunit-git.css" type="text/css"></link>
+	<script type="text/javascript" src="./qunit/qunit-git.js"></script>
+	<script type="text/javascript" src="./qunit/jquery-1.7.1.min.js"></script>
 
-		<script type="text/javascript" src="../parsers/DE/DEAllNumericFormParser.js"></script> 
-		<script type="text/javascript" src="../parsers/DE/DEDayOfWeekParser.js"></script> 
-		<script type="text/javascript" src="../parsers/DE/DEMonthNameLittleEndianParser.js"></script>
+	<!-- Chrono -->
+	<script type="text/javascript" src="../chrono.js"></script>
 
-		<script type="text/javascript" src="../refiners/IntegratedRefinement.js"></script> 
-		<script type="text/javascript" src="../refiners/ALL/RemoveReplicateRefiner.js"></script> 
-		<script type="text/javascript" src="../refiners/ALL/MergeComponentsRefiner.js"></script> 
-		<script type="text/javascript" src="../refiners/ALL/MissingComponentsRefiner.js"></script> 
-		
-    <script type="text/javascript" src="./TestBaseSystem.js"></script>  
-    <script type="text/javascript" src="./TestETC.js"></script>
-    <script type="text/javascript" src="./TestParsers_EN.js"></script>  
-    <script type="text/javascript" src="./TestParsers_JP.js"></script>  
-    <script type="text/javascript" src="./TestParsers_TH.js"></script>  
-    <script type="text/javascript" src="./TestParsers_DE.js"></script>  
-    <script type="text/javascript" src="./TestWithContent_EN.js"></script>  
-    <script type="text/javascript" src="./TestWithContent_JP.js"></script>  
-		
-</head>  
-<body>  
-    <h1 id="qunit-header">QUnit Test Suite</h1>  
-    <h2 id="qunit-banner"></h2>  
-    <div id="qunit-testrunner-toolbar"></div>  
-    <h2 id="qunit-userAgent"></h2>  
-    <ol id="qunit-tests"></ol>  
-</body>  
-</html>  
+	<!-- Tests -->
+	<script type="text/javascript" src="./test_system.js"></script>
+
+
+</head>
+<body>
+    <h1 id="qunit-header">QUnit Test Suite</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+</body>
+</html>
