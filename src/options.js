@@ -5,6 +5,8 @@ var ENMonthNameMiddleEndianParser = require('./parsers/EN/ENMonthNameMiddleEndia
 var ENSlashDateFormatParser = require('./parsers/EN/ENSlashDateFormatParser').Parser;
 var ENTimeAgoFormatParser = require('./parsers/EN/ENTimeAgoFormatParser').Parser;
 var ENTimeExpessionParser = require('./parsers/EN/ENTimeExpressionParser').Parser;
+var ENWeekdayParser = require('./parsers/EN/ENWeekdayParser').Parser;
+var ENCasualDateParser = require('./parsers/EN/ENCasualDateParser').Parser;
 
 var ENMergeDateRangeRefiner = require('./refiners/EN/ENMergeDateRangeRefiner').Refiner;
 
@@ -33,8 +35,8 @@ exports.standardOptions = function () {
 exports.casualOptions = function () {
 
     var options = exports.standardOptions();
-    // options.parsers.add(new ENCasualDateExpressionParser());
-    // options.parsers.add(new ENDayOfWeekDateFormatParser());
+    options.parsers.push(new ENCasualDateParser());
+    options.parsers.push(new ENWeekdayParser());
     // options.parsers.add(new ENWeekExpressionParser());
     // options.parsers.add(new JPCasualDateExpressionParser());
 

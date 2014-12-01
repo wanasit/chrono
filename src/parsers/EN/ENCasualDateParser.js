@@ -9,7 +9,7 @@ var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = /(today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
     
-exports.Parser = exports.Parser = function (ENENCasualDateParser)(){
+exports.Parser = function ENCasualDateParser(){
     
     Parser.call(this);
         
@@ -17,35 +17,41 @@ exports.Parser = exports.Parser = function (ENENCasualDateParser)(){
     
     this.extract = function(text, ref, match, opt){ 
         
-        var text = match[0].toLowerCase();
-        var refMoment = moment(ref);
-        var result = new chrono.ParseResult({
-            text: text,
-            index: match.index,
-            start: {}
+        var index = match.index;
+        var text = match[0];
+        var result = new ParsedResult({
+            index: index,
+            text: text
         });
 
-        var date = null;
+        var refMoment = moment(ref);
+        var startMoment = refMoment.clone();
         var lowerText = text.toLowerCase();
-        if(lowerText == 'today' || lowerText == 'tonight'){
 
-            date = refMoment.clone();
+        if(lowerText == 'tonight'){
+            // Normally means this coming midnight 
+            result.start.imply('hour', 0);
+            if (startMoment.hour() > 6) {
+                startMoment.add(1, 'day');
+            }
 
         } else if(lowerText == 'tomorrow' || lowerText == 'tmr'){
 
-            if(refMoment.hour() < 4) {
-                date = refMoment.clone().hour(6);
-            } else {
-                date = refMoment.clone().add(1, 'day');
+            // Check not "Tomorrow" on late night
+            if(refMoment.hour() > 4) {
+                startMoment.add(1, 'day');
             }
 
         } else if(lowerText == 'yesterday') {
 
-            date = refMoment.clone().add('d',-1);
+            startMoment.add(-1, 'day');
         }
-        else if(lowerText.match('last')) {
+        else if(lowerText.match(/last\s*night/)) {
 
-            date = refMoment.clone().add('d',-1);
+            result.start.imply('hour', 0);
+            if (refMoment.hour() > 6) {
+                startMoment.add(-1, 'day');
+            }
 
         } else if (lowerText.match("this")) {
 
@@ -60,17 +66,14 @@ exports.Parser = exports.Parser = function (ENENCasualDateParser)(){
 
             } else if (secondMatch == "morning") {
 
-                result.start.imply('hour', 3);
-                if (refMoment.hour() < 3) {
-                    // When say "this morning" on before 3 AM
-                    date = refMoment.clone().add(-1, 'day');
-                }
+                result.start.imply('hour', 6);
             }
         }
 
-        result.start.assign('day', date.date())
-        result.start.assign('month', date.month())
-        result.start.assign('year', date.year())
+        result.start.assign('day', startMoment.date())
+        result.start.assign('month', startMoment.month() + 1)
+        result.start.assign('year', startMoment.year())
+        result.tags['ENCasualDateParser'] = true;
         return result;
     }
 }
