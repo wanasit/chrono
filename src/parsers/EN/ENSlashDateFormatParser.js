@@ -21,7 +21,10 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
 
         var index = match.index + match[1].length;
         var text = match[0].substr(match[1].length, match[0].length - match[7].length);
-        var orginalText = text;
+        var result = new ParsedResult({
+            text: text,
+            index: index,
+        });
             
         if(text.match(/^\d.\d$/)) return;
 
@@ -35,9 +38,7 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         var month = match[3];
         var day   = match[4];
         
-        //Day of week
-        var dayOfWeek = null;
-        if(match[2]) dayOfWeek =  DAYS_OFFSET[match[2].toLowerCase()]
+        
         
         month = parseInt(month);
         day  = parseInt(day);
@@ -59,16 +60,17 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
             return null;
         }
         
-        return new ParsedResult({
-            referenceDate:ref,
-            text:orginalText,
-            index:index,
-            start:{
-                day:date.date(),
-                month:date.month()+1,
-                year:date.year(),
-                dayOfWeek: dayOfWeek,
-            }
-        })
+
+        result.start.assign('day', date.date());
+        result.start.assign('month', date.month() + 1);
+        result.start.assign('year', date.year());
+
+        //Day of week
+        if(match[2]) {
+            result.start.assign('weekday', DAYS_OFFSET[match[2].toLowerCase()]);
+        }
+
+        result.tags['ENSlashDateFormatParser'] = true;
+        return result;
     };
 };

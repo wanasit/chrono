@@ -114,6 +114,7 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012, 7, 10, 6);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+    
 
     var text = "The Deadline was this afternoon ";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
@@ -135,6 +136,7 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
+
     var text = "The Deadline was this evening ";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
     ok(results.length == 1, JSON.stringify( results ) )
@@ -154,11 +156,6 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012, 7, 10, 18);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
-
-
-
-
-
 });
 
 

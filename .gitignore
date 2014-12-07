@@ -1,5 +1,10 @@
 
+# Minify Mapping
+chrono.min.json
+chrono.map.json
 
-
+# Node Modules
 node_modules/*
 
+# ETC
+.Rhistory

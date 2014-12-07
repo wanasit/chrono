@@ -22,8 +22,9 @@
     "karma-qunit": "~0.1.1",
     "karma-script-launcher": "~0.1.0",
     "minifyify": "^4.4.0",
-    "qunitjs": "~1.12.0",
-    "uglify-js": "~2.4.1"
+    "qunitjs": "~1.14.0",
+    "uglify-js": "~2.4.1",
+    "watchify": "^2.1.1"
   },
   "scripts": {
     "make-bundle": "browserify src/chrono.js -d --s chrono -o chrono.js",

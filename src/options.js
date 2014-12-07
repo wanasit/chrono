@@ -8,6 +8,7 @@ var ENTimeExpessionParser = require('./parsers/EN/ENTimeExpressionParser').Parse
 var ENWeekdayParser = require('./parsers/EN/ENWeekdayParser').Parser;
 var ENCasualDateParser = require('./parsers/EN/ENCasualDateParser').Parser;
 
+var ENMergeDateTimeRefiner = require('./refiners/EN/ENMergeDateTimeRefiner').Refiner;
 var ENMergeDateRangeRefiner = require('./refiners/EN/ENMergeDateRangeRefiner').Refiner;
 
 var OverlapRemovalRefiner = require('./refiners/OverlapRemovalRefiner').Refiner;
@@ -25,6 +26,7 @@ exports.standardOptions = function () {
             new ENTimeExpessionParser(),
         ],
         refiners: [
+            new ENMergeDateTimeRefiner(),
             new ENMergeDateRangeRefiner(),
             new OverlapRemovalRefiner(),
         ]
