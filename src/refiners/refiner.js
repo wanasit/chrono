@@ -9,16 +9,17 @@ exports.Refiner = function Refiner() {
 
 exports.Filter = function Filter() { 
     
-    Refiner.call(this);
+    exports.Refiner.call(this);
 
     this.isValid = function(text, result, opt) { return true; }
     this.refine = function(text, results, opt) { 
 
         var filteredResult = [];
-        for (var i=0; i=results.length; i++) {
+        for (var i=0; i < results.length; i++) {
 
-            if (this.isValid(results[i])) {
-                filteredResult.push(results[i]);
+            var result = results[i];
+            if (this.isValid(text, result, opt)) {
+                filteredResult.push(result);
             }
         }
 

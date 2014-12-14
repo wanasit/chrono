@@ -19,7 +19,6 @@ function isTimeOnly(result) {
 
 function isAbleToMerge(text, prevResult, curResult) {
     var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
-    
     return textBetween.match(PATTERN);
 }
 
@@ -35,9 +34,14 @@ function mergeResult(text, dateResult, timeResult){
         
     if (beginTime.isCertain('meridiem')) {
         beginDateTime.assign('meridiem', beginTime.get('meridiem'));
-    }else if (beginTime.get('meridiem') != null) {
+    } else if (beginTime.get('meridiem') !== undefined) {
         beginDateTime.imply('meridiem', beginTime.get('meridiem'));
     }
+
+    if (beginDateTime.get('meridiem') == 1 && beginDateTime.get('hour') < 12) {
+        beginDateTime.assign('hour', beginDateTime.get('hour') + 12);
+    }
+
     
     dateResult.start = beginDateTime;
         

@@ -20,6 +20,7 @@ exports.Refiner = function OverlapRemovalRefiner() {
             
             // If overlap, compare the length and discard the shorter one
             if (result.index < prevResult.index + prevResult.text.length) {
+
                 if (result.text.length > prevResult.text.length){
                     prevResult = result;
                 }
@@ -34,7 +35,7 @@ exports.Refiner = function OverlapRemovalRefiner() {
         if (prevResult != null) {
             filteredResults.push(prevResult);
         }
-        
+
         return filteredResults;
     }
 }

@@ -181,5 +181,50 @@ test("Test - Combined Expression", function() {
         var expectDate = new Date(2012, 7, 10, 17);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
-
 });
+
+
+test('Test - Random text', function() { 
+    
+    var text = "tonight";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('year') == 2012, JSON.stringify(result.start))
+    ok(result.start.get('month') == 1, JSON.stringify(result.start))
+    ok(result.start.get('day') == 1, JSON.stringify(result.start))
+    ok(result.start.get('hour') == 22, JSON.stringify(result.start))
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
+
+    var text = "tonight 8pm";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start))
+    ok(result.start.get('month') == 1, JSON.stringify(result.start))
+    ok(result.start.get('day')   == 1, JSON.stringify(result.start))
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
+
+    
+    var text = "tonight at 8";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('hour')  == 20, JSON.stringify(result.start))
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start))
+    ok(result.start.get('month') == 1, JSON.stringify(result.start))
+    ok(result.start.get('day')   == 1, JSON.stringify(result.start))
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start))
+
+
+    var text = "thurs";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('weekday') == 4, result.text)
+
+   
+    var text = "thurs";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
+    ok(result.start.get('weekday') == 4, result.text)
+})
+
+
