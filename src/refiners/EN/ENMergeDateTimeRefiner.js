@@ -19,6 +19,7 @@ function isTimeOnly(result) {
 
 function isAbleToMerge(text, prevResult, curResult) {
     var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
+    
     return textBetween.match(PATTERN);
 }
 

@@ -18,8 +18,11 @@ Chrono.prototype.parse = function(text, refDate, opt) {
         var results = parser.execute(text, refDate, opt);
         allResults = allResults.concat(results);
     });
+
+    allResults.sort(function(a, b) {
+        return a.index - b.index;
+    });
     
-    // Sort allResults
     this.refiners.forEach(function (refiner) {
         allResults = refiner.refine(text, allResults, opt);
     });
@@ -30,7 +33,7 @@ Chrono.prototype.parse = function(text, refDate, opt) {
 
 Chrono.prototype.parseDate = function(text, refDate, opt) {
     var results = this.parse(text, refDate, opt);
-    if (results > 0) {
+    if (results.length > 0) {
         return results[0].start.date();
     }
     return null;
@@ -48,9 +51,9 @@ exports.standard = new Chrono( exports.options.standardOptions() );
 exports.casual = new Chrono( exports.options.casualOptions() );
 
 exports.parse = function () {
-    return exports.standard.parse.apply(exports.standard, arguments);
+    return exports.casual.parse.apply(exports.casual, arguments);
 }
 
 exports.parseDate = function () {
-    return exports.standard.parseDate.apply(exports.standard, arguments);
+    return exports.casual.parseDate.apply(exports.casual, arguments);
 }

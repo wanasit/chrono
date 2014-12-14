@@ -40,8 +40,8 @@ exports.standardOptions = function () {
 exports.casualOptions = function () {
 
     var options = exports.standardOptions();
-    options.parsers.push(new ENCasualDateParser());
-    options.parsers.push(new ENWeekdayParser());
+    options.parsers.unshift(new ENCasualDateParser());
+    options.parsers.unshift(new ENWeekdayParser());
     // options.parsers.add(new ENWeekExpressionParser());
     // options.parsers.add(new JPCasualDateExpressionParser());
 
