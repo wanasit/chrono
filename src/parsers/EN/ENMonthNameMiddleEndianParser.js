@@ -59,8 +59,12 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             text = text.replace(match[9],parseInt(match[9])+'');
             date  = moment(text,'MMMM DD YYYY');
             if(!date) return null;
-        }
-        else{
+
+            result.start.assign('day', date.date());
+            result.start.assign('month', date.month() + 1);
+            result.start.assign('year', date.year());
+
+        } else {
             
             match = text.match(regShortPattern);
             if(!match) return null;
@@ -89,14 +93,13 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(date.diff(moment(ref))) ){ 
                 date = lastYear;
             }
+
+            result.start.assign('day', date.date());
+            result.start.assign('month', date.month() + 1);
+            result.start.imply('year', date.year());
         }
         
         //Day of week
-
-        
-        result.start.assign('day', date.date());
-        result.start.assign('month', date.month() + 1);
-        result.start.assign('year', date.year());
         if(match[3]) {
             result.start.assign('weekday', DAYS_OFFSET[match[3].toLowerCase()]);
         }

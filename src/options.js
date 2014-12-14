@@ -12,7 +12,8 @@ var ENMergeDateTimeRefiner = require('./refiners/EN/ENMergeDateTimeRefiner').Ref
 var ENMergeDateRangeRefiner = require('./refiners/EN/ENMergeDateRangeRefiner').Refiner;
 
 var OverlapRemovalRefiner = require('./refiners/OverlapRemovalRefiner').Refiner;
-
+var ExtractTimezoneOffsetRefiner = require('./refiners/ExtractTimezoneOffsetRefiner').Refiner;
+var ExtractTimezoneAbbrRefiner = require('./refiners/ExtractTimezoneAbbrRefiner').Refiner;
 
 exports.standardOptions = function () {
     return {
@@ -28,6 +29,8 @@ exports.standardOptions = function () {
         refiners: [
             new ENMergeDateTimeRefiner(),
             new ENMergeDateRangeRefiner(),
+            new ExtractTimezoneOffsetRefiner(),
+            new ExtractTimezoneAbbrRefiner(),
             new OverlapRemovalRefiner(),
         ]
     }

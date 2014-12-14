@@ -4,13 +4,30 @@
 */
 
 var moment = require('moment');
+
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
+
+var CONST  = require('../../constants/EN');
 
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
         'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
     
-var PATTERN  = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s*,?\s*)?([0-9]{1,2})(st|nd|rd|th)?(\s*(to|\-|\s)\s*([0-9]{1,2})(st|nd|rd|th)?)?\s*(?:of)?\s*(January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|July|Jul|August|Aug|September|Sep|October|Oct|November|Nov|December|Dec)((\s*[0-9]{2,4})(\s*BE)?)?(\W|$)/i;
+var PATTERN = new RegExp('(\\W|^)' +
+        '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' + 
+        '([0-9]{1,2})(?:st|nd|rd|th)?' + 
+        '(?:\\s*(?:to|\\-|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
+        '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
+        '(?:(\\s*[0-9]{2,4})(\\s*BE)?)?' + 
+        '(?=\\W|$)', 'i'
+    );
+
+var WEEKDAY_GROUP = 2;
+var DATE_GROUP = 3;
+var DATE_TO_GROUP = 4;
+var MONTH_NAME_GROUP = 5;
+var YEAR_GROUP = 6;
+var YEAR_BE_GROUP = 7;
 
 exports.Parser = function ENMonthNameLittleEndianParser(){
     Parser.call(this);
@@ -18,24 +35,27 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){ 
-        
+
         var result = new ParsedResult({
-            text: match[0].substr(match[1].length, match[0].length - match[14].length - match[1].length),
+            text: match[0].substr(match[1].length, match[0].length - match[1].length),
             index: match.index + match[1].length
         });
 
-        var text = result.text;
-        if(match[5]) text = text.replace(match[5],'');
-        if(match[6]) text = text.replace(match[6],'');
+        var startMoment = moment(ref);
 
-        var year = null
-        if(match[11]){
-            year = match[12];
+        var month = match[MONTH_NAME_GROUP];
+        month = CONST.MONTH_OFFSET[month.toLowerCase()];
+
+        var day = match[DATE_GROUP];
+        day = parseInt(day);
+
+        var year = null;
+        if (match[YEAR_GROUP]) {
+            year = match[YEAR_GROUP];
             year = parseInt(year);
 
-            if(match[13]){ 
+            if(match[YEAR_BE_GROUP]){ 
                 //BC
-                text = text.replace(match[13], '');
                 year = year - 543;
 
             } else if (year < 100){ 
@@ -43,19 +63,17 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
                 year = year + 2000;
             }
         }
-
-
+        
+        startMoment.month(month - 1);
+        startMoment.date(day);
 
         if(year){
-            var startMoment = moment(text,'DD MMMM YYYY');
-            if(!startMoment) return null;
-            
+            startMoment.year(year);
+
             result.start.assign('day', startMoment.date());
             result.start.assign('month', startMoment.month() + 1);
             result.start.assign('year', startMoment.year());
         } else {
-            startMoment  = moment(text,'DD MMMM');
-            if(!startMoment) return null;
             
             //Find the most appropriated year
             startMoment.year(moment(ref).year());
@@ -74,15 +92,16 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         }
         
         // Weekday component
-        if (match[3]) {
-            result.start.assign('weekday', DAYS_OFFSET[match[3].toLowerCase()]);
+        if (match[WEEKDAY_GROUP]) {
+            var weekday = match[WEEKDAY_GROUP];
+            weekday = CONST.WEEKDAY_OFFSET[weekday.toLowerCase()]
+            result.start.assign('weekday', weekday);
         }
 
         // Text can be 'range' value. Such as '12 - 13 January 2012'
-        if (match[8]) {
+        if (match[DATE_TO_GROUP]) {
             result.end = result.start.clone();
-            result.start.assign('day', parseInt(match[4]));
-            result.end.assign('day', parseInt(match[8]));
+            result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
         }
 
         result.tags['ENMonthNameLittleEndianParser'] = true;

@@ -3,8 +3,55 @@
 */
 var Refiner = require('../refiner').Refiner;
 
+var OVERLAP_PATTERN = /^\s*(to|\-)\s*$/i;
 
+function isAbleToMerge(text, result1, result2) {
+    var begin = result1.index + result1.text.length;
+    var end   = result2.index;
+    var textBetween = text.substring(begin,end);
 
+    return textBetween.match(OVERLAP_PATTERN);
+}
+
+function mergeResult(text, fromResult, toResult){
+
+    for (var key in toResult.start.knownValues) {
+        if (!fromResult.start.isCertain(key)) {
+            fromResult.start.assign(key, toResult.start.get(key));
+        }
+    }
+
+    for (var key in fromResult.start.knownValues) {
+        if (!toResult.start.isCertain(key)) {
+            toResult.start.assign(key, fromResult.start.get(key));
+        }
+    }
+
+    if (fromResult.start.date().getTime() > toResult.start.date()) {
+        var tmp = toResult;
+        toResult = fromResult;
+        fromResult = tmp;
+    }
+    
+    fromResult.end = toResult.start;
+
+    
+
+    for (var tag in toResult.tags) {
+        fromResult.tags[tag] = true;
+    }
+
+        
+    var startIndex = Math.min(fromResult.index, toResult.index);
+    var endIndex = Math.max(
+        fromResult.index + fromResult.text.length, 
+        toResult.index + toResult.text.length);
+        
+    fromResult.index = startIndex;
+    fromResult.text  = text.substring(startIndex, endIndex);
+    fromResult.tags['ENMergeDateRangeRefiner'] = true;
+    return fromResult;
+}
 
 
 exports.Refiner = function ENMergeDateRangeRefiner() {
@@ -38,37 +85,8 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
             mergedResult.push(currResult);
         }
 
+
         return mergedResult;
     }
 }
 
-
-var OVERLAP_PATTERN = /^\s*(to|\-)\s*$/i;
-
-function isAbleToMerge(text, result1, result2) {
-    var begin = result1.index + result1.text.length;
-    var end   = result2.index;
-    var textBetween = text.substring(begin,end);
-
-    return textBetween.match(OVERLAP_PATTERN);
-}
-
-
-
-function mergeResult(text, fromResult, toResult){
-
-    if (fromResult.start.date().getTime() > toResult.start.date()) {
-        var tmp = fromResult;
-        toResult = fromResult;
-        fromResult = tmp;
-    }
-
-    fromResult.end = toResult.start;
-        
-    var startIndex = Math.min(fromResult.index, toResult.index);
-    var endIndex = Math.max(fromResult.index + fromResult.text.length(), toResult.index + toResult.text.length());
-        
-    fromResult.index = startIndex;
-    fromResult.text  = text.substring(startIndex, endIndex);
-    return fromResult;
-}
