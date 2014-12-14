@@ -1,55 +1,53 @@
 Chrono
 ======
 
-A natural language date parser in Javascript. It is designed to extract date information from any given text. 
+A natural language date parser in Javascript, designed for extracting date information from any given text. 
 
-Chrono supports a number of date and time formats, including :
+Chrono supports most date and time formats, such as :
 
 * Today, Tomorrow, Yesterday, Last Friday, etc
-* 10/13/2013
+* 17 August 2013 - 19 August 2013
 * This Friday from 13:00 - 16.00
-* Saturday, 17 August 2013 - Monday, 19 August 2013
+* 5 days ago
 * Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
+* 2014-11-30T08:15:30-05:30
 
-### Node.js 
+#### Node.js 
 
     npm install chrono-node
 
-### Browser
+#### Browser
 
     <script src="https://rawgithub.com/wanasit/chrono/master/chrono.min.js"></script>
 
+#### Browserify
+
+Chrono's modules are linked and packaged using [Browserify](http://browserify.org) on `src/chrono.js`. By default, `chrono.js` file exports `chrono` object as a window global.
+
+```
+browserify src/chrono.js --s chrono -o chrono.js
+```
+
 ## USAGE
 
-Just pass a string to function `chrono.parseDate` or `chrono.parse`. 
+Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
 
 ```javascript
 > var chrono = require('chrono-node')
 
 > chrono.parseDate('An appointment on Sep 12-13') 
-Thu Sep 12 2013 12:00:00 GMT+0900 (JST)
+Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
     
-> chrono.parse('An appointment on Sep 12-13')    
-[ { start: 
-     { year: 2013,
-       month: 8,
-       day: 12,
-       impliedComponents: [Object],
-       isCertain: [Function],
-       date: [Function] },
-    startDate: Thu Sep 12 2013 12:00:00 GMT+0900 (JST),
-    end: 
-     { year: 2013,
-       month: 8,
-       day: 13,
-       impliedComponents: [Object],
-       isCertain: [Function],
-       date: [Function] },
-    endDate: Fri Sep 13 2013 12:00:00 GMT+0900 (JST),
-    referenceDate: Sat Aug 17 2013 17:54:57 GMT+0900 (JST),
-    index: 18,
+> chrono.parse('An appointment on Sep 12-13');
+[ { index: 18,
     text: 'Sep 12-13',
-    concordance: 'An appointment on Sep 12-13' } ]
+    tags: { ENMonthNameMiddleEndianParser: true },
+    start: 
+     { knownValues: [Object],
+       impliedValues: [Object] },
+    end: 
+     { knownValues: [Object],
+       impliedValues: [Object] } } ]
 ```
 
 ### Reference Date
@@ -67,45 +65,42 @@ Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
 Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
 ```
 
-### Text 
+### Detailed Parsed Results
 
-Chrono is designed to work with long text (notes, emails, articles, etc). 
-`chrono.parse` will return an array of every date mentioned in the story.
+The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`. 
 
 ```javascript
-> var text = 'October 7, 2011, of which details were not revealed out of respect to Jobs\'s family.[239] Apple announced on the same day that they had no plans for a public service, but were encouraging "well-wishers" to send their remembrance messages to an email address created to receive such messages.[240] Sunday, October 16, 2011'
-> chrono.parse(text)
-[{ start: 
-    { year: 2011,
-      month: 9,
-      day: 7,
-      ....
- { start: 
-    { year: 2011,
-      month: 9,
-      day: 16,
-      ....
+var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM')
+
+results[0].index  // 15
+results[0].text   // 'tomorrow from 10 to 11 AM'
+results[0].ref    // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
+
+results[0].start.date()  // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
+results[0].end.date()    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 ```
 
-### Parsing Result 
+#### ParsedResult
 
-Chrono provides very detailed parsing results as objects of class `chrono.ParseResult`.
+* `start` The parsed date components as a [ParsedComponents](#parsedcomponents) object
+* `end`   Similar to `start` but can be null.
+* `index` The location within the input text of this result  
+* `text`  The text this result that appears in the input 
+* `ref`   The [reference date](#reference-date) of this result
 
-* `start (chrono.DateComponents)` : The parsing result as a [DateComponents](#date-components) object
-* `startDate (Date)` : The parsing result as a javascript Date object
-* `end (chrono.DateComponents)` `endDate (Date)` : Similar to `start` and `startDate` (Optional)
-* `index (int)`   : The location within the input text of this result  
-* `text (string)` : The mentioned words within the input text of this result 
-* `concordance (string)` : The context of mentioned words within the input text (up to 30 characters)
-* `referenceDate (Date)` : The [reference date](#reference-date) of this result
+#### ParsedComponents
 
-#### Date Components
+A group of found date and time components (year, month, hour, etc). ParsedComponents objects consist of `knownValues` and `impliedValues`.
 
-* `year`,`month`,`day`, `dayOfWeek`, `hour`, `minute`, `second` : The datected components
-* `impliedComponents (array)` : The components that are not explicitly mentioned 
-* `date ( function )` : Return a javascript Date
+* `assign(component, value)`  Set known value to the component
+* `imply(component, value)`   Set implied value to the component
+* `get(component)`            Get known or implied value for the component
+* `isCertain(component)`      return true if the value of the component is known.
+* `date()`                    Create a javascript Date
 
-## Customize Chrono
+## Extend Chrono
+
+
 
 ### Parser
 
