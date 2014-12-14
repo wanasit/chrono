@@ -12,15 +12,15 @@ Chrono supports most date and time formats, such as :
 * Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
 * 2014-11-30T08:15:30-05:30
 
-### Node.js 
+#### Node.js 
 
     npm install chrono-node
 
-### Browser
+#### Browser
 
     <script src="https://rawgithub.com/wanasit/chrono/master/chrono.min.js"></script>
 
-### Browserify
+#### Browserify
 
 Chrono's modules are linked and packaged using [Browserify](http://browserify.org) on `src/chrono.js`. By default, `chrono.js` file exports `chrono` object as a window global.
 
@@ -70,30 +70,37 @@ Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
 The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`. 
 
 ```javascript
+var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM')
 
-> chrono.parseDate('Friday', new Date(2012,7,23)); 
-Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
+results[0].index  // 15
+results[0].text   // 'tomorrow from 10 to 11 AM'
+results[0].ref    // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
 
-> results[0].index  // 15
-> results[0].text   // 'at 1 PM Tomorrow'
-
+results[0].start.date()  // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
+results[0].end.date()    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 ```
 
 #### ParsedResult
 
-* `start (chrono.ParsedComponents)` : The parsing result as a [ParsedComponents](#parsedcomponents) object
-* `end (chrono.ParsedComponents)` : Similar to `start` 
-* `index (int)`   : The location within the input text of this result  
-* `text (string)` : The mentioned words within the input text of this result 
-* `ref (Date)` : The [reference date](#reference-date) of this result
+* `start` The parsed date components as a [ParsedComponents](#parsedcomponents) object
+* `end`   Similar to `start` but can be null.
+* `index` The location within the input text of this result  
+* `text`  The text this result that appears in the input 
+* `ref`   The [reference date](#reference-date) of this result
 
 #### ParsedComponents
 
-* `assign(component, value)` : The datected components
-* `imply(component, value)` : The components that are not explicitly mentioned 
-* `date()` : Return a javascript Date
+A group of found date and time components (year, month, hour, etc). ParsedComponents objects consist of `knownValues` and `impliedValues`.
 
-## Customize Chrono
+* `assign(component, value)`  Set known value to the component
+* `imply(component, value)`   Set implied value to the component
+* `get(component)`            Get known or implied value for the component
+* `isCertain(component)`      return true if the value of the component is known.
+* `date()`                    Create a javascript Date
+
+## Extend Chrono
+
+
 
 ### Parser
 
