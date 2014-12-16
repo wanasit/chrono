@@ -24,6 +24,7 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         var result = new ParsedResult({
             text: text,
             index: index,
+            ref: ref,
         });
             
         if(text.match(/^\d.\d$/)) return;

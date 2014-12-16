@@ -21,7 +21,8 @@ exports.Parser = function ENCasualDateParser(){
         var text = match[0];
         var result = new ParsedResult({
             index: index,
-            text: text
+            text: text,
+            ref: ref,
         });
 
         var refMoment = moment(ref);

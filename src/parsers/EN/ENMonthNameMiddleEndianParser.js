@@ -121,6 +121,7 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
 
         result.index = index;
         result.text = originalText;
+        result.ref = ref;
 
         result.tags['ENMonthNameMiddleEndianParser'] = true;
         return result;

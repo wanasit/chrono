@@ -19,8 +19,11 @@ test("Test - Module status", function() {
 
 	ok(chrono.options, 'Check [options] object');
 
-	ok(chrono.standard, 'Check [chrono.standard] object');
+	ok(chrono.casual, 'Check [chrono.casual] object');
+
+	ok(chrono.strict, 'Check [chrono.strict] object');
 });
+
 
 test("Test - Create & manipulate date results", function() {
 
@@ -52,7 +55,6 @@ test("Test - Create & manipulate date results", function() {
 	components.assign('year', 2013)
 	ok(components.get('year') == 2013);
 });
-
 
 
 test("Test - Override parser", function() {

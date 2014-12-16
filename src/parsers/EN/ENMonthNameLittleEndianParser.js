@@ -38,7 +38,8 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
 
         var result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
-            index: match.index + match[1].length
+            index: match.index + match[1].length,
+            ref: ref,
         });
 
         var startMoment = moment(ref);

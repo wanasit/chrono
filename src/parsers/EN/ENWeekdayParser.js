@@ -21,7 +21,8 @@ exports.Parser = function ENWeekdayParser() {
         var text = match[0].substr(match[1].length, match[0].length - match[9].length - match[1].length);
         var result = new ParsedResult({
             index: index,
-            text: text
+            text: text,
+            ref: ref,
         });
 
         var dayOfWeek = match[6].toLowerCase();

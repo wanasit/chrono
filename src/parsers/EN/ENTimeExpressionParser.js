@@ -50,6 +50,7 @@ exports.Parser = function ENTimeExpressionParser(){
         if (match.index > 0 && text[match.index-1].match(/\w/)) return null;
         var refMoment = moment(ref);
         var result = new ParsedResult();
+        result.ref = ref;
         result.index = match.index + match[1].length;
         result.text  = match[0].substring(match[1].length);
         result.tags['ENTimeExpressionParser'] = true;

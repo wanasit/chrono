@@ -22,7 +22,8 @@ exports.Parser = function ENDeadlineFormatParser(){
 
         var result = new ParsedResult({
             index: index,
-            text: text
+            text: text,
+            ref: ref,
         });
 
         var num = match[3];

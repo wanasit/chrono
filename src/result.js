@@ -2,12 +2,15 @@ var moment = require('moment');
 
 function ParsedResult(result){
     result = result || {};
+
+    this.ref   = result.ref;
     this.index = result.index;
     this.text  = result.text;
-    this.tags = result.tags || {};
-    this.start = new ParsedComponents(result.start)
+    this.tags  = result.tags || {};
+
+    this.start = new ParsedComponents(result.start, result.ref)
     if(result.end){
-        this.end = new ParsedComponents(result.end)
+        this.end = new ParsedComponents(result.end, result.ref)
     }
 }
 
@@ -21,7 +24,7 @@ ParsedResult.prototype.clone = function() {
 }
 
 
-function ParsedComponents (components){
+function ParsedComponents (components, ref){
 
     this.knownValues = {};
     this.impliedValues = {};
@@ -30,6 +33,13 @@ function ParsedComponents (components){
         for (key in components) {
             this.knownValues[key] = components[key];
         }
+    }
+
+    if (ref) {
+        ref = moment(ref);
+        this.imply('day', ref.date())
+        this.imply('month', ref.month() + 1)
+        this.imply('year', ref.year())
     }
 
     this.imply('hour', 12);

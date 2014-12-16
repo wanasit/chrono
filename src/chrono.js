@@ -1,9 +1,18 @@
 
-var Chrono = function(options) {
+var options = exports.options = require('./options');
+exports.Parser = require('./parsers/parser').Parser;
+exports.Refiner = require('./refiners/refiner').Filter;
+exports.Filter = require('./refiners/refiner').Filter;
+exports.ParsedResult = require('./result').ParsedResult;
+exports.ParsedComponents = require('./result').ParsedComponents;
 
-    this.options = options;
-    this.parsers = new Object(options.parsers);
-    this.refiners = new Object(options.refiners);
+var Chrono = function(option) {
+
+    option = option || exports.options.strictOption();
+
+    this.option = option;
+    this.parsers = new Object(option.parsers);
+    this.refiners = new Object(option.refiners);
 }
 
 
@@ -40,15 +49,8 @@ Chrono.prototype.parseDate = function(text, refDate, opt) {
 }
 
 exports.Chrono = Chrono;
-exports.options = require('./options');
-exports.Parser = require('./parsers/parser').Parser;
-exports.Refiner = require('./refiners/refiner').Filter;
-exports.Filter = require('./refiners/refiner').Filter;
-exports.ParsedResult = require('./result').ParsedResult;
-exports.ParsedComponents = require('./result').ParsedComponents;
-
-exports.standard = new Chrono( exports.options.standardOptions() );
-exports.casual = new Chrono( exports.options.casualOptions() );
+exports.strict = new Chrono( options.strictOption() );
+exports.casual = new Chrono( options.casualOption() );
 
 exports.parse = function () {
     return exports.casual.parse.apply(exports.casual, arguments);

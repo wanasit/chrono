@@ -17,7 +17,7 @@ var ExtractTimezoneAbbrRefiner = require('./refiners/ExtractTimezoneAbbrRefiner'
 var UnlikelyFormatFilter = require('./refiners/UnlikelyFormatFilter').Refiner;
 
 
-exports.standardOptions = function () {
+exports.strictOption = function () {
     return {
         parsers: [
         	new ENISOFormatParser(),
@@ -40,9 +40,9 @@ exports.standardOptions = function () {
 };
 
 
-exports.casualOptions = function () {
+exports.casualOption = function () {
 
-    var options = exports.standardOptions();
+    var options = exports.strictOption();
     options.parsers.unshift(new ENCasualDateParser());
     options.parsers.unshift(new ENWeekdayParser());
     // options.parsers.add(new ENWeekExpressionParser());

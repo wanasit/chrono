@@ -41,7 +41,8 @@ exports.Parser = function ENISOFormatParser(){
 
         var result = new ParsedResult({
             text: text,
-            index: index
+            index: index,
+            ref: ref,
         })
         
         result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));
