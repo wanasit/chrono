@@ -12,7 +12,7 @@
     "source": "./src",
     "test-qunit": "./test-qunit"
   },
-  "main": "./chrono",
+  "main": "./src/chrono",
   "devDependencies": {
     "browserify": "^6.3.3",
     "karma": "~0.10.4",
