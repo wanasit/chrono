@@ -104,7 +104,7 @@ Chrono’s extraction pipeline are mainly separated into 'parse' and ‘refine�
 
 ### Parser
 
-Parser is a module for low-level pattern-based parsing. Ideally, each parser should be designed to handle a single specific date format. You can add new type of parsers for supporting new date formats or languages.
+Parser is a module for low-level pattern-based parsing. Ideally, each parser should be designed to handle a single specific date format. User can add new type of parsers for supporting new date formats or languages.
 
 ```javascript
 var christmasParser = new chrono.Parser();
@@ -137,9 +137,42 @@ custom.parseDate("I'll arrive at 2.30AM on Christmas night")
 
 To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`. 
 * The `pattern` method must return `RegExp` object of searching pattern. 
-* The `extract` will be called with the 
+* The `extract` method will be called with the 
 [match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) object when the pattern is found. This function must create and return a [result](#parsedresult) (or null to skip).
 
 ### Refiner
+
+Refiner is a heigher level module for improving or manipurating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
+
+```javascript
+var guessPMRefiner = new chrono.Refiner();
+guessPMRefiner.refine = function(text, results, opt) {
+    // If there is no AM/PM specified, 
+    //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
+    results.forEach(function (result) {
+        if (!result.start.isCertain('meridiem') 
+            &&  result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
+            
+            result.start.assign('meridiem', 1);
+            result.start.assign('hour', result.start.get('hour') + 12);
+        }
+    });
+    return results;
+} 
+
+var custom = new chrono.Chrono();
+custom.refiners.push(guessPMRefiner);
+
+// This will be parsed as PM.
+// > Tue Dec 16 2014 14:30:00 GMT-0600 (CST) 
+custom.parseDate("This is at 2.30");
+
+// Unless the 'AM' part is specified
+// > Tue Dec 16 2014 02:30:00 GMT-0600 (CST)
+custom.parseDate("This is at 2.30 AM");
+```
+
+
+
 
 
