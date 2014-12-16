@@ -1,7 +1,7 @@
 Chrono
 ======
 
-A natural language date parser in Javascript, designed for extracting date information from any given text. 
+A natural language date parser in Javascript, designed for extracting date information from any given text.
 
 Chrono supports most date and time formats, such as :
 
@@ -12,7 +12,7 @@ Chrono supports most date and time formats, such as :
 * Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
 * 2014-11-30T08:15:30-05:30
 
-#### Node.js 
+#### Node.js
 
     npm install chrono-node
 
@@ -22,52 +22,53 @@ Chrono supports most date and time formats, such as :
 
 #### Browserify
 
-Chrono's modules are linked and packaged using [Browserify](http://browserify.org) on `src/chrono.js`. By default, `chrono.js` file exports `chrono` object as a window global.
+Chrono's modules are linked and packaged using [Browserify](http://browserify.org) on `src/chrono.js`. By default, `chrono.js` file exports `chrono` object as a window global. If you need to use this package in a Browserify project, you need to derequire it after building the browserify bundle.
 
 ```
 browserify src/chrono.js --s chrono -o chrono.js
+derequire chrono.js > tmp && mv tmp chrono.js
 ```
 
 ## USAGE
 
-Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
+Simply pass a string to function `chrono.parseDate` or `chrono.parse`.
 
 ```javascript
 > var chrono = require('chrono-node')
 
-> chrono.parseDate('An appointment on Sep 12-13') 
+> chrono.parseDate('An appointment on Sep 12-13')
 Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
-    
+
 > chrono.parse('An appointment on Sep 12-13');
 [ { index: 18,
     text: 'Sep 12-13',
     tags: { ENMonthNameMiddleEndianParser: true },
-    start: 
+    start:
      { knownValues: [Object],
        impliedValues: [Object] },
-    end: 
+    end:
      { knownValues: [Object],
        impliedValues: [Object] } } ]
 ```
 
 ### Reference Date
 
-Today's "Friday" is different from last month's "Friday". 
-The meaning of the referenced dates depends on when they are mentioned. 
-Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
+Today's "Friday" is different from last month's "Friday".
+The meaning of the referenced dates depends on when they are mentioned.
+Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.
 
 ```javascript
 
-> chrono.parseDate('Friday', new Date(2012,7,23)); 
+> chrono.parseDate('Friday', new Date(2012,7,23));
 Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
 
-> chrono.parseDate('Friday', new Date(2012,7,1)); 
+> chrono.parseDate('Friday', new Date(2012,7,1));
 Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
 ```
 
 ### Detailed Parsed Results
 
-The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`. 
+The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`.
 
 ```javascript
 var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM')
@@ -84,8 +85,8 @@ results[0].end.date()    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 
 * `start` The parsed date components as a [ParsedComponents](#parsedcomponents) object
 * `end`   Similar to `start` but can be null.
-* `index` The location within the input text of this result  
-* `text`  The text this result that appears in the input 
+* `index` The location within the input text of this result
+* `text`  The text this result that appears in the input
 * `ref`   The [reference date](#reference-date) of this result
 
 #### ParsedComponents
@@ -110,19 +111,19 @@ Parser is a module for low-level pattern-based parsing. Ideally, each parser sho
 var christmasParser = new chrono.Parser();
 
 // Provide search pattern
-christmasParser.pattern = function () { return /Christmas/i } 
+christmasParser.pattern = function () { return /Christmas/i }
 
 // This function will be called when matched pattern is found
-christmasParser.extract = function(text, ref, match, opt) { 
-    
+christmasParser.extract = function(text, ref, match, opt) {
+
     // Return a parsed result, that is 25 December
     return new chrono.ParsedResult({
         ref: ref,
         text: match[0],
         index: match.index,
-        start: {    
-            day: 25, 
-            month: 12, 
+        start: {
+            day: 25,
+            month: 12,
         }
     });
 }
@@ -130,14 +131,14 @@ christmasParser.extract = function(text, ref, match, opt) {
 var custom = new chrono.Chrono();
 custom.parsers.push(christmasParser);
 
-custom.parseDate("I'll arrive at 2.30AM on Christmas night") 
+custom.parseDate("I'll arrive at 2.30AM on Christmas night")
 // Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
 
 ```
 
-To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`. 
-* The `pattern` method must return `RegExp` object of searching pattern. 
-* The `extract` will be called with the 
+To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`.
+* The `pattern` method must return `RegExp` object of searching pattern.
+* The `extract` will be called with the
 [match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) object when the pattern is found. This function must create and return a [result](#parsedresult) (or null to skip).
 
 ### Refiner
