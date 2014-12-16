@@ -98,61 +98,48 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 * `isCertain(component)`      return true if the value of the component is known.
 * `date()`                    Create a javascript Date
 
-## Extend Chrono
+## Extend or Customize Chrono
 
-
+Chrono’s extraction pipeline are mainly separated into 'parse' and ‘refine’ phases. During parsing, ‘parsers’ (`Parser`) are used to extract patterns from the input text. The parsed results ([ParsedResult](#parsedresult)) are the combined, sorted, then refine using ‘refiners’ (`Refiner`). In the refining phase, the results can be combined, filtered-out, or attached with additional information.
 
 ### Parser
 
-Parser is a module for low-level parsing. Each parser is designed to handle a single specific date format.
-In Chrono's parsing process, a number of parsers will be used togather to produce the results. 
-You should define new type of parsers for supporting new date formats or languages.
-
-Chrono creates parser objects by [factory method](http://javascript.info/tutorial/factory-constructor-pattern) pattern.
-To add a new type of parser, declare a new factory function in `chrono.parsers`. 
-Within that function:
-
-* Create an object from `chrono.Parser()` 
-* Override the object's `pattern` and `extract` methods 
-* Return the object
+Parser is a module for low-level pattern-based parsing. Ideally, each parser should be designed to handle a single specific date format. You can add new type of parsers for supporting new date formats or languages.
 
 ```javascript
-chrono.parsers.ChrismasParser = function(text, ref, opt) {
-  
-  // Create a chrono's base parser
-  var parser = chrono.Parser(text, ref, opt); 
-  
-  // Extend the parser with our pattern
-  parser.pattern = function () { return /Christmas/i } // Provide search pattern
-  parser.extract = function(text, index) { 
-    // Chrono will find all indexes of the text that match our pattern.
-    // We need to check and return the result 
-    var mentioned_text = text.substr(index).match(/Christmas/i)[0];
-    return new chrono.ParseResult({
-      referenceDate: ref,
-      text: mentioned_text,
-      index: index,
-      start: {
-        day: 25, month: 11, // It's 25 December
-        year: ref.getFullYear() // But we aren't sure about the 'year' 
-        impliedComponents: ['year'] 
-      }
-    });
-  }
+var christmasParser = new chrono.Parser();
 
-  return parser;
+// Provide search pattern
+christmasParser.pattern = function () { return /Christmas/i } 
+
+// This function will be called when matched pattern is found
+christmasParser.extract = function(text, ref, match, opt) { 
+    
+    // Return a parsed result, that is 25 December
+    return new chrono.ParsedResult({
+        ref: ref,
+        text: match[0],
+        index: match.index,
+        start: {    
+            day: 25, 
+            month: 12, 
+        }
+    });
 }
 
-...
+var custom = new chrono.Chrono();
+custom.parsers.push(christmasParser);
 
-// Lets chrono merge and refine our result (See. '2.30 AM')
-> chrono.parseDate("I'll arrive at 2.30AM on Christmas night")
-Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
+custom.parseDate("I'll arrive at 2.30AM on Christmas night") 
+// Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
 
 ```
 
+To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`. 
+* The `pattern` method must return `RegExp` object of searching pattern. 
+* The `extract` will be called with the 
+[match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) object when the pattern is found. This function must create and return a [result](#parsedresult) (or null to skip).
 
-
-
+### Refiner
 
 
