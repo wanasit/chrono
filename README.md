@@ -98,7 +98,7 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 * `isCertain(component)`      return true if the value of the component is known.
 * `date()`                    Create a javascript Date
 
-## Extend or Customize Chrono
+## Customize Chrono
 
 Chrono’s extraction pipeline are mainly separated into 'parse' and ‘refine’ phases. During parsing, ‘parsers’ (`Parser`) are used to extract patterns from the input text. The parsed results ([ParsedResult](#parsedresult)) are the combined, sorted, then refine using ‘refiners’ (`Refiner`). In the refining phase, the results can be combined, filtered-out, or attached with additional information.
 
