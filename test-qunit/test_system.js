@@ -90,3 +90,5 @@ test("Test - Override parser", function() {
 	var results = customParser.execute(originalText, new Date(), originalOpt);
 	ok(extractCalled == 2, 'Function [extract] called: ' + extractCalled);
 });
+
+

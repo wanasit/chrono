@@ -27,10 +27,10 @@
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "make-bundle": "browserify src/chrono.js -dv --s chrono -o chrono.js",
-    "make-minify": "browserify src/chrono.js -dv --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
+    "make-bundle": "browserify src/chrono.js -d --s chrono -o chrono.js",
+    "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
     "make": "npm run make-bundle & npm run make-minify",
-    "watch": "watchify src/chrono.js -dv --s chrono -o chrono.js",
+    "watch": "watchify src/chrono.js -d --s chrono -o chrono.js",
     "karma": "karma start"
   },
   "dependencies": {
