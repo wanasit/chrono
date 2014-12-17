@@ -1,7 +1,7 @@
 Chrono
 ======
 
-A natural language date parser in Javascript, designed for extracting date information from any given text. 
+A natural language date parser in Javascript, designed for extracting date information from any given text. (Java version is also available [here](https://github.com/wanasit/chrono-java))
 
 Chrono supports most date and time formats, such as :
 
@@ -147,7 +147,7 @@ Refiner is a heigher level module for improving or manipurating the results. Use
 ```javascript
 var guessPMRefiner = new chrono.Refiner();
 guessPMRefiner.refine = function(text, results, opt) {
-    // If there is no AM/PM specified, 
+    // If there is no AM/PM (meridiem) specified, 
     //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
     results.forEach(function (result) {
         if (!result.start.isCertain('meridiem') 
@@ -172,7 +172,6 @@ custom.parseDate("This is at 2.30");
 custom.parseDate("This is at 2.30 AM");
 ```
 
-
-
+In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
 
 
