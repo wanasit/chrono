@@ -7,7 +7,7 @@
     "url": "https://github.com/berryboy/chrono.git"
   },
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "directories": {
     "source": "./src",
     "test-qunit": "./test-qunit"
@@ -20,8 +20,8 @@
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
     "karma-qunit": "~0.1.1",
-    "karma-script-launcher": "~0.1.0",
     "minifyify": "^4.4.0",
+    "qunit": "^0.7.5",
     "qunitjs": "~1.14.0",
     "uglify-js": "~2.4.1",
     "watchify": "^2.1.1"
@@ -31,7 +31,8 @@
     "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "watchify src/chrono.js -d --s chrono -o chrono.js",
-    "karma": "karma start"
+    "karma": "karma start",
+    "test": "qunit -c chrono:src/chrono.js -t test-qunit/*.js"
   },
   "dependencies": {
     "moment": "^2.8.4"
