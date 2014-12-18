@@ -11,6 +11,13 @@ var ENCasualDateParser = require('./parsers/EN/ENCasualDateParser').Parser;
 var ENMergeDateTimeRefiner = require('./refiners/EN/ENMergeDateTimeRefiner').Refiner;
 var ENMergeDateRangeRefiner = require('./refiners/EN/ENMergeDateRangeRefiner').Refiner;
 
+
+var JPStandardParser = require('./parsers/JP/JPStandardParser').Parser;
+var JPCasualDateParser = require('./parsers/JP/JPCasualDateParser').Parser;
+
+var JPMergeDateRangeRefiner = require('./refiners/JP/JPMergeDateRangeRefiner').Refiner;
+
+
 var OverlapRemovalRefiner = require('./refiners/OverlapRemovalRefiner').Refiner;
 var ExtractTimezoneOffsetRefiner = require('./refiners/ExtractTimezoneOffsetRefiner').Refiner;
 var ExtractTimezoneAbbrRefiner = require('./refiners/ExtractTimezoneAbbrRefiner').Refiner;
@@ -19,7 +26,10 @@ var UnlikelyFormatFilter = require('./refiners/UnlikelyFormatFilter').Refiner;
 
 exports.strictOption = function () {
     return {
+
         parsers: [
+        
+            // EN
         	new ENISOFormatParser(),
             new ENDeadlineFormatParser(),
             new ENMonthNameLittleEndianParser(),
@@ -27,11 +37,21 @@ exports.strictOption = function () {
             new ENSlashDateFormatParser(),
             new ENTimeAgoFormatParser(),           
             new ENTimeExpessionParser(),
+
+            // JP
+            new JPStandardParser(),
         ],
+
         refiners: [
+            // Removing overlaping first
             new OverlapRemovalRefiner(),
+            
+            // ETC
             new ENMergeDateTimeRefiner(),
             new ENMergeDateRangeRefiner(),
+            new JPMergeDateRangeRefiner(),
+
+            // Extract additional info later
             new ExtractTimezoneOffsetRefiner(),
             new ExtractTimezoneAbbrRefiner(),
             new UnlikelyFormatFilter()
@@ -43,12 +63,12 @@ exports.strictOption = function () {
 exports.casualOption = function () {
 
     var options = exports.strictOption();
+    // EN
     options.parsers.unshift(new ENCasualDateParser());
     options.parsers.unshift(new ENWeekdayParser());
-    // options.parsers.add(new ENWeekExpressionParser());
-    // options.parsers.add(new JPCasualDateExpressionParser());
 
-    // options.refiners.add(2, new ENMergeWeekdayRefiner());
+    // JP
+    options.parsers.unshift(new JPCasualDateParser());
     
     return options;
 };

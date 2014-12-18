@@ -8,7 +8,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var CONST  = require('../../constants/EN');
+var util  = require('../../utils/EN');
 
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
         'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
@@ -45,7 +45,7 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         var startMoment = moment(ref);
 
         var month = match[MONTH_NAME_GROUP];
-        month = CONST.MONTH_OFFSET[month.toLowerCase()];
+        month = util.MONTH_OFFSET[month.toLowerCase()];
 
         var day = match[DATE_GROUP];
         day = parseInt(day);
@@ -95,7 +95,7 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         // Weekday component
         if (match[WEEKDAY_GROUP]) {
             var weekday = match[WEEKDAY_GROUP];
-            weekday = CONST.WEEKDAY_OFFSET[weekday.toLowerCase()]
+            weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()]
             result.start.assign('weekday', weekday);
         }
 
