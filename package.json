@@ -15,15 +15,15 @@
   "main": "./src/chrono",
   "devDependencies": {
     "browserify": "^6.3.3",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.5",
     "karma": "~0.10.4",
     "karma-browserify": "^1.0.0",
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
     "karma-qunit": "~0.1.1",
     "minifyify": "^4.4.0",
-    "qunit": "^0.7.5",
-    "qunitjs": "~1.14.0",
-    "uglify-js": "~2.4.1",
+    "qunit": "git://github.com/wanasit/node-qunit.git",
     "watchify": "^2.1.1"
   },
   "scripts": {
@@ -32,7 +32,8 @@
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "watchify src/chrono.js -d --s chrono -o chrono.js",
     "karma": "karma start",
-    "test": "qunit -c chrono:src/chrono.js -t test-qunit/*.js"
+    "test": "qunit -c chrono:src/chrono.js -p src -t test-qunit/*.js --cov",
+    "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "moment": "^2.8.4"
