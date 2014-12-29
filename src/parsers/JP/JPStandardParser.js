@@ -71,7 +71,7 @@ exports.Parser = function JPStandardParser(){
             year = parseInt(year);
 
             if (match[ERA_GROUP] == '平成') {
-                year += 1989;
+                year += 1988;
             } else if (match[ERA_GROUP] == '昭和') {
                 year += 1926;
             }
