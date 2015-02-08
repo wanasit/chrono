@@ -9,7 +9,7 @@ exports.Refiner = function UnlikelyFormatFilter() {
 
     this.isValid = function(text, result, opt) { 
 
-        if (result.text.replace(' ','').match(/^\d*\.\d*$/)) {
+        if (result.text.replace(' ','').match(/^\d*(\.\d*)?$/)) {
             return false;
         }
 

@@ -93,6 +93,10 @@ test('Test - Random text', function() {
 
 test("Test - Random non-date patterns", function() {
 
+    var text = ' 3'
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
     var text = ' 0.5 '
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) )
