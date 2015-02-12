@@ -15,7 +15,7 @@ var PATTERN = new RegExp('(\\W|^)'
             + '([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})'
             + '(?:T' //..
                 + '([0-9]{1,2}):([0-9]{1,2})' // hh:mm
-                + '(?::([0-9]{1,2})(?:\\.\\d{1,4})?)?' // :ss.s
+                + '(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?' // :ss.s
                 + '(?:Z|([+-]\\d{2}):?(\\d{2})?)' // TZD (Z or ±hh:mm or ±hhmm or ±hh)
             + ')?'  //..
             + '(?=\\W|$)', 'i');
@@ -26,8 +26,9 @@ var DATE_NUMBER_GROUP  = 4;
 var HOUR_NUMBER_GROUP  = 5;
 var MINUTE_NUMBER_GROUP = 6;
 var SECOND_NUMBER_GROUP = 7;
-var TZD_HOUR_OFFSET_GROUP = 8;
-var TZD_MINUTE_OFFSET_GROUP = 9;
+var MILLISECOND_NUMBER_GROUP = 8;
+var TZD_HOUR_OFFSET_GROUP = 9;
+var TZD_MINUTE_OFFSET_GROUP = 10;
 
 exports.Parser = function ENISOFormatParser(){
     Parser.call(this);
@@ -65,6 +66,12 @@ exports.Parser = function ENISOFormatParser(){
 
                 result.start.assign('second',
                         parseInt(match[SECOND_NUMBER_GROUP]));
+            }
+
+            if (match[MILLISECOND_NUMBER_GROUP] != null) {
+
+                result.start.assign('millisecond',
+                        parseInt(match[MILLISECOND_NUMBER_GROUP]));
             }
 
             if (match[TZD_HOUR_OFFSET_GROUP] == null) {
