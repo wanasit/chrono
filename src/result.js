@@ -45,6 +45,7 @@ function ParsedComponents (components, ref){
     this.imply('hour', 12);
     this.imply('minute', 0);
     this.imply('second', 0);
+    this.imply('millisecond', 0);
 }
 
 ParsedComponents.prototype.clone = function () {
