@@ -45,6 +45,7 @@ function ParsedComponents (components, ref){
     this.imply('hour', 12);
     this.imply('minute', 0);
     this.imply('second', 0);
+    this.imply('millisecond', 0);
 }
 
 ParsedComponents.prototype.clone = function () {
@@ -83,7 +84,8 @@ ParsedComponents.prototype.date = function() {
     dateMoment.set('hour', this.get('hour'));
     dateMoment.set('minute', this.get('minute'));
     dateMoment.set('second', this.get('second'));
-    
+    dateMoment.set('millisecond', this.get('millisecond'));
+
     // Javascript Date Object return minus timezone offset
     var currentTimezoneOffset = -new Date().getTimezoneOffset();
     var targetTimezoneOffset = this.isCertain('timezoneOffset') ? 

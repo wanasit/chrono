@@ -21,6 +21,8 @@ test("Test - Single Expression", function() {
         ok(!result.start.isCertain('year'))
         ok(result.start.isCertain('hour'))
         ok(result.start.isCertain('minute'))
+        ok(!result.start.isCertain('second'))
+        ok(!result.start.isCertain('millisecond'))
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
@@ -39,8 +41,11 @@ test("Test - Single Expression", function() {
         ok(result.start, JSON.stringify(result.start) )
         ok(result.start.get('hour') == 20, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(!result.start.isCertain('second'))
+        ok(!result.start.isCertain('millisecond'))
 
-        var resultDate = result.start.date();
+
+      var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 20, 10);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
@@ -57,8 +62,11 @@ test("Test - Single Expression", function() {
         ok(result.start, JSON.stringify(result.start) )
         ok(result.start.get('hour') == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 30, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(!result.start.isCertain('second'))
+        ok(!result.start.isCertain('millisecond'))
 
-        var resultDate = result.start.date();
+
+      var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12, 30);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
@@ -106,6 +114,8 @@ test("Test - Range Expression", function() {
         ok(!result.start.isCertain('year'))
         ok(result.start.isCertain('hour'))
         ok(result.start.isCertain('minute'))
+        ok(!result.start.isCertain('second'))
+        ok(!result.start.isCertain('millisecond'))
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
@@ -120,6 +130,8 @@ test("Test - Range Expression", function() {
         ok(!result.end.isCertain('year'))
         ok(result.end.isCertain('hour'))
         ok(result.end.isCertain('minute'))
+        ok(!result.end.isCertain('second'))
+        ok(!result.end.isCertain('millisecond'))
 
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 12, 32);
@@ -145,9 +157,9 @@ test("Test - Range Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
         
         ok(result.end, JSON.stringify(result.start) )
-        ok(result.end.get('hour') == 23, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-        ok(result.end.get('minute') == 0, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-        ok(result.end.get('meridiem') == 1, 'Test Result - (Day) ' + JSON.stringify(result.start))
+        ok(result.end.get('hour') == 23, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('minute') == 0, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('meridiem') == 1, 'Test Result - (Day) ' + JSON.stringify(result.end) )
 
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 23, 0);
@@ -187,6 +199,9 @@ test("Test - Date + Time Expression", function() {
         ok(result.start.get('day') == 18, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('hour') == 3, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
+        ok(!result.start.isCertain('millisecond'))
 
         var resultDate = result.start.date();
         var expectDate = new Date(2014, 4-1, 18, 3, 0);
@@ -207,7 +222,9 @@ test("Test - Date + Time Expression", function() {
         ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('hour') == 22, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 12, 'Test Result - (minute) ' + JSON.stringify(result.start) )
-        ok(result.start.get('second') == 59, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 59, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
+        ok(!result.start.isCertain('millisecond'))
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 22, 12, 59);
@@ -228,19 +245,25 @@ test("Test - Date + Time Expression", function() {
         ok(result.start.get('day') == 18, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('hour') == 7, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
         ok(result.start.get('meridiem') == 0, 'Test Result - (meridiem) ' + JSON.stringify(result.start) )
+        ok(!result.start.isCertain('millisecond'))
 
         var resultDate = result.start.date();
         var expectDate = new Date(2014, 4-1, 18, 7, 0);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date ' + resultDate +'/' +expectDate)
 
 
-        ok(result.end.get('year') == 2014, 'Test Result - (Year) ' + JSON.stringify(result.start) )
-        ok(result.end.get('month') == 4, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-        ok(result.end.get('day') == 18, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-        ok(result.end.get('hour') == 8, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
-        ok(result.end.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
-        ok(result.end.get('meridiem') == 0, 'Test Result - (meridiem) ' + JSON.stringify(result.start) )
+        ok(result.end.get('year') == 2014, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+        ok(result.end.get('month') == 4, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+        ok(result.end.get('day') == 18, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('hour') == 8, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+        ok(result.end.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.end) )
+        ok(result.end.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.end) )
+        ok(result.end.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.end) )
+        ok(result.end.get('meridiem') == 0, 'Test Result - (meridiem) ' + JSON.stringify(result.end) )
+        ok(!result.end.isCertain('millisecond'))
 
         var resultDate = result.end.date();
         var expectDate = new Date(2014, 4-1, 18, 8, 0);
