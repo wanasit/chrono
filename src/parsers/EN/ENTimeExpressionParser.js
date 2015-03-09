@@ -132,6 +132,11 @@ exports.Parser = function ENTimeExpressionParser(){
             return result;
         }
 
+        // Pattern "YY.YY -XXXX" is more like timezone offset
+        if (match[0].match(/^\s*(\+|\-)\d{3,4}$/)) {
+            return result;
+        }
+
         if(result.end == null){
             result.end = result.start.clone();
         }

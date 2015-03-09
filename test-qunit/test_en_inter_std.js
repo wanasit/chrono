@@ -127,6 +127,22 @@ test("Test - Compare with native js", function() {
     ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
 
 
+    var text = 'Sat, 21 Feb 2015 11:50:48 -0500';
+    var result = chrono.parse(text)[0];
+    var expect = new Date(text);
+
+    ok(result.text == text);
+    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
+
+
+    var text = '22 Feb 2015 04:12:00 -0000';
+    var result = chrono.parse(text)[0];
+    var expect = new Date(text);
+
+    ok(result.text == text);
+    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
+
+
     var text = '0000-01-01T00:00:00-00:00';
     var result = chrono.parse(text)[0];
     var expect = new Date(text);
