@@ -4721,7 +4721,7 @@ ParsedComponents.prototype.date = function() {
     dateMoment.set('millisecond', this.get('millisecond'));
 
     // Javascript Date Object return minus timezone offset
-    var currentTimezoneOffset = -new Date().getTimezoneOffset();
+    var currentTimezoneOffset = -dateMoment.zone();
     var targetTimezoneOffset = this.isCertain('timezoneOffset') ? 
         this.get('timezoneOffset') : currentTimezoneOffset;
 
