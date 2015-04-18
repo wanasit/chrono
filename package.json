@@ -32,7 +32,7 @@
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "watchify src/chrono.js -d --s chrono -o chrono.js",
     "karma": "karma start",
-    "test": "qunit -c chrono:src/chrono.js -p src -t test-qunit/*.js --cov",
+    "test": "qunit -l '{summary:true, tests: true}' -c chrono:src/chrono.js -p src -t test-qunit/*.js --cov",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
