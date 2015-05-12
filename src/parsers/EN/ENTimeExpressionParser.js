@@ -104,12 +104,13 @@ exports.Parser = function ENTimeExpressionParser(){
         // ----- AM & PM  
         if(match[AM_PM_HOUR_GROUP] != null) {
             if(hour > 12) return null;
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "am"){
+            var ampm = match[AM_PM_HOUR_GROUP].replace(/\./g, "").toLowerCase();
+            if(ampm == "am"){
                 meridiem = 0; 
                 if(hour == 12) hour = 0;
             }
             
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "pm"){
+            if(ampm == "pm"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
