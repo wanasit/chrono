@@ -137,6 +137,27 @@ test('Test - Date patterns', function() {
     resultDate = results[0].start.date();
     ok(results.length == 1, JSON.stringify(results) )
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.8.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.08.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(2015, 7, 13, 12, 0);
+    text = "2015.08.13";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
 });
 
 test("Test - Random non-date patterns", function() {
