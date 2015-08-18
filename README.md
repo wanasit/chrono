@@ -18,6 +18,10 @@ Chrono supports most date and time formats, such as :
 
     npm install chrono-node
 
+#### Bower
+
+    bower install chrono
+
 #### Browser
 
     <script src="https://rawgithub.com/wanasit/chrono/master/chrono.min.js"></script>
