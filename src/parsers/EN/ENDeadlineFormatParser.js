@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(within|in)\s*([0-9]+)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
 
 exports.Parser = function ENDeadlineFormatParser(){
     Parser.call(this);
@@ -27,7 +27,11 @@ exports.Parser = function ENDeadlineFormatParser(){
         });
 
         var num = match[3];
-        num = parseInt(num);
+        if (num === 'a' || num === 'an'){
+            num = 1;
+        } else {
+            num = parseInt(num);
+        }
 
         var date = moment(ref);
         if (match[4].match(/day/)) {

@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(?:within\s*)?([0-9]+)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
 
 exports.Parser = function ENTimeAgoFormatParser(){
     Parser.call(this);
@@ -29,8 +29,12 @@ exports.Parser = function ENTimeAgoFormatParser(){
         });
 
         var num = match[2];
-        num = parseInt(num);
-
+        if(num === 'a' || num === 'an'){
+            num = 1;
+        } else {
+            num = parseInt(num);
+        }
+        
         var date = moment(ref);
         if (match[3].match(/day/)) {
 
