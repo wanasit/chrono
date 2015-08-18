@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(Sun|Sunday|Mon|Monday|Tue|Tuesday|Wed|Wednesday|Thur|Thursday|Fri|Friday|Sat|Saturday)?\s*\,?\s*([0-9]{1,2})[\/\.]([0-9]{1,2})([\/\.]([0-9]{4}|[0-9]{2}))?(\W|$)/i;
+var PATTERN = /(\W|^)(sun(?:day)?|mon(?:day)|tue(?:sday)|wed(?:nesday)|thu(?:rsday)|fri(?:day)|sat(?:urday))?\s*\,?\s*([0-9]{1,2})[\/\.\-]([0-9]{1,2})([\/\.\-]([0-9]{4}|[0-9]{2}))?(\W|$)/i;
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
@@ -39,12 +39,26 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         var month = match[3];
         var day   = match[4];
         
-        
-        
         month = parseInt(month);
         day  = parseInt(day);
         year = parseInt(year);
-        if(month < 1 || month > 12) return null;
+
+        if(month < 1 || month > 12) {
+            if(month > 12) {
+                // dd/mm/yyyy date format if day looks like a month, and month
+                // looks like a day.
+                if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
+                    // unambiguous
+                    var tday = month;
+                    month = day;
+                    day = tday;
+                }
+                else {
+                    // both month and day are <= 12
+                    return null;
+                }
+            }
+        }
         if(day < 1 || day > 31) return null;
 
         if(year < 100){
@@ -55,7 +69,7 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
             }
         }
         
-        text = month+'/'+day+'/'+year
+        text = month+'/'+day+'/'+year;
         date = moment(text,'M/D/YYYY');
         if(!date || date.date() != day || date.month() != (month-1)) {
             return null;

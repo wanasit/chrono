@@ -1,4 +1,5 @@
 var ENISOFormatParser = require('./parsers/EN/ENISOFormatParser').Parser;
+var ENDateFormatParser = require('./parsers/EN/ENDateFormatParser').Parser;
 var ENDeadlineFormatParser = require('./parsers/EN/ENDeadlineFormatParser').Parser;
 var ENMonthNameLittleEndianParser = require('./parsers/EN/ENMonthNameLittleEndianParser').Parser;
 var ENMonthNameMiddleEndianParser = require('./parsers/EN/ENMonthNameMiddleEndianParser').Parser;
@@ -31,6 +32,7 @@ exports.strictOption = function () {
         
             // EN
         	new ENISOFormatParser(),
+            new ENDateFormatParser(),
             new ENDeadlineFormatParser(),
             new ENMonthNameLittleEndianParser(),
             new ENMonthNameMiddleEndianParser(),
