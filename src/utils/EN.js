@@ -41,6 +41,8 @@ exports.MONTH_OFFSET = {
     'september': 9,
     'sep': 9,
     'sep.': 9,
+    'sept': 9,
+    'sept.': 9,
     'october': 10,
     'oct': 10,
     'oct.': 10,
