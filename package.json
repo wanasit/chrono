@@ -7,7 +7,7 @@
     "url": "https://github.com/berryboy/chrono.git"
   },
   "license": "MIT",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "directories": {
     "source": "./src",
     "test-qunit": "./test-qunit"
@@ -22,7 +22,7 @@
     "karma-chrome-launcher": "~0.1.0",
     "karma-firefox-launcher": "~0.1.0",
     "karma-qunit": "~0.1.1",
-    "minifyify": "^4.4.0",
+    "minifyify": "^7.0.6",
     "qunit": "git://github.com/wanasit/node-qunit.git",
     "watchify": "^2.1.1"
   },

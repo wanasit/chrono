@@ -40,6 +40,50 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date() ' + resultDate +'/' +expectDate)
     }    
 
+    var text = "1994-11-05T13:15:30";
+    var results = chrono.parse(text, new Date(2012,7,8));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) )
+        ok(result.start.get('year') == 1994, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 11, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 5, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 15, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 30, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('timezoneOffset') == 0, 'Test Result - (Timezone) ' + JSON.stringify(result.start) )
+        ok(result.text == text, result.text)
+        
+        var resultDate = result.start.date();
+        var expectDate = new Date(784041330000);
+        
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date() ' + resultDate +'/' +expectDate)
+    }       
+
+    var text = "2015-07-31T12:00:00";
+    var results = chrono.parse(text, new Date(2012,7,8));
+    ok(results.length == 1, JSON.stringify( results ) )
+    
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) )
+        ok(result.start.get('year') == 2015, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 31, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 12, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 0, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('timezoneOffset') == 0, 'Test Result - (Timezone) ' + JSON.stringify(result.start) )
+        ok(result.text == text, result.text)
+        
+        var resultDate = result.start.date();
+        var expectDate = new Date(1438344000000);
+        
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date() ' + resultDate +'/' +expectDate)
+    }    
+
 
     var text = "1994-11-05T13:15:30Z";
     var results = chrono.parse(text, new Date(2012,7,8));
