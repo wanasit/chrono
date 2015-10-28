@@ -3656,7 +3656,7 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
 var PATTERN = new RegExp('(\\W|^)' +
         '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' + 
         '([0-9]{1,2})(?:st|nd|rd|th)?' + 
-        '(?:\\s*(?:to|\\-|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
+        '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
         '(?:(\\s*[0-9]{2,4}(?![^\\s]\\d))(\\s*BE)?)?' + 
         '(?=\\W|$)', 'i'
@@ -4074,7 +4074,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 

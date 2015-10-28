@@ -22,7 +22,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 

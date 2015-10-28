@@ -58,7 +58,11 @@ test('Test - Random text', function() {
     var results = chrono.parse(text);
     ok(results.length == 1, JSON.stringify(results) )
     ok(results[0].text.length == 29, JSON.stringify(results) )
-
+	
+    var text = "SUN 15SEP 11:05 AM – 12:50 PM"
+    var results = chrono.parse(text);
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(results[0].end != null, JSON.stringify(results) )
     
     var text = "FRI 13SEP 1:29 PM - FRI 13SEP 3:29 PM"
     var results = chrono.parse(text);
