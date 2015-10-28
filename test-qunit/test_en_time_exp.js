@@ -71,24 +71,24 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 	
-	var text = "1230p";
+	var text = "5:16p";
     var results = chrono.parse(text, new Date(2012,7,10));
     ok(results.length == 1, JSON.stringify( results ) )
 
     var result = results[0];
     if(result){
         ok(result.index == 0, 'Wrong index')
-        ok(result.text == '1230p', result.text )
+        ok(result.text == '5:16p', result.text )
 
         ok(result.start, JSON.stringify(result.start) )
-        ok(result.start.get('hour') == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) )
-        ok(result.start.get('minute') == 30, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 17, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 16, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(!result.start.isCertain('second'))
         ok(!result.start.isCertain('millisecond'))
 
 
       var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 30);
+        var expectDate = new Date(2012, 7, 10, 17, 16);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
