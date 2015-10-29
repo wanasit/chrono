@@ -3428,7 +3428,7 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = new RegExp('(\\W|^)' 
-            + '([0-9]{4})[\\-\\.]([0-9]{1,2})[\\-\\.]([0-9]{1,2})'
+            + '([0-9]{4})[\\-\\.\\/]([0-9]{1,2})[\\-\\.\\/]([0-9]{1,2})'
             + '(?=\\W|$)', 'i');
 
 var YEAR_NUMBER_GROUP = 2;
