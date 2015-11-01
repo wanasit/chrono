@@ -3656,7 +3656,7 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
 var PATTERN = new RegExp('(\\W|^)' +
         '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' + 
         '([0-9]{1,2})(?:st|nd|rd|th)?' + 
-        '(?:\\s*(?:to|\\-|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
+        '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
         '(?:(\\s*[0-9]{2,4}(?![^\\s]\\d))(\\s*BE)?)?' + 
         '(?=\\W|$)', 'i'
@@ -4069,12 +4069,12 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(AM|PM|A\\.M\\.|P\\.M\\.))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
     "(?=\\W|$)", 'i');
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
@@ -4082,7 +4082,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(AM|PM|A\\.M\\.|P\\.M\\.))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
     "(?=\\W|$)", 'i');
 
 var HOUR_GROUP    = 2;
@@ -4156,13 +4156,13 @@ exports.Parser = function ENTimeExpressionParser(){
         // ----- AM & PM  
         if(match[AM_PM_HOUR_GROUP] != null) {
             if(hour > 12) return null;
-            var ampm = match[AM_PM_HOUR_GROUP].replace(/\./g, "").toLowerCase();
-            if(ampm == "am"){
+            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            if(ampm == "a"){
                 meridiem = 0; 
                 if(hour == 12) hour = 0;
             }
             
-            if(ampm == "pm"){
+            if(ampm == "p"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
@@ -4236,7 +4236,7 @@ exports.Parser = function ENTimeExpressionParser(){
 
             if (hour > 12) return null;
 
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "am"){
+            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "a"){
                 meridiem = 0; 
                 if(hour == 12) {
                     hour = 0;
@@ -4246,7 +4246,7 @@ exports.Parser = function ENTimeExpressionParser(){
                 }
             }
             
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "pm"){
+            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }

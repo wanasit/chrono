@@ -17,12 +17,12 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(AM|PM|A\\.M\\.|P\\.M\\.))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
     "(?=\\W|$)", 'i');
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
@@ -30,7 +30,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(AM|PM|A\\.M\\.|P\\.M\\.))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
     "(?=\\W|$)", 'i');
 
 var HOUR_GROUP    = 2;
@@ -104,13 +104,13 @@ exports.Parser = function ENTimeExpressionParser(){
         // ----- AM & PM  
         if(match[AM_PM_HOUR_GROUP] != null) {
             if(hour > 12) return null;
-            var ampm = match[AM_PM_HOUR_GROUP].replace(/\./g, "").toLowerCase();
-            if(ampm == "am"){
+            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            if(ampm == "a"){
                 meridiem = 0; 
                 if(hour == 12) hour = 0;
             }
             
-            if(ampm == "pm"){
+            if(ampm == "p"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
@@ -184,7 +184,7 @@ exports.Parser = function ENTimeExpressionParser(){
 
             if (hour > 12) return null;
 
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "am"){
+            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "a"){
                 meridiem = 0; 
                 if(hour == 12) {
                     hour = 0;
@@ -194,7 +194,7 @@ exports.Parser = function ENTimeExpressionParser(){
                 }
             }
             
-            if(match[AM_PM_HOUR_GROUP].replace(".", "").toLowerCase() == "pm"){
+            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
