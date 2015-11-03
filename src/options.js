@@ -1,9 +1,9 @@
 var ENISOFormatParser = require('./parsers/EN/ENISOFormatParser').Parser;
-var ENDateFormatParser = require('./parsers/EN/ENDateFormatParser').Parser;
 var ENDeadlineFormatParser = require('./parsers/EN/ENDeadlineFormatParser').Parser;
 var ENMonthNameLittleEndianParser = require('./parsers/EN/ENMonthNameLittleEndianParser').Parser;
 var ENMonthNameMiddleEndianParser = require('./parsers/EN/ENMonthNameMiddleEndianParser').Parser;
 var ENSlashDateFormatParser = require('./parsers/EN/ENSlashDateFormatParser').Parser;
+var ENSlashDateFormatStartWithYearParser = require('./parsers/EN/ENSlashDateFormatStartWithYearParser').Parser;
 var ENTimeAgoFormatParser = require('./parsers/EN/ENTimeAgoFormatParser').Parser;
 var ENTimeExpessionParser = require('./parsers/EN/ENTimeExpressionParser').Parser;
 var ENWeekdayParser = require('./parsers/EN/ENWeekdayParser').Parser;
@@ -31,12 +31,12 @@ exports.strictOption = function () {
         parsers: [
         
             // EN
-        	new ENISOFormatParser(),
-            new ENDateFormatParser(),
+            new ENISOFormatParser(),
             new ENDeadlineFormatParser(),
             new ENMonthNameLittleEndianParser(),
             new ENMonthNameMiddleEndianParser(),
             new ENSlashDateFormatParser(),
+            new ENSlashDateFormatStartWithYearParser(),
             new ENTimeAgoFormatParser(),           
             new ENTimeExpessionParser(),
 

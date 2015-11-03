@@ -1,13 +1,22 @@
 /*
-    
-    
+    Date format with slash "/" (also "-" and ".") between numbers 
+    - Tuesday 11/3/2015
+    - 11/3/2015
+    - 11/3
 */
-
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(sun(?:day)?|mon(?:day)|tue(?:sday)|wed(?:nesday)|thu(?:rsday)|fri(?:day)|sat(?:urday))?\s*\,?\s*([0-9]{1,2})[\/\.\-]([0-9]{1,2})([\/\.\-]([0-9]{4}|[0-9]{2}))?(\W|$)/i;
+var PATTERN = new RegExp('(\\W|^)' + 
+    '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)?' +
+    '\\s*\\,?\\s*' + 
+    '([0-9]{1,2})[\\/\\.\\-]([0-9]{1,2})' + 
+    '(' + 
+        '[\\/\\.\\-]' + 
+        '([0-9]{4}|[0-9]{2}))?' + 
+    '(\\W|$)', 'i');
+
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
@@ -17,7 +26,13 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){
         
-        if(match[1] == '/' || match[7] == '/') return;
+        if(match[1] == '/' || match[7] == '/') {
+            // Long skip, if there is some overlapping like:
+            // XX[/YY/ZZ]
+            // [XX/YY/]ZZ
+            match.index += match[0].length
+            return;
+        }
 
         var index = match.index + match[1].length;
         var text = match[0].substr(match[1].length, match[0].length - match[7].length);

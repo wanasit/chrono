@@ -1,11 +1,11 @@
 /*
     ISO 8601
     http://www.w3.org/TR/NOTE-datetime
-    // YYYY-MM-DD
-    // YYYY-MM-DDThh:mmTZD
-    // YYYY-MM-DDThh:mm:ssTZD
-    // YYYY-MM-DDThh:mm:ss.sTZD 
-    // TZD = (Z or +hh:mm or -hh:mm)
+    - YYYY-MM-DD
+    - YYYY-MM-DDThh:mmTZD
+    - YYYY-MM-DDThh:mm:ssTZD
+    - YYYY-MM-DDThh:mm:ss.sTZD 
+    - TZD = (Z or +hh:mm or -hh:mm)
 */
 var moment = require('moment');
 var Parser = require('../parser').Parser;
