@@ -11,7 +11,7 @@ var PATTERN = /(today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(mornin
     
 exports.Parser = function ENCasualDateParser(){
     
-    Parser.call(this);
+    Parser.apply(this, arguments);
         
     this.pattern = function() { return PATTERN; }
     

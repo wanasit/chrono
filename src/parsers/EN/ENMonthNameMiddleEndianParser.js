@@ -21,7 +21,7 @@ var regShortPattern = /(\W|^)((Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|S
 
 
 exports.Parser = function ENMonthNameMiddleEndianParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
 
 
     this.pattern = function() { return regShortPattern; }

@@ -31,7 +31,7 @@ var TZD_HOUR_OFFSET_GROUP = 9;
 var TZD_MINUTE_OFFSET_GROUP = 10;
 
 exports.Parser = function ENISOFormatParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
     

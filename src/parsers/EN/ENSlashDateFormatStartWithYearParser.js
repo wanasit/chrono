@@ -18,7 +18,7 @@ var MONTH_NUMBER_GROUP = 3;
 var DATE_NUMBER_GROUP  = 4;
 
 exports.Parser = function ENSlashDateFormatStartWithYearParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
     

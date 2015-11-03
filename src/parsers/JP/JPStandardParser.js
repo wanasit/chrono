@@ -18,7 +18,7 @@ var MONTH_GROUP       = 5;
 var DAY_GROUP         = 6;
 
 exports.Parser = function JPStandardParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
     

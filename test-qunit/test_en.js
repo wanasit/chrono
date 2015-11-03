@@ -90,8 +90,7 @@ test('Test - Random text', function() {
     var results = chrono.parse(text);
 
     ok(results.length == 1, JSON.stringify(results) )
-    ok(results[0].text == '2014-07-07T04:00:00Z', JSON.stringify(results) )
-    
+    ok(results[0].text == '2014-07-07T04:00:00Z', JSON.stringify(results))
 })
 
 test("Test - Random non-date patterns", function() {

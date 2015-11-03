@@ -22,7 +22,7 @@ var WEEKDAY_GROUP = 3;
 var POSTFIX_GROUP = 4;
 
 exports.Parser = function ENWeekdayParser() {
-    Parser.call(this);
+    Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
     

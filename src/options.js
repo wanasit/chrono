@@ -25,23 +25,23 @@ var ExtractTimezoneAbbrRefiner = require('./refiners/ExtractTimezoneAbbrRefiner'
 var UnlikelyFormatFilter = require('./refiners/UnlikelyFormatFilter').Refiner;
 
 
-exports.strictOption = function () {
-    return {
+function baseOption(strictMode) {
 
+    return {
         parsers: [
         
             // EN
-            new ENISOFormatParser(),
-            new ENDeadlineFormatParser(),
-            new ENMonthNameLittleEndianParser(),
-            new ENMonthNameMiddleEndianParser(),
-            new ENSlashDateFormatParser(),
-            new ENSlashDateFormatStartWithYearParser(),
-            new ENTimeAgoFormatParser(),           
-            new ENTimeExpessionParser(),
+            new ENISOFormatParser(strictMode),
+            new ENDeadlineFormatParser(strictMode),
+            new ENMonthNameLittleEndianParser(strictMode),
+            new ENMonthNameMiddleEndianParser(strictMode),
+            new ENSlashDateFormatParser(strictMode),
+            new ENSlashDateFormatStartWithYearParser(strictMode),
+            new ENTimeAgoFormatParser(strictMode),           
+            new ENTimeExpessionParser(strictMode),
 
             // JP
-            new JPStandardParser(),
+            new JPStandardParser(strictMode),
         ],
 
         refiners: [
@@ -59,12 +59,19 @@ exports.strictOption = function () {
             new UnlikelyFormatFilter()
         ]
     }
+}
+
+
+
+exports.strictOption = function () {
+    return baseOption(true);
 };
 
 
 exports.casualOption = function () {
 
-    var options = exports.strictOption();
+    var options = baseOption(false);
+    
     // EN
     options.parsers.unshift(new ENCasualDateParser());
     options.parsers.unshift(new ENWeekdayParser());

@@ -56,6 +56,35 @@ test("Test - Create & manipulate date results", function() {
 	ok(components.get('year') == 2013);
 });
 
+test("Test - Calendar Checking", function() {
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24});
+	ok(components.isPossibleDate() == true);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12});
+	ok(components.isPossibleDate() == true);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30});
+	ok(components.isPossibleDate() == true);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 30});
+	ok(components.isPossibleDate() == true);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 13, day: 24});
+	ok(components.isPossibleDate() == false);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 32});
+	ok(components.isPossibleDate() == false);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:24});
+	ok(components.isPossibleDate() == false);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 60});
+	ok(components.isPossibleDate() == false);
+
+	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
+	ok(components.isPossibleDate() == false);
+});
 
 test("Test - Override parser", function() {
 
@@ -64,7 +93,7 @@ test("Test - Override parser", function() {
 	var extractCalled = 0;
 
 	function CustomParser() {
-		chrono.Parser.call(this);
+		chrono.Parser.apply(this, arguments);
 
 		this.pattern = function () { return /pattern/; }
 		this.extract = function(text, ref, match, opt){
@@ -83,8 +112,6 @@ test("Test - Override parser", function() {
 			return null;
 		}
 	}
-
-
 
 	var customParser = new CustomParser();
 	var results = customParser.execute(originalText, new Date(), originalOpt);

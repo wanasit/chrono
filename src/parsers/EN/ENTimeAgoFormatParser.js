@@ -10,7 +10,7 @@ var ParsedResult = require('../../result').ParsedResult;
 var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
 
 exports.Parser = function ENTimeAgoFormatParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
 

@@ -53,7 +53,7 @@ ParsedComponents.prototype.clone = function () {
     component.knownValues = JSON.parse(JSON.stringify(this.knownValues));
     component.impliedValues = JSON.parse(JSON.stringify(this.impliedValues));
     return component;
-}
+};
 
 ParsedComponents.prototype.get = function(component, value) {
     if (component in this.knownValues) return this.knownValues[component];
@@ -74,8 +74,25 @@ ParsedComponents.prototype.isCertain = function(component) {
     return component in this.knownValues;
 };
 
-ParsedComponents.prototype.date = function() {
+ParsedComponents.prototype.isPossibleDate = function() {
+    
+    var dateMoment = this.moment();
 
+    if (dateMoment.get('year') != this.get('year')) return false;
+    if (dateMoment.get('month') != this.get('month')-1) return false;
+    if (dateMoment.get('date') != this.get('day')) return false;
+    if (dateMoment.get('hour') != this.get('hour')) return false;
+    if (dateMoment.get('minute') != this.get('minute')) return false;
+
+    return true;
+}
+
+ParsedComponents.prototype.date = function() {
+    var dateMoment = this.moment();
+    return dateMoment.toDate();
+};
+
+ParsedComponents.prototype.moment = function() {
     var dateMoment = moment();
 
     dateMoment.set('year', this.get('year'));
@@ -93,8 +110,11 @@ ParsedComponents.prototype.date = function() {
 
     var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
     dateMoment.add(-adjustTimezoneOffset, 'minutes');
-    return dateMoment.toDate();
-};
+
+    return dateMoment;
+}
+
+
 
 exports.ParsedComponents = ParsedComponents;
 exports.ParsedResult = ParsedResult;

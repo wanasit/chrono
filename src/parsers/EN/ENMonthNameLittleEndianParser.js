@@ -30,7 +30,7 @@ var YEAR_GROUP = 6;
 var YEAR_BE_GROUP = 7;
 
 exports.Parser = function ENMonthNameLittleEndianParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
     

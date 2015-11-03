@@ -40,7 +40,7 @@ var AM_PM_HOUR_GROUP = 5;
 
 
 exports.Parser = function ENTimeExpressionParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
 
     this.pattern = function() { return FIRST_REG_PATTERN; }
     

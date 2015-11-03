@@ -21,7 +21,7 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
     'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
   
 exports.Parser = function ENSlashDateFormatParser(argument) {
-    Parser.call(this);
+    Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){

@@ -11,7 +11,7 @@ var PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
 
 exports.Parser = function JPCasualDateParser(){
     
-    Parser.call(this);
+    Parser.apply(this, arguments);
         
     this.pattern = function() { return PATTERN; }
     

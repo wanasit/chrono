@@ -1,5 +1,7 @@
 
-function Parser() {
+function Parser(strictMode) {
+    
+    this.isStrictMode = function() { return (strictMode == true) };
 
     this.pattern = function() { return /./i; }
 

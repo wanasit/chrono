@@ -10,7 +10,7 @@ var ParsedResult = require('../../result').ParsedResult;
 var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
 
 exports.Parser = function ENDeadlineFormatParser(){
-    Parser.call(this);
+    Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
 
