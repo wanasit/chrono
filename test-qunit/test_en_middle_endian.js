@@ -335,8 +335,35 @@ test("Test - Range expression", function() {
         var expectDate = new Date(2011, 11-1, 12, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
-
-
 });
 
 
+test("Test - Impossible Dates (Strict Mode)", function() {
+ 
+    var text = "August 32, 2014";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ) )
+
+    var text = "Febuary 29, 2014";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
+
+    var text = "August 32";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
+
+    var text = "Febuary 29";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
+
+});
+
+test("Test - Impossible Dates (Casual Mode)", function() {
+ 
+    var text = "August 32, 2015";
+    var expectDate = new Date(2015, 8, 1, 12, 0);
+    var results = chrono.parse(text);
+    var resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+});

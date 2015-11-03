@@ -42,8 +42,6 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             ref: ref,
         });
 
-        var startMoment = moment(ref);
-
         var month = match[MONTH_NAME_GROUP];
         month = util.MONTH_OFFSET[month.toLowerCase()];
 
@@ -64,32 +62,31 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
                 year = year + 2000;
             }
         }
-        
-        startMoment.month(month - 1);
-        startMoment.date(day);
 
         if(year){
-            startMoment.year(year);
-
-            result.start.assign('day', startMoment.date());
-            result.start.assign('month', startMoment.month() + 1);
-            result.start.assign('year', startMoment.year());
+            result.start.assign('day', day);
+            result.start.assign('month', month);
+            result.start.assign('year', year);
         } else {
             
             //Find the most appropriated year
-            startMoment.year(moment(ref).year());
-            var nextYear = startMoment.clone().add(1, 'y');
-            var lastYear = startMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){  
-                startMoment = nextYear;
+            var refMoment = moment(ref);
+            refMoment.month(month - 1);
+            refMoment.date(day);
+            refMoment.year(moment(ref).year());
+
+            var nextYear = refMoment.clone().add(1, 'y');
+            var lastYear = refMoment.clone().add(-1, 'y');
+            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){  
+                refMoment = nextYear;
             }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){ 
-                startMoment = lastYear;
+            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){ 
+                refMoment = lastYear;
             }
 
-            result.start.assign('day', startMoment.date());
-            result.start.assign('month', startMoment.month() + 1);
-            result.start.imply('year', startMoment.year());
+            result.start.assign('day', day);
+            result.start.assign('month', month);
+            result.start.imply('year', refMoment.year());
         }
         
         // Weekday component
@@ -108,6 +105,5 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         result.tags['ENMonthNameLittleEndianParser'] = true;
         return result;
     };
-
 }
 

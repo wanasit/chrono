@@ -23,6 +23,10 @@ ParsedResult.prototype.clone = function() {
     }
 }
 
+ParsedResult.prototype.hasPossibleDates = function() {
+    return this.start.isPossibleDate() && (!this.end || this.end.isPossibleDate());
+}
+
 
 function ParsedComponents (components, ref){
 

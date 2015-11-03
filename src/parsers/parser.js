@@ -22,9 +22,14 @@ function Parser(strictMode) {
 
             var result = this.extract(text, ref, match, opt);
             if (result) {
+
                 // If success, start from the end of the result
                 remainingText = text.substring(result.index + result.text.length);
-                results.push(result);
+
+                if (!this.isStrictMode() || result.hasPossibleDates()) {
+                    results.push(result);
+                }
+                
             } else {
                 // If fail, move on by 1
                 remainingText = text.substring(match.index + 1);

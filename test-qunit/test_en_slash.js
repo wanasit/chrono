@@ -228,27 +228,37 @@ test('Test - Random date patterns', function() {
 });
 
 
-test("Test - Impossible", function() {
+test("Test - Impossible Date (Strict Mode)", function() {
 
     var text = "8/32/2014";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ) )
 
     var text = "8/32";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ) )
 
     var text = "2/29/2014";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 
     var text = "2014/22/29";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 
     var text = "2014/13/22";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 });
 
+
+test("Test - Impossible Dates (Casual Mode)", function() {
+ 
+    var text = "9/31/2015";
+    var expectDate = new Date(2015, 9, 1, 12, 0);
+    var results = chrono.parse(text);
+    var resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+});
 

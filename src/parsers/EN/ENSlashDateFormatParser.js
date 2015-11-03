@@ -83,17 +83,10 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
                 year = year + 2000; //AD
             }
         }
-        
-        text = month+'/'+day+'/'+year;
-        date = moment(text,'M/D/YYYY');
-        if(!date || date.date() != day || date.month() != (month-1)) {
-            return null;
-        }
-        
 
-        result.start.assign('day', date.date());
-        result.start.assign('month', date.month() + 1);
-        result.start.assign('year', date.year());
+        result.start.assign('day', day);
+        result.start.assign('month', month);
+        result.start.assign('year', year);
 
         //Day of week
         if(match[2]) {

@@ -295,16 +295,34 @@ test("Test - Combined expression", function() {
 
 });
 
-// test("Test - Impossible", function() {
-//     // 
-//     // var text = "32 August 2014";
-//     // var results = chrono.parse(text, new Date(2012,7,10));
-//     // ok(results.length == 0, JSON.stringify( results ) )
+test("Test - Impossible Dates (Strict Mode)", function() {
+ 
+    var text = "32 August 2014";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ) )
 
+    var text = "29 Febuary 2014";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
 
-//     // var text = "29 Febuary 2014";
-//     // var results = chrono.parse(text, new Date(2012,7,10));
-//     // ok(results.length == 0, JSON.stringify( results ) )
-// });
+    var text = "32 August";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
+
+    var text = "29 Febuary";
+    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    ok(results.length == 0, JSON.stringify( results ))
+
+});
+
+test("Test - Impossible Dates (Casual Mode)", function() {
+ 
+    var text = "32 August 2015";
+    var expectDate = new Date(2015, 8, 1, 12, 0);
+    var results = chrono.parse(text);
+    var resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+});
 
 
