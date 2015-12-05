@@ -14,7 +14,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
-            "(?:\\.|\\:|\\：)(\\d{1,2})" + 
+            "(?:\\:|\\：)(\\d{2})" + 
         ")?" + 
     ")?" + 
     "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
@@ -133,8 +133,10 @@ exports.Parser = function ENTimeExpressionParser(){
             return result;
         }
 
+
+
         // Pattern "YY.YY -XXXX" is more like timezone offset
-        if (match[0].match(/^\s*(\+|\-)\d{3,4}$/)) {
+        if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
             return result;
         }
 

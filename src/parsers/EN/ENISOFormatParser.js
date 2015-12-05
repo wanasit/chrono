@@ -37,7 +37,7 @@ exports.Parser = function ENISOFormatParser(){
     
     this.extract = function(text, ref, match, opt){ 
         
-        var text = match[0].substr(match[1]);
+        var text = match[0].substr(match[1].length);
         var index = match.index + match[1].length;
 
         var result = new ParsedResult({

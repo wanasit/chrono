@@ -91,6 +91,28 @@ test('Test - Random text', function() {
 
     ok(results.length == 1, JSON.stringify(results) )
     ok(results[0].text == '2014-07-07T04:00:00Z', JSON.stringify(results))
+
+
+    var text = "1.5.3 - 2015-09-24";
+    var results = chrono.parse(text);
+
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(results[0].text == '2015-09-24', JSON.stringify(results))
+
+
+    var text = "1.5.30 - 2015-09-24";
+    var results = chrono.parse(text);
+
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(results[0].text == '2015-09-24', JSON.stringify(results))
+
+
+    var text = "1.50.30 - 2015-09-24";
+    var results = chrono.parse(text);
+
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(results[0].text == '2015-09-24', JSON.stringify(results))
+
 })
 
 test("Test - Random non-date patterns", function() {
@@ -128,6 +150,18 @@ test("Test - Random non-date patterns", function() {
     ok(results.length == 0, JSON.stringify(results) )
 
     var text = "Total: $1,194.09 [image: View Reservation";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "Version: 1.1.3";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "Version: 1.1.30";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "Version: 1.10.30";
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) )
 

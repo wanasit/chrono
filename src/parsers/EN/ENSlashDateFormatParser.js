@@ -9,24 +9,36 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = new RegExp('(\\W|^)' + 
-    '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)?' +
-    '\\s*\\,?\\s*' + 
+    '(?:' + 
+        '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)' +
+        '\\s*\\,?\\s*' +
+    ')?' + 
     '([0-9]{1,2})[\\/\\.\\-]([0-9]{1,2})' + 
-    '(' + 
+    '(?:' + 
         '[\\/\\.\\-]' + 
-        '([0-9]{4}|[0-9]{2}))?' + 
+        '([0-9]{4}|[0-9]{2})' + 
+    ')?' + 
     '(\\W|$)', 'i');
 
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
     'thursday': 4, 'thur': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
-  
+
+
+var OPENNING_GROUP = 1;
+var ENDING_GROUP = 6;
+
+var WEEKDAY_GROUP = 2;
+var MONTH_GROUP = 3;
+var DAY_GROUP = 4;
+var YEAR_GROUP = 5;
+
 exports.Parser = function ENSlashDateFormatParser(argument) {
     Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){
         
-        if(match[1] == '/' || match[7] == '/') {
+        if(match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
             // Long skip, if there is some overlapping like:
             // XX[/YY/ZZ]
             // [XX/YY/]ZZ
@@ -34,25 +46,27 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
             return;
         }
 
-        var index = match.index + match[1].length;
-        var text = match[0].substr(match[1].length, match[0].length - match[7].length);
+        var index = match.index + match[OPENNING_GROUP].length;
+        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
+
+
         var result = new ParsedResult({
             text: text,
             index: index,
             ref: ref,
         });
             
-        if(text.match(/^\d.\d$/)) return;
-
+        if(text.match(/^\d\.\d$/)) return;
+        if(text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return;
         
         // MM/dd -> OK
         // MM.dd -> NG
-        if(!match[6] && match[0].indexOf('/') < 0) return;
+        if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
 
         var date = null;
-        var year = match[6] || moment(ref).year() + '';
-        var month = match[3];
-        var day   = match[4];
+        var year = match[YEAR_GROUP] || moment(ref).year() + '';
+        var month = match[MONTH_GROUP];
+        var day   = match[DAY_GROUP];
         
         month = parseInt(month);
         day  = parseInt(day);
@@ -89,8 +103,8 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         result.start.assign('year', year);
 
         //Day of week
-        if(match[2]) {
-            result.start.assign('weekday', DAYS_OFFSET[match[2].toLowerCase()]);
+        if(match[WEEKDAY_GROUP]) {
+            result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
         }
 
         result.tags['ENSlashDateFormatParser'] = true;
