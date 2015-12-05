@@ -1,8 +1,13 @@
 
 var options = exports.options = require('./options');
-exports.Parser = require('./parsers/parser').Parser;
-exports.Refiner = require('./refiners/refiner').Filter;
-exports.Filter = require('./refiners/refiner').Filter;
+
+exports.parser = require('./parsers/parser');
+exports.refiner = require('./refiners/refiner');
+
+exports.Parser = exports.parser.Parser;
+exports.Refiner = exports.refiner.Refiner;
+exports.Filter = exports.refiner.Filter;
+
 exports.ParsedResult = require('./result').ParsedResult;
 exports.ParsedComponents = require('./result').ParsedComponents;
 

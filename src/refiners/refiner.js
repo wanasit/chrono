@@ -1,7 +1,4 @@
-/*
-                                  
-  
-*/
+
 exports.Refiner = function Refiner() { 
 
     this.refine = function(text, results, opt) { return results; };
@@ -26,3 +23,18 @@ exports.Filter = function Filter() {
         return filteredResult;
     }
 }
+
+
+// Common refiners
+exports.OverlapRemovalRefiner = require('./OverlapRemovalRefiner').Refiner;
+exports.ExtractTimezoneOffsetRefiner = require('./ExtractTimezoneOffsetRefiner').Refiner;
+exports.ExtractTimezoneAbbrRefiner = require('./ExtractTimezoneAbbrRefiner').Refiner;
+exports.UnlikelyFormatFilter = require('./UnlikelyFormatFilter').Refiner;
+
+// EN refiners
+exports.ENMergeDateTimeRefiner = require('./EN/ENMergeDateTimeRefiner').Refiner;
+exports.ENMergeDateRangeRefiner = require('./EN/ENMergeDateRangeRefiner').Refiner;
+
+// JP refiners
+exports.JPMergeDateRangeRefiner = require('./JP/JPMergeDateRangeRefiner').Refiner;
+
