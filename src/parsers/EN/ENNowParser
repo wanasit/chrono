@@ -1,0 +1,29 @@
+var moment = require('moment');
+var Parser = require('../parser').Parser;
+var ParsedResult = require('../../result').ParsedResult;
+
+var PATTERN = /now|today/;
+
+exports.Parser = function ENWeekdayParser() {
+    Parser.apply(this, arguments);
+
+    this.pattern = function() { return PATTERN; }
+    
+    this.extract = function(text, ref, match, opt){
+        var result = new ParsedResult({
+            index: match.index,
+            text: match[0],
+            ref: ref,
+        });
+        
+        var now = moment(ref);
+
+        result.start.imply('hour', now.hour())
+        result.start.imply('second', now.second())
+        result.start.imply('minute', now.minute())
+        result.start.imply('day', now.date())
+        result.start.imply('month', now.month())
+        result.start.imply('year', now.year())
+        return result;
+    }
+}
