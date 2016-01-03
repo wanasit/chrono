@@ -6,7 +6,7 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-
+var ParsedComponents = require('../../result').ParsedComponents;
 
 var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
     "(?:(?:at|from)\\s*)?" + 
@@ -141,7 +141,7 @@ exports.Parser = function ENTimeExpressionParser(){
         }
 
         if(result.end == null){
-            result.end = result.start.clone();
+            result.end = new ParsedComponents(null, result.start.date());
         }
 
         var hour = 0;
@@ -219,14 +219,20 @@ exports.Parser = function ENTimeExpressionParser(){
                     }
                 }
             }
-        }
         
-        if(hour >= 12) meridiem = 1;
+        } else if(hour >= 12) {
+            meridiem = 1;
+        }
+
         result.text = result.text + match[0];
         result.end.assign('hour', hour);
         result.end.assign('minute', minute);
         if (meridiem >= 0) {
             result.end.assign('meridiem', meridiem);
+        }
+
+        if (result.end.date().getTime() < result.start.date().getTime()) {
+            result.end.imply('day', result.end.get('day') + 1)
         }
         
         return result;

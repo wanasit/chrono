@@ -313,6 +313,97 @@ test("Test - Date + Time Expression", function() {
 })
 
 
+test("Test - Time Expression's Meridiem imply", function() {
+
+    var text = "1pm-3";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == '1pm-3', result.text )
+
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
+        ok(result.start.get('meridiem') == 1, 'Test Result - (meridiem) ' + JSON.stringify(result.start) )
+        ok(result.start.isCertain('meridiem'), JSON.stringify(result))
+
+        ok(result.end.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+        ok(result.end.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+        ok(result.end.get('day') == 11, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('hour') == 3, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+        ok(result.end.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.end) )
+        ok(result.end.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.end) )
+        ok(result.end.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.end) )
+        ok(!result.end.isCertain('meridiem'), JSON.stringify(result))
+    }
+
+    var text = "2014-04-18 1pm-3";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == '2014-04-18 1pm-3', result.text )
+
+        ok(result.start.get('year') == 2014, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 4, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 18, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
+        ok(result.start.get('meridiem') == 1, 'Test Result - (meridiem) ' + JSON.stringify(result.start) )
+        ok(result.start.isCertain('meridiem'), JSON.stringify(result))
+
+        ok(result.end.get('year') == 2014, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+        ok(result.end.get('month') == 4, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+        ok(result.end.get('day') == 19, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('hour') == 3, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+        ok(result.end.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.end) )
+        ok(result.end.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.end) )
+        ok(result.end.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.end) )
+        ok(!result.end.isCertain('meridiem'), JSON.stringify(result))
+    }
+
+    var text = "today from 1pm-3";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if (result) {
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == 'today from 1pm-3', result.text )
+
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 13, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.start) )
+        ok(result.start.get('meridiem') == 1, 'Test Result - (meridiem) ' + JSON.stringify(result.start) )
+        ok(result.start.isCertain('meridiem'), JSON.stringify(result))
+
+        ok(result.end.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.end) )
+        ok(result.end.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.end) )
+        ok(result.end.get('day') == 11, 'Test Result - (Day) ' + JSON.stringify(result.end) )
+        ok(result.end.get('hour') == 3, 'Test Result - (Hour) ' + JSON.stringify(result.end) )
+        ok(result.end.get('minute') == 0, 'Test Result - (minute) ' + JSON.stringify(result.end) )
+        ok(result.end.get('second') == 0, 'Test Result - (second) ' + JSON.stringify(result.end) )
+        ok(result.end.get('millisecond') == 0, 'Test Result - (millisecond) ' + JSON.stringify(result.end) )
+        ok(!result.end.isCertain('meridiem'), JSON.stringify(result))
+    }
+})
+
+
 test("Test - Random date + time expression", function() {
 
     var text = "monday 4/29/2013 630-930am";

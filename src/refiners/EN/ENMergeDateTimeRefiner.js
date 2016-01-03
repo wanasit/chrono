@@ -42,9 +42,6 @@ function mergeResult(text, dateResult, timeResult){
         beginDateTime.assign('hour', beginDateTime.get('hour') + 12);
     }
 
-    
-    dateResult.start = beginDateTime;
-        
     if (dateResult.end != null || timeResult.end != null) {
         
         var endDate   = dateResult.end == null ? dateResult.start : dateResult.end;            
@@ -61,9 +58,20 @@ function mergeResult(text, dateResult, timeResult){
             endDateTime.imply('meridiem', endTime.get('meridiem'));
         }
         
+        if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
+            // Ex. 9pm - 1am
+            if (endDateTime.isCertain('day')) {
+                endDateTime.assign('day', endDateTime.get('day') + 1);
+            } else {
+                endDateTime.imply('day', endDateTime.get('day') + 1);
+            }
+        }
+
         dateResult.end = endDateTime;
     }
-        
+
+    dateResult.start = beginDateTime;    
+
     var startIndex = Math.min(dateResult.index, timeResult.index);
     var endIndex = Math.max(
             dateResult.index + dateResult.text.length, 
