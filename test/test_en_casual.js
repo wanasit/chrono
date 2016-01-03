@@ -228,3 +228,19 @@ test('Test - Random text', function() {
 })
 
 
+test('Test - Random negative text', function() { 
+
+    var text = "notoday";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+
+    var text = "tdtmr";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "xyesterday";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+})
+
