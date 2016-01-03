@@ -181,3 +181,36 @@ custom.parseDate("This is at 2.30 AM");
 In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
 
 
+## Development Guild 
+
+This guild explains how to setup chrono project for prospective contributors.
+
+```bash
+# Clone and install library
+git clone https://github.com/wanasit/chrono.git chrono
+cd chrono
+npm install
+
+# Try running the test
+npm run test
+```
+
+Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command 
+
+```
+npm run make
+```
+
+Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
+
+Chrono's unit testing is based-on [Qunit](https://qunitjs.com/) and [Karma](https://github.com/karma-runner/karma). During the developement, I recommend running Karma test together with watchify.
+
+```
+# Start karma
+npm run karma
+
+# Start watch (run on a different terminal)
+npm run watch
+```
+
+

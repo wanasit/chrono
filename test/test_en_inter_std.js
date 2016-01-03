@@ -165,7 +165,7 @@ test("Test - Compare with native js", function() {
     ok(result.text == text);
     ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
 
-    var text = '1994-02-30T08:15:30-05:30';
+    var text = '1994-02-28T08:15:30-05:30';
     var result = chrono.parse(text)[0];
     var expect = new Date(text);
 

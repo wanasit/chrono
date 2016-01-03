@@ -14,7 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'chrono.js',
-      'test-qunit/test*.js',
+      'test/test*.js',
     ],
 
 
