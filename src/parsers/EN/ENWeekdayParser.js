@@ -12,7 +12,7 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
     '(?:(this|last|next)\\s*)?' +
-    '(Sunday|Sun|Monday|Mon|Tuesday|Tues|Tue|Wednesday|Wed|Thursday|Thurs|Thur|Friday|Fri|Saturday|Sat)' +
+    '(' + Object.keys(DAYS_OFFSET).join('|') + ')' +
     '(?:\\s*(?:\\,|\\)|\\）))?' +
     '(?:\\s*(this|last|next)\\s*week)?' +
     '(?=\\W|$)', 'i');
