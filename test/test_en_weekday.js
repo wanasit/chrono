@@ -13,7 +13,7 @@ test("Test - Single Expression", function() {
         ok(result.start, JSON.stringify(result.start) )
         ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
         ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-        ok(result.start.get('day') == 6, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 13, 'Test Result - (Day) ' + JSON.stringify(result.start) )
         ok(result.start.get('weekday') == 1, 'Test Result - (Weekday) ' + JSON.stringify(result.start) )
 
 
@@ -23,7 +23,7 @@ test("Test - Single Expression", function() {
         ok(result.start.isCertain('weekday'))
 
         var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 6, 12);
+        var expectDate = new Date(2012, 7, 13, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
