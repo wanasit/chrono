@@ -34,7 +34,7 @@ exports.Parser = function ENCasualDateParser(){
             result.start.imply('hour', 22);
             result.start.imply('meridiem', 1);
 
-        } else if(lowerText == 'tomorrow' || lowerText == 'tmr'){
+        } else if(lowerText == 'tomorrow' || lowerText == 'tmr' || lowerText == 'tom'){
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 4) {
