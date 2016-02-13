@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
+var PATTERN = /(\W|^)(today|tonight|tomorrow|tmr|tom|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
     
 exports.Parser = function ENCasualDateParser(){
     
