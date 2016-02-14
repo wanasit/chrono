@@ -14,6 +14,8 @@ Chrono supports most date and time formats, such as :
 * Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
 * 2014-11-30T08:15:30-05:30
 
+## Install
+
 #### Node.js 
 
     npm install chrono-node
@@ -22,9 +24,17 @@ Chrono supports most date and time formats, such as :
 
     bower install chrono
 
-#### Browser
+#### CDN
 
-    <script src="https://rawgithub.com/wanasit/chrono/master/chrono.min.js"></script>
+Via [jsDelivr](https://www.jsdelivr.com/projects/chrono):
+
+    <script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>
+
+#### Rails
+
+    source 'https://rails-assets.org' do
+      gem 'rails-assets-chrono'
+    end
 
 #### Browserify
 
