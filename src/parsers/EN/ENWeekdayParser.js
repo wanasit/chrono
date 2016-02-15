@@ -27,7 +27,6 @@ exports.Parser = function ENWeekdayParser() {
     this.pattern = function() { return PATTERN; }
 
     this.extract = function(text, ref, match, opt){
-
         var index = match.index + match[1].length;
         var text = match[0].substr(match[1].length, match[0].length - match[1].length);
         var result = new ParsedResult({
@@ -56,13 +55,14 @@ exports.Parser = function ENWeekdayParser() {
                 startMoment.day(offset);
         } else{
             var refOffset = startMoment.day();
-
-            if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset - 7);
-            } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset + 7);
+            if ( opt.forwardDatesOnly && refOffset > offset ) {
+              startMoment.day(offset + 7);
+            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
+              startMoment.day(offset - 7);
+            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
+              startMoment.day(offset + 7);
             } else {
-                startMoment.day(offset);
+              startMoment.day(offset);
             }
         }
 
