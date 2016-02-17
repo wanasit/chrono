@@ -29,12 +29,14 @@ exports.Parser = function ENCasualDateParser(){
         var startMoment = refMoment.clone();
         var lowerText = text.toLowerCase();
 
+        var tomorrowWords = ['tomorrow', 'tmr', 'tom'];
+
         if(lowerText == 'tonight'){
             // Normally means this coming midnight 
             result.start.imply('hour', 22);
             result.start.imply('meridiem', 1);
 
-        } else if(lowerText == 'tomorrow' || lowerText == 'tmr' || lowerText == 'tom'){
+        } else if(tomorrowWords.indexOf(lowerText) > -1){
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 4) {
