@@ -5,7 +5,7 @@ function baseOption(strictMode) {
 
     return {
         parsers: [
-        
+
             // EN
             new parser.ENISOFormatParser(strictMode),
             new parser.ENDeadlineFormatParser(strictMode),
@@ -13,8 +13,8 @@ function baseOption(strictMode) {
             new parser.ENMonthNameMiddleEndianParser(strictMode),
             new parser.ENSlashDateFormatParser(strictMode),
             new parser.ENSlashDateFormatStartWithYearParser(strictMode),
-            new parser.ENTimeAgoFormatParser(strictMode),           
-            new parser.ENTimeExpessionParser(strictMode),
+            new parser.ENTimeAgoFormatParser(strictMode),
+            new parser.ENTimeExpressionParser(strictMode),
 
             // JP
             new parser.JPStandardParser(strictMode),
@@ -23,7 +23,7 @@ function baseOption(strictMode) {
         refiners: [
             // Removing overlaping first
             new refiner.OverlapRemovalRefiner(),
-            
+
             // ETC
             new refiner.ENMergeDateTimeRefiner(),
             new refiner.ENMergeDateRangeRefiner(),
@@ -47,13 +47,13 @@ exports.strictOption = function () {
 exports.casualOption = function () {
 
     var options = baseOption(false);
-    
+
     // EN
     options.parsers.unshift(new parser.ENCasualDateParser());
     options.parsers.unshift(new parser.ENWeekdayParser());
 
     // JP
     options.parsers.unshift(new parser.JPCasualDateParser());
-    
+
     return options;
 };
