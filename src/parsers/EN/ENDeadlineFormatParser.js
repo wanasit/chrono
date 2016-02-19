@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half\s*an?|half)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
 
 exports.Parser = function ENDeadlineFormatParser(){
     Parser.apply(this, arguments);
