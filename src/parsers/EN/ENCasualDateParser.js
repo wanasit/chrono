@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
+var PATTERN = /(\W|^)(now|today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
 
 exports.Parser = function ENCasualDateParser(){
 
@@ -67,6 +67,13 @@ exports.Parser = function ENCasualDateParser(){
 
                 result.start.imply('hour', 6);
             }
+
+        } else if (lowerText.match("now")) {
+
+          result.start.imply('hour', refMoment.hour());
+          result.start.imply('minute', refMoment.minute());
+          result.start.imply('second', refMoment.second());
+
         }
 
         result.start.assign('day', startMoment.date())
