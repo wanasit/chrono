@@ -7,9 +7,9 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(dentro\s*de|en)\s*([0-9]+|medi[oa]|una?)\s*(minutos?|horas?|d[ií]as?)\s*(?=(?:\W|$))/i;
 
-exports.Parser = function ENDeadlineFormatParser(){
+exports.Parser = function ESDeadlineFormatParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
@@ -26,17 +26,17 @@ exports.Parser = function ENDeadlineFormatParser(){
             ref: ref,
         });
 
-        var num = match[3];
-        if (num === 'a' || num === 'an'){
-            num = 1;
-        } else if (num.match(/half/)) {
+        var num = parseInt(match[3]);
+        if (isNaN(num)) {
+          if (match[3].match(/medi/)) {
             num = 0.5;
-        } else {
-            num = parseInt(num);
+          } else {
+            num = 1;
+          }
         }
 
         var date = moment(ref);
-        if (match[4].match(/day/)) {
+        if (match[4].match(/d[ií]a/)) {
             date.add(num, 'd');
 
             result.start.assign('year', date.year());
@@ -46,11 +46,11 @@ exports.Parser = function ENDeadlineFormatParser(){
         }
 
 
-        if (match[4].match(/hour/)) {
+        if (match[4].match(/hora/)) {
 
             date.add(num, 'hour');
 
-        } else if (match[4].match(/minute/)) {
+        } else if (match[4].match(/minuto/)) {
 
             date.add(num, 'minute');
         }
@@ -60,7 +60,7 @@ exports.Parser = function ENDeadlineFormatParser(){
         result.start.imply('day', date.date());
         result.start.assign('hour', date.hour());
         result.start.assign('minute', date.minute());
-        result.tags['ENDeadlineFormatParser'] = true;
+        result.tags['ESDeadlineFormatParser'] = true;
         return result;
     };
 }
