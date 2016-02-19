@@ -23,7 +23,7 @@ var ParsedResult = require('../../result').ParsedResult;
   - ayer -> yesterday
   - mañana -> tomorrow
  */
-var PATTERN = /(\W|^)(esta\s*(mañana|tarde|noche)|(ayer|mañana)\s*por\s*la\s*(mañana|tarde|noche)|hoy|mañana|ayer|anoche)(?=\W|$)/i;
+var PATTERN = /(\W|^)(ahora|esta\s*(mañana|tarde|noche)|(ayer|mañana)\s*por\s*la\s*(mañana|tarde|noche)|hoy|mañana|ayer|anoche)(?=\W|$)/i;
 
 exports.Parser = function ESCasualDateParser(){
 
@@ -110,6 +110,13 @@ exports.Parser = function ESCasualDateParser(){
               result.start.imply('meridiem', 1);
 
             }
+
+        } else if (lowerText.match("ahora")) {
+
+          result.start.imply('hour', refMoment.hour());
+          result.start.imply('minute', refMoment.minute());
+          result.start.imply('second', refMoment.second());
+
         }
 
         result.start.assign('day', startMoment.date())
