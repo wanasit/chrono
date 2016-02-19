@@ -155,14 +155,14 @@ test("Test - Single Expression (Casual)", function() {
     if(result){
         ok(result.start, JSON.stringify(result.start) )
         ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
-        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
-        ok(result.start.get('day') == 3, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 27, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
         ok(result.index == 0, 'Wrong index')
         ok(result.text == 'a week ago', result.text )
 
         var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 3, 12);
+        var expectDate = new Date(2012, 7-1, 27, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 });
