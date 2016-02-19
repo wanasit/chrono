@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(minutes?|hours?|weeks?|days?|months?|years?)\s*(?:ago|before|earlier)(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?|half(?:\s*an?)?)\s*(minutes?|hours?|weeks?|days?|months?|years?)\s*(?:ago|before|earlier)(?=(?:\W|$))/i;
 var STRICT_PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
 
 exports.Parser = function ENTimeAgoFormatParser(){
@@ -34,6 +34,8 @@ exports.Parser = function ENTimeAgoFormatParser(){
         var num = match[2];
         if(num === 'a' || num === 'an'){
             num = 1;
+        } else if (num.match(/half/)) {
+            num = 0.5;
         } else {
             num = parseInt(num);
         }
