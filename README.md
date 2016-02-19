@@ -28,13 +28,17 @@ Chrono supports most date and time formats, such as :
 
 Via [jsDelivr](https://www.jsdelivr.com/projects/chrono):
 
-    <script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>
+```html
+<script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>
+```
 
 #### Rails
 
-    source 'https://rails-assets.org' do
-      gem 'rails-assets-chrono'
-    end
+```ruby
+source 'https://rails-assets.org' do
+  gem 'rails-assets-chrono'
+end
+```
 
 #### Browserify
 
