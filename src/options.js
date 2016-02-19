@@ -18,6 +18,13 @@ function baseOption(strictMode) {
 
             // JP
             new parser.JPStandardParser(strictMode),
+
+            // ES
+            new parser.ESTimeAgoFormatParser(strictMode),
+            new parser.ESDeadlineFormatParser(strictMode),
+            new parser.ESTimeExpressionParser(strictMode),
+            new parser.ESMonthNameLittleEndianParser(strictMode),
+            new parser.ESSlashDateFormatParser(strictMode),
         ],
 
         refiners: [
@@ -54,6 +61,11 @@ exports.casualOption = function () {
 
     // JP
     options.parsers.unshift(new parser.JPCasualDateParser());
+
+    // ES
+    options.parsers.unshift(new parser.ESCasualDateParser());
+    options.parsers.unshift(new parser.ESWeekdayParser());
+
 
     return options;
 };
