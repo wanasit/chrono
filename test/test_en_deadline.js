@@ -67,6 +67,18 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012,7,10,13,14);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+
+    var text = "within half an hour";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == 'within half an hour', result.text )
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012,7,10,12,44);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
 });
-
-
