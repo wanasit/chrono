@@ -265,4 +265,17 @@ test('Test - Random negative text', function() {
     var text = "xyesterday";
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "nowhere";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "noway";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
+    var text = "knowledge";
+    var results = chrono.parse(text);
+    ok(results.length == 0, JSON.stringify(results) )
+
 })
