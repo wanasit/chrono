@@ -301,7 +301,7 @@ test("Test - Impossible Dates (Strict Mode)", function() {
     var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ) )
 
-    var text = "29 Febuary 2014";
+    var text = "29 February 2014";
     var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 
@@ -309,8 +309,8 @@ test("Test - Impossible Dates (Strict Mode)", function() {
     var results = chrono.strict.parse(text, new Date(2012,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 
-    var text = "29 Febuary";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
+    var text = "29 February";
+    var results = chrono.strict.parse(text, new Date(2013,7,10));
     ok(results.length == 0, JSON.stringify( results ))
 
 });
