@@ -14,9 +14,12 @@ exports.Refiner = function ExtractTimezoneAbbrRefiner() {
 
 		results.forEach(function(result) {
 
+            if (!result.tags['ENTimeExpressionParser']) {
+                return;
+            }
+
             var match = TIMEZONE_NAME_PATTERN.exec(text.substring(result.index + result.text.length));
             if (match) {
-                
                 var timezoneAbbr = match[1];
                 if (TIMEZONE_ABBR_MAP[timezoneAbbr] === undefined) {
                     return;

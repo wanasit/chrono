@@ -119,6 +119,23 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012,7,10,11,44);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+
+
+    var text = "12 hours ago I did something";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == '12 hours ago', result.text )
+        ok(result.start.get('hour') == 0, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 14, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012,7,10,0,14);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
 });
 
 
