@@ -199,10 +199,7 @@ test("Test - Compare with native js", function() {
     var text = 'Sat, 21 Feb 2015 11:50:48 -0500';
     var result = chrono.parse(text)[0];
     var expect = new Date(text);
-    console.log(result)
-    console.log(result.start)
-    console.log(result.start.date())
-    console.log(expect)
+
     ok(result.text == text);
     ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
 

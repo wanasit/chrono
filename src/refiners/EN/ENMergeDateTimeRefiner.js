@@ -34,7 +34,10 @@ function mergeResult(text, dateResult, timeResult){
         
     if (beginTime.isCertain('meridiem')) {
         beginDateTime.assign('meridiem', beginTime.get('meridiem'));
-    } else if (beginTime.get('meridiem') !== undefined) {
+    } else if (
+        beginTime.get('meridiem') !== undefined &&
+        beginDateTime.get('meridiem') === undefined
+    ) {
         beginDateTime.imply('meridiem', beginTime.get('meridiem'));
     }
 
