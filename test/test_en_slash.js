@@ -244,6 +244,23 @@ test('Test - Random date patterns', function() {
     resultDate = results[0].start.date();
     ok(results.length == 1, JSON.stringify(results) )
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+
+    expectDate = new Date(1999, 7, 13, 12, 0);
+    text = "8/13/99";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+    expectDate = new Date(1989, 7, 13, 12, 0);
+    text = "8/13/89";
+    results = chrono.parse(text);
+    resultDate = results[0].start.date();
+    ok(results.length == 1, JSON.stringify(results) )
+    ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
+
+
 });
 
 

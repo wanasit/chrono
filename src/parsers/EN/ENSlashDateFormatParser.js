@@ -91,10 +91,10 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         if(day < 1 || day > 31) return null;
 
         if(year < 100){
-            if(year > 50){
-                year = year + 2500 - 543; //BE
-            }else{
-                year = year + 2000; //AD
+            if (year > 50) {
+                year = year + 1900; 
+            } else {
+                year = year + 2000; 
             }
         }
 
