@@ -16,7 +16,7 @@ var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
     
-var PATTERN = new RegExp('(^|\\D\\s+)' +
+var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
     '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
     '\\s*' +
     '(?:' +
@@ -29,7 +29,7 @@ var MONTH_NAME_GROUP = 2;
 var YEAR_GROUP = 3;
 var YEAR_BE_GROUP = 4;
 
-exports.Parser = function ENMonthNameYearParser(){
+exports.Parser = function ENMonthNameParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
@@ -63,7 +63,7 @@ exports.Parser = function ENMonthNameYearParser(){
         }
 
         if(year){
-            result.start.assign('day', day);
+            result.start.imply('day', day);
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
@@ -82,12 +82,12 @@ exports.Parser = function ENMonthNameYearParser(){
                 refMoment = lastYear;
             }
 
-            result.start.assign('day', day);
+            result.start.imply('day', day);
             result.start.assign('month', month);
             result.start.imply('year', refMoment.year());
         }
 
-        result.tags['ENMonthNameYearParser'] = true;
+        result.tags['ENMonthNameParser'] = true;
         return result;
     }
 }

@@ -11,10 +11,10 @@ function baseOption(strictMode) {
             new parser.ENDeadlineFormatParser(strictMode),
             new parser.ENMonthNameLittleEndianParser(strictMode),
             new parser.ENMonthNameMiddleEndianParser(strictMode),
-            new parser.ENMonthNameYearParser(strictMode),
+            new parser.ENMonthNameParser(strictMode),
             new parser.ENSlashDateFormatParser(strictMode),
             new parser.ENSlashDateFormatStartWithYearParser(strictMode),
-            new parser.ENSlashMonthYearFormatParser(strictMode),
+            new parser.ENSlashMonthFormatParser(strictMode),
             new parser.ENTimeAgoFormatParser(strictMode),
             new parser.ENTimeExpressionParser(strictMode),
 
