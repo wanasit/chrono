@@ -14,9 +14,9 @@ var ParsedResult = require('../../result').ParsedResult;
 var PATTERN = new RegExp('(\\W|^)' 
             + '([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})'
             + '(?:T' //..
-                + '([0-9]{1,2}):([0-9]{1,2})' // hh:mm
+                + '([0-9]{1,2})(:|h)([0-9]{1,2})' // hh:mm or hhhmm
                 + '(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?' // :ss.s
-                + '(?:Z|([+-]\\d{2}):?(\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)
+                + '(?:Z|([+-]\\d{2})(:|h)?(\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh or hhh)
             + ')?'  //..
             + '(?=\\W|$)', 'i');
 
@@ -36,7 +36,6 @@ exports.Parser = function ENISOFormatParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){ 
-        
         var text = match[0].substr(match[1].length);
         var index = match.index + match[1].length;
 

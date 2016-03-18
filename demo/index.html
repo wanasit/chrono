@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Demo chrono.js</title>
+  <script src="../chrono.js"></script>
+</head>
+<body>
+  <textarea id="" style="width: 100%; height: 200px"></textarea>
+  <button style="float: right;">Parse</button>
+  
+  <script>
+    var button = document.getElementsByTagName('button')[0];
+    
+    button.onclick = function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      
+      var text = document.getElementsByTagName('textarea')[0].value;
+      
+      console.log(chrono.parse(text));
+    }
+  </script>
+</body>
+</html>
