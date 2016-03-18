@@ -9,8 +9,8 @@ var ParsedResult = require('../../result').ParsedResult;
 var ParsedComponents = require('../../result').ParsedComponents;
 
 var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
-    "(?:(?:at|from)\\s*)?" + 
-    "(\\d{1,4}|noon|midnight)" + 
+    "(?:(?:à|de)\\s*)?" + 
+    "(\\d{1,4}|midi|minuit)" + 
     "(?:" + 
         "(?:\\.|\\:|\\：|h)(\\d{1,2})" + 
         "(?:" + 
@@ -22,10 +22,10 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|à|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
-        "(?:\\.|\\:|\\：)(\\d{1,2})" + 
+        "(?:\\.|\\:|\\：|h)(\\d{1,2})" + 
         "(?:" + 
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
@@ -39,7 +39,7 @@ var SECOND_GROUP  = 4;
 var AM_PM_HOUR_GROUP = 5;
 
 
-exports.Parser = function ENTimeExpressionParser(){
+exports.Parser = function FRTimeExpressionParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() { return FIRST_REG_PATTERN; }
@@ -53,7 +53,7 @@ exports.Parser = function ENTimeExpressionParser(){
         result.ref = ref;
         result.index = match.index + match[1].length;
         result.text  = match[0].substring(match[1].length);
-        result.tags['ENTimeExpressionParser'] = true;
+        result.tags['FRTimeExpressionParser'] = true;
 
         result.start.imply('day',   refMoment.date());
         result.start.imply('month', refMoment.month()+1);
@@ -72,10 +72,10 @@ exports.Parser = function ENTimeExpressionParser(){
         }
         
         // ----- Hours
-        if (match[HOUR_GROUP].toLowerCase() == "noon"){
+        if (match[HOUR_GROUP].toLowerCase() == "midi"){
             meridiem = 1; 
             hour = 12;
-        } else if (match[HOUR_GROUP].toLowerCase() == "midnight") {
+        } else if (match[HOUR_GROUP].toLowerCase() == "minuit") {
             meridiem = 0; 
             hour = 0;
         } else {

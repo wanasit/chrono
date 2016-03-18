@@ -25,6 +25,11 @@ function baseOption(strictMode) {
             new parser.ESTimeExpressionParser(strictMode),
             new parser.ESMonthNameLittleEndianParser(strictMode),
             new parser.ESSlashDateFormatParser(strictMode),
+            
+            // FR
+            new parser.FRTimeExpressionParser(strictMode),
+            new parser.FRMonthNameLittleEndianParser(strictMode),
+            new parser.FRMonthNameMiddleEndianParser(strictMode),
         ],
 
         refiners: [
@@ -66,6 +71,9 @@ exports.casualOption = function () {
     options.parsers.unshift(new parser.ESCasualDateParser());
     options.parsers.unshift(new parser.ESWeekdayParser());
 
+    // FR
+    options.parsers.unshift(new parser.FRCasualDateParser());
+    options.parsers.unshift(new parser.FRWeekdayParser());
 
     return options;
 };
