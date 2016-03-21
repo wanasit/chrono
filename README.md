@@ -195,7 +195,7 @@ custom.parseDate("This is at 2.30 AM");
 In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
 
 
-## Development Guide
+## Development Guides
 
 This guide explains how to setup chrono project for prospective contributors.
 
