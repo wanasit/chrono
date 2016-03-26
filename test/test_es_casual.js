@@ -3,7 +3,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "La fecha límite es ahora";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 8, 9, 10));
+    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 8, 9, 10, 11));
     ok(results.length == 1, JSON.stringify( results ) )
 
     var result = results[0];
@@ -18,9 +18,10 @@ test("Test - Single Expression", function() {
         ok(result.start.get('hour') == 8, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
         ok(result.start.get('minute') == 9, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
         ok(result.start.get('second') == 10, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('millisecond') == 11, 'Test Result - (Millisecond) ' + JSON.stringify(result.start) )
 
         var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 8, 9, 10);
+        var expectDate = new Date(2012, 7, 10, 8, 9, 10, 11);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 

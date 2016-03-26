@@ -73,6 +73,7 @@ exports.Parser = function ENCasualDateParser(){
           result.start.imply('hour', refMoment.hour());
           result.start.imply('minute', refMoment.minute());
           result.start.imply('second', refMoment.second());
+          result.start.imply('millisecond', refMoment.millisecond());
 
         }
 
