@@ -529,6 +529,44 @@ test("Test - Time Expression's Meridiem imply", function() {
 })
 
 
+test("Test - Timezone extraction", function() {
+
+    var text = "friday at 2 pm";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == text, result.text)
+    ok(!result.start.isCertain('timezoneOffset'), JSON.stringify(result.start))
+    ok(!result.start.get('timezoneOffset'), JSON.stringify(result.start))
+
+
+    var text = "friday at 2 pm EST";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.isCertain('timezoneOffset'), JSON.stringify(result.start))
+    ok(result.start.get('timezoneOffset') === -300, JSON.stringify(result.start))
+
+
+    var text = "friday at 2 pm est";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == text, result.text)
+    ok(result.start.isCertain('timezoneOffset'), JSON.stringify(result.start))
+    ok(result.start.get('timezoneOffset') === -300, JSON.stringify(result.start))
+
+
+    var text = "friday at 2 pm establish ...";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == 'friday at 2 pm', result.text)
+    ok(!result.start.isCertain('timezoneOffset'), JSON.stringify(result.start))
+    ok(!result.start.get('timezoneOffset'), JSON.stringify(result.start))
+
+
+    var text = "friday at 2 pm I will do something";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == 'friday at 2 pm', result.text)
+    ok(!result.start.isCertain('timezoneOffset'), JSON.stringify(result.start))
+    ok(!result.start.get('timezoneOffset'), JSON.stringify(result.start))
+})
+
+
 test("Test - Random date + time expression", function() {
 
     var text = "monday 4/29/2013 630-930am";
