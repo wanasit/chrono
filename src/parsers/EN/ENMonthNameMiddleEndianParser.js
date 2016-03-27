@@ -7,6 +7,11 @@
         - January 13, 2012
         - January 13 - 15, 2012
         - Tuesday, January 13, 2012
+
+    Watch out for:
+        - January 12:00
+        - January 12.44
+        - January 1222344
 */
 
 var moment = require('moment');
@@ -33,7 +38,7 @@ var PATTERN = new RegExp('(\\W|^)' +
     '(?:' +
         '\\s*,?\\s*([0-9]{4})(\\s*BE)?\\s*' +
     ')?' + 
-    '(?=\\W|$)', 'i');
+    '(?=\\W|$)(?!\\:\\d)', 'i');
 
 var WEEKDAY_GROUP = 2;
 var MONTH_NAME_GROUP = 3;
@@ -48,6 +53,11 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){
+
+        if (text.indexOf('5 May 12:00') >= 0) {
+            console.log(match)
+        }
+
         var result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
             index: match.index + match[1].length,
