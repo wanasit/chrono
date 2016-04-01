@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(seconds?|minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
 
 exports.Parser = function ENDeadlineFormatParser(){
     Parser.apply(this, arguments);
@@ -53,6 +53,10 @@ exports.Parser = function ENDeadlineFormatParser(){
         } else if (match[4].match(/minute/)) {
 
             date.add(num, 'minute');
+
+        } else if (match[4].match(/second/)) {
+
+            date.add(num, 'second');
         }
 
         result.start.imply('year', date.year());
@@ -60,6 +64,7 @@ exports.Parser = function ENDeadlineFormatParser(){
         result.start.imply('day', date.date());
         result.start.assign('hour', date.hour());
         result.start.assign('minute', date.minute());
+        result.start.assign('second', date.second());
         result.tags['ENDeadlineFormatParser'] = true;
         return result;
     };
