@@ -12,7 +12,7 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
 
         if (results.length < 2) return results;
         
-        var mergedResult = []
+        var mergedResult = [];
         var currResult = null;
         var prevResult = null;
         
@@ -38,7 +38,7 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
 
 
         return mergedResult;
-    }
+    };
 
     this.isAbleToMerge = function(text, result1, result2) {
         var begin = result1.index + result1.text.length;
@@ -46,19 +46,26 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
         var textBetween = text.substring(begin,end);
 
         return textBetween.match(this.pattern());
-    }
+    };
+
+    this.isWeekdayResult = function (result) {
+        return result.start.isCertain('weekday') && !result.start.isCertain('day');
+    };
 
     this.mergeResult = function(text, fromResult, toResult) {
 
-        for (var key in toResult.start.knownValues) {
-            if (!fromResult.start.isCertain(key)) {
-                fromResult.start.assign(key, toResult.start.get(key));
-            }
-        }
+        if (!this.isWeekdayResult(fromResult) && !this.isWeekdayResult(toResult)) {
 
-        for (var key in fromResult.start.knownValues) {
-            if (!toResult.start.isCertain(key)) {
-                toResult.start.assign(key, fromResult.start.get(key));
+            for (var key in toResult.start.knownValues) {
+                if (!fromResult.start.isCertain(key)) {
+                    fromResult.start.assign(key, toResult.start.get(key));
+                }
+            }
+
+            for (var key in fromResult.start.knownValues) {
+                if (!toResult.start.isCertain(key)) {
+                    toResult.start.assign(key, fromResult.start.get(key));
+                }
             }
         }
 
@@ -87,5 +94,5 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
         fromResult.tags[this.constructor.name] = true;
         return fromResult;
     }
-}
+};
 

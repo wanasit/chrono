@@ -7,7 +7,7 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tues':2, 'tue':2, 'wednesday': 3, 'wed': 3,
-    'thursday': 4, 'thurs':4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
+    'thursday': 4, 'thurs':4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6};
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
@@ -24,7 +24,7 @@ var POSTFIX_GROUP = 4;
 exports.Parser = function ENWeekdayParser() {
     Parser.apply(this, arguments);
 
-    this.pattern = function() { return PATTERN; }
+    this.pattern = function() { return PATTERN; };
 
     this.extract = function(text, ref, match, opt){
         var index = match.index + match[1].length;
@@ -48,9 +48,9 @@ exports.Parser = function ENWeekdayParser() {
             norm = norm.toLowerCase();
 
             if(norm == 'last')
-                startMoment.day(offset - 7)
+                startMoment.day(offset - 7);
             else if(norm == 'next')
-                startMoment.day(offset + 7)
+                startMoment.day(offset + 7);
             else if(norm== 'this')
                 startMoment.day(offset);
         } else{
@@ -67,10 +67,10 @@ exports.Parser = function ENWeekdayParser() {
         }
 
         result.start.assign('weekday', offset);
-        result.start.imply('day', startMoment.date())
-        result.start.imply('month', startMoment.month() + 1)
-        result.start.imply('year', startMoment.year())
+        result.start.imply('day', startMoment.date());
+        result.start.imply('month', startMoment.month() + 1);
+        result.start.imply('year', startMoment.year());
         return result;
     }
-}
+};
 
