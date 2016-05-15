@@ -14,7 +14,10 @@ var PATTERN = new RegExp('(\\W|^)' +
         '([0-9]{1,2})(?:st|nd|rd|th)?' + 
         '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
-        '(?:(\\s*[0-9]{2,4}(?![^\\s]\\d))(\\s*BE)?)?' + 
+        '(?:' +
+            ',?\\s*([0-9]{2,4}(?![^\\s]\\d))' +
+            '(\\s*BE)?' +
+        ')?' +
         '(?=\\W|$)', 'i'
     );
 
