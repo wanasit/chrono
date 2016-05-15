@@ -1,7 +1,11 @@
 # Node Modules
 node_modules/*
 
-# ETC
-.Rhistory
-
+# Coverages
 coverage/
+
+# Misc
+.Rhistory
+.idea/
+
+
