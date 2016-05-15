@@ -7,8 +7,8 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?|half(?:\s*an?)?)\s*(minutes?|hours?|weeks?|days?|months?|years?)\s*(?:ago|before|earlier)(?=(?:\W|$))/i;
-var STRICT_PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
+var PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?|half(?:\s*an?)?)\s*(seconds?|minutes?|hours?|weeks?|days?|months?|years?)\s*(?:ago|before|earlier)(?=(?:\W|$))/i;
+var STRICT_PATTERN = /(\W|^)(?:within\s*)?([0-9]+|an?)\s*(seconds?|minutes?|hours?|days?)\s*ago(?=(?:\W|$))/i;
 
 exports.Parser = function ENTimeAgoFormatParser(){
     Parser.apply(this, arguments);
@@ -42,7 +42,7 @@ exports.Parser = function ENTimeAgoFormatParser(){
 
         var date = moment(ref);
 
-        if (match[3].match(/hour/) || match[3].match(/minute/)) {
+        if (match[3].match(/hour|minute|second/)) {
             if (match[3].match(/hour/)) {
 
                 date.add(-num, 'hour');
@@ -50,6 +50,10 @@ exports.Parser = function ENTimeAgoFormatParser(){
             } else if (match[3].match(/minute/)) {
 
                 date.add(-num, 'minute');
+
+            } else if (match[3].match(/second/)) {
+
+                date.add(-num, 'second');
             }
 
             result.start.imply('day', date.date());
@@ -57,6 +61,7 @@ exports.Parser = function ENTimeAgoFormatParser(){
             result.start.imply('year', date.year());
             result.start.assign('hour', date.hour());
             result.start.assign('minute', date.minute());
+            result.start.assign('second', date.second());
             result.tags['ENTimeAgoFormatParser'] = true;
             return result;
         }
