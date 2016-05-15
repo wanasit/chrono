@@ -13,7 +13,8 @@ exports.WEEKDAY_OFFSET = {
     'friday': 5, 
     'fri': 5,
     'saturday': 6, 
-    'sat': 6,}
+    'sat': 6
+};
     
 exports.MONTH_OFFSET = { 
     'january': 1,
@@ -51,5 +52,21 @@ exports.MONTH_OFFSET = {
     'nov.': 11,
     'december': 12,
     'dec': 12,
-    'dec.': 12,
-}
+    'dec.': 12
+};
+
+exports.INTEGER_WORDS_PATTERN = '(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)';
+exports.INTEGER_WORDS = {
+    'one' : 1,
+    'two' : 2,
+    'three' : 3,
+    'four' : 4,
+    'five' : 5,
+    'six' : 6,
+    'seven' : 7,
+    'eight' : 8,
+    'nine' : 9,
+    'ten' : 10,
+    'eleven' : 11,
+    'twelve' : 12
+};

@@ -6,8 +6,17 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
+var util  = require('../../utils/EN');
 
-var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(seconds?|minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+//var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(seconds?|minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
+
+var PATTERN = new RegExp('(\\W|^)' +
+    '(within|in)\\s*' +
+    '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?|half(?:\\s*an?)?)\\s*' +
+    '(seconds?|minutes?|hours?|days?)\\s*' +
+    '(?=\\W|$)', 'i'
+);
+
 
 exports.Parser = function ENDeadlineFormatParser(){
     Parser.apply(this, arguments);
@@ -23,11 +32,13 @@ exports.Parser = function ENDeadlineFormatParser(){
         var result = new ParsedResult({
             index: index,
             text: text,
-            ref: ref,
+            ref: ref
         });
 
         var num = match[3];
-        if (num === 'a' || num === 'an'){
+        if (util.INTEGER_WORDS[num] !== undefined) {
+            num = 5;
+        } else if (num === 'a' || num === 'an'){
             num = 1;
         } else if (num.match(/half/)) {
             num = 0.5;

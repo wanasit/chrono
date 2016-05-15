@@ -18,11 +18,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-
 var util  = require('../../utils/EN');
-
-var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'tue':2, 'wednesday': 3, 'wed': 3,
-    'thursday': 4, 'thur': 4, 'thu': 4,'friday': 5, 'fri': 5,'saturday': 6, 'sat': 6,}
     
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:' +
