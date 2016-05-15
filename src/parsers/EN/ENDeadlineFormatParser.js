@@ -8,20 +8,26 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
-//var PATTERN = /(\W|^)(within|in)\s*([0-9]+|an?|half(?:\s*an?)?)\s*(seconds?|minutes?|hours?|days?)\s*(?=(?:\W|$))/i;
-
 var PATTERN = new RegExp('(\\W|^)' +
     '(within|in)\\s*' +
-    '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?|half(?:\\s*an?)?)\\s*' +
+    '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
+    '(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\\s*' +
+    '(?=\\W|$)', 'i'
+);
+
+var STRICT_PATTERN = new RegExp('(\\W|^)' +
+    '(within|in)\\s*' +
+    '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?)\\s*' +
     '(seconds?|minutes?|hours?|days?)\\s*' +
     '(?=\\W|$)', 'i'
 );
 
-
 exports.Parser = function ENDeadlineFormatParser(){
     Parser.apply(this, arguments);
 
-    this.pattern = function() { return PATTERN; }
+    this.pattern = function() {
+        return this.isStrictMode()? STRICT_PATTERN : PATTERN;
+    };
 
     this.extract = function(text, ref, match, opt){
 
@@ -37,9 +43,11 @@ exports.Parser = function ENDeadlineFormatParser(){
 
         var num = match[3];
         if (util.INTEGER_WORDS[num] !== undefined) {
-            num = 5;
+            num = util.INTEGER_WORDS[num];
         } else if (num === 'a' || num === 'an'){
             num = 1;
+        } else if (num.match(/few/)){
+            num = 3;
         } else if (num.match(/half/)) {
             num = 0.5;
         } else {
@@ -47,15 +55,23 @@ exports.Parser = function ENDeadlineFormatParser(){
         }
 
         var date = moment(ref);
-        if (match[4].match(/day/)) {
-            date.add(num, 'd');
+        if (match[4].match(/day|week|month|year/)) {
+
+            if (match[4].match(/day/)) {
+                date.add(num, 'd');
+            } else if (match[4].match(/week/)) {
+                date.add(num * 7, 'd');
+            } else if (match[4].match(/month/)) {
+                date.add(num, 'month');
+            } else if (match[4].match(/year/)) {
+                date.add(num, 'year');
+            }
 
             result.start.assign('year', date.year());
             result.start.assign('month', date.month() + 1);
             result.start.assign('day', date.date());
             return result;
         }
-
 
         if (match[4].match(/hour/)) {
 
@@ -79,4 +95,4 @@ exports.Parser = function ENDeadlineFormatParser(){
         result.tags['ENDeadlineFormatParser'] = true;
         return result;
     };
-}
+};

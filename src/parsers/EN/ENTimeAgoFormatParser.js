@@ -11,7 +11,7 @@ var util  = require('../../utils/EN');
 var PATTERN = new RegExp('' +
     '(\\W|^)' +
     '(?:within\\s*)?' +
-    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?|half(?:\\s*an?)?)\\s*' +
+    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
     '(seconds?|minutes?|hours?|weeks?|days?|months?|years?)\\s*' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 
@@ -48,6 +48,8 @@ exports.Parser = function ENTimeAgoFormatParser(){
             num = util.INTEGER_WORDS[num];
         } else if(num === 'a' || num === 'an'){
             num = 1;
+        } else if (num.match(/few/)) {
+            num = 3;
         } else if (num.match(/half/)) {
             num = 0.5;
         } else {

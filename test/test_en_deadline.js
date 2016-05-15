@@ -148,4 +148,82 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2012,7,10,12,44);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+
+
+    var text = "within two weeks";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'within two weeks', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 24, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+
+    var text = "within a month";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'within a month', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+
+    var text = "within a few months";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'within a few months', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 10, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+
+    var text = "within one year";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'within one year', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2013, 7, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+});
+
+
+test("Test - Single Expression (Strict)", function() {
+
+    var text = "within one year";
+    var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 0, JSON.stringify( results ) );
+
+
+    var text = "within a few months";
+    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
+    ok(results.length == 0, JSON.stringify( results ) )
+
+
+    var text = "within a few days";
+    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
+    ok(results.length == 0, JSON.stringify( results ) )
 });
