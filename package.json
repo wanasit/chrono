@@ -7,7 +7,7 @@
     "url": "https://github.com/berryboy/chrono.git"
   },
   "license": "MIT",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "directories": {
     "source": "./src",
     "test-qunit": "./test-qunit"
