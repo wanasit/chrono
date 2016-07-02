@@ -122,7 +122,7 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 
 Chrono comes with `strict` mode that parse only formal date patterns. 
 
-```
+```javascript
 // 'strict' mode
 chrono.strict.parseDate('Today');       // null
 chrono.strict.parseDate('Friday');      // null
