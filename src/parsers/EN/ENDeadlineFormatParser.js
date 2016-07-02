@@ -11,7 +11,7 @@ var util  = require('../../utils/EN');
 var PATTERN = new RegExp('(\\W|^)' +
     '(within|in)\\s*' +
     '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
-    '(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\\s*' +
+    '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)\\s*' +
     '(?=\\W|$)', 'i'
 );
 
@@ -77,7 +77,7 @@ exports.Parser = function ENDeadlineFormatParser(){
 
             date.add(num, 'hour');
 
-        } else if (match[4].match(/minute/i)) {
+        } else if (match[4].match(/min/i)) {
 
             date.add(num, 'minute');
 

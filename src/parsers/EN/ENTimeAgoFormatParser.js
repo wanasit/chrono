@@ -12,7 +12,7 @@ var PATTERN = new RegExp('' +
     '(\\W|^)' +
     '(?:within\\s*)?' +
     '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
-    '(seconds?|minutes?|hours?|weeks?|days?|months?|years?)\\s*' +
+    '(seconds?|min(?:ute)?s?|hours?|weeks?|days?|months?|years?)\\s*' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 
 var STRICT_PATTERN = new RegExp('' +
@@ -58,12 +58,12 @@ exports.Parser = function ENTimeAgoFormatParser(){
 
         var date = moment(ref);
 
-        if (match[3].match(/hour|minute|second/i)) {
+        if (match[3].match(/hour|min|second/i)) {
             if (match[3].match(/hour/i)) {
 
                 date.add(-num, 'hour');
 
-            } else if (match[3].match(/minute/i)) {
+            } else if (match[3].match(/min/i)) {
 
                 date.add(-num, 'minute');
 
