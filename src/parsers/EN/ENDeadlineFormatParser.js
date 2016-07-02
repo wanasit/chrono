@@ -41,29 +41,29 @@ exports.Parser = function ENDeadlineFormatParser(){
             ref: ref
         });
 
-        var num = match[3];
+        var num = match[3].toLowerCase();
         if (util.INTEGER_WORDS[num] !== undefined) {
             num = util.INTEGER_WORDS[num];
         } else if (num === 'a' || num === 'an'){
             num = 1;
-        } else if (num.match(/few/)){
+        } else if (num.match(/few/i)){
             num = 3;
-        } else if (num.match(/half/)) {
+        } else if (num.match(/half/i)) {
             num = 0.5;
         } else {
             num = parseInt(num);
         }
 
         var date = moment(ref);
-        if (match[4].match(/day|week|month|year/)) {
+        if (match[4].match(/day|week|month|year/i)) {
 
-            if (match[4].match(/day/)) {
+            if (match[4].match(/day/i)) {
                 date.add(num, 'd');
-            } else if (match[4].match(/week/)) {
+            } else if (match[4].match(/week/i)) {
                 date.add(num * 7, 'd');
-            } else if (match[4].match(/month/)) {
+            } else if (match[4].match(/month/i)) {
                 date.add(num, 'month');
-            } else if (match[4].match(/year/)) {
+            } else if (match[4].match(/year/i)) {
                 date.add(num, 'year');
             }
 
@@ -73,15 +73,15 @@ exports.Parser = function ENDeadlineFormatParser(){
             return result;
         }
 
-        if (match[4].match(/hour/)) {
+        if (match[4].match(/hour/i)) {
 
             date.add(num, 'hour');
 
-        } else if (match[4].match(/minute/)) {
+        } else if (match[4].match(/minute/i)) {
 
             date.add(num, 'minute');
 
-        } else if (match[4].match(/second/)) {
+        } else if (match[4].match(/second/i)) {
 
             date.add(num, 'second');
         }

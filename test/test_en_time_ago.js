@@ -173,6 +173,64 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
+
+
+    var text = "5 Days ago, we did something";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 5, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '5 Days ago', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8-1, 5, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+
+    var text = "   half An hour ago";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.index == 3, 'Wrong index');
+        ok(result.text == 'half An hour ago', result.text );
+        ok(result.start.get('hour') == 11, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('minute') == 44, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012,7,10,11,44);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+
+    var text = "A days ago, we did something";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 9, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'A days ago', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8-1, 9, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
 });
 
 
