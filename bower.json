@@ -1,7 +1,7 @@
 {
   "name": "chrono",
   "main": "chrono.js",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "homepage": "https://github.com/wanasit/chrono",
   "authors": [
     "Wanasit Tanakitrungruang <berrysboy@gmail.com>"
