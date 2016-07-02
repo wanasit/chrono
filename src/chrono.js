@@ -13,7 +13,7 @@ exports.ParsedComponents = require('./result').ParsedComponents;
 
 var Chrono = function(option) {
 
-    option = option || exports.options.strictOption();
+    option = option || exports.options.casualOption();
 
     this.option = option;
     this.parsers = new Object(option.parsers);
