@@ -43,26 +43,32 @@ exports.Parser = function ENWeekdayParser() {
         var prefix = match[PREFIX_GROUP];
         var postfix = match[POSTFIX_GROUP];
 
-        if (prefix || postfix) {
-            var norm = prefix || postfix;
-            norm = norm.toLowerCase();
+        var refOffset = startMoment.day();
+        var norm = prefix || postfix;
+        norm = norm || '';
+        norm = norm.toLowerCase();
+        if(norm == 'last') {
+            startMoment.day(offset - 7);
+        } else if(norm == 'next') {
+            startMoment.day(offset + 7);
+        } else if(norm == 'this') {
 
-            if(norm == 'last')
-                startMoment.day(offset - 7);
-            else if(norm == 'next')
-                startMoment.day(offset + 7);
-            else if(norm== 'this')
-                startMoment.day(offset);
-        } else{
-            var refOffset = startMoment.day();
             if ( opt.forwardDatesOnly && refOffset > offset ) {
-              startMoment.day(offset + 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset - 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset + 7);
+                startMoment.day(offset + 7);
             } else {
-              startMoment.day(offset);
+                startMoment.day(offset);
+            }
+
+        } else {
+
+            if ( opt.forwardDatesOnly && refOffset > offset ) {
+                startMoment.day(offset + 7);
+            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
+                startMoment.day(offset - 7);
+            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
+                startMoment.day(offset + 7);
+            } else {
+                startMoment.day(offset);
             }
         }
 

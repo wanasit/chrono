@@ -69,7 +69,9 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
             }
         }
 
-        if (fromResult.start.date().getTime() > toResult.start.date()) {
+        if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
+            console.log(fromResult.start)
+            console.log(toResult.start)
             var tmp = toResult;
             toResult = fromResult;
             fromResult = tmp;
