@@ -120,8 +120,8 @@ test("Test - Single Expression", function () {
 
     var result = results[0];
     if (result) {
-        ok(result.index == 24, 'Wrong index');
-        ok(result.text == 'Friday next week', result.text);
+        ok(result.index == 21, 'Wrong index');
+        ok(result.text == 'on Friday next week', result.text);
 
         ok(result.start, JSON.stringify(result.start));
         ok(result.start.get('year') == 2015, 'Test Result - (Year) ' + JSON.stringify(result.start));
@@ -141,8 +141,8 @@ test("Test - Single Expression", function () {
 
     var result = results[0];
     if (result) {
-        ok(result.index == 32, 'Wrong index');
-        ok(result.text == 'Tuesday, next week', result.text);
+        ok(result.index == 29, 'Wrong index');
+        ok(result.text == 'on Tuesday, next week', result.text);
 
         ok(result.start, JSON.stringify(result.start));
         ok(result.start.get('year') == 2015, 'Test Result - (Year) ' + JSON.stringify(result.start));
@@ -257,5 +257,3 @@ test('Test - forward dates only option', function () {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.end.date ' + resultDate + '/' + expectDate)
     }
 });
-
-
