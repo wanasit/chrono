@@ -31,6 +31,8 @@ function baseOption(strictMode) {
             // ZH-Hant
             new parser.ZHHantDateParser(strictMode),
             new parser.ZHHantWeekdayParser(strictMode),
+            new parser.ZHHantTimeExpressionParser(strictMode),
+            new parser.ZHHantCasualDateParser(strictMode),
         ],
 
         refiners: [

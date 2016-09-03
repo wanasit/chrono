@@ -45,13 +45,13 @@ exports.Parser = function ZHHantDateParser() {
 
         //Month
         var month = parseInt(match[MONTH_GROUP]);
-        if (!month) month = util.zhStringToNumber(match[MONTH_GROUP]);
+        if (isNaN(month)) month = util.zhStringToNumber(match[MONTH_GROUP]);
         result.start.assign('month', month);
 
         //Day
         if (match[DAY_GROUP]) {
             var day = parseInt(match[DAY_GROUP]);
-            if (!day) day = util.zhStringToNumber(match[DAY_GROUP]);
+            if (isNaN(day)) day = util.zhStringToNumber(match[DAY_GROUP]);
             result.start.assign('day', day);
         } else {
             result.start.imply('day', startMoment.date());
@@ -60,7 +60,7 @@ exports.Parser = function ZHHantDateParser() {
         //Year
         if (match[YEAR_GROUP]) {
             var year = parseInt(match[YEAR_GROUP]);
-            if (!year) year = util.zhStringToYear(match[YEAR_GROUP]);
+            if (isNaN(year)) year = util.zhStringToYear(match[YEAR_GROUP]);
             result.start.assign('year', year);
         } else {
             result.start.imply('year', startMoment.year());
