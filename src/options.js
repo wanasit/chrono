@@ -33,6 +33,7 @@ function baseOption(strictMode) {
             new parser.ZHHantWeekdayParser(strictMode),
             new parser.ZHHantTimeExpressionParser(strictMode),
             new parser.ZHHantCasualDateParser(strictMode),
+            new parser.ZHHantDeadlineFormatParser(strictMode),
         ],
 
         refiners: [
