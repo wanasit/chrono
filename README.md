@@ -120,8 +120,8 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 
 ```javascript
 // Remove the timezone offset of a parsed date and then create the Date object
-> var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult object
-> results[0].start.assign('timezoneOffset', 0); // Set the TZ offset of the ParsedComponents object 'start' to 0
+> var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
+> results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
 > var d = results[0].start.date(); // Create a Date object
 > d.toString(); // Display resulting Date object
 'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
