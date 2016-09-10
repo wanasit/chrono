@@ -1,8 +1,8 @@
 /*
-    
+
     The parser for parsing US's date format that begin with month's name.
-    
-    EX. 
+
+    EX.
         - January 13
         - January 13, 2012
         - January 13 - 15, 2012
@@ -19,21 +19,22 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
-    
+
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:' +
-        '(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun\\.?|Mon\\.?|Tue\\.?|Wed\\.?|Thu\\.?|Fri\\.?|Sat\\.?)' + 
+        '(?:on\\s*?)?' +
+        '(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun\\.?|Mon\\.?|Tue\\.?|Wed\\.?|Thu\\.?|Fri\\.?|Sat\\.?)' +
     '\\s*,?\\s*)?' +
-    '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
+    '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' +
     '\\s*' +
-    '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' + 
-    '(?:' + 
-        '(?:to|\\-)\\s*' + 
-        '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' + 
-    ')?' + 
+    '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' +
+    '(?:' +
+        '(?:to|\\-)\\s*' +
+        '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' +
+    ')?' +
     '(?:' +
         '\\s*,?\\s*([0-9]{4})(\\s*BE)?\\s*' +
-    ')?' + 
+    ')?' +
     '(?=\\W|$)(?!\\:\\d)', 'i');
 
 var WEEKDAY_GROUP = 2;
@@ -47,7 +48,7 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
-    
+
     this.extract = function(text, ref, match, opt){
 
         if (text.indexOf('5 May 12:00') >= 0) {
@@ -60,7 +61,7 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             ref: ref,
         });
 
-        
+
         var month = match[MONTH_NAME_GROUP];
         month = util.MONTH_OFFSET[month.toLowerCase()];
 
@@ -72,11 +73,11 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             year = match[YEAR_GROUP];
             year = parseInt(year);
 
-            if(match[YEAR_BE_GROUP]){ 
+            if(match[YEAR_BE_GROUP]){
                 //BC
                 year = year - 543;
 
-            } else if (year < 100){ 
+            } else if (year < 100){
 
                 year = year + 2000;
             }
@@ -87,7 +88,7 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
-            
+
             //Find the most appropriated year
             var refMoment = moment(ref);
             refMoment.month(month - 1);
@@ -95,10 +96,10 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
 
             var nextYear = refMoment.clone().add(1, 'y');
             var lastYear = refMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){  
+            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
                 refMoment = nextYear;
             }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){ 
+            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
                 refMoment = lastYear;
             }
 
@@ -106,7 +107,7 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             result.start.assign('month', month);
             result.start.imply('year', refMoment.year());
         }
-        
+
         // Weekday component
         if (match[WEEKDAY_GROUP]) {
             var weekday = match[WEEKDAY_GROUP];
@@ -124,4 +125,3 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
         return result;
     }
 }
-

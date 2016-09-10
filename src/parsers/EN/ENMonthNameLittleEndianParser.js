@@ -1,6 +1,6 @@
 /*
-    
-    
+
+
 */
 
 var moment = require('moment');
@@ -8,11 +8,12 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
-    
+
 var PATTERN = new RegExp('(\\W|^)' +
-        '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' + 
-        '([0-9]{1,2})(?:st|nd|rd|th)?' + 
-        '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' + 
+        '(?:on\\s*?)?' +
+        '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' +
+        '([0-9]{1,2})(?:st|nd|rd|th)?' +
+        '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' +
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
         '(?:' +
             ',?\\s*([0-9]{2,4}(?![^\\s]\\d))' +
@@ -30,10 +31,10 @@ var YEAR_BE_GROUP = 7;
 
 exports.Parser = function ENMonthNameLittleEndianParser(){
     Parser.apply(this, arguments);
-    
+
     this.pattern = function() { return PATTERN; }
-    
-    this.extract = function(text, ref, match, opt){ 
+
+    this.extract = function(text, ref, match, opt){
 
         var result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
@@ -52,11 +53,11 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             year = match[YEAR_GROUP];
             year = parseInt(year);
 
-            if(match[YEAR_BE_GROUP]){ 
+            if(match[YEAR_BE_GROUP]){
                 //BC
                 year = year - 543;
 
-            } else if (year < 100){ 
+            } else if (year < 100){
 
                 year = year + 2000;
             }
@@ -67,7 +68,7 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
-            
+
             //Find the most appropriated year
             var refMoment = moment(ref);
             refMoment.month(month - 1);
@@ -76,10 +77,10 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
 
             var nextYear = refMoment.clone().add(1, 'y');
             var lastYear = refMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){  
+            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
                 refMoment = nextYear;
             }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){ 
+            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
                 refMoment = lastYear;
             }
 
@@ -87,7 +88,7 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             result.start.assign('month', month);
             result.start.imply('year', refMoment.year());
         }
-        
+
         // Weekday component
         if (match[WEEKDAY_GROUP]) {
             var weekday = match[WEEKDAY_GROUP];
@@ -105,4 +106,3 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         return result;
     };
 }
-

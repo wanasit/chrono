@@ -1,5 +1,5 @@
 /*
-    Date format with slash "/" (also "-" and ".") between numbers 
+    Date format with slash "/" (also "-" and ".") between numbers
     - Tuesday 11/3/2015
     - 11/3/2015
     - 11/3
@@ -8,16 +8,17 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = new RegExp('(\\W|^)' + 
-    '(?:' + 
+var PATTERN = new RegExp('(\\W|^)' +
+    '(?:' +
+        '(?:on\\s*?)?' +
         '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)' +
         '\\s*\\,?\\s*' +
-    ')?' + 
-    '([0-9]{1,2})[\\/\\.\\-]([0-9]{1,2})' + 
-    '(?:' + 
-        '[\\/\\.\\-]' + 
-        '([0-9]{4}|[0-9]{2})' + 
-    ')?' + 
+    ')?' +
+    '([0-9]{1,2})[\\/\\.\\-]([0-9]{1,2})' +
+    '(?:' +
+        '[\\/\\.\\-]' +
+        '([0-9]{4}|[0-9]{2})' +
+    ')?' +
     '(\\W|$)', 'i');
 
 var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, 'wednesday': 3, 'wed': 3,
@@ -37,7 +38,7 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
 
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){
-        
+
         if(match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
             // Long skip, if there is some overlapping like:
             // XX[/YY/ZZ]
@@ -55,10 +56,10 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
             index: index,
             ref: ref,
         });
-            
+
         if(text.match(/^\d\.\d$/)) return;
         if(text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return;
-        
+
         // MM/dd -> OK
         // MM.dd -> NG
         if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
@@ -67,7 +68,7 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
         var year = match[YEAR_GROUP] || moment(ref).year() + '';
         var month = match[MONTH_GROUP];
         var day   = match[DAY_GROUP];
-        
+
         month = parseInt(month);
         day  = parseInt(day);
         year = parseInt(year);
@@ -92,9 +93,9 @@ exports.Parser = function ENSlashDateFormatParser(argument) {
 
         if(year < 100){
             if (year > 50) {
-                year = year + 1900; 
+                year = year + 1900;
             } else {
-                year = year + 2000; 
+                year = year + 2000;
             }
         }
 
