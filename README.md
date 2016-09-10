@@ -118,6 +118,15 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 * `isCertain(component)`      return true if the value of the component is known.
 * `date()`                    Create a javascript Date
 
+```javascript
+// Remove the timezone offset of a parsed date and then create the Date object
+> var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
+> results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
+> var d = results[0].start.date(); // Create a Date object
+> d.toString(); // Display resulting Date object
+'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
+```
+
 ### Strict vs Casual 
 
 Chrono comes with `strict` mode that parse only formal date patterns. 
