@@ -28,6 +28,13 @@ function baseOption(strictMode) {
             new parser.ESMonthNameLittleEndianParser(strictMode),
             new parser.ESSlashDateFormatParser(strictMode),
 
+            // FR
+            new parser.FRDeadlineFormatParser(strictMode),
+            new parser.FRMonthNameLittleEndianParser(strictMode),
+            new parser.FRSlashDateFormatParser(strictMode),
+            new parser.FRTimeAgoFormatParser(strictMode),
+            new parser.FRTimeExpressionParser(strictMode),
+
             // ZH-Hant
             new parser.ZHHantDateParser(strictMode),
             new parser.ZHHantWeekdayParser(strictMode),
@@ -43,6 +50,8 @@ function baseOption(strictMode) {
             // ETC
             new refiner.ENMergeDateTimeRefiner(),
             new refiner.ENMergeDateRangeRefiner(),
+            new refiner.FRMergeDateRangeRefiner(),
+            new refiner.FRMergeDateTimeRefiner(),
             new refiner.JPMergeDateRangeRefiner(),
 
             // Extract additional info later
@@ -75,6 +84,9 @@ exports.casualOption = function () {
     options.parsers.unshift(new parser.ESCasualDateParser());
     options.parsers.unshift(new parser.ESWeekdayParser());
 
-
+    // FR
+    options.parsers.unshift(new parser.FRCasualDateParser());
+    options.parsers.unshift(new parser.FRWeekdayParser());
+    
     return options;
 };

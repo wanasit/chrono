@@ -75,8 +75,17 @@ exports.ESWeekdayParser = require('./ES/ESWeekdayParser').Parser;
 exports.ESMonthNameLittleEndianParser = require('./ES/ESMonthNameLittleEndianParser').Parser;
 exports.ESSlashDateFormatParser = require('./ES/ESSlashDateFormatParser').Parser;
 
+exports.FRCasualDateParser = require('./FR/FRCasualDateParser').Parser;
+exports.FRDeadlineFormatParser = require('./FR/FRDeadlineFormatParser').Parser;
+exports.FRMonthNameLittleEndianParser = require('./FR/FRMonthNameLittleEndianParser').Parser;
+exports.FRSlashDateFormatParser = require('./FR/FRSlashDateFormatParser').Parser;
+exports.FRTimeAgoFormatParser = require('./FR/FRTimeAgoFormatParser').Parser;
+exports.FRTimeExpressionParser = require('./FR/FRTimeExpressionParser').Parser;
+exports.FRWeekdayParser = require('./FR/FRWeekdayParser').Parser;
+
 exports.ZHHantDateParser = require('./ZH-Hant/ZHHantDateParser').Parser;
 exports.ZHHantWeekdayParser = require('./ZH-Hant/ZHHantWeekdayParser').Parser;
 exports.ZHHantTimeExpressionParser = require('./ZH-Hant/ZHHantTimeExpressionParser').Parser;
 exports.ZHHantCasualDateParser = require('./ZH-Hant/ZHHantCasualDateParser').Parser;
 exports.ZHHantDeadlineFormatParser = require('./ZH-Hant/ZHHantDeadlineFormatParser').Parser;
+

@@ -38,3 +38,6 @@ exports.ENMergeDateRangeRefiner = require('./EN/ENMergeDateRangeRefiner').Refine
 // JP refiners
 exports.JPMergeDateRangeRefiner = require('./JP/JPMergeDateRangeRefiner').Refiner;
 
+// FR refiners
+exports.FRMergeDateRangeRefiner = require('./FR/FRMergeDateRangeRefiner').Refiner;
+exports.FRMergeDateTimeRefiner = require('./FR/FRMergeDateTimeRefiner').Refiner;

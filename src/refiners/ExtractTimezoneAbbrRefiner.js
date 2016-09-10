@@ -14,7 +14,7 @@ exports.Refiner = function ExtractTimezoneAbbrRefiner() {
 
 		results.forEach(function(result) {
 
-            if (!result.tags['ENTimeExpressionParser'] && !result.tags['ZHTimeExpressionParser']) {
+            if (!result.tags['ENTimeExpressionParser'] && !result.tags['ZHTimeExpressionParser'] && !result.tags['FRTimeExpressionParser']) {
                 return;
             }
 
