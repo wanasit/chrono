@@ -11,6 +11,7 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
+    '(?:on\\s*?)?' +
     '(?:(this|last|next)\\s*)?' +
     '(' + Object.keys(DAYS_OFFSET).join('|') + ')' +
     '(?:\\s*(?:\\,|\\)|\\）))?' +
@@ -79,4 +80,3 @@ exports.Parser = function ENWeekdayParser() {
         return result;
     }
 };
-
