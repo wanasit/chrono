@@ -407,16 +407,16 @@ test('Test - Random text', function() {
 
 test('Test - Random negative text', function() {
 
-    var text = "nicheute";
+    var text = "scheute";
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) );
 
 
-    var text = "heutenicht";
+    var text = "heuteufel";
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) );
 
-    var text = "angestern";
+    var text = "Leihgestern";
     var results = chrono.parse(text);
     ok(results.length == 0, JSON.stringify(results) );
 
