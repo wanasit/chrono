@@ -17,7 +17,7 @@ var PATTERN = new RegExp('(\\W|^)' +
         '([0-9]{1,2})' +
         '(?:\\s*(?:au|\\-|\\–|jusqu\'au?|\\s)\\s*([0-9]{1,2})(?:er)?)?\\s*(?:de)?\\s*' +
         '(Jan(?:vier|\\.)?|Fév(?:rier|\\.)?|Mars|Avr(?:il|\\.)?|Mai|Juin|Juil(?:let|\\.)?|Ao[uû]t|Sept(?:embre|\\.)?|Oct(?:obre|\\.)?|Nov(?:embre|\\.)?|déc(?:embre|\\.)?)' +
-        '(?:\\s*(\\s*[0-9]{2,4}(?![^\\s]\\d))(\\s*AC)?)?' +
+        '(?:\\s*(\\s*[0-9]{1,4}(?![^\\s]\\d))(?:\\s*(AC|[ap]\\.?\\s*c(?:h(?:r)?)?\\.?\\s*n\\.?))?)?' +
         '(?=\\W|$)', 'i'
     );
 
@@ -53,9 +53,10 @@ exports.Parser = function FRMonthNameLittleEndianParser(){
             year = parseInt(year);
 
             if(match[YEAR_BE_GROUP]){
-                //BC
-                year = year - 543;
-
+                if (/a/i.test(match[YEAR_BE_GROUP])) {
+                    // Ante Christe natum
+                    year = -year;
+                }
             } else if (year < 100){
 
                 year = year + 2000;

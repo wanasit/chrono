@@ -17,7 +17,7 @@ var PATTERN = new RegExp('(\\W|^)' +
         '([0-9]{1,2})(?:º|ª|°)?' +
         '(?:\\s*(?:desde|de|\\-|\\–|al?|hasta|\\s)\\s*([0-9]{1,2})(?:º|ª|°)?)?\\s*(?:de)?\\s*' +
         '(Ene(?:ro|\\.)?|Feb(?:rero|\\.)?|Mar(?:zo|\\.)?|Abr(?:il|\\.)?|May(?:o|\\.)?|Jun(?:io|\\.)?|Jul(?:io|\\.)?|Ago(?:sto|\\.)?|Sep(?:tiembre|\\.)?|Oct(?:ubre|\\.)?|Nov(?:iembre|\\.)?|Dic(?:iembre|\\.)?)' +
-        '(?:\\s*(?:del?)?(\\s*[0-9]{2,4}(?![^\\s]\\d))(\\s*AC)?)?' +
+        '(?:\\s*(?:del?)?(\\s*[0-9]{1,4}(?![^\\s]\\d))(\\s*[ad]\\.?\\s*c\\.?|a\\.?\\s*d\\.?)?)?' +
         '(?=\\W|$)', 'i'
     );
 
@@ -53,9 +53,10 @@ exports.Parser = function ESMonthNameLittleEndianParser(){
             year = parseInt(year);
 
             if(match[YEAR_BE_GROUP]){
-                //BC
-                year = year - 543;
-
+                if (/a\.?\s*c\.?/i.test(match[YEAR_BE_GROUP])) {
+                    // antes de Cristo
+                    year = -year;
+                }
             } else if (year < 100){
 
                 year = year + 2000;
