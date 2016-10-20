@@ -42,13 +42,13 @@ test("Test - Single Expression", function() {
     }
 
 
-    var text = "we have to do something within 10 day";
+    var text = "we have to make something within 10 day";
     var results = chrono.parse(text, new Date(2012,7,10));
     ok(results.length == 1, JSON.stringify( results ) );
 
     var result = results[0];
     if(result){
-        ok(result.index == 24, 'Wrong index');
+        ok(result.index == 26, 'Wrong index');
         ok(result.text == 'within 10 day', result.text );
 
         ok(result.start, JSON.stringify(result.start) );

@@ -66,7 +66,6 @@ exports.ENCasualDateParser = require('./EN/ENCasualDateParser').Parser;
 exports.JPStandardParser = require('./JP/JPStandardParser').Parser;
 exports.JPCasualDateParser = require('./JP/JPCasualDateParser').Parser;
 
-
 exports.ESCasualDateParser = require('./ES/ESCasualDateParser').Parser;
 exports.ESDeadlineFormatParser = require('./ES/ESDeadlineFormatParser').Parser;
 exports.ESTimeAgoFormatParser = require('./ES/ESTimeAgoFormatParser').Parser;
@@ -89,3 +88,11 @@ exports.ZHHantTimeExpressionParser = require('./ZH-Hant/ZHHantTimeExpressionPars
 exports.ZHHantCasualDateParser = require('./ZH-Hant/ZHHantCasualDateParser').Parser;
 exports.ZHHantDeadlineFormatParser = require('./ZH-Hant/ZHHantDeadlineFormatParser').Parser;
 
+exports.DEDeadlineFormatParser = require('./DE/DEDeadlineFormatParser').Parser;
+exports.DEMonthNameLittleEndianParser = require('./DE/DEMonthNameLittleEndianParser').Parser;
+exports.DEMonthNameParser = require('./DE/DEMonthNameParser').Parser;
+exports.DESlashDateFormatParser = require('./DE/DESlashDateFormatParser').Parser;
+exports.DETimeAgoFormatParser = require('./DE/DETimeAgoFormatParser').Parser;
+exports.DETimeExpressionParser = require('./DE/DETimeExpressionParser').Parser;
+exports.DEWeekdayParser = require('./DE/DEWeekdayParser').Parser;
+exports.DECasualDateParser = require('./DE/DECasualDateParser').Parser;
