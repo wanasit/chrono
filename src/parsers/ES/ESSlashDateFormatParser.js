@@ -93,9 +93,9 @@ exports.Parser = function ESSlashDateFormatParser(argument) {
 
         if(year < 100){
             if(year > 50){
-                year = year + 2500 - 543; //BE
+                year = year + 1900;
             }else{
-                year = year + 2000; //AD
+                year = year + 2000;
             }
         }
 

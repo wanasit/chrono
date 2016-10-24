@@ -41,6 +41,45 @@ test("Test - Single expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
+    var text = "10 August 234 BC";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 August 234 BC', result.text );
+
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == -234, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(-234, 8-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+    var text = "10 August 88 AD";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 August 88 AD', result.text );
+
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 88, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(88, 8-1, 10, 12);
+        expectDate.setFullYear(88);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
     var text = 'Sun 15Sep';
     var results = chrono.parse(text, new Date(2013,7,10));
     ok(results.length == 1, JSON.stringify( results ) );
@@ -411,5 +450,4 @@ test("Test - Impossible Dates (Casual Mode)", function() {
     ok(results.length == 1, JSON.stringify(results) );
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
 });
-
 

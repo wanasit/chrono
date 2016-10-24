@@ -194,7 +194,8 @@ exports.Parser = function ENTimeExpressionParser(){
 
             if (hour > 12) return null;
 
-            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "a"){
+            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            if(ampm == "a"){
                 meridiem = 0; 
                 if(hour == 12) {
                     hour = 0;
@@ -204,7 +205,7 @@ exports.Parser = function ENTimeExpressionParser(){
                 }
             }
             
-            if(match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p"){
+            if(ampm == "p"){
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
@@ -252,4 +253,3 @@ exports.Parser = function ENTimeExpressionParser(){
         return result;
     }
 }
-
