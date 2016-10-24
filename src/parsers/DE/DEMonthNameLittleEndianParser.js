@@ -7,17 +7,19 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-
-var util  = require('../../utils/ES');
-
-var DAYS_OFFSET = util.WEEKDAY_OFFSET;
+var util  = require('../../utils/DE');
 
 var PATTERN = new RegExp('(\\W|^)' +
-        '(?:(Domingo|Lunes|Martes|Miércoles|Miercoles|Jueves|Viernes|Sábado|Sabado|Dom|Lun|Mar|Mie|Jue|Vie|Sab)\\s*,?\\s*)?' +
-        '([0-9]{1,2})(?:º|ª|°)?' +
-        '(?:\\s*(?:desde|de|\\-|\\–|al?|hasta|\\s)\\s*([0-9]{1,2})(?:º|ª|°)?)?\\s*(?:de)?\\s*' +
-        '(Ene(?:ro|\\.)?|Feb(?:rero|\\.)?|Mar(?:zo|\\.)?|Abr(?:il|\\.)?|May(?:o|\\.)?|Jun(?:io|\\.)?|Jul(?:io|\\.)?|Ago(?:sto|\\.)?|Sep(?:tiembre|\\.)?|Oct(?:ubre|\\.)?|Nov(?:iembre|\\.)?|Dic(?:iembre|\\.)?)' +
-        '(?:\\s*(?:del?)?(\\s*[0-9]{1,4}(?![^\\s]\\d))(\\s*[ad]\\.?\\s*c\\.?|a\\.?\\s*d\\.?)?)?' +
+        '(?:am\\s*?)?' +
+        '(?:(Sonntag|Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|So|Mo|Di|Mi|Do|Fr|Sa)\\s*,?\\s*)?' +
+        '(?:den\\s*)?' +
+        '([0-9]{1,2})\\.' +
+        '(?:\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\s)\\s*([0-9]{1,2})\\.)?\\s*' +
+        '(Jan(?:uar|\\.)?|Feb(?:ruar|\\.)?|Mär(?:z|\\.)?|Maerz|Mrz\\.?|Apr(?:il|\\.)?|Mai|Jun(?:i|\\.)?|Jul(?:i|\\.)?|Aug(?:ust|\\.)?|Sep(?:t|t\\.|tember|\\.)?|Okt(?:ober|\\.)?|Nov(?:ember|\\.)?|Dez(?:ember|\\.)?)' +
+        '(?:' +
+            ',?\\s*([0-9]{1,4}(?![^\\s]\\d))' +
+            '(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?' +
+        ')?' +
         '(?=\\W|$)', 'i'
     );
 
@@ -28,7 +30,7 @@ var MONTH_NAME_GROUP = 5;
 var YEAR_GROUP = 6;
 var YEAR_BE_GROUP = 7;
 
-exports.Parser = function ESMonthNameLittleEndianParser(){
+exports.Parser = function DEMonthNameLittleEndianParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
@@ -53,8 +55,8 @@ exports.Parser = function ESMonthNameLittleEndianParser(){
             year = parseInt(year);
 
             if(match[YEAR_BE_GROUP]){
-                if (/a\.?\s*c\.?/i.test(match[YEAR_BE_GROUP])) {
-                    // antes de Cristo
+                if (/v/i.test(match[YEAR_BE_GROUP])) {
+                    // v.Chr.
                     year = -year;
                 }
             } else if (year < 100){
@@ -102,7 +104,7 @@ exports.Parser = function ESMonthNameLittleEndianParser(){
             result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
         }
 
-        result.tags['ESMonthNameLittleEndianParser'] = true;
+        result.tags['DEMonthNameLittleEndianParser'] = true;
         return result;
     };
 }

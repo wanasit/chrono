@@ -1,8 +1,8 @@
 /*
     Date format with slash "/" (also "-" and ".") between numbers
-    - Martes 3/11/2015
-    - 3/11/2015
-    - 3/11
+    - Tuesday 11/3/2015
+    - 11/3/2015
+    - 11/3
 */
 var moment = require('moment');
 var Parser = require('../parser').Parser;
@@ -10,30 +10,38 @@ var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:' +
-        '((?:domingo|dom|lunes|lun|martes|mar|mi[ée]rcoles|mie|jueves|jue|viernes|vie|s[áa]bado|sab))' +
+        '(?:am\\s*?)?' +
+        '((?:sonntag|so|montag|mo|dienstag|di|mittwoch|mi|donnerstag|do|freitag|fr|samstag|sa))' +
         '\\s*\\,?\\s*' +
+        '(?:den\\s*)?' +
     ')?' +
-    '([0-1]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' +
+    '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' +
     '(?:' +
         '[\\/\\.\\-]' +
         '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' +
     ')?' +
     '(\\W|$)', 'i');
 
-var DAYS_OFFSET = { 'domingo': 0, 'dom': 0, 'lunes': 1, 'lun': 1, 'martes': 2, 'mar': 2, 'miercoles': 3, 'miércoles': 3, 'mie': 3,
-    'jueves': 4, 'jue': 4, 'viernes': 5, 'vier': 5, 'sábado': 6, 'sabado': 6, 'sab': 6,}
+var DAYS_OFFSET = {
+    'sonntag': 0, 'so': 0,
+    'montag': 1, 'mo': 1,
+    'dienstag': 2, 'di': 2,
+    'mittwoch': 3, 'mi': 3,
+    'donnerstag': 4, 'do': 4,
+    'freitag': 5, 'fr': 5,
+    'samstag': 6, 'sa': 6
+};
 
 
 var OPENNING_GROUP = 1;
 var ENDING_GROUP = 6;
 
-// in Spanish we use day/month/year
 var WEEKDAY_GROUP = 2;
-var MONTH_GROUP = 4;
 var DAY_GROUP = 3;
+var MONTH_GROUP = 4;
 var YEAR_GROUP = 5;
 
-exports.Parser = function ESSlashDateFormatParser(argument) {
+exports.Parser = function DESlashDateFormatParser(argument) {
     Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };
@@ -73,28 +81,13 @@ exports.Parser = function ESSlashDateFormatParser(argument) {
         day  = parseInt(day);
         year = parseInt(year);
 
-        if(month < 1 || month > 12) {
-            if(month > 12) {
-                // dd/mm/yyyy date format if day looks like a month, and month
-                // looks like a day.
-                if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
-                    // unambiguous
-                    var tday = month;
-                    month = day;
-                    day = tday;
-                }
-                else {
-                    // both month and day are <= 12
-                    return null;
-                }
-            }
-        }
+        if (month < 1 || month > 12) return null;
         if(day < 1 || day > 31) return null;
 
         if(year < 100){
-            if(year > 50){
+            if (year > 50) {
                 year = year + 1900;
-            }else{
+            } else {
                 year = year + 2000;
             }
         }
@@ -108,7 +101,7 @@ exports.Parser = function ESSlashDateFormatParser(argument) {
             result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
         }
 
-        result.tags['ESSlashDateFormatParser'] = true;
+        result.tags['DESlashDateFormatParser'] = true;
         return result;
     };
 };

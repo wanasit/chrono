@@ -41,6 +41,14 @@ function baseOption(strictMode) {
             new parser.ZHHantTimeExpressionParser(strictMode),
             new parser.ZHHantCasualDateParser(strictMode),
             new parser.ZHHantDeadlineFormatParser(strictMode),
+
+            // DE
+            new parser.DEDeadlineFormatParser(strictMode),
+            new parser.DEMonthNameLittleEndianParser(strictMode),
+            new parser.DEMonthNameParser(strictMode),
+            new parser.DESlashDateFormatParser(strictMode),
+            new parser.DETimeAgoFormatParser(strictMode),
+            new parser.DETimeExpressionParser(strictMode),
         ],
 
         refiners: [
@@ -53,6 +61,8 @@ function baseOption(strictMode) {
             new refiner.FRMergeDateRangeRefiner(),
             new refiner.FRMergeDateTimeRefiner(),
             new refiner.JPMergeDateRangeRefiner(),
+            new refiner.DEMergeDateTimeRefiner(),
+            new refiner.DEMergeDateRangeRefiner(),
 
             // Extract additional info later
             new refiner.ExtractTimezoneOffsetRefiner(),
@@ -87,6 +97,10 @@ exports.casualOption = function () {
     // FR
     options.parsers.unshift(new parser.FRCasualDateParser());
     options.parsers.unshift(new parser.FRWeekdayParser());
-    
+
+    // DE
+    options.parsers.unshift(new parser.DECasualDateParser());
+    options.parsers.unshift(new parser.DEWeekdayParser());
+
     return options;
 };

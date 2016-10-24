@@ -21,24 +21,46 @@ test("Test - Single expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
-    var text = "10 Agosto 2555 AC";
+    var text = "10 Agosto 234 AC";
     var results = chrono.parse(text, new Date(2012,7,10));
     ok(results.length == 1, JSON.stringify( results ) )
 
     var result = results[0];
     if (result) {
         ok(result.index == 0, 'Wrong index')
-        ok(result.text == '10 Agosto 2555 AC', result.text )
+        ok(result.text == '10 Agosto 234 AC', result.text )
 
         ok(result.start, JSON.stringify(result.start) )
-        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('year') == -234, 'Test Result - (Year) ' + JSON.stringify(result.start) )
         ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
         ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
         var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
+        var expectDate = new Date(-234, 8-1, 10, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+
+
+    var text = "10 Agosto 88 d. C.";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if (result) {
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == '10 Agosto 88 d. C.', result.text )
+
+        ok(result.start, JSON.stringify(result.start) )
+        ok(result.start.get('year') == 88, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(88, 8-1, 10, 12);
+        expectDate.setFullYear(88);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
 
     var text = 'Dom 15Sep';
     var results = chrono.parse(text, new Date(2013,7,10));

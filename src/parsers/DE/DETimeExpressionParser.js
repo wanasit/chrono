@@ -9,20 +9,21 @@ var ParsedResult = require('../../result').ParsedResult;
 var ParsedComponents = require('../../result').ParsedComponents;
 
 var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
-    "(?:(?:at|from)\\s*)?" + 
-    "(\\d{1,4}|noon|midnight)" + 
+    "(?:(?:um|von)\\s*)?" + 
+    "(\\d{1,4}|mittags?|mitternachts?)" + 
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
             "(?:\\:|\\：)(\\d{2})" + 
         ")?" + 
-    ")?" + 
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
+    ")?" +
+    "(?:\\s*uhr)?" +
+    "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" + 
     "(?=\\W|$)", 'i');
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" + 
-    "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + 
+    "(\\-|\\–|\\~|\\〜|bis|\\?)\\s*" + 
     "(\\d{1,4})" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
@@ -30,7 +31,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
+    "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" + 
     "(?=\\W|$)", 'i');
 
 var HOUR_GROUP    = 2;
@@ -39,7 +40,7 @@ var SECOND_GROUP  = 4;
 var AM_PM_HOUR_GROUP = 5;
 
 
-exports.Parser = function ENTimeExpressionParser(){
+exports.Parser = function DETimeExpressionParser() {
     Parser.apply(this, arguments);
 
     this.pattern = function() { return FIRST_REG_PATTERN; }
@@ -53,7 +54,7 @@ exports.Parser = function ENTimeExpressionParser(){
         result.ref = ref;
         result.index = match.index + match[1].length;
         result.text  = match[0].substring(match[1].length);
-        result.tags['ENTimeExpressionParser'] = true;
+        result.tags['DETimeExpressionParser'] = true;
 
         result.start.imply('day',   refMoment.date());
         result.start.imply('month', refMoment.month()+1);
@@ -72,10 +73,10 @@ exports.Parser = function ENTimeExpressionParser(){
         }
         
         // ----- Hours
-        if (match[HOUR_GROUP].toLowerCase() == "noon"){
+        if (/mittags?/i.test(match[HOUR_GROUP])) {
             meridiem = 1; 
             hour = 12;
-        } else if (match[HOUR_GROUP].toLowerCase() == "midnight") {
+        } else if (/mitternachts?/i.test(match[HOUR_GROUP])) {
             meridiem = 0; 
             hour = 0;
         } else {
@@ -102,15 +103,13 @@ exports.Parser = function ENTimeExpressionParser(){
         }
 
         // ----- AM & PM  
-        if(match[AM_PM_HOUR_GROUP] != null) {
-            if(hour > 12) return null;
+        if (match[AM_PM_HOUR_GROUP] != null) {
+            if (hour > 12) return null;
             var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-            if(ampm == "a"){
+            if (ampm === 'morgens' || ampm === 'vormittags') {
                 meridiem = 0; 
                 if(hour == 12) hour = 0;
-            }
-            
-            if(ampm == "p"){
+            } else {
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
@@ -190,12 +189,12 @@ exports.Parser = function ENTimeExpressionParser(){
         }
         
         // ----- AM & PM 
-        if (match[AM_PM_HOUR_GROUP] != null){
+        if (match[AM_PM_HOUR_GROUP] != null) {
 
             if (hour > 12) return null;
 
             var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-            if(ampm == "a"){
+            if (ampm === 'morgens' || ampm === 'vormittags') {
                 meridiem = 0; 
                 if(hour == 12) {
                     hour = 0;
@@ -203,9 +202,7 @@ exports.Parser = function ENTimeExpressionParser(){
                         result.end.imply('day', result.end.get('day') + 1);
                     }
                 }
-            }
-            
-            if(ampm == "p"){
+            } else {
                 meridiem = 1; 
                 if(hour != 12) hour += 12;
             }
@@ -253,4 +250,3 @@ exports.Parser = function ENTimeExpressionParser(){
         return result;
     }
 }
-

@@ -3,28 +3,29 @@
     The parser for parsing month name and year.
     
     EX. 
-        - January
-        - January 2012
-        - January, 2012
+        - Januar
+        - Januar 2012
 */
 
 var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/DE');
 
 var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
-    '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
+    '(Jan\\.?|Januar|Feb\\.?|Februar|Mär\\.?|M(?:ä|ae)rz|Mrz\\.?|Apr\\.?|April|Mai\\.?|Jun\\.?|Juni|Jul\\.?|Juli|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Okt\\.?|Oktober|Nov\\.?|November|Dez\\.?|Dezember)' + 
     '\\s*' +
     '(?:' +
-        ',?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +
+        ',?\\s*(?:([0-9]{4})(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?|([0-9]{1,4})\\s*([vn]\\.?\\s*C(?:hr)?\\.?))' +
     ')?' +
     '(?=[^\\s\\w]|$)', 'i');
 
 var MONTH_NAME_GROUP = 2;
 var YEAR_GROUP = 3;
 var YEAR_BE_GROUP = 4;
+var YEAR_GROUP2 = 5;
+var YEAR_BE_GROUP2 = 6;
 
 exports.Parser = function ENMonthNameParser(){
     Parser.apply(this, arguments);
@@ -32,6 +33,7 @@ exports.Parser = function ENMonthNameParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){
+
         var result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
             index: match.index + match[1].length,
@@ -45,26 +47,21 @@ exports.Parser = function ENMonthNameParser(){
         var day = 1;
 
         var year = null;
-        if (match[YEAR_GROUP]) {
-            year = match[YEAR_GROUP];
+        if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
+            year = match[YEAR_GROUP] || match[YEAR_GROUP2];
             year = parseInt(year);
 
-            if(match[YEAR_BE_GROUP]){
-                if (match[YEAR_BE_GROUP].match(/BE/)) {
-                    // Buddhist Era
-                    year = year - 543;
-                } else if (match[YEAR_BE_GROUP].match(/BC/)) {
-                    // Before Christ
+            if (match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2]) {
+                if (/v/i.test(match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2])) {
+                    // v.Chr.
                     year = -year;
                 }
-
-            } else if (year < 100){ 
-
+            } else if (year < 100) {
                 year = year + 2000;
             }
         }
 
-        if(year){
+        if (year){
             result.start.imply('day', day);
             result.start.assign('month', month);
             result.start.assign('year', year);
@@ -89,7 +86,7 @@ exports.Parser = function ENMonthNameParser(){
             result.start.imply('year', refMoment.year());
         }
 
-        result.tags['ENMonthNameParser'] = true;
+        result.tags['DEMonthNameParser'] = true;
         return result;
     }
 }

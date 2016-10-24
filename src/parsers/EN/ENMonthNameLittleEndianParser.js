@@ -16,8 +16,8 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(?:\\s*(?:to|\\-|\\–|until|through|till|\\s)\\s*([0-9]{1,2})(?:st|nd|rd|th)?)?\\s*(?:of)?\\s*' +
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
         '(?:' +
-            ',?\\s*([0-9]{2,4}(?![^\\s]\\d))' +
-            '(\\s*BE)?' +
+            ',?\\s*([0-9]{1,4}(?![^\\s]\\d))' +
+            '(\\s*(?:BE|AD|BC))?' +
         ')?' +
         '(?=\\W|$)', 'i'
     );
@@ -54,9 +54,16 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             year = parseInt(year);
 
             if(match[YEAR_BE_GROUP]){
-                //BC
-                year = year - 543;
-
+                if (/BE/i.test(match[YEAR_BE_GROUP])) {
+                    // Buddhist Era
+                    year = year - 543;
+                } else if (/BC/i.test(match[YEAR_BE_GROUP])) {
+                    // Before Christ
+                    year = -year;
+                }
+            } else if (year < 10) {
+                // require single digit years to always have BC/AD
+                return null;
             } else if (year < 100){
 
                 year = year + 2000;
