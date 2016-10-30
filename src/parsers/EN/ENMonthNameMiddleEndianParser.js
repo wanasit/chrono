@@ -33,7 +33,7 @@ var PATTERN = new RegExp('(\\W|^)' +
         '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' +
     ')?' +
     '(?:' +
-        '\\s*,?\\s*([0-9]{4})(\\s*BE)?\\s*' +
+        '\\s*,?\\s*(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' +
     ')?' +
     '(?=\\W|$)(?!\\:\\d)', 'i');
 
@@ -43,6 +43,8 @@ var DATE_GROUP = 4;
 var DATE_TO_GROUP = 5;
 var YEAR_GROUP = 6;
 var YEAR_BE_GROUP = 7;
+var YEAR_GROUP2 = 8;
+var YEAR_BE_GROUP2 = 9;
 
 exports.Parser = function ENMonthNameMiddleEndianParser(){
     Parser.apply(this, arguments);
@@ -69,14 +71,19 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
         day = parseInt(day);
 
         var year = null;
-        if (match[YEAR_GROUP]) {
-            year = match[YEAR_GROUP];
+        if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
+            year = match[YEAR_GROUP] || match[YEAR_GROUP2];
             year = parseInt(year);
 
-            if(match[YEAR_BE_GROUP]){
-                //BC
-                year = year - 543;
-
+            var yearBE = match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2];
+            if (yearBE) {
+                if (/BE/i.test(yearBE)) {
+                    // Buddhist Era
+                    year = year - 543;
+                } else if (/BC/i.test(yearBE)) {
+                    // Before Christ
+                    year = -year;
+                }
             } else if (year < 100){
 
                 year = year + 2000;
