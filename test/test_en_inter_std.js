@@ -153,6 +153,29 @@ test("Test - Single Expression", function() {
         
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date() ' + resultDate +'/' +expectDate)
     }
+
+    var text = "2016-05-07T23:45:00.487+01:00";
+    var results = chrono.strict.parse(text, new Date(2012,7,8));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) )
+        ok(result.start.get('year') == 2016, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 7, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+        ok(result.start.get('hour') == 23, 'Test Result - (Hour) ' + JSON.stringify(result.start) )
+        ok(result.start.get('minute') == 45, 'Test Result - (Minute) ' + JSON.stringify(result.start) )
+        ok(result.start.get('second') == 00, 'Test Result - (Second) ' + JSON.stringify(result.start) )
+        ok(result.start.get('timezoneOffset') == 60, 'Test Result - (Timezone) ' + JSON.stringify(result.start) )
+
+        ok(result.text == '2016-05-07T23:45:00.487+01:00', result.text)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(1462661100487);
+
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.start.date() ' + resultDate +'/' +expectDate)
+    }
 });
 
 
@@ -205,6 +228,14 @@ test("Test - Compare with native js", function() {
 
 
     var text = '22 Feb 2015 04:12:00 -0000';
+    var result = chrono.parse(text)[0];
+    var expect = new Date(text);
+
+    ok(result.text == text);
+    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
+
+
+    var text = '0000-01-01T00:00:00-01:00';
     var result = chrono.parse(text)[0];
     var expect = new Date(text);
 

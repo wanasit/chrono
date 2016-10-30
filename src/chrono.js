@@ -36,7 +36,7 @@ Chrono.prototype.parse = function(text, refDate, opt) {
     allResults.sort(function(a, b) {
         return a.index - b.index;
     });
-    
+
     this.refiners.forEach(function (refiner) {
         allResults = refiner.refine(text, allResults, opt);
     });

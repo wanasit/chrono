@@ -80,8 +80,10 @@ ParsedComponents.prototype.isCertain = function(component) {
 };
 
 ParsedComponents.prototype.isPossibleDate = function() {
-    
     var dateMoment = this.moment();
+    if (this.isCertain('timezoneOffset')) {
+        dateMoment.utcOffset(this.get('timezoneOffset'))
+    }
 
     if (dateMoment.get('year') != this.get('year')) return false;
     if (dateMoment.get('month') != this.get('month')-1) return false;
