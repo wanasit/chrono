@@ -422,6 +422,64 @@ test("Test - Range expression", function() {
     }
 });
 
+test("Test - Ordinal Words", function () {
+
+    var text = 'May eighth, 2010';
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'May eighth, 2010', result.text );
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2010, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 8, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+    }
+
+
+    var text = 'May twenty-fourth';
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'May twenty-fourth', result.text );
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 24, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+    }
+
+
+    var text = 'May eighth - tenth, 2010';
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == 'May eighth - tenth, 2010', result.text );
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2010, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 8, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.end, JSON.stringify(result.end));
+        ok(result.end.get('year') == 2010, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.end.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.end.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+    }
+
+});
 
 test("Test - Impossible Dates (Strict Mode)", function() {
  

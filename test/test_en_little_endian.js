@@ -417,7 +417,47 @@ test("Test - Combined expression", function() {
         var expectDate = new Date(2012, 5-1, 7, 11, 0);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
+});
 
+
+test("Test - Ordinal Words", function () {
+
+
+    var text = 'Twenty-fourth of May';
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+
+        ok(result.text == 'Twenty-fourth of May', result.text );
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 24, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+    }
+
+
+    var text = 'Eighth to eleventh May 2010';
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if(result){
+
+        ok(result.text == 'Eighth to eleventh May 2010', result.text );
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2010, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 8, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.end, JSON.stringify(result.end));
+        ok(result.end.get('year') == 2010, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.end.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.end.get('day') == 11, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+    }
 
 });
 

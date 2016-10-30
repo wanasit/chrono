@@ -27,10 +27,10 @@ var PATTERN = new RegExp('(\\W|^)' +
     '\\s*,?\\s*)?' +
     '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' +
     '\\s*' +
-    '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' +
+    '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN +')\\s*' +
     '(?:' +
         '(?:to|\\-)\\s*' +
-        '([0-9]{1,2})(?:st|nd|rd|th)?\\s*' +
+        '(([0-9]{1,2})(?:st|nd|rd|th)?| ' + util.ORDINAL_WORDS_PATTERN + ')\\s*' +
     ')?' +
     '(?:' +
         '\\s*,?\\s*(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' +
@@ -40,11 +40,13 @@ var PATTERN = new RegExp('(\\W|^)' +
 var WEEKDAY_GROUP = 2;
 var MONTH_NAME_GROUP = 3;
 var DATE_GROUP = 4;
-var DATE_TO_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
-var YEAR_GROUP2 = 8;
-var YEAR_BE_GROUP2 = 9;
+var DATE_NUM_GROUP = 5;
+var DATE_TO_GROUP = 6;
+var DATE_TO_NUM_GROUP = 7;
+var YEAR_GROUP = 8;
+var YEAR_BE_GROUP = 9;
+var YEAR_GROUP2 = 10;
+var YEAR_BE_GROUP2 = 11;
 
 exports.Parser = function ENMonthNameMiddleEndianParser(){
     Parser.apply(this, arguments);
@@ -52,10 +54,6 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
     this.pattern = function() { return PATTERN; }
 
     this.extract = function(text, ref, match, opt){
-
-        if (text.indexOf('5 May 12:00') >= 0) {
-            console.log(match)
-        }
 
         var result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
@@ -66,9 +64,9 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
 
         var month = match[MONTH_NAME_GROUP];
         month = util.MONTH_OFFSET[month.toLowerCase()];
-
-        var day = match[DATE_GROUP];
-        day = parseInt(day);
+        var day = match[DATE_NUM_GROUP] ?
+            parseInt(match[DATE_NUM_GROUP]) :
+            util.ORDINAL_WORDS[match[DATE_GROUP].trim().replace('-', ' ').toLowerCase()];
 
         var year = null;
         if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
@@ -124,11 +122,15 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
 
         // Text can be 'range' value. Such as 'January 12 - 13, 2012'
         if (match[DATE_TO_GROUP]) {
+            var endDate = match[DATE_TO_NUM_GROUP] ?
+                endDate = parseInt(match[DATE_TO_NUM_GROUP]) :
+                util.ORDINAL_WORDS[match[DATE_TO_GROUP].replace('-', ' ').trim().toLowerCase()];
+
             result.end = result.start.clone();
-            result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
+            result.end.assign('day', endDate);
         }
 
         result.tags['ENMonthNameMiddleEndianParser'] = true;
         return result;
     }
-}
+};
