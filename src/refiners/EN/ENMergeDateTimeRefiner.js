@@ -6,7 +6,7 @@ var Refiner = require('../refiner').Refiner;
 
 
 
-var PATTERN = new RegExp("^\\s*(T|at|on|of|,|-)?\\s*$");
+var PATTERN = new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
 
 function isDateOnly(result) {
     return !result.start.isCertain('hour');

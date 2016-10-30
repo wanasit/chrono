@@ -310,6 +310,26 @@ test('Test - Random text', function() {
     ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start));
 
 
+    var text = "tomorrow before 4pm";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('hour')  == 16, JSON.stringify(result.start));
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start));
+    ok(result.start.get('month') == 1, JSON.stringify(result.start));
+    ok(result.start.get('day')   == 2, JSON.stringify(result.start));
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start));
+
+
+    var text = "tomorrow after 4pm";
+    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('hour')  == 16, JSON.stringify(result.start));
+    ok(result.start.get('year')  == 2012, JSON.stringify(result.start));
+    ok(result.start.get('month') == 1, JSON.stringify(result.start));
+    ok(result.start.get('day')   == 2, JSON.stringify(result.start));
+    ok(result.start.get('meridiem')  == 1, JSON.stringify(result.start));
+
+
     var text = "thurs";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text);
