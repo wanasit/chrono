@@ -5,6 +5,7 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
+var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
 
 var DAYS_OFFSET = { 'dimanche': 0, 'dim': 0, 'lundi': 1, 'lun': 1,'mardi': 2, 'mar':2, 'mercredi': 3, 'mer': 3,
     'jeudi': 4, 'jeu':4, 'vendredi': 5, 'ven': 5,'samedi': 6, 'sam': 6};
@@ -32,46 +33,31 @@ exports.Parser = function FRWeekdayParser() {
         var result = new ParsedResult({
             index: index,
             text: text,
-            ref: ref,
+            ref: ref
         });
 
         var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         var offset = DAYS_OFFSET[dayOfWeek];
         if(offset === undefined) return null;
 
-        var startMoment = moment(ref);
+        var modifier = null;
         var prefix = match[PREFIX_GROUP];
         var postfix = match[POSTFIX_GROUP];
-
         if (prefix || postfix) {
             var norm = prefix || postfix;
             norm = norm.toLowerCase();
 
-            if(norm == 'dernier')
-                startMoment.day(offset - 7);
-            else if(norm == 'prochain')
-                startMoment.day(offset + 7);
-            else if(norm== 'ce')
-                startMoment.day(offset);
-        } else{
-            var refOffset = startMoment.day();
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
-              startMoment.day(offset + 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset - 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset + 7);
-            } else {
-              startMoment.day(offset);
+            if(norm == 'dernier') {
+                modifier = 'last';
+            } else if(norm == 'prochain') {
+                modifier = 'next';
+            } else if(norm== 'ce') {
+                modifier = 'this';
             }
         }
 
-        result.start.assign('weekday', offset);
-        result.start.imply('day', startMoment.date());
-        result.start.imply('month', startMoment.month() + 1);
-        result.start.imply('year', startMoment.year());
+        updateParsedComponent(result, ref, offset, modifier);
         result.tags['FRWeekdayParser'] = true;
-
         return result;
     }
 };

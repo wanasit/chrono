@@ -22,6 +22,46 @@ var PREFIX_GROUP = 2;
 var WEEKDAY_GROUP = 3;
 var POSTFIX_GROUP = 4;
 
+
+exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifyer) {
+
+    var startMoment = moment(ref);
+    var startMomentFixed = false;
+    var refOffset = startMoment.day();
+
+    if(modifyer == 'last') {
+        startMoment.day(offset - 7);
+        startMomentFixed = true;
+    } else if(modifyer == 'next') {
+        startMoment.day(offset + 7);
+        startMomentFixed = true;
+    } else if(modifyer == 'this') {
+        startMoment.day(offset);
+    } else {
+        if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
+            startMoment.day(offset - 7);
+        } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
+            startMoment.day(offset + 7);
+        } else {
+            startMoment.day(offset);
+        }
+    }
+
+    result.start.assign('weekday', offset);
+    if (startMomentFixed) {
+        result.start.assign('day', startMoment.date());
+        result.start.assign('month', startMoment.month() + 1);
+        result.start.assign('year', startMoment.year());
+    } else {
+        result.start.imply('day', startMoment.date());
+        result.start.imply('month', startMoment.month() + 1);
+        result.start.imply('year', startMoment.year());
+    }
+
+    return result;
+};
+
+
 exports.Parser = function ENWeekdayParser() {
     Parser.apply(this, arguments);
 
@@ -33,50 +73,24 @@ exports.Parser = function ENWeekdayParser() {
         var result = new ParsedResult({
             index: index,
             text: text,
-            ref: ref,
+            ref: ref
         });
 
         var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         var offset = DAYS_OFFSET[dayOfWeek];
-        if(offset === undefined) return null;
+        if(offset === undefined) {
+            return null;
+        }
 
-        var startMoment = moment(ref);
         var prefix = match[PREFIX_GROUP];
         var postfix = match[POSTFIX_GROUP];
-
-        var refOffset = startMoment.day();
         var norm = prefix || postfix;
         norm = norm || '';
         norm = norm.toLowerCase();
-        if(norm == 'last') {
-            startMoment.day(offset - 7);
-        } else if(norm == 'next') {
-            startMoment.day(offset + 7);
-        } else if(norm == 'this') {
 
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
-                startMoment.day(offset + 7);
-            } else {
-                startMoment.day(offset);
-            }
+        exports.updateParsedComponent(result, ref, offset, norm);
+        result.tags['ENWeekdayParser'] = true;
 
-        } else {
-
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
-                startMoment.day(offset + 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset - 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset + 7);
-            } else {
-                startMoment.day(offset);
-            }
-        }
-
-        result.start.assign('weekday', offset);
-        result.start.imply('day', startMoment.date());
-        result.start.imply('month', startMoment.month() + 1);
-        result.start.imply('year', startMoment.year());
         return result;
     }
 };

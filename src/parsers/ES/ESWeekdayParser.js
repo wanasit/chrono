@@ -5,6 +5,7 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
+var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
 
 var DAYS_OFFSET = { 'domingo': 0, 'dom': 0, 'lunes': 1, 'lun': 1, 'martes': 2, 'mar':2, 'miercoles': 3, 'miércoles': 3, 'mie': 3,
     'jueves': 4, 'jue': 4, 'viernes': 5, 'vier': 5, 'sabado': 6, 'sábado': 6, 'sab': 6,}
@@ -32,44 +33,33 @@ exports.Parser = function ESWeekdayParser() {
         var result = new ParsedResult({
             index: index,
             text: text,
-            ref: ref,
+            ref: ref
         });
 
         var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         var offset = DAYS_OFFSET[dayOfWeek];
         if(offset === undefined) return null;
 
-        var startMoment = moment(ref);
+        var modifier = null;
         var prefix = match[PREFIX_GROUP];
         var postfix = match[POSTFIX_GROUP];
-
         if (prefix || postfix) {
             var norm = prefix || postfix;
             norm = norm.toLowerCase();
 
-            if(norm == 'pasado')
-                startMoment.day(offset - 7)
-            else if(norm == 'próximo' || norm == 'proximo')
-                startMoment.day(offset + 7)
-            else if(norm== 'este')
-                startMoment.day(offset);
-        } else{
-            var refOffset = startMoment.day();
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
-              startMoment.day(offset + 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset - 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-              startMoment.day(offset + 7);
-            } else {
-              startMoment.day(offset);
+            if(norm == 'pasado') {
+                modifier = 'this';
+            }
+            else if(norm == 'próximo' || norm == 'proximo') {
+                modifier = 'next';
+            }
+            else if(norm== 'este') {
+                modifier =  'this';
             }
         }
 
-        result.start.assign('weekday', offset);
-        result.start.imply('day', startMoment.date())
-        result.start.imply('month', startMoment.month() + 1)
-        result.start.imply('year', startMoment.year())
+        updateParsedComponent(result, ref, offset, modifier);
+        result.tags['ESWeekdayParser'] = true;
         return result;
     }
 }

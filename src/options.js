@@ -46,6 +46,7 @@ function baseOption(strictMode) {
         refiners: [
             // Removing overlaping first
             new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
 
             // ETC
             new refiner.ENMergeDateTimeRefiner(),
@@ -57,6 +58,7 @@ function baseOption(strictMode) {
             // Extract additional info later
             new refiner.ExtractTimezoneOffsetRefiner(),
             new refiner.ExtractTimezoneAbbrRefiner(),
+
             new refiner.UnlikelyFormatFilter()
         ]
     }
