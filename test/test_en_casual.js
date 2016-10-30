@@ -320,6 +320,30 @@ test('Test - Random text', function() {
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text);
     ok(result.start.get('weekday') == 4, result.text)
+
+    var text = "this evening";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+    ok(result.start.get('month') == 10, JSON.stringify(result.start));
+    ok(result.start.get('day') == 1, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 18, JSON.stringify(result.start));
+
+    var text = "yesterday afternoon";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+    ok(result.start.get('month') == 9, JSON.stringify(result.start));
+    ok(result.start.get('day') == 30, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 15, JSON.stringify(result.start));
+
+    var text = "tomorrow morning";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+    ok(result.start.get('month') == 10, JSON.stringify(result.start));
+    ok(result.start.get('day') == 2, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 6, JSON.stringify(result.start));
 });
 
 

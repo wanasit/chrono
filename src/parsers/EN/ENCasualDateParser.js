@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(now|today|tonight|tomorrow|tmr|yesterday|last\s*night|this\s*(morning|afternoon|evening))(?=\W|$)/i;
+var PATTERN = /(\W|^)(now|today|tonight|last\s*night|(?:this|tomorrow|tmr|yesterday)\s*(morning|afternoon|evening)|tomorrow|tmr|yesterday)(?=\W|$)/i;
 
 exports.Parser = function ENCasualDateParser(){
 
@@ -34,26 +34,34 @@ exports.Parser = function ENCasualDateParser(){
             result.start.imply('hour', 22);
             result.start.imply('meridiem', 1);
 
-        } else if(lowerText == 'tomorrow' || lowerText == 'tmr'){
+        } else if (/^tomorrow|^tmr/.test(lowerText)) {
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 1) {
                 startMoment.add(1, 'day');
             }
 
-        } else if(lowerText == 'yesterday') {
+        } else if (/^yesterday/.test(lowerText)) {
 
             startMoment.add(-1, 'day');
-        }
-        else if(lowerText.match(/last\s*night/)) {
+
+        } else if(lowerText.match(/last\s*night/)) {
 
             result.start.imply('hour', 0);
             if (refMoment.hour() > 6) {
                 startMoment.add(-1, 'day');
             }
 
-        } else if (lowerText.match("this")) {
+        } else if (lowerText.match("now")) {
 
+          result.start.imply('hour', refMoment.hour());
+          result.start.imply('minute', refMoment.minute());
+          result.start.imply('second', refMoment.second());
+          result.start.imply('millisecond', refMoment.millisecond());
+
+        }
+
+        if (match[3]) {
             var secondMatch = match[3].toLowerCase();
             if (secondMatch == "afternoon") {
 
@@ -67,14 +75,6 @@ exports.Parser = function ENCasualDateParser(){
 
                 result.start.imply('hour', 6);
             }
-
-        } else if (lowerText.match("now")) {
-
-          result.start.imply('hour', refMoment.hour());
-          result.start.imply('minute', refMoment.minute());
-          result.start.imply('second', refMoment.second());
-          result.start.imply('millisecond', refMoment.millisecond());
-
         }
 
         result.start.assign('day', startMoment.date())
