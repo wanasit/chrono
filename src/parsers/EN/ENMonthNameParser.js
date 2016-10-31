@@ -18,9 +18,9 @@ var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
     '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
     '\\s*' +
     '(?:' +
-        ',?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +
+        '[,-]?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +
     ')?' +
-    '(?=[^\\s\\w]|$)', 'i');
+    '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
 
 var MONTH_NAME_GROUP = 2;
 var YEAR_GROUP = 3;
