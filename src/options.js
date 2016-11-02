@@ -9,6 +9,7 @@ function baseOption(strictMode) {
             // EN
             new parser.ENISOFormatParser(strictMode),
             new parser.ENDeadlineFormatParser(strictMode),
+            new parser.ENRelativeDateFormatParser(strictMode),
             new parser.ENMonthNameLittleEndianParser(strictMode),
             new parser.ENMonthNameMiddleEndianParser(strictMode),
             new parser.ENMonthNameParser(strictMode),

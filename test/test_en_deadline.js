@@ -269,6 +269,13 @@ test("Test - Single Expression", function() {
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
 
+    var text = "in a week";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+    ok(result.start.get('month') == 10, JSON.stringify(result.start));
+    ok(result.start.get('day') == 8, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 12, JSON.stringify(result.start));
 
 });
 
