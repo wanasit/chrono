@@ -121,6 +121,45 @@ test("Test - Single Expression", function() {
     ok(result.start.get('day') == 24, JSON.stringify(result.start));
     ok(result.start.get('hour') == 12, JSON.stringify(result.start));
 
+    var text = "next week at 10-06-2016";
+    var results = chrono.parse(text, new Date(2016, 10-1, 1));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.text == text, result.text);
+        ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+        ok(result.start.get('month') == 10, JSON.stringify(result.start));
+        ok(result.start.get('day') == 6, JSON.stringify(result.start));
+        ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+    }
+
+    var text = "next month at 11-06-2016";
+    var results = chrono.parse(text, new Date(2016, 10-1, 1));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.text == text, result.text);
+        ok(result.start.get('year') == 2016, JSON.stringify(result.start));
+        ok(result.start.get('month') == 11, JSON.stringify(result.start));
+        ok(result.start.get('day') == 6, JSON.stringify(result.start));
+        ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+    }
+
+    var text = "next year at Feb-2017";
+    var results = chrono.parse(text, new Date(2016, 10, 10));
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.text == text, result.text);
+        ok(result.start.get('year') == 2017, JSON.stringify(result.start));
+        ok(result.start.get('month') == 2, JSON.stringify(result.start));
+        ok(result.start.get('day') == 1, JSON.stringify(result.start));
+        ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+    }
+
 });
 
 test("Test - Single Expression (Strict)", function() {

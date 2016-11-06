@@ -52,6 +52,7 @@ function baseOption(strictMode) {
             // ETC
             new refiner.ENMergeDateTimeRefiner(),
             new refiner.ENMergeDateRangeRefiner(),
+            new refiner.ENPrioritizeSpecificDateRefiner(),
             new refiner.FRMergeDateRangeRefiner(),
             new refiner.FRMergeDateTimeRefiner(),
             new refiner.JPMergeDateRangeRefiner(),
