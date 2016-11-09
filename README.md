@@ -31,6 +31,11 @@ Via [jsDelivr](https://www.jsdelivr.com/projects/chrono):
 ```html
 <script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>
 ```
+Via [CDNJS](https://cdnjs.com/libraries/chrono-node):
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chrono-node/VERSION/chrono.min.js"></script>
+```
 
 #### Rails
 
