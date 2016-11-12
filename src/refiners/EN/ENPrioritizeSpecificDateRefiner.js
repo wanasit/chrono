@@ -10,16 +10,21 @@ var PATTERN = new RegExp("^\\s*(at|after|before|on|,|-|\\(|\\))?\\s*$");
 function isMoreSpecific(prevResult, currResult) {
     var moreSpecific = false;
 
-    if (prevResult.start.isCertain('year'))
-        if (!currResult.start.isCertain('year'))
+    if (prevResult.start.isCertain('year')) {
+        if (!currResult.start.isCertain('year')) {
             moreSpecific = true;
-        else
-            if (prevResult.start.isCertain('month'))
-                if (!currResult.start.isCertain('month'))
+        } else {
+            if (prevResult.start.isCertain('month')) {
+                if (!currResult.start.isCertain('month')) {
                     moreSpecific = true;
-                else
-                    if (prevResult.start.isCertain('day') && !currResult.start.isCertain('day'))
+                } else {
+                    if (prevResult.start.isCertain('day') && !currResult.start.isCertain('day')) {
                         moreSpecific = true;
+                    }
+                }
+            }
+        }
+    }
 
     return moreSpecific;
 }
