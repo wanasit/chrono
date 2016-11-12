@@ -9,7 +9,6 @@ function baseOption(strictMode) {
             // EN
             new parser.ENISOFormatParser(strictMode),
             new parser.ENDeadlineFormatParser(strictMode),
-            new parser.ENRelativeDateFormatParser(strictMode),
             new parser.ENMonthNameLittleEndianParser(strictMode),
             new parser.ENMonthNameMiddleEndianParser(strictMode),
             new parser.ENMonthNameParser(strictMode),
@@ -80,6 +79,7 @@ exports.casualOption = function () {
     // EN
     options.parsers.unshift(new parser.ENCasualDateParser());
     options.parsers.unshift(new parser.ENWeekdayParser());
+    options.parsers.unshift(new parser.ENRelativeDateFormatParser());
 
     // JP
     options.parsers.unshift(new parser.JPCasualDateParser());

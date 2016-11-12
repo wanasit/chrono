@@ -15,19 +15,10 @@ var PATTERN = new RegExp('(\\W|^)' +
     '(?=\\W|$)', 'i'
 );
 
-var STRICT_PATTERN = new RegExp('(\\W|^)' +
-    '(next|last|past)\\s*' +
-    '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+)\\s*' +
-    '(seconds?|minutes?|hours?|days?)\\s*' +
-    '(?=\\W|$)', 'i'
-);
-
 exports.Parser = function ENRelativeDateFormatParser(){
     Parser.apply(this, arguments);
 
-    this.pattern = function() {
-        return this.isStrictMode()? STRICT_PATTERN : PATTERN;
-    };
+    this.pattern = function() { return PATTERN; };
 
     this.extract = function(text, ref, match, opt){
 

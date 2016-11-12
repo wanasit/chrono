@@ -161,22 +161,3 @@ test("Test - Single Expression", function() {
     }
 
 });
-
-test("Test - Single Expression (Strict)", function() {
-
-    var text = "next year";
-    var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
-    ok(results.length == 0, JSON.stringify( results ) );
-
-    var text = "past year";
-    var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
-    ok(results.length == 0, JSON.stringify( results ) );
-
-    var text = "next few months";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    ok(results.length == 0, JSON.stringify( results ) );
-
-    var text = "past few days";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    ok(results.length == 0, JSON.stringify( results ) );
-});
