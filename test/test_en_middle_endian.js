@@ -1,6 +1,6 @@
 
 test("Test - Single Expression", function() {
-    var text = 'She is getting married next year (July 2017).';
+    var text = 'She is getting married soon (July 2017).';
     var results = chrono.parse(text, new Date(2012,7,10));
     ok(results.length == 1, JSON.stringify( results ) )
 
@@ -11,7 +11,7 @@ test("Test - Single Expression", function() {
         ok(result.start.get('month') == 7, 'Test Result - (Month) ' + JSON.stringify(result.start) )
         ok(result.start.get('day') == 1, 'Test Result - (Day) ' + JSON.stringify(result.start) )
 
-        ok(result.index == 34, 'Wrong index')
+        ok(result.index == 29, 'Wrong index')
         ok(result.text == 'July 2017', result.text )
 
         var resultDate = result.start.date();

@@ -51,6 +51,7 @@ function baseOption(strictMode) {
             // ETC
             new refiner.ENMergeDateTimeRefiner(),
             new refiner.ENMergeDateRangeRefiner(),
+            new refiner.ENPrioritizeSpecificDateRefiner(),
             new refiner.FRMergeDateRangeRefiner(),
             new refiner.FRMergeDateTimeRefiner(),
             new refiner.JPMergeDateRangeRefiner(),
@@ -78,6 +79,7 @@ exports.casualOption = function () {
     // EN
     options.parsers.unshift(new parser.ENCasualDateParser());
     options.parsers.unshift(new parser.ENWeekdayParser());
+    options.parsers.unshift(new parser.ENRelativeDateFormatParser());
 
     // JP
     options.parsers.unshift(new parser.JPCasualDateParser());

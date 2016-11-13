@@ -12,10 +12,10 @@ var DAYS_OFFSET = { 'sunday': 0, 'sun': 0, 'monday': 1, 'mon': 1,'tuesday': 2, '
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
     '(?:on\\s*?)?' +
-    '(?:(this|last|next)\\s*)?' +
+    '(?:(this|last|past|next)\\s*)?' +
     '(' + Object.keys(DAYS_OFFSET).join('|') + ')' +
     '(?:\\s*(?:\\,|\\)|\\）))?' +
-    '(?:\\s*(this|last|next)\\s*week)?' +
+    '(?:\\s*(this|last|past|next)\\s*week)?' +
     '(?=\\W|$)', 'i');
 
 var PREFIX_GROUP = 2;
@@ -23,19 +23,19 @@ var WEEKDAY_GROUP = 3;
 var POSTFIX_GROUP = 4;
 
 
-exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifyer) {
+exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifier) {
 
     var startMoment = moment(ref);
     var startMomentFixed = false;
     var refOffset = startMoment.day();
 
-    if(modifyer == 'last') {
+    if(modifier == 'last' || modifier == 'past') {
         startMoment.day(offset - 7);
         startMomentFixed = true;
-    } else if(modifyer == 'next') {
+    } else if(modifier == 'next') {
         startMoment.day(offset + 7);
         startMomentFixed = true;
-    } else if(modifyer == 'this') {
+    } else if(modifier == 'this') {
         startMoment.day(offset);
     } else {
         if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {

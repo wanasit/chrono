@@ -35,6 +35,7 @@ exports.UnlikelyFormatFilter = require('./UnlikelyFormatFilter').Refiner;
 // EN refiners
 exports.ENMergeDateTimeRefiner = require('./EN/ENMergeDateTimeRefiner').Refiner;
 exports.ENMergeDateRangeRefiner = require('./EN/ENMergeDateRangeRefiner').Refiner;
+exports.ENPrioritizeSpecificDateRefiner = require('./EN/ENPrioritizeSpecificDateRefiner').Refiner;
 
 // JP refiners
 exports.JPMergeDateRangeRefiner = require('./JP/JPMergeDateRangeRefiner').Refiner;
