@@ -63,6 +63,7 @@ exports.ENTimeAgoFormatParser = require('./EN/ENTimeAgoFormatParser').Parser;
 exports.ENTimeExpressionParser = require('./EN/ENTimeExpressionParser').Parser;
 exports.ENWeekdayParser = require('./EN/ENWeekdayParser').Parser;
 exports.ENCasualDateParser = require('./EN/ENCasualDateParser').Parser;
+exports.ENCasualTimeParser = require('./EN/ENCasualTimeParser').Parser;
 
 exports.JPStandardParser = require('./JP/JPStandardParser').Parser;
 exports.JPCasualDateParser = require('./JP/JPCasualDateParser').Parser;
