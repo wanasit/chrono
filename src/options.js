@@ -78,6 +78,7 @@ exports.casualOption = function () {
 
     // EN
     options.parsers.unshift(new parser.ENCasualDateParser());
+    options.parsers.unshift(new parser.ENCasualTimeParser());
     options.parsers.unshift(new parser.ENWeekdayParser());
     options.parsers.unshift(new parser.ENRelativeDateFormatParser());
 
@@ -91,6 +92,6 @@ exports.casualOption = function () {
     // FR
     options.parsers.unshift(new parser.FRCasualDateParser());
     options.parsers.unshift(new parser.FRWeekdayParser());
-    
+
     return options;
 };
