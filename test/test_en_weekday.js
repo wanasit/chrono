@@ -176,6 +176,27 @@ test("Test - Single Expression", function () {
     }
 });
 
+test("Test - Weekday With Casual Time", function () {
+    var text = "Lets meet on Tuesday morning";
+    var results = chrono.casual.parse(text, new Date(2015, 3, 18));
+    ok(results.length == 1, JSON.stringify(results));
+    var result = results[0];
+    if (result) {
+        ok(result.index == 10, 'Wrong index');
+        ok(result.text == 'on Tuesday morning', result.text);
+
+        ok(result.start, JSON.stringify(result.start));
+        ok(result.start.get('year') == 2015, 'Test Result - (Year) ' + JSON.stringify(result.start));
+        ok(result.start.get('month') == 4, 'Test Result - (Month) ' + JSON.stringify(result.start));
+        ok(result.start.get('day') == 21, 'Test Result - (Day) ' + JSON.stringify(result.start));
+        ok(result.start.get('weekday') == 2, 'Test Result - (Weekday) ' + JSON.stringify(result.start));
+        ok(result.start.get('hour') == 6, 'Test Result - (Hour) ' + JSON.stringify(result.start));
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2015, 3, 21, 6);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate + '/' + expectDate)
+    }
+});
 
 test("Test - Weekday Overlap", function () {
 
