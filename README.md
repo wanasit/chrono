@@ -16,29 +16,46 @@ Chrono supports most date and time formats, such as :
 
 ## Install
 
-#### Node.js 
+#### npm (recommended)
 
-    npm install chrono-node
+Just run:
+
+    $ npm i --save chrono-node
+    
+And start using chrono:
+
+    var chrono = require('chrono-node')
+    chrono.parseDate('An appointment on Sep 12-13') 
 
 #### Bower
 
-    bower install chrono
+Prefer bower? You can do that, too:
 
-#### CDN
+Just run:
 
-Via [jsDelivr](https://www.jsdelivr.com/projects/chrono):
-
+    $ bower install chrono
+  
+And use:
+   
 ```html
-<script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>
+    <script src="bower_components/chrono/chrono.min.js"></script>
+    <script>chrono.parseDate('An appointment on Sep 12-13')</script>
 ```
+    
 
-#### Rails
+#### Other Options:
 
-```ruby
-source 'https://rails-assets.org' do
-  gem 'rails-assets-chrono'
-end
-```
+Doing something else? No worries. Try these:
+
+Platform | Installation
+---------|----
+CDN      | Via [jsDelivr]:<br> `<script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>`
+Rails    | Install from [Rails Assets] by adding this to your Gemfile:<br> `gem 'rails-assets-chrono', source: 'https://rails-assets.org'`
+Swift    | Try using the community-made [chrono-swift] wrapper.
+
+[Rails Assets]: https://rails-assets.org/
+[jsDelivr]: https://www.jsdelivr.com/projects/chrono
+[chrono-swift]: https://github.com/neilsardesai/chrono-swift
 
 #### Browserify
 
