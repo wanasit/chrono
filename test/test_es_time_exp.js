@@ -161,7 +161,7 @@ test("Test - Time Expression's Meridiem imply", function() {
 
 test("Test - Random date + time expression", function() {
 
-    var text = "lunes 4/29/2013 630-930am";
+    var text = "lunes 29/4/2013 630-930am";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
@@ -186,7 +186,7 @@ test("Test - Random date + time expression", function() {
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
-    var text = "viernes 6/21/2013 2:30";
+    var text = "viernes 21/6/2013 2:30";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
@@ -194,11 +194,11 @@ test("Test - Random date + time expression", function() {
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
-    var text = "Lunes, 6/24/2013, 7:00pm - 8:30pm";
+    var text = "Lunes, 24/6/2013, 7:00pm - 8:30pm";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
-    var text = "Jueves6/20/2013 from 7:00 PM to 10:00 PM";
+    var text = "Jueves20/6/2013 from 7:00 PM to 10:00 PM";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
 
