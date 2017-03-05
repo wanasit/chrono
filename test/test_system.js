@@ -119,3 +119,48 @@ test("Test - Override parser", function() {
 });
 
 
+test("Test - combining options", function() {
+
+	var firstOption = {
+		parsers: [
+			new chrono.parser.ENISOFormatParser(),
+		],
+		refiners: [
+			new chrono.refiner.OverlapRemovalRefiner(),
+		]
+	}
+
+	var secondOption = {
+		parsers: [
+			new chrono.parser.ENISOFormatParser(),
+			new chrono.parser.JPStandardParser(),
+		],
+		refiners: []
+	}
+
+	var mergedOption = chrono.options.mergeOptions([
+		firstOption,
+		secondOption
+	]);
+
+	ok(mergedOption);
+	ok(mergedOption.parsers.length == 2);
+	ok(mergedOption.refiners.length == 1);
+
+	var customChrono = new chrono.Chrono(mergedOption);
+	ok(customChrono.parseDate('2012-9-3'));
+	ok(customChrono.parseDate('2012年９月3日'));
+	ok(!customChrono.parseDate('Tuesday'));
+});
+
+test("Test - language options", function() {
+	ok(chrono.ja.parseDate('2012-9-3'));
+	ok(chrono.ja.parseDate('2012年９月3日'));
+	ok(!chrono.ja.parseDate('Lundi'));
+
+	ok(chrono.fr.parseDate('2012-9-3'));
+	ok(chrono.fr.parseDate('Lundi'));
+	ok(!chrono.fr.parseDate('2012年９月3日'));
+});
+
+

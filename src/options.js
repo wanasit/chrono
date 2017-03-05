@@ -1,12 +1,88 @@
 var parser = require('./parsers/parser');
 var refiner = require('./refiners/refiner');
 
-function baseOption(strictMode) {
 
+exports.mergeOptions = function(options) {
+
+    var addedTypes = {};
+    var mergedOption = {
+        parsers: [],
+        refiners: [],
+    };
+
+    options.forEach(function (option) {
+
+        if (option.call) {
+            option = option.call();
+        }
+
+        if (option.parsers) {
+            option.parsers.forEach(function (p) {
+                if (!addedTypes[p.constructor]) {
+                    mergedOption.parsers.push(p);
+                    addedTypes[p.constructor] = true;
+                }
+            });
+        }
+
+        if (option.refiners) {
+            option.refiners.forEach(function (r) {
+                if (!addedTypes[r.constructor]) {
+                    mergedOption.refiners.push(r);
+                    addedTypes[r.constructor] = true;
+                }
+            });
+        }
+    });
+
+    return mergedOption;
+}
+
+
+exports.commonPostProcessing = function() {
+    return {
+        refiners: [
+            // These should be after all other refiners
+            new refiner.ExtractTimezoneOffsetRefiner(),
+            new refiner.ExtractTimezoneAbbrRefiner(),
+            new refiner.UnlikelyFormatFilter()
+        ]
+    }
+}
+
+
+// -------------------------------------------------------------
+
+exports.strictOption = function () {
+    return exports.mergeOptions([
+        exports.en(true),
+        exports.ja(true),
+        exports.es(true),
+        exports.fr(true),
+        exports.zh,
+        exports.commonPostProcessing,
+    ]);
+};
+
+exports.casualOption = function () {
+    return exports.mergeOptions([
+        exports.en.casual,
+        exports.ja.casual,
+        exports.es.casual,
+        exports.fr.casual,
+        exports.zh,
+        exports.commonPostProcessing,
+    ]);
+};
+
+
+
+// -------------------------------------------------------------
+
+
+exports.en = function(strictMode) {
     return {
         parsers: [
-
-            // EN
             new parser.ENISOFormatParser(strictMode),
             new parser.ENDeadlineFormatParser(strictMode),
             new parser.ENMonthNameLittleEndianParser(strictMode),
@@ -17,81 +93,123 @@ function baseOption(strictMode) {
             new parser.ENSlashMonthFormatParser(strictMode),
             new parser.ENTimeAgoFormatParser(strictMode),
             new parser.ENTimeExpressionParser(strictMode),
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
 
-            // JP
-            new parser.JPStandardParser(strictMode),
+            // English
+            new refiner.ENMergeDateTimeRefiner(),
+            new refiner.ENMergeDateRangeRefiner(),
+            new refiner.ENPrioritizeSpecificDateRefiner(),
+        ]
+    }
+}
 
-            // ES
+exports.en.casual = function() {
+    var option = exports.en(false);
+
+    // EN
+    option.parsers.unshift(new parser.ENCasualDateParser());
+    option.parsers.unshift(new parser.ENCasualTimeParser());
+    option.parsers.unshift(new parser.ENWeekdayParser());
+    option.parsers.unshift(new parser.ENRelativeDateFormatParser());
+    return option;
+}
+
+// -------------------------------------------------------------
+
+exports.ja = function() {
+    return {
+        parsers: [
+            new parser.JPStandardParser(),
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
+            new refiner.JPMergeDateRangeRefiner(),
+        ]
+    }
+}
+
+exports.ja.casual = function() {
+    var option = exports.ja();
+    option.parsers.unshift(new parser.JPCasualDateParser());
+    return option;
+}
+
+
+// -------------------------------------------------------------
+
+
+exports.es = function(strictMode) {
+    return {
+        parsers: [
             new parser.ESTimeAgoFormatParser(strictMode),
             new parser.ESDeadlineFormatParser(strictMode),
             new parser.ESTimeExpressionParser(strictMode),
             new parser.ESMonthNameLittleEndianParser(strictMode),
             new parser.ESSlashDateFormatParser(strictMode),
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
+        ]
+    }
+}
 
-            // FR
+exports.es.casual = function() {
+    var option = exports.es(false);
+    option.parsers.unshift(new parser.ESCasualDateParser());
+    option.parsers.unshift(new parser.ESWeekdayParser());
+    return option;
+}
+
+
+// -------------------------------------------------------------
+
+exports.fr = function(strictMode) {
+    return {
+        parsers: [
             new parser.FRDeadlineFormatParser(strictMode),
             new parser.FRMonthNameLittleEndianParser(strictMode),
             new parser.FRSlashDateFormatParser(strictMode),
             new parser.FRTimeAgoFormatParser(strictMode),
             new parser.FRTimeExpressionParser(strictMode),
-
-            // ZH-Hant
-            new parser.ZHHantDateParser(strictMode),
-            new parser.ZHHantWeekdayParser(strictMode),
-            new parser.ZHHantTimeExpressionParser(strictMode),
-            new parser.ZHHantCasualDateParser(strictMode),
-            new parser.ZHHantDeadlineFormatParser(strictMode),
         ],
-
         refiners: [
-            // Removing overlaping first
             new refiner.OverlapRemovalRefiner(),
             new refiner.ForwardDateRefiner(),
-
-            // ETC
-            new refiner.ENMergeDateTimeRefiner(),
-            new refiner.ENMergeDateRangeRefiner(),
-            new refiner.ENPrioritizeSpecificDateRefiner(),
             new refiner.FRMergeDateRangeRefiner(),
             new refiner.FRMergeDateTimeRefiner(),
-            new refiner.JPMergeDateRangeRefiner(),
+        ]
+    }
+}
 
-            // Extract additional info later
-            new refiner.ExtractTimezoneOffsetRefiner(),
-            new refiner.ExtractTimezoneAbbrRefiner(),
+exports.fr.casual = function() {
+    var option = exports.fr(false);
+    option.parsers.unshift(new parser.FRCasualDateParser());
+    option.parsers.unshift(new parser.FRWeekdayParser());
+    return option;
+}
 
-            new refiner.UnlikelyFormatFilter()
+
+// -------------------------------------------------------------
+
+exports.zh = function() {
+    return {
+        parsers: [
+            new parser.ZHHantDateParser(),
+            new parser.ZHHantWeekdayParser(),
+            new parser.ZHHantTimeExpressionParser(),
+            new parser.ZHHantCasualDateParser(),
+            new parser.ZHHantDeadlineFormatParser(),
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
         ]
     }
 }
 
 
-
-exports.strictOption = function () {
-    return baseOption(true);
-};
-
-
-exports.casualOption = function () {
-
-    var options = baseOption(false);
-
-    // EN
-    options.parsers.unshift(new parser.ENCasualDateParser());
-    options.parsers.unshift(new parser.ENCasualTimeParser());
-    options.parsers.unshift(new parser.ENWeekdayParser());
-    options.parsers.unshift(new parser.ENRelativeDateFormatParser());
-
-    // JP
-    options.parsers.unshift(new parser.JPCasualDateParser());
-
-    // ES
-    options.parsers.unshift(new parser.ESCasualDateParser());
-    options.parsers.unshift(new parser.ESWeekdayParser());
-
-    // FR
-    options.parsers.unshift(new parser.FRCasualDateParser());
-    options.parsers.unshift(new parser.FRWeekdayParser());
-
-    return options;
-};

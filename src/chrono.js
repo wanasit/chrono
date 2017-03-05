@@ -57,6 +57,19 @@ exports.Chrono = Chrono;
 exports.strict = new Chrono( options.strictOption() );
 exports.casual = new Chrono( options.casualOption() );
 
+exports.en = new Chrono( options.mergeOptions([
+    options.en.casual, options.commonPostProcessing]));
+
+exports.es = new Chrono( options.mergeOptions([
+    options.es.casual, options.en, options.commonPostProcessing]));
+
+exports.fr = new Chrono( options.mergeOptions([
+    options.fr.casual, options.en, options.commonPostProcessing]));
+
+exports.ja = new Chrono( options.mergeOptions([ 
+    options.ja.casual, options.en, options.commonPostProcessing]));
+
+
 exports.parse = function () {
     return exports.casual.parse.apply(exports.casual, arguments);
 }
@@ -64,3 +77,7 @@ exports.parse = function () {
 exports.parseDate = function () {
     return exports.casual.parseDate.apply(exports.casual, arguments);
 }
+
+
+
+
