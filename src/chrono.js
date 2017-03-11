@@ -18,7 +18,7 @@ var Chrono = function(option) {
     this.option = option;
     this.parsers = new Object(option.parsers);
     this.refiners = new Object(option.refiners);
-}
+};
 
 
 Chrono.prototype.parse = function(text, refDate, opt) {
@@ -51,7 +51,7 @@ Chrono.prototype.parseDate = function(text, refDate, opt) {
         return results[0].start.date();
     }
     return null;
-}
+};
 
 exports.Chrono = Chrono;
 exports.strict = new Chrono( options.strictOption() );
@@ -59,6 +59,9 @@ exports.casual = new Chrono( options.casualOption() );
 
 exports.en = new Chrono( options.mergeOptions([
     options.en.casual, options.commonPostProcessing]));
+
+exports.de = new Chrono( options.mergeOptions([
+    options.de.casual, options.en, options.commonPostProcessing]));
 
 exports.es = new Chrono( options.mergeOptions([
     options.es.casual, options.en, options.commonPostProcessing]));
@@ -72,11 +75,11 @@ exports.ja = new Chrono( options.mergeOptions([
 
 exports.parse = function () {
     return exports.casual.parse.apply(exports.casual, arguments);
-}
+};
 
 exports.parseDate = function () {
     return exports.casual.parseDate.apply(exports.casual, arguments);
-}
+};
 
 
 

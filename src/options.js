@@ -7,7 +7,7 @@ exports.mergeOptions = function(options) {
     var addedTypes = {};
     var mergedOption = {
         parsers: [],
-        refiners: [],
+        refiners: []
     };
 
     options.forEach(function (option) {
@@ -36,7 +36,7 @@ exports.mergeOptions = function(options) {
     });
 
     return mergedOption;
-}
+};
 
 
 exports.commonPostProcessing = function() {
@@ -48,7 +48,7 @@ exports.commonPostProcessing = function() {
             new refiner.UnlikelyFormatFilter()
         ]
     }
-}
+};
 
 
 // -------------------------------------------------------------
@@ -56,23 +56,55 @@ exports.commonPostProcessing = function() {
 exports.strictOption = function () {
     return exports.mergeOptions([
         exports.en(true),
-        exports.ja(true),
+
+        exports.de(true),
         exports.es(true),
         exports.fr(true),
+        exports.ja(true),
         exports.zh,
-        exports.commonPostProcessing,
+        exports.commonPostProcessing
     ]);
 };
 
 exports.casualOption = function () {
     return exports.mergeOptions([
         exports.en.casual,
-        exports.ja.casual,
+
+        exports.de(true),
         exports.es.casual,
         exports.fr.casual,
+        exports.ja.casual,
         exports.zh,
-        exports.commonPostProcessing,
+        exports.commonPostProcessing
     ]);
+};
+
+// -------------------------------------------------------------
+
+exports.de = function(strictMode) {
+    return {
+        parsers: [
+            new parser.DEDeadlineFormatParser(strictMode),
+            new parser.DEMonthNameLittleEndianParser(strictMode),
+            new parser.DEMonthNameParser(strictMode),
+            new parser.DESlashDateFormatParser(strictMode),
+            new parser.DETimeAgoFormatParser(strictMode),
+            new parser.DETimeExpressionParser(strictMode)
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
+            new refiner.DEMergeDateTimeRefiner(),
+            new refiner.DEMergeDateRangeRefiner()
+        ]
+    }
+};
+
+exports.de.casual = function() {
+    var option = exports.de(false);
+    option.parsers.unshift(new parser.DECasualDateParser());
+    option.parsers.unshift(new parser.DEWeekdayParser());
+    return option;
 };
 
 
@@ -92,7 +124,7 @@ exports.en = function(strictMode) {
             new parser.ENSlashDateFormatStartWithYearParser(strictMode),
             new parser.ENSlashMonthFormatParser(strictMode),
             new parser.ENTimeAgoFormatParser(strictMode),
-            new parser.ENTimeExpressionParser(strictMode),
+            new parser.ENTimeExpressionParser(strictMode)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
@@ -101,10 +133,10 @@ exports.en = function(strictMode) {
             // English
             new refiner.ENMergeDateTimeRefiner(),
             new refiner.ENMergeDateRangeRefiner(),
-            new refiner.ENPrioritizeSpecificDateRefiner(),
+            new refiner.ENPrioritizeSpecificDateRefiner()
         ]
     }
-}
+};
 
 exports.en.casual = function() {
     var option = exports.en(false);
@@ -115,28 +147,28 @@ exports.en.casual = function() {
     option.parsers.unshift(new parser.ENWeekdayParser());
     option.parsers.unshift(new parser.ENRelativeDateFormatParser());
     return option;
-}
+};
 
 // -------------------------------------------------------------
 
 exports.ja = function() {
     return {
         parsers: [
-            new parser.JPStandardParser(),
+            new parser.JPStandardParser()
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
             new refiner.ForwardDateRefiner(),
-            new refiner.JPMergeDateRangeRefiner(),
+            new refiner.JPMergeDateRangeRefiner()
         ]
     }
-}
+};
 
 exports.ja.casual = function() {
     var option = exports.ja();
     option.parsers.unshift(new parser.JPCasualDateParser());
     return option;
-}
+};
 
 
 // -------------------------------------------------------------
@@ -149,21 +181,21 @@ exports.es = function(strictMode) {
             new parser.ESDeadlineFormatParser(strictMode),
             new parser.ESTimeExpressionParser(strictMode),
             new parser.ESMonthNameLittleEndianParser(strictMode),
-            new parser.ESSlashDateFormatParser(strictMode),
+            new parser.ESSlashDateFormatParser(strictMode)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
-            new refiner.ForwardDateRefiner(),
+            new refiner.ForwardDateRefiner()
         ]
     }
-}
+};
 
 exports.es.casual = function() {
     var option = exports.es(false);
     option.parsers.unshift(new parser.ESCasualDateParser());
     option.parsers.unshift(new parser.ESWeekdayParser());
     return option;
-}
+};
 
 
 // -------------------------------------------------------------
@@ -175,23 +207,23 @@ exports.fr = function(strictMode) {
             new parser.FRMonthNameLittleEndianParser(strictMode),
             new parser.FRSlashDateFormatParser(strictMode),
             new parser.FRTimeAgoFormatParser(strictMode),
-            new parser.FRTimeExpressionParser(strictMode),
+            new parser.FRTimeExpressionParser(strictMode)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
             new refiner.ForwardDateRefiner(),
             new refiner.FRMergeDateRangeRefiner(),
-            new refiner.FRMergeDateTimeRefiner(),
+            new refiner.FRMergeDateTimeRefiner()
         ]
     }
-}
+};
 
 exports.fr.casual = function() {
     var option = exports.fr(false);
     option.parsers.unshift(new parser.FRCasualDateParser());
     option.parsers.unshift(new parser.FRWeekdayParser());
     return option;
-}
+};
 
 
 // -------------------------------------------------------------
@@ -203,13 +235,11 @@ exports.zh = function() {
             new parser.ZHHantWeekdayParser(),
             new parser.ZHHantTimeExpressionParser(),
             new parser.ZHHantCasualDateParser(),
-            new parser.ZHHantDeadlineFormatParser(),
+            new parser.ZHHantDeadlineFormatParser()
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
-            new refiner.ForwardDateRefiner(),
+            new refiner.ForwardDateRefiner()
         ]
     }
-}
-
-
+};
