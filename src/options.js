@@ -124,7 +124,8 @@ exports.en = function(strictMode) {
             new parser.ENSlashDateFormatStartWithYearParser(strictMode),
             new parser.ENSlashMonthFormatParser(strictMode),
             new parser.ENTimeAgoFormatParser(strictMode),
-            new parser.ENTimeExpressionParser(strictMode)
+            new parser.ENTimeExpressionParser(strictMode),
+            new parser.ENTimeFromNowFormatParser(strictMode)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
