@@ -1,7 +1,5 @@
 /*
 
-What did Travis CI do?
-
 */
 
 var moment = require('moment');
