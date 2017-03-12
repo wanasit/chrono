@@ -25,16 +25,18 @@ var STRICT_PATTERN = new RegExp('' +
     '(seconds?|minutes?|hours?|days?)\\s*' +
     'from now(?=(?:\\W|$))', 'i');
 
-exports.Parser = function ENTimeAgoFormatParser(){
+exports.Parser = function ENTimeFromNowFormatParser() {
     Parser.apply(this, arguments);
 
     this.pattern = function() {
-        return this.isStrictMode()? STRICT_PATTERN : PATTERN;
+        return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
     };
 
-    this.extract = function(text, ref, match, opt){
+    this.extract = function(text, ref, match, opt) {
 
-        if (match.index > 0 && text[match.index-1].match(/\w/)) return null;
+        if (match.index > 0 && text[match.index-1].match(/\w/)) {
+            return null;
+        }
 
         var text = match[0];
         text  = match[0].substr(match[1].length, match[0].length - match[1].length);
@@ -64,15 +66,15 @@ exports.Parser = function ENTimeAgoFormatParser(){
         if (match[3].match(/hour|min|second/i)) {
             if (match[3].match(/hour/i)) {
 
-                date.add(-num, 'hour');
+                date.add(+num, 'hour');
 
             } else if (match[3].match(/min/i)) {
 
-                date.add(-num, 'minute');
+                date.add(+num, 'minute');
 
             } else if (match[3].match(/second/i)) {
 
-                date.add(-num, 'second');
+                date.add(+num, 'second');
             }
 
             result.start.imply('day', date.date());
@@ -86,7 +88,7 @@ exports.Parser = function ENTimeAgoFormatParser(){
         }
 
         if (match[3].match(/week/i)) {
-            date.add(-num, 'week');
+            date.add(+num, 'week');
 
             result.start.imply('day', date.date());
             result.start.imply('month', date.month() + 1);
@@ -96,16 +98,16 @@ exports.Parser = function ENTimeAgoFormatParser(){
         }
 
         if (match[3].match(/day/i)) {
-            date.add(-num, 'd');
+            date.add(+num, 'd');
         }
 
         if (match[3].match(/month/i)) {
-            date.add(-num, 'month');
+            date.add(+num, 'month');
         }
 
         if (match[3].match(/year/i)) {
 
-            date.add(-num, 'year');
+            date.add(+num, 'year');
         }
 
         result.start.assign('day', date.date());
