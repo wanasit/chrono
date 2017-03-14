@@ -12,10 +12,10 @@ var DAYS_OFFSET = { 'domingo': 0, 'dom': 0, 'lunes': 1, 'lun': 1, 'martes': 2, '
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
-    '(?:(este|pasado|pr[oó]ximo)\\s*)?' +
+    '(?:(este|pasado|proximo|próximo|siguiente|que viene)\\s*)?' +
     '(' + Object.keys(DAYS_OFFSET).join('|') + ')' +
     '(?:\\s*(?:\\,|\\)|\\）))?' +
-    '(?:\\s*(este|pasado|pr[óo]ximo)\\s*week)?' +
+    '(?:\\s*(este|pasado|proximo|próximo|siguiente|que viene)\\s*)?' +
     '(?=\\W|$)', 'i');
 
 var PREFIX_GROUP = 2;
@@ -48,9 +48,9 @@ exports.Parser = function ESWeekdayParser() {
             norm = norm.toLowerCase();
 
             if(norm == 'pasado') {
-                modifier = 'this';
+                modifier = 'past';
             }
-            else if(norm == 'próximo' || norm == 'proximo') {
+            else if(norm == 'próximo' || norm == 'proximo' || norm == 'siguiente' || norm == 'que viene') {
                 modifier = 'next';
             }
             else if(norm== 'este') {
