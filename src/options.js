@@ -222,6 +222,7 @@ exports.fr.casual = function() {
     var option = exports.fr(false);
     option.parsers.unshift(new parser.FRCasualDateParser());
     option.parsers.unshift(new parser.FRWeekdayParser());
+    option.parsers.unshift(new parser.FRRelativeDateFormatParser());
     return option;
 };
 

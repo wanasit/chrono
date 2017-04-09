@@ -83,6 +83,7 @@ exports.FRSlashDateFormatParser = require('./FR/FRSlashDateFormatParser').Parser
 exports.FRTimeAgoFormatParser = require('./FR/FRTimeAgoFormatParser').Parser;
 exports.FRTimeExpressionParser = require('./FR/FRTimeExpressionParser').Parser;
 exports.FRWeekdayParser = require('./FR/FRWeekdayParser').Parser;
+exports.FRRelativeDateFormatParser = require('./FR/FRRelativeDateFormatParser').Parser;
 
 exports.ZHHantDateParser = require('./ZH-Hant/ZHHantDateParser').Parser;
 exports.ZHHantWeekdayParser = require('./ZH-Hant/ZHHantWeekdayParser').Parser;
