@@ -22,6 +22,9 @@ exports.MONTH_OFFSET = {
     'février': 2,
     'fév': 2,
     'fév.': 2,
+    'fevrier': 2,
+    'fev': 2,
+    'fev.': 2,
     'mars': 3,
     'mar': 3,
     'mar.': 3,
@@ -48,6 +51,7 @@ exports.MONTH_OFFSET = {
     'nov': 11,
     'nov.': 11,
     'décembre': 12,
+    'decembre': 12,
     'dec': 12,
     'dec.': 12
 };
