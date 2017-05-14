@@ -23,7 +23,7 @@
     "karma-firefox-launcher": "~0.1.0",
     "karma-qunit": "~0.1.1",
     "minifyify": "^7.0.6",
-    "qunit": "git://github.com/wanasit/node-qunit.git",
+    "qunit": "^0.9.3",
     "watchify": "^2.1.1"
   },
   "scripts": {
@@ -32,7 +32,7 @@
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "watchify src/chrono.js -d --s chrono -o chrono.js",
     "karma": "karma start",
-    "test": "qunit -l '{summary:true, tests: true}' -c chrono:src/chrono.js -p src -t test/*.js --cov",
+    "test": "qunit -l '{summary:true, tests: true}' -c chrono:src/chrono.js -p src -t test/*.js --cov --timeout 10000",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
