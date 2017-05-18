@@ -32,13 +32,6 @@ exports.Parser = function FRRelativeDateFormatParser(){
         var text  = match[0];
         text  = match[0].substr(match[1].length, match[0].length - match[1].length);
 
-        var result = new ParsedResult({
-            index: index,
-            text: text,
-            ref: ref
-        });
-        result.tags['FRRelativeDateFormatParser'] = true;
-
         // Multiplier
         var multiplier = match[MULTIPLIER_GROUP] === undefined ? '1' : match[MULTIPLIER_GROUP];
         if (util.INTEGER_WORDS[multiplier] !== undefined) {
@@ -51,6 +44,18 @@ exports.Parser = function FRRelativeDateFormatParser(){
         var modifier = match[MODIFIER_1_GROUP] === undefined ?
                     (match[MODIFIER_2_GROUP] === undefined ? '' : match[MODIFIER_2_GROUP].toLowerCase())
                      : match[MODIFIER_1_GROUP].toLowerCase();
+        if(!modifier) {
+            // At least one modifier is mandatory to match this parser
+            return;
+        }
+
+        var result = new ParsedResult({
+            index: index,
+            text: text,
+            ref: ref
+        });
+        result.tags['FRRelativeDateFormatParser'] = true;
+
         var modifierFactor;
         switch(true) {
             case /prochaine?s?/.test(modifier):

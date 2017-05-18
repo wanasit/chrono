@@ -1,3 +1,15 @@
+test("Test - FR - modifier mandatory just after", function() {
+
+    var text = "le mois d'avril";
+    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    ok(result === undefined, result);
+
+    // The modifier "prochain" have to be just after the word "mois", to avoid this kind of cases we cannot handle
+    var text = "le mois d'avril prochain";
+    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    ok(result === undefined, result);
+
+});
 
 test("Test - FR - relative date", function() {
 
