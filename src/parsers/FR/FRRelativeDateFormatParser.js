@@ -8,6 +8,9 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/FR');
 
+// Load fr localization data from moment
+require('moment/locale/fr');
+
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:les?|la|l\'|du|des?)\\s*' +
     '('+ util.INTEGER_WORDS_PATTERN + '|\\d+)?\\s*' +
