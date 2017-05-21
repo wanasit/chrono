@@ -1,5 +1,8 @@
 
-function Parser(strictMode) {
+function Parser(config) {
+
+    config = config || {};
+    var strictMode = config.strict;
 
     this.isStrictMode = function() { return (strictMode == true) };
 

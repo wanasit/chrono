@@ -60,6 +60,9 @@ exports.casual = new Chrono( options.casualOption() );
 exports.en = new Chrono( options.mergeOptions([
     options.en.casual, options.commonPostProcessing]));
 
+exports.en_GB = new Chrono( options.mergeOptions([
+    options.en_GB.casual, options.commonPostProcessing]));
+
 exports.de = new Chrono( options.mergeOptions([
     options.de.casual, options.en, options.commonPostProcessing]));
 
