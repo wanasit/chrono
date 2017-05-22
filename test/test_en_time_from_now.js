@@ -1,4 +1,17 @@
-test("Test - English - Time From Now - Single Expression", function () {
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
+
+test("Test - Single Expression", function () {
     var text = "5 days from now, we did something";
     var results = chrono.parse(text, new Date(2012, 7, 10));
     ok(results.length == 1, JSON.stringify(results));
@@ -242,7 +255,7 @@ test("Test - English - Time From Now - Single Expression", function () {
 });
 
 
-test("Test - English - Time From Now - Single Expression (Casual)", function () {
+test("Test - Single Expression (Casual)", function () {
     var text = "5 months from now, we did something";
     var results = chrono.parse(text, new Date(2012, 8 - 1, 10));
     ok(results.length == 1, JSON.stringify(results));
@@ -321,7 +334,7 @@ test("Test - English - Time From Now - Single Expression (Casual)", function () 
     }
 });
 
-test("Test - English - Time From Now - Single Expression (Strict)", function () {
+test("Test - Single Expression (Strict)", function () {
     var text = "15 min from now";
     var results = chrono.strict.parse(text, new Date(2012, 7, 10, 12, 14));
     ok(results.length == 0, JSON.stringify(results));
