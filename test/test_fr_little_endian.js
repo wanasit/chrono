@@ -1,3 +1,15 @@
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
 
 test("Test - Single expression", function() {
 
@@ -431,3 +443,126 @@ test("Test - Impossible Dates (Casual Mode)", function() {
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
 });
 
+
+test("Test - accentuated versions", function() {
+
+
+    var text = "10 Août 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Août 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+    var text = "10 Février 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 2, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Février 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 2-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+    var text = "10 Décembre 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 12, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Décembre 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 12-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+});
+
+
+test("Test - unaccentuated versions", function() {
+
+
+    var text = "10 Aout 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Aout 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+    var text = "10 Fevrier 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 2, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Fevrier 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 2-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+    var text = "10 Decembre 2012";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    ok(results.length == 1, JSON.stringify( results ) );
+
+    var result = results[0];
+    if (result) {
+        ok(result.start, JSON.stringify(result.start) );
+        ok(result.start.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
+        ok(result.start.get('month') == 12, 'Test Result - (Month) ' + JSON.stringify(result.start) );
+        ok(result.start.get('day') == 10, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+
+        ok(result.index == 0, 'Wrong index');
+        ok(result.text == '10 Decembre 2012', result.text );
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 12-1, 10, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+});

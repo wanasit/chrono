@@ -54,13 +54,16 @@ exports.commonPostProcessing = function() {
 // -------------------------------------------------------------
 
 exports.strictOption = function () {
-    return exports.mergeOptions([
-        exports.en(true),
+    var strictConfig = {
+        strict: true
+    }
 
-        exports.de(true),
-        exports.es(true),
-        exports.fr(true),
-        exports.ja(true),
+    return exports.mergeOptions([
+        exports.en(strictConfig),
+        exports.de(strictConfig),
+        exports.es(strictConfig),
+        exports.fr(strictConfig),
+        exports.ja(strictConfig),
         exports.zh,
         exports.commonPostProcessing
     ]);
@@ -69,8 +72,8 @@ exports.strictOption = function () {
 exports.casualOption = function () {
     return exports.mergeOptions([
         exports.en.casual,
-
-        exports.de(true),
+        // Some German abbriviate overlap with common English
+        exports.de({ strict: true }), 
         exports.es.casual,
         exports.fr.casual,
         exports.ja.casual,
@@ -81,15 +84,15 @@ exports.casualOption = function () {
 
 // -------------------------------------------------------------
 
-exports.de = function(strictMode) {
+exports.de = function(config) {
     return {
         parsers: [
-            new parser.DEDeadlineFormatParser(strictMode),
-            new parser.DEMonthNameLittleEndianParser(strictMode),
-            new parser.DEMonthNameParser(strictMode),
-            new parser.DESlashDateFormatParser(strictMode),
-            new parser.DETimeAgoFormatParser(strictMode),
-            new parser.DETimeExpressionParser(strictMode)
+            new parser.DEDeadlineFormatParser(config),
+            new parser.DEMonthNameLittleEndianParser(config),
+            new parser.DEMonthNameParser(config),
+            new parser.DESlashDateFormatParser(config),
+            new parser.DETimeAgoFormatParser(config),
+            new parser.DETimeExpressionParser(config)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
@@ -101,7 +104,9 @@ exports.de = function(strictMode) {
 };
 
 exports.de.casual = function() {
-    var option = exports.de(false);
+    var option = exports.de({
+        strict: false
+    });
     option.parsers.unshift(new parser.DECasualDateParser());
     option.parsers.unshift(new parser.DEWeekdayParser());
     return option;
@@ -112,19 +117,19 @@ exports.de.casual = function() {
 // -------------------------------------------------------------
 
 
-exports.en = function(strictMode) {
+exports.en = function(config) {
     return {
         parsers: [
-            new parser.ENISOFormatParser(strictMode),
-            new parser.ENDeadlineFormatParser(strictMode),
-            new parser.ENMonthNameLittleEndianParser(strictMode),
-            new parser.ENMonthNameMiddleEndianParser(strictMode),
-            new parser.ENMonthNameParser(strictMode),
-            new parser.ENSlashDateFormatParser(strictMode),
-            new parser.ENSlashDateFormatStartWithYearParser(strictMode),
-            new parser.ENSlashMonthFormatParser(strictMode),
-            new parser.ENTimeAgoFormatParser(strictMode),
-            new parser.ENTimeExpressionParser(strictMode)
+            new parser.ENISOFormatParser(config),
+            new parser.ENDeadlineFormatParser(config),
+            new parser.ENMonthNameLittleEndianParser(config),
+            new parser.ENMonthNameMiddleEndianParser(config),
+            new parser.ENMonthNameParser(config),
+            new parser.ENSlashDateFormatParser(config),
+            new parser.ENSlashDateFormatStartWithYearParser(config),
+            new parser.ENSlashMonthFormatParser(config),
+            new parser.ENTimeAgoFormatParser(config),
+            new parser.ENTimeExpressionParser(config)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
@@ -138,8 +143,10 @@ exports.en = function(strictMode) {
     }
 };
 
-exports.en.casual = function() {
-    var option = exports.en(false);
+exports.en.casual = function(config) {
+    config = config || {};
+    config.strict = false;
+    var option = exports.en(config);
 
     // EN
     option.parsers.unshift(new parser.ENCasualDateParser());
@@ -148,6 +155,19 @@ exports.en.casual = function() {
     option.parsers.unshift(new parser.ENRelativeDateFormatParser());
     return option;
 };
+
+
+exports.en_GB = function(config) {
+    config = config || {};
+    config.littleEndian = true;
+    return exports.en(config);
+}
+
+exports.en_GB.casual = function(config) {
+    config = config || {};
+    config.littleEndian = true;
+    return exports.en.casual(config);
+}
 
 // -------------------------------------------------------------
 
@@ -174,14 +194,14 @@ exports.ja.casual = function() {
 // -------------------------------------------------------------
 
 
-exports.es = function(strictMode) {
+exports.es = function(config) {
     return {
         parsers: [
-            new parser.ESTimeAgoFormatParser(strictMode),
-            new parser.ESDeadlineFormatParser(strictMode),
-            new parser.ESTimeExpressionParser(strictMode),
-            new parser.ESMonthNameLittleEndianParser(strictMode),
-            new parser.ESSlashDateFormatParser(strictMode)
+            new parser.ESTimeAgoFormatParser(config),
+            new parser.ESDeadlineFormatParser(config),
+            new parser.ESTimeExpressionParser(config),
+            new parser.ESMonthNameLittleEndianParser(config),
+            new parser.ESSlashDateFormatParser(config)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
@@ -191,7 +211,10 @@ exports.es = function(strictMode) {
 };
 
 exports.es.casual = function() {
-    var option = exports.es(false);
+    var option = exports.es({ 
+        strict: false 
+    });
+
     option.parsers.unshift(new parser.ESCasualDateParser());
     option.parsers.unshift(new parser.ESWeekdayParser());
     return option;
@@ -200,14 +223,14 @@ exports.es.casual = function() {
 
 // -------------------------------------------------------------
 
-exports.fr = function(strictMode) {
+exports.fr = function(config) {
     return {
         parsers: [
-            new parser.FRDeadlineFormatParser(strictMode),
-            new parser.FRMonthNameLittleEndianParser(strictMode),
-            new parser.FRSlashDateFormatParser(strictMode),
-            new parser.FRTimeAgoFormatParser(strictMode),
-            new parser.FRTimeExpressionParser(strictMode)
+            new parser.FRDeadlineFormatParser(config),
+            new parser.FRMonthNameLittleEndianParser(config),
+            new parser.FRSlashDateFormatParser(config),
+            new parser.FRTimeAgoFormatParser(config),
+            new parser.FRTimeExpressionParser(config)
         ],
         refiners: [
             new refiner.OverlapRemovalRefiner(),
@@ -219,9 +242,13 @@ exports.fr = function(strictMode) {
 };
 
 exports.fr.casual = function() {
-    var option = exports.fr(false);
+    var option = exports.fr({
+        strict: false
+    });
+
     option.parsers.unshift(new parser.FRCasualDateParser());
     option.parsers.unshift(new parser.FRWeekdayParser());
+    option.parsers.unshift(new parser.FRRelativeDateFormatParser());
     return option;
 };
 

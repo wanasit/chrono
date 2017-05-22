@@ -1,3 +1,15 @@
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
 test("Test - Should return false with euro style phone number", function() {
   var text = "80-32-89-89";
   var results = chrono.strict.parse(text, new Date(2012,7,10));

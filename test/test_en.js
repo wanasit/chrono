@@ -1,3 +1,15 @@
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
 
 
 test("Test - Date + Time Expression", function() {

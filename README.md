@@ -210,7 +210,7 @@ To create a custom parser, override `pattern` and `extract` methods on an object
 
 ### Refiner
 
-Refiner is a heigher level module for improving or manipurating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
+Refiner is a higher level module for improving or manipulating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
 
 ```javascript
 var guessPMRefiner = new chrono.Refiner();

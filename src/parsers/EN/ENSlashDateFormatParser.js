@@ -1,8 +1,16 @@
 /*
     Date format with slash "/" (also "-" and ".") between numbers
-    - Tuesday 11/3/2015
+    - Tuesday 11/3/2015 
     - 11/3/2015
     - 11/3
+
+    By default the paser us "middle-endien" format (US English),
+    then fallback to little-endian if failed.
+    - 11/3/2015 = November 3rd, 2015
+    - 23/4/2015 = April 23th, 2015
+
+    If "littleEndian" config is set, the parser will try the little-endian first. 
+    - 11/3/2015 = March 11th, 2015
 */
 var moment = require('moment');
 var Parser = require('../parser').Parser;
@@ -29,12 +37,19 @@ var OPENNING_GROUP = 1;
 var ENDING_GROUP = 6;
 
 var WEEKDAY_GROUP = 2;
-var MONTH_GROUP = 3;
-var DAY_GROUP = 4;
+
+
+var FIRST_NUMBERS_GROUP = 3;
+var SECOND_NUMBERS_GROUP = 4;
+
 var YEAR_GROUP = 5;
 
-exports.Parser = function ENSlashDateFormatParser(argument) {
+exports.Parser = function ENSlashDateFormatParser(config) {
     Parser.apply(this, arguments);
+    config = config || {};
+    var littleEndian  = config.littleEndian;
+    var MONTH_GROUP = littleEndian ? SECOND_NUMBERS_GROUP : FIRST_NUMBERS_GROUP;
+    var DAY_GROUP = littleEndian ? FIRST_NUMBERS_GROUP : SECOND_NUMBERS_GROUP;
 
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){

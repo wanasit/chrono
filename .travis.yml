@@ -1,5 +1,6 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "6"
+  - "7"
 after_success:
   - npm run coveralls
