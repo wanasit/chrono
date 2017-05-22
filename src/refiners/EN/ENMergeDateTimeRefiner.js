@@ -4,62 +4,67 @@
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
 
-
-
 var PATTERN = new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
 
-function isDateOnly(result) {
+var isDateOnly = exports.isDateOnly = function(result) {
     return !result.start.isCertain('hour');
 }
     
-function isTimeOnly(result) {
+var isTimeOnly = exports.isTimeOnly = function(result) {
     return !result.start.isCertain('month') && !result.start.isCertain('weekday');
 }
 
-
-function isAbleToMerge(text, prevResult, curResult) {
+var isAbleToMerge = exports.isAbleToMerge = function(text, prevResult, curResult) {
     var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
     return textBetween.match(PATTERN);
 }
+
+var mergeDateTimeComponent = exports.mergeDateTimeComponent = function(dateComponent, timeComponent) {
+    var dateTimeComponent = dateComponent.clone();
+
+    if (timeComponent.isCertain('hour')) {
+        dateTimeComponent.assign('hour', timeComponent.get('hour'));
+        dateTimeComponent.assign('minute', timeComponent.get('minute'));
+        dateTimeComponent.assign('second', timeComponent.get('second'));
+    } else {
+        dateTimeComponent.imply('hour', timeComponent.get('hour'));
+        dateTimeComponent.imply('minute', timeComponent.get('minute'));
+        dateTimeComponent.imply('second', timeComponent.get('second'));
+    }
+
+
+    if (timeComponent.isCertain('meridiem')) {
+        dateTimeComponent.assign('meridiem', timeComponent.get('meridiem'));
+    } else if (
+        timeComponent.get('meridiem') !== undefined &&
+        dateTimeComponent.get('meridiem') === undefined
+    ) {
+        dateTimeComponent.imply('meridiem', timeComponent.get('meridiem'));
+    }
+
+    if (dateTimeComponent.get('meridiem') == 1 && dateTimeComponent.get('hour') < 12) {
+        if (timeComponent.isCertain('hour')) {
+            dateTimeComponent.assign('hour', dateTimeComponent.get('hour') + 12);
+        } else {
+            dateTimeComponent.imply('hour', dateTimeComponent.get('hour') + 12);
+        }
+    }
+
+    return dateTimeComponent;
+}
+
 
 function mergeResult(text, dateResult, timeResult){
 
     var beginDate = dateResult.start;
     var beginTime = timeResult.start;
-        
-    var beginDateTime = beginDate.clone();
-    beginDateTime.assign('hour', beginTime.get('hour'));
-    beginDateTime.assign('minute', beginTime.get('minute'));
-    beginDateTime.assign('second', beginTime.get('second'));
-        
-    if (beginTime.isCertain('meridiem')) {
-        beginDateTime.assign('meridiem', beginTime.get('meridiem'));
-    } else if (
-        beginTime.get('meridiem') !== undefined &&
-        beginDateTime.get('meridiem') === undefined
-    ) {
-        beginDateTime.imply('meridiem', beginTime.get('meridiem'));
-    }
-
-    if (beginDateTime.get('meridiem') == 1 && beginDateTime.get('hour') < 12) {
-        beginDateTime.assign('hour', beginDateTime.get('hour') + 12);
-    }
-
+    var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
+    
     if (dateResult.end != null || timeResult.end != null) {
         
         var endDate   = dateResult.end == null ? dateResult.start : dateResult.end;            
         var endTime   = timeResult.end == null ? timeResult.start : timeResult.end;
-
-        var endDateTime = endDate.clone();
-        endDateTime.assign('hour', endTime.get('hour'));
-        endDateTime.assign('minute', endTime.get('minute'));
-        endDateTime.assign('second', endTime.get('second'));
-        
-        if (endTime.isCertain('meridiem')) {
-            endDateTime.assign('meridiem', endTime.get('meridiem'));
-        } else if (beginTime.get('meridiem') != null) {
-            endDateTime.imply('meridiem', endTime.get('meridiem'));
-        }
+        var endDateTime = mergeDateTimeComponent(endDate, endTime);
         
         if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
             // Ex. 9pm - 1am
@@ -111,14 +116,14 @@ exports.Refiner = function ENMergeDateTimeRefiner() {
                     && isAbleToMerge(text, prevResult, currResult)) {
                 
                 prevResult = mergeResult(text, prevResult, currResult);
-                currResult = null;
+                currResult = results[i + 1];
                 i += 1;
                 
             } else if (isDateOnly(currResult) && isTimeOnly(prevResult)
                     && isAbleToMerge(text, prevResult, currResult)) {
                 
                 prevResult = mergeResult(text, currResult, prevResult);
-                currResult = null;
+                currResult = results[i + 1];
                 i += 1;
             }
             

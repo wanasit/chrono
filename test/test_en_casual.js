@@ -1,3 +1,15 @@
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
 
 test("Test - Single Expression", function() {
 
@@ -267,7 +279,7 @@ test("Test - Casual date range", function() {
         ok(result.end.get('year') == 2012, 'Test Result - (Year) ' + JSON.stringify(result.start) );
         ok(result.end.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start) );
         ok(result.end.get('day') == 17, 'Test Result - (Day) ' + JSON.stringify(result.start) );
-        ok(result.end.get('hour') == 12, 'Test Result - (Day) ' + JSON.stringify(result.start) );
+        ok(result.end.get('hour') == 12, 'Test Result - (Hour) ' + JSON.stringify(result.start) );
 
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 17, 12);
@@ -276,7 +288,46 @@ test("Test - Casual date range", function() {
 });
 
 
+test("Test - Casual time implication", function() {
 
+    var text = "annual leave from today morning to tomorrow";
+    var results = chrono.casual.parse(text, new Date(2012, 8-1, 4, 12));
+    ok(results.length == 1, JSON.stringify( results ) );
+    
+    var result = results[0];
+    if(result){
+        ok(result.text == 'today morning to tomorrow');
+
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start))
+        ok(result.start.get('day') == 4, 'Test Result - (Day) ' + JSON.stringify(result.start))
+        ok(result.start.get('hour') == 6, 'Test Result - (Hour) ' + JSON.stringify(result.start))
+        ok(!result.start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(result.start))
+
+        ok(result.end.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.end))
+        ok(result.end.get('day') == 5, 'Test Result - (Day) ' + JSON.stringify(result.end))
+        ok(result.end.get('hour') == 12, 'Test Result - (Hour) ' + JSON.stringify(result.end))
+        ok(!result.end.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(result.end))
+    }
+
+    var text = "annual leave from today to tomorrow afternoon";
+    var results = chrono.casual.parse(text, new Date(2012, 8-1, 4, 12));
+    ok(results.length == 1, JSON.stringify( results ) );
+    
+    var result = results[0];
+    if(result){
+        ok(result.text == 'today to tomorrow afternoon');
+
+        ok(result.start.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.start))
+        ok(result.start.get('day') == 4, 'Test Result - (Day) ' + JSON.stringify(result.start))
+        ok(result.start.get('hour') == 12, 'Test Result - (Hour) ' + JSON.stringify(result.start))
+        ok(!result.start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(result.start))
+
+        ok(result.end.get('month') == 8, 'Test Result - (Month) ' + JSON.stringify(result.end))
+        ok(result.end.get('day') == 5, 'Test Result - (Day) ' + JSON.stringify(result.end))
+        ok(result.end.get('hour') == 15, 'Test Result - (Hour) ' + JSON.stringify(result.end))
+        ok(!result.end.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(result.end))
+    }
+})
 
 
 test('Test - Random text', function() {

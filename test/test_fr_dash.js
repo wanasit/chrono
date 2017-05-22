@@ -1,3 +1,15 @@
+// QUnit Setup
+//-------------------------------------
+
+var test = function() {
+    QUnit.test.apply(QUnit.test, arguments);
+}
+
+var ok = function() {
+    QUnit.assert.ok.apply(QUnit.assert, arguments);
+}
+
+//-------------------------------------
 
 test("Test - Should handle FR dayname mm-dd-yy", function() {
   var text = "Vendredi 12-30-16";

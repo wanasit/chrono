@@ -3,8 +3,7 @@
 */
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
-
-
+var mergeDateTimeComponent = require('../EN/ENMergeDateTimeRefiner').mergeDateTimeComponent;
 
 var PATTERN = new RegExp("^\\s*(T|à|a|vers|de|,|-)?\\s*$");
 
@@ -26,40 +25,13 @@ function mergeResult(text, dateResult, timeResult){
 
     var beginDate = dateResult.start;
     var beginTime = timeResult.start;
-        
-    var beginDateTime = beginDate.clone();
-    beginDateTime.assign('hour', beginTime.get('hour'));
-    beginDateTime.assign('minute', beginTime.get('minute'));
-    beginDateTime.assign('second', beginTime.get('second'));
-        
-    if (beginTime.isCertain('meridiem')) {
-        beginDateTime.assign('meridiem', beginTime.get('meridiem'));
-    } else if (
-        beginTime.get('meridiem') !== undefined &&
-        beginDateTime.get('meridiem') === undefined
-    ) {
-        beginDateTime.imply('meridiem', beginTime.get('meridiem'));
-    }
-
-    if (beginDateTime.get('meridiem') == 1 && beginDateTime.get('hour') < 12) {
-        beginDateTime.assign('hour', beginDateTime.get('hour') + 12);
-    }
+    var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
 
     if (dateResult.end != null || timeResult.end != null) {
         
         var endDate   = dateResult.end == null ? dateResult.start : dateResult.end;            
         var endTime   = timeResult.end == null ? timeResult.start : timeResult.end;
-
-        var endDateTime = endDate.clone();
-        endDateTime.assign('hour', endTime.get('hour'));
-        endDateTime.assign('minute', endTime.get('minute'));
-        endDateTime.assign('second', endTime.get('second'));
-        
-        if (endTime.isCertain('meridiem')) {
-            endDateTime.assign('meridiem', endTime.get('meridiem'));
-        } else if (beginTime.get('meridiem') != null) {
-            endDateTime.imply('meridiem', endTime.get('meridiem'));
-        }
+        var endDateTime = mergeDateTimeComponent(endDate, endTime);
         
         if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
             // Ex. 9pm - 1am
