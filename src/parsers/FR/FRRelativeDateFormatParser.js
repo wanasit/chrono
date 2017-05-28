@@ -8,8 +8,12 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/FR');
 
-// Load fr localization data from moment
+// Force load fr localization data from moment for the locale files to be linkded durning browserify.
+// NOTE: The function moment.defineLocale() also has a side effect that it change global locale
+//  We also need to save and restore the previous locale (see. moment.js, loadLocale)
+var originalLocale = moment.locale();
 require('moment/locale/fr');
+moment.locale(originalLocale);
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:les?|la|l\'|du|des?)\\s*' +
