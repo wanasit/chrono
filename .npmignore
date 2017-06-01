@@ -1,0 +1,6 @@
+test/
+chrono.*
+karma.*
+bower.json
+.travis.yml
+!src/**/*.js
