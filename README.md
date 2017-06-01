@@ -69,7 +69,7 @@ browserify src/chrono.js --s chrono -o chrono.js
 
 Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
 
-```javascript
+```bash
 > var chrono = require('chrono-node')
 
 > chrono.parseDate('An appointment on Sep 12-13') 
@@ -93,7 +93,7 @@ Today's "Friday" is different from last month's "Friday".
 The meaning of the referenced dates depends on when they are mentioned. 
 Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
 
-```javascript
+```bash
 
 > chrono.parseDate('Friday', new Date(2012,7,23)); 
 Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
