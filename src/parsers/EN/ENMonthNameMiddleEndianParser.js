@@ -26,14 +26,15 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun\\.?|Mon\\.?|Tue\\.?|Wed\\.?|Thu\\.?|Fri\\.?|Sat\\.?)' +
     '\\s*,?\\s*)?' +
     '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' +
-    '\\s*' +
+    '(?:-|\/|\\s*,?\\s*)' +
     '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN +')\\s*' +
     '(?:' +
         '(?:to|\\-)\\s*' +
         '(([0-9]{1,2})(?:st|nd|rd|th)?| ' + util.ORDINAL_WORDS_PATTERN + ')\\s*' +
     ')?' +
     '(?:' +
-        '\\s*,?\\s*(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' +
+        '(?:-|\/|\\s*,?\\s*)' +
+        '(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' +
     ')?' +
     '(?=\\W|$)(?!\\:\\d)', 'i');
 

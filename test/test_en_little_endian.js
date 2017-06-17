@@ -13,7 +13,6 @@ var ok = function() {
 
 test("Test - Single expression", function() {
 
-
     var text = "10 August 2012";
     var results = chrono.parse(text, new Date(2012,7,10));
     ok(results.length == 1, JSON.stringify( results ) );
@@ -235,13 +234,38 @@ test("Test - Single expression", function() {
         var expectDate = new Date(2016, 2-1, 23, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
     }
-
-
 });
 
+test("Test - Single expression with separators", function() {
+
+    var text = "10-August 2012";
+    var expectDate = new Date(2012, 8-1, 10, 12, 0);
+    var result = chrono.parse(text, new Date(2012,7, 8))[0];
+    ok(result.text == '10-August 2012', JSON.stringify(result));
+    ok(Math.abs(expectDate.getTime() - result.start.date().getTime()) < 1000, JSON.stringify(result));
+
+
+    var text = "10-August-2012";
+    var expectDate = new Date(2012, 8-1, 10, 12, 0);
+    var result = chrono.parse(text, new Date(2012,7, 8))[0];
+    ok(result.text == '10-August-2012', JSON.stringify(result));
+    ok(Math.abs(expectDate.getTime() - result.start.date().getTime()) < 1000, JSON.stringify(result));
+
+    var text = "10/August 2012";
+    var expectDate = new Date(2012, 8-1, 10, 12, 0);
+    var result = chrono.parse(text, new Date(2012,7, 8))[0];
+    ok(result.text == '10/August 2012', JSON.stringify(result));
+    ok(Math.abs(expectDate.getTime() - result.start.date().getTime()) < 1000, JSON.stringify(result));
+
+
+    var text = "10/August/2012";
+    var expectDate = new Date(2012, 8-1, 10, 12, 0);
+    var result = chrono.parse(text, new Date(2012,7, 8))[0];
+    ok(result.text == '10/August/2012', JSON.stringify(result));
+    ok(Math.abs(expectDate.getTime() - result.start.date().getTime()) < 1000, JSON.stringify(result));
+});
 
 test("Test - Range expression", function() {
-
 
     var text = "10 - 22 August 2012";
     var results = chrono.parse(text, new Date(2012,7,10));
