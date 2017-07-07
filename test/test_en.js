@@ -140,6 +140,23 @@ test('Test - Random text', function() {
     ok(results[0].text == 'tonight to Thursday', JSON.stringify(results));
     ok(results[0].end.get('day') == 13, JSON.stringify(results));
     ok(results[0].end.get('month') == 7, JSON.stringify(results));
+
+    var text = 'August 12, 2015 to 13 September';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == 'August 12, 2015 to 13 September', JSON.stringify(results));
+    ok(results[0].end.get('day') == 13, JSON.stringify(results));
+    ok(results[0].end.get('month') == 9, JSON.stringify(results));
+    ok(results[0].end.get('year') == 2015, JSON.stringify(results));
+
+    var text = 'from 10am to now';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == 'from 10am to now', JSON.stringify(results));
+    ok(results[0].end.get('hour') == 15, JSON.stringify(results));
+    ok(results[0].end.get('minute') == 0, JSON.stringify(results));
 })
 
 test("Test - Random non-date patterns", function() {

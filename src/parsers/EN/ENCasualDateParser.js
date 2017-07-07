@@ -54,10 +54,10 @@ exports.Parser = function ENCasualDateParser(){
 
         } else if (lowerText.match("now")) {
 
-          result.start.imply('hour', refMoment.hour());
-          result.start.imply('minute', refMoment.minute());
-          result.start.imply('second', refMoment.second());
-          result.start.imply('millisecond', refMoment.millisecond());
+          result.start.assign('hour', refMoment.hour());
+          result.start.assign('minute', refMoment.minute());
+          result.start.assign('second', refMoment.second());
+          result.start.assign('millisecond', refMoment.millisecond());
 
         }
 
