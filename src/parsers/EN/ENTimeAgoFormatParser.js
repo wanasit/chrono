@@ -8,18 +8,25 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
+var TIME_UNIT = 
+    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
+    '(sec(?:onds?)?|min(?:ute)?s?|hours?|weeks?|days?|months?|years?)\\s*';
+
+var TIME_UNIT_STRICT = 
+    '([0-9]+|an?)\\s*' +
+    '(seconds?|minutes?|hours?|days?)\\s*';
+
+var PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
 var PATTERN = new RegExp('' +
     '(\\W|^)' +
     '(?:within\\s*)?' +
-    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
-    '(seconds?|min(?:ute)?s?|hours?|weeks?|days?|months?|years?)\\s*' +
+    '((?:' + TIME_UNIT + ')+)' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 
 var STRICT_PATTERN = new RegExp('' +
     '(\\W|^)' +
     '(?:within\\s*)?' +
-    '([0-9]+|an?)\\s*' +
-    '(seconds?|minutes?|hours?|days?)\\s*' +
+    '((?:' + TIME_UNIT_STRICT + ')+)' +
     'ago(?=(?:\\W|$))', 'i');
 
 exports.Parser = function ENTimeAgoFormatParser(){
@@ -43,7 +50,52 @@ exports.Parser = function ENTimeAgoFormatParser(){
             ref: ref
         });
 
-        var num = match[2].toLowerCase() ;
+        var fragments = extractDateTimeUnitFragments(match[2]);
+        var date = moment(ref);
+
+        for (var key in fragments) {
+            date.add(-fragments[key], key);
+        }
+
+        if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {
+            result.start.assign('hour', date.hour());
+            result.start.assign('minute', date.minute());
+            result.start.assign('second', date.second());
+            result.tags['ENTimeAgoFormatParser'] = true;
+        } 
+        
+        if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {
+            result.start.assign('day', date.date());
+            result.start.assign('month', date.month() + 1);
+            result.start.assign('year', date.year());
+        } else {
+            if (fragments['week'] > 0) {
+                result.start.imply('weekday', date.day());
+            }
+
+            result.start.imply('day', date.date());
+            result.start.imply('month', date.month() + 1);
+            result.start.imply('year', date.year());
+        }
+
+        return result;
+    };
+
+    function extractDateTimeUnitFragments(timeunitText) {
+        var fragments = {};
+        var remainingText = timeunitText;
+        var match = PATTERN_TIME_UNIT.exec(remainingText);
+        while (match) {
+            collectDateTimeFragment(match, fragments);
+            remainingText = remainingText.substring(match[0].length);
+            match = PATTERN_TIME_UNIT.exec(remainingText);
+        }
+        return fragments;
+    };
+
+    function collectDateTimeFragment(match, fragments) {
+
+        var num = match[1].toLowerCase() ;
         if (util.INTEGER_WORDS[num] !== undefined) {
             num = util.INTEGER_WORDS[num];
         } else if(num === 'a' || num === 'an'){
@@ -56,59 +108,23 @@ exports.Parser = function ENTimeAgoFormatParser(){
             num = parseInt(num);
         }
 
-        var date = moment(ref);
-
-        if (match[3].match(/hour|min|second/i)) {
-            if (match[3].match(/hour/i)) {
-
-                date.add(-num, 'hour');
-
-            } else if (match[3].match(/min/i)) {
-
-                date.add(-num, 'minute');
-
-            } else if (match[3].match(/second/i)) {
-
-                date.add(-num, 'second');
-            }
-
-            result.start.imply('day', date.date());
-            result.start.imply('month', date.month() + 1);
-            result.start.imply('year', date.year());
-            result.start.assign('hour', date.hour());
-            result.start.assign('minute', date.minute());
-            result.start.assign('second', date.second());
-            result.tags['ENTimeAgoFormatParser'] = true;
-            return result;
+        if (match[2].match(/hour/i)) {
+            fragments['hour'] = num;
+        } else if (match[2].match(/min/i)) {
+            fragments['minute'] = num;
+        } else if (match[2].match(/sec/i)) {
+            fragments['second'] = num;
+        } else if (match[2].match(/week/i)) {
+            fragments['week'] = num;
+        } else if (match[2].match(/day/i)) {
+            fragments['d'] = num;
+        } else if (match[2].match(/month/i)) {
+            fragments['month'] = num;
+        } else if (match[2].match(/year/i)) {
+            fragments['year'] = num;
         }
 
-        if (match[3].match(/week/i)) {
-            date.add(-num, 'week');
+        return fragments;
+    }
 
-            result.start.imply('day', date.date());
-            result.start.imply('month', date.month() + 1);
-            result.start.imply('year', date.year());
-            result.start.imply('weekday', date.day());
-            return result;
-        }
-
-        if (match[3].match(/day/i)) {
-            date.add(-num, 'd');
-        }
-
-        if (match[3].match(/month/i)) {
-            date.add(-num, 'month');
-        }
-
-        if (match[3].match(/year/i)) {
-
-            date.add(-num, 'year');
-        }
-
-        result.start.assign('day', date.date());
-        result.start.assign('month', date.month() + 1);
-        result.start.assign('year', date.year());
-        return result;
-
-    };
 }

@@ -344,6 +344,35 @@ test("Test - Single Expression (Casual)", function() {
     }
 });
 
+
+test("Test - Nested time ago", function() {
+
+    var text = "15 hours 29 min ago";
+    var results = chrono.parse(text, new Date(2012,7,10,22,30));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(results[0].text == '15 hours 29 min ago', text);
+    ok(results[0].start.get('day') == 10, text);
+    ok(results[0].start.get('hour') == 7, text);
+    ok(results[0].start.get('minute') == 1, text);
+
+    var text = "1 day 21 hours ago ";
+    var results = chrono.parse(text, new Date(2012,7,10,22,30));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(results[0].text == '1 day 21 hours ago', text);
+    ok(results[0].start.get('day') == 9, text);
+    ok(results[0].start.get('hour') == 1, text);
+    ok(results[0].start.get('minute') == 30, text);
+
+    var text = "3 min 49 sec ago ";
+    var results = chrono.parse(text, new Date(2012,7,10,22,30));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(results[0].text == '3 min 49 sec ago', text);
+    ok(results[0].start.get('day') == 10, text);
+    ok(results[0].start.get('hour') == 22, text);
+    ok(results[0].start.get('minute') == 26, text);
+    ok(results[0].start.get('second') == 11, text);
+});
+
 test("Test - Single Expression (Strict)", function() {
 
     var text = "15 minute before";
