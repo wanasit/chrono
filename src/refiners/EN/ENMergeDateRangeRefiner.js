@@ -55,6 +55,8 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
     this.mergeResult = function(text, fromResult, toResult) {
 
         if (!this.isWeekdayResult(fromResult) && !this.isWeekdayResult(toResult)) {
+            
+            var timeKeys = {'hour': true, 'minute': true, 'second': true};
 
             for (var key in toResult.start.knownValues) {
                 if (!fromResult.start.isCertain(key)) {
@@ -70,9 +72,25 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
         }
 
         if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
-            var tmp = toResult;
-            toResult = fromResult;
-            fromResult = tmp;
+            
+            var fromMoment = fromResult.start.moment();
+            var toMoment = toResult.start.moment();
+
+            if (this.isWeekdayResult(fromResult) && fromMoment.clone().add(-7, 'days').isBefore(toMoment)) {
+                fromMoment = fromMoment.add(-7, 'days');
+                fromResult.start.imply('day', fromMoment.date());
+                fromResult.start.imply('month', fromMoment.month() + 1);
+                fromResult.start.imply('year', fromMoment.year());
+            } else if (this.isWeekdayResult(toResult) && toMoment.clone().add(7, 'days').isAfter(fromMoment)) {
+                toMoment = toMoment.add(7, 'days');
+                toResult.start.imply('day', toMoment.date());
+                toResult.start.imply('month', toMoment.month() + 1);
+                toResult.start.imply('year', toMoment.year());
+            } else {
+                var tmp = toResult;
+                toResult = fromResult;
+                fromResult = tmp;
+            }
         }
         
         fromResult.end = toResult.start;

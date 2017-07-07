@@ -125,6 +125,21 @@ test('Test - Random text', function() {
     ok(results.length == 1, JSON.stringify(results) )
     ok(results[0].text == '2015-09-24', JSON.stringify(results))
 
+    var text = "Monday afternoon to last night";
+    var results = chrono.parse(text, new Date(2017, 7-1, 7));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == 'Monday afternoon to last night', JSON.stringify(results));
+    ok(results[0].start.get('day') == 3, JSON.stringify(results));
+    ok(results[0].start.get('month') == 7, JSON.stringify(results));
+
+    var text = "tonight to Thursday";
+    var results = chrono.parse(text, new Date(2017, 7-1, 7));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == 'tonight to Thursday', JSON.stringify(results));
+    ok(results[0].end.get('day') == 13, JSON.stringify(results));
+    ok(results[0].end.get('month') == 7, JSON.stringify(results));
 })
 
 test("Test - Random non-date patterns", function() {
