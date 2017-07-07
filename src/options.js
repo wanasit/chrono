@@ -129,6 +129,7 @@ exports.en = function(config) {
             new parser.ENSlashDateFormatStartWithYearParser(config),
             new parser.ENSlashMonthFormatParser(config),
             new parser.ENTimeAgoFormatParser(config),
+            new parser.ENTimeFromNowFormatParser(config),
             new parser.ENTimeExpressionParser(config)
         ],
         refiners: [

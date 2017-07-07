@@ -64,6 +64,7 @@ exports.ENSlashDateFormatStartWithYearParser = require('./EN/ENSlashDateFormatSt
 exports.ENSlashMonthFormatParser = require('./EN/ENSlashMonthFormatParser').Parser;
 exports.ENTimeAgoFormatParser = require('./EN/ENTimeAgoFormatParser').Parser;
 exports.ENTimeExpressionParser = require('./EN/ENTimeExpressionParser').Parser;
+exports.ENTimeFromNowFormatParser = require('./EN/ENTimeFromNowFormatParser').Parser;
 exports.ENWeekdayParser = require('./EN/ENWeekdayParser').Parser;
 exports.ENCasualDateParser = require('./EN/ENCasualDateParser').Parser;
 exports.ENCasualTimeParser = require('./EN/ENCasualTimeParser').Parser;
