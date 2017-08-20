@@ -309,3 +309,69 @@ test("Test - Single Expression (Strict)", function() {
     var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
     ok(results.length == 0, JSON.stringify( results ) )
 });
+
+
+test("Test - Single Expression (Implied)", function() {
+
+    var text = "within 30 days";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+    var text = "within 30 months";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+    var text = "within 30 years";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+    var text = "within 5 hours";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+    var text = "within 5 minutes";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+    var text = "within 5 seconds";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    ok(results.length == 1, JSON.stringify( results ) );
+    ok(!results[0].start.isCertain('year'), 'Test Result - (Year) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('month'), 'Test Result - (Month) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('day'), 'Test Result - (Day) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('hour'), 'Test Result - (Hour) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('minute'), 'Test Result - (Minute) ' + JSON.stringify(results[0].start));
+    ok(!results[0].start.isCertain('second'), 'Test Result - (Second) ' + JSON.stringify(results[0].start));
+
+});
+
