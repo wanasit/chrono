@@ -335,9 +335,14 @@ test("Test - Single Expression (Casual)", function () {
 });
 
 test("Test - Single Expression (Strict)", function () {
+
     var text = "15 min from now";
     var results = chrono.strict.parse(text, new Date(2012, 7, 10, 12, 14));
     ok(results.length == 0, JSON.stringify(results));
+
+    var text = "15 minutes from now";
+    var results = chrono.strict.parse(text, new Date(2012, 7, 10, 12, 14));
+    ok(results.length == 1, JSON.stringify(results));
 
     var text = "a week from now, we did something";
     var results = chrono.strict.parse(text, new Date(2012, 8 - 1, 3));

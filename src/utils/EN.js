@@ -69,7 +69,9 @@ exports.INTEGER_WORDS = {
     'eleven' : 11,
     'twelve' : 12
 };
-exports.INTEGER_WORDS_PATTERN = '(?:' + Object.keys(exports.INTEGER_WORDS).join('|') +')';
+exports.INTEGER_WORDS_PATTERN = '(?:' 
+    + Object.keys(exports.INTEGER_WORDS).join('|') 
+    +')';
 
 exports.ORDINAL_WORDS = {
     'first' : 1,
@@ -104,4 +106,64 @@ exports.ORDINAL_WORDS = {
     'thirtieth': 30,
     'thirty first': 31
 };
-exports.ORDINAL_WORDS_PATTERN = '(?:' + Object.keys(exports.ORDINAL_WORDS).join('|').replace(/ /g, '[ -]') + ')';
+exports.ORDINAL_WORDS_PATTERN = '(?:' 
+    + Object.keys(exports.ORDINAL_WORDS).join('|').replace(/ /g, '[ -]') 
+    + ')';
+
+var TIME_UNIT = 
+    '(' + exports.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
+    '(sec(?:onds?)?|min(?:ute)?s?|hours?|weeks?|days?|months?|years?)\\s*';
+
+var TIME_UNIT_STRICT = 
+    '([0-9]+|an?)\\s*' +
+    '(seconds?|minutes?|hours?|days?)\\s*';
+
+var PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
+
+exports.TIME_UNIT_PATTERN = '(?:' + TIME_UNIT + ')+';
+exports.TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
+
+exports.extractDateTimeUnitFragments = function (timeunitText) {
+    var fragments = {};
+    var remainingText = timeunitText;
+    var match = PATTERN_TIME_UNIT.exec(remainingText);
+    while (match) {
+        collectDateTimeFragment(match, fragments);
+        remainingText = remainingText.substring(match[0].length);
+        match = PATTERN_TIME_UNIT.exec(remainingText);
+    }
+    return fragments;
+};
+
+function collectDateTimeFragment(match, fragments) {
+    var num = match[1].toLowerCase() ;
+    if (exports.INTEGER_WORDS[num] !== undefined) {
+        num = exports.INTEGER_WORDS[num];
+    } else if(num === 'a' || num === 'an'){
+        num = 1;
+    } else if (num.match(/few/)) {
+        num = 3;
+    } else if (num.match(/half/)) {
+        num = 0.5;
+    } else {
+        num = parseInt(num);
+    }
+
+    if (match[2].match(/hour/i)) {
+        fragments['hour'] = num;
+    } else if (match[2].match(/min/i)) {
+        fragments['minute'] = num;
+    } else if (match[2].match(/sec/i)) {
+        fragments['second'] = num;
+    } else if (match[2].match(/week/i)) {
+        fragments['week'] = num;
+    } else if (match[2].match(/day/i)) {
+        fragments['d'] = num;
+    } else if (match[2].match(/month/i)) {
+        fragments['month'] = num;
+    } else if (match[2].match(/year/i)) {
+        fragments['year'] = num;
+    }
+
+    return fragments;
+}
