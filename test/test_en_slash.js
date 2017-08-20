@@ -64,6 +64,10 @@ test("Test - Single Expression", function() {
         ok(result.index == 0, 'Wrong index')
         ok(result.text == '8/10/2012', result.text )
 
+        ok(result.start.isCertain('day'));
+        ok(result.start.isCertain('month'));
+        ok(result.start.isCertain('year'));
+
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
@@ -101,6 +105,10 @@ test("Test - Single Expression", function() {
 
         ok(result.index == 0, 'Wrong index')
         ok(result.text == '8/10', result.text )
+
+        ok(result.start.isCertain('day'));
+        ok(result.start.isCertain('month'));
+        ok(!result.start.isCertain('year'));
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
@@ -368,3 +376,29 @@ test("Test - Impossible Dates (Casual Mode)", function() {
     ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 1000, resultDate +'/' +expectDate);
 });
 
+test('Test - forward dates only option', function () {
+
+    var text = "5/31";
+    var results = chrono.parse(text, new Date(1999, 6-1, 1), {forwardDatesOnly: true});
+    ok(results.length == 1, JSON.stringify( results ) )
+
+    var result = results[0];
+    if(result){
+        ok(result.start, JSON.stringify(result.start) )
+        ok(result.start.get('year') == 2000, 'Test Result - (Year) ' + JSON.stringify(result.start) )
+        ok(result.start.get('month') == 5, 'Test Result - (Month) ' + JSON.stringify(result.start) )
+        ok(result.start.get('day') == 31, 'Test Result - (Day) ' + JSON.stringify(result.start) )
+
+        ok(result.index == 0, 'Wrong index')
+        ok(result.text == '5/31', result.text )
+
+        ok(result.start.isCertain('day'));
+        ok(result.start.isCertain('month'));
+        ok(!result.start.isCertain('year'));
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2000, 5-1, 31, 12);
+        ok(Math.abs(expectDate.getTime() - resultDate.getTime()) < 100000, 'Test result.startDate ' + resultDate +'/' +expectDate)
+    }
+
+});

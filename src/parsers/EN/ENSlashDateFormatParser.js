@@ -116,7 +116,11 @@ exports.Parser = function ENSlashDateFormatParser(config) {
 
         result.start.assign('day', day);
         result.start.assign('month', month);
-        result.start.assign('year', year);
+        if (match[YEAR_GROUP]) {
+            result.start.assign('year', year);
+        } else {
+            result.start.imply('year', year);
+        }
 
         //Day of week
         if(match[WEEKDAY_GROUP]) {
