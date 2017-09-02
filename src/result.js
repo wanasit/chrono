@@ -112,7 +112,7 @@ ParsedComponents.prototype.moment = function() {
 
     // Javascript Date Object return minus timezone offset
     var currentTimezoneOffset = dateMoment.utcOffset();
-    var targetTimezoneOffset = this.isCertain('timezoneOffset') ? 
+    var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ? 
         this.get('timezoneOffset') : currentTimezoneOffset;
 
     var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
