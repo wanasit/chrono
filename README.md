@@ -50,7 +50,7 @@ Doing something else? No worries. Try these:
 
 Platform | Installation
 ---------|----
-CDN      | Via [jsDelivr]:<br> `<script src="https://cdn.jsdelivr.net/chrono/VERSION/chrono.min.js"></script>`
+CDN      | Via [jsDelivr]:<br> `<script src="https://cdn.jsdelivr.net/npm/chrono-node@VERSION/chrono.min.js"></script>`
 Rails    | Install from [Rails Assets] by adding this to your Gemfile:<br> `gem 'rails-assets-chrono', source: 'https://rails-assets.org'`
 Swift    | Try using the community-made [chrono-swift] wrapper.
 
