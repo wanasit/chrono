@@ -16,7 +16,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
             "(?:\\:|\\：)(\\d{2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
     "(?=\\W|$)", 'i');
 
 
@@ -29,7 +29,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         ")?" + 
     ")?" + 
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + 
+    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
     "(?=\\W|$)", 'i');
 
 var HOUR_GROUP    = 2;

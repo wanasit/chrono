@@ -497,6 +497,54 @@ test("Test - Ordinal Words", function () {
 
 });
 
+test("Test - little endian date followed by time", function() {
+
+    var text = '24th October, 9 am';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == '24th October, 9 am', JSON.stringify(results));
+    ok(results[0].start.get('day') == 24, JSON.stringify(results));
+    ok(results[0].start.get('month') == 10, JSON.stringify(results));
+    ok(results[0].start.get('hour') == 9, JSON.stringify(results));
+
+    var text = '24th October, 9 pm';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == '24th October, 9 pm', JSON.stringify(results));
+    ok(results[0].start.get('day') == 24, JSON.stringify(results));
+    ok(results[0].start.get('month') == 10, JSON.stringify(results));
+    ok(results[0].start.get('hour') == 21, JSON.stringify(results));
+
+    var text = '24 October, 9 pm';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == '24 October, 9 pm', JSON.stringify(results));
+    ok(results[0].start.get('day') == 24, JSON.stringify(results));
+    ok(results[0].start.get('month') == 10, JSON.stringify(results));
+    ok(results[0].start.get('hour') == 21, JSON.stringify(results));
+
+    var text = '24 October, 9 p.m.';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == '24 October, 9 p.m.', JSON.stringify(results));
+    ok(results[0].start.get('day') == 24, JSON.stringify(results));
+    ok(results[0].start.get('month') == 10, JSON.stringify(results));
+    ok(results[0].start.get('hour') == 21, JSON.stringify(results));
+
+    var text = '24 October 10 o clock';
+    var results = chrono.parse(text, new Date(2017, 7-1, 7, 15));
+
+    ok(results.length == 1, JSON.stringify(results));
+    ok(results[0].text == '24 October 10 o clock', JSON.stringify(results));
+    ok(results[0].start.get('day') == 24, JSON.stringify(results));
+    ok(results[0].start.get('month') == 10, JSON.stringify(results));
+    ok(results[0].start.get('hour') == 10, JSON.stringify(results));    
+});
+
 test("Test - Impossible Dates (Strict Mode)", function() {
  
     var text = "32 August 2014";

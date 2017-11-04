@@ -660,4 +660,20 @@ test("Test - Random date + time expression", function() {
     var text = "at midnight";
     var result = chrono.parse(text)[0];
     ok(result.text == text, result.text)
+
+    var text = "at 7 oclock";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
+
+    var text = "at 7 o clock";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
+
+    var text = "at 7 o'clock";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
+
+    var text = "at 7-8 o'clock";
+    var result = chrono.parse(text)[0];
+    ok(result.text == text, result.text)
 })

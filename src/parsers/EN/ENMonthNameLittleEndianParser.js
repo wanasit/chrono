@@ -21,8 +21,10 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
         '(?:' +
             '(?:-|\/|,?\\s*)' +
-            '([0-9]{1,4}(?![^\\s]\\d))' +
-            '(\\s*(?:BE|AD|BC))?' +
+            '((?:' + 
+                '[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|' +
+                '[1-2][0-9]{3}' + 
+            ')(?![^\\s]\\d))' +
         ')?' +
         '(?=\\W|$)', 'i'
     );
@@ -34,7 +36,6 @@ var DATE_TO_GROUP = 5;
 var DATE_TO_NUM_GROUP = 6;
 var MONTH_NAME_GROUP = 7;
 var YEAR_GROUP = 8;
-var YEAR_BE_GROUP = 9;
 
 exports.Parser = function ENMonthNameLittleEndianParser(){
     Parser.apply(this, arguments);
@@ -59,26 +60,23 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         var year = null;
         if (match[YEAR_GROUP]) {
             year = match[YEAR_GROUP];
-            year = parseInt(year);
-
-            if(match[YEAR_BE_GROUP]){
-
-                if (/BE/i.test(match[YEAR_BE_GROUP])) {
-                    // Buddhist Era
-                    year = year - 543;
-                } else if (/BC/i.test(match[YEAR_BE_GROUP])) {
-                    // Before Christ
-                    year = -year;
+            
+            if (/BE/i.test(year)) {
+                // Buddhist Era
+                year = year.replace(/BE/i, '');
+                year = parseInt(year) - 543;
+            } else if (/BC/i.test(year)){
+                // Before Christ
+                year = year.replace(/BC/i, '');
+                year = -parseInt(year);
+            } else if (/AD/i.test(year)){
+                year = year.replace(/AD/i, '');
+                year = parseInt(year);
+            } else {
+                year = parseInt(year);
+                if (year < 100){
+                    year = year + 2000;
                 }
-
-            } else if (year < 10) {
-
-                // require single digit years to always have BC/AD
-                return null;
-
-            } else if (year < 100){
-
-                year = year + 2000;
             }
         }
 
