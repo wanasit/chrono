@@ -25,7 +25,8 @@ Chrono.prototype.parse = function(text, refDate, opt) {
 
     refDate = refDate || new Date();
     opt = opt || {};
-
+    opt.forwardDate = opt.forwardDate || opt.forwardDate;
+    
     var allResults = [];
 
     this.parsers.forEach(function (parser) {

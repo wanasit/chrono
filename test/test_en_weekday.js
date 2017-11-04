@@ -39,7 +39,7 @@ test("Test - Single Expression", function () {
     }
 
     var text = "Monday (forward dates only)";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9), {forwardDatesOnly: true});
+    var results = chrono.casual.parse(text, new Date(2012, 7, 9), {forwardDate: true});
     ok(results.length == 1, JSON.stringify(results));
 
     var result = results[0];
@@ -270,7 +270,7 @@ test("Test - Weekday Overlap", function () {
 test('Test - forward dates only option', function () {
 
     var text = "this Friday to this Monday";
-    var results = chrono.casual.parse(text, new Date(2016, 8-1, 4), {forwardDatesOnly: true});
+    var results = chrono.casual.parse(text, new Date(2016, 8-1, 4), {forwardDate: true});
     ok(results.length == 1, JSON.stringify(results));
 
     var result = results[0];

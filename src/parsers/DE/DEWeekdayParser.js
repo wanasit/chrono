@@ -60,17 +60,17 @@ exports.Parser = function DEWeekdayParser() {
         } else if (/n(?:ä|ae)chste/.test(norm)) {
             startMoment.day(offset + 7);
         } else if (/diese/.test(norm)) {
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
+            if ( opt.forwardDate && refOffset > offset ) {
                 startMoment.day(offset + 7);
             } else {
                 startMoment.day(offset);
             }
         } else {
-            if ( opt.forwardDatesOnly && refOffset > offset ) {
+            if ( opt.forwardDate && refOffset > offset ) {
                 startMoment.day(offset + 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
+            } else if (!opt.forwardDate && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
                 startMoment.day(offset - 7);
-            } else if (!opt.forwardDatesOnly && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
+            } else if (!opt.forwardDate && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
                 startMoment.day(offset + 7);
             } else {
                 startMoment.day(offset);

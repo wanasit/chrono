@@ -11,7 +11,7 @@ exports.Refiner = function ForwardDateRefiner() {
 
     this.refine = function(text, results, opt) {
 
-        if (!opt['forwardDate'] && !opt['forwardDatesOnly']) {
+        if (!opt['forwardDate']) {
             return results;
         }
 

@@ -379,7 +379,7 @@ test("Test - Impossible Dates (Casual Mode)", function() {
 test('Test - forward dates only option', function () {
 
     var text = "5/31";
-    var results = chrono.parse(text, new Date(1999, 6-1, 1), {forwardDatesOnly: true});
+    var results = chrono.parse(text, new Date(1999, 6-1, 1), {forwardDate: true});
     ok(results.length == 1, JSON.stringify( results ) )
 
     var result = results[0];

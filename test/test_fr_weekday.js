@@ -40,7 +40,7 @@ test("Test - Single Expression", function() {
     }
 
     var text = "Lundi (forward dates only)";
-    var results = chrono.casual.parse(text, new Date(2012,7,9), {forwardDatesOnly: true});
+    var results = chrono.casual.parse(text, new Date(2012,7,9), {forwardDate: true});
     ok(results.length == 1, JSON.stringify( results ) )
 
     var result = results[0];

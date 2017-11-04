@@ -204,7 +204,7 @@ test("Test - Weekday Overlap", function () {
 test('Test - forward dates only option', function () {
 
     var text = "diesen Freitag bis diesen Montag";
-    var results = chrono.de.parse(text, new Date(2016, 8-1, 4), {forwardDatesOnly: true});
+    var results = chrono.de.parse(text, new Date(2016, 8-1, 4), {forwardDate: true});
     ok(results.length == 1, JSON.stringify(results));
 
     var result = results[0];
