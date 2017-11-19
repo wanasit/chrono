@@ -13,7 +13,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
-            "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,3}))?" + 
+            "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,6}))?" + 
         ")?" + 
     ")?" + 
     "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
@@ -26,7 +26,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
-            "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,4}))?" + 
+            "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,6}))?" + 
         ")?" + 
     ")?" + 
     "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
@@ -65,7 +65,7 @@ exports.Parser = function ENTimeExpressionParser(){
 
         // ----- Millisecond
         if(match[MILLI_SECOND_GROUP] != null){ 
-            var millisecond = parseInt(match[MILLI_SECOND_GROUP]);
+            var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
             if(millisecond >= 1000) return null;
             
             result.start.assign('millisecond', millisecond);
@@ -166,7 +166,7 @@ exports.Parser = function ENTimeExpressionParser(){
 
         // ----- Millisecond
         if(match[MILLI_SECOND_GROUP] != null){ 
-            var millisecond = parseInt(match[MILLI_SECOND_GROUP]);
+            var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
             if(millisecond >= 1000) return null;
             
             result.end.assign('millisecond', millisecond);

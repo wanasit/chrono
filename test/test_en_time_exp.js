@@ -595,6 +595,25 @@ test("Test - Milliseconds", function() {
     ok(result.end.get('second') == 50, JSON.stringify(result.start))
     ok(result.end.get('minute') == 45, JSON.stringify(result.start))
     ok(result.end.get('hour') == 22, JSON.stringify(result.start))
+
+
+    var text = "friday at 10:31:50.522142 - 10:45:50.122124 pm";
+    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    ok(result.text == text, result.text)
+
+    ok(result.start.isCertain('millisecond'), JSON.stringify(result.start))
+    ok(result.start.get('millisecond') == 522, JSON.stringify(result.start))
+    ok(result.start.get('second') == 50, JSON.stringify(result.start))
+    ok(result.start.get('minute') == 31, JSON.stringify(result.start))
+    ok(result.start.get('hour') == 22, JSON.stringify(result.start))
+
+    ok(result.end.isCertain('millisecond'), JSON.stringify(result.start))
+    ok(result.end.get('millisecond') == 122, JSON.stringify(result.start))
+    ok(result.end.get('second') == 50, JSON.stringify(result.start))
+    ok(result.end.get('minute') == 45, JSON.stringify(result.start))
+    ok(result.end.get('hour') == 22, JSON.stringify(result.start))
+
+
 })
 
 test("Test - Random date + time expression", function() {
