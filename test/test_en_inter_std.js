@@ -269,4 +269,14 @@ test("Test - Compare with native js", function() {
     
     ok(result.text == text);
     ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 1000)
+
+
+    var text = '09/25/2017 10:31:50.522 PM';
+    var result = chrono.parse(text)[0];
+    var expect = new Date(text);
+    
+    ok(result.text == text, result.text);
+    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 10, 
+        'Expected:' + expect.getMilliseconds() + ' Actual:' + result.start.date().getTime()
+    )
 });

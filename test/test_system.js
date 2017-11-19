@@ -130,6 +130,31 @@ test("Test - Override parser", function() {
 	ok(extractCalled == 2, 'Function [extract] called: ' + extractCalled);
 });
 
+test("Test - Add custom parser", function() {
+    var customParser = new chrono.Parser();
+
+    customParser.pattern = function () { return /(\d{1,2})(st|nd|rd|th)/i } 
+    customParser.extract = function(text, ref, match, opt) { 
+        return new chrono.ParsedResult({
+            ref: ref,
+            text: match[0],
+            index: match.index,
+            start: {
+                day: parseInt(match[1]) 
+            }
+        });
+	}
+	
+    var custom = new chrono.Chrono();
+    custom.parsers.push(customParser);
+
+    var text = "meeting on 25th";
+	var result = custom.parse(text, new Date(2017,11 -1, 19))[0];
+	
+    ok(result.text == '25th', result.text)
+    ok(result.start.get('month') == 11, JSON.stringify(result))
+    ok(result.start.get('day') == 25, JSON.stringify(result))
+})
 
 test("Test - combining options", function() {
 

@@ -13,7 +13,7 @@ var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
-            "(?:\\:|\\：)(\\d{2})" + 
+            "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,3}))?" + 
         ")?" + 
     ")?" + 
     "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
@@ -26,7 +26,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
     "(?:" + 
         "(?:\\.|\\:|\\：)(\\d{1,2})" + 
         "(?:" + 
-            "(?:\\.|\\:|\\：)(\\d{1,2})" + 
+            "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,4}))?" + 
         ")?" + 
     ")?" + 
     "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + 
@@ -35,7 +35,8 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
 var HOUR_GROUP    = 2;
 var MINUTE_GROUP  = 3;
 var SECOND_GROUP  = 4;
-var AM_PM_HOUR_GROUP = 5;
+var MILLI_SECOND_GROUP  = 5;
+var AM_PM_HOUR_GROUP = 6;
 
 
 exports.Parser = function ENTimeExpressionParser(){
@@ -61,6 +62,14 @@ exports.Parser = function ENTimeExpressionParser(){
         var hour = 0;
         var minute = 0;
         var meridiem = -1;
+
+        // ----- Millisecond
+        if(match[MILLI_SECOND_GROUP] != null){ 
+            var millisecond = parseInt(match[MILLI_SECOND_GROUP]);
+            if(millisecond >= 1000) return null;
+            
+            result.start.assign('millisecond', millisecond);
+        }
 
         // ----- Second
         if(match[SECOND_GROUP] != null){ 
@@ -155,6 +164,14 @@ exports.Parser = function ENTimeExpressionParser(){
         var minute = 0;
         var meridiem = -1;
 
+        // ----- Millisecond
+        if(match[MILLI_SECOND_GROUP] != null){ 
+            var millisecond = parseInt(match[MILLI_SECOND_GROUP]);
+            if(millisecond >= 1000) return null;
+            
+            result.end.assign('millisecond', millisecond);
+        }
+        
         // ----- Second
         if(match[SECOND_GROUP] != null){ 
             var second = parseInt(match[SECOND_GROUP]);

@@ -25,13 +25,26 @@ var mergeDateTimeComponent = exports.mergeDateTimeComponent = function(dateCompo
     if (timeComponent.isCertain('hour')) {
         dateTimeComponent.assign('hour', timeComponent.get('hour'));
         dateTimeComponent.assign('minute', timeComponent.get('minute'));
-        dateTimeComponent.assign('second', timeComponent.get('second'));
+
+        if (timeComponent.isCertain('second')) {
+            dateTimeComponent.assign('second', timeComponent.get('second'));
+
+            if (timeComponent.isCertain('millisecond')) {
+                dateTimeComponent.assign('millisecond', timeComponent.get('millisecond'));
+            } else {
+                dateTimeComponent.imply('millisecond', timeComponent.get('millisecond'));
+            }
+        } else {
+            dateTimeComponent.imply('second', timeComponent.get('second'));
+            dateTimeComponent.imply('millisecond', timeComponent.get('millisecond'));
+        }
+        
     } else {
         dateTimeComponent.imply('hour', timeComponent.get('hour'));
         dateTimeComponent.imply('minute', timeComponent.get('minute'));
         dateTimeComponent.imply('second', timeComponent.get('second'));
+        dateTimeComponent.imply('millisecond', timeComponent.get('millisecond'));
     }
-
 
     if (timeComponent.isCertain('meridiem')) {
         dateTimeComponent.assign('meridiem', timeComponent.get('meridiem'));
