@@ -9,7 +9,7 @@ var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
 var PATTERN = new RegExp('(\\W|^)' +
-    '(next|last|past)\\s*' +
+    '(this|next|last|past)\\s*' +
     '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|few|half(?:\\s*an?)?)?\\s*' +
     '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' +
     '(?=\\W|$)', 'i'
@@ -52,8 +52,46 @@ exports.Parser = function ENRelativeDateFormatParser(){
         }
 
         num *= modifier;
-
         var date = moment(ref);
+
+        if (match[MODIFIER_WORD_GROUP].toLowerCase().match(/^this/)) {
+
+            if (match[MULTIPLIER_WORD_GROUP]) {
+                return null;
+            }
+
+            if (match[RELATIVE_WORD_GROUP].match(/day|week|month|year/i)) {
+                
+                // This week
+                if (match[RELATIVE_WORD_GROUP].match(/week/i)) {
+                    date.add(-date.get('d'), 'd');
+                    result.start.imply('day', date.date());
+                    result.start.imply('month', date.month() + 1);
+                    result.start.imply('year', date.year());
+                } 
+                
+                // This month
+                else if (match[RELATIVE_WORD_GROUP].match(/month/i)) {
+                    date.add(-date.date() + 1, 'd');
+                    result.start.imply('day', date.date());
+                    result.start.assign('year', date.year());
+                    result.start.assign('month', date.month() + 1);
+                } 
+
+                // This year
+                else if (match[RELATIVE_WORD_GROUP].match(/year/i)) {
+                    date.add(-date.date() + 1, 'd');
+                    date.add(-date.month(), 'month');
+
+                    result.start.imply('day', date.date());
+                    result.start.imply('month', date.month() + 1);
+                    result.start.assign('year', date.year());
+                } 
+
+                return result;
+            }
+        }
+        
         if (match[RELATIVE_WORD_GROUP].match(/day|week|month|year/i)) {
 
             if (match[RELATIVE_WORD_GROUP].match(/day/i)) {

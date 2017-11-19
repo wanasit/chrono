@@ -13,6 +13,39 @@ var ok = function() {
 
 test("Test - Single Expression", function() {
 
+    var text = "this week";
+    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2017, JSON.stringify(result.start));
+    ok(result.start.get('month') == 11, JSON.stringify(result.start));
+    ok(result.start.get('day') == 19, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+
+    var text = "this month";
+    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2017, JSON.stringify(result.start));
+    ok(result.start.get('month') == 11, JSON.stringify(result.start));
+    ok(result.start.get('day') == 1, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+
+    var text = "this month";
+    var result = chrono.parse(text, new Date(2017, 11-1, 1))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2017, JSON.stringify(result.start));
+    ok(result.start.get('month') == 11, JSON.stringify(result.start));
+    ok(result.start.get('day') == 1, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+
+    var text = "this year";
+    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
+    ok(result.text == text, result.text);
+    ok(result.start.get('year') == 2017, JSON.stringify(result.start));
+    ok(result.start.get('month') == 1, JSON.stringify(result.start));
+    ok(result.start.get('day') == 1, JSON.stringify(result.start));
+    ok(result.start.get('hour') == 12, JSON.stringify(result.start));
+
+
     var text = "next week";
     var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
     ok(result.text == text, result.text);
