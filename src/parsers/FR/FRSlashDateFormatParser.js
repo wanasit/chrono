@@ -32,6 +32,7 @@ var WEEKDAY_GROUP = 2;
 var DAY_GROUP = 3;
 var MONTH_GROUP = 4;
 var YEAR_GROUP = 5;
+var YEAR_BE_GROUP = 6;
 
 exports.Parser = function FRSlashDateFormatParser(argument) {
     Parser.apply(this, arguments);
@@ -65,13 +66,27 @@ exports.Parser = function FRSlashDateFormatParser(argument) {
         if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
 
         var date = null;
-        var year = match[YEAR_GROUP] || moment(ref).year() + '';
         var month = match[MONTH_GROUP];
         var day   = match[DAY_GROUP];
 
         day  = parseInt(day);
         month = parseInt(month);
-        year = parseInt(year);
+
+        var year = null;
+        if (match[YEAR_GROUP]) {
+            year = match[YEAR_GROUP];
+            year = parseInt(year);
+
+            if(match[YEAR_BE_GROUP]){
+                if (/a/i.test(match[YEAR_BE_GROUP])) {
+                    // Ante Christe natum
+                    year = -year;
+                }
+            } else if (year < 100){
+
+                year = year + 2000;
+            }
+        }
 
         if(month < 1 || month > 12) {
             if(month > 12) {
@@ -88,19 +103,34 @@ exports.Parser = function FRSlashDateFormatParser(argument) {
                 }
             }
         }
+
         if(day < 1 || day > 31) return null;
 
-        if(year < 100){
-            if(year > 50){
-                year = year + 1900;
-            }else{
-                year = year + 2000;
-            }
-        }
+        if(year){
+            result.start.assign('day', day);
+            result.start.assign('month', month);
+            result.start.assign('year', year);
+        } else {
 
-        result.start.assign('day', day);
-        result.start.assign('month', month);
-        result.start.assign('year', year);
+            // Find the most appropriated year
+            var refMoment = moment(ref);
+            refMoment.month(month - 1);
+            refMoment.date(day);
+            refMoment.year(moment(ref).year());
+
+            var nextYear = refMoment.clone().add(1, 'y');
+            var lastYear = refMoment.clone().add(-1, 'y');
+            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
+                refMoment = nextYear;
+            }
+            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
+                refMoment = lastYear;
+            }
+
+            result.start.assign('day', day);
+            result.start.assign('month', month);
+            result.start.imply('year', refMoment.year());
+        }
 
         // Day of week
         if(match[WEEKDAY_GROUP]) {
