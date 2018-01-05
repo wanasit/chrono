@@ -276,7 +276,5 @@ test("Test - Compare with native js", function() {
     var expect = new Date(text);
     
     ok(result.text == text, result.text);
-    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 10, 
-        'Expected:' + expect.getMilliseconds() + ' Actual:' + result.start.date().getTime()
-    )
+    ok(Math.abs(expect.getTime() - result.start.date().getTime()) <= 10, 'Expected:' + expect.getMilliseconds() + ' Actual:' + result.start.date().getTime())
 });

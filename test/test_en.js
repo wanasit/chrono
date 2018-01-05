@@ -236,10 +236,9 @@ test("Test - Wikipedia Texts", function() {
 
     var result = results[0];
     if(result){
-        ok( result.start.get('year') == 2011 && 
-            result.start.get('month') == 10 &&
-            result.start.get('day')   == 7, 
-        JSON.stringify(result.start));
+        ok(result.start.get('year') == 2011);
+        ok(result.start.get('month') == 10);
+        ok(result.start.get('day')   == 7);
 
         ok(result.index == 0, 'Index : '+result.index)
         ok(result.text == 'October 7, 2011', 'Text :'+ result.text )
@@ -247,10 +246,9 @@ test("Test - Wikipedia Texts", function() {
     
     var result = results[1];
     if(result){
-        ok( result.start.get('year') == 2011 && 
-            result.start.get('month') == 10 &&
-            result.start.get('day')   == 16, 
-        JSON.stringify(result.start));
+        ok(result.start.get('year') == 2011);
+        ok(result.start.get('month') == 10);
+        ok(result.start.get('day')   == 16);
 
         ok(result.index == 297, 'Index : '+result.index)
         ok(result.text == 'Sunday, October 16, 2011', 'Text :'+ result.text )
