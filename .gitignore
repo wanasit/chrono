@@ -7,5 +7,7 @@ coverage/
 # Misc
 .Rhistory
 .idea/
-
+.DS_Store
+.vscode
+.settings
 
