@@ -17,6 +17,7 @@
     "browserify": "^14.3.0",
     "coveralls": "^2.11.2",
     "istanbul": "^0.4.5",
+    "jest": "^22.0.4",
     "karma": "~1.7.0",
     "karma-browserify": "^5.1.1",
     "karma-chrome-launcher": "~2.1.1",
