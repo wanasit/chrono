@@ -16,8 +16,8 @@
   "devDependencies": {
     "browserify": "^14.3.0",
     "coveralls": "^2.11.2",
-    "minifyify": "^7.0.6",
-    "watchify": "^3.9.0"
+    "jest": "^22.0.4",
+    "minifyify": "^7.0.6"
   },
   "scripts": {
     "make-bundle": "browserify src/chrono.js -d --s chrono -o chrono.js",
