@@ -17,6 +17,7 @@
     "browserify": "^14.3.0",
     "coveralls": "^2.11.2",
     "jest": "^22.0.4",
+    "nsp": "^3.2.1",
     "minifyify": "^7.0.6"
   },
   "scripts": {
@@ -24,10 +25,10 @@
     "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "jest --watch",
-    "test": "jest --coverage",
+    "test": "jest --coverage && nsp check",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "moment": "2.10.3"
+    "moment": "2.21.0"
   }
 }
