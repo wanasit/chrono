@@ -2,7 +2,7 @@ Chrono
 ======
 A natural language date parser in Javascript, designed for extracting date information from any given text. (Java version is also available [here](https://github.com/wanasit/chrono-java)) 
 
-[Demo](https://chrono.glitch.me/) - [![Remix on Glitch](https://i.imgur.com/i3pah98.png)](https://glitch.com/edit/#!/remix/chrono)
+[Demo](https://chrono.glitch.me/) ([Remix on Glitch](https://glitch.com/edit/#!/remix/chrono))
 
 [![Build Status](https://travis-ci.org/wanasit/chrono.svg?branch=master)](https://travis-ci.org/wanasit/chrono)
 [![Coverage Status](https://img.shields.io/coveralls/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
