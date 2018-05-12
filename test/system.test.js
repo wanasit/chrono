@@ -196,6 +196,12 @@ test("Test - default language options", function() {
 	expect(chrono.fr.parseDate('2012-9-3')).not.toBeNull();
 	expect(chrono.fr.parseDate('Lundi')).not.toBeNull();
 	expect(chrono.fr.parseDate('2012年９月3日')).toBeNull();
+
+	expect(chrono.en.parseDate("04/12/1993"))
+		.toEqual(chrono.parseDate("1993-04-12"))
+	
+	expect(chrono.en_GB.parseDate("04/12/1993"))
+		.toEqual(chrono.parseDate("1993-12-04"))
 });
 
 
