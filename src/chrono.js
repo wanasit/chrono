@@ -49,6 +49,18 @@ Chrono.prototype.parse = function(text, refDate, opt) {
 Chrono.prototype.parseDate = function(text, refDate, opt) {
     var results = this.parse(text, refDate, opt);
     if (results.length > 0) {
+        var meridiem = -1, meridiemFixed = false;
+        results.forEach(function (result) {
+            if(!meridiemFixed && result.start.isCertain('meridiem')) {
+                meridiem = result.start.get('meridiem');
+                var hour = results[0].start.get('hour');
+                if (meridiem === 1 && hour < 12) {
+                    results[0].start.assign('hour',hour + 12);
+                }
+                meridiemFixed = true;
+                results[0].start.assign('meridiem',meridiem);
+            }
+        });
         return results[0].start.date();
     }
     return null;
