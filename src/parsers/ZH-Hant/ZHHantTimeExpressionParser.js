@@ -12,9 +12,9 @@ var util = require('../../utils/ZH-Hant.js');
 
 var patternString1 = '(?:由|從|自)?' +
     '(?:' +
-    '(今|明|聽|昨|尋|琴)(早|朝|晚)|' +
+    '(今|明|前|大前|後|大後|聽|昨|尋|琴)(早|朝|晚)|' +
     '(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨))|' +
-    '(今|明|聽|昨|尋|琴)(?:日|天)' +
+    '(今|明|前|大前|後|大後|聽|昨|尋|琴)(?:日|天)' +
     '(?:[\\s,，]*)' +
     '(?:(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨)))?' +
     ')?' +
@@ -28,9 +28,9 @@ var patternString1 = '(?:由|從|自)?' +
 
 var patternString2 = '(?:\\s*(?:到|至|\\-|\\–|\\~|\\〜)\\s*)' +
     '(?:' +
-    '(今|明|聽|昨|尋|琴)(早|朝|晚)|' +
+    '(今|明|前|大前|後|大後|聽|昨|尋|琴)(早|朝|晚)|' +
     '(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨))|' +
-    '(今|明|聽|昨|尋|琴)(?:日|天)' +
+    '(今|明|前|大前|後|大後|聽|昨|尋|琴)(?:日|天)' +
     '(?:[\\s,，]*)' +
     '(?:(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨)))?' +
     ')?' +
@@ -86,6 +86,14 @@ exports.Parser = function ZHHantTimeExpressionParser() {
               }
             } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
                 startMoment.add(-1, 'day');
+            } else if (day1 == "前"){
+                startMoment.add(-2, 'day');
+            } else if (day1 == "大前"){
+                startMoment.add(-3, 'day');
+            } else if (day1 == "後"){
+                startMoment.add(2, 'day');
+            } else if (day1 == "大後"){
+                startMoment.add(3, 'day');
             }
             result.start.assign('day', startMoment.date());
             result.start.assign('month', startMoment.month() + 1);
@@ -96,6 +104,14 @@ exports.Parser = function ZHHantTimeExpressionParser() {
                 startMoment.add(1, 'day');
             } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
                 startMoment.add(-1, 'day');
+            } else if (day3 == "前"){
+                startMoment.add(-2, 'day');
+            } else if (day3 == "大前"){
+                startMoment.add(-3, 'day');
+            } else if (day3 == "後"){
+                startMoment.add(2, 'day');
+            } else if (day3 == "大後"){
+                startMoment.add(3, 'day');
             }
             result.start.assign('day', startMoment.date());
             result.start.assign('month', startMoment.month() + 1);
@@ -237,6 +253,14 @@ exports.Parser = function ZHHantTimeExpressionParser() {
               }
             } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
                 endMoment.add(-1, 'day');
+            } else if (day1 == "前"){
+                endMoment.add(-2, 'day');
+            } else if (day1 == "大前"){
+                endMoment.add(-3, 'day');
+            } else if (day1 == "後"){
+                endMoment.add(2, 'day');
+            } else if (day1 == "大後"){
+                endMoment.add(3, 'day');
             }
             result.end.assign('day', endMoment.date());
             result.end.assign('month', endMoment.month() + 1);
@@ -247,6 +271,14 @@ exports.Parser = function ZHHantTimeExpressionParser() {
                 endMoment.add(1, 'day');
             } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
                 endMoment.add(-1, 'day');
+            } else if (day3 == "前"){
+                endMoment.add(-2, 'day');
+            } else if (day3 == "大前"){
+                endMoment.add(-3, 'day');
+            } else if (day3 == "後"){
+                endMoment.add(2, 'day');
+            } else if (day3 == "大後"){
+                endMoment.add(3, 'day');
             }
             result.end.assign('day', endMoment.date());
             result.end.assign('month', endMoment.month() + 1);

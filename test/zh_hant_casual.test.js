@@ -78,6 +78,28 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 
+    var text = "雞後天凌晨全部都係雞";
+    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 0, 0));
+    expect(results.length).toBe(1);
+
+    var result = results[0];
+    if(result){
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 12, 0, 0);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "雞大前天凌晨全部都係雞";
+    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 0, 0));
+    expect(results.length).toBe(1);
+
+    var result = results[0];
+    if(result){
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 7, 0, 0);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
 
     var text = "雞琴日全部都係雞";
     var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
