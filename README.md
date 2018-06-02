@@ -116,6 +116,14 @@ chrono.parseDate('Friday', referenceDate)
 chrono.parseDate('Friday', referenceDate, {forwardDate: true})
 // Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
+* `timezones` (Map) to override Chrono's default timezone abbriviation mapping. The value should be the timezone offset in minutes (between -720 to 720).
+```
+chrono.parse('Friday at 2 pm IST', refDate, {'IST': 330})[0].start.get('timezoneOffset');
+// 330 (IST – India Standard Time +0530)
+
+chrono.parse('Friday at 2 pm IST', refDate, {'IST': 60})[0].start.get('timezoneOffset');
+// 60 (IST - Irish Standard Time +0100)
+```
 
 ### Detailed Parsed Results
 
@@ -271,8 +279,18 @@ git clone https://github.com/wanasit/chrono.git chrono
 cd chrono
 npm install
 
-# Try running the test
+```
+
+Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
+
+Chrono's unit testing is based-on [Jest](https://facebook.github.io/jest/). 
+
+```
+# Run the test
 npm run test
+
+# Run the test in watch mode
+npm run watch
 ```
 
 Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `chrono.min.js`) can be built by [Browserify](http://browserify.org) on `src/chrono.js` using the following command 
@@ -280,17 +298,4 @@ Chrono's source files is in `src` directory. The built bundle (`chrono.js` and `
 ```
 npm run make
 ```
-
-Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
-
-Chrono's unit testing is based-on [Qunit](https://qunitjs.com/) and [Karma](https://github.com/karma-runner/karma). During the developement, I recommend running Karma test together with watchify.
-
-```
-# Start karma
-npm run karma
-
-# Start watch (run on a different terminal)
-npm run watch
-```
-
 
