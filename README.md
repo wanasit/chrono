@@ -71,13 +71,14 @@ browserify src/chrono.js --s chrono -o chrono.js
 Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
 
 ```javascript
-> var chrono = require('chrono-node')
+var chrono = require('chrono-node')
+...
 
-> chrono.parseDate('An appointment on Sep 12-13') 
-Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
+chrono.parseDate('An appointment on Sep 12-13') 
+// Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
     
-> chrono.parse('An appointment on Sep 12-13');
-[ { index: 18,
+chrono.parse('An appointment on Sep 12-13');
+/* [ { index: 18,
     text: 'Sep 12-13',
     tags: { ENMonthNameMiddleEndianParser: true },
     start: 
@@ -85,7 +86,7 @@ Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
        impliedValues: [Object] },
     end: 
      { knownValues: [Object],
-       impliedValues: [Object] } } ]
+       impliedValues: [Object] } } ] */
 ```
 
 ### Reference Date
@@ -95,12 +96,25 @@ The meaning of the referenced dates depends on when they are mentioned.
 Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
 
 ```javascript
+chrono.parseDate('Friday', new Date(2012,7,23)); 
+// Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
 
-> chrono.parseDate('Friday', new Date(2012,7,23)); 
-Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
+chrono.parseDate('Friday', new Date(2012,7,1)); 
+// Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
+```
 
-> chrono.parseDate('Friday', new Date(2012,7,1)); 
-Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
+### Parsing Options
+
+* `forwardDate` (boolean) to assume the results should happen after the reference date (forward into the future)
+```
+var referenceDate = new Date(2012,7,25) 
+// Sat Aug 25 2012 00:00:00 GMT+0900 -- The reference date was Saturday
+
+chrono.parseDate('Friday', referenceDate)
+// Fri Aug 24 2012 12:00:00 GMT+0900 (JST) -- The day before was Friday
+
+chrono.parseDate('Friday', referenceDate, {forwardDate: true})
+// Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
 
 ### Detailed Parsed Results
@@ -138,11 +152,11 @@ A group of found date and time components (year, month, hour, etc). ParsedCompon
 
 ```javascript
 // Remove the timezone offset of a parsed date and then create the Date object
-> var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
-> results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
-> var d = results[0].start.date(); // Create a Date object
-> d.toString(); // Display resulting Date object
-'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
+var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
+results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
+
+var d = results[0].start.date(); // Create a Date object
+d.toString(); // 'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
 ```
 
 ### Strict vs Casual 
