@@ -1,7 +1,7 @@
 /*
   
 */
-var ENMergeDateRangeRefiner = require('../EN/ENMergeDateRangeRefiner').Refiner;
+var ENMergeDateRangeRefiner = require('../en/ENMergeDateRangeRefiner').Refiner;
 
 exports.Refiner = function DEMergeDateRangeRefiner() {
     ENMergeDateRangeRefiner.call(this);

@@ -1,5 +1,5 @@
 var chrono = require('../../src/chrono');
-test("Test - FR - modifier mandatory just after", function() {
+test("Test - fr - modifier mandatory just after", function() {
 
     var text = "le mois d'avril";
     var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
@@ -12,7 +12,7 @@ test("Test - FR - modifier mandatory just after", function() {
 
 });
 
-test("Test - FR - relative date", function() {
+test("Test - fr - relative date", function() {
 
     var text = "la semaine prochaine";
     var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];

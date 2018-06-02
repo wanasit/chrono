@@ -4,9 +4,9 @@
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
 
-var mergeDateTimeComponent = require('../EN/ENMergeDateTimeRefiner').mergeDateTimeComponent;
-var isDateOnly = require('../EN/ENMergeDateTimeRefiner').isDateOnly;
-var isTimeOnly = require('../EN/ENMergeDateTimeRefiner').isTimeOnly;
+var mergeDateTimeComponent = require('../en/ENMergeDateTimeRefiner').mergeDateTimeComponent;
+var isDateOnly = require('../en/ENMergeDateTimeRefiner').isDateOnly;
+var isTimeOnly = require('../en/ENMergeDateTimeRefiner').isTimeOnly;
 
 var PATTERN = new RegExp("^\\s*(T|um|am|,|-)?\\s*$");
 

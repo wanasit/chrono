@@ -5,7 +5,7 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
+var updateParsedComponent = require('../en/ENWeekdayParser').updateParsedComponent;
 
 var DAYS_OFFSET = { 'domingo': 0, 'dom': 0, 'lunes': 1, 'lun': 1, 'martes': 2, 'mar':2, 'miercoles': 3, 'miércoles': 3, 'mie': 3,
     'jueves': 4, 'jue': 4, 'viernes': 5, 'vier': 5, 'sabado': 6, 'sábado': 6, 'sab': 6,}

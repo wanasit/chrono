@@ -32,18 +32,18 @@ exports.ExtractTimezoneAbbrRefiner = require('./ExtractTimezoneAbbrRefiner').Ref
 exports.ForwardDateRefiner = require('./ForwardDateRefiner').Refiner;
 exports.UnlikelyFormatFilter = require('./UnlikelyFormatFilter').Refiner;
 
-// EN refiners
-exports.ENMergeDateTimeRefiner = require('./EN/ENMergeDateTimeRefiner').Refiner;
-exports.ENMergeDateRangeRefiner = require('./EN/ENMergeDateRangeRefiner').Refiner;
-exports.ENPrioritizeSpecificDateRefiner = require('./EN/ENPrioritizeSpecificDateRefiner').Refiner;
+// en refiners
+exports.ENMergeDateTimeRefiner = require('./en/ENMergeDateTimeRefiner').Refiner;
+exports.ENMergeDateRangeRefiner = require('./en/ENMergeDateRangeRefiner').Refiner;
+exports.ENPrioritizeSpecificDateRefiner = require('./en/ENPrioritizeSpecificDateRefiner').Refiner;
 
-// JP refiners
-exports.JPMergeDateRangeRefiner = require('./JP/JPMergeDateRangeRefiner').Refiner;
+// ja refiners
+exports.JPMergeDateRangeRefiner = require('./ja/JPMergeDateRangeRefiner').Refiner;
 
-// FR refiners
-exports.FRMergeDateRangeRefiner = require('./FR/FRMergeDateRangeRefiner').Refiner;
-exports.FRMergeDateTimeRefiner = require('./FR/FRMergeDateTimeRefiner').Refiner;
+// fr refiners
+exports.FRMergeDateRangeRefiner = require('./fr/FRMergeDateRangeRefiner').Refiner;
+exports.FRMergeDateTimeRefiner = require('./fr/FRMergeDateTimeRefiner').Refiner;
 
-// DE refiners
-exports.DEMergeDateRangeRefiner = require('./DE/DEMergeDateRangeRefiner').Refiner;
-exports.DEMergeDateTimeRefiner = require('./DE/DEMergeDateTimeRefiner').Refiner;
+// de refiners
+exports.DEMergeDateRangeRefiner = require('./de/DEMergeDateRangeRefiner').Refiner;
+exports.DEMergeDateTimeRefiner = require('./de/DEMergeDateTimeRefiner').Refiner;

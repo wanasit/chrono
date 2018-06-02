@@ -4834,7 +4834,7 @@ exports.en.casual = function(config) {
     config.strict = false;
     var option = exports.en(config);
 
-    // EN
+    // en
     option.parsers.unshift(new parser.ENCasualDateParser());
     option.parsers.unshift(new parser.ENCasualTimeParser());
     option.parsers.unshift(new parser.ENWeekdayParser());
@@ -5066,7 +5066,7 @@ exports.Parser = function DECasualDateParser() {
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
+var util  = require('../../utils/de');
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(in|nach)\\s*' +
@@ -5167,7 +5167,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
+var util  = require('../../utils/de');
 
 var PATTERN = new RegExp('(\\W|^)' +
         '(?:am\\s*?)?' +
@@ -5283,7 +5283,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
+var util  = require('../../utils/de');
 
 var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
     '(Jan\\.?|Januar|Feb\\.?|Februar|Mär\\.?|M(?:ä|ae)rz|Mrz\\.?|Apr\\.?|April|Mai\\.?|Jun\\.?|Juni|Jul\\.?|Juli|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Okt\\.?|Oktober|Nov\\.?|November|Dez\\.?|Dezember)' + 
@@ -5483,7 +5483,7 @@ exports.Parser = function DESlashDateFormatParser(argument) {
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
+var util  = require('../../utils/de');
 
 var PATTERN = new RegExp('' +
     '(\\W|^)vor\\s*' +
@@ -6066,7 +6066,7 @@ exports.Parser = function ENCasualTimeParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(within|in)\\s*' +
@@ -6272,7 +6272,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('(\\W|^)' +
         '(?:on\\s*?)?' +
@@ -6414,7 +6414,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:' +
@@ -6546,7 +6546,7 @@ var moment = require('moment');
 
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
     '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
@@ -6637,7 +6637,7 @@ exports.Parser = function ENMonthNameParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(this|next|last|past)\\s*' +
@@ -7022,7 +7022,7 @@ exports.Parser = function ENSlashMonthFormatParser(argument) {
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('' +
     '(\\W|^)' +
@@ -7366,7 +7366,7 @@ exports.Parser = function ENTimeExpressionParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/EN');
+var util  = require('../../utils/en');
 
 var PATTERN = new RegExp('' +
     '(\\W|^)' +
@@ -7738,7 +7738,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var util  = require('../../utils/ES');
+var util  = require('../../utils/es');
 
 var DAYS_OFFSET = util.WEEKDAY_OFFSET;
 
@@ -8295,7 +8295,7 @@ exports.Parser = function ESTimeExpressionParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
+var updateParsedComponent = require('../en/ENWeekdayParser').updateParsedComponent;
 
 var DAYS_OFFSET = { 'domingo': 0, 'dom': 0, 'lunes': 1, 'lun': 1, 'martes': 2, 'mar':2, 'miercoles': 3, 'miércoles': 3, 'mie': 3,
     'jueves': 4, 'jue': 4, 'viernes': 5, 'vier': 5, 'sabado': 6, 'sábado': 6, 'sab': 6,}
@@ -8447,7 +8447,7 @@ exports.Parser = function FRCasualDateParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/FR');
+var util  = require('../../utils/fr');
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(dans|en)\\s*' +
@@ -8549,7 +8549,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var util  = require('../../utils/FR');
+var util  = require('../../utils/fr');
 
 var DAYS_OFFSET = util.WEEKDAY_OFFSET;
 
@@ -8657,7 +8657,7 @@ exports.Parser = function FRMonthNameLittleEndianParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/FR');
+var util  = require('../../utils/fr');
 
 // Force load fr localization data from moment for the locale files to be linkded durning browserify.
 // NOTE: The function moment.defineLocale() also has a side effect that it change global locale
@@ -9298,7 +9298,7 @@ exports.Parser = function FRTimeExpressionParser(){
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
+var updateParsedComponent = require('../en/ENWeekdayParser').updateParsedComponent;
 
 var DAYS_OFFSET = { 'dimanche': 0, 'dim': 0, 'lundi': 1, 'lun': 1,'mardi': 2, 'mar':2, 'mercredi': 3, 'mer': 3,
     'jeudi': 4, 'jeu':4, 'vendredi': 5, 'ven': 5,'samedi': 6, 'sam': 6};
@@ -9429,7 +9429,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var util  = require('../../utils/JP'); 
+var util  = require('../../utils/ja');
 var PATTERN = /(?:(同|((昭和|平成)?([0-9０-９]{2,4})))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
   
 var YEAR_GROUP        = 2;
@@ -9663,7 +9663,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var util = require('../../utils/ZH-Hant.js');
+var util = require('../../utils/zh-Hant.js');
 
 var PATTERN = new RegExp(
     '(\\d{2,4}|[' + Object.keys(util.NUMBER).join('') + ']{2,4})?' +
@@ -9737,7 +9737,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var util = require('../../utils/ZH-Hant.js');
+var util = require('../../utils/zh-Hant.js');
 
 var PATTERN = new RegExp(
     '(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+|半|幾)(?:\\s*)' +
@@ -9836,7 +9836,7 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var ParsedComponents = require('../../result').ParsedComponents;
 
-var util = require('../../utils/ZH-Hant.js');
+var util = require('../../utils/zh-Hant.js');
 
 var patternString1 = '(?:由|從|自)?' +
     '(?:' +
@@ -10263,9 +10263,9 @@ exports.Parser = function ZHHantTimeExpressionParser() {
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var updateParsedComponent = require('../EN/ENWeekdayParser').updateParsedComponent;
+var updateParsedComponent = require('../en/ENWeekdayParser').updateParsedComponent;
 
-var util = require('../../utils/ZH-Hant.js');
+var util = require('../../utils/zh-Hant.js');
 
 var PATTERN = new RegExp(
     '(上|今|下|這|呢)?' +
@@ -10371,62 +10371,62 @@ function Parser(config) {
 
 exports.Parser = Parser;
 
-exports.ENISOFormatParser = require('./EN/ENISOFormatParser').Parser;
-exports.ENDeadlineFormatParser = require('./EN/ENDeadlineFormatParser').Parser;
-exports.ENRelativeDateFormatParser = require('./EN/ENRelativeDateFormatParser').Parser;
-exports.ENMonthNameLittleEndianParser = require('./EN/ENMonthNameLittleEndianParser').Parser;
-exports.ENMonthNameMiddleEndianParser = require('./EN/ENMonthNameMiddleEndianParser').Parser;
-exports.ENMonthNameParser = require('./EN/ENMonthNameParser').Parser;
-exports.ENSlashDateFormatParser = require('./EN/ENSlashDateFormatParser').Parser;
-exports.ENSlashDateFormatStartWithYearParser = require('./EN/ENSlashDateFormatStartWithYearParser').Parser;
-exports.ENSlashMonthFormatParser = require('./EN/ENSlashMonthFormatParser').Parser;
-exports.ENTimeAgoFormatParser = require('./EN/ENTimeAgoFormatParser').Parser;
-exports.ENTimeExpressionParser = require('./EN/ENTimeExpressionParser').Parser;
-exports.ENTimeLaterFormatParser = require('./EN/ENTimeLaterFormatParser').Parser;
-exports.ENWeekdayParser = require('./EN/ENWeekdayParser').Parser;
-exports.ENCasualDateParser = require('./EN/ENCasualDateParser').Parser;
-exports.ENCasualTimeParser = require('./EN/ENCasualTimeParser').Parser;
+exports.ENISOFormatParser = require('./en/ENISOFormatParser').Parser;
+exports.ENDeadlineFormatParser = require('./en/ENDeadlineFormatParser').Parser;
+exports.ENRelativeDateFormatParser = require('./en/ENRelativeDateFormatParser').Parser;
+exports.ENMonthNameLittleEndianParser = require('./en/ENMonthNameLittleEndianParser').Parser;
+exports.ENMonthNameMiddleEndianParser = require('./en/ENMonthNameMiddleEndianParser').Parser;
+exports.ENMonthNameParser = require('./en/ENMonthNameParser').Parser;
+exports.ENSlashDateFormatParser = require('./en/ENSlashDateFormatParser').Parser;
+exports.ENSlashDateFormatStartWithYearParser = require('./en/ENSlashDateFormatStartWithYearParser').Parser;
+exports.ENSlashMonthFormatParser = require('./en/ENSlashMonthFormatParser').Parser;
+exports.ENTimeAgoFormatParser = require('./en/ENTimeAgoFormatParser').Parser;
+exports.ENTimeExpressionParser = require('./en/ENTimeExpressionParser').Parser;
+exports.ENTimeLaterFormatParser = require('./en/ENTimeLaterFormatParser').Parser;
+exports.ENWeekdayParser = require('./en/ENWeekdayParser').Parser;
+exports.ENCasualDateParser = require('./en/ENCasualDateParser').Parser;
+exports.ENCasualTimeParser = require('./en/ENCasualTimeParser').Parser;
 
-exports.JPStandardParser = require('./JP/JPStandardParser').Parser;
-exports.JPCasualDateParser = require('./JP/JPCasualDateParser').Parser;
+exports.JPStandardParser = require('./ja/JPStandardParser').Parser;
+exports.JPCasualDateParser = require('./ja/JPCasualDateParser').Parser;
 
-exports.ESCasualDateParser = require('./ES/ESCasualDateParser').Parser;
-exports.ESDeadlineFormatParser = require('./ES/ESDeadlineFormatParser').Parser;
-exports.ESTimeAgoFormatParser = require('./ES/ESTimeAgoFormatParser').Parser;
-exports.ESTimeExpressionParser = require('./ES/ESTimeExpressionParser').Parser;
-exports.ESWeekdayParser = require('./ES/ESWeekdayParser').Parser;
-exports.ESMonthNameLittleEndianParser = require('./ES/ESMonthNameLittleEndianParser').Parser;
-exports.ESSlashDateFormatParser = require('./ES/ESSlashDateFormatParser').Parser;
+exports.ESCasualDateParser = require('./es/ESCasualDateParser').Parser;
+exports.ESDeadlineFormatParser = require('./es/ESDeadlineFormatParser').Parser;
+exports.ESTimeAgoFormatParser = require('./es/ESTimeAgoFormatParser').Parser;
+exports.ESTimeExpressionParser = require('./es/ESTimeExpressionParser').Parser;
+exports.ESWeekdayParser = require('./es/ESWeekdayParser').Parser;
+exports.ESMonthNameLittleEndianParser = require('./es/ESMonthNameLittleEndianParser').Parser;
+exports.ESSlashDateFormatParser = require('./es/ESSlashDateFormatParser').Parser;
 
-exports.FRCasualDateParser = require('./FR/FRCasualDateParser').Parser;
-exports.FRDeadlineFormatParser = require('./FR/FRDeadlineFormatParser').Parser;
-exports.FRMonthNameLittleEndianParser = require('./FR/FRMonthNameLittleEndianParser').Parser;
-exports.FRSlashDateFormatParser = require('./FR/FRSlashDateFormatParser').Parser;
-exports.FRTimeAgoFormatParser = require('./FR/FRTimeAgoFormatParser').Parser;
-exports.FRTimeExpressionParser = require('./FR/FRTimeExpressionParser').Parser;
-exports.FRWeekdayParser = require('./FR/FRWeekdayParser').Parser;
-exports.FRRelativeDateFormatParser = require('./FR/FRRelativeDateFormatParser').Parser;
+exports.FRCasualDateParser = require('./fr/FRCasualDateParser').Parser;
+exports.FRDeadlineFormatParser = require('./fr/FRDeadlineFormatParser').Parser;
+exports.FRMonthNameLittleEndianParser = require('./fr/FRMonthNameLittleEndianParser').Parser;
+exports.FRSlashDateFormatParser = require('./fr/FRSlashDateFormatParser').Parser;
+exports.FRTimeAgoFormatParser = require('./fr/FRTimeAgoFormatParser').Parser;
+exports.FRTimeExpressionParser = require('./fr/FRTimeExpressionParser').Parser;
+exports.FRWeekdayParser = require('./fr/FRWeekdayParser').Parser;
+exports.FRRelativeDateFormatParser = require('./fr/FRRelativeDateFormatParser').Parser;
 
-exports.ZHHantDateParser = require('./ZH-Hant/ZHHantDateParser').Parser;
-exports.ZHHantWeekdayParser = require('./ZH-Hant/ZHHantWeekdayParser').Parser;
-exports.ZHHantTimeExpressionParser = require('./ZH-Hant/ZHHantTimeExpressionParser').Parser;
-exports.ZHHantCasualDateParser = require('./ZH-Hant/ZHHantCasualDateParser').Parser;
-exports.ZHHantDeadlineFormatParser = require('./ZH-Hant/ZHHantDeadlineFormatParser').Parser;
+exports.ZHHantDateParser = require('./zh-Hant/ZHHantDateParser').Parser;
+exports.ZHHantWeekdayParser = require('./zh-Hant/ZHHantWeekdayParser').Parser;
+exports.ZHHantTimeExpressionParser = require('./zh-Hant/ZHHantTimeExpressionParser').Parser;
+exports.ZHHantCasualDateParser = require('./zh-Hant/ZHHantCasualDateParser').Parser;
+exports.ZHHantDeadlineFormatParser = require('./zh-Hant/ZHHantDeadlineFormatParser').Parser;
 
-exports.DEDeadlineFormatParser = require('./DE/DEDeadlineFormatParser').Parser;
-exports.DEMonthNameLittleEndianParser = require('./DE/DEMonthNameLittleEndianParser').Parser;
-exports.DEMonthNameParser = require('./DE/DEMonthNameParser').Parser;
-exports.DESlashDateFormatParser = require('./DE/DESlashDateFormatParser').Parser;
-exports.DETimeAgoFormatParser = require('./DE/DETimeAgoFormatParser').Parser;
-exports.DETimeExpressionParser = require('./DE/DETimeExpressionParser').Parser;
-exports.DEWeekdayParser = require('./DE/DEWeekdayParser').Parser;
-exports.DECasualDateParser = require('./DE/DECasualDateParser').Parser;
+exports.DEDeadlineFormatParser = require('./de/DEDeadlineFormatParser').Parser;
+exports.DEMonthNameLittleEndianParser = require('./de/DEMonthNameLittleEndianParser').Parser;
+exports.DEMonthNameParser = require('./de/DEMonthNameParser').Parser;
+exports.DESlashDateFormatParser = require('./de/DESlashDateFormatParser').Parser;
+exports.DETimeAgoFormatParser = require('./de/DETimeAgoFormatParser').Parser;
+exports.DETimeExpressionParser = require('./de/DETimeExpressionParser').Parser;
+exports.DEWeekdayParser = require('./de/DEWeekdayParser').Parser;
+exports.DECasualDateParser = require('./de/DECasualDateParser').Parser;
 
 },{"./DE/DECasualDateParser":5,"./DE/DEDeadlineFormatParser":6,"./DE/DEMonthNameLittleEndianParser":7,"./DE/DEMonthNameParser":8,"./DE/DESlashDateFormatParser":9,"./DE/DETimeAgoFormatParser":10,"./DE/DETimeExpressionParser":11,"./DE/DEWeekdayParser":12,"./EN/ENCasualDateParser":13,"./EN/ENCasualTimeParser":14,"./EN/ENDeadlineFormatParser":15,"./EN/ENISOFormatParser":16,"./EN/ENMonthNameLittleEndianParser":17,"./EN/ENMonthNameMiddleEndianParser":18,"./EN/ENMonthNameParser":19,"./EN/ENRelativeDateFormatParser":20,"./EN/ENSlashDateFormatParser":21,"./EN/ENSlashDateFormatStartWithYearParser":22,"./EN/ENSlashMonthFormatParser":23,"./EN/ENTimeAgoFormatParser":24,"./EN/ENTimeExpressionParser":25,"./EN/ENTimeLaterFormatParser":26,"./EN/ENWeekdayParser":27,"./ES/ESCasualDateParser":28,"./ES/ESDeadlineFormatParser":29,"./ES/ESMonthNameLittleEndianParser":30,"./ES/ESSlashDateFormatParser":31,"./ES/ESTimeAgoFormatParser":32,"./ES/ESTimeExpressionParser":33,"./ES/ESWeekdayParser":34,"./FR/FRCasualDateParser":35,"./FR/FRDeadlineFormatParser":36,"./FR/FRMonthNameLittleEndianParser":37,"./FR/FRRelativeDateFormatParser":38,"./FR/FRSlashDateFormatParser":39,"./FR/FRTimeAgoFormatParser":40,"./FR/FRTimeExpressionParser":41,"./FR/FRWeekdayParser":42,"./JP/JPCasualDateParser":43,"./JP/JPStandardParser":44,"./ZH-Hant/ZHHantCasualDateParser":45,"./ZH-Hant/ZHHantDateParser":46,"./ZH-Hant/ZHHantDeadlineFormatParser":47,"./ZH-Hant/ZHHantTimeExpressionParser":48,"./ZH-Hant/ZHHantWeekdayParser":49}],51:[function(require,module,exports){
 /*
   
 */
-var ENMergeDateRangeRefiner = require('../EN/ENMergeDateRangeRefiner').Refiner;
+var ENMergeDateRangeRefiner = require('../en/ENMergeDateRangeRefiner').Refiner;
 
 exports.Refiner = function DEMergeDateRangeRefiner() {
     ENMergeDateRangeRefiner.call(this);
@@ -10443,9 +10443,9 @@ exports.Refiner = function DEMergeDateRangeRefiner() {
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
 
-var mergeDateTimeComponent = require('../EN/ENMergeDateTimeRefiner').mergeDateTimeComponent;
-var isDateOnly = require('../EN/ENMergeDateTimeRefiner').isDateOnly;
-var isTimeOnly = require('../EN/ENMergeDateTimeRefiner').isTimeOnly;
+var mergeDateTimeComponent = require('../en/ENMergeDateTimeRefiner').mergeDateTimeComponent;
+var isDateOnly = require('../en/ENMergeDateTimeRefiner').isDateOnly;
+var isTimeOnly = require('../en/ENMergeDateTimeRefiner').isTimeOnly;
 
 var PATTERN = new RegExp("^\\s*(T|um|am|,|-)?\\s*$");
 
@@ -11127,7 +11127,7 @@ exports.Refiner = function FRMergeDateRangeRefiner() {
 */
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
-var mergeDateTimeComponent = require('../EN/ENMergeDateTimeRefiner').mergeDateTimeComponent;
+var mergeDateTimeComponent = require('../en/ENMergeDateTimeRefiner').mergeDateTimeComponent;
 
 var PATTERN = new RegExp("^\\s*(T|à|a|vers|de|,|-)?\\s*$");
 
@@ -11292,7 +11292,7 @@ exports.Refiner = function ForwardDateRefiner() {
 /*
   
 */
-var ENMergeDateRangeRefiner = require('../EN/ENMergeDateRangeRefiner').Refiner;
+var ENMergeDateRangeRefiner = require('../en/ENMergeDateRangeRefiner').Refiner;
 
 exports.Refiner = function JPMergeDateRangeRefiner() {
     ENMergeDateRangeRefiner.call(this);
@@ -11397,21 +11397,21 @@ exports.ExtractTimezoneAbbrRefiner = require('./ExtractTimezoneAbbrRefiner').Ref
 exports.ForwardDateRefiner = require('./ForwardDateRefiner').Refiner;
 exports.UnlikelyFormatFilter = require('./UnlikelyFormatFilter').Refiner;
 
-// EN refiners
-exports.ENMergeDateTimeRefiner = require('./EN/ENMergeDateTimeRefiner').Refiner;
-exports.ENMergeDateRangeRefiner = require('./EN/ENMergeDateRangeRefiner').Refiner;
-exports.ENPrioritizeSpecificDateRefiner = require('./EN/ENPrioritizeSpecificDateRefiner').Refiner;
+// en refiners
+exports.ENMergeDateTimeRefiner = require('./en/ENMergeDateTimeRefiner').Refiner;
+exports.ENMergeDateRangeRefiner = require('./en/ENMergeDateRangeRefiner').Refiner;
+exports.ENPrioritizeSpecificDateRefiner = require('./en/ENPrioritizeSpecificDateRefiner').Refiner;
 
-// JP refiners
-exports.JPMergeDateRangeRefiner = require('./JP/JPMergeDateRangeRefiner').Refiner;
+// ja refiners
+exports.JPMergeDateRangeRefiner = require('./ja/JPMergeDateRangeRefiner').Refiner;
 
-// FR refiners
-exports.FRMergeDateRangeRefiner = require('./FR/FRMergeDateRangeRefiner').Refiner;
-exports.FRMergeDateTimeRefiner = require('./FR/FRMergeDateTimeRefiner').Refiner;
+// fr refiners
+exports.FRMergeDateRangeRefiner = require('./fr/FRMergeDateRangeRefiner').Refiner;
+exports.FRMergeDateTimeRefiner = require('./fr/FRMergeDateTimeRefiner').Refiner;
 
-// DE refiners
-exports.DEMergeDateRangeRefiner = require('./DE/DEMergeDateRangeRefiner').Refiner;
-exports.DEMergeDateTimeRefiner = require('./DE/DEMergeDateTimeRefiner').Refiner;
+// de refiners
+exports.DEMergeDateRangeRefiner = require('./de/DEMergeDateRangeRefiner').Refiner;
+exports.DEMergeDateTimeRefiner = require('./de/DEMergeDateTimeRefiner').Refiner;
 
 },{"./DE/DEMergeDateRangeRefiner":51,"./DE/DEMergeDateTimeRefiner":52,"./EN/ENMergeDateRangeRefiner":53,"./EN/ENMergeDateTimeRefiner":54,"./EN/ENPrioritizeSpecificDateRefiner":55,"./ExtractTimezoneAbbrRefiner":56,"./ExtractTimezoneOffsetRefiner":57,"./FR/FRMergeDateRangeRefiner":58,"./FR/FRMergeDateTimeRefiner":59,"./ForwardDateRefiner":60,"./JP/JPMergeDateRangeRefiner":61,"./OverlapRemovalRefiner":62,"./UnlikelyFormatFilter":63}],65:[function(require,module,exports){
 var moment = require('moment');

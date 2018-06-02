@@ -3,7 +3,7 @@
 */
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
-var mergeDateTimeComponent = require('../EN/ENMergeDateTimeRefiner').mergeDateTimeComponent;
+var mergeDateTimeComponent = require('../en/ENMergeDateTimeRefiner').mergeDateTimeComponent;
 
 var PATTERN = new RegExp("^\\s*(T|à|a|vers|de|,|-)?\\s*$");
 
