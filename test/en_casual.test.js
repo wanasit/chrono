@@ -175,10 +175,10 @@ test("Test - Single Expression", function() {
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
-        expect(result.start.get('hour')).toBe(18);
+        expect(result.start.get('hour')).toBe(20);
 
         var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 18);
+        var expectDate = new Date(2012, 7, 10, 20);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 });
@@ -379,7 +379,7 @@ test('Test - Random text', function() {
     var text = "thurs";
     var result = chrono.parse(text)[0];
     expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4)
+    expect(result.start.get('weekday')).toBe(4);
 
     var text = "this evening";
     var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
@@ -387,7 +387,7 @@ test('Test - Random text', function() {
     expect(result.start.get('year')).toBe(2016);
     expect(result.start.get('month')).toBe(10);
     expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(18);
+    expect(result.start.get('hour')).toBe(20);
 
     var text = "yesterday afternoon";
     var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
@@ -404,6 +404,30 @@ test('Test - Random text', function() {
     expect(result.start.get('month')).toBe(10);
     expect(result.start.get('day')).toBe(2);
     expect(result.start.get('hour')).toBe(6);
+
+    var text = "this afternoon at 3";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
+    expect(result.text).toBe(text);
+    expect(result.start.get('year')).toBe(2016);
+    expect(result.start.get('month')).toBe(10);
+    expect(result.start.get('day')).toBe(1);
+    expect(result.start.get('hour')).toBe(15);
+
+    var text = "11 at night";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
+    expect(result.text).toBe(text);
+    expect(result.start.get('year')).toBe(2016);
+    expect(result.start.get('month')).toBe(10);
+    expect(result.start.get('day')).toBe(1);
+    expect(result.start.get('hour')).toBe(23);
+
+    var text = "11 tonight";
+    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
+    expect(result.text).toBe(text);
+    expect(result.start.get('year')).toBe(2016);
+    expect(result.start.get('month')).toBe(10);
+    expect(result.start.get('day')).toBe(1);
+    expect(result.start.get('hour')).toBe(23);
 });
 
 

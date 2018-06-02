@@ -46,7 +46,7 @@ exports.Parser = function ENTimeExpressionParser(){
     
     this.extract = function(text, ref, match, opt){ 
         
-        // This pattern can be overlaped Ex. [12] AM, 1[2] AM
+        // This pattern can be overlapped Ex. [12] AM, 1[2] AM
         if (match.index > 0 && text[match.index-1].match(/\w/)) return null;
         var refMoment = moment(ref);
         var result = new ParsedResult();
@@ -136,16 +136,12 @@ exports.Parser = function ENTimeExpressionParser(){
                 result.start.imply('meridiem', 1);
             }
         }
-        
+
         // ==============================================================
         //                  Extracting the 'to' chunk
         // ==============================================================
         match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
         if (!match) {
-            // Not accept number only result
-            if (result.text.match(/^\d+$/)) { 
-                return null;
-            }
             return result;
         }
 
