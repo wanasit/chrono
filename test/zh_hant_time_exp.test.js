@@ -21,6 +21,33 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 
+    var text = "雞後天凌晨全部都係雞";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 0, 0));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if(result){
+        expect(result.index).toBe(1)
+        expect(result.text).toBe('後天凌晨')
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 12, 0, 0);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "雞大前天凌晨全部都係雞";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 0, 0));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if(result){
+        expect(result.index).toBe(1)
+        expect(result.text).toBe('大前天凌晨')
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 7, 0, 0);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
 
 
 });
