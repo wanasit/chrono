@@ -14,8 +14,6 @@ exports.ParsedComponents = require('./result').ParsedComponents;
 var Chrono = function(option) {
 
     option = option || exports.options.casualOption();
-
-    this.option = option;
     this.parsers = new Object(option.parsers);
     this.refiners = new Object(option.refiners);
 };
