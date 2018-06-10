@@ -191,7 +191,7 @@ By default, Chrono is configurated to parse different date formats from muliple 
 
 Handling different date format for UK / US is a good example.
 
-```
+```javascript
 // default English (US)
 chrono.parseDate('6/10/2018');    // Sun Jun 10 2018 12:00:00 ...
 chrono.en.parseDate('6/10/2018'); // Sun Jun 10 2018 12:00:00 ...
