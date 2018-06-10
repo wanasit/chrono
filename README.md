@@ -185,6 +185,23 @@ chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('Friday');      // Fri Jul 01 2016 12:00:00 ...
 ```
 
+### Choosing Locale
+
+By default, Chrono is configurated to parse different date formats from muliple languages out-off-box. However, by using predefined locale options, you can increase parsing accuracy.
+
+Handling different date format for UK / US is a good example.
+
+```
+// default English (US)
+chrono.parseDate('6/10/2018');    // Sun Jun 10 2018 12:00:00 ...
+chrono.en.parseDate('6/10/2018'); // Sun Jun 10 2018 12:00:00 ...
+
+// UK English or German
+chrono.en_GB.parseDate('6/10/2018'); // Sat Oct 06 2018 12:00:00 ...
+chrono.de.parseDate('6/10/2018');    // Sat Oct 06 2018 12:00:00 ...
+```
+
+Current supported locale options are: `en`, `en_GB`, `de`, `es`, `fr`, `ja`
 
 ## Customize Chrono
 
