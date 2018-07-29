@@ -12,7 +12,7 @@ function Parser(config) {
     this.extract = function(text, ref, match, opt){ return null; }
 
     this.createMomentWithTZ = function(refMomentTZ, resultDate) {
-        if (resultDate === null) {
+        if (resultDate === undefined || resultDate === null) {
             return null;
         }
         const moment_tz = moment(refMomentTZ);
