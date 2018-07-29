@@ -1,5 +1,6 @@
 
 var options = exports.options = require('./options');
+var moment = require('moment-timezone');
 
 exports.parser = require('./parsers/parser');
 exports.refiner = require('./refiners/refiner');
@@ -19,16 +20,16 @@ var Chrono = function(option) {
 };
 
 
-Chrono.prototype.parse = function(text, refDate, opt) {
+Chrono.prototype.parse = function(text, refMomentTZ, opt) {
 
-    refDate = refDate || new Date();
+    refMomentTZ = refMomentTZ || moment();
     opt = opt || {};
     opt.forwardDate = opt.forwardDate || opt.forwardDate;
     
     var allResults = [];
 
     this.parsers.forEach(function (parser) {
-        var results = parser.execute(text, refDate, opt);
+        var results = parser.execute(text, refMomentTZ, opt);
         allResults = allResults.concat(results);
     });
 
@@ -44,8 +45,8 @@ Chrono.prototype.parse = function(text, refDate, opt) {
 };
 
 
-Chrono.prototype.parseDate = function(text, refDate, opt) {
-    var results = this.parse(text, refDate, opt);
+Chrono.prototype.parseDate = function(text, refMomentTZ, opt) {
+    var results = this.parse(text, refMomentTZ, opt);
     if (results.length > 0) {
         return results[0].start.date();
     }

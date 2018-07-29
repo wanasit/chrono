@@ -65,6 +65,8 @@ exports.Parser = function ENCasualDateParser(){
         result.start.assign('month', startMoment.month() + 1)
         result.start.assign('year', startMoment.year())
         result.tags['ENCasualDateParser'] = true;
+        result.startMoment = moment(startMoment);
+        result.endMoment = moment(startMoment);
         return result;
     }
 }

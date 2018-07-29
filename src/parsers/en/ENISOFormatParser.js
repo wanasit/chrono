@@ -96,6 +96,8 @@ exports.Parser = function ENISOFormatParser(){
         }
         
         result.tags['ENISOFormatParser'] = true;
+        result.startMoment = moment(result.start);
+        result.endMoment = moment(result.start);
         return result;
     };
 
