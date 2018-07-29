@@ -10,6 +10,21 @@ function Parser(config) {
 
     this.extract = function(text, ref, match, opt){ return null; }
 
+    this.createMomentWithTZ = function(refMomentTZ, resultDate) {
+        if (resultDate === null) {
+            return null;
+        }
+        const moment_tz = moment(refMomentTZ);
+        moment_tz.year(resultDate.get('year'));
+        moment_tz.month(resultDate.get('month')-1);
+        moment_tz.date(resultDate.get('day'));
+        moment_tz.hour(resultDate.get('hour'));
+        moment_tz.minute(resultDate.get('minute'));
+        moment_tz.second(resultDate.get('second'));
+        moment_tz.millisecond(resultDate.get('millisecond'));
+        return moment_tz;
+    };
+
     this.execute = function(text, ref, opt) {
 
         var results = [];
@@ -25,6 +40,9 @@ function Parser(config) {
 
             var result = this.extract(text, ref, match, opt);
             if (result) {
+                // update result with correct startMoment and endMoment
+                result.startMoment = this.createMomentWithTZ(result.ref, result.start);
+                result.endMoment = this.createMomentWithTZ(result.ref, result.end);
 
                 // If success, start from the end of the result
                 remainingText = text.substring(result.index + result.text.length);
