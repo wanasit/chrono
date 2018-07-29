@@ -1,3 +1,4 @@
+var moment = require('moment');
 
 function Parser(config) {
 
