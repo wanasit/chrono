@@ -69,12 +69,27 @@ test("Test - Single Expression", function() {
 });
 
 test("Test - Single Expression (Strict)", function() {
-
     var text = "15 minute after";
     var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(0);
+    expect(results[0]).toBe(undefined);
 
     var text = "a week ago, we did something";
     var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
     expect(results.length).toBe(0)
+
+    var text = "in 25 minutes";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 40));
+    expect(results.length).toBe(1);
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('in 25 minutes');
+        expect(result.start.get('hour')).toBe(13);
+        expect(result.start.get('minute')).toBe(5);
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 10, 13, 5);
+        expect(expectDate.getTime()).toBe(resultDate.getTime())
+    }
 });
