@@ -21,6 +21,7 @@ ParsedResult.prototype.clone = function() {
     if (this.end) {
         result.end = this.end.clone();
     }
+    return result
 }
 
 ParsedResult.prototype.hasPossibleDates = function() {
@@ -45,7 +46,7 @@ function ParsedComponents (components, ref){
         this.imply('month', ref.month() + 1)
         this.imply('year', ref.year())
     }
-    
+
 
     this.imply('hour', 12);
     this.imply('minute', 0);
@@ -112,7 +113,7 @@ ParsedComponents.prototype.moment = function() {
 
     // Javascript Date Object return minus timezone offset
     var currentTimezoneOffset = dateMoment.utcOffset();
-    var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ? 
+    var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ?
         this.get('timezoneOffset') : currentTimezoneOffset;
 
     var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
