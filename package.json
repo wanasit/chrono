@@ -1,10 +1,10 @@
 {
-  "name": "chrono-node",
-  "description": "A natural language date parser in Javascript",
-  "homepage": "http://github.com/berryboy/chrono",
+  "name": "lachrono",
+  "description": "Fork of Chrono for use in Lacona",
+  "homepage": "http://github.com/brandonhorst/lachrono",
   "repository": {
     "type": "git",
-    "url": "https://github.com/berryboy/chrono.git"
+    "url": "https://github.com/brandonhrost/lachrono.git"
   },
   "license": "MIT",
   "version": "1.3.10",
