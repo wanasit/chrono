@@ -241,6 +241,38 @@ test("Test - Single Expression", function () {
         var expectDate = new Date(2012, 7, 10, 12, 15);
         expect(expectDate.getTime()).toBe(resultDate.getTime())
     }
+
+    var text = "in 1 hour";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
+    expect(results.length).toBe(1);
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('in 1 hour');
+        expect(result.start.get('hour')).toBe(13);
+        expect(result.start.get('minute')).toBe(14);
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 10, 13, 14);
+        expect(expectDate.getTime()).toBe(resultDate.getTime())
+    }
+
+    var text = "in 1.5 hours";
+    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 40));
+    expect(results.length).toBe(1);
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('in 1.5 hours');
+        expect(result.start.get('hour')).toBe(14);
+        expect(result.start.get('minute')).toBe(10);
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 10, 14, 10);
+        expect(expectDate.getTime()).toBe(resultDate.getTime())
+    }
 });
 
 
