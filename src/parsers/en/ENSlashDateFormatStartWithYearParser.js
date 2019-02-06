@@ -8,9 +8,12 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
+var util  = require('../../utils/EN');
 
 var PATTERN = new RegExp('(\\W|^)' 
-            + '([0-9]{4})[\\-\\.\\/]([0-9]{1,2})[\\-\\.\\/]([0-9]{1,2})'
+            + '([0-9]{4})[\\-\\.\\/]'
+            + '((?:' + util.MONTH_PATTERN + '|[0-9]{1,2}))[\\-\\.\\/]'
+            + '([0-9]{1,2})'
             + '(?=\\W|$)', 'i');
 
 var YEAR_NUMBER_GROUP = 2;
@@ -33,8 +36,11 @@ exports.Parser = function ENSlashDateFormatStartWithYearParser(){
             ref: ref,
         })
         
+        var month = match[MONTH_NUMBER_GROUP].toLowerCase();
+        month = util.MONTH_OFFSET[month] | month;
+
         result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));
-        result.start.assign('month', parseInt(match[MONTH_NUMBER_GROUP]));
+        result.start.assign('month', parseInt(month));
         result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));
 
         if (moment(result.start.get('month')) > 12 || moment(result.start.get('month')) < 1 ||
