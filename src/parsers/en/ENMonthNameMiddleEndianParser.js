@@ -25,7 +25,7 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(?:on\\s*?)?' +
         '(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun\\.?|Mon\\.?|Tue\\.?|Wed\\.?|Thu\\.?|Fri\\.?|Sat\\.?)' +
     '\\s*,?\\s*)?' +
-    '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' +
+    '(' + util.MONTH_PATTERN + ')' +
     '(?:-|\/|\\s*,?\\s*)' +
     '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN +')(?!\\s*(?:am|pm))\\s*' + '' + 
     '(?:' +

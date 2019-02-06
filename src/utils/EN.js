@@ -55,6 +55,10 @@ exports.MONTH_OFFSET = {
     'dec.': 12
 };
 
+exports.MONTH_PATTERN = '(?:' 
+    + Object.keys(exports.MONTH_OFFSET).join('|').replace(/\./g, '\\.')
+    + ')';
+
 exports.INTEGER_WORDS = {
     'one' : 1,
     'two' : 2,

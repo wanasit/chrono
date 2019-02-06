@@ -18,7 +18,7 @@ var PATTERN = new RegExp('(\\W|^)' +
             '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')' +
         ')?' + 
         '(?:-|\/|\\s*(?:of)?\\s*)' +
-        '(Jan(?:uary|\\.)?|Feb(?:ruary|\\.)?|Mar(?:ch|\\.)?|Apr(?:il|\\.)?|May|Jun(?:e|\\.)?|Jul(?:y|\\.)?|Aug(?:ust|\\.)?|Sep(?:tember|\\.)?|Oct(?:ober|\\.)?|Nov(?:ember|\\.)?|Dec(?:ember|\\.)?)' +
+        '(' + util.MONTH_PATTERN + ')' +
         '(?:' +
             '(?:-|\/|,?\\s*)' +
             '((?:' + 
