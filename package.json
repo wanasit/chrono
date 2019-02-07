@@ -28,7 +28,7 @@
     "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
     "make": "npm run make-bundle & npm run make-minify",
     "watch": "jest --watch",
-    "test": "jest --coverage && npm audit --audit-level high",
+    "test": "jest --coverage",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
