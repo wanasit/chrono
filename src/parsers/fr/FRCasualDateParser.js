@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(maintenant|aujourd'hui|ajd|cette\s*nuit|la\s*veille|(demain|hier)(\s*(matin|soir|aprem|après-midi))?|ce\s*(matin|soir)|cet\s*(après-midi|aprem))(?=\W|$)/i;
+var PATTERN = /(\W|^)(maintenant|aujourd'hui|ajd|cette\s*nuit|la\s*veille|(demain|hier)(\s*(matin|soir|aprem|après-midi|après\s*midi))?|ce\s*(matin|soir)|cet\s*(après-midi|aprem|après\s*midi))(?=\W|$)/i;
 
 exports.Parser = function FRCasualDateParser(){
 
@@ -52,7 +52,7 @@ exports.Parser = function FRCasualDateParser(){
                 startMoment.add(-1, 'day');
             }
 
-        } else if (lowerText.match(/(après-midi|aprem)/)) {
+        } else if (lowerText.match(/(après-midi|aprem|après\s*midi)/)) {
 
             result.start.imply('hour', 14);
 
@@ -66,10 +66,10 @@ exports.Parser = function FRCasualDateParser(){
 
         }  else if (lowerText.match("maintenant")) {
 
-          result.start.imply('hour', refMoment.hour());
-          result.start.imply('minute', refMoment.minute());
-          result.start.imply('second', refMoment.second());
-          result.start.imply('millisecond', refMoment.millisecond());
+          result.start.assign('hour', refMoment.hour());
+          result.start.assign('minute', refMoment.minute());
+          result.start.assign('second', refMoment.second());
+          result.start.assign('millisecond', refMoment.millisecond());
 
         }
 
