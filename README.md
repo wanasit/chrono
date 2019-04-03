@@ -122,10 +122,10 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 * `timezones` (Map) to override Chrono's default timezone abbriviation mapping. The value should be the timezone offset in minutes (between -720 to 720).
 
 ```js
-chrono.parse('Friday at 2 pm IST', refDate, { 'IST': 330 })[0].start.get('timezoneOffset');
+chrono.parse('Friday at 2 pm IST', refDate, { timezones: { 'IST': 330 } })[0].start.get('timezoneOffset');
 // 330 (IST – India Standard Time +0530)
 
-chrono.parse('Friday at 2 pm IST', refDate, { 'IST': 60 })[0].start.get('timezoneOffset');
+chrono.parse('Friday at 2 pm IST', refDate, { timezones: {'IST': 60 } })[0].start.get('timezoneOffset');
 // 60 (IST - Irish Standard Time +0100)
 ```
 
@@ -185,8 +185,8 @@ chrono.strict.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 // 'casual' mode (default) 
 chrono.parseDate('Today');              // Thu Jun 30 2016 12:00:00 ...
 chrono.casual.parseDate('Friday');      // Fri Jul 01 2016 12:00:00 ...
+chrono.casual.parseDate('2016-07-01');  // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
-chrono.casual.parseDate('Friday');      // Fri Jul 01 2016 12:00:00 ...
 ```
 
 ### Choosing Locale

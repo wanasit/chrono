@@ -236,7 +236,7 @@ test("Test - Compare with native js", function() {
     expect(expected.getTime()).toBeCloseTo(result.start.date().getTime())
 
 
-    var text = '0000-01-01T00:00:00-01:00';
+    var text = '1900-01-01T00:00:00-01:00';
     var result = chrono.parse(text)[0];
     var expected = new Date(text);
 
@@ -244,7 +244,7 @@ test("Test - Compare with native js", function() {
     expect(expected.getTime()).toBeCloseTo(result.start.date().getTime())
 
 
-    var text = '0000-01-01T00:00:00-00:00';
+    var text = '1900-01-01T00:00:00-00:00';
     var result = chrono.parse(text)[0];
     var expected = new Date(text);
 

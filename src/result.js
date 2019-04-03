@@ -21,6 +21,8 @@ ParsedResult.prototype.clone = function() {
     if (this.end) {
         result.end = this.end.clone();
     }
+
+    return result
 }
 
 ParsedResult.prototype.hasPossibleDates = function() {

@@ -15,7 +15,7 @@ var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
 var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' +
-    '(Jan\\.?|January|Feb\\.?|February|Mar\\.?|March|Apr\\.?|April|May\\.?|Jun\\.?|June|Jul\\.?|July|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Oct\\.?|October|Nov\\.?|November|Dec\\.?|December)' + 
+    '('+ util.MONTH_PATTERN +')' + 
     '\\s*' +
     '(?:' +
         '[,-]?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +

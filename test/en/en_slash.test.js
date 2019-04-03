@@ -135,8 +135,6 @@ test("Test - Single Expression", function() {
 
 });
 
-
-
 test("Test - Single Expression Little-Endian", function() {
 
     var text = "8/10/2012";
@@ -158,6 +156,29 @@ test("Test - Single Expression Little-Endian", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 });
+
+test("Test - Single Expression Little-Endian with Month name", function() {
+
+    var text = "8/Oct/2012";
+    var results = chrono.en_GB.parse(text, new Date(2012,7,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if(result){
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(10)
+        expect(result.start.get('day')).toBe(8)
+
+        expect(result.index).toBe(0)
+        expect(result.text).toBe('8/Oct/2012')
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 10-1, 8, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+});
+
 
 test("Test - Single Expression Start with Year", function() {
 
@@ -189,6 +210,42 @@ test("Test - Single Expression Start with Year", function() {
     if(result){
         expect(result.index).toBe(16)
         expect(result.text).toBe('2012/8/10')
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7, 10, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+});
+
+test("Test - Single Expression Start with Year and Month Name", function() {
+
+    var text = "2012/Aug/10";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if(result){
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(8)
+        expect(result.start.get('day')).toBe(10)
+
+        expect(result.index).toBe(0)
+        expect(result.text).toBe('2012/Aug/10')
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 8-1, 10, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "The Deadline is 2012/aug/10";
+    var results = chrono.parse(text, new Date(2012,7,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if(result){
+        expect(result.index).toBe(16)
+        expect(result.text).toBe('2012/aug/10')
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
