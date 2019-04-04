@@ -258,7 +258,7 @@ test("Test - Range Expression", function() {
 
 
     var text = "8/10/2012 - 8/15/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.en.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];

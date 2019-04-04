@@ -851,7 +851,7 @@ test("Test - Timezone extraction", function() {
     expect(result.start.get('timezoneOffset')).toBe(120)
 
     var text = "Vendredi à 2 pm est";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe(text)
     expect(result.start.isCertain('timezoneOffset')).toBe(true)
     expect(result.start.get('timezoneOffset')).toBe(-300)

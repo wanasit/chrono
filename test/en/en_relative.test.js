@@ -156,7 +156,7 @@ test("Test - Single Expression", function() {
     expect(result.start.get('hour')).toBe(12);
 
     var text = "next week at 10-06-2016";
-    var results = chrono.parse(text, new Date(2016, 10-1, 1));
+    var results = chrono.en.parse(text, new Date(2016, 10-1, 1));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -169,7 +169,7 @@ test("Test - Single Expression", function() {
     }
 
     var text = "next month at 11-06-2016";
-    var results = chrono.parse(text, new Date(2016, 10-1, 1));
+    var results = chrono.en.parse(text, new Date(2016, 10-1, 1));
     expect(results.length).toBe(1)
 
     var result = results[0];
