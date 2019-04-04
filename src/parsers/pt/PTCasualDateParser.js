@@ -82,10 +82,7 @@ exports.Parser = function PTCasualDateParser(){
             }
         } else if (lowerText.match(/de|à/)) {
 
-            console.log('loooo', lowerText);
-
             var firstMatch = match[4].toLowerCase();
-            console.log('firstMatch', firstMatch);
             if (firstMatch === 'ontem') {
 
               startMoment.add(-1, 'day');
@@ -97,7 +94,6 @@ exports.Parser = function PTCasualDateParser(){
             }
 
             var secondMatch = match[6].toLowerCase();
-            console.log('secondMatch', secondMatch);
             if (secondMatch == "tarde") {
 
                 result.start.imply('hour', 18);
