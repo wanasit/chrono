@@ -61,6 +61,7 @@ exports.strictOption = function () {
     return exports.mergeOptions([
         exports.en(strictConfig),
         exports.de(strictConfig),
+        exports.pt(strictConfig),
         exports.es(strictConfig),
         exports.fr(strictConfig),
         exports.ja(strictConfig),
@@ -74,6 +75,7 @@ exports.casualOption = function () {
         exports.en.casual,
         // Some German abbriviate overlap with common English
         exports.de({ strict: true }), 
+        exports.pt.casual,
         exports.es.casual,
         exports.fr.casual,
         exports.ja.casual,
@@ -191,6 +193,34 @@ exports.ja.casual = function() {
     return option;
 };
 
+// -------------------------------------------------------------
+
+
+exports.pt = function(config) {
+    return {
+        parsers: [
+            new parser.PTTimeAgoFormatParser(config),
+            new parser.PTDeadlineFormatParser(config),
+            new parser.PTTimeExpressionParser(config),
+            new parser.PTMonthNameLittleEndianParser(config),
+            new parser.PTSlashDateFormatParser(config)
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner()
+        ]
+    }
+};
+
+exports.pt.casual = function() {
+    var option = exports.pt({ 
+        strict: false 
+    });
+
+    option.parsers.unshift(new parser.PTCasualDateParser());
+    option.parsers.unshift(new parser.PTWeekdayParser());
+    return option;
+};
 
 // -------------------------------------------------------------
 

@@ -205,7 +205,7 @@ chrono.en_GB.parseDate('6/10/2018'); // Sat Oct 06 2018 12:00:00 ...
 chrono.de.parseDate('6/10/2018');    // Sat Oct 06 2018 12:00:00 ...
 ```
 
-Current supported locale options are: `en`, `en_GB`, `de`, `es`, `fr`, `ja`
+Current supported locale options are: `en`, `en_GB`, `de`, `pt`, `es`, `fr`, `ja`
 
 ## Customize Chrono
 
