@@ -32,6 +32,6 @@
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "moment": "2.21.0"
+    "moment": "^2.21.0"
   }
 }
