@@ -99,7 +99,64 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     } 
 
-    
+    var text = "主な株主（同年7月27日）";
+    var results = chrono.parse(text, new Date(2012,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('同年7月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "主な株主（本年7月27日）";
+    var results = chrono.parse(text, new Date(2012,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('本年7月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "主な株主（今年7月27日）";
+    var results = chrono.parse(text, new Date(2012,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('今年7月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+
 });
 
 
