@@ -9,8 +9,8 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var util  = require('../../utils/JP'); 
-var PATTERN = /(?:(同|今|本|((昭和|平成)?([0-9０-９]{2,4})))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
-
+var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{2,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+  
 var YEAR_GROUP        = 2;
 var ERA_GROUP         = 3;
 var YEAR_NUMBER_GROUP = 4;
@@ -67,10 +67,16 @@ exports.Parser = function JPStandardParser(){
 
         } else {
             var year = match[YEAR_NUMBER_GROUP];
-            year = util.toHankaku(year);
-            year = parseInt(year);
+            if (year == '元') {
+                year = 1;
+            } else {
+                year = util.toHankaku(year);
+                year = parseInt(year);
+            }
 
-            if (match[ERA_GROUP] == '平成') {
+            if (match[ERA_GROUP] == '令和') {
+                year += 2018;
+            } else if (match[ERA_GROUP] == '平成') {
                 year += 1988;
             } else if (match[ERA_GROUP] == '昭和') {
                 year += 1925;
