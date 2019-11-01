@@ -2,7 +2,7 @@
 
 */
 var Refiner = require('./refiner').Refiner;
-
+var moment = require('moment');
 // Map ABBR -> Offset in minute
 var TIMEZONE_NAME_PATTERN = new RegExp("^\\s*\\(?([A-Z]{2,4})\\)?(?=\\W|$)", 'i');
 var DEFAULT_TIMEZONE_ABBR_MAP = {
@@ -36,14 +36,21 @@ exports.Refiner = function ExtractTimezoneAbbrRefiner(config) {
                 if (timezones[timezoneAbbr] === undefined) {
                     return;
                 }
-
+                
                 var timezoneOffset = timezones[timezoneAbbr];
+                var day = moment(result.ref).utcOffset(timezoneOffset).date()
                 if (!result.start.isCertain('timezoneOffset')) {
                     result.start.assign('timezoneOffset', timezoneOffset);
+                    if (!JSON.stringify(result.tags).match(/DateAndTime/i)) {
+                        result.start.assign('day', day);
+                    }
                 }
 
                 if (result.end != null && !result.end.isCertain('timezoneOffset')) {
                     result.end.assign('timezoneOffset', timezoneOffset);
+                    if (!JSON.stringify(result.tags).match(/DateAndTime/i)) {
+                        result.end.assign('day', day);
+                    }
                 }
 
                 result.text += match[0];
