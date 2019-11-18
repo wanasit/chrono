@@ -11,11 +11,12 @@ var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/JP'); 
 var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{2,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
   
-var YEAR_GROUP        = 2;
-var ERA_GROUP         = 3;
-var YEAR_NUMBER_GROUP = 4;
-var MONTH_GROUP       = 5;
-var DAY_GROUP         = 6;
+var YEAR_GROUP          = 1;
+var ABSOLUTE_YEAR_GROUP = 2; // not used
+var ERA_GROUP           = 3;
+var YEAR_NUMBER_GROUP   = 4;
+var MONTH_GROUP         = 5;
+var DAY_GROUP           = 6;
 
 exports.Parser = function JPStandardParser(){
     Parser.apply(this, arguments);
@@ -61,7 +62,7 @@ exports.Parser = function JPStandardParser(){
             result.start.assign('month', startMoment.month() + 1);
             result.start.imply('year', startMoment.year());
 
-        } else if (match[YEAR_GROUP].match('同年|今年|本年')) {
+        } else if (match[YEAR_GROUP].match('同|今|本')) {
 
             result.start.assign('year', startMoment.year());
 
