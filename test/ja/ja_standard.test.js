@@ -71,7 +71,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('平成26年12月29日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(2014)
+        expect(result.start.knownValues.year).toBe(2014)
         expect(result.start.get('month')).toBe(12)
         expect(result.start.get('day')).toBe(29)
         
@@ -90,7 +90,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('昭和６４年１月７日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(1989)
+        expect(result.start.knownValues.year).toBe(1989)
         expect(result.start.get('month')).toBe(1)
         expect(result.start.get('day')).toBe(7)
         
@@ -110,7 +110,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('令和元年5月1日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(2019)
+        expect(result.start.knownValues.year).toBe(2019)
         expect(result.start.get('month')).toBe(5)
         expect(result.start.get('day')).toBe(1)
         
@@ -128,7 +128,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('同年7月27日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.knownValues.year).toBe(2012)
         expect(result.start.get('month')).toBe(7)
         expect(result.start.get('day')).toBe(27)
 
@@ -147,7 +147,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('本年7月27日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.knownValues.year).toBe(2012)
         expect(result.start.get('month')).toBe(7)
         expect(result.start.get('day')).toBe(27)
 
@@ -166,7 +166,7 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('今年7月27日')
 
         expect(result.start).not.toBeNull()
-        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.knownValues.year).toBe(2012)
         expect(result.start.get('month')).toBe(7)
         expect(result.start.get('day')).toBe(27)
 
