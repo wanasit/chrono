@@ -118,6 +118,26 @@ test("Test - Single Expression", function() {
         var expectDate = new Date(2019, 5-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
+
+    var text = "主な株主（令和2年5月1日）";
+    var results = chrono.parse(text, new Date(2012,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('令和2年5月1日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.knownValues.year).toBe(2020)
+        expect(result.start.get('month')).toBe(5)
+        expect(result.start.get('day')).toBe(1)
+        
+        var resultDate = result.start.date();
+        var expectDate = new Date(2020, 5-1, 1, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
     var text = "主な株主（同年7月27日）";
     var results = chrono.parse(text, new Date(2012,8-1,10));
     expect(results.length).toBe(1)
