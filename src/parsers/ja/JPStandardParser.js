@@ -9,7 +9,7 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var util  = require('../../utils/JP'); 
-var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{2,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
   
 var YEAR_GROUP        = 2;
 var ERA_GROUP         = 3;
