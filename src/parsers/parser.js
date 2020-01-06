@@ -111,3 +111,12 @@ exports.DETimeAgoFormatParser = require('./de/DETimeAgoFormatParser').Parser;
 exports.DETimeExpressionParser = require('./de/DETimeExpressionParser').Parser;
 exports.DEWeekdayParser = require('./de/DEWeekdayParser').Parser;
 exports.DECasualDateParser = require('./de/DECasualDateParser').Parser;
+
+exports.RUDeadlineFormatParser = require('./ru/RUDeadlineFormatParser').Parser;
+exports.RUMonthNameLittleEndianParser = require('./ru/RUMonthNameLittleEndianParser').Parser;
+exports.RUMonthNameParser = require('./ru/RUMonthNameParser').Parser;
+exports.RUSlashDateFormatParser = require('./ru/RUSlashDateFormatParser').Parser;
+exports.RUTimeAgoFormatParser = require('./ru/RUTimeAgoFormatParser').Parser;
+exports.RUTimeExpressionParser = require('./ru/RUTimeExpressionParser').Parser;
+exports.RUWeekdayParser = require('./ru/RUWeekdayParser').Parser;
+exports.RUCasualDateParser = require('./ru/RUCasualDateParser').Parser;

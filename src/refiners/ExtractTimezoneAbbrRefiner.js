@@ -26,7 +26,8 @@ exports.Refiner = function ExtractTimezoneAbbrRefiner(config) {
             if (!result.tags['ENTimeExpressionParser'] &&
                 !result.tags['ZHTimeExpressionParser'] &&
                 !result.tags['FRTimeExpressionParser'] &&
-                !result.tags['DETimeExpressionParser']) {
+                !result.tags['DETimeExpressionParser'] &&
+                !result.tags['RuTimeExpressionParser']) {
                 return;
             }
 

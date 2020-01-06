@@ -47,3 +47,7 @@ exports.FRMergeDateTimeRefiner = require('./fr/FRMergeDateTimeRefiner').Refiner;
 // de refiners
 exports.DEMergeDateRangeRefiner = require('./de/DEMergeDateRangeRefiner').Refiner;
 exports.DEMergeDateTimeRefiner = require('./de/DEMergeDateTimeRefiner').Refiner;
+
+// ru refiners
+exports.RUMergeDateRangeRefiner = require('./ru/RUMergeDateRangeRefiner').Refiner;
+exports.RUMergeDateTimeRefiner = require('./ru/RUMergeDateTimeRefiner').Refiner;

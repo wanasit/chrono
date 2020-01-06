@@ -65,6 +65,7 @@ exports.strictOption = function () {
         exports.es(strictConfig),
         exports.fr(strictConfig),
         exports.ja(strictConfig),
+        exports.ru(strictConfig),
         exports.zh,
         exports.commonPostProcessing
     ]);
@@ -79,6 +80,7 @@ exports.casualOption = function () {
         exports.es.casual,
         exports.fr.casual,
         exports.ja.casual,
+        exports.ru.casual,
         exports.zh,
         exports.commonPostProcessing
     ]);
@@ -111,6 +113,41 @@ exports.de.casual = function() {
     });
     option.parsers.unshift(new parser.DECasualDateParser());
     option.parsers.unshift(new parser.DEWeekdayParser());
+    return option;
+};
+
+
+
+// -------------------------------------------------------------
+
+
+// -------------------------------------------------------------
+
+exports.ru = function(config) {
+    return {
+        parsers: [
+            new parser.RUDeadlineFormatParser(config),
+            new parser.RUMonthNameLittleEndianParser(config),
+            new parser.RUMonthNameParser(config),
+            new parser.RUSlashDateFormatParser(config),
+            new parser.RUTimeAgoFormatParser(config),
+            new parser.RUTimeExpressionParser(config)
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
+            new refiner.RUMergeDateTimeRefiner(),
+            new refiner.RUMergeDateRangeRefiner()
+        ]
+    }
+};
+
+exports.ru.casual = function() {
+    var option = exports.ru({
+        strict: false
+    });
+    option.parsers.unshift(new parser.RUCasualDateParser());
+    option.parsers.unshift(new parser.RUWeekdayParser());
     return option;
 };
 
