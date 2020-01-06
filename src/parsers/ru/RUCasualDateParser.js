@@ -1,6 +1,8 @@
 /*
 
-
+    сегодня
+    вчера
+    позавчера
 */
 
 var moment = require('moment');

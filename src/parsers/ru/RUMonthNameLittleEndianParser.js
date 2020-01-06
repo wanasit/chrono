@@ -1,6 +1,7 @@
 /*
 
-Понедельник, 12 января 2019
+    12 января 2019
+    12 января
 
 */
 
@@ -10,17 +11,14 @@ var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/RU');
 
-var PATTERN = new RegExp(
-    '([0-9]{1,2})\s+' +
-    '(Янв(?:аря|.)?|Фев(?:раля|.)?|Мар(?:та|.)?|Мая|Июн(?:я|.)?|Июл(?:я|.)?|Авг(?:уста|.)?|Сен(?:тября|.)?|Окт(?:ября|.)?|Ноя(?:бря|.)?|Дек(?:абря|.)?)\s+([0-9]{1,4})'
-);
+var PATTERN = new RegExp('([0-9]{1,2})\\s+(Янв(?:аря|.)?|Фев(?:раля|.)?|Мар(?:та|.)?|Апр(?:рель|.)?|Мая|Июн(?:я|.)?|Июл(?:я|.)?|Авг(?:уста|.)?|Сен(?:тября|.)?|Окт(?:ября|.)?|Ноя(?:бря|.)?|Дек(?:абря|.)?)+\\s?([0-9]{1,4})?', 'i');
 
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
+var DATE_GROUP = 1;
+var MONTH_NAME_GROUP = 2;
+var YEAR_GROUP = 3;
+var YEAR_BE_GROUP = 100;
+var WEEKDAY_GROUP = 100;
+var DATE_TO_GROUP = 100;
 
 exports.Parser = function RUMonthNameLittleEndianParser(){
     Parser.apply(this, arguments);
