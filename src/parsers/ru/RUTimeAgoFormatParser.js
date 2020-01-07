@@ -1,26 +1,21 @@
-/*
-
-
-*/
-
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
+var util  = require('../../utils/RU');
 
 var PATTERN = new RegExp('' +
-    '(\\W|^)vor\\s*' +
-    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|einigen|eine[rm]\\s*halben|eine[rm])\\s*' +
-    '(sekunden?|min(?:ute)?n?|stunden?|wochen?|tag(?:en)?|monat(?:en)?|jahr(?:en)?)\\s*' +
-    '(?=(?:\\W|$))', 'i');
+    '(\\W|^)' +
+    '(?:в течении\\s*)?' +
+    '(' + util.TIME_UNIT_PATTERN + ')' +
+    '(?:назад|ранее)(?=(?:\\W|$))', 'i');
 
 var STRICT_PATTERN = new RegExp('' +
-    '(\\W|^)vor\\s*' +
-    '([0-9]+|eine(?:r|m))\\s*' +
-    '(sekunden?|minuten?|stunden?|tag(?:en)?)' +
-    '(?=(?:\\W|$))', 'i');
+    '(\\W|^)' +
+    '(?:в течении\\s*)?' +
+    '(' + util.TIME_UNIT_STRICT_PATTERN + ')' +
+    'назад(?=(?:\\W|$))', 'i');
 
-exports.Parser = function DETimeAgoFormatParser(){
+exports.Parser = function RUTimeAgoFormatParser(){
     Parser.apply(this, arguments);
 
     this.pattern = function() {
@@ -33,7 +28,7 @@ exports.Parser = function DETimeAgoFormatParser(){
 
         var text = match[0];
         text  = match[0].substr(match[1].length, match[0].length - match[1].length);
-        index = match.index + match[1].length;
+        var index = match.index + match[1].length;
 
         var result = new ParsedResult({
             index: index,
@@ -41,72 +36,34 @@ exports.Parser = function DETimeAgoFormatParser(){
             ref: ref
         });
 
-        var num = match[2].toLowerCase() ;
-        if (util.INTEGER_WORDS[num] !== undefined) {
-            num = util.INTEGER_WORDS[num];
-        } else if (num === 'einer' || num === 'einem') {
-            num = 1;
-        } else if (num === 'einigen') {
-            num = 3;
-        } else if (/halben/.test(num)) {
-            num = 0.5;
-        } else {
-            num = parseInt(num);
-        }
-
+        var fragments = util.extractDateTimeUnitFragments(match[2]);
         var date = moment(ref);
 
-        if (/stunde|min|sekunde/i.test(match[3])) {
-            if (/stunde/i.test(match[3])) {
+        for (var key in fragments) {
+            date.add(-fragments[key], key);
+        }
 
-                date.add(-num, 'hour');
+        if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {
+            result.start.assign('hour', date.hour());
+            result.start.assign('minute', date.minute());
+            result.start.assign('second', date.second());
+            result.tags['RUTimeAgoFormatParser'] = true;
+        }
 
-            } else if (/min/i.test(match[3])) {
-
-                date.add(-num, 'minute');
-
-            } else if (/sekunde/i.test(match[3])) {
-
-                date.add(-num, 'second');
+        if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {
+            result.start.assign('day', date.date());
+            result.start.assign('month', date.month() + 1);
+            result.start.assign('year', date.year());
+        } else {
+            if (fragments['week'] > 0) {
+                result.start.imply('weekday', date.day());
             }
 
             result.start.imply('day', date.date());
             result.start.imply('month', date.month() + 1);
             result.start.imply('year', date.year());
-            result.start.assign('hour', date.hour());
-            result.start.assign('minute', date.minute());
-            result.start.assign('second', date.second());
-            result.tags['DETimeAgoFormatParser'] = true;
-            return result;
         }
 
-        if (/woche/i.test(match[3])) {
-            date.add(-num, 'week');
-
-            result.start.imply('day', date.date());
-            result.start.imply('month', date.month() + 1);
-            result.start.imply('year', date.year());
-            result.start.imply('weekday', date.day());
-            return result;
-        }
-
-        if (/tag/i.test(match[3])) {
-            date.add(-num, 'd');
-        }
-
-        if (/monat/i.test(match[3])) {
-            date.add(-num, 'month');
-        }
-
-        if (/jahr/i.test(match[3])) {
-
-            date.add(-num, 'year');
-        }
-
-        result.start.assign('day', date.date());
-        result.start.assign('month', date.month() + 1);
-        result.start.assign('year', date.year());
         return result;
-
     };
 }

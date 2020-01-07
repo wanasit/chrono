@@ -1,35 +1,33 @@
 /*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Tuesday 11/3/2015
-    - 11/3/2015
-    - 11/3
+    - Понедельник 06/01/2020
+    - 06/01/2019
+    - 06/01
 */
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = new RegExp('(\\W|^)' +
-  '(?:' +
-  '(?:am\\s*?)?' +
-  '((?:sonntag|so|montag|mo|dienstag|di|mittwoch|mi|donnerstag|do|freitag|fr|samstag|sa))' +
-  '\\s*\\,?\\s*' +
-  '(?:den\\s*)?' +
-  ')?' +
-  '([0-3]{0,1}[0-9]{1})[\\/\\.\\-\\,\\ ]([0-3]{0,1}[0-9]{1})' +
-  '(?:' +
-  '[\\/\\.\\-\\,\\ ]' +
-  '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' +
-  ')?' +
-  '(\\W|$)', 'i');
+    '(?:' +
+    '(?:в\\s*?)?' +
+    '((?:воскресенье|вс|понедельник|пн|вторник|вт|среда|ср|четверг|чт|пятница|пт|суббота|сб))' +
+    '\\s*\\,?\\s*' +
+    ')?' +
+    '([0-3]{0,1}[0-9]{1})[\\/\\.\\-\\,\\ ]([0-3]{0,1}[0-9]{1})' +
+    '(?:' +
+    '[\\/\\.\\-\\,\\ ]' +
+    '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' +
+    ')?' +
+    '(\\W|$)', 'i');
 
 var DAYS_OFFSET = {
-    'sonntag': 0, 'so': 0,
-    'montag': 1, 'mo': 1,
-    'dienstag': 2, 'di': 2,
-    'mittwoch': 3, 'mi': 3,
-    'donnerstag': 4, 'do': 4,
-    'freitag': 5, 'fr': 5,
-    'samstag': 6, 'sa': 6
+    'воскресенье': 0, 'вс': 0,
+    'понедельник': 1, 'пн': 1,
+    'вторник': 2, 'вт': 2,
+    'среда': 3, 'ср': 3,
+    'четверг': 4, 'чт': 4,
+    'пятница': 5, 'пт': 5,
+    'суббота': 6, 'сб': 6
 };
 
 
@@ -41,7 +39,7 @@ var DAY_GROUP = 3;
 var MONTH_GROUP = 4;
 var YEAR_GROUP = 5;
 
-exports.Parser = function DESlashDateFormatParser(argument) {
+exports.Parser = function RUSlashDateFormatParser(argument) {
     Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };
@@ -70,7 +68,6 @@ exports.Parser = function DESlashDateFormatParser(argument) {
 
         // MM/dd -> OK
         // MM.dd -> NG
-        if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
 
         var date = null;
         var year = match[YEAR_GROUP] || moment(ref).year() + '';
@@ -101,7 +98,7 @@ exports.Parser = function DESlashDateFormatParser(argument) {
             result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
         }
 
-        result.tags['DESlashDateFormatParser'] = true;
+        result.tags['RUSlashDateFormatParser'] = true;
         return result;
     };
 };

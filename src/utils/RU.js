@@ -67,3 +67,50 @@ exports.INTEGER_WORDS = {
     'одиннадцать' : 11,
     'двенадцать' : 12,
 };
+
+exports.MONTH_PATTERN = '(?:'
+    + Object.keys(exports.MONTH_OFFSET).join('|').replace(/\./g, '\\.')
+    + ')';
+
+exports.INTEGER_WORDS = {
+    'один' : 1,
+    'два' : 2,
+    'три' : 3,
+    'четыре' : 4,
+    'пять' : 5,
+    'шесть' : 6,
+    'семь' : 7,
+    'восемь' : 8,
+    'девять' : 9,
+    'десять' : 10,
+    'одиннадцать' : 11,
+    'двенадцать' : 12
+};
+exports.INTEGER_WORDS_PATTERN = '(?:'
+    + Object.keys(exports.INTEGER_WORDS).join('|')
+    +')';
+
+var TIME_UNIT =
+    '(' + exports.INTEGER_WORDS_PATTERN + '|[0-9]+|[0-9]+\.[0-9]+|an?(?:\\s*несколько)?|пол(?:\\s*an?)?)\\s*' +
+    '(секунды?|минуты?|часа?|часов?|недель?|недели|дней?|дня?|месяцев?|месяца?|лет?|года?)\\s*';
+
+var TIME_UNIT_STRICT =
+    '(?:[0-9]+|an?)\\s*' +
+    '(?:секунд?|минут?|часов?|дней?)\\s*';
+
+var PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
+
+exports.TIME_UNIT_PATTERN = '(?:' + TIME_UNIT + ')+';
+exports.TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
+
+exports.extractDateTimeUnitFragments = function (timeunitText) {
+    var fragments = {};
+    var remainingText = timeunitText;
+    var match = PATTERN_TIME_UNIT.exec(remainingText);
+    while (match) {
+        collectDateTimeFragment(match, fragments);
+        remainingText = remainingText.substring(match[0].length);
+        match = PATTERN_TIME_UNIT.exec(remainingText);
+    }
+    return fragments;
+};
