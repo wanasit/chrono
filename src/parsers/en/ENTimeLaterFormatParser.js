@@ -34,10 +34,8 @@ exports.Parser = function ENTimeLaterFormatParser(){
         if (!prefix && !suffix) return null;
 
         var preamble = match[1];
-        
-        var text = match[0];
-        text  = match[0].substr(preamble.length, match[0].length - preamble.length);
-        index = match.index + preamble.length;
+        var text  = match[0].substr(preamble.length, match[0].length - preamble.length);
+        var index = match.index + preamble.length;
 
         var result = new ParsedResult({
             index: index,
