@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -39,8 +34,8 @@ exports.Parser = function ZHHantCasualDateParser() {
             ref: ref,
         });
 
-        var refMoment = moment(ref);
-        var startMoment = refMoment.clone();
+        var refMoment = dayjs(ref);
+        var startMoment = refMoment;
 
         if (match[NOW_GROUP]) {
             result.start.imply('hour', refMoment.hour());
@@ -53,19 +48,19 @@ exports.Parser = function ZHHantCasualDateParser() {
 
             if (day1 == '明' || day1 == '聽') {
               // Check not "Tomorrow" on late night
-              if(refMoment.hour() > 1) {
-                  startMoment.add(1, 'day');
-              }
+                if(refMoment.hour() > 1) {
+                    startMoment = startMoment.add(1, 'day');
+                }
             } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
-                startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
             } else if (day1 == "前"){
-                startMoment.add(-2, 'day');
+                startMoment = startMoment.add(-2, 'day');
             } else if (day1 == "大前"){
-                startMoment.add(-3, 'day');
+                startMoment = startMoment.add(-3, 'day');
             } else if ( day1 == "後"){
-                startMoment.add(2, 'day');
+                startMoment = startMoment.add(2, 'day');
             } else if (day1 == "大後"){
-                startMoment.add(3, 'day');
+                startMoment = startMoment.add(3, 'day');
             }
 
             if (time1 == '早' || time1 == '朝') {
@@ -97,20 +92,20 @@ exports.Parser = function ZHHantCasualDateParser() {
             var day3 = match[DAY_GROUP_3];
 
             if (day3 == '明' || day3 == '聽') {
-              // Check not "Tomorrow" on late night
-              if(refMoment.hour() > 1) {
-                  startMoment.add(1, 'day');
-              }
+                // Check not "Tomorrow" on late night
+                if(refMoment.hour() > 1) {
+                    startMoment = startMoment.add(1, 'day');
+                }
             } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
-                startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
             } else if (day3 == "前"){
-                startMoment.add(-2, 'day');
+                startMoment = startMoment.add(-2, 'day');
             } else if (day3 == "大前"){
-                startMoment.add(-3, 'day');
+                startMoment = startMoment.add(-3, 'day');
             } else if (day3 == "後"){
-                startMoment.add(2, 'day');
+                startMoment = startMoment.add(2, 'day');
             } else if (day3 == "大後"){
-                startMoment.add(3, 'day');
+                startMoment = startMoment.add(3, 'day');
             }
 
 

@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -40,16 +35,16 @@ exports.Parser = function FRTimeAgoFormatParser(){
           }
         }
 
-        var date = moment(ref);
+        var date = dayjs(ref);
 
         if (match[3].match(/heure/) || match[3].match(/minute/)) {
             if (match[3].match(/heure/)) {
 
-                date.add(-num, 'hour');
+                date = date.add(-num, 'hour');
 
             } else if (match[3].match(/minute/)) {
 
-                date.add(-num, 'minute');
+                date = date.add(-num, 'minute');
             }
 
             result.start.imply('day', date.date());
@@ -62,7 +57,7 @@ exports.Parser = function FRTimeAgoFormatParser(){
         }
 
         if (match[3].match(/semaine/)) {
-            date.add(-num, 'week');
+            date = date.add(-num, 'week');
 
             result.start.imply('day', date.date());
             result.start.imply('month', date.month() + 1);
@@ -72,16 +67,15 @@ exports.Parser = function FRTimeAgoFormatParser(){
         }
 
         if (match[3].match(/jour/)) {
-            date.add(-num, 'd');
+            date = date.add(-num, 'd');
         }
 
         if (match[3].match(/mois/)) {
-            date.add(-num, 'month');
+            date = date.add(-num, 'month');
         }
 
         if (match[3].match(/années?|ans?/)) {
-
-            date.add(-num, 'year');
+            date = date.add(-num, 'year');
         }
 
         result.start.assign('day', date.date());

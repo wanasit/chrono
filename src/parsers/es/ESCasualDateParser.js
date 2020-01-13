@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -41,26 +36,26 @@ exports.Parser = function ESCasualDateParser(){
             ref: ref,
         });
 
-        var refMoment = moment(ref);
-        var startMoment = refMoment.clone();
+        var refMoment = dayjs(ref);
+        var startMoment = refMoment;
         var lowerText = text.toLowerCase().replace(/\s+/g, ' ');
 
         if(lowerText == 'mañana'){
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 1) {
-                startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
             }
 
         } else if(lowerText == 'ayer') {
 
-            startMoment.add(-1, 'day');
+            startMoment = startMoment.add(-1, 'day');
         }
         else if(lowerText == 'anoche') {
 
             result.start.imply('hour', 0);
             if (refMoment.hour() > 6) {
-                startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
             }
 
         } else if (lowerText.match("esta")) {
@@ -86,11 +81,11 @@ exports.Parser = function ESCasualDateParser(){
             var firstMatch = match[4].toLowerCase();
             if (firstMatch === 'ayer') {
 
-              startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
 
             } else if (firstMatch === 'mañana') {
 
-              startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
 
             }
 

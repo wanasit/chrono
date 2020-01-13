@@ -3,7 +3,7 @@
 
 */
 
-var moment = require('moment');
+var dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/DE');
@@ -54,17 +54,17 @@ exports.Parser = function DEDeadlineFormatParser(){
             num = parseInt(num);
         }
 
-        var date = moment(ref);
+        var date = dayjs(ref);
         if (/tag|woche|monat|jahr/i.test(match[4])) {
 
             if (/tag/i.test(match[4])) {
-                date.add(num, 'd');
+                date = date.add(num, 'd');
             } else if (/woche/i.test(match[4])) {
-                date.add(num * 7, 'd');
+                date = date.add(num * 7, 'd');
             } else if (/monat/i.test(match[4])) {
-                date.add(num, 'month');
+                date = date.add(num, 'month');
             } else if (/jahr/i.test(match[4])) {
-                date.add(num, 'year');
+                date = date.add(num, 'year');
             }
 
             result.start.assign('year', date.year());
@@ -75,15 +75,15 @@ exports.Parser = function DEDeadlineFormatParser(){
 
         if (/stunde/i.test(match[4])) {
 
-            date.add(num, 'hour');
+            date = date.add(num, 'hour');
 
         } else if (/min/i.test(match[4])) {
 
-            date.add(num, 'minute');
+            date = date.add(num, 'minute');
 
         } else if (/sekunde/i.test(match[4])) {
 
-            date.add(num, 'second');
+            date = date.add(num, 'second');
         }
 
         result.start.imply('year', date.year());

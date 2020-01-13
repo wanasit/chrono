@@ -1,19 +1,10 @@
-/*
+const quarterOfYear = require('dayjs/plugin/quarterOfYear');
+const dayjs = require('dayjs');
+dayjs.extend(quarterOfYear);
 
-
-*/
-
-var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/FR');
-
-// Force load fr localization data from moment for the locale files to be linkded durning browserify.
-// NOTE: The function moment.defineLocale() also has a side effect that it change global locale
-//  We also need to save and restore the previous locale (see. moment.js, loadLocale)
-var originalLocale = moment.locale();
-require('moment/locale/fr');
-moment.locale(originalLocale);
 
 var PATTERN = new RegExp('(\\W|^)' +
     '(?:les?|la|l\'|du|des?)\\s*' +
@@ -78,51 +69,50 @@ exports.Parser = function FRRelativeDateFormatParser(){
 
         var total = multiplier * modifierFactor;
 
-        var dateFrom = moment(ref),
-            dateTo = moment(ref);
-        dateFrom.locale('fr');
-        dateTo.locale('fr');
+        var dateFrom = dayjs(ref);
+        var dateTo = dayjs(ref);
+
         var relative = match[RELATIVE_WORD_GROUP];
         var startOf;
         switch(true) {
             case /secondes?/.test(relative):
-                dateFrom.add(total, 's');
-                dateTo.add(modifierFactor, 's');
+                dateFrom = dateFrom.add(total, 's');
+                dateTo = dateTo.add(modifierFactor, 's');
                 startOf = 'second';
                 break;
             case /min(?:ute)?s?/.test(relative):
-                dateFrom.add(total, 'm');
-                dateTo.add(modifierFactor, 'm');
+                dateFrom = dateFrom.add(total, 'm');
+                dateTo = dateTo.add(modifierFactor, 'm');
                 startOf = 'minute';
                 break;
             case /heures?/.test(relative):
-                dateFrom.add(total, 'h');
-                dateTo.add(modifierFactor, 'h');
+                dateFrom = dateFrom.add(total, 'h');
+                dateTo = dateTo.add(modifierFactor, 'h');
                 startOf = 'hour';
                 break;
             case /jours?/.test(relative):
-                dateFrom.add(total, 'd');
-                dateTo.add(modifierFactor, 'd');
+                dateFrom = dateFrom.add(total, 'd');
+                dateTo = dateTo.add(modifierFactor, 'd');
                 startOf = 'day';
                 break;
             case /semaines?/.test(relative):
-                dateFrom.add(total, 'w');
-                dateTo.add(modifierFactor, 'w');
+                dateFrom = dateFrom.add(total, 'w');
+                dateTo = dateTo.add(modifierFactor, 'w');
                 startOf = 'week';
                 break;
             case /mois?/.test(relative):
-                dateFrom.add(total, 'M');
-                dateTo.add(modifierFactor, 'M');
+                dateFrom = dateFrom.add(total, 'M');
+                dateTo = dateTo.add(modifierFactor, 'M');
                 startOf = 'month';
                 break;
             case /trimestres?/.test(relative):
-                dateFrom.add(total, 'Q');
-                dateTo.add(modifierFactor, 'Q');
+                dateFrom = dateFrom.add(total, 'Q');
+                dateTo = dateTo.add(modifierFactor, 'Q');
                 startOf = 'quarter';
                 break;
             case /années?/.test(relative):
-                dateFrom.add(total, 'y');
-                dateTo.add(modifierFactor, 'y');
+                dateFrom = dateFrom.add(total, 'y');
+                dateTo = dateTo.add(modifierFactor, 'y');
                 startOf = 'year';
                 break;
         }
@@ -135,8 +125,13 @@ exports.Parser = function FRRelativeDateFormatParser(){
         }
 
         // Get start and end of dates
-        dateFrom.startOf(startOf);
-        dateTo.endOf(startOf);
+        dateFrom = dateFrom.startOf(startOf);
+        dateTo = dateTo.endOf(startOf);
+        if (startOf == 'week') { // Weekday in FR start on Sat?
+            dateFrom = dateFrom.add(1, 'd')
+            dateTo = dateTo.add(1, 'd')
+        }
+        
 
         // Assign results
         result.start.assign('year', dateFrom.year());

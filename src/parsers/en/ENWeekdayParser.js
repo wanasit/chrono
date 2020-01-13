@@ -1,8 +1,4 @@
-/*
-
-
-*/
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -25,25 +21,25 @@ var POSTFIX_GROUP = 4;
 
 exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifier) {
 
-    var startMoment = moment(ref);
+    var startMoment = dayjs(ref);
     var startMomentFixed = false;
     var refOffset = startMoment.day();
 
     if(modifier == 'last' || modifier == 'past') {
-        startMoment.day(offset - 7);
+        startMoment =startMoment.day(offset - 7);
         startMomentFixed = true;
     } else if(modifier == 'next') {
-        startMoment.day(offset + 7);
+        startMoment = startMoment.day(offset + 7);
         startMomentFixed = true;
     } else if(modifier == 'this') {
-        startMoment.day(offset);
+        startMoment = startMoment.day(offset);
     } else {
         if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-            startMoment.day(offset - 7);
+            startMoment = startMoment.day(offset - 7);
         } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-            startMoment.day(offset + 7);
+            startMoment = startMoment.day(offset + 7);
         } else {
-            startMoment.day(offset);
+            startMoment = startMoment.day(offset);
         }
     }
 

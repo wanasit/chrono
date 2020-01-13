@@ -1,15 +1,9 @@
-/*
+const dayjs = require('dayjs');
+const parser = require('../parser');
+const ParsedResult = require('../../result').ParsedResult;
+const util  = require('../../utils/DE');
 
-
-*/
-
-var moment = require('moment');
-
-var Parser = require('../parser').Parser;
-var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/DE');
-
-var PATTERN = new RegExp('(\\W|^)' +
+const PATTERN = new RegExp('(\\W|^)' +
         '(?:am\\s*?)?' +
         '(?:(Sonntag|Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|So|Mo|Di|Mi|Do|Fr|Sa)\\s*,?\\s*)?' +
         '(?:den\\s*)?' +
@@ -23,21 +17,21 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(?=\\W|$)', 'i'
     );
 
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
+const WEEKDAY_GROUP = 2;
+const DATE_GROUP = 3;
+const DATE_TO_GROUP = 4;
+const MONTH_NAME_GROUP = 5;
+const YEAR_GROUP = 6;
+const YEAR_BE_GROUP = 7;
 
 exports.Parser = function DEMonthNameLittleEndianParser(){
-    Parser.apply(this, arguments);
+    parser.Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
 
     this.extract = function(text, ref, match, opt){
 
-        var result = new ParsedResult({
+        const result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
             index: match.index + match[1].length,
             ref: ref,
@@ -70,25 +64,10 @@ exports.Parser = function DEMonthNameLittleEndianParser(){
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
-
-            //Find the most appropriated year
-            var refMoment = moment(ref);
-            refMoment.month(month - 1);
-            refMoment.date(day);
-            refMoment.year(moment(ref).year());
-
-            var nextYear = refMoment.clone().add(1, 'y');
-            var lastYear = refMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = nextYear;
-            }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = lastYear;
-            }
-
+            year = parser.findYearClosestToRef(ref, day, month);
             result.start.assign('day', day);
             result.start.assign('month', month);
-            result.start.imply('year', refMoment.year());
+            result.start.imply('year', year);
         }
 
         // Weekday component

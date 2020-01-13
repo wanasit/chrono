@@ -1,5 +1,6 @@
+const dayjs = require('dayjs');
 
-function Parser(config) {
+exports.Parser = function (config) {
 
     config = config || {};
     var strictMode = config.strict;
@@ -51,7 +52,25 @@ function Parser(config) {
     }
 }
 
-exports.Parser = Parser;
+exports.findYearClosestToRef = function (ref, day, month) {
+    //Find the most appropriated year
+    const refMoment = dayjs(ref);
+    var dateMoment = refMoment;
+    dateMoment = dateMoment.month(month - 1);
+    dateMoment = dateMoment.date(day);
+    dateMoment = dateMoment.year(refMoment.year())
+
+    const nextYear = dateMoment.add(1, 'y');
+    const lastYear = dateMoment.add(-1, 'y');
+    if( Math.abs(nextYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment)) ){
+        dateMoment = nextYear;
+    }
+    else if( Math.abs(lastYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment)) ){
+        dateMoment = lastYear;
+    }
+
+    return dateMoment.year();
+}
 
 exports.ENISOFormatParser = require('./en/ENISOFormatParser').Parser;
 exports.ENDeadlineFormatParser = require('./en/ENDeadlineFormatParser').Parser;

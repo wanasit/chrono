@@ -4,7 +4,7 @@
     - 11/3/2015
     - 11/3
 */
-var moment = require('moment');
+var dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -72,8 +72,7 @@ exports.Parser = function DESlashDateFormatParser(argument) {
         // MM.dd -> NG
         if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
 
-        var date = null;
-        var year = match[YEAR_GROUP] || moment(ref).year() + '';
+        var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
         var month = match[MONTH_GROUP];
         var day   = match[DAY_GROUP];
 

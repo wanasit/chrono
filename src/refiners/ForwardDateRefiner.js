@@ -3,7 +3,7 @@
     e.g. "March 12-13 (without year)" or "Thursday", the refiner will try to adjust the result
     into the future instead of the past.
 */
-var moment = require('moment');
+var dayjs = require('dayjs');
 var Refiner = require('./refiner').Refiner;
 
 exports.Refiner = function ForwardDateRefiner() {
@@ -17,14 +17,12 @@ exports.Refiner = function ForwardDateRefiner() {
 
         results.forEach(function(result) {
 
-            var refMoment = moment(result.ref);
+            var refMoment = dayjs(result.ref);
 
-            if (result.start.isCertain('day') && result.start.isCertain('month') &&
-                !result.start.isCertain('year') &&
-                refMoment.isAfter(result.start.moment())
+            if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())
             ) {
                 // Adjust year into the future
-                for (var i=0; i < 3 && refMoment.isAfter(result.start.moment()); i++) {
+                for (var i=0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
                     result.start.imply('year', result.start.get('year') + 1);
 
                     if (result.end && !result.end.isCertain('year')) {
@@ -32,24 +30,21 @@ exports.Refiner = function ForwardDateRefiner() {
                     }
                 }
 
-                result.tags['ExtractTimezoneOffsetRefiner'] = true;
+                result.tags['ForwardDateRefiner'] = true;
             }
 
-            if (!result.start.isCertain('day') && !result.start.isCertain('month') && !result.start.isCertain('year') &&
-                result.start.isCertain('weekday') &&
-                refMoment.isAfter(result.start.moment())
-            ) {
+            if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
                 // Adjust date to the coming week
                 if (refMoment.day() > result.start.get('weekday')) {
-                    refMoment.day(result.start.get('weekday') + 7);
+                    refMoment = refMoment.day(result.start.get('weekday') + 7);
                 } else {
-                    refMoment.day(result.start.get('weekday'));
+                    refMoment = refMoment.day(result.start.get('weekday'));
                 }
 
                 result.start.imply('day', refMoment.date());
                 result.start.imply('month', refMoment.month() + 1);
                 result.start.imply('year', refMoment.year());
-                result.tags['ExtractTimezoneOffsetRefiner'] = true;
+                result.tags['ForwardDateRefiner'] = true;
             }
         });
 

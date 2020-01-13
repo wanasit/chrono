@@ -7,7 +7,7 @@
     - YYYY-MM-DDThh:mm:ss.sTZD 
     - TZD = (Z or +hh:mm or -hh:mm)
 */
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -50,8 +50,8 @@ exports.Parser = function ENISOFormatParser(){
         result.start.assign('month', parseInt(match[MONTH_NUMBER_GROUP]));
         result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));
 
-        if (moment(result.start.get('month')) > 12 || moment(result.start.get('month')) < 1 ||
-            moment(result.start.get('day')) > 31 || moment(result.start.get('day')) < 1) {
+        if (dayjs(result.start.get('month')) > 12 || dayjs(result.start.get('month')) < 1 ||
+            dayjs(result.start.get('day')) > 31 || dayjs(result.start.get('day')) < 1) {
             return null;
         }
 

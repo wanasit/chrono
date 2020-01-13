@@ -4,8 +4,7 @@
     - 3/11/2015
     - 3/11
 */
-var moment = require('moment');
-var Parser = require('../parser').Parser;
+var parser = require('../parser');
 var ParsedResult = require('../../result').ParsedResult;
 
 var PATTERN = new RegExp('(\\W|^)' +
@@ -35,7 +34,7 @@ var YEAR_GROUP = 5;
 var YEAR_BE_GROUP = 6;
 
 exports.Parser = function FRSlashDateFormatParser(argument) {
-    Parser.apply(this, arguments);
+    parser.Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };
     this.extract = function(text, ref, match, opt){
@@ -111,25 +110,10 @@ exports.Parser = function FRSlashDateFormatParser(argument) {
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
-
-            // Find the most appropriated year
-            var refMoment = moment(ref);
-            refMoment.month(month - 1);
-            refMoment.date(day);
-            refMoment.year(moment(ref).year());
-
-            var nextYear = refMoment.clone().add(1, 'y');
-            var lastYear = refMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = nextYear;
-            }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = lastYear;
-            }
-
+            year = parser.findYearClosestToRef(ref, day, month)
             result.start.assign('day', day);
             result.start.assign('month', month);
-            result.start.imply('year', refMoment.year());
+            result.start.imply('year', year);
         }
 
         // Day of week

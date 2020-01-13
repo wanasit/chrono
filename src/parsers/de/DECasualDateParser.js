@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+var dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -25,43 +20,45 @@ exports.Parser = function DECasualDateParser() {
     this.pattern = function() { return PATTERN; }
 
     this.extract = function(text, ref, match, opt) {
-        var text = match[0].substr(match[1].length);
-        var index = match.index + match[1].length;
-        var result = new ParsedResult({
+        text = match[0].substr(match[1].length);
+        
+        const index = match.index + match[1].length;
+        const result = new ParsedResult({
             index: index,
             text: text,
             ref: ref,
         });
 
-        var refMoment = moment(ref);
-        var startMoment = refMoment.clone();
-        var lowerText = text.toLowerCase();
+        const refMoment = dayjs(ref);
+        const lowerText = text.toLowerCase();
+
+        var startMoment = refMoment;
 
         if (/(?:heute|diese)\s*nacht/.test(lowerText)) {
             // Normally means this coming midnight
             result.start.imply('hour', 22);
             result.start.imply('meridiem', 1);
         } else if (/^(?:ü|ue)bermorgen/.test(lowerText)) {
-            startMoment.add(refMoment.hour() > 1 ? 2 : 1, 'day');
+            startMoment = startMoment.add(refMoment.hour() > 1 ? 2 : 1, 'day');
         } else if (/^morgen/.test(lowerText)) {
             // Check not "Tomorrow" on late night
             if (refMoment.hour() > 1) {
-                startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
             }
         } else if (/^gestern/.test(lowerText)) {
-            startMoment.add(-1, 'day');
+            startMoment = startMoment.add(-1, 'day');
         } else if (/^vorgestern/.test(lowerText)) {
-            startMoment.add(-2, 'day');
+            startMoment = startMoment.add(-2, 'day');
         } else if (/letzte\s*nacht/.test(lowerText)) {
             result.start.imply('hour', 0);
             if (refMoment.hour() > 6) {
-                startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
             }
         } else if (lowerText === 'jetzt') {
-          result.start.imply('hour', refMoment.hour());
-          result.start.imply('minute', refMoment.minute());
-          result.start.imply('second', refMoment.second());
-          result.start.imply('millisecond', refMoment.millisecond());
+            result.start.imply('hour', refMoment.hour());
+            result.start.imply('minute', refMoment.minute());
+            result.start.imply('second', refMoment.second());
+            result.start.imply('millisecond', refMoment.millisecond());
         }
 
         var secondMatch = match[3] || match[4] || match[5];

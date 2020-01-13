@@ -1,8 +1,3 @@
-/*
-
-
-*/
-var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var updateParsedComponent = require('../en/ENWeekdayParser').updateParsedComponent;

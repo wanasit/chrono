@@ -1,9 +1,4 @@
-/*
-    
-    
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -25,8 +20,8 @@ exports.Parser = function JPCasualDateParser(){
             ref: ref,
         });
 
-        var refMoment = moment(ref);
-        var startMoment = refMoment.clone();
+        var refMoment = dayjs(ref);
+        var startMoment = refMoment;
 
         if(text == '今夜' || text == '今夕' || text == '今晩'){
             // Normally means this coming midnight 
@@ -37,12 +32,12 @@ exports.Parser = function JPCasualDateParser(){
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 4) {
-                startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
             }
 
         } else if(text == '昨日') {
 
-            startMoment.add(-1, 'day');
+            startMoment = startMoment.add(-1, 'day');
 
         } else if (text.match("今朝")) {
 

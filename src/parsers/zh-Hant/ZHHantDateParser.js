@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -36,7 +31,7 @@ exports.Parser = function ZHHantDateParser() {
     };
 
     this.extract = function(text, ref, match, opt) {
-        var startMoment = moment(ref);
+        var startMoment = dayjs(ref);
         var result = new ParsedResult({
             text: match[0],
             index: match.index,

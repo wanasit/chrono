@@ -12,7 +12,7 @@
     If "littleEndian" config is set, the parser will try the little-endian first. 
     - 11/3/2015 = March 11th, 2015
 */
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -80,7 +80,7 @@ exports.Parser = function ENSlashDateFormatParser(config) {
         if(!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
 
         var date = null;
-        var year = match[YEAR_GROUP] || moment(ref).year() + '';
+        var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
         var month = match[MONTH_GROUP];
         var day   = match[DAY_GROUP];
 

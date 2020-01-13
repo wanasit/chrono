@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/DE');
@@ -54,20 +49,20 @@ exports.Parser = function DETimeAgoFormatParser(){
             num = parseInt(num);
         }
 
-        var date = moment(ref);
+        var date = dayjs(ref);
 
         if (/stunde|min|sekunde/i.test(match[3])) {
             if (/stunde/i.test(match[3])) {
 
-                date.add(-num, 'hour');
+                date = date.add(-num, 'hour');
 
             } else if (/min/i.test(match[3])) {
 
-                date.add(-num, 'minute');
+                date = date.add(-num, 'minute');
 
             } else if (/sekunde/i.test(match[3])) {
 
-                date.add(-num, 'second');
+                date = date.add(-num, 'second');
             }
 
             result.start.imply('day', date.date());
@@ -81,7 +76,7 @@ exports.Parser = function DETimeAgoFormatParser(){
         }
 
         if (/woche/i.test(match[3])) {
-            date.add(-num, 'week');
+            date = date.add(-num, 'week');
 
             result.start.imply('day', date.date());
             result.start.imply('month', date.month() + 1);
@@ -91,16 +86,16 @@ exports.Parser = function DETimeAgoFormatParser(){
         }
 
         if (/tag/i.test(match[3])) {
-            date.add(-num, 'd');
+            date = date.add(-num, 'd');
         }
 
         if (/monat/i.test(match[3])) {
-            date.add(-num, 'month');
+            date = date.add(-num, 'month');
         }
 
         if (/jahr/i.test(match[3])) {
 
-            date.add(-num, 'year');
+            date = date.add(-num, 'year');
         }
 
         result.start.assign('day', date.date());

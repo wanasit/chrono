@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -39,16 +34,16 @@ exports.Parser = function ESTimeAgoFormatParser(){
           }
         }
 
-        var date = moment(ref);
+        var date = dayjs(ref);
 
         if (match[3].match(/hora/) || match[3].match(/minuto/)) {
             if (match[3].match(/hora/)) {
 
-                date.add(-num, 'hour');
+                date = date.add(-num, 'hour');
 
             } else if (match[3].match(/minuto/)) {
 
-                date.add(-num, 'minute');
+                date = date.add(-num, 'minute');
             }
 
             result.start.imply('day', date.date());
@@ -61,7 +56,7 @@ exports.Parser = function ESTimeAgoFormatParser(){
         }
 
         if (match[3].match(/semana/)) {
-            date.add(-num, 'week');
+            date = date.add(-num, 'week');
 
             result.start.imply('day', date.date());
             result.start.imply('month', date.month() + 1);
@@ -71,16 +66,16 @@ exports.Parser = function ESTimeAgoFormatParser(){
         }
 
         if (match[3].match(/d[ií]a/)) {
-            date.add(-num, 'd');
+            date = date.add(-num, 'd');
         }
 
         if (match[3].match(/mes/)) {
-            date.add(-num, 'month');
+            date = date.add(-num, 'month');
         }
 
         if (match[3].match(/año/)) {
 
-            date.add(-num, 'year');
+            date = date.add(-num, 'year');
         }
 
         result.start.assign('day', date.date());
