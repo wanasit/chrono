@@ -1,16 +1,16 @@
 const dayjs = require('dayjs');
-var parser = require('../parser');
-var ParsedResult = require('../../result').ParsedResult;
+const parser = require('../parser');
+const ParsedResult = require('../../result').ParsedResult;
 
-var util  = require('../../utils/JP'); 
-var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{2,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+const util  = require('../../utils/JP'); 
 
-var SPECIAL_YEAR_GROUP  = 1;
-var TYPICAL_YEAR_GROUP  = 2;
-var ERA_GROUP         = 3;
-var YEAR_NUMBER_GROUP = 4;
-var MONTH_GROUP       = 5;
-var DAY_GROUP         = 6;
+const PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+const SPECIAL_YEAR_GROUP  = 1;
+const TYPICAL_YEAR_GROUP  = 2;
+const ERA_GROUP         = 3;
+const YEAR_NUMBER_GROUP = 4;
+const MONTH_GROUP       = 5;
+const DAY_GROUP         = 6;
 
 exports.Parser = function JPStandardParser(){
     parser.Parser.apply(this, arguments);
