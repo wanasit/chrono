@@ -42,6 +42,25 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     } 
 
+    var text = "主な株主（2020年2月29日現在）";
+    var results = chrono.parse(text, new Date(2019,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('2020年2月29日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2020)
+        expect(result.start.get('month')).toBe(2)
+        expect(result.start.get('day')).toBe(29)
+        
+        var resultDate = result.start.date();
+        var expectDate = new Date(2020, 2-1, 29, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    } 
+
     var text = "主な株主（９月3日現在）";
     var results = chrono.parse(text, new Date(2012,8-1,10));
     expect(results.length).toBe(1)
@@ -172,6 +191,67 @@ test("Test - Single Expression", function() {
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "主な株主（今年11月27日）";
+    var results = chrono.parse(text, new Date(2012,1-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(5)
+        expect(result.text).toBe('今年11月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(11)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 11-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+});
+
+
+test("Test - Single Expression without year", function() {
+
+    var text = "7月27日";
+    var results = chrono.parse(text, new Date(2012,8-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(0)
+        expect(result.text).toBe('7月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2012)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2012, 7-1, 27, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+    }
+
+    var text = "11月27日";
+    var results = chrono.parse(text, new Date(2012,1-1,10));
+    expect(results.length).toBe(1)
+
+    var result = results[0];
+    if (result) {
+        expect(result.index).toBe(0)
+        expect(result.text).toBe('11月27日')
+
+        expect(result.start).not.toBeNull()
+        expect(result.start.get('year')).toBe(2011)
+        expect(result.start.get('month')).toBe(11)
+        expect(result.start.get('day')).toBe(27)
+
+        var resultDate = result.start.date();
+        var expectDate = new Date(2011, 11-1, 27, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 });

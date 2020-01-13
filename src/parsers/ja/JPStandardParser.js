@@ -1,10 +1,12 @@
+const dayjs = require('dayjs');
 var parser = require('../parser');
 var ParsedResult = require('../../result').ParsedResult;
 
 var util  = require('../../utils/JP'); 
 var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{2,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
-  
-var YEAR_GROUP        = 2;
+
+var SPECIAL_YEAR_GROUP  = 1;
+var TYPICAL_YEAR_GROUP  = 2;
 var ERA_GROUP         = 3;
 var YEAR_NUMBER_GROUP = 4;
 var MONTH_GROUP       = 5;
@@ -16,8 +18,6 @@ exports.Parser = function JPStandardParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){ 
-
-        
         var result = new ParsedResult({
             text: match[0],
             index: match.index,
@@ -35,15 +35,8 @@ exports.Parser = function JPStandardParser(){
         result.start.assign('day', day);
         result.start.assign('month', month);
             
-        if (!match[YEAR_GROUP]) {
-            year = parser.findYearClosestToRef(ref, day, month);
-            result.start.imply('year', year);
+        if (match[TYPICAL_YEAR_GROUP]) {
 
-        } else if (match[YEAR_GROUP].match('同年|今年|本年')) {
-
-            result.start.assign('year', startMoment.year());
-
-        } else {
             var year = match[YEAR_NUMBER_GROUP];
             if (year == '元') {
                 year = 1;
@@ -61,9 +54,15 @@ exports.Parser = function JPStandardParser(){
             }
 
             result.start.assign('year', year);
+
+        } else if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match('同|今|本')) {
+            const moment = dayjs(ref)
+            result.start.assign('year', moment.year());
+        } else {
+            const year = parser.findYearClosestToRef(ref, day, month);
+            result.start.imply('year', year);
         }
         
-
         result.tags['JPStandardParser'] = true;
         return result;
     };
