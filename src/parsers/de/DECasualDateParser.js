@@ -32,7 +32,7 @@ exports.Parser = function DECasualDateParser() {
         const refMoment = dayjs(ref);
         const lowerText = text.toLowerCase();
 
-        let startMoment = refMoment;
+        var startMoment = refMoment;
 
         if (/(?:heute|diese)\s*nacht/.test(lowerText)) {
             // Normally means this coming midnight

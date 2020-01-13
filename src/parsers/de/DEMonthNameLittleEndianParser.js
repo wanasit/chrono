@@ -37,13 +37,13 @@ exports.Parser = function DEMonthNameLittleEndianParser(){
             ref: ref,
         });
 
-        let month = match[MONTH_NAME_GROUP];
+        var month = match[MONTH_NAME_GROUP];
         month = util.MONTH_OFFSET[month.toLowerCase()];
 
-        let day = match[DATE_GROUP];
+        var day = match[DATE_GROUP];
         day = parseInt(day);
 
-        let year = null;
+        var year = null;
         if (match[YEAR_GROUP]) {
             year = match[YEAR_GROUP];
             year = parseInt(year);

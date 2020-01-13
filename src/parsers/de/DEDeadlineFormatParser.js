@@ -54,7 +54,7 @@ exports.Parser = function DEDeadlineFormatParser(){
             num = parseInt(num);
         }
 
-        let date = dayjs(ref);
+        var date = dayjs(ref);
         if (/tag|woche|monat|jahr/i.test(match[4])) {
 
             if (/tag/i.test(match[4])) {

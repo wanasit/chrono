@@ -123,7 +123,7 @@ ParsedComponents.prototype.date = function() {
 
 
 ParsedComponents.prototype.dayjs = function() {
-    let result = dayjs();
+    var result = dayjs();
 
     result = result.year(this.get('year'));
     result = result.month(this.get('month') - 1);

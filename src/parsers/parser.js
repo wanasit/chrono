@@ -55,7 +55,7 @@ exports.Parser = function (config) {
 exports.findYearClosestToRef = function (ref, day, month) {
     //Find the most appropriated year
     const refMoment = dayjs(ref);
-    let dateMoment = refMoment;
+    var dateMoment = refMoment;
     dateMoment = dateMoment.month(month - 1);
     dateMoment = dateMoment.date(day);
     dateMoment = dateMoment.year(refMoment.year())

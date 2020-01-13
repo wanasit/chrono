@@ -69,8 +69,8 @@ exports.Parser = function FRRelativeDateFormatParser(){
 
         var total = multiplier * modifierFactor;
 
-        let dateFrom = dayjs(ref);
-        let dateTo = dayjs(ref);
+        var dateFrom = dayjs(ref);
+        var dateTo = dayjs(ref);
 
         var relative = match[RELATIVE_WORD_GROUP];
         var startOf;
@@ -119,7 +119,7 @@ exports.Parser = function FRRelativeDateFormatParser(){
 
         // if we go forward, switch the start and end dates
         if(modifierFactor > 0) {
-            let dateTmp = dateFrom;
+            var dateTmp = dateFrom;
             dateFrom = dateTo;
             dateTo = dateTmp;
         }

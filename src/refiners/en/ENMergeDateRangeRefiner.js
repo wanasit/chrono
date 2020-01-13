@@ -69,8 +69,8 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
 
         if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
             
-            let fromMoment = fromResult.start.dayjs();
-            let toMoment = toResult.start.dayjs();
+            var fromMoment = fromResult.start.dayjs();
+            var toMoment = toResult.start.dayjs();
 
             if (fromResult.isOnlyWeekday() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
                 fromMoment = fromMoment.add(-7, 'days');
@@ -83,7 +83,7 @@ exports.Refiner = function ENMergeDateRangeRefiner() {
                 toResult.start.imply('month', toMoment.month() + 1);
                 toResult.start.imply('year', toMoment.year());
             } else {
-                let tmp = toResult;
+                var tmp = toResult;
                 toResult = fromResult;
                 fromResult = tmp;
             }
