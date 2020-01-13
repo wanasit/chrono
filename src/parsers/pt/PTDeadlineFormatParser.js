@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -35,9 +30,9 @@ exports.Parser = function PTDeadlineFormatParser(){
           }
         }
 
-        var date = moment(ref);
+        var date = dayjs(ref);
         if (match[4].match(/dia/)) {
-            date.add(num, 'd');
+            date = date.add(num, 'd');
 
             result.start.assign('year', date.year());
             result.start.assign('month', date.month() + 1);
@@ -48,11 +43,11 @@ exports.Parser = function PTDeadlineFormatParser(){
 
         if (match[4].match(/hora/)) {
 
-            date.add(num, 'hour');
+            date = date.add(num, 'hour');
 
         } else if (match[4].match(/minuto/)) {
 
-            date.add(num, 'minute');
+            date = date.add(num, 'minute');
         }
 
         result.start.imply('year', date.year());

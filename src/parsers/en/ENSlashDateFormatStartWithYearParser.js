@@ -5,7 +5,7 @@
     - YYYY-MM-DD
     - YYYY.MM.DD
 */
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
@@ -43,8 +43,9 @@ exports.Parser = function ENSlashDateFormatStartWithYearParser(){
         result.start.assign('month', parseInt(month));
         result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));
 
-        if (moment(result.start.get('month')) > 12 || moment(result.start.get('month')) < 1 ||
-            moment(result.start.get('day')) > 31 || moment(result.start.get('day')) < 1) {
+        if (
+            dayjs(result.start.get('month')) > 12 || dayjs(result.start.get('month')) < 1 || 
+            dayjs(result.start.get('day')) > 31 || dayjs(result.start.get('day')) < 1) {
             return null;
         }
         

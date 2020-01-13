@@ -1,8 +1,4 @@
-/*
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var ParsedComponents = require('../../result').ParsedComponents;
@@ -48,7 +44,7 @@ exports.Parser = function ENTimeExpressionParser(){
         
         // This pattern can be overlapped Ex. [12] AM, 1[2] AM
         if (match.index > 0 && text[match.index-1].match(/\w/)) return null;
-        var refMoment = moment(ref);
+        var refMoment = dayjs(ref);
         var result = new ParsedResult();
         result.ref = ref;
         result.index = match.index + match[1].length;

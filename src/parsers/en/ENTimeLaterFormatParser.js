@@ -1,4 +1,4 @@
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
@@ -46,9 +46,9 @@ exports.Parser = function ENTimeLaterFormatParser(){
         });
 
         var fragments = util.extractDateTimeUnitFragments(match[3]);
-        var date = moment(ref);
+        var date = dayjs(ref);
         for (var key in fragments) {
-            date.add(fragments[key], key);
+            date = date.add(fragments[key], key);
         }
 
         if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {

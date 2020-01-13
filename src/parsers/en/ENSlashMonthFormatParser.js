@@ -3,7 +3,6 @@
     - 11/05
     - 06/2005
 */
-var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -32,7 +31,6 @@ exports.Parser = function ENSlashMonthFormatParser(argument) {
             ref: ref,
         });
 
-        var date = null;
         var year = match[YEAR_GROUP] ;
         var month = match[MONTH_GROUP];
         var day   = 1;

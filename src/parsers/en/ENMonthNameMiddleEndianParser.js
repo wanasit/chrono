@@ -13,10 +13,7 @@
         - January 12.44
         - January 1222344
 */
-
-var moment = require('moment');
-
-var Parser = require('../parser').Parser;
+var parser = require('../parser');
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
 
@@ -50,7 +47,7 @@ var YEAR_GROUP2 = 10;
 var YEAR_BE_GROUP2 = 11;
 
 exports.Parser = function ENMonthNameMiddleEndianParser(){
-    Parser.apply(this, arguments);
+    parser.Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
 
@@ -94,24 +91,10 @@ exports.Parser = function ENMonthNameMiddleEndianParser(){
             result.start.assign('month', month);
             result.start.assign('year', year);
         } else {
-
-            //Find the most appropriated year
-            var refMoment = moment(ref);
-            refMoment.month(month - 1);
-            refMoment.date(day);
-
-            var nextYear = refMoment.clone().add(1, 'y');
-            var lastYear = refMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = nextYear;
-            }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(refMoment.diff(moment(ref))) ){
-                refMoment = lastYear;
-            }
-
+            year = parser.findYearClosestToRef(ref, day, month)
             result.start.assign('day', day);
             result.start.assign('month', month);
-            result.start.imply('year', refMoment.year());
+            result.start.imply('year', year);
         }
 
         // Weekday component

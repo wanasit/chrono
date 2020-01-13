@@ -2,7 +2,7 @@
 
 
 */
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -47,7 +47,7 @@ exports.Parser = function DEWeekdayParser() {
         var offset = DAYS_OFFSET[dayOfWeek];
         if(offset === undefined) return null;
 
-        var startMoment = moment(ref);
+        var startMoment = dayjs(ref);
         var prefix = match[PREFIX_GROUP];
         var postfix = match[POSTFIX_GROUP];
 
@@ -56,24 +56,24 @@ exports.Parser = function DEWeekdayParser() {
         norm = norm || '';
         norm = norm.toLowerCase();
         if (/letzte/.test(norm)) {
-            startMoment.day(offset - 7);
+            startMoment = startMoment.day(offset - 7);
         } else if (/n(?:ä|ae)chste/.test(norm)) {
-            startMoment.day(offset + 7);
+            startMoment = startMoment.day(offset + 7);
         } else if (/diese/.test(norm)) {
             if ( opt.forwardDate && refOffset > offset ) {
-                startMoment.day(offset + 7);
+                startMoment = startMoment.day(offset + 7);
             } else {
-                startMoment.day(offset);
+                startMoment = startMoment.day(offset);
             }
         } else {
             if ( opt.forwardDate && refOffset > offset ) {
-                startMoment.day(offset + 7);
+                startMoment = startMoment.day(offset + 7);
             } else if (!opt.forwardDate && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset - 7);
+                startMoment = startMoment.day(offset - 7);
             } else if (!opt.forwardDate && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-                startMoment.day(offset + 7);
+                startMoment = startMoment.day(offset + 7);
             } else {
-                startMoment.day(offset);
+                startMoment = startMoment.day(offset);
             }
         }
 

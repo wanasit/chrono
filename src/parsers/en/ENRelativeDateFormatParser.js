@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/EN');
@@ -52,7 +47,7 @@ exports.Parser = function ENRelativeDateFormatParser(){
         }
 
         num *= modifier;
-        var date = moment(ref);
+        var date = dayjs(ref);
 
         if (match[MODIFIER_WORD_GROUP].toLowerCase().match(/^this/)) {
 
@@ -64,7 +59,7 @@ exports.Parser = function ENRelativeDateFormatParser(){
                 
                 // This week
                 if (match[RELATIVE_WORD_GROUP].match(/week/i)) {
-                    date.add(-date.get('d'), 'd');
+                    date = date.add(-date.get('d'), 'd');
                     result.start.imply('day', date.date());
                     result.start.imply('month', date.month() + 1);
                     result.start.imply('year', date.year());
@@ -72,7 +67,7 @@ exports.Parser = function ENRelativeDateFormatParser(){
                 
                 // This month
                 else if (match[RELATIVE_WORD_GROUP].match(/month/i)) {
-                    date.add(-date.date() + 1, 'd');
+                    date = date.add(-date.date() + 1, 'd');
                     result.start.imply('day', date.date());
                     result.start.assign('year', date.year());
                     result.start.assign('month', date.month() + 1);
@@ -80,8 +75,8 @@ exports.Parser = function ENRelativeDateFormatParser(){
 
                 // This year
                 else if (match[RELATIVE_WORD_GROUP].match(/year/i)) {
-                    date.add(-date.date() + 1, 'd');
-                    date.add(-date.month(), 'month');
+                    date = date.add(-date.date() + 1, 'd');
+                    date = date.add(-date.month(), 'month');
 
                     result.start.imply('day', date.date());
                     result.start.imply('month', date.month() + 1);
@@ -95,25 +90,25 @@ exports.Parser = function ENRelativeDateFormatParser(){
         if (match[RELATIVE_WORD_GROUP].match(/day|week|month|year/i)) {
 
             if (match[RELATIVE_WORD_GROUP].match(/day/i)) {
-                date.add(num, 'd');
+                date = date.add(num, 'd');
                 result.start.assign('year', date.year());
                 result.start.assign('month', date.month() + 1);
                 result.start.assign('day', date.date());
             } else if (match[RELATIVE_WORD_GROUP].match(/week/i)) {
-                date.add(num * 7, 'd');
+                date = date.add(num * 7, 'd');
                 // We don't know the exact date for next/last week so we imply
                 // them
                 result.start.imply('day', date.date());
                 result.start.imply('month', date.month() + 1);
                 result.start.imply('year', date.year());
             } else if (match[RELATIVE_WORD_GROUP].match(/month/i)) {
-                date.add(num, 'month');
+                date = date.add(num, 'month');
                 // We don't know the exact day for next/last month
                 result.start.imply('day', date.date());
                 result.start.assign('year', date.year());
                 result.start.assign('month', date.month() + 1);
             } else if (match[RELATIVE_WORD_GROUP].match(/year/i)) {
-                date.add(num, 'year');
+                date = date.add(num, 'year');
                 // We don't know the exact day for month on next/last year
                 result.start.imply('day', date.date());
                 result.start.imply('month', date.month() + 1);
@@ -125,19 +120,19 @@ exports.Parser = function ENRelativeDateFormatParser(){
 
         if (match[RELATIVE_WORD_GROUP].match(/hour/i)) {
 
-            date.add(num, 'hour');
+            date = date.add(num, 'hour');
             result.start.imply('minute', date.minute());
             result.start.imply('second', date.second());
 
         } else if (match[RELATIVE_WORD_GROUP].match(/min/i)) {
 
-            date.add(num, 'minute');
+            date = date.add(num, 'minute');
             result.start.assign('minute', date.minute());
             result.start.imply('second', date.second());
 
         } else if (match[RELATIVE_WORD_GROUP].match(/second/i)) {
 
-            date.add(num, 'second');
+            date = date.add(num, 'second');
             result.start.assign('second', date.second());
             result.start.assign('minute', date.minute());
         }

@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -55,20 +50,20 @@ exports.Parser = function ZHHantCasualDateParser() {
         }
       }
 
-      var date = moment(ref);
+      var date = dayjs(ref);
       var unit = match[UNIT_GROUP];
       var unitAbbr = unit[0];
 
       if (unitAbbr.match(/[日天星禮月年]/)){
-        if(unitAbbr == '日' || unitAbbr == '天'){
-          date.add(number, 'd');
-        }else if(unitAbbr == '星' || unitAbbr == '禮'){
-          date.add(number * 7, 'd');
-        }else if(unitAbbr == '月'){
-          date.add(number, 'month');
-        }else if(unitAbbr == '年'){
-          date.add(number, 'year');
-        }
+          if(unitAbbr == '日' || unitAbbr == '天'){
+            date = date.add(number, 'd');
+          }else if(unitAbbr == '星' || unitAbbr == '禮'){
+            date = date.add(number * 7, 'd');
+          }else if(unitAbbr == '月'){
+            date = date.add(number, 'month');
+          }else if(unitAbbr == '年'){
+            date = date.add(number, 'year');
+          }
 
         result.start.assign('year', date.year());
         result.start.assign('month', date.month() + 1);
@@ -77,11 +72,11 @@ exports.Parser = function ZHHantCasualDateParser() {
       }
 
       if(unitAbbr == '秒'){
-        date.add(number, 'second');
+        date = date.add(number, 'second');
       }else if(unitAbbr == '分'){
-        date.add(number, 'minute');
+        date = date.add(number, 'minute');
       }else if(unitAbbr == '小' || unitAbbr == '鐘'){
-        date.add(number, 'hour');
+        date = date.add(number, 'hour');
       }
 
       result.start.imply('year', date.year());

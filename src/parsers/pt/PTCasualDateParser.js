@@ -1,9 +1,4 @@
-/*
-
-
-*/
-
-var moment = require('moment');
+const dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
@@ -40,26 +35,26 @@ exports.Parser = function PTCasualDateParser(){
             ref: ref,
         });
 
-        var refMoment = moment(ref);
-        var startMoment = refMoment.clone();
+        var refMoment = dayjs(ref);
+        var startMoment = refMoment;
         var lowerText = text.toLowerCase().replace(/\s+/g, ' ');
 
         if(lowerText == 'amanhã'){
 
             // Check not "Tomorrow" on late night
             if(refMoment.hour() > 1) {
-                startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
             }
 
         } else if(lowerText == 'ontem') {
 
-            startMoment.add(-1, 'day');
+            startMoment = startMoment.add(-1, 'day');
         }
         else if(lowerText == 'noite') {
 
             result.start.imply('hour', 0);
             if (refMoment.hour() > 6) {
-                startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
             }
 
         } else if (lowerText.match("esta")) {
@@ -85,11 +80,11 @@ exports.Parser = function PTCasualDateParser(){
             var firstMatch = match[4].toLowerCase();
             if (firstMatch === 'ontem') {
 
-              startMoment.add(-1, 'day');
+                startMoment = startMoment.add(-1, 'day');
 
             } else if (firstMatch === 'amanhã') {
 
-              startMoment.add(1, 'day');
+                startMoment = startMoment.add(1, 'day');
 
             }
 

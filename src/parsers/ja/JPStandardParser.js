@@ -1,11 +1,4 @@
-/*
-    
-    
-*/
-
-var moment = require('moment');
-
-var Parser = require('../parser').Parser;
+var parser = require('../parser');
 var ParsedResult = require('../../result').ParsedResult;
 
 var util  = require('../../utils/JP'); 
@@ -18,13 +11,13 @@ var MONTH_GROUP       = 5;
 var DAY_GROUP         = 6;
 
 exports.Parser = function JPStandardParser(){
-    Parser.apply(this, arguments);
+    parser.Parser.apply(this, arguments);
     
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){ 
 
-        var startMoment = moment(ref);
+        
         var result = new ParsedResult({
             text: match[0],
             index: match.index,
@@ -39,27 +32,12 @@ exports.Parser = function JPStandardParser(){
         day = util.toHankaku(day);
         day = parseInt(day);
 
-        startMoment.set('date', day);
-        startMoment.set('month', month - 1);
-        result.start.assign('day', startMoment.date());
-        result.start.assign('month', startMoment.month() + 1);
+        result.start.assign('day', day);
+        result.start.assign('month', month);
             
         if (!match[YEAR_GROUP]) {
-            
-            //Find the most appropriated year
-            startMoment.year(moment(ref).year());
-            var nextYear = startMoment.clone().add(1, 'y');
-            var lastYear = startMoment.clone().add(-1, 'y');
-            if( Math.abs(nextYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){  
-                startMoment = nextYear;
-            }
-            else if( Math.abs(lastYear.diff(moment(ref))) < Math.abs(startMoment.diff(moment(ref))) ){ 
-                startMoment = lastYear;
-            }
-
-            result.start.assign('day', startMoment.date());
-            result.start.assign('month', startMoment.month() + 1);
-            result.start.imply('year', startMoment.year());
+            year = parser.findYearClosestToRef(ref, day, month);
+            result.start.imply('year', year);
 
         } else if (match[YEAR_GROUP].match('同年|今年|本年')) {
 
