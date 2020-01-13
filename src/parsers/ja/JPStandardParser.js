@@ -31,19 +31,6 @@ exports.Parser = function JPStandardParser(){
             ref: ref,
         });
         
-        var month = match[MONTH_GROUP];
-        month = util.toHankaku(month);
-        month = parseInt(month);
-
-        var day = match[DAY_GROUP];
-        day = util.toHankaku(day);
-        day = parseInt(day);
-
-        startMoment.set('date', day);
-        startMoment.set('month', month - 1);
-        result.start.assign('day', startMoment.date());
-        result.start.assign('month', startMoment.month() + 1);
-            
         if (!match[YEAR_GROUP]) {
             
             //Find the most appropriated year
@@ -57,8 +44,6 @@ exports.Parser = function JPStandardParser(){
                 startMoment = lastYear;
             }
 
-            result.start.assign('day', startMoment.date());
-            result.start.assign('month', startMoment.month() + 1);
             result.start.imply('year', startMoment.year());
 
         } else if (match[YEAR_GROUP].match('同年|今年|本年')) {
@@ -84,6 +69,17 @@ exports.Parser = function JPStandardParser(){
 
             result.start.assign('year', year);
         }
+
+        var month = match[MONTH_GROUP];
+        month = util.toHankaku(month);
+        month = parseInt(month);
+
+        var day = match[DAY_GROUP];
+        day = util.toHankaku(day);
+        day = parseInt(day);
+
+        result.start.assign('month', month);
+        result.start.assign('day', day);
         
 
         result.tags['JPStandardParser'] = true;
