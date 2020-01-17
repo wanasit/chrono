@@ -120,3 +120,4 @@ exports.RUTimeAgoFormatParser = require('./ru/RUTimeAgoFormatParser').Parser;
 exports.RUTimeExpressionParser = require('./ru/RUTimeExpressionParser').Parser;
 exports.RUWeekdayParser = require('./ru/RUWeekdayParser').Parser;
 exports.RUCasualDateParser = require('./ru/RUCasualDateParser').Parser;
+exports.RUCasualTimeParser = require('./ru/RuCasualTimeParser').Parser;

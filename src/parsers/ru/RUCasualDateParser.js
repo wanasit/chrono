@@ -1,15 +1,13 @@
 /*
 
-    сегодня
-    вчера
-    позавчера
+
 */
 
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)(сегодня|вчера|ночью|сегодня ночью|прошлой\s*ночью|(?:завтра|вчера)\s*|послезавтра|позавчера)(?=\W|$)/i;
+var PATTERN = /(\W|^)(сейчас|сегодня|вчера|ночью|прошлым\s*вечером|сегодня ночью|прошлой\s*ночью|(?:завтра|вчера)\s*|послезавтра|позавчера)(?=\W|$)/i;
 
 exports.Parser = function RUCasualDateParser(){
 
@@ -31,7 +29,7 @@ exports.Parser = function RUCasualDateParser(){
         var startMoment = refMoment.clone();
         var lowerText = text.toLowerCase();
 
-        if(lowerText === 'сегодня ночью'||lowerText === 'ночью'){
+        if(lowerText === 'сегодня ночью'){
             // Normally means this coming midnight
             result.start.imply('hour', 22);
             result.start.imply('meridiem', 1);
@@ -65,7 +63,14 @@ exports.Parser = function RUCasualDateParser(){
                 startMoment.add(-1, 'day');
             }
 
-        } else if (lowerText.match("сегодня")) {
+        } else if(lowerText.match(/прошлым\s*вечером/)) {
+
+            result.start.imply('hour', 15);
+            if (refMoment.hour() > 6) {
+                startMoment.add(-1, 'day');
+            }
+
+        } else if (lowerText.match("сейчас")) {
 
             result.start.assign('hour', refMoment.hour());
             result.start.assign('minute', refMoment.minute());

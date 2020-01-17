@@ -11,7 +11,7 @@ var ParsedComponents = require('../../result').ParsedComponents;
 
 var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" +
     "(?:(?:в|после)\\s*)?" +
-    "(\\d{1,4}|утра?|вечера?)" +
+    "(\\d{1,4}|утра|вечера)" +
     "(?:" +
     "(?:\\.|\\:|\\：)(\\d{1,2})" +
     "(?:" +
@@ -24,7 +24,7 @@ var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" +
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" +
-    "(\\-|\\–|\\~|\\〜|bis|\\?)\\s*" +
+    "(\\-|\\–|\\~|\\〜|в|\\?)\\s*" +
     "(\\d{1,4})" +
     "(?:" +
     "(?:\\.|\\:|\\：)(\\d{1,2})" +
@@ -76,10 +76,10 @@ exports.Parser = function RUTimeExpressionParser() {
         }
 
         // ----- Hours
-        if (/утра?/i.test(match[HOUR_GROUP])) {
+        if (/вечера/i.test(match[HOUR_GROUP])) {
             meridiem = 1;
             hour = 12;
-        } else if (/вечера?/i.test(match[HOUR_GROUP])) {
+        } else if (/утра/i.test(match[HOUR_GROUP])) {
             meridiem = 0;
             hour = 0;
         } else {
@@ -108,7 +108,7 @@ exports.Parser = function RUTimeExpressionParser() {
         // ----- AM & PM
         if (match[AM_PM_HOUR_GROUP] != null) {
             if (hour > 12) return null;
-            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
             if (ampm === 'утра') {
                 meridiem = 0;
                 if (hour == 12) hour = 0;

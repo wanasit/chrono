@@ -148,6 +148,7 @@ exports.ru.casual = function() {
     });
     option.parsers.unshift(new parser.RUCasualDateParser());
     option.parsers.unshift(new parser.RUWeekdayParser());
+    option.parsers.unshift(new parser.RUCasualTimeParser());
     return option;
 };
 
