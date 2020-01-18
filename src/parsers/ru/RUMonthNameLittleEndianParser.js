@@ -10,12 +10,12 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/RU');
-//TODO Починить эту штуку. Она чет не работает вместе с "12 января в 23:00"
-var PATTERN = new RegExp('([0-9]{1,2})\\s+(Янв(?:аря|.)?|Фев(?:раля|.)?|Мар(?:та|.)?|Апр(?:рель|.)?|Мая|Июн(?:я|.)?|Июл(?:я|.)?|Авг(?:уста|.)?|Сен(?:тября|.)?|Окт(?:ября|.)?|Ноя(?:бря|.)?|Дек(?:абря|.)?)+\\s?([0-9]{1,4})?', 'i');
 
-var DATE_GROUP = 1;
-var MONTH_NAME_GROUP = 2;
-var YEAR_GROUP = 3;
+var PATTERN = new RegExp('(\\W|^)' + '([0-9]{1,2})\\s*' + '(' + util.MONTH_PATTERN + ')\\s*' + '(([0-9]{1,4})?)'+'(?=\\W|$)', 'i');
+
+var DATE_GROUP = 2;
+var MONTH_NAME_GROUP = 3;
+var YEAR_GROUP = 4;
 var YEAR_BE_GROUP = 100;
 var WEEKDAY_GROUP = 100;
 var DATE_TO_GROUP = 100;

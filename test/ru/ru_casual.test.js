@@ -238,7 +238,7 @@ test('Test - Random text', function() {
     expect(result.start.get('weekday')).toBe(4);
 
 
-    var text = "чт";
+    var text = "чт.";
     var result = chrono.parse(text)[0];
     expect(result.text).toBe(text);
     expect(result.start.get('weekday')).toBe(4);
