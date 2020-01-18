@@ -122,12 +122,12 @@ test("Test - Random date + time expression", function() {
 
     var text = "в полдень";
     var result = chrono.ru.parse(text)[0];
-    expect(result.text).toBe('полдень');
+    expect(result.text).toBe('в полдень');
     expect(result.start.get('hour')).toBe(12);
 
     var text = "в полночь";
     var result = chrono.ru.parse(text)[0];
-    expect(result.text).toBe('полночь');
+    expect(result.text).toBe('в полночь');
     expect(result.start.get('hour')).toBe(24);
 
     var text = "ночь";

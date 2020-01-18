@@ -12,34 +12,34 @@
 var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
-var util  = require('../../utils/RU');
+var util = require('../../utils/RU');
 
 var PATTERN = new RegExp('(\\W|^)' +
-  '(через|спустя)\\s*' +
-  '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|несколько|одну|один\\s*пол|одну)\\s*' +
-  '((секунда|секунд|секунды)|(минут|минуту|минуты)|(часов|час|часа)|(дней|день|дня)|(недель|неделю|неделя|недели)|(месяцев|месяц|месяца)|(лет|год|года))\\s*' +
-  '(?=\\W|$)', 'i'
+    '(через|спустя)\\s*' +
+    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|несколько|одну|один\\s*пол|одну)?\\s*' +
+    '((секунда|секунд|секунды|секунду)|(минут|минуту|минуты)|(часов|час|часа)|(дней|день|дня)|(недель|неделю|неделя|недели)|(месяцев|месяц|месяца)|(лет|год|года))' +
+    '(?=\\W|$)', 'i'
 );
 
 var STRICT_PATTERN = new RegExp('(\\W|^)' +
-  '(через|спустя)\\s*' +
-  '('+ util.INTEGER_WORDS_PATTERN + '|[0-9]+|одну(?:r|m)?)\\s*' +
-  '((секунд|секунду|секунды)|(минут|минуту|минуты)|(часов|часа|час)|(дней|день|дня))\\s*' +
-  '(?=\\W|$)', 'i'
+    '(через|спустя)\\s*' +
+    '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|одну(?:r|m)?)\\s*' +
+    '((секунд|секунду|секунды)|(минут|минуту|минуты)|(часов|часа|час)|(дней|день|дня))\\s*' +
+    '(?=\\W|$)', 'i'
 );
 
-exports.Parser = function RUDeadlineFormatParser(){
+exports.Parser = function RUDeadlineFormatParser() {
     Parser.apply(this, arguments);
 
-    this.pattern = function() {
-        return this.isStrictMode()? STRICT_PATTERN : PATTERN;
+    this.pattern = function () {
+        return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
     };
 
-    this.extract = function(text, ref, match, opt){
+    this.extract = function (text, ref, match, opt) {
 
         var index = match.index + match[1].length;
-        var text  = match[0];
-        text  = match[0].substr(match[1].length, match[0].length - match[1].length);
+        var text = match[0];
+        text = match[0].substr(match[1].length, match[0].length - match[1].length);
 
         var result = new ParsedResult({
             index: index,
@@ -47,17 +47,21 @@ exports.Parser = function RUDeadlineFormatParser(){
             ref: ref
         });
 
-        var num = match[3].toLowerCase();
-        if (util.INTEGER_WORDS[num] !== undefined) {
-            num = util.INTEGER_WORDS[num];
-        } else if (num === 'один' || num === 'одну') {
-            num = 1;
-        } else if (num === 'несколько') {
-            num = 3;
-        } else if (/пол/.test(num)) {
-            num = 0.5;
-        } else {
-            num = parseInt(num);
+        if (match[3]) {
+            var num = match[3].toLowerCase();
+            if (util.INTEGER_WORDS[num] !== undefined) {
+                num = util.INTEGER_WORDS[num];
+            } else if (num === 'один' || num === 'одну') {
+                num = 1;
+            } else if (num === 'несколько') {
+                num = 3;
+            } else if (/пол/.test(num)) {
+                num = 0.5;
+            } else {
+                num = parseInt(num);
+            }
+        } else if (/час/i.test(match[4])) {
+            num = 1
         }
 
         var date = moment(ref);

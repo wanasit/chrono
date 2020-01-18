@@ -7,7 +7,7 @@ var moment = require('moment');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 
-var PATTERN = /(\W|^)((утром|обед|полдень|вечером|полночь|ночью|ночь))/i;
+var PATTERN = /(\W|^)((утром|обед|в полдень|вечером|в полночь|ночью|ночь))/i;
 
 var TIME_MATCH = 4;
 
@@ -48,12 +48,12 @@ exports.Parser = function RUCasualTimeParser(){
                 result.start.imply('hour', 6);
                 break;
 
-            case 'полдень':
+            case 'в полдень':
                 result.start.imply('meridiem', 0);
                 result.start.imply('hour', 12);
                 break;
 
-            case 'полночь':
+            case 'в полночь':
             case 'ночь':
                 result.start.imply('meridiem', 1);
                 result.start.imply('hour', 24);
