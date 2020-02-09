@@ -31,7 +31,6 @@ var WEEKDAY_GROUP = 2;
 var DAY_GROUP = 3;
 var MONTH_GROUP = 4;
 var YEAR_GROUP = 5;
-var YEAR_BE_GROUP = 6;
 
 exports.Parser = function FRSlashDateFormatParser(argument) {
     parser.Parser.apply(this, arguments);
@@ -76,13 +75,7 @@ exports.Parser = function FRSlashDateFormatParser(argument) {
             year = match[YEAR_GROUP];
             year = parseInt(year);
 
-            if(match[YEAR_BE_GROUP]){
-                if (/a/i.test(match[YEAR_BE_GROUP])) {
-                    // Ante Christe natum
-                    year = -year;
-                }
-            } else if (year < 100){
-
+            if (year < 100){
                 year = year + 2000;
             }
         }
