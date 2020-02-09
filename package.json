@@ -16,17 +16,19 @@
     "source": "./src",
     "test": "./test"
   },
-  "main": "./src/chrono",
+  "main": "./dist/chrono.js",
   "devDependencies": {
-    "browserify": "^14.3.0",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
     "coveralls": "^3.0.2",
     "jest": "^22.0.4",
-    "minifyify": "^7.0.6"
+    "terser-webpack-plugin": "^2.3.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "make-bundle": "browserify src/chrono.js -d --s chrono -o chrono.js",
-    "make-minify": "browserify src/chrono.js -d --s chrono -d -p [minifyify --output chrono.map.json] -o chrono.min.js",
-    "make": "npm run make-bundle & npm run make-minify",
+    "build": "webpack",
     "watch": "jest --watch",
     "test": "jest --coverage",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
