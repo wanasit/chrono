@@ -1,5 +1,6 @@
 # Node Modules
 node_modules/*
+package-lock.json
 
 # Coverages
 coverage/
@@ -10,4 +11,3 @@ coverage/
 .DS_Store
 .vscode
 .settings
-
