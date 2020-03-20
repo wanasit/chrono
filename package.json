@@ -11,7 +11,7 @@
     "testURL": "http://localhost/"
   },
   "license": "MIT",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "directories": {
     "source": "./src",
     "test": "./test"
