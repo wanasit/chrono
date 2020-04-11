@@ -32,7 +32,8 @@
     "build": "webpack",
     "watch": "jest --watch",
     "test": "jest --coverage",
-    "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
+    "coveralls": "npm run test && cat coverage/lcov.info | coveralls",
+    "version": "npm run build && git add -A dist"
   },
   "dependencies": {
     "dayjs": "^1.8.19"
