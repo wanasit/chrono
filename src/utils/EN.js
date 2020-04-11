@@ -116,7 +116,7 @@ exports.ORDINAL_WORDS_PATTERN = '(?:'
 
 var TIME_UNIT = 
     '(' + exports.INTEGER_WORDS_PATTERN + '|[0-9]+|[0-9]+\.[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
-    '(sec(?:onds?)?|min(?:ute)?s?|hours?|weeks?|days?|months?|years?)\\s*';
+    '(sec(?:onds?)?|min(?:ute)?s?|h(?:r|rs|our|ours)?|weeks?|days?|months?|years?)\\s*';
 
 var TIME_UNIT_STRICT = 
     '(?:[0-9]+|an?)\\s*' +
@@ -153,7 +153,7 @@ function collectDateTimeFragment(match, fragments) {
         num = parseFloat(num);
     }
 
-    if (match[2].match(/hour/i)) {
+    if (match[2].match(/^h/i)) {
         fragments['hour'] = num;
     } else if (match[2].match(/min/i)) {
         fragments['minute'] = num;

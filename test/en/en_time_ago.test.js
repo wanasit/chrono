@@ -76,6 +76,20 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     });
 
+    testSingleCase(chrono, '1h ago', new Date(2012,7,10,12,14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('1h ago');
+        expect(result.start.get('hour')).toBe(11);
+        expect(result.start.get('minute')).toBe(14);
+    });
+
+    testSingleCase(chrono, '1hr ago', new Date(2012,7,10,12,14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('1hr ago');
+        expect(result.start.get('hour')).toBe(11);
+        expect(result.start.get('minute')).toBe(14);
+    });
+
     testSingleCase(chrono, '   half an hour ago', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe('half an hour ago');

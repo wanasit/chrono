@@ -75,6 +75,14 @@ test("Test - Single Expression", function () {
         expect(expectDate.getTime()).toBe(resultDate.getTime())
     });
 
+    testSingleCase(chrono, '   12 hrs from now', new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(3);
+        expect(result.text).toBe('12 hrs from now');
+        expect(result.start.get('day')).toBe(11);
+        expect(result.start.get('hour')).toBe(0);
+        expect(result.start.get('minute')).toBe(14);
+    });
+
     testSingleCase(chrono, '   half an hour from now', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe('half an hour from now');
