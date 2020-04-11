@@ -103,12 +103,7 @@ test("Test - Single Expression", function() {
 
 test("Test - Single Expression Little-Endian", function() {
 
-    var text = "8/10/2012";
-    var results = chrono.en_GB.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.en_GB, '8/10/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(10)
@@ -120,17 +115,12 @@ test("Test - Single Expression Little-Endian", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 10-1, 8, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Single Expression Little-Endian with Month name", function() {
 
-    var text = "8/Oct/2012";
-    var results = chrono.en_GB.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.en_GB, '8/Oct/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(10)
@@ -142,7 +132,7 @@ test("Test - Single Expression Little-Endian with Month name", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 10-1, 8, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
@@ -203,12 +193,7 @@ test("Test - Single Expression Start with Year and Month Name", function() {
 test("Test - Range Expression", function() {
 
 
-    var text = "8/10/2012 - 8/15/2012";
-    var results = chrono.en.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.en, '8/10/2012 - 8/15/2012', new Date(2012,7,10), (result) => {
 
         expect(result.index).toBe(0)
         expect(result.text).toBe('8/10/2012 - 8/15/2012')
@@ -221,17 +206,17 @@ test("Test - Range Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('year')).toBe(2012)
         expect(result.end.get('month')).toBe(8)
         expect(result.end.get('day')).toBe(15)
-        
+
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 8-1, 15, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
-    }
+
+    });
 });
 
 test('Test - Random date patterns', function() {

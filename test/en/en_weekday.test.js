@@ -1,12 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
+
 test("Test - Single Expression", function () {
 
-    var text = "Monday";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Monday', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Monday');
 
@@ -25,14 +22,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 6, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Monday (forward dates only)";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9), {forwardDate: true});
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Monday (forward dates only)', new Date(2012, 7, 9), {forwardDate: true}, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Monday');
 
@@ -51,14 +43,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 13, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Thursday";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Thursday', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Thursday');
 
@@ -71,14 +58,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 9, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Sunday";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Sunday', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Sunday');
 
@@ -91,15 +73,10 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 12, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "The Deadline is last Friday...";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'The Deadline is last Friday...', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('last Friday');
 
@@ -112,14 +89,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 3, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "The Deadline is past Friday...";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'The Deadline is past Friday...', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('past Friday');
 
@@ -132,15 +104,10 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 3, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "Let's have a meeting on Friday next week";
-    var results = chrono.casual.parse(text, new Date(2015, 3, 18));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Let\'s have a meeting on Friday next week', new Date(2015, 3, 18), (result) => {
         expect(result.index).toBe(21);
         expect(result.text).toBe('on Friday next week');
 
@@ -153,15 +120,10 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2015, 3, 24, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "I plan on taking the day off on Tuesday, next week";
-    var results = chrono.casual.parse(text, new Date(2015, 3, 18));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'I plan on taking the day off on Tuesday, next week', new Date(2015, 3, 18), (result) => {
         expect(result.index).toBe(29);
         expect(result.text).toBe('on Tuesday, next week');
 
@@ -174,15 +136,11 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2015, 3, 21, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Weekday With Casual Time", function () {
-    var text = "Lets meet on Tuesday morning";
-    var results = chrono.casual.parse(text, new Date(2015, 3, 18));
-    expect(results.length).toBe(1);
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Lets meet on Tuesday morning', new Date(2015, 3, 18), (result) => {
         expect(result.index).toBe(10);
         expect(result.text).toBe('on Tuesday morning');
 
@@ -196,17 +154,12 @@ test("Test - Weekday With Casual Time", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2015, 3, 21, 6);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Weekday Overlap", function () {
 
-    var text = "Sunday, December 7, 2014";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Sunday, December 7, 2014', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Sunday, December 7, 2014');
 
@@ -225,15 +178,10 @@ test("Test - Weekday Overlap", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2014, 12 - 1, 7, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "Sunday 12/7/2014";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 9));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'Sunday 12/7/2014', new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Sunday 12/7/2014');
 
@@ -252,18 +200,13 @@ test("Test - Weekday Overlap", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2014, 12 - 1, 7, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test('Test - forward dates only option', function () {
 
-    var text = "this Friday to this Monday";
-    var results = chrono.casual.parse(text, new Date(2016, 8-1, 4), {forwardDate: true});
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, 'this Friday to this Monday', new Date(2016, 8-1, 4), {forwardDate: true}, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('this Friday to this Monday');
 
@@ -297,5 +240,5 @@ test('Test - forward dates only option', function () {
         var resultDate = result.end.date();
         var expectDate = new Date(2016, 8-1, 8, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });

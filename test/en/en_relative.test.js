@@ -156,31 +156,21 @@ test("Test - Single Expression", function() {
     expect(result.start.get('day')).toBe(24);
     expect(result.start.get('hour')).toBe(12);
 
-    var text = "next week at 10-06-2016";
-    var results = chrono.en.parse(text, new Date(2016, 10-1, 1));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
-        expect(result.text).toBe(text);
+    testSingleCase(chrono.en, 'next week at 10-06-2016', new Date(2016, 10-1, 1), (result) => {
+        expect(result.text).toBe('next week at 10-06-2016');
         expect(result.start.get('year')).toBe(2016);
         expect(result.start.get('month')).toBe(10);
         expect(result.start.get('day')).toBe(6);
         expect(result.start.get('hour')).toBe(12);
-    }
+    });
 
-    var text = "next month at 11-06-2016";
-    var results = chrono.en.parse(text, new Date(2016, 10-1, 1));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
-        expect(result.text).toBe(text);
+    testSingleCase(chrono.en, 'next month at 11-06-2016', new Date(2016, 10-1, 1), (result) => {
+        expect(result.text).toBe('next month at 11-06-2016');
         expect(result.start.get('year')).toBe(2016);
         expect(result.start.get('month')).toBe(11);
         expect(result.start.get('day')).toBe(6);
         expect(result.start.get('hour')).toBe(12);
-    }
+    });
 
     testSingleCase(chrono, 'next year at Feb-2017', new Date(2016, 10, 10), (result) => {
         expect(result.text).toBe('next year at Feb-2017');
