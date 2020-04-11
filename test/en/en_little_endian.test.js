@@ -17,6 +17,17 @@ test("Test - Single expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     });
 
+    testSingleCase(chrono, '3rd Feb 82', new Date(2012,7,10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get('year')).toBe(1982);
+        expect(result.start.get('month')).toBe(2);
+        expect(result.start.get('day')).toBe(3);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('3rd Feb 82');
+
+        expect(result.start).toBeDate(new Date(1982, 2-1, 3, 12));
+    });
 
     testSingleCase(chrono, '10 August 2555 BE', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0);

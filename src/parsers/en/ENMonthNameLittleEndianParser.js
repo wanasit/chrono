@@ -16,7 +16,8 @@ var PATTERN = new RegExp('(\\W|^)' +
             '(?:-|\/|,?\\s*)' +
             '((?:' + 
                 '[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|' +
-                '[1-2][0-9]{3}' + 
+                '[1-2][0-9]{3}|' +
+                '[5-9][0-9]' +
             ')(?![^\\s]\\d))' +
         ')?' +
         '(?=\\W|$)', 'i'
@@ -68,7 +69,11 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
             } else {
                 year = parseInt(year);
                 if (year < 100){
-                    year = year + 2000;
+                    if (year > 50) {
+                        year = year + 1900;
+                    } else {
+                        year = year + 2000;
+                    }
                 }
             }
         }
