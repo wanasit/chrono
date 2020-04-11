@@ -1,13 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
-    var text = "hace 5 días, hicimos algo";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace 5 días, hicimos algo', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -19,14 +15,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 5, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "hace 10 dias, hicimos algo";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace 10 dias, hicimos algo', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(7)
@@ -38,15 +29,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 31, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "hace 15 minutos";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace 15 minutos', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('hace 15 minutos')
         expect(result.start.get('hour')).toBe(11)
@@ -55,14 +41,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,59);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "   hace 12 horas";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, '   hace 12 horas', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(3)
         expect(result.text).toBe('hace 12 horas')
         expect(result.start.get('hour')).toBe(0)
@@ -71,18 +52,13 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,0,14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test("Test - Single Expression (Casual)", function() {
 
-    var text = "hace 5 meses, hicimos algo";
-    var results = chrono.parse(text, new Date(2012, 8-1,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace 5 meses, hicimos algo', new Date(2012, 8-1,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(3)
@@ -94,14 +70,9 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 3-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "hace 5 años, hicimos algo";
-    var results = chrono.parse(text, new Date(2012, 8-1,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace 5 años, hicimos algo', new Date(2012, 8-1,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2007)
         expect(result.start.get('month')).toBe(8)
@@ -113,15 +84,10 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2007, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "hace una semana, hicimos algo";
-    var results = chrono.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.es, 'hace una semana, hicimos algo', new Date(2012, 8-1, 3), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(7)
@@ -133,5 +99,5 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 27, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });

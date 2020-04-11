@@ -1,14 +1,10 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
 
-    var text = "8h10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8h10", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8h10')
 
@@ -28,14 +24,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8h10m";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8h10m", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8h10m')
 
@@ -55,14 +46,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8h10m00";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8h10m00", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8h10m00')
 
@@ -82,14 +68,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8h10m00s";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8h10m00s", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8h10m00s')
 
@@ -109,14 +90,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8:10 PM";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8:10 PM", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8:10 PM')
 
@@ -130,14 +106,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 20, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8h10 PM";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8h10 PM", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8h10 PM')
 
@@ -151,15 +122,10 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 20, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "1230pm";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "1230pm", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('1230pm')
 
@@ -173,14 +139,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12, 30);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 	
-    var text = "5:16p";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "5:16p", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('5:16p')
 
@@ -194,14 +155,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5h16p";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "5h16p", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('5h16p')
 
@@ -215,14 +171,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5h16mp";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "5h16mp", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('5h16mp')
 
@@ -236,14 +187,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5:16 p.m.";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "5:16 p.m.", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('5:16 p.m.')
 
@@ -257,14 +203,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5h16 p.m.";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "5h16 p.m.", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('5h16 p.m.')
 
@@ -278,14 +219,9 @@ test("Test - Single Expression", function() {
       var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "RDV à 6.13 AM";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "RDV à 6.13 AM", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(4)
         expect(result.text).toBe('à 6.13 AM')
 
@@ -296,15 +232,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 6, 13);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = '13h-15h';
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "13h-15h", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('13h-15h')
 
@@ -316,7 +247,7 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 13, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(15)
         expect(result.end.get('minute')).toBe(0)
@@ -325,14 +256,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 15, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = '13-15h';
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "13-15h", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('13-15h')
 
@@ -344,7 +270,7 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 13, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(15)
         expect(result.end.get('minute')).toBe(0)
@@ -353,14 +279,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 15, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = '1-3pm';
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "1-3pm", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('1-3pm')
 
@@ -372,7 +293,7 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 13, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(15)
         expect(result.end.get('minute')).toBe(0)
@@ -381,15 +302,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 15, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = '11pm-2';
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "11pm-2", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('11pm-2')
 
@@ -401,7 +317,7 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 23, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(2)
         expect(result.end.get('minute')).toBe(0)
@@ -410,17 +326,12 @@ test("Test - Single Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 11, 2, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Range Expression", function() {
 
-    var text = "8:10 - 12.32";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8:10 - 12.32", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8:10 - 12.32')
 
@@ -439,7 +350,7 @@ test("Test - Range Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-        
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(12)
         expect(result.end.get('minute')).toBe(32)
@@ -455,14 +366,9 @@ test("Test - Range Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 12, 32);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8:10 - 12h32";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "8:10 - 12h32", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('8:10 - 12h32')
 
@@ -481,7 +387,7 @@ test("Test - Range Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 10);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-        
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(12)
         expect(result.end.get('minute')).toBe(32)
@@ -497,15 +403,10 @@ test("Test - Range Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 12, 32);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = " from 6:30pm to 11:00pm ";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, " from 6:30pm to 11:00pm ", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(1)
         expect(result.text).toBe('from 6:30pm to 11:00pm')
 
@@ -517,7 +418,7 @@ test("Test - Range Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 18, 30);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-        
+
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(23)
         expect(result.end.get('minute')).toBe(0)
@@ -526,38 +427,33 @@ test("Test - Range Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 23, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 });
 
 test("Test - Impossible", function() {
 
     var text = "8:62";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.fr.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(0)
 
     var text = "25:12";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.fr.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(0)
 
     var text = "12h12:99s";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.fr.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(0)
 
 
     var text = "13.12 PM";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.fr.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(0)
 });
 
 test("Test - Date + Time Expression", function() {
 
-    var text = "Quelque chose se passe le 2014-04-18 à 3h00";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "Quelque chose se passe le 2014-04-18 à 3h00", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26)
         expect(result.text).toBe('2014-04-18 à 3h00')
 
@@ -573,14 +469,9 @@ test("Test - Date + Time Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2014, 4-1, 18, 3, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Quelque chose se passe le 10 Août 2012 à 10:12:59";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "Quelque chose se passe le 10 Août 2012 à 10:12:59", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26)
         expect(result.text).toBe('10 Août 2012 à 10:12:59')
 
@@ -596,14 +487,9 @@ test("Test - Date + Time Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 10, 12, 59);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Quelque chose se passe le 15juin 2016 20h";
-    var results = chrono.parse(text, new Date(2016,6,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "Quelque chose se passe le 15juin 2016 20h", new Date(2016,6,10), (result) => {
         expect(result.index).toBe(26)
         expect(result.text).toBe('15juin 2016 20h')
 
@@ -619,14 +505,9 @@ test("Test - Date + Time Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 6-1, 15, 20, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Quelque chose se passe le 2014-04-18 7:00 - 8h00 ...";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "Quelque chose se passe le 2014-04-18 7:00 - 8h00 ...", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26)
         expect(result.text).toBe('2014-04-18 7:00 - 8h00')
 
@@ -658,16 +539,11 @@ test("Test - Date + Time Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2014, 4-1, 18, 8, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
 
-    var text = "Quelque chose se passe le 2014-04-18 de 7:00 à 20:00 ...";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "Quelque chose se passe le 2014-04-18 de 7:00 à 20:00 ...", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26)
         expect(result.text).toBe('2014-04-18 de 7:00 à 20:00')
 
@@ -699,18 +575,13 @@ test("Test - Date + Time Expression", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2014, 4-1, 18, 20, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 })
 
 
 test("Test - Time Expression's Meridiem imply", function() {
 
-    var text = "1pm-3";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "1pm-3", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('1pm-3')
 
@@ -732,14 +603,9 @@ test("Test - Time Expression's Meridiem imply", function() {
         expect(result.end.get('second')).toBe(0)
         expect(result.end.get('millisecond')).toBe(0)
         expect(result.end.isCertain('meridiem')).toBe(false)
-    }
+    });
 
-    var text = "18-04-2014 1pm-3";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "18-04-2014 1pm-3", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('18-04-2014 1pm-3')
 
@@ -761,14 +627,9 @@ test("Test - Time Expression's Meridiem imply", function() {
         expect(result.end.get('second')).toBe(0)
         expect(result.end.get('millisecond')).toBe(0)
         expect(result.end.isCertain('meridiem')).toBe(false)
-    }
+    });
 
-    var text = "aujourd'hui de 1pm-3";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.fr, "aujourd'hui de 1pm-3", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe("aujourd'hui de 1pm-3")
 
@@ -790,14 +651,9 @@ test("Test - Time Expression's Meridiem imply", function() {
         expect(result.end.get('second')).toBe(0)
         expect(result.end.get('millisecond')).toBe(0)
         expect(result.end.isCertain('meridiem')).toBe(false)
-    }
+    });
 
-    var text = "ajd de 1am-3";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.fr, "ajd de 1am-3", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('ajd de 1am-3')
 
@@ -819,33 +675,33 @@ test("Test - Time Expression's Meridiem imply", function() {
         expect(result.end.get('second')).toBe(0)
         expect(result.end.get('millisecond')).toBe(0)
         expect(result.end.isCertain('meridiem')).toBe(false)
-    }
+    });
 })
 
 
 test("Test - Timezone extraction", function() {
 
     var text = "Vendredi à 2 pm";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe(text)
     expect(result.start.isCertain('timezoneOffset')).toBe(false)
     expect(!result.start.get('timezoneOffset')).not.toBeNull()
 
 
     var text = "vendredi 2 pm EST";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe(text)
     expect(result.start.isCertain('timezoneOffset')).toBe(true)
     expect(result.start.get('timezoneOffset')).toBe(-300)
 
     var text = "vendredi 15h CET";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe(text)
     expect(result.start.isCertain('timezoneOffset')).toBe(true)
     expect(result.start.get('timezoneOffset')).toBe(60)
 
     var text = "vendredi 15h cest";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe(text)
     expect(result.start.isCertain('timezoneOffset')).toBe(true)
     expect(result.start.get('timezoneOffset')).toBe(120)
@@ -858,14 +714,14 @@ test("Test - Timezone extraction", function() {
 
 
     var text = "Vendredi à 2 pm j'ai rdv...";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe('Vendredi à 2 pm')
     expect(result.start.isCertain('timezoneOffset')).toBe(false)
     expect(!result.start.get('timezoneOffset')).not.toBeNull()
 
 
     var text = "Vendredi à 2 pm je vais faire quelque chose";
-    var result = chrono.parse(text, new Date(2016, 3, 28))[0];
+    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
     expect(result.text).toBe('Vendredi à 2 pm')
     expect(result.start.isCertain('timezoneOffset')).toBe(false)
     expect(!result.start.get('timezoneOffset')).not.toBeNull()
@@ -875,86 +731,86 @@ test("Test - Timezone extraction", function() {
 test("Test - Random date + time expression", function() {
 
     var text = "lundi 29/4/2013 630-930am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
     
     var text = "mercredi 1/5/2013 1115am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
     
     var text = "vendredi 3/5/2013 1230pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     
     var text = "dimanche 6/5/2013  750am-910am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "lundi 13/5/2013 630-930am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "wednesday 5/15/2013 1030am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Vendredi 21/6/2013 2:30";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "mardi 7/2/2013 1-230 pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "mardi 7/2/2013 1-23h0";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "mardi 7/2/2013 1h-23h0m";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Lundi, 24/6/2013, 7:00pm - 8:30pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Jeudi6/5/2013 de 7h à 10h";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Mercredi, 3 juil 2013 14h";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
 
     var text = "18h";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
 
     var text = "18-22h";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "11h-13";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "that I need to know or am I covered?";
-    var result = chrono.parse(text);
+    var result = chrono.fr.parse(text);
     expect(result.length).toBe(0)
 
     var text = "à 12h";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "a midi";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
     expect(result.start.get('hour')).toBe(12)
 
     var text = "à minuit";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text)
 })

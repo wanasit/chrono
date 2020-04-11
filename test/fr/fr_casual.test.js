@@ -1,14 +1,10 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
 
-    var text = "La deadline est maintenant";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 8, 9, 10, 11));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est maintenant", new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('maintenant');
 
@@ -24,15 +20,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 9, 10, 11);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline est aujourd'hui";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est aujourd'hui", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('aujourd\'hui');
 
@@ -44,15 +35,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline est demain";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est demain", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('demain');
 
@@ -64,27 +50,17 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 11, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
     // Say.."Demain" in the late night (1 AM)
-    var text = "La deadline est demain";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 1));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est demain", new Date(2012, 7, 10, 1), (result) => {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline était hier";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline était hier", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(18);
         expect(result.text).toBe('hier');
 
@@ -96,15 +72,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 9, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline était la veille";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline était la veille", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(18);
         expect(result.text).toBe('la veille');
 
@@ -117,15 +88,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 9, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline est ce matin";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est ce matin", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('ce matin');
 
@@ -138,15 +104,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline est cet après-midi";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est cet après-midi", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('cet après-midi');
 
@@ -159,14 +120,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "La deadline est cet aprem";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est cet aprem", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('cet aprem');
 
@@ -179,15 +135,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "La deadline est ce soir";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est ce soir", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('ce soir');
 
@@ -200,19 +151,14 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 18);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test("Test - Combined Expression", function() {
 
 
-    var text = "La deadline est aujourd'hui 17:00";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est aujourd'hui 17:00", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('aujourd\'hui 17:00');
 
@@ -225,14 +171,9 @@ test("Test - Combined Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "La deadline est demain 17:00";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est demain 17:00", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('demain 17:00');
 
@@ -245,14 +186,9 @@ test("Test - Combined Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 11, 17);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "La deadline est demain matin 11h";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "La deadline est demain matin 11h", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe('demain matin 11h');
 
@@ -265,18 +201,13 @@ test("Test - Combined Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 11, 11);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test("Test - Casual date range", function() {
 
-    var text = "L'évenènement est d'aujourd'hui à vendredi prochain";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 4, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "L'évenènement est d'aujourd'hui à vendredi prochain", new Date(2012, 7, 4, 12), (result) => {
         expect(result.index).toBe(20);
         expect(result.text).toBe("aujourd'hui à vendredi prochain");
 
@@ -300,16 +231,11 @@ test("Test - Casual date range", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
 
-    var text = "L'évenènement est d'aujourd'hui à vendredi prochain";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.fr, "L'évenènement est d'aujourd'hui à vendredi prochain", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(20);
         expect(result.text).toBe('aujourd\'hui à vendredi prochain');
 
@@ -333,7 +259,7 @@ test("Test - Casual date range", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 17, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
@@ -343,7 +269,7 @@ test("Test - Casual date range", function() {
 test('Test - Random text', function() {
 
     var text = "cette nuit";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2012);
     expect(result.start.get('month')).toBe(1);
@@ -352,7 +278,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 8pm";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -361,7 +287,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 20h";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -370,7 +296,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 20:00";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -379,7 +305,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 20h00";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -388,7 +314,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 20h00m00";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -397,7 +323,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "ce soir 20h00m00s";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -406,7 +332,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "Ce soir à 20h";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -415,7 +341,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1);
 
     var text = "Ce soir a 20h";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('hour') ).toBe(20);
     expect(result.start.get('year') ).toBe(2012);
@@ -425,13 +351,13 @@ test('Test - Random text', function() {
 
 
     var text = "jeu";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text);
     expect(result.start.get('weekday')).toBe(4);
 
 
     var text = "sam";
-    var result = chrono.parse(text)[0];
+    var result = chrono.fr.parse(text)[0];
     expect(result.text).toBe(text);
     expect(result.start.get('weekday')).toBe(6)
 });
@@ -440,15 +366,15 @@ test('Test - Random text', function() {
 test('Test - Random negative text', function() {
 
     var text = "pasaujourd'hui";
-    var results = chrono.parse(text);
+    var results = chrono.fr.parse(text);
     expect(results.length).toBe(0);
 
     var text = "pashier";
-    var results = chrono.parse(text);
+    var results = chrono.fr.parse(text);
     expect(results.length).toBe(0);
 
     var text = "maintenanter";
-    var results = chrono.parse(text);
+    var results = chrono.fr.parse(text);
     expect(results.length).toBe(0);
 
 });

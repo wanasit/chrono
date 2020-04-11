@@ -4,7 +4,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo é agora";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 8, 9, 10, 11));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 8, 9, 10, 11));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -28,7 +28,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo é hoje";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -48,7 +48,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo é Amanhã";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -66,9 +66,8 @@ test("Test - Single Expression", function() {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
     }
 
-    // Say.."Tomorrow" in the late night (1 AM)
-    var text = "O prazo é Tomorrow";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 1));
+    var text = "O prazo é Amanhã";
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 1));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -80,7 +79,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo foi ontem";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -100,7 +99,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo foi ontem à noite ";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -121,7 +120,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo foi esta manhã ";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -142,7 +141,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "O prazo foi esta tarde ";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -167,7 +166,7 @@ test("Test - Combined Expression", function() {
 
 
     var text = "O prazo é hoje às 5PM";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
+    var results = chrono.pt.parse(text, new Date(2012, 7, 10, 12));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -191,7 +190,7 @@ test("Test - Combined Expression", function() {
 test('Test - Random text', function() {
 
     var text = "esta noite";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.pt.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text)
     expect(result.start.get('year')).toBe(2012)
     expect(result.start.get('month')).toBe(1)
@@ -200,7 +199,7 @@ test('Test - Random text', function() {
     expect(result.start.get('meridiem') ).toBe(1)
 
     var text = "esta noite 8pm";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.pt.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text)
     expect(result.start.get('hour') ).toBe(20)
     expect(result.start.get('year') ).toBe(2012)
@@ -210,7 +209,7 @@ test('Test - Random text', function() {
 
 
     var text = "esta noite at 8"; // TODO
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
+    var result = chrono.pt.parse(text, new Date(2012, 1-1, 1, 12))[0];
     expect(result.text).toBe(text)
     expect(result.start.get('hour') ).toBe(20)
     expect(result.start.get('year') ).toBe(2012)
@@ -220,13 +219,13 @@ test('Test - Random text', function() {
 
 
     var text = "quinta";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
     expect(result.start.get('weekday')).toBe(4)
 
 
     var text = "sexta";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
     expect(result.start.get('weekday')).toBe(5)
 })
@@ -235,24 +234,24 @@ test('Test - Random text', function() {
 test('Test - Random negative text', function() {
 
     var text = "naohoje";
-    var results = chrono.parse(text);
+    var results = chrono.pt.parse(text);
     expect(results.length).toBe(0)
 
 
     var text = "hyamanhã";
-    var results = chrono.parse(text);
+    var results = chrono.pt.parse(text);
     expect(results.length).toBe(0)
 
     var text = "xontem";
-    var results = chrono.parse(text);
+    var results = chrono.pt.parse(text);
     expect(results.length).toBe(0)
 
     var text = "porhora";
-    var results = chrono.parse(text);
+    var results = chrono.pt.parse(text);
     expect(results.length).toBe(0)
 
     var text = "agoraxsd";
-    var results = chrono.parse(text);
+    var results = chrono.pt.parse(text);
     expect(results.length).toBe(0)
 
 })

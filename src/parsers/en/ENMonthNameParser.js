@@ -29,17 +29,15 @@ exports.Parser = function ENMonthNameParser(){
     this.pattern = function() { return PATTERN; }
     
     this.extract = function(text, ref, match, opt){
-        var result = new ParsedResult({
+        const result = new ParsedResult({
             text: match[0].substr(match[1].length, match[0].length - match[1].length),
             index: match.index + match[1].length,
             ref: ref,
         });
 
-        
-        var month = match[MONTH_NAME_GROUP];
-        month = util.MONTH_OFFSET[month.toLowerCase()];
-
-        var day = 1;
+        const day = 1;
+        const monthName = match[MONTH_NAME_GROUP];
+        const month = util.MONTH_OFFSET[monthName.toLowerCase()];
 
         var year = null;
         if (match[YEAR_GROUP]) {
@@ -70,6 +68,10 @@ exports.Parser = function ENMonthNameParser(){
             result.start.imply('day', day);
             result.start.assign('month', month);
             result.start.imply('year', year);
+        }
+
+        if (result.text.match(/^\w{3}$/)) {
+            return false;
         }
 
         result.tags['ENMonthNameParser'] = true;

@@ -72,6 +72,10 @@ exports.Parser = function ENMonthNameParser(){
             result.start.imply('year', year);
         }
 
+        if (this.isStrictMode() && result.text.match(/^\w+$/)) {
+            return false;
+        }
+
         result.tags['DEMonthNameParser'] = true;
         return result;
     }

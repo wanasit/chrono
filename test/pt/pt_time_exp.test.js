@@ -4,7 +4,7 @@ test("Test - Single Expression", function() {
 
 
     var text = "Ficaremos às 6.13 AM";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.pt.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -28,7 +28,7 @@ test("Test - Single Expression", function() {
 test("Test - Range Expression", function() {
 
     var text = "8:10 - 12.32";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.pt.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -70,7 +70,7 @@ test("Test - Range Expression", function() {
     }
 
     var text = " de 6:30pm a 11:00pm ";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.pt.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -102,7 +102,7 @@ test("Test - Range Expression", function() {
 test("Test - Date + Time Expression", function() {
 
     var text = "Algo passou em 10 de Agosto de 2012 10:12:59 pm";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.pt.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -130,7 +130,7 @@ test("Test - Date + Time Expression", function() {
 test("Test - Time Expression's Meridiem imply", function() {
 
     var text = "hoje de 1pm a 3";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    var results = chrono.pt.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1)
 
     var result = results[0];
@@ -163,78 +163,78 @@ test("Test - Time Expression's Meridiem imply", function() {
 test("Test - Random date + time expression", function() {
 
     var text = "segunda 4/29/2013 630-930am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "terça 5/1/2013 1115am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "quarta 5/3/2013 1230pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
 
     var text = "domingo 5/6/2013  750am-910am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "segunda-feira 5/13/2013 630-930am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "quarta-feira 5/15/2013 1030am";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "quinta 6/21/2013 2:30";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "terça-feira 7/2/2013 1-230 pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Segunda-feira, 6/24/2013, 7:00pm - 8:30pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Quinta6/20/2013 from 7:00 PM to 10:00 PM";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "Quarta, 3 Julho de 2013 às 2pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
 
     var text = "6pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "6 pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "7-10pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "11.1pm";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "às 12";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 
     var text = "ao meio-dia";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
     expect(result.start.get('hour')).toBe(12)
     expect(result.start.get('hour')).toBe(12)
 
     var text = "a meia-noite";
-    var result = chrono.parse(text)[0];
+    var result = chrono.pt.parse(text)[0];
     expect(result.text).toBe(text)
 })

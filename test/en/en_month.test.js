@@ -80,6 +80,19 @@ test("Test - Month expression in context", function() {
 
         expect(result.start).toBeDate(new Date(2012, 9-1, 1, 12));
     });
+
+
+    testSingleCase(chrono, 'By Angie Mar November 2019', (result) => {
+
+        expect(result.text).toBe('November 2019');
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get('year')).toBe(2019);
+        expect(result.start.get('month')).toBe(11);
+
+        expect(result.start).toBeDate(new Date(2019, 11-1, 1, 12));
+    });
+
 });
 
 test("Test - Month slash expression", function() {

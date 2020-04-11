@@ -2,12 +2,12 @@ var chrono = require('../../src/chrono');
 test("Test - fr - modifier mandatory just after", function() {
 
     var text = "le mois d'avril";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result).toBe(undefined);
 
     // The modifier "prochain" have to be just after the word "mois", to avoid this kind of cases we cannot handle
     var text = "le mois d'avril prochain";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result).toBe(undefined);
 
 });
@@ -15,7 +15,7 @@ test("Test - fr - modifier mandatory just after", function() {
 test("Test - fr - relative date", function() {
 
     var text = "la semaine prochaine";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -33,7 +33,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les 2 prochaines semaines";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -51,7 +51,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les trois prochaines semaines";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -69,7 +69,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "le mois dernier";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(4);
@@ -87,7 +87,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les 30 jours précédents";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(4);
@@ -105,7 +105,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les 24 heures passées";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -123,7 +123,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les 90 secondes suivantes";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12, 11, 27, 0))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12, 11, 27, 0))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -143,7 +143,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "les huit dernieres minutes"; // No accent should work too
-    var result = chrono.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(5);
@@ -161,7 +161,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "le dernier trimestre";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2017);
     expect(result.start.get('month')).toBe(1);
@@ -179,7 +179,7 @@ test("Test - fr - relative date", function() {
 
 
     var text = "l'année prochaine";
-    var result = chrono.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
+    var result = chrono.fr.parse(text, new Date(2017, 5-1, 12, 11, 27))[0];
     expect(result.text).toBe(text);
     expect(result.start.get('year')).toBe(2018);
     expect(result.start.get('month')).toBe(1);

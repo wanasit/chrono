@@ -1,37 +1,4 @@
 
-expect.extend({
-
-    toBeDate(resultOrComponent, date) {
-        if (typeof resultOrComponent.date !== 'function') {
-            return {
-                message: () => `${resultOrComponent} is not a ParsedResult or ParsedComponent`,
-                pass: false
-            };
-        }
-
-        const actualDate = resultOrComponent.date();
-        const actualTime = actualDate.getTime();
-        const expectedTime = date.getTime();
-        return {
-            message: () => `Expected date to be: ${date} Received: ${actualDate}`,
-            pass: actualTime === expectedTime 
-        };
-    },
-
-    toBeSingleOnText(results, text) {
-        if (results.length === 1) {
-            return {
-                message: () => `Got single result from '${text}'`,
-                pass: true
-            };
-        }
-
-        return {
-            message: () => `Got ${results.length} results from '${text}'`,
-            pass: false
-        };
-    }
-});
 
 export function testSingleCase(chrono, text, refDateOrResultCheck, optionOrResultCheck, resultCheck) {
 
@@ -63,3 +30,41 @@ export function testUnexpectedResult(chrono, text, refDate) {
     const results = chrono.parse(text, refDate);
     expect(results).toHaveLength(0);
 }
+
+expect.extend({
+
+    toBeDate(resultOrComponent, date) {
+        if (typeof resultOrComponent.date !== 'function') {
+            return {
+                message: () => `${resultOrComponent} is not a ParsedResult or ParsedComponent`,
+                pass: false
+            };
+        }
+
+        const actualDate = resultOrComponent.date();
+        const actualTime = actualDate.getTime();
+        const expectedTime = date.getTime();
+        return {
+            message: () => `Expected date to be: ${date} Received: ${actualDate}`,
+            pass: actualTime === expectedTime
+        };
+    },
+
+    toBeSingleOnText(results, text) {
+        if (results.length === 1) {
+            return {
+                message: () => `Got single result from '${text}'`,
+                pass: true
+            };
+        }
+
+        return {
+            message: () => `Got ${results.length} results from '${text}'\n${
+                results.map(
+                    result => JSON.stringify(result)
+                ).join('\n')
+            }`,
+            pass: false
+        };
+    }
+});

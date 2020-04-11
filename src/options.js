@@ -75,10 +75,10 @@ exports.casualOption = function () {
         exports.en.casual,
         // Some German abbriviate overlap with common English
         exports.de({ strict: true }), 
-        exports.pt.casual,
-        exports.es.casual,
-        exports.fr.casual,
-        exports.ja.casual,
+        exports.pt,
+        exports.es,
+        exports.fr,
+        exports.ja,
         exports.zh,
         exports.commonPostProcessing
     ]);
