@@ -1,13 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
-    var text = "5 days ago, we did something";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5 days ago, we did something', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -19,14 +15,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 5, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "10 days ago, we did something";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '10 days ago, we did something', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(7);
@@ -38,15 +29,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 31, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "15 minute ago";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '15 minute ago', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('15 minute ago');
         expect(result.start.get('hour')).toBe(11);
@@ -55,14 +41,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,59);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "15 minute earlier";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '15 minute earlier', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('15 minute earlier');
         expect(result.start.get('hour')).toBe(11);
@@ -71,14 +52,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,59);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "15 minute before";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '15 minute before', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('15 minute before');
         expect(result.start.get('hour')).toBe(11);
@@ -87,14 +63,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,59);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "   12 hours ago";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '   12 hours ago', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe('12 hours ago');
         expect(result.start.get('hour')).toBe(0);
@@ -103,14 +74,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,0,14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "   half an hour ago";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '   half an hour ago', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe('half an hour ago');
         expect(result.start.get('hour')).toBe(11);
@@ -119,15 +85,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,44);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "12 hours ago I did something";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '12 hours ago I did something', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('12 hours ago');
         expect(result.start.get('hour')).toBe(0);
@@ -136,15 +97,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,0,14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "12 seconds ago I did something";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '12 seconds ago I did something', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('12 seconds ago');
         expect(result.start.get('hour')).toBe(12);
@@ -154,15 +110,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12, 13, 48);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "three seconds ago I did something";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'three seconds ago I did something', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('three seconds ago');
         expect(result.start.get('hour')).toBe(12);
@@ -172,16 +123,11 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12, 13, 57);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
 
-    var text = "5 Days ago, we did something";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5 Days ago, we did something', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -193,15 +139,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 5, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "   half An hour ago";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '   half An hour ago', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe('half An hour ago');
         expect(result.start.get('hour')).toBe(11);
@@ -210,15 +151,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,11,44);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "A days ago, we did something";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'A days ago, we did something', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -230,15 +166,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 9, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "a min before";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'a min before', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('a min before');
         expect(result.start.get('hour')).toBe(12);
@@ -247,19 +178,14 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,13);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 });
 
 
 test("Test - Single Expression (Casual)", function() {
 
-    var text = "5 months ago, we did something";
-    var results = chrono.parse(text, new Date(2012, 8-1,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5 months ago, we did something', new Date(2012, 8-1,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(3);
@@ -271,14 +197,9 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 3-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5 years ago, we did something";
-    var results = chrono.parse(text, new Date(2012, 8-1,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5 years ago, we did something', new Date(2012, 8-1,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2007);
         expect(result.start.get('month')).toBe(8);
@@ -290,15 +211,10 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2007, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "a week ago, we did something";
-    var results = chrono.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'a week ago, we did something', new Date(2012, 8-1, 3), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(7);
@@ -310,15 +226,10 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 27, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "a few days ago, we did something";
-    var results = chrono.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'a few days ago, we did something', new Date(2012, 8-1, 3), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(7);
@@ -330,7 +241,7 @@ test("Test - Single Expression (Casual)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 31, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 

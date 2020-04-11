@@ -1,7 +1,5 @@
-const chrono = require('../../src/chrono');
-const test_util = require('../test_util');
-
-const testSingleCase = test_util.testSingleCase;
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Month expression", function() {
 
@@ -82,17 +80,12 @@ test("Test - Month expression in context", function() {
 
         expect(result.start).toBeDate(new Date(2012, 9-1, 1, 12));
     });
-})
+});
 
 test("Test - Month slash expression", function() {
 
 
-    var text = "9/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono, '9/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(9);
@@ -103,14 +96,9 @@ test("Test - Month slash expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 9-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "09/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono, '09/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(9);
@@ -121,7 +109,7 @@ test("Test - Month slash expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 9-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 });
 

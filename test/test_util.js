@@ -33,15 +33,33 @@ expect.extend({
     }
 });
 
-exports.testSingleCase = (chrono, text, refDate, resultCheck) => {
+export function testSingleCase(chrono, text, refDateOrResultCheck, optionOrResultCheck, resultCheck) {
 
-    if (resultCheck === undefined && typeof refDate === "function") {
-        resultCheck = refDate;
-        refDate = undefined;
+    if (resultCheck === undefined && typeof optionOrResultCheck === "function") {
+        resultCheck = optionOrResultCheck;
+        optionOrResultCheck = undefined;
     }
 
-    const results = chrono.parse(text, refDate);
+    if (optionOrResultCheck === undefined && typeof refDateOrResultCheck === "function") {
+        resultCheck = refDateOrResultCheck;
+        refDateOrResultCheck = undefined;
+    }
+
+    const results = chrono.parse(text, refDateOrResultCheck, optionOrResultCheck);
     expect(results).toBeSingleOnText(text);
 
     resultCheck(results[0]);
+}
+
+export function testWithExpectedDate(chrono, text, expectedDate) {
+
+    testSingleCase(chrono, text, (result) => {
+
+        expect(result.start).toBeDate(expectedDate);
+    });
+}
+
+export function testUnexpectedResult(chrono, text, refDate) {
+    const results = chrono.parse(text, refDate);
+    expect(results).toHaveLength(0);
 }

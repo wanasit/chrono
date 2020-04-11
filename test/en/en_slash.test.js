@@ -1,12 +1,8 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
-    var text = "The event is going ahead (04/2016)";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'The event is going ahead (04/2016)', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2016)
         expect(result.start.get('month')).toBe(4)
@@ -18,14 +14,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 4-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "Published: 06/2004";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'Published: 06/2004', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2004)
         expect(result.start.get('month')).toBe(6)
@@ -37,14 +28,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2004, 6-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8/10/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '8/10/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -60,14 +46,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = ": 8/1/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, ': 8/1/2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -79,14 +60,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "8/10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '8/10', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -102,36 +78,26 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "The Deadline is 8/10/2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'The Deadline is 8/10/2012', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(16)
         expect(result.text).toBe('8/10/2012')
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "The Deadline is Tuesday 11/3/2015";
-    var results = chrono.parse(text, new Date(2015,10,3));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'The Deadline is Tuesday 11/3/2015', new Date(2015,10,3), (result) => {
         expect(result.index).toBe(16)
         expect(result.text).toBe('Tuesday 11/3/2015')
 
         var resultDate = result.start.date();
         var expectDate = new Date(2015, 10, 3, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 });
 
@@ -182,12 +148,7 @@ test("Test - Single Expression Little-Endian with Month name", function() {
 
 test("Test - Single Expression Start with Year", function() {
 
-    var text = "2012/8/10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '2012/8/10', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -199,32 +160,22 @@ test("Test - Single Expression Start with Year", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "The Deadline is 2012/8/10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'The Deadline is 2012/8/10', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(16)
         expect(result.text).toBe('2012/8/10')
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Single Expression Start with Year and Month Name", function() {
 
-    var text = "2012/Aug/10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '2012/Aug/10', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2012)
         expect(result.start.get('month')).toBe(8)
@@ -236,21 +187,16 @@ test("Test - Single Expression Start with Year and Month Name", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "The Deadline is 2012/aug/10";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'The Deadline is 2012/aug/10', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(16)
         expect(result.text).toBe('2012/aug/10')
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
@@ -424,12 +370,7 @@ test("Test - Impossible Dates (Casual Mode)", function() {
 
 test('Test - forward dates only option', function () {
 
-    var text = "5/31";
-    var results = chrono.parse(text, new Date(1999, 6-1, 1), {forwardDate: true});
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5/31', new Date(1999, 6-1, 1), {forwardDate: true}, (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2000)
         expect(result.start.get('month')).toBe(5)
@@ -445,6 +386,6 @@ test('Test - forward dates only option', function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2000, 5-1, 31, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 });

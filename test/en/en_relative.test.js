@@ -1,4 +1,5 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -181,38 +182,23 @@ test("Test - Single Expression", function() {
         expect(result.start.get('hour')).toBe(12);
     }
 
-    var text = "next year at Feb-2017";
-    var results = chrono.parse(text, new Date(2016, 10, 10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
-        expect(result.text).toBe(text);
+    testSingleCase(chrono, 'next year at Feb-2017', new Date(2016, 10, 10), (result) => {
+        expect(result.text).toBe('next year at Feb-2017');
         expect(result.start.get('year')).toBe(2017);
         expect(result.start.get('month')).toBe(2);
         expect(result.start.get('day')).toBe(1);
         expect(result.start.get('hour')).toBe(12);
-    }
+    });
 
-    var text = "next week (Dec 2016)";
-    var results = chrono.parse(text, new Date(2016, 11, 27));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'next week (Dec 2016)', new Date(2016, 11, 27), (result) => {
         expect(result.text).toBe('next week (Dec 2016')
         expect(result.start.get('year')).toBe(2016);
         expect(result.start.get('month')).toBe(12);
         expect(result.start.get('day')).toBe(1);
         expect(result.start.get('hour')).toBe(12);
-    }
+    });
 
-    var text = 'She is getting married next year (July 2013).';
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'She is getting married next year (July 2013).', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull()
         expect(result.start.get('year')).toBe(2013)
         expect(result.start.get('month')).toBe(7)
@@ -224,5 +210,5 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2013, 7-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });

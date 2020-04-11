@@ -1,14 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
-    var text = "we have to make something in 5 days.";
-    var results = chrono.parse(text, new Date(2012,7,10));
-
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'we have to make something in 5 days.', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26);
         expect(result.text).toBe('in 5 days');
 
@@ -20,16 +15,11 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 15, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
 
-    var text = "we have to make something in five days.";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'we have to make something in five days.', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26);
         expect(result.text).toBe('in five days');
 
@@ -41,15 +31,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 15, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "we have to make something within 10 day";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'we have to make something within 10 day', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(26);
         expect(result.text).toBe('within 10 day');
 
@@ -61,215 +46,145 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 20, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "in 5 minutes";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'in 5 minutes', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('in 5 minutes');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,19);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "within 1 hour";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within 1 hour', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within 1 hour');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,13,14);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "In 5 minutes I will go home";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'In 5 minutes I will go home', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('In 5 minutes');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,19);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "In 5 minutes A car need to move";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'In 5 minutes A car need to move', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('In 5 minutes');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,19);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "In 5 seconds A car need to move";
-    var results = chrono.parse(text, new Date(2012,7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'In 5 seconds A car need to move', new Date(2012,7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('In 5 seconds');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12, 14, 5);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within half an hour";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within half an hour', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within half an hour');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,44);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within two weeks";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within two weeks', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within two weeks');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 24, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within a month";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within a month', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within a month');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within a few months";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within a few months', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within a few months');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 10, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within one year";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within one year', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within one year');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2013, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within one Year";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within one Year', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within one Year');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2013, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "within One year";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'within One year', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within One year');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2013, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "In 5 Minutes A car need to move";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'In 5 Minutes A car need to move', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('In 5 Minutes');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,19);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "In 5 mins a car need to move";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, 'In 5 mins a car need to move', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('In 5 mins');
 
         var resultDate = result.start.date();
         var expectDate = new Date(2012,7,10,12,19);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
     var text = "in a week";
     var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];

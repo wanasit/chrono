@@ -1,14 +1,10 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single expression", function() {
 
 
-    var text = "10. August 2012";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono, '10. August 2012', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -20,15 +16,10 @@ test("Test - Single expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "10. August 113 v. Chr.";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono, '10. August 113 v. Chr.', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('10. August 113 v. Chr.');
 
@@ -40,7 +31,7 @@ test("Test - Single expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(-113, 8-1, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
     var text = "10. August 85 n. Chr.";
     var results = chrono.parse(text, new Date(2012,7,10));

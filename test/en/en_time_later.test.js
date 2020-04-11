@@ -1,13 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
-    var text = "2 days later";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '2 days later', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -22,20 +18,15 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 12, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "5 minutes later";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 10, 0));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '5 minutes later', new Date(2012, 7, 10, 10, 0), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
         expect(result.start.get('hour')).toBe(10);
-        expect(result.start.get('minute')).toBe(5);        
+        expect(result.start.get('minute')).toBe(5);
 
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 minutes later');
@@ -46,14 +37,9 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 8-1, 10, 10, 5);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "3 week later";
-    var results = chrono.parse(text, new Date(2012, 7-1, 10, 10, 0));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono, '3 week later', new Date(2012, 7-1, 10, 10, 0), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(7);
@@ -65,7 +51,7 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7-1, 31, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test("Test - Single Expression (Strict)", function() {
@@ -77,12 +63,7 @@ test("Test - Single Expression (Strict)", function() {
     var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
     expect(results.length).toBe(0)
 
-    var text = "in 25 minutes";
-    var results = chrono.parse(text, new Date(2012, 7, 10, 12, 40));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono, 'in 25 minutes', new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('in 25 minutes');
         expect(result.start.get('hour')).toBe(13);
@@ -91,5 +72,5 @@ test("Test - Single Expression (Strict)", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 13, 5);
         expect(expectDate.getTime()).toBe(resultDate.getTime())
-    }
+    });
 });
