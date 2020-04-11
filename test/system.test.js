@@ -1,9 +1,5 @@
 import * as chrono from '../src/chrono';
 
-var ok = function() {
-	expect(arguments[0]).toBeTruthy();
-}
-
 //-------------------------------------
 
 test("Test - Load modules", function() {
@@ -34,9 +30,9 @@ test("Test - Load modules", function() {
 });
 
 
-test("Test - Create & manipulate date results", function() {
+test("Test - Create & manipulate date results", () => {
 
-	var components = new chrono.ParsedComponents( {year: 2014, month: 11, day: 24});
+	const components = new chrono.ParsedComponents( {year: 2014, month: 11, day: 24});
 	expect(components.get('year')).toBe(2014);
 	expect(components.get('month')).toBe(11);
 	expect(components.get('day')).toBe(24);
@@ -61,41 +57,59 @@ test("Test - Create & manipulate date results", function() {
 	expect(components.get('year')).toBe(2014);
 
 	// "assign" overrides "assign"
-	components.assign('year', 2013)
+	components.assign('year', 2013);
 	expect(components.get('year')).toBe(2013);
 });
 
-test("Test - Calendar Checking", function() {
+test("Test - Calendar Checking", () => {
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24});
-	expect(components.isPossibleDate()).toBe(true);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24});
+		expect(components.isPossibleDate()).toBe(true);
+	}
+	
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12});
+		expect(components.isPossibleDate()).toBe(true);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12});
-	expect(components.isPossibleDate()).toBe(true);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30});
+		expect(components.isPossibleDate()).toBe(true);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30});
-	expect(components.isPossibleDate()).toBe(true);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 30});
+		expect(components.isPossibleDate()).toBe(true);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 30});
-	expect(components.isPossibleDate()).toBe(true);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 13, day: 24});
+		expect(components.isPossibleDate()).toBe(false);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 13, day: 24});
-	expect(components.isPossibleDate()).toBe(false);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 32});
+		expect(components.isPossibleDate()).toBe(false);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 32});
-	expect(components.isPossibleDate()).toBe(false);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:24});
+		expect(components.isPossibleDate()).toBe(false);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:24});
-	expect(components.isPossibleDate()).toBe(false);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 60});
+		expect(components.isPossibleDate()).toBe(false);
+	}
 
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 60});
-	expect(components.isPossibleDate()).toBe(false);
-
-	var components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
-	expect(components.isPossibleDate()).toBe(false);
+	{
+		const components = new chrono.ParsedComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
+		expect(components.isPossibleDate()).toBe(false);
+	}
 });
 
-test("Test - Override parser", function() {
+test("Test - Override parser", () => {
 
 	var originalText = '01234-pattern-01234-pattern';
 	var originalOpt = { some: 'thing'};
@@ -104,14 +118,14 @@ test("Test - Override parser", function() {
 	function CustomParser() {
 		chrono.Parser.apply(this, arguments);
 
-		this.pattern = function () { return /pattern/; }
+		this.pattern = function () { return /pattern/; };
 		this.extract = function(text, ref, match, opt){
 
-			if(extractCalled == 0){
+			if(extractCalled === 0){
 				expect(text).toBe(originalText);
 				expect(opt).toBe(originalOpt);
 				expect(match.index).toBe(6);
-			} else if(extractCalled == 1){
+			} else if(extractCalled === 1){
 				expect(text).toBe(originalText);
 				expect(opt).toBe(originalOpt);
 				expect(match.index).toBe(20);
@@ -127,10 +141,10 @@ test("Test - Override parser", function() {
 	expect(extractCalled).toBe(2);
 });
 
-test("Test - Add custom parser", function() {
+test("Test - Add custom parser", () => {
     var customParser = new chrono.Parser();
 
-    customParser.pattern = function () { return /(\d{1,2})(st|nd|rd|th)/i } 
+    customParser.pattern = function () { return /(\d{1,2})(st|nd|rd|th)/i };
     customParser.extract = function(text, ref, match, opt) { 
         return new chrono.ParsedResult({
             ref: ref,
@@ -140,7 +154,7 @@ test("Test - Add custom parser", function() {
                 day: parseInt(match[1]) 
             }
         });
-	}
+	};
 	
     var custom = new chrono.Chrono();
     custom.parsers.push(customParser);
@@ -148,36 +162,36 @@ test("Test - Add custom parser", function() {
     var text = "meeting on 25th";
 	var result = custom.parse(text, new Date(2017,11 -1, 19))[0];
 	
-    expect(result.text).toBe('25th')
-    expect(result.start.get('month')).toBe(11)
-    expect(result.start.get('day')).toBe(25)
-})
+    expect(result.text).toBe('25th');
+    expect(result.start.get('month')).toBe(11);
+    expect(result.start.get('day')).toBe(25);
+});
 
 test("Test - combining options", function() {
 
-	var firstOption = {
+	let firstOption = {
 		parsers: [
 			new chrono.parser.ENISOFormatParser(),
 		],
 		refiners: [
 			new chrono.refiner.OverlapRemovalRefiner(),
 		]
-	}
+	};
 
-	var secondOption = {
+	let secondOption = {
 		parsers: [
 			new chrono.parser.ENISOFormatParser(),
 			new chrono.parser.JPStandardParser(),
 		],
 		refiners: []
-	}
+	};
 
-	var mergedOption = chrono.options.mergeOptions([
+	let mergedOption = chrono.options.mergeOptions([
 		firstOption,
 		secondOption
 	]);
 
-	ok(mergedOption);
+	expect(mergedOption).toBeTruthy();
 	expect(mergedOption.parsers.length).toBe(2);
 	expect(mergedOption.refiners.length).toBe(1);
 
@@ -198,10 +212,10 @@ test("Test - default language options", function() {
 	expect(chrono.fr.parseDate('2012年９月3日')).toBeNull();
 
 	expect(chrono.en.parseDate("04/12/1993"))
-		.toEqual(chrono.parseDate("1993-04-12"))
+		.toEqual(chrono.parseDate("1993-04-12"));
 	
 	expect(chrono.en_GB.parseDate("04/12/1993"))
-		.toEqual(chrono.parseDate("1993-12-04"))
+		.toEqual(chrono.parseDate("1993-12-04"));
 });
 
 
