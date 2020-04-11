@@ -1,4 +1,4 @@
-const chrono = require('../src/chrono');
+import * as chrono from '../src/chrono';
 
 var ok = function() {
 	expect(arguments[0]).toBeTruthy();

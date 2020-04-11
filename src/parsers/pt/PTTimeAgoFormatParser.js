@@ -17,7 +17,7 @@ exports.Parser = function PTTimeAgoFormatParser(){
 
         var text = match[0];
         text  = match[0].substr(match[1].length, match[0].length - match[1].length);
-        index = match.index + match[1].length;
+        let index = match.index + match[1].length;
 
         var result = new ParsedResult({
             index: index,

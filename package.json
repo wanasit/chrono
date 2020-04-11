@@ -20,9 +20,10 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "babel-jest": "^25.3.0",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.2",
-    "jest": "^22.0.4",
+    "jest": "^25.3.0",
     "terser-webpack-plugin": "^2.3.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"

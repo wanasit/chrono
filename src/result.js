@@ -47,7 +47,7 @@ function ParsedComponents (components, ref){
     this.impliedValues = {};
 
     if (components) {
-        for (key in components) {
+        for (let key in components) {
             this.knownValues[key] = components[key];
         }
     }
