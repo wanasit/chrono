@@ -1,155 +1,155 @@
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
-function ParsedResult(result){
-    result = result || {};
+export class ParsedResult {
 
-    this.ref   = result.ref;
-    this.index = result.index;
-    this.text  = result.text;
-    this.tags  = result.tags || {};
+    constructor(result) {
+        result = result || {};
 
-    this.start = new ParsedComponents(result.start, result.ref)
-    if(result.end){
-        this.end = new ParsedComponents(result.end, result.ref)
-    }
-}
+        this.ref   = result.ref;
+        this.index = result.index;
+        this.text  = result.text;
+        this.tags  = result.tags || {};
 
-ParsedResult.prototype.clone = function() {
-    var result = new ParsedResult(this);
-    result.tags = JSON.parse(JSON.stringify(this.tags));
-    result.start = this.start.clone();
-    if (this.end) {
-        result.end = this.end.clone();
-    }
+        this.start = new ParsedComponents(result.start, result.ref);
 
-    return result
-}
-
-ParsedResult.prototype.date = function() {
-    return this.start.date();
-}
-
-ParsedResult.prototype.hasPossibleDates = function() {
-    return this.start.isPossibleDate() && (!this.end || this.end.isPossibleDate());
-}
-
-ParsedResult.prototype.isOnlyWeekday = function() {
-    return this.start.isOnlyWeekdayComponent();
-}
-
-ParsedResult.prototype.isOnlyDayMonth = function() {
-    return this.start.isOnlyDayMonthComponent();
-}
-
-function ParsedComponents (components, ref){
-
-    this.knownValues = {};
-    this.impliedValues = {};
-
-    if (components) {
-        for (let key in components) {
-            this.knownValues[key] = components[key];
+        if(result.end){
+            this.end = new ParsedComponents(result.end, result.ref);
         }
     }
 
-    if (ref) {
-        ref = dayjs(ref);
-        this.imply('day', ref.date())
-        this.imply('month', ref.month() + 1)
-        this.imply('year', ref.year())
-    }
-    
+    clone() {
+        var result = new ParsedResult(this);
+        result.tags = JSON.parse(JSON.stringify(this.tags));
+        result.start = this.start.clone();
+        if (this.end) {
+            result.end = this.end.clone();
+        }
 
-    this.imply('hour', 12);
-    this.imply('minute', 0);
-    this.imply('second', 0);
-    this.imply('millisecond', 0);
+        return result
+    }
+
+    date() {
+        return this.start.date();
+    }
+
+    hasPossibleDates() {
+        return this.start.isPossibleDate() && (!this.end || this.end.isPossibleDate());
+    }
+
+    isOnlyWeekday() {
+        return this.start.isOnlyWeekdayComponent();
+    }
+
+    isOnlyDayMonth() {
+        return this.start.isOnlyDayMonthComponent();
+    }
 }
 
-ParsedComponents.prototype.clone = function () {
-    var component = new ParsedComponents();
-    component.knownValues = JSON.parse(JSON.stringify(this.knownValues));
-    component.impliedValues = JSON.parse(JSON.stringify(this.impliedValues));
-    return component;
-};
+export class ParsedComponents {
 
-ParsedComponents.prototype.get = function(component, value) {
-    if (component in this.knownValues) return this.knownValues[component];
-    if (component in this.impliedValues) return this.impliedValues[component];
-};
+    constructor(components, ref) {
+        this.knownValues = {};
+        this.impliedValues = {};
 
-ParsedComponents.prototype.assign = function(component, value) {
-    this.knownValues[component] = value;
-    delete this.impliedValues[component];
-};
+        if (components) {
+            for (let key in components) {
+                this.knownValues[key] = components[key];
+            }
+        }
 
-ParsedComponents.prototype.imply = function(component, value) {
-    if (component in this.knownValues) return;
-    this.impliedValues[component] = value;
-};
+        if (ref) {
+            ref = dayjs(ref);
+            this.imply('day', ref.date());
+            this.imply('month', ref.month() + 1);
+            this.imply('year', ref.year())
+        }
 
-ParsedComponents.prototype.isCertain = function(component) {
-    return component in this.knownValues;
-};
 
-ParsedComponents.prototype.isOnlyWeekdayComponent = function() {
-    return this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
-};
-
-ParsedComponents.prototype.isOnlyDayMonthComponent = function() {
-    return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
-};
-
-ParsedComponents.prototype.isPossibleDate = function() {
-    var dateMoment = this.dayjs();
-    if (this.isCertain('timezoneOffset')) {
-        const adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();
-        dateMoment = dateMoment.add(adjustTimezoneOffset, 'minutes');
+        this.imply('hour', 12);
+        this.imply('minute', 0);
+        this.imply('second', 0);
+        this.imply('millisecond', 0);
     }
 
-    if (dateMoment.get('year') != this.get('year')) return false;
-    if (dateMoment.get('month') != this.get('month')-1) return false;
-    if (dateMoment.get('date') != this.get('day')) return false;
-    if (dateMoment.get('hour') != this.get('hour')) return false;
-    if (dateMoment.get('minute') != this.get('minute')) return false;
+    get(component) {
+        if (component in this.knownValues) return this.knownValues[component];
+        if (component in this.impliedValues) return this.impliedValues[component];
+    }
 
-    return true;
-};
+    isCertain(component) {
+        return component in this.knownValues;
+    }
 
-ParsedComponents.prototype.date = function() {
-    var result = this.dayjs();
-    return result.toDate();
-};
+    imply(component, value) {
+        if (component in this.knownValues) return;
+        this.impliedValues[component] = value;
+    }
 
+    assign(component, value) {
+        this.knownValues[component] = value;
+        delete this.impliedValues[component];
+    }
 
-ParsedComponents.prototype.dayjs = function() {
-    var result = dayjs();
+    clone() {
+        const component = new ParsedComponents();
+        component.knownValues = JSON.parse(JSON.stringify(this.knownValues));
+        component.impliedValues = JSON.parse(JSON.stringify(this.impliedValues));
+        return component;
+    }
 
-    result = result.year(this.get('year'));
-    result = result.month(this.get('month') - 1);
-    result = result.date(this.get('day'));
-    result = result.hour(this.get('hour'));
-    result = result.minute(this.get('minute'));
-    result = result.second(this.get('second'));
-    result = result.millisecond(this.get('millisecond'));
+    isOnlyWeekdayComponent() {
+        return this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
+    }
 
-    // Javascript Date Object return minus timezone offset
-    var currentTimezoneOffset = result.utcOffset();
-    var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ? 
-        this.get('timezoneOffset') : currentTimezoneOffset;
+    isOnlyDayMonthComponent() {
+        return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
+    }
 
-    var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
-    result = result.add(-adjustTimezoneOffset, 'minute');
+    isPossibleDate() {
+        var dateMoment = this.dayjs();
+        if (this.isCertain('timezoneOffset')) {
+            const adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();
+            dateMoment = dateMoment.add(adjustTimezoneOffset, 'minutes');
+        }
 
-    return result;
-};
+        if (dateMoment.get('year') != this.get('year')) return false;
+        if (dateMoment.get('month') != this.get('month')-1) return false;
+        if (dateMoment.get('date') != this.get('day')) return false;
+        if (dateMoment.get('hour') != this.get('hour')) return false;
+        if (dateMoment.get('minute') != this.get('minute')) return false;
 
-ParsedComponents.prototype.moment = function() {
-    // Keep for compatibility
-    return this.dayjs();
-};
+        return true;
+    }
 
+    date() {
+        const result = this.dayjs();
+        return result.toDate();
+    }
 
+    dayjs() {
+        var result = dayjs();
 
-exports.ParsedComponents = ParsedComponents;
-exports.ParsedResult = ParsedResult;
+        result = result.year(this.get('year'));
+        result = result.month(this.get('month') - 1);
+        result = result.date(this.get('day'));
+        result = result.hour(this.get('hour'));
+        result = result.minute(this.get('minute'));
+        result = result.second(this.get('second'));
+        result = result.millisecond(this.get('millisecond'));
+
+        // Javascript Date Object return minus timezone offset
+        var currentTimezoneOffset = result.utcOffset();
+        var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ?
+            this.get('timezoneOffset') : currentTimezoneOffset;
+
+        var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
+        result = result.add(-adjustTimezoneOffset, 'minute');
+
+        return result;
+    }
+
+    moment() {
+        // Keep for compatibility
+        return this.dayjs();
+    }
+}
