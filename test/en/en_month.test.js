@@ -106,9 +106,7 @@ test("Test - Month slash expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('9/2012');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 9-1, 1, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 9-1, 1, 12));
     });
 
     testSingleCase(chrono, '09/2012', new Date(2012,7,10), (result) => {
@@ -119,9 +117,7 @@ test("Test - Month slash expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('09/2012');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 9-1, 1, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 9-1, 1, 12));
     });
 
 });

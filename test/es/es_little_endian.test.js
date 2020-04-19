@@ -13,9 +13,7 @@ test("Test - Single expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('10 Agosto 2012');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
     });
 
     testSingleCase(chrono, '10 Agosto 234 AC', new Date(2012,7,10), (result) => {
@@ -27,9 +25,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(-234, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(-234, 8-1, 10, 12));
     });
 
 
@@ -58,9 +54,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('month')).toBe(9);
         expect(result.start.get('day')).toBe(15);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 9-1, 15, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 9-1, 15, 12));
     });
 
     testSingleCase(chrono, 'DOM 15SEP', new Date(2013,7,10), (result) => {
@@ -72,9 +66,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('month')).toBe(9);
         expect(result.start.get('day')).toBe(15);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 9-1, 15, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 9-1, 15, 12));
     });
 
     testSingleCase(chrono, 'La fecha final es el 10 Agosto', new Date(2012,7,10), (result) => {
@@ -87,9 +79,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
     });
 
 
@@ -104,9 +94,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('day')).toBe(10);
         expect(result.start.get('weekday')).toBe(2);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 1-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 1-1, 10, 12));
     });
 
 
@@ -121,9 +109,7 @@ test("Test - Single expression", function() {
         expect(result.start.get('day')).toBe(10);
         expect(result.start.get('weekday')).toBe(2);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 1-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 1-1, 10, 12));
     });
 
 });
@@ -142,9 +128,7 @@ test("Test - Range expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -152,9 +136,7 @@ test("Test - Range expression", function() {
         expect(result.end.get('month')).toBe(8);
         expect(result.end.get('day')).toBe(22);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 8-1, 22, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 8-1, 22, 12));
     });
 
 
@@ -168,9 +150,7 @@ test("Test - Range expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -178,9 +158,7 @@ test("Test - Range expression", function() {
         expect(result.end.get('month')).toBe(8);
         expect(result.end.get('day')).toBe(22);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 8-1, 22, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 8-1, 22, 12));
     });
 
     testSingleCase(chrono, '10 Agosto - 12 Septiembre', new Date(2012,7,10), (result) => {
@@ -193,9 +171,7 @@ test("Test - Range expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -203,9 +179,7 @@ test("Test - Range expression", function() {
         expect(result.end.get('month')).toBe(9);
         expect(result.end.get('day')).toBe(12);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 9-1, 12, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 9-1, 12, 12));
     });
 
     testSingleCase(chrono, '10 Agosto - 12 Septiembre 2013', new Date(2012,7,10), (result) => {
@@ -218,9 +192,7 @@ test("Test - Range expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2013, 8-1, 10, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -228,9 +200,7 @@ test("Test - Range expression", function() {
         expect(result.end.get('month')).toBe(9);
         expect(result.end.get('day')).toBe(12);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2013, 9-1, 12, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2013, 9-1, 12, 12));
     });
 });
 
@@ -247,9 +217,7 @@ test("Test - Combined expression", function() {
         expect(result.start.get('day')).toBe(12);
 
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7-1, 12, 19, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7-1, 12, 19, 0));
     });
 
 });

@@ -19,9 +19,7 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain('year')).toBe(false);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 6, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 6, 12));
     });
 
 
@@ -35,9 +33,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(9);
         expect(result.start.get('weekday')).toBe(4);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 9, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 9, 12));
     });
 
     testSingleCase(chrono.de, 'Sonntag', new Date(2012, 7, 9), (result) => {
@@ -50,9 +46,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(12);
         expect(result.start.get('weekday')).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 12, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
     });
 
 
@@ -66,9 +60,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(3);
         expect(result.start.get('weekday')).toBe(5);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 3, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 3, 12));
     });
 
 
@@ -82,9 +74,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(24);
         expect(result.start.get('weekday')).toBe(5);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2015, 3, 24, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2015, 3, 24, 12));
     });
 
 
@@ -98,9 +88,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(21);
         expect(result.start.get('weekday')).toBe(2);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2015, 3, 21, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2015, 3, 21, 12));
     });
 });
 
@@ -123,9 +111,7 @@ test("Test - Weekday Overlap", function () {
         expect(result.start.isCertain('year')).toBe(true);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2014, 12 - 1, 7, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2014, 12 - 1, 7, 12));
     });
 
 
@@ -145,9 +131,7 @@ test("Test - Weekday Overlap", function () {
         expect(result.start.isCertain('year')).toBe(true);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2014, 12 - 1, 7, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2014, 12 - 1, 7, 12));
     });
 });
 
@@ -169,9 +153,7 @@ test('Test - forward dates only option', function () {
         expect(result.start.isCertain('year')).toBe(false);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 8-1, 5, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 8-1, 5, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -185,8 +167,6 @@ test('Test - forward dates only option', function () {
         expect(result.end.isCertain('year')).toBe(false);
         expect(result.end.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2016, 8-1, 8, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2016, 8-1, 8, 12));
     });
 });

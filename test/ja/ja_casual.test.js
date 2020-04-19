@@ -13,9 +13,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
     });
 
 
@@ -28,9 +26,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(9);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 9, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 9, 12));
     });
 });
 

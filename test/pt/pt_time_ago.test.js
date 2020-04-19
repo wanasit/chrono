@@ -12,9 +12,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('há 5 dias');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 5, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 5, 12));
     });
 
     testSingleCase(chrono, 'há 10 dias, fizemos algo', new Date(2012,7,10), (result) => {
@@ -26,9 +24,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('há 10 dias');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7-1, 31, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 12));
     });
 
 
@@ -38,9 +34,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('hour')).toBe(11);
         expect(result.start.get('minute')).toBe(59);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,11,59);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,11,59));
     });
 
     testSingleCase(chrono, '   há 12 horas', new Date(2012,7,10,12,14), (result) => {
@@ -49,9 +43,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('hour')).toBe(0);
         expect(result.start.get('minute')).toBe(14);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,0,14);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,0,14));
     });
 });
 
@@ -67,9 +59,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('há 5 meses');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 3-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 3-1, 10, 12));
     });
 
     testSingleCase(chrono, 'há 5 anos, fizemos algo', new Date(2012, 8-1,10), (result) => {
@@ -81,9 +71,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('há 5 anos');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2007, 8-1, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2007, 8-1, 10, 12));
     });
 
 
@@ -96,8 +84,6 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('há uma semana');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7-1, 27, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7-1, 27, 12));
     });
 });

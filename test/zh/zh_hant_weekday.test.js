@@ -19,9 +19,7 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain('year')).toBe(false);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9-1, 1, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 9-1, 1, 12));
     });
 
     testSingleCase(chrono.casual, '禮拜四 (forward dates only)', new Date(2016, 9-1, 2), {forwardDate: true}, (result) => {
@@ -40,9 +38,7 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain('year')).toBe(false);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9-1, 8, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 9-1, 8, 12));
     });
 
     testSingleCase(chrono.casual, '禮拜日', new Date(2016, 9-1, 2), (result) => {
@@ -55,9 +51,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(4);
         expect(result.start.get('weekday')).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9-1, 4, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 9-1, 4, 12));
     });
 
     testSingleCase(chrono.casual, '雞上個禮拜三全部都係雞', new Date(2016, 9-1, 2), (result) => {
@@ -70,9 +64,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(24);
         expect(result.start.get('weekday')).toBe(3);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 8-1, 24, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 8-1, 24, 12));
     });
 
 
@@ -86,9 +78,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('day')).toBe(4);
         expect(result.start.get('weekday')).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9-1, 4, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 9-1, 4, 12));
     });
 });
 
@@ -109,9 +99,7 @@ test('Test - forward dates only option', function () {
         expect(result.start.isCertain('year')).toBe(false);
         expect(result.start.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9-1, 3, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 9-1, 3, 12));
 
 
         expect(result.end).not.toBeNull();
@@ -125,8 +113,6 @@ test('Test - forward dates only option', function () {
         expect(result.end.isCertain('year')).toBe(false);
         expect(result.end.isCertain('weekday')).toBe(true);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2016, 9-1, 5, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2016, 9-1, 5, 12));
     });
 });

@@ -11,9 +11,7 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 days from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 15, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 12));
     });
 
     testSingleCase(chrono, '10 days from now, we did something', new Date(2012, 7, 10), (result) => {
@@ -25,9 +23,7 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('10 days from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 20, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 20, 12));
     });
 
     testSingleCase(chrono, '15 minute from now', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -36,9 +32,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(12);
         expect(result.start.get('minute')).toBe(29);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 29);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 29));
     });
 
     testSingleCase(chrono, '15 minutes earlier', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -47,9 +41,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(11);
         expect(result.start.get('minute')).toBe(59);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 11, 59);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
 
     testSingleCase(chrono, '15 minute out', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -58,9 +50,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(12);
         expect(result.start.get('minute')).toBe(29);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 29);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 29));
     });
 
     testSingleCase(chrono, '   12 hours from now', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -70,9 +60,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(0);
         expect(result.start.get('minute')).toBe(14);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 11, 0, 14);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 0, 14));
     });
 
     testSingleCase(chrono, '   12 hrs from now', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -89,9 +77,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(12);
         expect(result.start.get('minute')).toBe(44);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 44);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 44));
     });
 
     testSingleCase(chrono, '12 hours from now I did something', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -101,9 +87,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(0);
         expect(result.start.get('minute')).toBe(14);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 11, 0, 14);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 0, 14));
     });
 
     testSingleCase(chrono, '12 seconds from now I did something', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -113,9 +97,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('minute')).toBe(14);
         expect(result.start.get('second')).toBe(12);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 14, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 14, 12));
     });
 
     testSingleCase(chrono, 'three seconds from now I did something', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -125,9 +107,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('minute')).toBe(14);
         expect(result.start.get('second')).toBe(3);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 14, 3);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 14, 3));
     });
 
     testSingleCase(chrono, '5 Days from now, we did something', new Date(2012, 7, 10), (result) => {
@@ -139,9 +119,7 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 Days from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 15, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 12));
     });
 
 
@@ -151,9 +129,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(12);
         expect(result.start.get('minute')).toBe(44);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 44);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 44));
     });
 
     testSingleCase(chrono, 'A days from now, we did something', new Date(2012, 7, 10), (result) => {
@@ -165,9 +141,7 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('A days from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 11, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 12));
     });
 
     testSingleCase(chrono, 'a min out', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -176,9 +150,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(12);
         expect(result.start.get('minute')).toBe(15);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 15);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 15));
     });
 
     testSingleCase(chrono, 'in 1 hour', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -187,9 +159,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(13);
         expect(result.start.get('minute')).toBe(14);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 13, 14);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 14));
     });
 
     testSingleCase(chrono, 'in 1.5 hours', new Date(2012, 7, 10, 12, 40), (result) => {
@@ -198,9 +168,7 @@ test("Test - Single Expression", function () {
         expect(result.start.get('hour')).toBe(14);
         expect(result.start.get('minute')).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 14, 10);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 14, 10));
     });
 });
 
@@ -215,9 +183,7 @@ test("Test - Single Expression (Casual)", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 months from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 1 - 1, 10, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 1 - 1, 10, 12));
     });
 
     testSingleCase(chrono, '5 years from now, we did something', new Date(2012, 8 - 1, 10), (result) => {
@@ -229,9 +195,7 @@ test("Test - Single Expression (Casual)", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 years from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2017, 8 - 1, 10, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2017, 8 - 1, 10, 12));
     });
 
 
@@ -244,9 +208,7 @@ test("Test - Single Expression (Casual)", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('a week from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 10, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
     });
 
     testSingleCase(chrono, 'a few days from now, we did something', new Date(2012, 8 - 1, 3), (result) => {
@@ -258,9 +220,7 @@ test("Test - Single Expression (Casual)", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe('a few days from now');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8 - 1, 6, 12);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 6, 12));
     });
 });
 

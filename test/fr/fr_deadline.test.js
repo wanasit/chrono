@@ -12,9 +12,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(15);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 15, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 15, 12));
     });
 
     testSingleCase(chrono, 'On doit faire quelque chose dans cinq jours.', new Date(2012,7,10), (result) => {
@@ -26,54 +24,42 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(15);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 15, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 15, 12));
     });
 
     testSingleCase(chrono, 'dans 5 minutes', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('dans 5 minutes');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,19);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
     testSingleCase(chrono, 'en 1 heure', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('en 1 heure');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,13,14);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,13,14));
     });
 
     testSingleCase(chrono, 'Dans 5 minutes je vais rentrer chez moi', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Dans 5 minutes');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,19);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
     testSingleCase(chrono, 'Dans 5 secondes une voiture va bouger', new Date(2012,7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Dans 5 secondes');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 14, 5);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 14, 5));
     });
 
     testSingleCase(chrono, 'dans deux semaines', new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('dans deux semaines');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 24, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 24, 12));
     });
 
 
@@ -81,9 +67,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('dans un mois');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8, 10, 12));
     });
 
 
@@ -91,9 +75,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('dans quelques mois');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 10, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 10, 10, 12));
     });
 
 
@@ -101,9 +83,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('en une année');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 7, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 7, 10, 12));
     });
 
 
@@ -111,18 +91,14 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('dans une Année');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 7, 10, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 7, 10, 12));
     });
 
     testSingleCase(chrono, 'Dans 5 Minutes une voiture doit être bougée', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Dans 5 Minutes');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,19);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
 
@@ -130,9 +106,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Dans 5 mins');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,19);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
 

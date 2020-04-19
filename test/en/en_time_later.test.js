@@ -15,9 +15,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('day')).toBe(true);
         expect(result.start.isCertain('month')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 12, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 12, 12));
     });
 
     testSingleCase(chrono, '5 minutes later', new Date(2012, 7, 10, 10, 0), (result) => {
@@ -34,9 +32,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('hour')).toBe(true);
         expect(result.start.isCertain('minute')).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 10, 5);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 10, 5));
     });
 
     testSingleCase(chrono, '3 week later', new Date(2012, 7-1, 10, 10, 0), (result) => {
@@ -48,9 +44,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('3 week later');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7-1, 31, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 12));
     });
 });
 
@@ -67,8 +61,6 @@ test("Test - Single Expression (Strict)", function() {
         expect(result.start.get('hour')).toBe(13);
         expect(result.start.get('minute')).toBe(5);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 13, 5);
-        expect(expectDate.getTime()).toBe(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 5));
     });
 });

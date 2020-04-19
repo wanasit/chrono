@@ -13,9 +13,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('lunes 8/2/2016');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 2-1, 8, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 2-1, 8, 12));
     });
 
 });

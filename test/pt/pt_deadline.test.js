@@ -12,9 +12,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8)
         expect(result.start.get('day')).toBe(15)
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 15, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 15, 12));
     });
 
     testSingleCase(chrono, 'nós temos que fazer algo dentro de 10 dias', new Date(2012,7,10), (result) => {
@@ -26,9 +24,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('month')).toBe(8)
         expect(result.start.get('day')).toBe(20)
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 20, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 20, 12));
     });
 
 
@@ -36,26 +32,20 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0)
         expect(result.text).toBe('em 5 minutos')
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,19);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
     testSingleCase(chrono, 'em uma hora', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('em uma hora')
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,13,14);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,13,14));
     });
 
     testSingleCase(chrono, 'em meia hora', new Date(2012,7,10,12,14), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('em meia hora')
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012,7,10,12,44);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012,7,10,12,44));
     });
 });

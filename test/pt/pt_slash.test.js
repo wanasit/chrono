@@ -12,9 +12,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('segunda 8/2/2016');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 2-1, 8, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 2-1, 8, 12));
     });
 
     testSingleCase(chrono, 'Terça-feira 9/2/2016', new Date(2012,7,10), (result) => {
@@ -26,9 +24,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('Terça-feira 9/2/2016');
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 2-1, 9, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2016, 2-1, 9, 12));
     });
 
 

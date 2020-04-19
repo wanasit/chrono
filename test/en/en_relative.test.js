@@ -197,8 +197,6 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(23)
         expect(result.text).toBe('next year (July 2013')
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 7-1, 1, 12);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2013, 7-1, 1, 12));
     });
 });

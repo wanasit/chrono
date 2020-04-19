@@ -21,9 +21,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('second')).toBe(false);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 8, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 8, 10));
     });
 
     testSingleCase(chrono, '8:10 PM', new Date(2012,7,10), (result) => {
@@ -37,9 +35,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 20, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+      expect(result.start).toBeDate(new Date(2012, 7, 10, 20, 10));
     });
 
     testSingleCase(chrono, '1230pm', new Date(2012,7,10), (result) => {
@@ -53,9 +49,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 12, 30);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+      expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 30));
     });
 	
     testSingleCase(chrono, '5:16p', new Date(2012,7,10), (result) => {
@@ -69,9 +63,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 17, 16);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono, '5:16 p.m.', new Date(2012,7,10), (result) => {
@@ -85,9 +77,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 17, 16);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono, 'Lets meet at 6.13 AM', new Date(2012,7,10), (result) => {
@@ -98,9 +88,7 @@ test("Test - Single Expression", function() {
         expect(result.start.get('hour')).toBe(6);
         expect(result.start.get('minute')).toBe(13);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 6, 13);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6, 13));
     });
 
 
@@ -113,18 +101,14 @@ test("Test - Single Expression", function() {
         expect(result.start.get('minute')).toBe(0);
         expect(result.start.get('meridiem')).toBe(1);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 13, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 0));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get('hour')).toBe(15);
         expect(result.end.get('minute')).toBe(0);
         expect(result.end.get('meridiem')).toBe(1);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 10, 15, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 15, 0));
     });
 
 
@@ -137,18 +121,14 @@ test("Test - Single Expression", function() {
         expect(result.start.get('minute')).toBe(0);
         expect(result.start.get('meridiem')).toBe(1);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 23, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 23, 0));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get('hour')).toBe(2);
         expect(result.end.get('minute')).toBe(0);
         expect(result.end.get('meridiem')).toBe(0);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 11, 2, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 7, 11, 2, 0));
     });
 });
 
@@ -170,9 +150,7 @@ test("Test - Range Expression", function() {
         expect(result.start.isCertain('second')).toBe(false);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 8, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 8, 10));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get('hour')).toBe(12);
@@ -186,9 +164,7 @@ test("Test - Range Expression", function() {
         expect(result.end.isCertain('second')).toBe(false);
         expect(result.end.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 10, 12, 32);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 12, 32));
     });
 
     testSingleCase(chrono, ' from 6:30pm to 11:00pm ', new Date(2012,7,10), (result) => {
@@ -200,18 +176,14 @@ test("Test - Range Expression", function() {
         expect(result.start.get('minute')).toBe(30);
         expect(result.start.get('meridiem')).toBe(1);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 18, 30);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 18, 30));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get('hour')).toBe(23);
         expect(result.end.get('minute')).toBe(0);
         expect(result.end.get('meridiem')).toBe(1);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 10, 23, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 23, 0));
     });
 
 });
@@ -240,9 +212,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.start.get('millisecond')).toBe(0);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2014, 4-1, 18, 3, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2014, 4-1, 18, 3, 0));
     });
 
     testSingleCase(chrono, 'Something happen on August 10, 2012 10:12:59 pm', new Date(2012,7,10), (result) => {
@@ -258,9 +228,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.start.get('millisecond')).toBe(0);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 8-1, 10, 22, 12, 59);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 22, 12, 59));
     });
 
     testSingleCase(chrono, 'Something happen on 2014-04-18 7:00 - 8:00 AM...', new Date(2012,7,10), (result) => {
@@ -277,9 +245,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.start.get('meridiem')).toBe(0);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2014, 4-1, 18, 7, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2014, 4-1, 18, 7, 0));
 
 
         expect(result.end.get('year')).toBe(2014);
@@ -292,9 +258,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.end.get('meridiem')).toBe(0);
         expect(result.end.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2014, 4-1, 18, 8, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2014, 4-1, 18, 8, 0));
     });
 
 
@@ -313,9 +277,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.start.get('meridiem')).toBe(1);
         expect(result.start.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2014, 4-1, 18, 19, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2014, 4-1, 18, 19, 0));
 
 
         expect(result.end.get('year')).toBe(2014);
@@ -328,9 +290,7 @@ test("Test - Date + Time Expression", function() {
         expect(result.end.get('meridiem')).toBe(1);
         expect(result.end.isCertain('millisecond')).toBe(false);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2014, 4-1, 18, 20, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.end).toBeDate(new Date(2014, 4-1, 18, 20, 0));
     });
 });
 

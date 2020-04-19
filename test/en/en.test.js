@@ -94,13 +94,9 @@ test('Test - Random text', function() {
     expect(results[0].end.get('meridiem')).toBe(1);
 
 
-    var resultDate = results[0].start.date();
-    var expectDate = new Date(2013, 4, 20, 9, 0);
-    expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    expect(results[0].start).toBeDate(new Date(2013, 4, 20, 9, 0));
     
-    var resultDate = results[0].end.date();
-    var expectDate = new Date(2013, 4, 20, 17, 0);
-    expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    expect(results[0].end).toBeDate(new Date(2013, 4, 20, 17, 0));
 
     var text = "2014-07-07T04:00:00Z";
     var results = chrono.parse(text);
