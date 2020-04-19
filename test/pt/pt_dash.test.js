@@ -1,4 +1,4 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
 
 test("Test - Should handle dayname dd-mm-yy", function() {
   var text = "Sexta-feira 30-12-16";
