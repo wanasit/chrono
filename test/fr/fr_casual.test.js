@@ -234,98 +234,109 @@ test("Test - Casual date range", function() {
 
 test('Test - Random text', function() {
 
-    var text = "cette nuit";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(22);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.fr, 'cette nuit', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "ce soir 8pm";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(22);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
-    var text = "ce soir 20h";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.fr, 'ce soir 8pm', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "ce soir 20:00";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
-    var text = "ce soir 20h00";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.fr, 'ce soir 20h', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "ce soir 20h00m00";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
-    var text = "ce soir 20h00m00s";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.fr, 'ce soir 20:00', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "Ce soir à 20h";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
-    var text = "Ce soir a 20h";
-    var result = chrono.fr.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.fr, 'ce soir 20h00', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
+
+    testSingleCase(chrono.fr, 'ce soir 20h00m00', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
+
+    testSingleCase(chrono.fr, 'ce soir 20h00m00s', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
+
+    testSingleCase(chrono.fr, 'Ce soir à 20h', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
+
+    testSingleCase(chrono.fr, 'Ce soir a 20h', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "jeu";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4);
+    testSingleCase(chrono.fr, 'jeu', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(4);
+    });
 
 
-    var text = "sam";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(6)
+    testSingleCase(chrono.fr, 'sam', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(6);
+    });
 });
 
 

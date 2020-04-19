@@ -203,37 +203,41 @@ test("Test - Casual date range", function() {
 
 test('Test - Random text', function() {
 
-    var text = "今日夜晚";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(22);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono, '今日夜晚', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "今晚8點正";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(22);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
+    testSingleCase(chrono, '今晚8點正', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "晚上8點";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "星期四";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4);
+    testSingleCase(chrono, '晚上8點', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
+
+
+    testSingleCase(chrono, '星期四', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(4);
+    });
 });

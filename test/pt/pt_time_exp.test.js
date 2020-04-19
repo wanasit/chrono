@@ -126,79 +126,97 @@ test("Test - Time Expression's Meridiem imply", function() {
 
 test("Test - Random date + time expression", function() {
 
-    var text = "segunda 4/29/2013 630-930am";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'segunda 4/29/2013 630-930am', (result, text) => {
 
-    var text = "terça 5/1/2013 1115am";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "quarta 5/3/2013 1230pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'terça 5/1/2013 1115am', (result, text) => {
 
+        expect(result.text).toBe(text);
+    });
 
-    var text = "domingo 5/6/2013  750am-910am";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'quarta 5/3/2013 1230pm', (result, text) => {
 
-    var text = "segunda-feira 5/13/2013 630-930am";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "quarta-feira 5/15/2013 1030am";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "quinta 6/21/2013 2:30";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "terça-feira 7/2/2013 1-230 pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Segunda-feira, 6/24/2013, 7:00pm - 8:30pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Quinta6/20/2013 from 7:00 PM to 10:00 PM";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Quarta, 3 Julho de 2013 às 2pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
 
-    var text = "6pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'domingo 5/6/2013  750am-910am', (result, text) => {
 
-    var text = "6 pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "7-10pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'segunda-feira 5/13/2013 630-930am', (result, text) => {
 
-    var text = "11.1pm";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "às 12";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.pt, 'quarta-feira 5/15/2013 1030am', (result, text) => {
 
-    var text = "ao meio-dia";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(12);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "a meia-noite";
-    var result = chrono.pt.parse(text)[0];
-    expect(result.text).toBe(text)
+    testSingleCase(chrono.pt, 'quinta 6/21/2013 2:30', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'terça-feira 7/2/2013 1-230 pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'Segunda-feira, 6/24/2013, 7:00pm - 8:30pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'Quinta6/20/2013 from 7:00 PM to 10:00 PM', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'Quarta, 3 Julho de 2013 às 2pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+
+    testSingleCase(chrono.pt, '6pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, '6 pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, '7-10pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, '11.1pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'às 12', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.pt, 'ao meio-dia', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono.pt, 'a meia-noite', (result, text) => {
+
+	expect(result.text).toBe(text)
+});
 });

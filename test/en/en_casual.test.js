@@ -223,113 +223,126 @@ test("Test - Casual time implication", function() {
 
 test('Test - Random text', function() {
 
-    var text = "tonight";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(22);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono, 'tonight', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "tonight 8pm";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(22);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
+    testSingleCase(chrono, 'tonight 8pm', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "tonight at 8";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "tomorrow before 4pm";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(16);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(2);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono, 'tonight at 8', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "tomorrow after 4pm";
-    var result = chrono.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(16);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(2);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono, 'tomorrow before 4pm', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(16);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(2);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "thurs";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4);
+    testSingleCase(chrono, 'tomorrow after 4pm', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(16);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(2);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "thurs";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4);
+    testSingleCase(chrono, 'thurs', (result, text) => {
 
-    var text = "this evening";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(20);
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(4);
+    });
 
-    var text = "yesterday afternoon";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(30);
-    expect(result.start.get('hour')).toBe(15);
 
-    var text = "tomorrow morning";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(2);
-    expect(result.start.get('hour')).toBe(6);
+    testSingleCase(chrono, 'thurs', (result, text) => {
 
-    var text = "this afternoon at 3";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(15);
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(4);
+    });
 
-    var text = "11 at night";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(23);
+    testSingleCase(chrono, 'this evening', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "11 tonight";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1, 8))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(23);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(20);
+    });
+
+    testSingleCase(chrono, 'yesterday afternoon', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(30);
+        expect(result.start.get('hour')).toBe(15);
+    });
+
+    testSingleCase(chrono, 'tomorrow morning', new Date(2016, 10-1, 1, 8), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(2);
+        expect(result.start.get('hour')).toBe(6);
+    });
+
+    testSingleCase(chrono, 'this afternoon at 3', new Date(2016, 10-1, 1, 8), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(15);
+    });
+
+    testSingleCase(chrono, '11 at night', new Date(2016, 10-1, 1, 8), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(23);
+    });
+
+    testSingleCase(chrono, '11 tonight', new Date(2016, 10-1, 1, 8), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(23);
+    });
 });
 
 

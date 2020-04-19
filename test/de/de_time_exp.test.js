@@ -85,58 +85,68 @@ test("Test - Range Expression", function() {
 
 test("Test - Timezone extraction", function() {
 
-    var text = "Freitag um 14 Uhr";
-    var result = chrono.de.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(false);
-    expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    testSingleCase(chrono.de, 'Freitag um 14 Uhr', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(false);
+        expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    });
 
 
-    var text = "Freitag um 14 Uhr CET";
-    var result = chrono.de.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(60);
+    testSingleCase(chrono.de, 'Freitag um 14 Uhr CET', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(60);
+    });
 
 
-    var text = "am Freitag um 14 Uhr cet";
-    var result = chrono.de.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(60);
+    testSingleCase(chrono.de, 'am Freitag um 14 Uhr cet', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(60);
+    });
 
 
-    var text = "am Freitag um 14 Uhr cetteln wir etwas an";
-    var result = chrono.de.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe('am Freitag um 14 Uhr');
-    expect(result.start.isCertain('timezoneOffset')).toBe(false);
-    expect(!result.start.get('timezoneOffset')).not.toBeNull()
+    testSingleCase(chrono.de, 'am Freitag um 14 Uhr cetteln wir etwas an', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe('am Freitag um 14 Uhr');
+        expect(result.start.isCertain('timezoneOffset')).toBe(false);
+        expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    });
+
 });
 
 
 test("Test - Random date + time expression", function() {
 
-    var text = "um 12";
-    var result = chrono.de.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.de, 'um 12', (result, text) => {
 
-    var text = "am Mittag";
-    var result = chrono.de.parse(text)[0];
-    expect(result.text).toBe('Mittag');
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "mittags";
-    var result = chrono.de.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono.de, 'am Mittag', (result, text) => {
 
-    var text = "um Mitternacht";
-    var result = chrono.de.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(0);
+        expect(result.text).toBe('Mittag');
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "mitternachts";
-    var result = chrono.de.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(0);
+    testSingleCase(chrono.de, 'mittags', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono.de, 'um Mitternacht', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(0);
+    });
+
+    testSingleCase(chrono.de, 'mitternachts', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(0);
+    });
 });

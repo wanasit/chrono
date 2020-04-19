@@ -95,7 +95,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 20, 10));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 20, 10));
     });
 
     testSingleCase(chrono.fr, "8h10 PM", new Date(2012,7,10), (result) => {
@@ -109,7 +109,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 20, 10));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 20, 10));
     });
 
 
@@ -124,9 +124,9 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 30));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 30));
     });
-	
+
     testSingleCase(chrono.fr, "5:16p", new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5:16p');
@@ -138,7 +138,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono.fr, "5h16p", new Date(2012,7,10), (result) => {
@@ -152,7 +152,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono.fr, "5h16mp", new Date(2012,7,10), (result) => {
@@ -166,7 +166,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono.fr, "5:16 p.m.", new Date(2012,7,10), (result) => {
@@ -180,7 +180,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono.fr, "5h16 p.m.", new Date(2012,7,10), (result) => {
@@ -194,7 +194,7 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('millisecond')).toBe(false);
 
 
-      expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 17, 16));
     });
 
     testSingleCase(chrono.fr, "RDV à 6.13 AM", new Date(2012,7,10), (result) => {
@@ -605,136 +605,160 @@ test("Test - Time Expression's Meridiem imply", function() {
 
 test("Test - Timezone extraction", function() {
 
-    var text = "Vendredi à 2 pm";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(false);
-    expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    testSingleCase(chrono.fr, 'Vendredi à 2 pm', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(false);
+        expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    });
 
 
-    var text = "vendredi 2 pm EST";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(-300);
+    testSingleCase(chrono.fr, 'vendredi 2 pm EST', new Date(2016, 3, 28), (result, text) => {
 
-    var text = "vendredi 15h CET";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(60);
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(-300);
+    });
 
-    var text = "vendredi 15h cest";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(120);
+    testSingleCase(chrono.fr, 'vendredi 15h CET', new Date(2016, 3, 28), (result, text) => {
 
-    var text = "Vendredi à 2 pm est";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.isCertain('timezoneOffset')).toBe(true);
-    expect(result.start.get('timezoneOffset')).toBe(-300);
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(60);
+    });
 
+    testSingleCase(chrono.fr, 'vendredi 15h cest', new Date(2016, 3, 28), (result, text) => {
 
-    var text = "Vendredi à 2 pm j'ai rdv...";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe('Vendredi à 2 pm');
-    expect(result.start.isCertain('timezoneOffset')).toBe(false);
-    expect(!result.start.get('timezoneOffset')).not.toBeNull();
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(120);
+    });
+
+    testSingleCase(chrono.fr, 'Vendredi à 2 pm est', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain('timezoneOffset')).toBe(true);
+        expect(result.start.get('timezoneOffset')).toBe(-300);
+    });
 
 
-    var text = "Vendredi à 2 pm je vais faire quelque chose";
-    var result = chrono.fr.parse(text, new Date(2016, 3, 28))[0];
-    expect(result.text).toBe('Vendredi à 2 pm');
-    expect(result.start.isCertain('timezoneOffset')).toBe(false);
-    expect(!result.start.get('timezoneOffset')).not.toBeNull()
+    testSingleCase(chrono.fr, "Vendredi à 2 pm j'ai rdv...", new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe('Vendredi à 2 pm');
+        expect(result.start.isCertain('timezoneOffset')).toBe(false);
+        expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    });
+
+
+    testSingleCase(chrono.fr, 'Vendredi à 2 pm je vais faire quelque chose', new Date(2016, 3, 28), (result, text) => {
+
+        expect(result.text).toBe('Vendredi à 2 pm');
+        expect(result.start.isCertain('timezoneOffset')).toBe(false);
+        expect(!result.start.get('timezoneOffset')).not.toBeNull();
+    });
+
 });
 
 
 test("Test - Random date + time expression", function() {
 
-    var text = "lundi 29/4/2013 630-930am";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-    
-    var text = "mercredi 1/5/2013 1115am";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-    
-    var text = "vendredi 3/5/2013 1230pm";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, 'lundi 29/4/2013 630-930am', (result, text) => {
 
-    
-    var text = "dimanche 6/5/2013  750am-910am";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "lundi 13/5/2013 630-930am";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, 'mercredi 1/5/2013 1115am', (result, text) => {
 
-    var text = "wednesday 5/15/2013 1030am";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "Vendredi 21/6/2013 2:30";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, 'vendredi 3/5/2013 1230pm', (result, text) => {
 
-    var text = "mardi 7/2/2013 1-230 pm";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "mardi 7/2/2013 1-23h0";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "mardi 7/2/2013 1h-23h0m";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Lundi, 24/6/2013, 7:00pm - 8:30pm";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Jeudi6/5/2013 de 7h à 10h";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-
-    var text = "Mercredi, 3 juil 2013 14h";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
 
-    var text = "18h";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, 'dimanche 6/5/2013  750am-910am', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'lundi 13/5/2013 630-930am', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'wednesday 5/15/2013 1030am', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'Vendredi 21/6/2013 2:30', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'mardi 7/2/2013 1-230 pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'mardi 7/2/2013 1-23h0', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'mardi 7/2/2013 1h-23h0m', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'Lundi, 24/6/2013, 7:00pm - 8:30pm', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'Jeudi6/5/2013 de 7h à 10h', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'Mercredi, 3 juil 2013 14h', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
 
 
-    var text = "18-22h";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, '18h', (result, text) => {
 
-    var text = "11h-13";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "that I need to know or am I covered?";
-    var result = chrono.fr.parse(text);
-    expect(result.length).toBe(0);
 
-    var text = "à 12h";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono.fr, '18-22h', (result, text) => {
 
-    var text = "a midi";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "à minuit";
-    var result = chrono.fr.parse(text)[0];
-    expect(result.text).toBe(text)
+    testSingleCase(chrono.fr, '11h-13', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'à 12h', (result, text) => {
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono.fr, 'a midi', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono.fr, 'à minuit', (result, text) => {
+
+        expect(result.text).toBe(text)
+    });
+
+    testUnexpectedResult(chrono.fr, 'that I need to know or am I covered?');
 });

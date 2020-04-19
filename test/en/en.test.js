@@ -8,7 +8,7 @@ test("Test - Date + Time Expression", function() {
     const results = chrono.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1);
     expect(results[0].text).toBe('2014-04-18 13:00 - 16:00')
-    
+
 });
 
 
@@ -17,7 +17,7 @@ test("Test - Compare with native js", function() {
     var text = 'Sat Nov 05 1994 22:45:30 GMT+0900 (JST)';
     var result = chrono.parse(text)[0];
     var expected = new Date(text);
-    
+
     expect(result.text).toBe(text);
     expect(expected.getTime()).toBeCloseTo(result.start.date().getTime());
 
@@ -25,38 +25,39 @@ test("Test - Compare with native js", function() {
     var text = 'Fri, 31 Mar 2000 07:00:00 UTC';
     var result = chrono.parse(text)[0];
     var expected = new Date(text);
-    
+
     expect(result.text).toBe(text);
     expect(expected.getTime()).toBeCloseTo(result.start.date().getTime());
 
     var text = '2014-12-14T18:22:14.759Z';
     var result = chrono.parse(text)[0];
     var expected = new Date(text);
-    
+
     expect(result.text).toBe(text);
     expect(Math.abs(expected.getTime() - result.start.date().getTime())).toBe(0)
 });
 
 test("Test - Implying timezeon", function() {
-    
-        var text = 'Sat Nov 05 1994 22:45:30 GMT+0900 (JST)';
-        var result = chrono.parse(text)[0];
-        var expected = new Date(text);
-        
-        expect(result.text).toBe(text);
-        expect(expected.getTime()).toBeCloseTo(result.start.date().getTime());
 
-        var impliedResult = chrono.parse('Sat Nov 05 1994 22:45:30')[0];
-        impliedResult.start.imply('timezoneOffset', 540);
+    var text = 'Sat Nov 05 1994 22:45:30 GMT+0900 (JST)';
+    var result = chrono.parse(text)[0];
+    var expected = new Date(text);
 
-        expect(expected.getTime()).toBeCloseTo(impliedResult.start.date().getTime());
+    expect(result.text).toBe(text);
+    expect(expected.getTime()).toBeCloseTo(result.start.date().getTime());
+
+    var impliedResult = chrono.parse('Sat Nov 05 1994 22:45:30')[0];
+    impliedResult.start.imply('timezoneOffset', 540);
+
+    expect(expected.getTime()).toBeCloseTo(impliedResult.start.date().getTime());
 });
 
-test('Test - Random text', function() { 
+test('Test - Random text', function() {
 
-    var text = "Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013";
-    var result = chrono.parse(text, new Date(2013,5,22,3,33))[0];
-    expect(result.text).toBe('02.07.2013');
+    testSingleCase(chrono, 'Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013', new Date(2013,5,22,3,33), (result, text) => {
+
+        expect(result.text).toBe('02.07.2013');
+    });
 
     var text = "174 November 1,2001- March 31,2002";
     var results = chrono.parse(text);
@@ -69,17 +70,17 @@ test('Test - Random text', function() {
     expect(results.length).toBe(1);
     expect(results[0].start.get('year')).toBe(2011);
 
-    
+
     var text = "SUN 15SEP 11:05 AM - 12:50 PM";
     var results = chrono.parse(text);
     expect(results.length).toBe(1);
     expect(results[0].text.length).toBe(29);
-	
+
     var text = "SUN 15SEP 11:05 AM – 12:50 PM";
     var results = chrono.parse(text);
     expect(results.length).toBe(1);
     expect(results[0].end).not.toBeNull();
-    
+
     var text = "FRI 13SEP 1:29 PM - FRI 13SEP 3:29 PM";
     var results = chrono.parse(text);
     expect(results.length).toBe(1);
@@ -95,7 +96,7 @@ test('Test - Random text', function() {
 
 
     expect(results[0].start).toBeDate(new Date(2013, 4, 20, 9, 0));
-    
+
     expect(results[0].end).toBeDate(new Date(2013, 4, 20, 17, 0));
 
     var text = "2014-07-07T04:00:00Z";
@@ -188,10 +189,10 @@ test("Test - Random non-date patterns", function() {
 
 
 test("Test - Wikipedia Texts", function() {
-    
+
     const text = 'October 7, 2011, of which details were not revealed out of respect to Jobs\'s family.[239] Apple announced on the same day that they had no plans for a public service, but were encouraging "well-wishers" to send their remembrance messages to an email address created to receive such messages.[240] Sunday, October 16, 2011';
     const results = chrono.parse(text, new Date(2012,7,10));
-    
+
     expect(results.length).toBe(2);
 
     {

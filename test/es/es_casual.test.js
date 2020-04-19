@@ -127,45 +127,50 @@ test("Test - Combined Expression", function() {
 
 test('Test - Random text', function() {
 
-    var text = "esta noche";
-    var result = chrono.es.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(22);
-    expect(result.start.get('meridiem') ).toBe(1);
+    testSingleCase(chrono.es, 'esta noche', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "esta noche 8pm";
-    var result = chrono.es.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(22);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
+    testSingleCase(chrono.es, 'esta noche 8pm', new Date(2012, 1-1, 1, 12), (result, text) => {
 
-    var text = "esta noche at 8"; // TODO
-    var result = chrono.es.parse(text, new Date(2012, 1-1, 1, 12))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour') ).toBe(20);
-    expect(result.start.get('year') ).toBe(2012);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')  ).toBe(1);
-    expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "jueves";
-    var result = chrono.es.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(4);
+    testSingleCase(chrono.es, 'esta noche at 8', new Date(2012, 1-1, 1, 12), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour') ).toBe(20);
+        expect(result.start.get('year') ).toBe(2012);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')  ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(1);
+    });
 
 
-    var text = "viernes";
-    var result = chrono.es.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('weekday')).toBe(5)
+    testSingleCase(chrono.es, 'jueves', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(4);
+    });
+
+
+    testSingleCase(chrono.es, 'viernes', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('weekday')).toBe(5);
+    });
 });
 
 

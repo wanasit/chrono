@@ -152,13 +152,14 @@ test("Test - Single Expression", function() {
         expect(result.start).toBeDate(new Date(2012,7,10,12,19));
     });
 
-    var text = "in a week";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(8);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'in a week', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(8);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
 });
 

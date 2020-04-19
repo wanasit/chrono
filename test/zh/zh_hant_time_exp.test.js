@@ -139,38 +139,45 @@ test("Test - Time Expression's Meridiem imply", function() {
 
 test("Test - Random date + time expression", function() {
 
-    var text = "2014年, 3月5日晏晝 6 點至 7 點";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono, '2014年, 3月5日晏晝 6 點至 7 點', (result, text) => {
 
-    var text = "下星期六凌晨1點30分廿九秒";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "尋日朝早六點正";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono, '下星期六凌晨1點30分廿九秒', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono, '尋日朝早六點正', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
 
 
-    var text = "六月四日3:00am";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono, '六月四日3:00am', (result, text) => {
 
-    var text = "上個禮拜五16時";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "3月17日 20點15";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+    testSingleCase(chrono, '上個禮拜五16時', (result, text) => {
 
-    var text = "10點";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
+        expect(result.text).toBe(text);
+    });
 
-    var text = "中午12點";
-    var result = chrono.parse(text)[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('hour')).toBe(12);
-    expect(result.start.get('hour')).toBe(12)
+    testSingleCase(chrono, '3月17日 20點15', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono, '10點', (result, text) => {
+
+        expect(result.text).toBe(text);
+    });
+
+    testSingleCase(chrono, '中午12點', (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+    });
 });
