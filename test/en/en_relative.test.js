@@ -3,158 +3,177 @@ import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
-    var text = "this week";
-    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2017);
-    expect(result.start.get('month')).toBe(11);
-    expect(result.start.get('day')).toBe(19);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'this week', new Date(2017, 11-1, 19), (result, text) => {
 
-    var text = "this month";
-    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2017);
-    expect(result.start.get('month')).toBe(11);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2017);
+        expect(result.start.get('month')).toBe(11);
+        expect(result.start.get('day')).toBe(19);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "this month";
-    var result = chrono.parse(text, new Date(2017, 11-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2017);
-    expect(result.start.get('month')).toBe(11);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'this month', new Date(2017, 11-1, 19), (result, text) => {
 
-    var text = "this year";
-    var result = chrono.parse(text, new Date(2017, 11-1, 19))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2017);
-    expect(result.start.get('month')).toBe(1);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2017);
+        expect(result.start.get('month')).toBe(11);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'this month', new Date(2017, 11-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2017);
+        expect(result.start.get('month')).toBe(11);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'this year', new Date(2017, 11-1, 19), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2017);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
 
-    var text = "next week";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(8);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'next week', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "next 2 weeks";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(15);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(8);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "last week";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(24);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'next 2 weeks', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "last 2 weeks";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(17);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(15);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "next day";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(2);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'last week', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "next 2 days";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(3);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(24);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "last day";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(30);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'last 2 weeks', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "last 2 days";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(29);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(17);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "next month";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(11);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'next day', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "next 2 months";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(12);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(2);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "last month";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'next 2 days', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "last 2 months";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(8);
-    expect(result.start.get('day')).toBe(1);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(3);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "next few weeks";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(22);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'last day', new Date(2016, 10-1, 1), (result, text) => {
 
-    var text = "next four weeks";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(10);
-    expect(result.start.get('day')).toBe(29);
-    expect(result.start.get('hour')).toBe(12);
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(30);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
-    var text = "past week";
-    var result = chrono.parse(text, new Date(2016, 10-1, 1))[0];
-    expect(result.text).toBe(text);
-    expect(result.start.get('year')).toBe(2016);
-    expect(result.start.get('month')).toBe(9);
-    expect(result.start.get('day')).toBe(24);
-    expect(result.start.get('hour')).toBe(12);
+    testSingleCase(chrono, 'last 2 days', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(29);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'next month', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(11);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'next 2 months', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(12);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'last month', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'last 2 months', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'next few weeks', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(22);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'next four weeks', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(10);
+        expect(result.start.get('day')).toBe(29);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
+    testSingleCase(chrono, 'past week', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(24);
+        expect(result.start.get('hour')).toBe(12);
+    });
 
     testSingleCase(chrono.en, 'next week at 10-06-2016', new Date(2016, 10-1, 1), (result) => {
         expect(result.text).toBe('next week at 10-06-2016');

@@ -17,7 +17,7 @@ export function testSingleCase(chrono, text, refDateOrResultCheck, optionOrResul
 
 
     if (resultCheck) {
-        resultCheck(results[0]);
+        resultCheck(results[0], text);
     }
 
 }
