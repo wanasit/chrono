@@ -1,11 +1,11 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 
 test("Test - Date + Time Expression", function() {
 
-    var text = "Something happen on 2014-04-18 13:00 - 16:00 as";
-    var results = chrono.parse(text, new Date(2012,7,10));
+    const text = "Something happen on 2014-04-18 13:00 - 16:00 as";
+    const results = chrono.parse(text, new Date(2012,7,10));
     expect(results.length).toBe(1);
     expect(results[0].text).toBe('2014-04-18 13:00 - 16:00')
     
@@ -165,53 +165,29 @@ test('Test - Random text', function() {
 
 test("Test - Random non-date patterns", function() {
 
-    var text = ' 3';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, ' 3');
 
-    var text = '       1';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '       1');
 
-    var text = '  11 ';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '  11 ');
 
-    var text = ' 0.5 ';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, ' 0.5 ');
 
-    var text = ' 35.49 ';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, ' 35.49 ');
 
-    var text = '12.53%';
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '12.53%');
 
-    var text = "6358fe2310> *5.0* / 5 Outstanding";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '6358fe2310> *5.0* / 5 Outstanding');
 
-    var text = "6358fe2310> *1.5* / 5 Outstanding";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '6358fe2310> *1.5* / 5 Outstanding');
 
-    var text = "Total: $1,194.09 [image: View Reservation";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, 'Total: $1,194.09 [image: View Reservation');
 
-    var text = "Version: 1.1.3";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, 'Version: 1.1.3');
 
-    var text = "Version: 1.1.30";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, 'Version: 1.1.30');
 
-    var text = "Version: 1.10.30";
-    var results = chrono.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, 'Version: 1.10.30');
 });
 
 

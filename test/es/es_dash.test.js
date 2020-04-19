@@ -1,13 +1,14 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Should handle es dayname dd-mm-yy", function() {
-  var text = "Viernes 30-12-16";
-  var results = chrono.strict.parse(text, new Date(2012,7,10));
-  expect(results.length).toBe(1)
+
+  testSingleCase(chrono.strict, 'Viernes 30-12-16', new Date(2012,7,10));
+
 });
 
 test("Test - Should handle es dd-mm-yy", function() {
-  var text = "30-12-16";
-  var results = chrono.strict.parse(text, new Date(2012,7,10));
-  expect(results.length).toBe(1)
+
+  testSingleCase(chrono.strict, '30-12-16', new Date(2012,7,10));
+
 });

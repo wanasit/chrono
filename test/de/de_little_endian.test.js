@@ -332,33 +332,6 @@ test("Test - Combined expression", function() {
     });
 });
 
-/*
-// TODO: in these cases, the DEMonthNameParser is used (the incorrect date is ignored)
-// TODO: interpret as full date
-test("Test - Impossible Dates (Strict Mode)", function() {
- 
-    var text = "32. Dezember 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
-
-    var text = "29. Februar 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
-
-    var text = "32. August";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
-
-    var text = "32. Oktober";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
-
-    var text = "29. Februar";
-    var results = chrono.strict.parse(text, new Date(2013,7,10));
-    expect(results.length).toBe(0)
-
-});*/
-
 test("Test - Impossible Dates (Casual Mode)", function() {
  
     var text = "32. Oktober 2015";

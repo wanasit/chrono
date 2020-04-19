@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -199,19 +199,13 @@ test("Test - Single Expression", function() {
 
 test("Test - Single Expression (Strict)", function() {
 
-    var text = "within one year";
-    var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, 'within one year', new Date(2012,7,10,12,14));
 
 
-    var text = "within a few months";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, 'within a few months', new Date(2012, 8-1, 3))
 
 
-    var text = "within a few days";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, 'within a few days', new Date(2012, 8-1, 3))
 });
 
 

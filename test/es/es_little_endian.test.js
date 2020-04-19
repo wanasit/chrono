@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single expression", function() {
 
@@ -256,22 +256,13 @@ test("Test - Combined expression", function() {
 
 test("Test - Impossible Dates (Strict Mode)", function() {
 
-    var text = "32 Agosto 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '32 Agosto 2014', new Date(2012,7,10));
 
-    var text = "29 Febrero 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '29 Febrero 2014', new Date(2012,7,10));
 
-    var text = "32 Agosto";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '32 Agosto', new Date(2012,7,10));
 
-    // TODO
-    var text = "29 Febuary";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, '29 Febuary', new Date(2012,7,10))
 
 });
 

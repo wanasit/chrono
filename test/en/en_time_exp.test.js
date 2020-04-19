@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -218,17 +218,11 @@ test("Test - Range Expression", function() {
 
 test("Test - Impossible", function() {
 
-    var text = "8:62";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '8:62', new Date(2012,7,10));
 
-    var text = "25:12";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono, '25:12', new Date(2012,7,10));
 
-    var text = "13.12 PM";
-    var results = chrono.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono, '13.12 PM', new Date(2012,7,10))
 });
 
 test("Test - Date + Time Expression", function() {

@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single expression", function() {
 
@@ -439,21 +439,13 @@ test("Test - little endian date followed by time", function() {
 
 test("Test - Impossible Dates (Strict Mode)", function() {
  
-    var text = "32 August 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '32 August 2014', new Date(2012,7,10));
 
-    var text = "29 February 2014";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '29 February 2014', new Date(2012,7,10));
 
-    var text = "32 August";
-    var results = chrono.strict.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.strict, '32 August', new Date(2012,7,10));
 
-    var text = "29 February";
-    var results = chrono.strict.parse(text, new Date(2013,7,10));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, '29 February', new Date(2013,7,10))
 
 });
 

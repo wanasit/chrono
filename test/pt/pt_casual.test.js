@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -189,25 +189,15 @@ test('Test - Random text', function() {
 
 test('Test - Random negative text', function() {
 
-    var text = "naohoje";
-    var results = chrono.pt.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.pt, 'naohoje');
 
 
-    var text = "hyamanhã";
-    var results = chrono.pt.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.pt, 'hyamanhã');
 
-    var text = "xontem";
-    var results = chrono.pt.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.pt, 'xontem');
 
-    var text = "porhora";
-    var results = chrono.pt.parse(text);
-    expect(results.length).toBe(0);
+    testUnexpectedResult(chrono.pt, 'porhora');
 
-    var text = "agoraxsd";
-    var results = chrono.pt.parse(text);
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.pt, 'agoraxsd')
 
 });

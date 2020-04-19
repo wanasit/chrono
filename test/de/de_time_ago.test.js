@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -224,11 +224,7 @@ test("Test - Single Expression (Casual)", function() {
 
 test("Test - Single Expression (Strict)", function() {
 
-    var text = "vor einer woche taten wir etwas";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, 'vor einer woche taten wir etwas', new Date(2012, 8-1, 3))
 
-    var text = "vor einer woche taten wir etwas";
-    var results = chrono.de.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(1)
+    testSingleCase(chrono.de, 'vor einer woche taten wir etwas', new Date(2012, 8-1, 3))
 });

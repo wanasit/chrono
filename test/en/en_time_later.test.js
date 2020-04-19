@@ -1,5 +1,5 @@
 import * as chrono from '../../src/chrono';
-import { testSingleCase } from '../test_util';
+import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {
 
@@ -59,9 +59,7 @@ test("Test - Single Expression (Strict)", function() {
     var results = chrono.strict.parse(text, new Date(2012,7,10,12,14));
     expect(results[0]).toBe(undefined);
 
-    var text = "a week ago, we did something";
-    var results = chrono.strict.parse(text, new Date(2012, 8-1, 3));
-    expect(results.length).toBe(0)
+    testUnexpectedResult(chrono.strict, 'a week ago, we did something', new Date(2012, 8-1, 3))
 
     testSingleCase(chrono, 'in 25 minutes', new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);
