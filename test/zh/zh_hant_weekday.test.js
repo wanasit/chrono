@@ -1,12 +1,9 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
+
 test("Test - Single Expression", function () {
 
-    var text = "星期四";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '星期四', new Date(2016, 9-1, 2), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('星期四');
 
@@ -25,14 +22,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 9-1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "禮拜四 (forward dates only)";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2), {forwardDate: true});
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '禮拜四 (forward dates only)', new Date(2016, 9-1, 2), {forwardDate: true}, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('禮拜四');
 
@@ -51,14 +43,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 9-1, 8, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "禮拜日";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '禮拜日', new Date(2016, 9-1, 2), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('禮拜日');
 
@@ -71,14 +58,9 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 9-1, 4, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "雞上個禮拜三全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '雞上個禮拜三全部都係雞', new Date(2016, 9-1, 2), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('上個禮拜三');
 
@@ -91,15 +73,10 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 8-1, 24, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞下星期天全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '雞下星期天全部都係雞', new Date(2016, 9-1, 2), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('下星期天');
 
@@ -112,17 +89,12 @@ test("Test - Single Expression", function () {
         var resultDate = result.start.date();
         var expectDate = new Date(2016, 9-1, 4, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 test('Test - forward dates only option', function () {
 
-    var text = "星期六-星期一";
-    var results = chrono.casual.parse(text, new Date(2016, 9-1, 2), {forwardDate: true});
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if (result) {
+    testSingleCase(chrono.casual, '星期六-星期一', new Date(2016, 9-1, 2), {forwardDate: true}, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('星期六-星期一');
 
@@ -156,5 +128,5 @@ test('Test - forward dates only option', function () {
         var resultDate = result.end.date();
         var expectDate = new Date(2016, 9-1, 5, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });

@@ -1,14 +1,10 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
 
-    var text = "雞而家全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 8, 9, 10, 11));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞而家全部都係雞', new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('而家');
 
@@ -24,15 +20,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 8, 9, 10, 11);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞今日全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今日全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今日');
 
@@ -44,15 +35,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞聽日全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞聽日全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('聽日');
 
@@ -64,49 +50,29 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 11, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
     // Say.."Tomorrow" in the late night (1 AM)
-    var text = "雞明天全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 1));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞明天全部都係雞', new Date(2012, 7, 10, 1), (result) => {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "雞後天凌晨全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 0, 0));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞後天凌晨全部都係雞', new Date(2012, 7, 10, 0, 0), (result) => {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 12, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
-    var text = "雞大前天凌晨全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 0, 0));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞大前天凌晨全部都係雞', new Date(2012, 7, 10, 0, 0), (result) => {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 7, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞琴日全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞琴日全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('琴日');
 
@@ -118,15 +84,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 9, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞昨天晚上全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞昨天晚上全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('昨天晚上');
 
@@ -139,15 +100,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 9, 22);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞今日朝早全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今日朝早全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今日朝早');
 
@@ -160,15 +116,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 6);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞晏晝全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞晏晝全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('晏晝');
 
@@ -181,15 +132,10 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 15);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
-    var text = "雞今晚全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今晚全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今晚');
 
@@ -202,19 +148,14 @@ test("Test - Single Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 22);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test("Test - Combined Expression", function() {
 
 
-    var text = "雞今日晏晝5點全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今日晏晝5點全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今日晏晝5點');
 
@@ -227,18 +168,13 @@ test("Test - Combined Expression", function() {
         var resultDate = result.start.date();
         var expectDate = new Date(2012, 7, 10, 17);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
 test("Test - Casual date range", function() {
 
-    var text = "雞今日 - 下禮拜五全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 4, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今日 - 下禮拜五全部都係雞', new Date(2012, 7, 4, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今日 - 下禮拜五');
 
@@ -262,16 +198,11 @@ test("Test - Casual date range", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 10, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 
 
 
-    var text = "雞今日 - 下禮拜五全部都係雞";
-    var results = chrono.casual.parse(text, new Date(2012, 7, 10, 12));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.casual, '雞今日 - 下禮拜五全部都係雞', new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('今日 - 下禮拜五');
 
@@ -295,7 +226,7 @@ test("Test - Casual date range", function() {
         var resultDate = result.end.date();
         var expectDate = new Date(2012, 7, 17, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+    });
 });
 
 
