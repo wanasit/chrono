@@ -28,18 +28,10 @@ var chrono = require('chrono-node');
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
 
-#### Other Options:
+### Swift
 
-Doing something else? No worries. Try these:
+Try using the community-made [chrono-swift] wrapper.
 
-Platform | Installation
----------|----
-CDN      | Via [jsDelivr]:<br> `<script src="https://cdn.jsdelivr.net/npm/chrono-node@VERSION/chrono.min.js"></script>`
-Rails    | Install from [Rails Assets] by adding this to your Gemfile:<br> `gem 'rails-assets-chrono', source: 'https://rails-assets.org'`
-Swift    | Try using the community-made [chrono-swift] wrapper.
-
-[Rails Assets]: https://rails-assets.org/
-[jsDelivr]: https://www.jsdelivr.com/projects/chrono
 [chrono-swift]: https://github.com/neilsardesai/chrono-swift
 
 ## Usage
