@@ -8,7 +8,7 @@ var mergeDateTimeComponent = require('../en/ENMergeDateTimeRefiner').mergeDateTi
 var isDateOnly = require('../en/ENMergeDateTimeRefiner').isDateOnly;
 var isTimeOnly = require('../en/ENMergeDateTimeRefiner').isTimeOnly;
 
-var PATTERN = new RegExp("^\\s*(T|op|om|voor|na|van|,|-)?\\s*$");
+var PATTERN = new RegExp("^\\s*(T|op|om|voor|na|van|,|-)\\s*$");
 
 function isAbleToMerge(text, prevResult, curResult) {
     var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
@@ -56,7 +56,7 @@ function mergeResult(text, dateResult, timeResult){
     return dateResult;
 }
 
-exports.Refiner = function DEMergeDateTimeRefiner() {
+exports.Refiner = function NLMergeDateTimeRefiner() {
     Refiner.call(this);
 
 
@@ -72,23 +72,17 @@ exports.Refiner = function DEMergeDateTimeRefiner() {
 
             currResult = results[i];
             prevResult = results[i-1];
-
-            if (isDateOnly(prevResult) && isTimeOnly(currResult)
-                    && isAbleToMerge(text, prevResult, currResult)) {
-
-                prevResult = mergeResult(text, prevResult, currResult);
-                currResult = null;
-                i += 1;
-
-            } else if (isDateOnly(currResult) && isTimeOnly(prevResult)
+            if (isDateOnly(currResult) && isTimeOnly(prevResult)
                     && isAbleToMerge(text, prevResult, currResult)) {
 
                 prevResult = mergeResult(text, currResult, prevResult);
                 currResult = null;
                 i += 1;
+                mergedResult.push(prevResult);
+            }else if(!isTimeOnly(prevResult)){
+                mergedResult.push(prevResult);
             }
 
-            mergedResult.push(prevResult);
         }
 
         if (currResult != null) {

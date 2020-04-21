@@ -3,7 +3,7 @@ import { testSingleCase } from '../test_util';
 
 test("Test - Single expression", function() {
 
-    testSingleCase(chrono, '10 augustus 2012', new Date(2012,7,10), (result) => {
+    testSingleCase(chrono, '10 augustus 2012\n', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -187,6 +187,7 @@ test("Test - Single expression with separators", function() {
     var text = "10-augustus 2012";
     var expectDate = new Date(2012, 8-1, 10, 12, 0);
     var result = chrono.parse(text, new Date(2012,7, 8))[0];
+    console.log('result',result)
     expect(result.text).toBe('10-augustus 2012');
     expect(expectDate.getTime()).toBeCloseTo(result.start.date().getTime());
 
@@ -402,6 +403,15 @@ test("Test - little endian date followed by time", function() {
         expect(result.start.get('day')).toBe(24);
         expect(result.start.get('month')).toBe(10);
         expect(result.start.get('hour')).toBe(10);
+    });
+});
+
+test("Test - little endian date prefixed by arbitrary numbers", function() {
+    testSingleCase(chrono.nl, '20 \n 3 maart 2020', new Date(2017, 7-1, 7, 15), (result) => {
+        expect(result.text).toBe('3 maart 2020');
+        expect(result.start.get('day')).toBe(3);
+        expect(result.start.get('month')).toBe(3);
+        expect(result.start.get('year')).toBe(2020);
     });
 });
 

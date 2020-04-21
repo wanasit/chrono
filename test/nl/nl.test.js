@@ -3,8 +3,6 @@ test('Test - Random text', function() {
 
     let text = "Datum: 15-mrt-20";
     let results = chrono.nl.parse(text);
-    console.log(results);
-    console.log(results[0].start.knownValues);
     expect(results.length).toBe(1);
     expect(results[0].index).toBe(7);
     // expect(results[0].text).toBe('15-mrt-2020');
@@ -15,7 +13,6 @@ test('Test - Random text', function() {
 
     text = "9:00 tot 17:00, dinsdag 20 mei 2013";
     results = chrono.nl.parse(text);
-    console.log('results',results);
     expect(results.length).toBe(1);
     expect(results[0].start.get('hour')).toBe(9);
     expect(results[0].end.get('hour')).toBe(17);

@@ -5,12 +5,8 @@ var util  = require('../../utils/NL');
 var PATTERN = new RegExp('(\\W|^)' +
         '(?:op\\s*?)?' +
         '(?:'+ '(' + util.WEEKDAY_PATTERN + ')' + '\\s*,?\\s*)?' +
-        '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')' +
-        '(?:\\s*' +
-            '(?:tot|\\-|\\–|tot en met|t/m|\\s)\\s*' +
-            '(([0-9]{1,2})(?:e)?|' + util.ORDINAL_WORDS_PATTERN + ')' +
-        ')?' +
-        '(?:-|\/|\\s*(?:van)?\\s*)' +
+        '([0-9]{1,2})\.?' +
+        '(?:\\s*(?:tot|\\-|\\–|tot en met|t\\/m)\\s*([0-9]{1,2})\.?)?\\s*' +
         '(' + util.MONTH_PATTERN + ')' +
         '(?:' +
             '(?:-|\/|,?\\s*)' +
@@ -22,14 +18,11 @@ var PATTERN = new RegExp('(\\W|^)' +
         ')?' +
         '(?=\\W|$)', 'i'
     );
-
 var WEEKDAY_GROUP = 2;
 var DATE_GROUP = 3;
-var DATE_NUM_GROUP = 4;
-var DATE_TO_GROUP = 5;
-var DATE_TO_NUM_GROUP = 6;
-var MONTH_NAME_GROUP = 7;
-var YEAR_GROUP = 8;
+var DATE_TO_GROUP = 4;
+var MONTH_NAME_GROUP = 5;
+var YEAR_GROUP = 6;
 
 exports.Parser = function ENMonthNameLittleEndianParser(){
     parser.Parser.apply(this, arguments);
@@ -47,9 +40,8 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
         var month = match[MONTH_NAME_GROUP];
         month = util.MONTH_OFFSET[month.toLowerCase()];
 
-        var day = match[DATE_NUM_GROUP] ?
-            parseInt(match[DATE_NUM_GROUP]):
-            util.ORDINAL_WORDS[match[DATE_GROUP].trim().replace('-', ' ').toLowerCase()];
+        var day = match[DATE_GROUP];
+        day = parseInt(day);
 
         var year = null;
         if (match[YEAR_GROUP]) {
@@ -98,10 +90,7 @@ exports.Parser = function ENMonthNameLittleEndianParser(){
 
         // Text can be 'range' value. Such as '12 - 13 januari 2012'
         if (match[DATE_TO_GROUP]) {
-            var endDate = match[DATE_TO_NUM_GROUP] ?
-                parseInt(match[DATE_TO_NUM_GROUP]):
-                util.ORDINAL_WORDS[match[DATE_TO_GROUP].trim().replace('-', ' ').toLowerCase()];
-
+            var endDate = parseInt(match[DATE_TO_GROUP]);
             result.end = result.start.clone();
             result.end.assign('day', endDate);
         }

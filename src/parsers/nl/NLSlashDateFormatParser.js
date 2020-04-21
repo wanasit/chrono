@@ -3,20 +3,24 @@
     - dinsdag 11/3/2015
     - 11/3/2015
     - 11/3
+    - dinsdag 11.mrt.15
 */
 var dayjs = require('dayjs');
 var Parser = require('../parser').Parser;
 var ParsedResult = require('../../result').ParsedResult;
 var util  = require('../../utils/NL');
 
-var PATTERN = new RegExp('(\\W|^)' +
+var PATTERN = new RegExp(
+    '(\\W|^)' +
     '(?:' +
         '(?:op\\s*?)?' +
         '(' + util.WEEKDAY_PATTERN + ')' +
         '\\s*\\,?\\s*' +
         '(?:de\\s*)?' +
     ')?' +
-    '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' +
+    '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-1]{0,1}[0-9]{1}|' +
+    util.MONTH_PATTERN +
+    ')' +
     '(?:' +
         '[\\/\\.\\-]' +
         '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' +
@@ -67,6 +71,9 @@ exports.Parser = function DESlashDateFormatParser(argument) {
         let day   = match[DAY_GROUP];
 
         month = parseInt(month);
+        if(!month) {
+            month = util.MONTH_OFFSET[match[MONTH_GROUP].trim().toLowerCase()];
+        }
         day  = parseInt(day);
         year = parseInt(year);
 

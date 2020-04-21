@@ -1351,7 +1351,6 @@ exports.Refiner = exports.refiner.Refiner;
 exports.Filter = exports.refiner.Filter;
 exports.ParsedResult = __webpack_require__(0).ParsedResult;
 exports.ParsedComponents = __webpack_require__(0).ParsedComponents;
-npm;
 
 var Chrono = function Chrono(option) {
   option = option || exports.options.casualOption();
@@ -6492,7 +6491,7 @@ var ParsedResult = __webpack_require__(0).ParsedResult;
 
 var util = __webpack_require__(8);
 
-var PATTERN = new RegExp('(\\W|^)' + '(?:am\\s*?)?' + '(?:(Sonntag|Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|So|Mo|Di|Mi|Do|Fr|Sa)\\s*,?\\s*)?' + '(?:den\\s*)?' + '([0-9]{1,2})\\.' + '(?:\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\s)\\s*([0-9]{1,2})\\.)?\\s*' + '(Jan(?:uar|\\.)?|Feb(?:ruar|\\.)?|Mär(?:z|\\.)?|Maerz|Mrz\\.?|Apr(?:il|\\.)?|Mai|Jun(?:i|\\.)?|Jul(?:i|\\.)?|Aug(?:ust|\\.)?|Sep(?:t|t\\.|tember|\\.)?|Okt(?:ober|\\.)?|Nov(?:ember|\\.)?|Dez(?:ember|\\.)?)' + '(?:' + ',?\\s*([0-9]{1,4}(?![^\\s]\\d))' + '(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?' + ')?' + '(?=\\W|$)', 'i');
+var PATTERN = new RegExp('(\\W|^)' + '(?:am\\s*?)?' + '(?:(Sonntag|Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|So|Mo|Di|Mi|Do|Fr|Sa)\\s*,?\\s*)?' + '(?:den\\s*)?' + '([0-9]{1,2})\\.' + '(?:\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\\\s)\\s*([0-9]{1,2})\\.)?\\s*' + '(Jan(?:uar|\\.)?|Feb(?:ruar|\\.)?|Mär(?:z|\\.)?|Maerz|Mrz\\.?|Apr(?:il|\\.)?|Mai|Jun(?:i|\\.)?|Jul(?:i|\\.)?|Aug(?:ust|\\.)?|Sep(?:t|t\\.|tember|\\.)?|Okt(?:ober|\\.)?|Nov(?:ember|\\.)?|Dez(?:ember|\\.)?)' + '(?:' + ',?\\s*([0-9]{1,4}(?![^\\s]\\d))' + '(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?' + ')?' + '(?=\\W|$)', 'i');
 var WEEKDAY_GROUP = 2;
 var DATE_GROUP = 3;
 var DATE_TO_GROUP = 4;
@@ -7338,14 +7337,12 @@ var ParsedResult = __webpack_require__(0).ParsedResult;
 
 var util = __webpack_require__(11);
 
-var PATTERN = new RegExp('(\\W|^)' + '(?:op\\s*?)?' + '(?:' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*,?\\s*)?' + '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')' + '(?:\\s*' + '(?:tot|\\-|\\–|tot en met|t/m|\\s)\\s*' + '(([0-9]{1,2})(?:e)?|' + util.ORDINAL_WORDS_PATTERN + ')' + ')?' + '(?:-|\/|\\s*(?:van)?\\s*)' + '(' + util.MONTH_PATTERN + ')' + '(?:' + '(?:-|\/|,?\\s*)' + '((?:' + '[1-9][0-9]{0,3}\\s*(?:BE|n\.Chr\.|v\.Chr\.)|' + '[1-2][0-9]{3}|' + '[5-9][0-9]' + ')(?![^\\s]\\d))' + ')?' + '(?=\\W|$)', 'i');
+var PATTERN = new RegExp('(\\W|^)' + '(?:op\\s*?)?' + '(?:' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*,?\\s*)?' + '([0-9]{1,2})\.?' + '(?:\\s*(?:tot|\\-|\\–|tot en met|t\\/m)\\s*([0-9]{1,2})\.?)?\\s*' + '(' + util.MONTH_PATTERN + ')' + '(?:' + '(?:-|\/|,?\\s*)' + '((?:' + '[1-9][0-9]{0,3}\\s*(?:BE|n\.Chr\.|v\.Chr\.)|' + '[1-2][0-9]{3}|' + '[5-9][0-9]' + ')(?![^\\s]\\d))' + ')?' + '(?=\\W|$)', 'i');
 var WEEKDAY_GROUP = 2;
 var DATE_GROUP = 3;
-var DATE_NUM_GROUP = 4;
-var DATE_TO_GROUP = 5;
-var DATE_TO_NUM_GROUP = 6;
-var MONTH_NAME_GROUP = 7;
-var YEAR_GROUP = 8;
+var DATE_TO_GROUP = 4;
+var MONTH_NAME_GROUP = 5;
+var YEAR_GROUP = 6;
 
 exports.Parser = function ENMonthNameLittleEndianParser() {
   parser.Parser.apply(this, arguments);
@@ -7362,7 +7359,8 @@ exports.Parser = function ENMonthNameLittleEndianParser() {
     });
     var month = match[MONTH_NAME_GROUP];
     month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_NUM_GROUP] ? parseInt(match[DATE_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_GROUP].trim().replace('-', ' ').toLowerCase()];
+    var day = match[DATE_GROUP];
+    day = parseInt(day);
     var year = null;
 
     if (match[YEAR_GROUP]) {
@@ -7412,7 +7410,7 @@ exports.Parser = function ENMonthNameLittleEndianParser() {
 
 
     if (match[DATE_TO_GROUP]) {
-      var endDate = match[DATE_TO_NUM_GROUP] ? parseInt(match[DATE_TO_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_TO_GROUP].trim().replace('-', ' ').toLowerCase()];
+      var endDate = parseInt(match[DATE_TO_GROUP]);
       result.end = result.start.clone();
       result.end.assign('day', endDate);
     }
@@ -7431,6 +7429,7 @@ exports.Parser = function ENMonthNameLittleEndianParser() {
     - dinsdag 11/3/2015
     - 11/3/2015
     - 11/3
+    - dinsdag 11.mrt.15
 */
 var dayjs = __webpack_require__(2);
 
@@ -7440,7 +7439,7 @@ var ParsedResult = __webpack_require__(0).ParsedResult;
 
 var util = __webpack_require__(11);
 
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:op\\s*?)?' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*\\,?\\s*' + '(?:de\\s*)?' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
+var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:op\\s*?)?' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*\\,?\\s*' + '(?:de\\s*)?' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-1]{0,1}[0-9]{1}|' + util.MONTH_PATTERN + ')' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
 var OPENNING_GROUP = 1;
 var ENDING_GROUP = 6;
 var WEEKDAY_GROUP = 2;
@@ -7480,6 +7479,11 @@ exports.Parser = function DESlashDateFormatParser(argument) {
     var month = match[MONTH_GROUP];
     var day = match[DAY_GROUP];
     month = parseInt(month);
+
+    if (!month) {
+      month = util.MONTH_OFFSET[match[MONTH_GROUP].trim().toLowerCase()];
+    }
+
     day = parseInt(day);
     year = parseInt(year);
     if (month < 1 || month > 12) return null;
@@ -8871,7 +8875,7 @@ var isDateOnly = __webpack_require__(5).isDateOnly;
 
 var isTimeOnly = __webpack_require__(5).isTimeOnly;
 
-var PATTERN = new RegExp("^\\s*(T|op|om|voor|na|van|,|-)?\\s*$");
+var PATTERN = new RegExp("^\\s*(T|op|om|voor|na|van|,|-)\\s*$");
 
 function isAbleToMerge(text, prevResult, curResult) {
   var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
@@ -8914,7 +8918,7 @@ function mergeResult(text, dateResult, timeResult) {
   return dateResult;
 }
 
-exports.Refiner = function DEMergeDateTimeRefiner() {
+exports.Refiner = function NLMergeDateTimeRefiner() {
   Refiner.call(this);
 
   this.refine = function (text, results, opt) {
@@ -8927,17 +8931,14 @@ exports.Refiner = function DEMergeDateTimeRefiner() {
       currResult = results[i];
       prevResult = results[i - 1];
 
-      if (isDateOnly(prevResult) && isTimeOnly(currResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      } else if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
+      if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
         prevResult = mergeResult(text, currResult, prevResult);
         currResult = null;
         i += 1;
+        mergedResult.push(prevResult);
+      } else if (!isTimeOnly(prevResult)) {
+        mergedResult.push(prevResult);
       }
-
-      mergedResult.push(prevResult);
     }
 
     if (currResult != null) {
