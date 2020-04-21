@@ -130,3 +130,11 @@ exports.DETimeAgoFormatParser = require('./de/DETimeAgoFormatParser').Parser;
 exports.DETimeExpressionParser = require('./de/DETimeExpressionParser').Parser;
 exports.DEWeekdayParser = require('./de/DEWeekdayParser').Parser;
 exports.DECasualDateParser = require('./de/DECasualDateParser').Parser;
+
+exports.NLMonthNameParser = require('./nl/NLMonthNameParser').Parser;
+exports.NLMonthNameLittleEndianParser = require('./nl/NLMonthNameLittleEndianParser').Parser;
+exports.NLSlashDateFormatParser = require('./nl/NLSlashDateFormatParser').Parser;
+exports.NLWeekdayParser = require('./nl/NLWeekdayParser').Parser;
+exports.NLTimeExpressionParser = require('./nl/NLTimeExpressionParser').Parser;
+exports.NLCasualDateParser = require('./nl/NLCasualDateParser').Parser;
+exports.NLCasualTimeParser = require('./nl/NLCasualTimeParser').Parser;

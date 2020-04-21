@@ -61,6 +61,7 @@ exports.strictOption = function () {
     return exports.mergeOptions([
         exports.en(strictConfig),
         exports.de(strictConfig),
+        exports.nl(strictConfig),
         exports.pt(strictConfig),
         exports.es(strictConfig),
         exports.fr(strictConfig),
@@ -74,7 +75,8 @@ exports.casualOption = function () {
     return exports.mergeOptions([
         exports.en.casual,
         // Some German abbriviate overlap with common English
-        exports.de({ strict: true }), 
+        exports.de({ strict: true }),
+        exports.nl,
         exports.pt,
         exports.es,
         exports.fr,
@@ -111,6 +113,37 @@ exports.de.casual = function() {
     });
     option.parsers.unshift(new parser.DECasualDateParser());
     option.parsers.unshift(new parser.DEWeekdayParser());
+    return option;
+};
+
+
+
+// -------------------------------------------------------------
+
+exports.nl = function(config) {
+    return {
+        parsers: [
+            new parser.NLMonthNameLittleEndianParser(config),
+            new parser.NLMonthNameParser(config),
+            new parser.NLSlashDateFormatParser(config),
+            new parser.NLTimeExpressionParser(config),
+        ],
+        refiners: [
+            new refiner.OverlapRemovalRefiner(),
+            new refiner.ForwardDateRefiner(),
+            new refiner.NLMergeDateTimeRefiner(),
+            new refiner.NLMergeDateRangeRefiner()
+        ]
+    }
+};
+
+exports.nl.casual = function() {
+    var option = exports.nl({
+        strict: false
+    });
+    option.parsers.unshift(new parser.NLCasualDateParser());
+    option.parsers.unshift(new parser.NLCasualTimeParser());
+    option.parsers.unshift(new parser.NLWeekdayParser());
     return option;
 };
 
@@ -213,8 +246,8 @@ exports.pt = function(config) {
 };
 
 exports.pt.casual = function() {
-    var option = exports.pt({ 
-        strict: false 
+    var option = exports.pt({
+        strict: false
     });
 
     option.parsers.unshift(new parser.PTCasualDateParser());
@@ -242,8 +275,8 @@ exports.es = function(config) {
 };
 
 exports.es.casual = function() {
-    var option = exports.es({ 
-        strict: false 
+    var option = exports.es({
+        strict: false
     });
 
     option.parsers.unshift(new parser.ESCasualDateParser());

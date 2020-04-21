@@ -65,6 +65,9 @@ exports.en_GB = new Chrono( options.mergeOptions([
 exports.de = new Chrono( options.mergeOptions([
     options.de.casual, options.en, options.commonPostProcessing]));
 
+exports.nl = new Chrono( options.mergeOptions([
+    options.nl.casual, options.en, options.commonPostProcessing]));
+
 exports.pt = new Chrono( options.mergeOptions([
     options.pt.casual, options.en, options.commonPostProcessing]));
 

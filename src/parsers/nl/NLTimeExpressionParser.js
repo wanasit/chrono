@@ -9,21 +9,21 @@ var ParsedResult = require('../../result').ParsedResult;
 var ParsedComponents = require('../../result').ParsedComponents;
 
 var FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
-    "(?:(?:um|von)\\s*)?" +
-    "(\\d{1,4}|mittags?|mitternachts?)" +
+    "(?:(?:om|van)\\s*)?" +
+    "(\\d{1,4}|tussen de middag|middernachts?)" +
     "(?:" +
         "(?:\\.|\\:|\\：)(\\d{1,2})" +
         "(?:" +
             "(?:\\:|\\：)(\\d{2})" +
         ")?" +
     ")?" +
-    "(?:\\s*uhr)?" +
-    "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" +
+    "(?:\\s*uur)?" +
+    "(?:\\s*(\'s morgens|\'s ochtends|in de ochtend|\'s middags|in de middag|\'s avonds|in de avond|\'s nachts))?" +
     "(?=\\W|$)", 'i');
 
 
 var SECOND_REG_PATTERN = new RegExp("^\\s*" +
-    "(\\-|\\–|\\~|\\〜|bis|\\?)\\s*" +
+    "(\\-|\\–|\\~|\\〜|tot|\\?)\\s*" +
     "(\\d{1,4})" +
     "(?:" +
         "(?:\\.|\\:|\\：)(\\d{1,2})" +
@@ -31,7 +31,7 @@ var SECOND_REG_PATTERN = new RegExp("^\\s*" +
             "(?:\\.|\\:|\\：)(\\d{1,2})" +
         ")?" +
     ")?" +
-    "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" +
+    "(?:\\s*(\'s morgens|\'s ochtends|in de ochtend|\'s middags|in de middag|\'s avonds|in de avond|\'s nachts))?" +
     "(?=\\W|$)", 'i');
 
 var HOUR_GROUP    = 2;
@@ -40,7 +40,7 @@ var SECOND_GROUP  = 4;
 var AM_PM_HOUR_GROUP = 5;
 
 
-exports.Parser = function DETimeExpressionParser() {
+exports.Parser = function NLTimeExpressionParser() {
     Parser.apply(this, arguments);
 
     this.pattern = function() { return FIRST_REG_PATTERN; }
@@ -54,7 +54,7 @@ exports.Parser = function DETimeExpressionParser() {
         result.ref = ref;
         result.index = match.index + match[1].length;
         result.text  = match[0].substring(match[1].length);
-        result.tags['DETimeExpressionParser'] = true;
+        result.tags['NLTimeExpressionParser'] = true;
 
         result.start.imply('day',   refMoment.date());
         result.start.imply('month', refMoment.month()+1);
@@ -73,10 +73,10 @@ exports.Parser = function DETimeExpressionParser() {
         }
 
         // ----- Hours
-        if (/mittags?/i.test(match[HOUR_GROUP])) {
+        if (/tussen de middag/i.test(match[HOUR_GROUP])) {
             meridiem = 1;
             hour = 12;
-        } else if (/mitternachts?/i.test(match[HOUR_GROUP])) {
+        } else if (/middernachts?/i.test(match[HOUR_GROUP])) {
             meridiem = 0;
             hour = 0;
         } else {
@@ -106,7 +106,7 @@ exports.Parser = function DETimeExpressionParser() {
         if (match[AM_PM_HOUR_GROUP] != null) {
             if (hour > 12) return null;
             var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-            if (ampm === 'morgens' || ampm === 'vormittags') {
+            if (ampm === "'s ochtends" ||  ampm === 'in de ochtend' || ampm === "'s morgens") {
                 meridiem = 0;
                 if(hour == 12) hour = 0;
             } else {
@@ -194,7 +194,7 @@ exports.Parser = function DETimeExpressionParser() {
             if (hour > 12) return null;
 
             var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-            if (ampm === 'morgens' || ampm === 'vormittags') {
+            if (ampm === '\'s ochtends' ||  ampm === 'in de ochtend' || ampm === '\'s morgens') {
                 meridiem = 0;
                 if(hour == 12) {
                     hour = 0;
