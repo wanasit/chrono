@@ -1,8 +1,7 @@
-var parser = require('./parsers/parser');
-var refiner = require('./refiners/refiner');
+import * as parser from './parsers/parser';
+import * as refiner from './refiners/refiner';
 
-
-exports.mergeOptions = function(options) {
+export function mergeOptions(options) {
 
     var addedTypes = {};
     var mergedOption = {
@@ -36,10 +35,10 @@ exports.mergeOptions = function(options) {
     });
 
     return mergedOption;
-};
+}
 
 
-exports.commonPostProcessing = function() {
+export function commonPostProcessing() {
     return {
         refiners: [
             // These should be after all other refiners
@@ -48,12 +47,12 @@ exports.commonPostProcessing = function() {
             new refiner.UnlikelyFormatFilter()
         ]
     }
-};
+}
 
 
 // -------------------------------------------------------------
 
-exports.strictOption = function () {
+export function strictOption() {
     var strictConfig = {
         strict: true
     };
@@ -69,9 +68,9 @@ exports.strictOption = function () {
         exports.zh,
         exports.commonPostProcessing
     ]);
-};
+}
 
-exports.casualOption = function () {
+export function casualOption() {
     return exports.mergeOptions([
         exports.en.casual,
         // Some German abbriviate overlap with common English
@@ -84,11 +83,11 @@ exports.casualOption = function () {
         exports.zh,
         exports.commonPostProcessing
     ]);
-};
+}
 
 // -------------------------------------------------------------
 
-exports.de = function(config) {
+export const de = function(config) {
     return {
         parsers: [
             new parser.DEDeadlineFormatParser(config),
@@ -107,7 +106,7 @@ exports.de = function(config) {
     }
 };
 
-exports.de.casual = function() {
+de.casual = function() {
     var option = exports.de({
         strict: false
     });
@@ -120,7 +119,7 @@ exports.de.casual = function() {
 
 // -------------------------------------------------------------
 
-exports.nl = function(config) {
+export const nl = function(config) {
     return {
         parsers: [
             new parser.NLMonthNameLittleEndianParser(config),
@@ -137,7 +136,7 @@ exports.nl = function(config) {
     }
 };
 
-exports.nl.casual = function() {
+nl.casual = function() {
     var option = exports.nl({
         strict: false
     });
@@ -152,7 +151,7 @@ exports.nl.casual = function() {
 // -------------------------------------------------------------
 
 
-exports.en = function(config) {
+export const en = function(config) {
     return {
         parsers: [
             new parser.ENISOFormatParser(config),
@@ -179,7 +178,7 @@ exports.en = function(config) {
     }
 };
 
-exports.en.casual = function(config) {
+en.casual = function(config) {
     config = config || {};
     config.strict = false;
     var option = exports.en(config);
@@ -193,21 +192,21 @@ exports.en.casual = function(config) {
 };
 
 
-exports.en_GB = function(config) {
+export const en_GB = function(config) {
     config = config || {};
     config.littleEndian = true;
     return exports.en(config);
-}
+};
 
-exports.en_GB.casual = function(config) {
+en_GB.casual = function(config) {
     config = config || {};
     config.littleEndian = true;
     return exports.en.casual(config);
-}
+};
 
 // -------------------------------------------------------------
 
-exports.ja = function() {
+export const ja = function() {
     return {
         parsers: [
             new parser.JPStandardParser()
@@ -220,7 +219,7 @@ exports.ja = function() {
     }
 };
 
-exports.ja.casual = function() {
+ja.casual = function() {
     var option = exports.ja();
     option.parsers.unshift(new parser.JPCasualDateParser());
     return option;
@@ -229,7 +228,7 @@ exports.ja.casual = function() {
 // -------------------------------------------------------------
 
 
-exports.pt = function(config) {
+export const pt = function(config) {
     return {
         parsers: [
             new parser.PTTimeAgoFormatParser(config),
@@ -245,7 +244,7 @@ exports.pt = function(config) {
     }
 };
 
-exports.pt.casual = function() {
+pt.casual = function() {
     var option = exports.pt({
         strict: false
     });
@@ -258,7 +257,7 @@ exports.pt.casual = function() {
 // -------------------------------------------------------------
 
 
-exports.es = function(config) {
+export const es = function(config) {
     return {
         parsers: [
             new parser.ESTimeAgoFormatParser(config),
@@ -274,7 +273,7 @@ exports.es = function(config) {
     }
 };
 
-exports.es.casual = function() {
+es.casual = function() {
     var option = exports.es({
         strict: false
     });
@@ -287,7 +286,7 @@ exports.es.casual = function() {
 
 // -------------------------------------------------------------
 
-exports.fr = function(config) {
+export const fr = function(config) {
     return {
         parsers: [
             new parser.FRDeadlineFormatParser(config),
@@ -305,7 +304,7 @@ exports.fr = function(config) {
     }
 };
 
-exports.fr.casual = function() {
+fr.casual = function() {
     var option = exports.fr({
         strict: false
     });
@@ -319,7 +318,7 @@ exports.fr.casual = function() {
 
 // -------------------------------------------------------------
 
-exports.zh = function() {
+export const zh = function() {
     return {
         parsers: [
             new parser.ZHHantDateParser(),
