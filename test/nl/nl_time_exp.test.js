@@ -1,14 +1,10 @@
-var chrono = require('../../src/chrono');
+import * as chrono from '../../src/chrono';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 
 
-    var text = "18:10";
-    var results = chrono.nl.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.nl, '18:10', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('18:10')
 
@@ -25,21 +21,14 @@ test("Test - Single Expression", function() {
         expect(result.start.isCertain('second')).toBe(false)
         expect(result.start.isCertain('millisecond')).toBe(false)
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 18, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 18, 10));
+    });
 
 });
 
 test("Test - Range Expression", function() {
 
-    var text = "18:10 - 22.32";
-    var results = chrono.nl.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1)
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.nl, '18:10 - 22.32', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(0)
         expect(result.text).toBe('18:10 - 22.32')
 
@@ -55,9 +44,7 @@ test("Test - Range Expression", function() {
         expect(result.start.isCertain('second')).toBe(false)
         expect(result.start.isCertain('millisecond')).toBe(false)
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 18, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 18, 10));
 
         expect(result.end).not.toBeNull()
         expect(result.end.get('hour')).toBe(22)
@@ -71,17 +58,10 @@ test("Test - Range Expression", function() {
         expect(result.end.isCertain('second')).toBe(false)
         expect(result.end.isCertain('millisecond')).toBe(false)
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 10, 22, 32);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime())
-    }
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 22, 32));
+    });
 
-    var text = " van 6:30 tot 23:00 ";
-    var results = chrono.nl.parse(text, new Date(2012,7,10));
-    expect(results.length).toBe(1);
-
-    var result = results[0];
-    if(result){
+    testSingleCase(chrono.nl, ' van 6:30 tot 23:00 ', new Date(2012,7,10), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe('van 6:30 tot 23:00');
 
@@ -90,19 +70,15 @@ test("Test - Range Expression", function() {
         expect(result.start.get('minute')).toBe(30);
         expect(result.start.get('meridiem')).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 6, 30);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6, 30));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get('hour')).toBe(23);
         expect(result.end.get('minute')).toBe(0);
         expect(result.end.get('meridiem')).toBe(1);
 
-        var resultDate = result.end.date();
-        var expectDate = new Date(2012, 7, 10, 23, 0);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
-    }
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 23, 0));
+    });
 
 });
 
