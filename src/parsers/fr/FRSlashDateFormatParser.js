@@ -47,7 +47,7 @@ exports.Parser = function FRSlashDateFormatParser(argument) {
         }
 
         var index = match.index + match[OPENNING_GROUP].length;
-        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
+        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[OPENNING_GROUP].length - match[ENDING_GROUP].length);
 
 
         var result = new ParsedResult({

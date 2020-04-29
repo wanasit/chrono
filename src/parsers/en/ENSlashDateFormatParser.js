@@ -1,6 +1,6 @@
 /*
     Date format with slash "/" (also "-" and ".") between numbers
-    - Tuesday 11/3/2015 
+    - Tuesday 11/3/2015
     - 11/3/2015
     - 11/3
 
@@ -9,7 +9,7 @@
     - 11/3/2015 = November 3rd, 2015
     - 23/4/2015 = April 23th, 2015
 
-    If "littleEndian" config is set, the parser will try the little-endian first. 
+    If "littleEndian" config is set, the parser will try the little-endian first.
     - 11/3/2015 = March 11th, 2015
 */
 const dayjs = require('dayjs');
@@ -63,8 +63,7 @@ exports.Parser = function ENSlashDateFormatParser(config) {
         }
 
         var index = match.index + match[OPENNING_GROUP].length;
-        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-
+        var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[OPENNING_GROUP].length - match[ENDING_GROUP].length);
 
         var result = new ParsedResult({
             text: text,
