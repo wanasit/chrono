@@ -18,24 +18,27 @@ var PATTERN = new RegExp(
         '\\s*\\,?\\s*' +
         '(?:de\\s*)?' +
     ')?' +
-    '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-1]{0,1}[0-9]{1}|' +
+    '([0-3]{0,1}[0-9]{1})' +
+        '(?<separator>\\.| ?\\/ ?| ?\\- ?)' +
+        '([0-1]{0,1}[0-9]{1}|' +
     util.MONTH_PATTERN +
     ')' +
     '(?:' +
-        '[\\/\\.\\-]' +
+        '\\k<separator>' +
         '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' +
     ')?' +
     '(\\W|$)', 'i');
 
 var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6;
+var ENDING_GROUP = 7;
 
 var WEEKDAY_GROUP = 2;
 var DAY_GROUP = 3;
-var MONTH_GROUP = 4;
-var YEAR_GROUP = 5;
+var SEPARATOR_GROUP = 4;
+var MONTH_GROUP = 5;
+var YEAR_GROUP = 6;
 
-exports.Parser = function DESlashDateFormatParser(argument) {
+exports.Parser = function NLSlashDateFormatParser(argument) {
     Parser.apply(this, arguments);
 
     this.pattern = function () { return PATTERN; };

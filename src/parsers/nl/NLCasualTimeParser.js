@@ -5,7 +5,7 @@ var PATTERN = /(\W|^)((deze)?\s*('s morgens|'s ochtends|in de ochtend|'s middags
 
 var TIME_MATCH = 4;
 
-exports.Parser = function ENCasualTimeParser(){
+exports.Parser = function NLCasualTimeParser(){
 
     Parser.apply(this, arguments);
 

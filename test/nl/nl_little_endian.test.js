@@ -15,6 +15,18 @@ test("Test - Single expression", function() {
         expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
     });
 
+    testSingleCase(chrono.nl, '10 aug. 2012\n', new Date(2012,7,10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get('year')).toBe(2012);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe('10 aug. 2012');
+
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 12));
+    });
+
     testSingleCase(chrono.nl, '3 februari 82', new Date(2012,7,10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(1982);

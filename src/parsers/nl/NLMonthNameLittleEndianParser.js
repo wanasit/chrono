@@ -6,12 +6,12 @@ var PATTERN = new RegExp('(\\W|^)' +
         '(?:op\\s*?)?' +
         '(?:'+ '(' + util.WEEKDAY_PATTERN + ')' + '\\s*,?\\s*)?' +
         '([0-9]{1,2})\.?' +
-        '(?:\\s*(?:tot|\\-|\\–|tot en met|t\\/m)\\s*([0-9]{1,2})\.?)?\\s*' +
-        '(' + util.MONTH_PATTERN + ')' +
+        '(?:\\s*(?:tot|\\-|\\–|tot en met|t\\/m)\\s*([0-9]{1,2})\\.?)?\\s*' +
+        '(' + util.MONTH_PATTERN + ')\\.?' +
         '(?:' +
             '(?:-|\/|,?\\s*)' +
             '((?:' +
-                '[1-9][0-9]{0,3}\\s*(?:BE|n\.Chr\.|v\.Chr\.)|' +
+                '[1-9][0-9]{0,3}\\s*(?:BE|n\\.Chr\\.|v\\.Chr\\.)|' +
                 '[1-2][0-9]{3}|' +
                 '[5-9][0-9]' +
             ')(?![^\\s]\\d))' +
@@ -24,7 +24,7 @@ var DATE_TO_GROUP = 4;
 var MONTH_NAME_GROUP = 5;
 var YEAR_GROUP = 6;
 
-exports.Parser = function ENMonthNameLittleEndianParser(){
+exports.Parser = function NLMonthNameLittleEndianParser(){
     parser.Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; };

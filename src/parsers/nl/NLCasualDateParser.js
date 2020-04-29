@@ -15,7 +15,7 @@ var PATTERN = new RegExp(
         'afgelopen\\s*nacht' +
     ')(?=\\W|$)', 'i');
 
-exports.Parser = function DECasualDateParser() {
+exports.Parser = function NLCasualDateParser() {
 
     Parser.apply(this, arguments);
 

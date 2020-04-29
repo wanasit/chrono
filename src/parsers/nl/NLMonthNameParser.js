@@ -23,7 +23,7 @@ var MONTH_NAME_GROUP = 2;
 var YEAR_GROUP = 3;
 var YEAR_BE_GROUP = 4;
 
-exports.Parser = function ENMonthNameParser(){
+exports.Parser = function NLMonthNameParser(){
     parser.Parser.apply(this, arguments);
 
     this.pattern = function() { return PATTERN; }
