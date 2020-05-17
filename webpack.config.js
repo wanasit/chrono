@@ -4,8 +4,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
-        'chrono': path.resolve(__dirname, 'src/chrono.js'),
-        'chrono.min': path.resolve(__dirname, 'src/chrono.js')
+        'chrono': path.resolve(__dirname, 'src/chrono.ts'),
+        'chrono.min': path.resolve(__dirname, 'src/chrono.ts')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -14,26 +14,27 @@ module.exports = {
         libraryTarget: 'umd',
         globalObject: 'this'
     },
+    resolve: {
+        extensions: ['.ts', '.js' ],
+    },
     module: {
         rules: [
-          {
-            test: /\.m?js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: ['@babel/preset-env']
-              }
+            {
+                test: /\.(ts|m?js)$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader'
+                }
             }
-          }
         ]
     },
     devtool: 'source-map',
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({
-            include: /\.min\.js$/
-          })
+        minimizer: [
+            new TerserPlugin({
+                include: /\.min\.js$/
+            })
         ],
     },
 };

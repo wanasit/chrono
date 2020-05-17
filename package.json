@@ -11,19 +11,30 @@
     "testURL": "http://localhost/"
   },
   "license": "MIT",
-  "version": "1.4.6",
+  "version": "2.0.0-experimental",
   "directories": {
     "source": "./src",
     "test": "./test"
   },
   "main": "./dist/chrono.js",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-export-namespace-from"
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "babel-jest": "^25.3.0",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-export-namespace-from": "^7.8.3",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "babel-jest": "^25.5.1",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.2",
-    "jest": "^25.3.0",
+    "jest": "^25.5.4",
     "terser-webpack-plugin": "^2.3.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
@@ -36,6 +47,6 @@
     "version": "npm run build && git add -A dist"
   },
   "dependencies": {
-    "dayjs": "^1.8.19"
+    "dayjs": "^1.8.26"
   }
 }

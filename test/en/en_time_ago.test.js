@@ -1,4 +1,4 @@
-import * as chrono from '../../src/chrono';
+import * as chrono from '../../src/';
 import { testSingleCase, testUnexpectedResult } from '../test_util';
 
 test("Test - Single Expression", function() {

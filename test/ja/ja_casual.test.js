@@ -1,10 +1,10 @@
-import * as chrono from '../../src/chrono';
+import * as chrono from '../../src/';
 import { testSingleCase } from '../test_util';
 
 
 test("Test - Single Expression", function() {
 
-    testSingleCase(chrono, '今日感じたことを忘れずに', new Date(2012, 8-1, 10, 12), (result) => {
+    testSingleCase(chrono.ja, '今日感じたことを忘れずに', new Date(2012, 8-1, 10, 12), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('今日');
 
@@ -17,7 +17,7 @@ test("Test - Single Expression", function() {
     });
 
 
-    testSingleCase(chrono, '昨日の全国観測値ランキング', new Date(2012,8-1, 10, 12), (result) => {
+    testSingleCase(chrono.ja, '昨日の全国観測値ランキング', new Date(2012,8-1, 10, 12), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('昨日');
 

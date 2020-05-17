@@ -1,4 +1,4 @@
-import * as chrono from '../../src/chrono';
+import * as chrono from '../../src/';
 import { testSingleCase, testWithExpectedDate } from '../test_util';
 
 test("Test - Single Expression", function() {
@@ -119,33 +119,3 @@ test("Test - Single Expression", function() {
     });
 });
 
-
-test("Test - Compare with native js", function() {
-
-    const testByCompareWithNative = (text) => {
-        const expectedDate = new Date(text);
-        testWithExpectedDate(chrono, text, expectedDate)
-    };
-
-    testByCompareWithNative('1994-11-05T13:15:30Z');
-
-    testByCompareWithNative('1994-02-28T08:15:30-05:30');
-
-    testByCompareWithNative('1994-11-05T08:15:30-05:30');
-
-    testByCompareWithNative('1994-11-05T08:15:30+11:30');
-
-    testByCompareWithNative('2014-11-30T08:15:30-05:30');
-
-    testByCompareWithNative('Sat, 21 Feb 2015 11:50:48 -0500');
-
-    testByCompareWithNative('22 Feb 2015 04:12:00 -0000');
-
-    testByCompareWithNative('1900-01-01T00:00:00-01:00');
-
-    testByCompareWithNative('1900-01-01T00:00:00-00:00');
-
-    testByCompareWithNative('9999-12-31T23:59:00-00:00');
-
-    testByCompareWithNative('09/25/2017 10:31:50.522 PM');
-});

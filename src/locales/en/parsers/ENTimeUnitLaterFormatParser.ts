@@ -1,0 +1,67 @@
+import {Parser, ParsingContext} from "../../../chrono";
+import {extractDateJSTimeUnitValues, TIME_UNIT_PATTERN, TIME_UNIT_STRICT_PATTERN} from "../constants";
+import {ParsingResult} from "../../../results";
+import dayjs from "dayjs";
+
+
+const PATTERN = new RegExp('' +
+    '(?<=\\W|^)' +
+    '(' + TIME_UNIT_PATTERN + ')' +
+    '(later|after|from now|henceforth|forward|out)' +
+    '(?=(?:\\W|$))',
+'i');
+
+const STRICT_PATTERN = new RegExp('' +
+    '(?<=\\W|^)' +
+    '(' + TIME_UNIT_STRICT_PATTERN + ')' +
+    '(later|from now)' +
+    '(?=(?:\\W|$))',
+'i');
+
+const GROUP_NUM_SUFFIX = 2
+const GROUP_NUM_TIMEUNITS = 1
+
+export default class ENTimeUnitLaterFormatParser implements Parser {
+
+    constructor(private strictMode: boolean) {}
+
+    pattern(): RegExp { return this.strictMode ? STRICT_PATTERN : PATTERN; }
+
+    extract(context: ParsingContext, match: RegExpMatchArray) {
+
+        const suffix = match[GROUP_NUM_SUFFIX].toLowerCase().trim();
+        if (!suffix) {
+            return null;
+        }
+
+        const fragments = extractDateJSTimeUnitValues(match[GROUP_NUM_TIMEUNITS]);
+        let date = dayjs(context.refDate);
+        for (const key in fragments) {
+            date = date.add(fragments[key], key);
+        }
+
+        const components = context.createParsingComponents();
+
+        if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {
+            components.assign('hour', date.hour());
+            components.assign('minute', date.minute());
+            components.assign('second', date.second());
+        }
+
+        if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {
+            components.assign('day', date.date());
+            components.assign('month', date.month() + 1);
+            components.assign('year', date.year());
+        } else {
+            if (fragments['week'] > 0) {
+                components.imply('weekday', date.day());
+            }
+
+            components.imply('day', date.date());
+            components.imply('month', date.month() + 1);
+            components.imply('year', date.year());
+        }
+
+        return components;
+    }
+}
