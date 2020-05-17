@@ -1,4 +1,4 @@
-# Chrono
+# Chrono (v2 preview)
 
 A natural language date parser in Javascript, designed for extracting date information from any given text. (Java version is also available [here](https://github.com/wanasit/chrono-java))
 
@@ -23,46 +23,42 @@ $ npm i --save chrono-node
 ```
     
 And start using chrono:
-```js
-var chrono = require('chrono-node');
+```javascript
+import * as chrono from 'chrono-node';
+
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
-
-### Swift
-
-Try using the community-made [chrono-swift] wrapper.
-
-[chrono-swift]: https://github.com/neilsardesai/chrono-swift
 
 ## Usage
 
 Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
 
-```js
-var chrono = require('chrono-node');
+```javascript
+import * as chrono from 'chrono-node';
 
 chrono.parseDate('An appointment on Sep 12-13');
 // Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
     
 chrono.parse('An appointment on Sep 12-13');
-/* [ { index: 18,
+/* [{ 
+    index: 18,
     text: 'Sep 12-13',
-    tags: { ENMonthNameMiddleEndianParser: true },
-    start: 
-     { knownValues: [Object],
-       impliedValues: [Object] },
-    end: 
-     { knownValues: [Object],
-       impliedValues: [Object] } } ] */
+    start: ...
+}] */
 ```
 
-### Reference Date
+For more advanced usage, here is the typescript definition of the `parse` function:
+```typescript
+function parse(text: string, refDate?: Date, option?: ParsingOption): ParsedResult[] {...}
+```
+
+#### Reference Date
 
 Today's "Friday" is different from last month's "Friday". 
 The meaning of the referenced dates depends on when they are mentioned. 
 Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
 
-```js
+```javascript
 chrono.parseDate('Friday', new Date(2012, 7, 23)); 
 // Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
 
@@ -72,10 +68,10 @@ chrono.parseDate('Friday', new Date(2012, 7, 1));
 
 ### Parsing Options
 
-* `forwardDate` (boolean) to assume the results should happen after the reference date (forward into the future)
+`forwardDate` (boolean) to assume the results should happen after the reference date (forward into the future)
 
-```js
-var referenceDate = new Date(2012, 7, 25);
+```javascript
+const referenceDate = new Date(2012, 7, 25);
 // Sat Aug 25 2012 00:00:00 GMT+0900 -- The reference date was Saturday
 
 chrono.parseDate('Friday', referenceDate);
@@ -85,59 +81,39 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 // Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
 
-* `timezones` (Map) to override Chrono's default timezone abbriviation mapping. The value should be the timezone offset in minutes (between -720 to 720).
-
-```js
-chrono.parse('Friday at 2 pm IST', refDate, { timezones: { 'IST': 330 } })[0].start.get('timezoneOffset');
-// 330 (IST – India Standard Time +0530)
-
-chrono.parse('Friday at 2 pm IST', refDate, { timezones: {'IST': 60 } })[0].start.get('timezoneOffset');
-// 60 (IST - Irish Standard Time +0100)
-```
-
-### Detailed Parsed Results
-
-The function `chrono.parse` returns detailed parsing results as objects of class `chrono.ParsedResult`. 
-
-```js
-var results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM');
-
-results[0].index;  // 15
-results[0].text;   // 'tomorrow from 10 to 11 AM'
-results[0].refDate;    // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
-
-results[0].start.date();  // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
-results[0].end.date();    // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
-```
+## Parsed Results and Components
 
 #### ParsedResult
-
-* `start` The parsed date components as a [ParsedComponents](#parsedcomponents) object
-* `end`   Similar to `start` but can be null.
-* `index` The location within the input text of this result  
-* `text`  The text this result that appears in the input 
-* `ref`   The [reference date](#reference-date) of this result
+* `refDate: Date` The [reference date](#reference-date) of this result
+* `index: number` The location within the input text of this result  
+* `text: string`  The text this result that appears in the input 
+* `start: ParsedComponents` The parsed date components as a [ParsedComponents](#parsedcomponents) object
+* `end?: ParsedComponents`  Similar to `start`
+* `date: () => Date` Create a javascript Date
 
 #### ParsedComponents
-
-A group of found date and time components (year, month, hour, etc). ParsedComponents objects consist of `knownValues` and `impliedValues`.
-
-* `assign(component, value)`  Set known value to the component
-* `imply(component, value)`   Set implied value to the component
 * `get(component)`            Get known or implied value for the component
-* `isCertain(component)`      return true if the value of the component is known.
 * `date()`                    Create a javascript Date
 
+For example:
 ```js
-// Remove the timezone offset of a parsed date and then create the Date object
-var results = new chrono.parse('2016-03-08T01:16:07+02:00'); // Create new ParsedResult Object
-results[0].start.assign('timezoneOffset', 0); // Change value in ParsedComponents Object 'start'
+const results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM');
 
-var d = results[0].start.date(); // Create a Date object
-d.toString(); // 'Tue Mar 08 2016 01:16:07 GMT+0000 (GMT)'
+results[0].index;     // 15
+results[0].text;      // 'tomorrow from 10 to 11 AM'
+results[0].refDate;   // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
+
+// `start` is Sat Dec 14 2014 10:00:00
+results[0].start.get('day');    // 14 (the 14th, the day after refDate)
+results[0].start.get('month');  // 12 (or December)
+results[0].start.get('hour');   // 10 
+results[0].start.date();        // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
+
+...
+results[0].end.date();  // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 ```
 
-### Strict vs Casual 
+## Strict vs Casual configuration
 
 Chrono comes with `strict` mode that parse only formal date patterns. 
 
@@ -155,94 +131,89 @@ chrono.casual.parseDate('2016-07-01');  // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 ```
 
-### Choosing Locale
+## Locales
 
-By default, Chrono is configurated to parse different date formats from muliple languages out-off-box. However, by using predefined locale options, you can increase parsing accuracy.
+By default, Chrono is configured to handle **only international English**. 
+This differs from the previous version of Chrono that would try all locales by default.
 
-Handling different date format for UK / US is a good example.
+There are several locales supported contributed by multiple developers under `./locales` directory.
 
 ```js
 // default English (US)
-chrono.parseDate('6/10/2018');    // Sun Jun 10 2018 12:00:00 ...
-chrono.en.parseDate('6/10/2018'); // Sun Jun 10 2018 12:00:00 ...
+chrono.parseDate('6/10/2018');    
 
-// UK English or German
-chrono.en_GB.parseDate('6/10/2018'); // Sat Oct 06 2018 12:00:00 ...
-chrono.de.parseDate('6/10/2018');    // Sat Oct 06 2018 12:00:00 ...
+chrono.en.parseDate('6/10/2018'); 
+chrono.ja.parseDate('昭和６４年１月７日'); 
 ```
 
-Current supported locale options are: `en`, `en_GB`, `de`, `pt`, `es`, `fr`, `ja`
+Current supported locale options are: `en`, `ja`
 
 ## Customize Chrono
 
-Chrono’s extraction pipeline are mainly separated into 'parse' and ‘refine’ phases. During parsing, ‘parsers’ (`Parser`) are used to extract patterns from the input text. The parsed results ([ParsedResult](#parsedresult)) are the combined, sorted, then refine using ‘refiners’ (`Refiner`). In the refining phase, the results can be combined, filtered-out, or attached with additional information.
+Chrono’s extraction pipeline configuration consists of `parsers: Parser[]` and `refiners: Refiner[]`.
+
+* First, each parser independently extracts patterns from input text input and create parsing results  ([ParsingResult](#parsedresult)).
+* Then, the parsing results are combined, sorted, and refined with the refiners. In the refining phase, the results can be filtered-out, merged, or attached with additional information.
 
 ### Parser
 
-Parser is a module for low-level pattern-based parsing. Ideally, each parser should be designed to handle a single specific date format. User can add new type of parsers for supporting new date formats or languages.
+```typescript
+interface Parser {
+    pattern: (context: ParsingContext) => RegExp,
+    extract: (context: ParsingContext, match: RegExpMatchArray) =>
+        (ParsingComponents | ParsingResult | {[c: Component]: string|number} | null)
+}
+```
 
-```js
-var christmasParser = new chrono.Parser();
+Parser is a module for low-level pattern-based parsing. 
+Ideally, each parser should be designed to handle a single specific date format. 
 
-// Provide search pattern
-christmasParser.pattern = function () { return /Christmas/i; };
+User can create a new parser for supporting new date formats or languages
+ by providing RegExp pattern `pattern()` and extracting result or components from the RegExp match `extract()`.
 
-// This function will be called when matched pattern is found
-christmasParser.extract = function(text, ref, match, opt) { 
-    
-    // Return a parsed result, that is 25 December
-    return new chrono.ParsedResult({
-        ref: ref,
-        text: match[0],
-        index: match.index,
-        start: {    
-            day: 25, 
-            month: 12, 
+```javascript
+const custom = chrono.casual.copy();
+custom.parsers.push({
+    pattern: () => { return /\bChristmas\b/i },
+    extract: (context, match) => {
+        return {
+            day: 25, month: 12
         }
-    });
-};
-
-// Create a new custom Chrono. The initial pipeline 'option' can also be specified as 
-// - new chrono.Chrono(exports.options.strictOption())
-// - new chrono.Chrono(exports.options.casualOption())
-var custom = new chrono.Chrono();
-custom.parsers.push(christmasParser);
+    }
+});
 
 custom.parseDate("I'll arrive at 2.30AM on Christmas night");
 // Wed Dec 25 2013 02:30:00 GMT+0900 (JST)
-
+// 'at 2.30AM on Christmas'
 ```
-
-To create a custom parser, override `pattern` and `extract` methods on an object of class `chrono.Parser`. 
-* The `pattern` method must return `RegExp` object of searching pattern. 
-* The `extract` method will be called with the 
-[match](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec) object when the pattern is found. This function must create and return a [result](#parsedresult) (or null to skip).
 
 ### Refiner
 
+```typescript
+interface Refiner {
+    refine: (context: ParsingContext, results: ParsingResult[]) => ParsingResult[]
+}
+```
+
 Refiner is a higher level module for improving or manipulating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
 
-```js
-var guessPMRefiner = new chrono.Refiner();
-guessPMRefiner.refine = function(text, results, opt) {
-    // If there is no AM/PM (meridiem) specified, 
-    //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
-    results.forEach(function (result) {
-        if (!result.start.isCertain('meridiem') &&
-            result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
-            
-            result.start.assign('meridiem', 1);
-            result.start.assign('hour', result.start.get('hour') + 12);
-        }
-    });
-    return results;
-};
+```javascript
+const custom = chrono.casual.copy();
+custom.refiners.push({
+    refine: (context, results) => {
+        // If there is no AM/PM (meridiem) specified,
+        //  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)
+        results.forEach((result) => {
+            if (!result.start.isCertain('meridiem') &&
+                result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
 
-// Create a new custom Chrono. The initial pipeline 'option' can also be specified as 
-// - new chrono.Chrono(exports.options.strictOption())
-// - new chrono.Chrono(exports.options.casualOption())
-var custom = new chrono.Chrono();
-custom.refiners.push(guessPMRefiner);
+                result.start.assign('meridiem', 1);
+                result.start.assign('hour', result.start.get('hour') + 12);
+            }
+        });
+        return results;
+    }
+});
 
 // This will be parsed as PM.
 // > Tue Dec 16 2014 14:30:00 GMT-0600 (CST) 
@@ -254,7 +225,6 @@ custom.parseDate("This is at 2.30 AM");
 ```
 
 In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
-
 
 ## Development Guides
 

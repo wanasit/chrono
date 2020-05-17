@@ -1,7 +1,6 @@
 import {ParsingComponents, ParsingResult} from "../results";
 
 export function mergeDateTimeResult(
-    textBetween: string,
     dateResult: ParsingResult,
     timeResult: ParsingResult): ParsingResult {
 
@@ -27,8 +26,6 @@ export function mergeDateTimeResult(
         result.end = endDateTime;
     }
 
-    result.index = dateResult.index;
-    result.text = dateResult.text + textBetween + timeResult.text;
     return result;
 }
 

@@ -4,8 +4,8 @@ import {AsyncDebugBlock, DebugHandler} from "./debugging";
 import {createCasualConfiguration} from './locales/en';
 
 export interface Configuration {
-    parsers: any[],
-    refiners: any[]
+    parsers: Parser[],
+    refiners: Refiner[]
 }
 
 export interface Parser {
@@ -19,8 +19,8 @@ export interface Refiner {
 }
 
 export class Chrono {
-    parsers: Array<any>
-    refiners: any[]
+    parsers: Array<Parser>
+    refiners: Array<Refiner>
 
     constructor(configuration?: Configuration) {
         configuration = configuration || createCasualConfiguration();
@@ -53,6 +53,13 @@ export class Chrono {
         });
 
         return results;
+    }
+
+    copy() : Chrono{
+        return new Chrono({
+            parsers: [...this.parsers],
+            refiners: [...this.refiners]
+        })
     }
 
     private static executeParser(context: ParsingContext, parser: Parser) {
