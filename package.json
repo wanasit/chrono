@@ -26,16 +26,32 @@
       "@babel/plugin-proposal-export-namespace-from"
     ]
   },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-module-boundary-types": "off"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-export-namespace-from": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
     "babel-jest": "^25.5.1",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.2",
+    "eslint": "^7.0.0",
     "jest": "^25.5.4",
     "terser-webpack-plugin": "^2.3.4",
+    "typescript": "^3.9.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },

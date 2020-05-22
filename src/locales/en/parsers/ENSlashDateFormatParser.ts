@@ -110,4 +110,4 @@ export default class ENSlashDateFormatParser implements Parser {
 
         return result;
     }
-};
+}

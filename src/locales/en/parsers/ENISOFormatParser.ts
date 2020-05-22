@@ -1,5 +1,5 @@
 import {Parser, ParsingContext} from "../../../chrono";
-import {Component} from "../../../results";
+import {Component} from "../../../index";
 
 // ISO 8601
 // http://www.w3.org/TR/NOTE-datetime
@@ -55,7 +55,7 @@ export default class ENISOFormatParser implements Parser {
                 components['timezoneOffset'] = 0;
 
             } else {
-                let hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);
+                const hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);
 
                 let minuteOffset = 0;
                 if (match[TZD_MINUTE_OFFSET_GROUP] != null) {

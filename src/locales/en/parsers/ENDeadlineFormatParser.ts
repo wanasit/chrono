@@ -74,4 +74,4 @@ export default class ENDeadlineFormatParser implements Parser {
         components.imply('second', date.second());
         return components;
     }
-};
+}

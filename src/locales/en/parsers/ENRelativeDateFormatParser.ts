@@ -147,4 +147,4 @@ export default class ENRelativeDateFormatParser implements Parser {
 
         return components;
     }
-};
+}

@@ -29,4 +29,4 @@ export default class ENSlashMonthFormatParser implements Parser {
             .assign('month', month)
             .assign('year', year)
     }
-};
+}

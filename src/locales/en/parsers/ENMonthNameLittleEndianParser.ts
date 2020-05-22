@@ -104,4 +104,4 @@ export default class ENMonthNameLittleEndianParser implements Parser {
 
         return result;
     }
-};
+}

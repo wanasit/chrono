@@ -43,4 +43,4 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
 
         return results;
     }
-};
+}

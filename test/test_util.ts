@@ -47,9 +47,10 @@ export function testUnexpectedResult(chrono, text, refDate) {
 // --------------------------------------------------
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace jest {
         interface Matchers<R> {
-            toBeDate(date): CustomMatcherResult;
+            toBeDate(date: Date): CustomMatcherResult;
             toBeSingleOnText(results): CustomMatcherResult;
         }
     }

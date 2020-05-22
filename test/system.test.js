@@ -47,7 +47,7 @@ test("Test - Add custom parser example", () => {
 	const custom = chrono.casual.copy();
 	custom.parsers.push({
 		pattern: () => { return /\bChristmas\b/i },
-		extract: (context, match) => {
+		extract: () => {
 			return {
 				day: 25, month: 12
 			}

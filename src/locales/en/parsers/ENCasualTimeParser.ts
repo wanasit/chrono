@@ -1,4 +1,3 @@
-import {ParsingComponents} from "../../../results";
 import {Parser, ParsingContext} from "../../../chrono";
 
 export default class ENCasualTimeParser implements Parser {
@@ -32,5 +31,5 @@ export default class ENCasualTimeParser implements Parser {
         }
 
         return component;
-    };
-};
+    }
+}

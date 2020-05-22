@@ -107,7 +107,7 @@ export default class ENTimeExpressionParser implements Parser {
         // ----- AM & PM
         if(match[AM_PM_HOUR_GROUP] != null) {
             if(hour > 12) return null;
-            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
             if(ampm == "a"){
                 meridiem = 0;
                 if(hour == 12) hour = 0;
@@ -142,7 +142,7 @@ export default class ENTimeExpressionParser implements Parser {
 
         // ----- Second
         if(match[SECOND_GROUP] != null){
-            var second = parseInt(match[SECOND_GROUP]);
+            const second = parseInt(match[SECOND_GROUP]);
             if(second >= 60) return null;
 
             result.start.assign('second', second);
@@ -157,7 +157,7 @@ export default class ENTimeExpressionParser implements Parser {
 
         // ----- Millisecond
         if(match[MILLI_SECOND_GROUP] != null){
-            var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
+            const millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
             if(millisecond >= 1000) return null;
 
             result.end.assign('millisecond', millisecond);
@@ -165,7 +165,7 @@ export default class ENTimeExpressionParser implements Parser {
 
         // ----- Second
         if(match[SECOND_GROUP] != null){
-            var second = parseInt(match[SECOND_GROUP]);
+            const second = parseInt(match[SECOND_GROUP]);
             if(second >= 60) return null;
 
             result.end.assign('second', second);
@@ -201,7 +201,7 @@ export default class ENTimeExpressionParser implements Parser {
                 return null;
             }
 
-            var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
             if(ampm == "a"){
                 meridiem = 0;
                 if(hour == 12) {
@@ -244,7 +244,7 @@ export default class ENTimeExpressionParser implements Parser {
         if (meridiem >= 0) {
             result.end.assign('meridiem', meridiem);
         } else {
-            var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
+            const startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
             if (startAtPM && result.start.get('hour') > hour) {
                 // 10pm - 1 (am)
                 result.end.imply('meridiem', 0);

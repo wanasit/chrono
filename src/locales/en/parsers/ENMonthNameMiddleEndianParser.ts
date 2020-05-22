@@ -116,4 +116,4 @@ export default class ENMonthNameMiddleEndianParser implements Parser {
         return result;
     }
 
-};
+}

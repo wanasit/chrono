@@ -16,7 +16,7 @@ export default class OverlapRemovalRefiner implements Refiner {
 
         let prevResult = results[0];
         for (let i=1; i<results.length; i++){
-            let result = results[i];
+            const result = results[i];
             
             // If overlap, compare the length and discard the shorter one
             if (result.index < prevResult.index + prevResult.text.length) {

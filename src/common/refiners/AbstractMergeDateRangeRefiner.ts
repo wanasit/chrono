@@ -63,5 +63,5 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
 
         return result;
     }
-};
+}
 

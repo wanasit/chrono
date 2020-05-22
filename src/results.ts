@@ -13,7 +13,7 @@ export class ParsingComponents implements ParsedComponents {
         this.knownValues = new Map<Component, string | number>();
         this.impliedValues = new Map<Component, string | number>();
         if (knownComponents) {
-            for (let key in knownComponents) {
+            for (const key in knownComponents) {
                 this.knownValues[key] = knownComponents[key];
             }
         }
@@ -64,12 +64,12 @@ export class ParsingComponents implements ParsedComponents {
     clone() : ParsingComponents {
         const component = new ParsingComponents(new Date());
         component.knownValues = new Map<Component, string|number>();
-        for (let key in this.knownValues) {
+        for (const key in this.knownValues) {
             component.knownValues[key] = this.knownValues[key];
         }
 
         component.impliedValues = new Map<Component, string|number>();
-        for (let key in this.impliedValues) {
+        for (const key in this.impliedValues) {
             component.impliedValues[key] = this.impliedValues[key];
         }
 

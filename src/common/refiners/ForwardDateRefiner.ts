@@ -46,4 +46,4 @@ export default class ForwardDateRefiner implements Refiner {
 
         return results;
     }
-};
+}
