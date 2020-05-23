@@ -89,6 +89,11 @@ export default class ENMonthNameLittleEndianParser implements Parser {
 
             result.start.assign('year', yearNumber)
         } else {
+
+            context.debug(() => {
+                console.log(day, month)
+            });
+
             const year = findYearClosestToRef(context.refDate, day, month);
             result.start.imply('year', year)
         }

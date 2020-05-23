@@ -13,6 +13,22 @@ export default class UnlikelyFormatFilter extends Filter {
             return false;
         }
 
+        if (!result.start.isValidDate()) {
+            context.debug(() => {
+                console.log(`Removing invalid result: ${result} (${result.start})`)
+            });
+
+            return false;
+        }
+
+        if (result.end && !result.end.isValidDate()) {
+            context.debug(() => {
+                console.log(`Removing invalid result: ${result} (${result.end})`)
+            });
+
+            return false;
+        }
+
         return true;
     }
 }

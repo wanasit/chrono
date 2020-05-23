@@ -39,46 +39,46 @@ test("Test - Calendar Checking", () => {
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24});
-		expect(components.isPossibleDate()).toBe(true);
+		expect(components.isValidDate()).toBe(true);
 	}
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24, hour:12});
-		expect(components.isPossibleDate()).toBe(true);
+		expect(components.isValidDate()).toBe(true);
 	}
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24, hour:12, minute: 30});
-		expect(components.isPossibleDate()).toBe(true);
+		expect(components.isValidDate()).toBe(true);
 	}
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 30});
-		expect(components.isPossibleDate()).toBe(true);
+		expect(components.isValidDate()).toBe(true);
 	}
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 13, day: 24});
-		expect(components.isPossibleDate()).toBe(false);
+		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
 		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 32});
-		expect(components.isPossibleDate()).toBe(false);
+		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
 		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:24});
-		expect(components.isPossibleDate()).toBe(false);
+		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
 		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:12, minute: 60});
-		expect(components.isPossibleDate()).toBe(false);
+		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
 		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
-		expect(components.isPossibleDate()).toBe(false);
+		expect(components.isValidDate()).toBe(false);
 	}
 });

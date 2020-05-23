@@ -2,9 +2,9 @@ import {Parser, ParsingContext} from "../../../chrono";
 
 export default class ENCasualTimeParser implements Parser {
 
-    pattern() { return /(?<=\W|^)(?:this)?\s*(morning|afternoon|evening|noon)(?=\W|$)/i; }
+    pattern() { return /(?<=\W|^)(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i; }
 
-    extract(match, context) {
+    extract(context: ParsingContext, match: RegExpMatchArray) {
         const component = context.createParsingComponents()
         switch (match[1].toLowerCase()) {
 

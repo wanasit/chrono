@@ -1,25 +1,39 @@
-import {OpUnitType} from "dayjs";
+import dayjs, {OpUnitType} from "dayjs";
+import {ParsingComponents} from "../../results";
 
 export const WEEKDAY_OFFSET = {
     'sunday': 0,
     'sun': 0,
+    'sun.': 0,
     'monday': 1,
     'mon': 1,
+    'mon.': 1,
     'tuesday': 2,
     'tue':2,
+    'tue.':2,
     'wednesday': 3,
     'wed': 3,
+    'wed.': 3,
     'thursday': 4,
+    'thurs': 4,
+    'thurs.': 4,
     'thur': 4,
+    'thur.': 4,
     'thu': 4,
+    'thu.': 4,
     'friday': 5,
     'fri': 5,
+    'fri.': 5,
     'saturday': 6,
-    'sat': 6
+    'sat': 6,
+    'sat.': 6
 };
 
 export const WEEKDAY_PATTERN = '(?:'
-    + Object.keys(WEEKDAY_OFFSET).join('|')
+    + Object.keys(WEEKDAY_OFFSET)
+        .sort((a, b) => b.length - a.length)
+        .join('|')
+        .replace(/\./g, '\\.')
     + ')';
 
 export const MONTH_OFFSET = {
@@ -62,7 +76,10 @@ export const MONTH_OFFSET = {
 };
 
 export const MONTH_PATTERN = '(?:'
-    + Object.keys(MONTH_OFFSET).join('|').replace(/\./g, '\\.')
+    + Object.keys(MONTH_OFFSET)
+        .sort((a, b) => b.length - a.length)
+        .join('|')
+        .replace(/\./g, '\\.')
     + ')';
 
 export const INTEGER_WORDS: {[word: string]: number} = {
@@ -106,20 +123,32 @@ export const ORDINAL_WORDS = {
     'nineteenth': 19,
     'twentieth': 20,
     'twenty first': 21,
+    'twenty-first': 21,
     'twenty second': 22,
+    'twenty-second': 22,
     'twenty third': 23,
+    'twenty-third': 23,
     'twenty fourth': 24,
+    'twenty-fourth': 24,
     'twenty fifth': 25,
+    'twenty-fifth': 25,
     'twenty sixth': 26,
+    'twenty-sixth': 26,
     'twenty seventh': 27,
+    'twenty-seventh': 27,
     'twenty eighth': 28,
+    'twenty-eighth': 28,
     'twenty ninth': 29,
+    'twenty-ninth': 29,
     'thirtieth': 30,
-    'thirty first': 31
+    'thirty first': 31,
+    'thirty-first': 31
 };
 
 export const ORDINAL_WORDS_PATTERN = '(?:'
-    + Object.keys(ORDINAL_WORDS).join('|').replace(/ /g, '[ -]')
+    + Object.keys(ORDINAL_WORDS)
+        .sort((a, b) => b.length - a.length)
+        .join('|')
     + ')';
 
 const TIME_UNIT =
@@ -134,6 +163,38 @@ const PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
 
 export const TIME_UNIT_PATTERN = '(?:' + TIME_UNIT.replace(/\((?!\?)/g, '(?:') + ')+';
 export const TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
+
+export function createComponentRelativeFromRefDate(
+    refDate:Date, fragments: {[c: OpUnitType]: number}): ParsingComponents {
+
+    let date = dayjs(refDate);
+    for (const key in fragments) {
+        date = date.add(fragments[key], key);
+    }
+
+    const components = new ParsingComponents(refDate);
+    if (fragments['hour'] || fragments['minute'] || fragments['second']) {
+        components.assign('hour', date.hour());
+        components.assign('minute', date.minute());
+        components.assign('second', date.second());
+    }
+
+    if (fragments['d'] || fragments['month'] || fragments['year']) {
+        components.assign('day', date.date());
+        components.assign('month', date.month() + 1);
+        components.assign('year', date.year());
+    } else {
+        if (fragments['week']) {
+            components.imply('weekday', date.day());
+        }
+
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.imply('year', date.year());
+    }
+
+    return components;
+}
 
 export function extractDateJSTimeUnitValues(timeunitText) : {[c: OpUnitType]: number} {
     const fragments = {};

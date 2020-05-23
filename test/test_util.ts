@@ -1,46 +1,59 @@
 import {BufferedDebugHandler} from "../src/debugging";
+import {ParsedResult, ParsingOption} from "../src";
 
-export function testSingleCase(chrono, text, resultCheck);
-export function testSingleCase(chrono, text, refDateOrResultCheck, resultCheck);
-export function testSingleCase(chrono, text, refDateOrResultCheck, optionOrResultCheck, resultCheck) {
+interface ChronoLike {
+    parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[]
+}
 
-    if (resultCheck === undefined && typeof optionOrResultCheck === "function") {
-        resultCheck = optionOrResultCheck;
-        optionOrResultCheck = undefined;
+type CheckResult = (p: ParsedResult, text: string) => void
+
+export function testSingleCase(chrono: ChronoLike, text: string, checkResult?: CheckResult);
+export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckResult?: Date | CheckResult, checkResult?: CheckResult);
+export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckResult?: Date | CheckResult, optionOrCheckResult?: ParsingOption| CheckResult, checkResult?: CheckResult) {
+
+    if (checkResult === undefined && typeof optionOrCheckResult === "function") {
+        checkResult = optionOrCheckResult;
+        optionOrCheckResult = undefined;
     }
 
-    if (optionOrResultCheck === undefined && typeof refDateOrResultCheck === "function") {
-        resultCheck = refDateOrResultCheck;
-        refDateOrResultCheck = undefined;
+    if (optionOrCheckResult === undefined && typeof refDateOrCheckResult === "function") {
+        checkResult = refDateOrCheckResult;
+        refDateOrCheckResult = undefined;
     }
 
     const debugHandler = new BufferedDebugHandler();
-    optionOrResultCheck = optionOrResultCheck || {};
-    optionOrResultCheck.debug = debugHandler;
+    optionOrCheckResult = optionOrCheckResult as ParsingOption || {};
+    optionOrCheckResult.debug = debugHandler;
 
     try {
-        const results = chrono.parse(text, refDateOrResultCheck, optionOrResultCheck);
+        const results = chrono.parse(text, refDateOrCheckResult as Date, optionOrCheckResult);
         expect(results).toBeSingleOnText(text);
-        if (resultCheck) {
-            resultCheck(results[0], text);
+        if (checkResult) {
+            checkResult(results[0], text);
         }
     } catch (e) {
-        debugHandler.executeBufferedBlocks()
+        debugHandler.executeBufferedBlocks();
         throw e
     }
 
 }
 
-export function testWithExpectedDate(chrono, text, expectedDate) {
+export function testWithExpectedDate(chrono: ChronoLike, text: string, expectedDate: Date) {
 
     testSingleCase(chrono, text, (result) => {
         expect(result.start).toBeDate(expectedDate);
     });
 }
 
-export function testUnexpectedResult(chrono, text, refDate) {
-    const results = chrono.parse(text, refDate);
-    expect(results).toHaveLength(0);
+export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date) {
+    const debugHandler = new BufferedDebugHandler();
+    try {
+        const results = chrono.parse(text, refDate, {debug: debugHandler});
+        expect(results).toHaveLength(0);
+    } catch (e) {
+        debugHandler.executeBufferedBlocks();
+        throw e;
+    }
 }
 
 
@@ -51,7 +64,7 @@ declare global {
     namespace jest {
         interface Matchers<R> {
             toBeDate(date: Date): CustomMatcherResult;
-            toBeSingleOnText(results): CustomMatcherResult;
+            toBeSingleOnText(text: string): CustomMatcherResult;
         }
     }
 }

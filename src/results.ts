@@ -3,15 +3,15 @@ import {Component, ParsedComponents, ParsedResult} from "./index";
 import dayjs from 'dayjs';
 
 export class ParsingComponents implements ParsedComponents {
-    knownValues: Map<Component, string | number>
-    impliedValues: Map<Component, string | number>
+    private knownValues: {[c: Component]: string|number}
+    private impliedValues: {[c: Component]: string|number}
 
     constructor(
         refDate: Date,
         knownComponents?: {[c: Component]: string|number},
     ) {
-        this.knownValues = new Map<Component, string | number>();
-        this.impliedValues = new Map<Component, string | number>();
+        this.knownValues = {};
+        this.impliedValues = {};
         if (knownComponents) {
             for (const key in knownComponents) {
                 this.knownValues[key] = knownComponents[key];
@@ -49,6 +49,10 @@ export class ParsingComponents implements ParsedComponents {
         return component in this.knownValues;
     }
 
+    getCertainComponents() : Array<Component> {
+        return Object.keys(this.knownValues) as Array<Component>
+    }
+
     imply(component: Component, value) : ParsingComponents {
         if (component in this.knownValues) return;
         this.impliedValues[component] = value;
@@ -63,12 +67,13 @@ export class ParsingComponents implements ParsedComponents {
 
     clone() : ParsingComponents {
         const component = new ParsingComponents(new Date());
-        component.knownValues = new Map<Component, string|number>();
+        component.knownValues = {};
+        component.impliedValues = {};
+
         for (const key in this.knownValues) {
             component.knownValues[key] = this.knownValues[key];
         }
 
-        component.impliedValues = new Map<Component, string|number>();
         for (const key in this.impliedValues) {
             component.impliedValues[key] = this.impliedValues[key];
         }
@@ -92,7 +97,7 @@ export class ParsingComponents implements ParsedComponents {
         return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
     }
 
-    isPossibleDate() : boolean {
+    isValidDate() : boolean {
         let dateMoment = this.dayjs();
         if (this.isCertain('timezoneOffset')) {
             const adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();

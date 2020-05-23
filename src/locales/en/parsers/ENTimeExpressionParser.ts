@@ -11,7 +11,7 @@ const FIRST_REG_PATTERN  = new RegExp("(?<!\w)(^|\\s|T)" +
     "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,6}))?" +
     ")?" +
     ")?" +
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" +
+    "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?|o\\W*clock))?" +
     "(?=\\W|$)", 'i');
 
 const SECOND_REG_PATTERN = new RegExp("^\\s*" +
@@ -23,7 +23,7 @@ const SECOND_REG_PATTERN = new RegExp("^\\s*" +
     "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,6}))?" +
     ")?" +
     ")?" +
-    "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" +
+    "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?|o\\W*clock|at night))?" +
     "(?=\\W|$)", 'i');
 
 const HOUR_GROUP    = 2;
@@ -43,7 +43,7 @@ export default class ENTimeExpressionParser implements Parser {
         let result = context.createParsingResult(
             match.index + match[1].length, match[0].substring(match[1].length));
 
-        if (result.text.match(/^\d+$/)) {
+        if (result.text.match(/^\d$/)) {
             return null;
         }
 

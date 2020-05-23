@@ -63,8 +63,7 @@ export function mergeDateTimeComponent(dateComponent: ParsingComponents, timeCom
     if (timeComponent.isCertain('meridiem')) {
         dateTimeComponent.assign('meridiem', timeComponent.get('meridiem'));
     } else if (
-        timeComponent.get('meridiem') !== undefined &&
-        dateTimeComponent.get('meridiem') === undefined
+        timeComponent.get('meridiem') != null && dateTimeComponent.get('meridiem') == null
     ) {
         dateTimeComponent.imply('meridiem', timeComponent.get('meridiem'));
     }

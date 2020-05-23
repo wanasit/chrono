@@ -8,15 +8,15 @@ import {MONTH_OFFSET, MONTH_PATTERN} from "../constants";
     - YYYY-MM-DD
     - YYYY.MM.DD
 */
-const PATTERN = new RegExp('(\\W|^)'
+const PATTERN = new RegExp('(?<=\\W|^)'
     + '([0-9]{4})[\\.\\/]'
     + '((?:' + MONTH_PATTERN + '|[0-9]{1,2}))[\\.\\/]'
     + '([0-9]{1,2})'
     + '(?=\\W|$)', 'i');
 
-const YEAR_NUMBER_GROUP = 2;
-const MONTH_NUMBER_GROUP = 3;
-const DATE_NUMBER_GROUP  = 4;
+const YEAR_NUMBER_GROUP = 1;
+const MONTH_NUMBER_GROUP = 2;
+const DATE_NUMBER_GROUP  = 3;
 
 export default class ENSlashDateFormatStartWithYearParser implements Parser {
 
@@ -29,10 +29,6 @@ export default class ENSlashDateFormatStartWithYearParser implements Parser {
 
         const year = parseInt(match[YEAR_NUMBER_GROUP]);
         const day = parseInt(match[DATE_NUMBER_GROUP]);
-
-        if (month < 1 || month > 12 || day < 1 || day > 31) {
-            return null;
-        }
 
         return {
             'day': day,

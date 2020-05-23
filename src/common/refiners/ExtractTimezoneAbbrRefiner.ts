@@ -17,10 +17,9 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
     }
 
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-
         const timezones = {...this.timezone, ...context.option.timezones};
         results.forEach((result) => {
-            const suffix = context.text.substring(result.start + result.text.length)
+            const suffix = context.text.substring(result.index + result.text.length)
             const match = TIMEZONE_NAME_PATTERN.exec(suffix);
             if (match) {
                 const timezoneAbbr = match[1].toUpperCase();

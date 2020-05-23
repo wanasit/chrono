@@ -1,7 +1,7 @@
 
 
 import ENISOFormatParser from "./parsers/ENISOFormatParser";
-import ENDeadlineFormatParser from "./parsers/ENDeadlineFormatParser";
+import ENTimeUnitDeadlineFormatParser from "./parsers/ENTimeUnitDeadlineFormatParser";
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
@@ -27,12 +27,14 @@ import {Chrono, Configuration} from "../../chrono";
 export const casual = new Chrono(createCasualConfiguration(false))
 export const strict = new Chrono(createConfiguration(true, false))
 
+export const GB = new Chrono(createConfiguration(false, true))
+
 export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
-    return casual.parse.apply(casual, arguments);
+    return casual.parse(text, ref, option);
 }
 
 export function parseDate(text: string, ref?: Date, option?: ParsingOption) : Date {
-    return casual.parseDate.apply(casual, arguments);
+    return casual.parseDate(text, ref, option);
 }
 
 export function createCasualConfiguration(littleEndian = false) : Configuration {
@@ -48,7 +50,7 @@ export function createConfiguration(strictMode= true, littleEndian = false) : Co
     return includeCommonConfiguration({
         parsers: [
             new ENISOFormatParser(),
-            new ENDeadlineFormatParser(strictMode),
+            new ENTimeUnitDeadlineFormatParser(strictMode),
             new ENMonthNameLittleEndianParser(),
             new ENMonthNameMiddleEndianParser(),
             new ENMonthNameParser(),
@@ -60,8 +62,8 @@ export function createConfiguration(strictMode= true, littleEndian = false) : Co
             new ENTimeUnitLaterFormatParser(strictMode),
         ],
         refiners: [
-            new ENMergeDateRangeRefiner(),
-            new ENMergeDateTimeRefiner()
+            new ENMergeDateTimeRefiner(),
+            new ENMergeDateRangeRefiner()
         ]
     });
 }

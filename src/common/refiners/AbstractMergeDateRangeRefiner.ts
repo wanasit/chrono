@@ -4,35 +4,35 @@
 
 import {ParsingResult} from "../../results";
 import {MergingRefiner} from "../abstractRefiners";
+import {Component} from "../../index";
 
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
 
     abstract patternBetween: () => RegExp
 
-    shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
+    shouldMergeResults(textBetween, currentResult, nextResult): boolean {
         return (!currentResult.end && !nextResult.end)
             && textBetween.match(this.patternBetween()) != null;
     }
 
-    mergeResults(textBetween: string, fromResult: ParsingResult, toResult: ParsingResult): ParsingResult {
+    mergeResults(textBetween, fromResult, toResult, context): ParsingResult {
 
-        if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent() ) {
+        if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
 
-            toResult.start.knownValues.forEach((value, key) => {
+            toResult.start.getCertainComponents().forEach(key => {
                 if (!fromResult.start.isCertain(key)) {
-                    fromResult.start.assign(key, value);
+                    fromResult.start.assign(key, toResult.start.get(key));
                 }
-            });
+            })
 
-            fromResult.start.knownValues.forEach((value, key) => {
+            fromResult.start.getCertainComponents().forEach(key => {
                 if (!toResult.start.isCertain(key)) {
-                    toResult.start.assign(key, value);
+                    toResult.start.assign(key, fromResult.start.get(key));
                 }
-            });
+            })
         }
 
         if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
-            
             let fromMoment = fromResult.start.dayjs();
             let toMoment = toResult.start.dayjs();
 

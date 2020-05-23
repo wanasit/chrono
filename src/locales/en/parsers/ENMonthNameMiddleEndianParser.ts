@@ -63,7 +63,7 @@ export default class ENMonthNameMiddleEndianParser implements Parser {
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
 
-        const month = MONTH_OFFSET[match[MONTH_NAME_GROUP]];
+        const month = MONTH_OFFSET[match[MONTH_NAME_GROUP].toLowerCase()];
         const day = match[DATE_NUM_GROUP] ?
             parseInt(match[DATE_NUM_GROUP]) :
             ORDINAL_WORDS[match[DATE_GROUP].toLowerCase()];

@@ -12,9 +12,9 @@ export abstract class Filter implements Refiner {
 
 export abstract class MergingRefiner implements Refiner {
 
-    abstract shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean;
+    abstract shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context: ParsingContext): boolean;
 
-    abstract mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): ParsingResult;
+    abstract mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context: ParsingContext): ParsingResult;
 
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
 
@@ -22,7 +22,7 @@ export abstract class MergingRefiner implements Refiner {
             return results;
         }
 
-        const mergedResults = [];
+        const mergedResults: ParsingResult[] = [];
         let curResult = results[0];
         let nextResult = null;
 
@@ -30,25 +30,23 @@ export abstract class MergingRefiner implements Refiner {
             nextResult = results[i];
 
             const textBetween = context.text.substring(curResult.index + curResult.text.length, nextResult.index);
-            if (this.shouldMergeResults(textBetween, curResult, nextResult)) {
+            if (!this.shouldMergeResults(textBetween, curResult, nextResult, context)) {
+                mergedResults.push(curResult);
+                curResult = nextResult;
+            } else {
                 const left = curResult;
                 const right = nextResult;
-                const mergedResult = this.mergeResults(textBetween, left, right);
-
+                const mergedResult = this.mergeResults(textBetween, left, right, context);
                 context.debug(() => {
                     console.log(`${this.constructor.name} merged ${left} and ${right} into ${mergedResult}`)
-                    console.log(mergedResult)
                 })
 
                 curResult = mergedResult;
-                nextResult = null;
             }
-
-            mergedResults.push(curResult);
         }
 
-        if (nextResult != null) {
-            mergedResults.push(nextResult);
+        if (curResult != null) {
+            mergedResults.push(curResult);
         }
 
         return mergedResults;

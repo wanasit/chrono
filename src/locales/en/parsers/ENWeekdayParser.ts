@@ -1,7 +1,7 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
 import {WEEKDAY_OFFSET, WEEKDAY_PATTERN} from "../constants";
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
 
 const PATTERN = new RegExp('(?<=\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
@@ -37,21 +37,11 @@ export default class ENWeekdayParser implements Parser {
         modifier = modifier.toLowerCase();
 
         const date = this.extractWeekday(context.refDate, offset, modifier);
-
-        const components = context.createParsingComponents()
-            .assign('weekday', offset);
-
-        if (modifier) {
-            components.assign('day', date.date());
-            components.assign('month', date.month() + 1);
-            components.assign('year', date.year());
-        } else {
-            components.imply('day', date.date());
-            components.imply('month', date.month() + 1);
-            components.imply('year', date.year());
-        }
-
-        return components;
+        return context.createParsingComponents()
+            .assign('weekday', offset)
+            .imply('day', date.date())
+            .imply('month', date.month() + 1)
+            .imply('year', date.year());
     }
 
     private extractWeekday(refDate: Date, offset, modifier?: string) : Dayjs {

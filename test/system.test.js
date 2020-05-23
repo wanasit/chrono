@@ -54,17 +54,25 @@ test("Test - Add custom parser example", () => {
 		}
 	});
 
-	testSingleCase(custom, "I'll arrive at 2.30AM on Christmas night", (result) => {
+	testSingleCase(custom, "I'll arrive at 2.30AM on Christmas", (result) => {
 		expect(result.text).toBe('at 2.30AM on Christmas');
 		expect(result.start.get('month')).toBe(12);
 		expect(result.start.get('day')).toBe(25);
+		expect(result.start.get('hour')).toBe(2);
+		expect(result.start.get('minute')).toBe(30);
+	})
+
+	testSingleCase(custom, "I'll arrive at Christmas night", (result) => {
+		expect(result.text).toBe('Christmas night');
+		expect(result.start.get('month')).toBe(12);
+		expect(result.start.get('day')).toBe(25);
+		expect(result.start.get('meridiem')).toBe(1);
 	})
 
 	testSingleCase(custom, "Doing something tomorrow", (result) => {
 		expect(result.text).toBe('tomorrow');
 	})
 });
-
 
 test("Test - Add custom refiner example", () => {
 
@@ -100,13 +108,14 @@ test("Test - Add custom refiner example", () => {
 
 });
 
-
-
-test("Test - Compare with native js", function() {
+test("Test - Compare with native js", ()=> {
 
 	const testByCompareWithNative = (text) => {
 		const expectedDate = new Date(text);
-		testWithExpectedDate(chrono, text, expectedDate)
+		testSingleCase(chrono, text, (result) => {
+			expect(result.text).toBe(text);
+			expect(result).toBeDate(expectedDate);
+		})
 	};
 
 	testByCompareWithNative('1994-11-05T13:15:30Z');
@@ -130,6 +139,25 @@ test("Test - Compare with native js", function() {
 	testByCompareWithNative('9999-12-31T23:59:00-00:00');
 
 	testByCompareWithNative('09/25/2017 10:31:50.522 PM');
+
+	testByCompareWithNative('Sat Nov 05 1994 22:45:30 GMT+0900 (JST)');
+
+	testByCompareWithNative('Fri, 31 Mar 2000 07:00:00 UTC');
+
+	testByCompareWithNative('2014-12-14T18:22:14.759Z');
 });
 
+test("Test - Skip version-number-like pattern", () => {
 
+	testSingleCase(chrono, '1.5.3 - 2015-09-24', (result) => {
+		expect(result.text).toBe('2015-09-24');
+	})
+
+	testSingleCase(chrono, '1.5.30 - 2015-09-24', (result) => {
+		expect(result.text).toBe('2015-09-24');
+	})
+
+	testSingleCase(chrono, '1.50.30 - 2015-09-24', (result) => {
+		expect(result.text).toBe('2015-09-24');
+	})
+})

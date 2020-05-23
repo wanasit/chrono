@@ -6,16 +6,17 @@ export const strict = en.strict;
 export const casual = en.casual;
 
 export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
-    return casual.parse.apply(casual, arguments);
+    return casual.parse(text, ref, option);
 }
 
 export function parseDate(text: string, ref?: Date, option?: ParsingOption) : Date {
-    return casual.parseDate.apply(casual, arguments);
+    return casual.parseDate(text, ref, option);
 }
 
 export interface ParsingOption {
     forwardDate?: boolean
     debug?: DebugHandler | DebugConsume
+    timezones?: {string: number}
 }
 
 export interface ParsedResult {

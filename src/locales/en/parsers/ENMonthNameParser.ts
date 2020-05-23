@@ -32,6 +32,10 @@ export default class ENMonthNameParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray) {
 
         if (match[0].length <= 3) {
+            context.debug(() => {
+                console.log(match)
+                console.log(MONTH_PATTERN)
+            });
             return null;
         }
 
