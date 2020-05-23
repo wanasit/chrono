@@ -5,8 +5,11 @@ import ExtractTimezoneOffsetRefiner from "./common/refiners/ExtractTimezoneOffse
 import OverlapRemovalRefiner from "./common/refiners/OverlapRemovalRefiner";
 import ForwardDateRefiner from "./common/refiners/ForwardDateRefiner";
 import UnlikelyFormatFilter from "./common/refiners/UnlikelyFormatFilter";
+import ISOFormatParser from "./common/parsers/ISOFormatParser";
 
 export function includeCommonConfiguration(configuration: Configuration): Configuration {
+
+    configuration.parsers.unshift(new ISOFormatParser())
 
     configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner())
     configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner())

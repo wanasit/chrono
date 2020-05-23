@@ -1,6 +1,5 @@
 
 
-import ENISOFormatParser from "./parsers/ENISOFormatParser";
 import ENTimeUnitDeadlineFormatParser from "./parsers/ENTimeUnitDeadlineFormatParser";
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
@@ -49,7 +48,6 @@ export function createCasualConfiguration(littleEndian = false) : Configuration 
 export function createConfiguration(strictMode= true, littleEndian = false) : Configuration {
     return includeCommonConfiguration({
         parsers: [
-            new ENISOFormatParser(),
             new ENTimeUnitDeadlineFormatParser(strictMode),
             new ENMonthNameLittleEndianParser(),
             new ENMonthNameMiddleEndianParser(),

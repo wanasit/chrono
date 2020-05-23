@@ -1,5 +1,5 @@
-import {Parser, ParsingContext} from "../../../chrono";
-import {Component} from "../../../index";
+import {Parser, ParsingContext} from "../../chrono";
+import {Component} from "../../index";
 
 // ISO 8601
 // http://www.w3.org/TR/NOTE-datetime
@@ -27,7 +27,7 @@ const MILLISECOND_NUMBER_GROUP = 7;
 const TZD_HOUR_OFFSET_GROUP = 8;
 const TZD_MINUTE_OFFSET_GROUP = 9;
 
-export default class ENISOFormatParser implements Parser {
+export default class ISOFormatParser implements Parser {
 
     pattern(): RegExp {
         return PATTERN;
