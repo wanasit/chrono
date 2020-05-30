@@ -1,7 +1,7 @@
 import dayjs, {OpUnitType} from "dayjs";
-import {ParsingComponents} from "../../results";
+import {matchAnyPattern} from "../../utils/pattern";
 
-export const WEEKDAY_OFFSET = {
+export const WEEKDAY_DICTIONARY: {[word: string]: number} = {
     'sunday': 0,
     'sun': 0,
     'sun.': 0,
@@ -29,14 +29,7 @@ export const WEEKDAY_OFFSET = {
     'sat.': 6
 };
 
-export const WEEKDAY_PATTERN = '(?:'
-    + Object.keys(WEEKDAY_OFFSET)
-        .sort((a, b) => b.length - a.length)
-        .join('|')
-        .replace(/\./g, '\\.')
-    + ')';
-
-export const MONTH_OFFSET = {
+export const MONTH_DICTIONARY: {[word: string]: number}  = {
     'january': 1,
     'jan': 1,
     'jan.': 1,
@@ -75,14 +68,7 @@ export const MONTH_OFFSET = {
     'dec.': 12
 };
 
-export const MONTH_PATTERN = '(?:'
-    + Object.keys(MONTH_OFFSET)
-        .sort((a, b) => b.length - a.length)
-        .join('|')
-        .replace(/\./g, '\\.')
-    + ')';
-
-export const INTEGER_WORDS: {[word: string]: number} = {
+export const INTEGER_WORD_DICTIONARY: {[word: string]: number} = {
     'one' : 1,
     'two' : 2,
     'three' : 3,
@@ -97,11 +83,7 @@ export const INTEGER_WORDS: {[word: string]: number} = {
     'twelve' : 12
 };
 
-export const INTEGER_WORDS_PATTERN = '(?:'
-    + Object.keys(exports.INTEGER_WORDS).join('|')
-    +')';
-
-export const ORDINAL_WORDS = {
+export const ORDINAL_WORD_DICTIONARY: {[word: string]: number} = {
     'first' : 1,
     'second': 2,
     'third': 3,
@@ -145,99 +127,85 @@ export const ORDINAL_WORDS = {
     'thirty-first': 31
 };
 
-export const ORDINAL_WORDS_PATTERN = '(?:'
-    + Object.keys(ORDINAL_WORDS)
-        .sort((a, b) => b.length - a.length)
-        .join('|')
-    + ')';
+export const TIME_UNIT_DICTIONARY : {[word: string]: OpUnitType} = {
+    'sec': 'second',
+    'second' : 'second',
+    'seconds' : 'second',
+    'min' : 'minute',
+    'mins' : 'minute',
+    'minute' : 'minute',
+    'minutes' : 'minute',
+    'h' : 'hour',
+    'hr' : 'hour',
+    'hrs' : 'hour',
+    'hour' : 'hour',
+    'hours' : 'hour',
+    'day' : 'd',
+    'days' : 'd',
+    'week' : 'week',
+    'weeks': 'week',
+    'month' : 'month',
+    'months' : 'month',
+    'yr' : 'year',
+    'year' : 'year',
+    'years' : 'year',
+};
 
-const TIME_UNIT =
-    '(' + INTEGER_WORDS_PATTERN + '|[0-9]+|[0-9]+\.[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' +
-    '(sec(?:onds?)?|min(?:ute)?s?|h(?:r|rs|our|ours)?|weeks?|days?|months?|years?)\\s*';
+//-----------------------------
 
-const TIME_UNIT_STRICT =
-    '(?:[0-9]+|an?)\\s*' +
-    '(?:seconds?|minutes?|hours?|days?)\\s*';
+export const NUMBER_PATTERN = `(?:${matchAnyPattern(INTEGER_WORD_DICTIONARY)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few)`;
 
-const PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
-
-export const TIME_UNIT_PATTERN = '(?:' + TIME_UNIT.replace(/\((?!\?)/g, '(?:') + ')+';
-export const TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
-
-export function createComponentRelativeFromRefDate(
-    refDate:Date, fragments: {[c: OpUnitType]: number}): ParsingComponents {
-
-    let date = dayjs(refDate);
-    for (const key in fragments) {
-        date = date.add(fragments[key], key);
+export function parseNumberPattern(match: string) : number {
+    const num = match.toLowerCase();
+    if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
+        return INTEGER_WORD_DICTIONARY[num];
+    } else if (num === 'a' || num === 'an') {
+        return 1;
+    } else if (num.match(/few/)) {
+        return 3;
+    } else if (num.match(/half/)) {
+        return 0.5;
     }
 
-    const components = new ParsingComponents(refDate);
-    if (fragments['hour'] || fragments['minute'] || fragments['second']) {
-        components.assign('hour', date.hour());
-        components.assign('minute', date.minute());
-        components.assign('second', date.second());
-    }
-
-    if (fragments['d'] || fragments['month'] || fragments['year']) {
-        components.assign('day', date.date());
-        components.assign('month', date.month() + 1);
-        components.assign('year', date.year());
-    } else {
-        if (fragments['week']) {
-            components.imply('weekday', date.day());
-        }
-
-        components.imply('day', date.date());
-        components.imply('month', date.month() + 1);
-        components.imply('year', date.year());
-    }
-
-    return components;
+    return parseFloat(num);
 }
 
-export function extractDateJSTimeUnitValues(timeunitText) : {[c: OpUnitType]: number} {
+//-----------------------------
+
+export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:st|nd|rd|th)?)`;
+export function parseOrdinalNumberPattern(match: string) : number {
+    let num = match.toLowerCase();
+    if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
+        return ORDINAL_WORD_DICTIONARY[num];
+    }
+
+    num = num.replace(/(?:st|nd|rd|th)$/i, '')
+    return parseInt(num);
+}
+
+//-----------------------------
+
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*`;
+const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, 'i');
+
+const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, '(?:');
+
+export const TIME_UNITS_PATTERN = `(?:${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})+`;
+
+export function parseTimeUnits(timeunitText) : {[c: OpUnitType]: number} {
     const fragments = {};
     let remainingText = timeunitText;
-    let match = PATTERN_TIME_UNIT.exec(remainingText);
+    let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     while (match) {
         collectDateTimeFragment(fragments, match);
         remainingText = remainingText.substring(match[0].length);
-        match = PATTERN_TIME_UNIT.exec(remainingText);
+        match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
     return fragments;
 }
 
 function collectDateTimeFragment(fragments, match) {
-
-    let num = match[1].toLowerCase() ;
-    if (exports.INTEGER_WORDS[num] !== undefined) {
-        num = exports.INTEGER_WORDS[num];
-    } else if(num === 'a' || num === 'an'){
-        num = 1;
-    } else if (num.match(/few/)) {
-        num = 3;
-    } else if (num.match(/half/)) {
-        num = 0.5;
-    } else {
-        num = parseFloat(num);
-    }
-
-    if (match[2].match(/^h/i)) {
-        fragments['hour'] = num;
-    } else if (match[2].match(/min/i)) {
-        fragments['minute'] = num;
-    } else if (match[2].match(/sec/i)) {
-        fragments['second'] = num;
-    } else if (match[2].match(/week/i)) {
-        fragments['week'] = num;
-    } else if (match[2].match(/day/i)) {
-        fragments['d'] = num;
-    } else if (match[2].match(/month/i)) {
-        fragments['month'] = num;
-    } else if (match[2].match(/year/i)) {
-        fragments['year'] = num;
-    }
-
-    return fragments;
+    const num = parseNumberPattern(match[1]);
+    const unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()]
+    fragments[unit] = num;
 }

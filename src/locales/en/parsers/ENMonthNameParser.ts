@@ -9,12 +9,13 @@
 */
 
 
-import {MONTH_OFFSET, MONTH_PATTERN} from "../constants";
+import {MONTH_DICTIONARY} from "../constants";
 import {Parser, ParsingContext} from "../../../chrono";
 import {findYearClosestToRef} from "../../../calculation/yearCalculation";
+import {matchAnyPattern} from "../../../utils/pattern";
 
 const PATTERN = new RegExp('(?<=^|\\D\\s+|[^\\w\\s])' +
-    '('+ MONTH_PATTERN +')' +
+    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
     '\\s*' +
     '(?:' +
         '[,-]?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +
@@ -32,10 +33,6 @@ export default class ENMonthNameParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray) {
 
         if (match[0].length <= 3) {
-            context.debug(() => {
-                console.log(match)
-                console.log(MONTH_PATTERN)
-            });
             return null;
         }
 
@@ -43,7 +40,7 @@ export default class ENMonthNameParser implements Parser {
         components.imply('day', 1);
 
         const monthName = match[MONTH_NAME_GROUP];
-        const month = MONTH_OFFSET[monthName.toLowerCase()];
+        const month = MONTH_DICTIONARY[monthName.toLowerCase()];
         components.assign('month', month);
 
         if (match[YEAR_GROUP]) {

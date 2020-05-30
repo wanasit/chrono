@@ -1,5 +1,6 @@
 import {Parser, ParsingContext} from "../../../chrono";
-import {MONTH_OFFSET, MONTH_PATTERN} from "../constants";
+import {MONTH_DICTIONARY} from "../constants";
+import {matchAnyPattern} from "../../../utils/pattern";
 
 /*
     Date format with slash "/" between numbers like ENSlashDateFormatParser,
@@ -10,13 +11,14 @@ import {MONTH_OFFSET, MONTH_PATTERN} from "../constants";
 */
 const PATTERN = new RegExp('(?<=\\W|^)'
     + '([0-9]{4})[\\.\\/]'
-    + '((?:' + MONTH_PATTERN + '|[0-9]{1,2}))[\\.\\/]'
+    + '(?:(' + matchAnyPattern(MONTH_DICTIONARY) + ')|([0-9]{1,2}))[\\.\\/]'
     + '([0-9]{1,2})'
     + '(?=\\W|$)', 'i');
 
 const YEAR_NUMBER_GROUP = 1;
-const MONTH_NUMBER_GROUP = 2;
-const DATE_NUMBER_GROUP  = 3;
+const MONTH_NAME_GROUP = 2;
+const MONTH_NUMBER_GROUP = 3;
+const DATE_NUMBER_GROUP  = 4;
 
 export default class ENSlashDateFormatStartWithYearParser implements Parser {
 
@@ -24,8 +26,8 @@ export default class ENSlashDateFormatStartWithYearParser implements Parser {
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
 
-        const monthWord = match[MONTH_NUMBER_GROUP].toLowerCase();
-        const month = MONTH_OFFSET[monthWord] || parseInt(monthWord);
+        const month = match[MONTH_NUMBER_GROUP] ? parseInt(match[MONTH_NUMBER_GROUP]) :
+            MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
 
         const year = parseInt(match[YEAR_NUMBER_GROUP]);
         const day = parseInt(match[DATE_NUMBER_GROUP]);

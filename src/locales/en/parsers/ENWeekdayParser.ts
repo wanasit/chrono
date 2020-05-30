@@ -1,13 +1,14 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
-import {WEEKDAY_OFFSET, WEEKDAY_PATTERN} from "../constants";
+import {WEEKDAY_DICTIONARY} from "../constants";
 import dayjs, {Dayjs} from "dayjs";
+import {matchAnyPattern} from "../../../utils/pattern";
 
 const PATTERN = new RegExp('(?<=\\W|^)' +
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
     '(?:on\\s*?)?' +
     '(?:(this|last|past|next)\\s*)?' +
-    `(${WEEKDAY_PATTERN})` +
+    `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
     '(?:\\s*(?:\\,|\\)|\\）))?' +
     '(?:\\s*(this|last|past|next)\\s*week)?' +
     '(?=\\W|$)', 'i');
@@ -25,7 +26,7 @@ export default class ENWeekdayParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
 
         const dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-        const offset = WEEKDAY_OFFSET[dayOfWeek];
+        const offset = WEEKDAY_DICTIONARY[dayOfWeek];
         if (offset === undefined) {
             return null;
         }

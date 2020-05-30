@@ -1,22 +1,21 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {
-    createComponentRelativeFromRefDate,
-    extractDateJSTimeUnitValues,
-    TIME_UNIT_PATTERN,
-    TIME_UNIT_STRICT_PATTERN
+    parseTimeUnits,
+    TIME_UNITS_PATTERN
 } from "../constants";
+import {ParsingComponents} from "../../../results";
 
 
 const PATTERN = new RegExp('' +
     '(?<=\\W|^)' +
-    '(' + TIME_UNIT_PATTERN + ')' +
+    '(' + TIME_UNITS_PATTERN + ')' +
     '(later|after|from now|henceforth|forward|out)' +
     '(?=(?:\\W|$))',
 'i');
 
 const STRICT_PATTERN = new RegExp('' +
     '(?<=\\W|^)' +
-    '(' + TIME_UNIT_STRICT_PATTERN + ')' +
+    '(' + TIME_UNITS_PATTERN + ')' +
     '(later|from now)' +
     '(?=(?:\\W|$))',
 'i');
@@ -37,7 +36,7 @@ export default class ENTimeUnitLaterFormatParser implements Parser {
             return null;
         }
 
-        const fragments = extractDateJSTimeUnitValues(match[GROUP_NUM_TIMEUNITS]);
-        return createComponentRelativeFromRefDate(context.refDate, fragments);
+        const fragments = parseTimeUnits(match[GROUP_NUM_TIMEUNITS]);
+        return ParsingComponents.createRelativeFromRefDate(context.refDate, fragments);
     }
 }

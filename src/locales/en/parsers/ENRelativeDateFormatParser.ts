@@ -1,12 +1,12 @@
-import {INTEGER_WORDS, INTEGER_WORDS_PATTERN} from "../constants";
+import {NUMBER_PATTERN, parseNumberPattern} from "../constants";
 import {Parser, ParsingContext} from "../../../chrono";
-import {ParsingComponents, ParsingResult} from "../../../results";
+import {ParsingComponents} from "../../../results";
 import dayjs from "dayjs";
 
 
 const PATTERN = new RegExp('(?<=\\W|^)' +
     '(this|next|last|past)\\s*' +
-    '('+ INTEGER_WORDS_PATTERN + '|[0-9]+|few|half(?:\\s*an?)?)?\\s*' +
+    `(${NUMBER_PATTERN})?\\s*` +
     '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' +
     '(?=\\W|$)', 'i'
 );
@@ -28,27 +28,13 @@ export default class ENRelativeDateFormatParser implements Parser {
         }
 
         const modifier = match[MODIFIER_WORD_GROUP].toLowerCase().match(/^next/) ? 1 : -1;
-        const num = match[MULTIPLIER_WORD_GROUP] || '';
-        let parsedNum: number;
-        if (INTEGER_WORDS[num] !== undefined) {
-            parsedNum = INTEGER_WORDS[num];
-        } else if (num === ''){
-            parsedNum = 1;
-        } else if (num.match(/few/i)){
-            parsedNum = 3;
-        } else if (num.match(/half/i)) {
-            parsedNum = 0.5;
-        } else {
-            parsedNum = parseInt(num);
-        }
-        parsedNum *= modifier;
-
+        const parsedNum = match[MULTIPLIER_WORD_GROUP] ? parseNumberPattern(match[MULTIPLIER_WORD_GROUP]) : 1;
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase()
 
         if (unitWord.match(/day|week|month|year/i)) {
-            return this.extractDateReference(context, unitWord, parsedNum);
+            return this.extractDateReference(context, unitWord, parsedNum * modifier);
         } else {
-            return this.extractTimeReference(context, unitWord, parsedNum)
+            return this.extractTimeReference(context, unitWord, parsedNum * modifier)
         }
     }
 

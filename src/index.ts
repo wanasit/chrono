@@ -27,12 +27,12 @@ export interface ParsedResult {
     readonly start: ParsedComponents
     readonly end?: ParsedComponents
 
-    date: () => Date
+    readonly date: () => Date
 }
 
 export interface ParsedComponents {
-    get: (c: Component) => string | number
-    date: () => Date
+    readonly get: (c: Component) => string | number
+    readonly date: () => Date
 }
 
 export type Component =

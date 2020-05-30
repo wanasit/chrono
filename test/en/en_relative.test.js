@@ -76,6 +76,15 @@ test("Test - Single Expression", () => {
         expect(result.start.get('hour')).toBe(12);
     });
 
+    testSingleCase(chrono, 'last two weeks', new Date(2016, 10-1, 1), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2016);
+        expect(result.start.get('month')).toBe(9);
+        expect(result.start.get('day')).toBe(17);
+        expect(result.start.get('hour')).toBe(12);
+    });
+
     testSingleCase(chrono, 'next day', new Date(2016, 10-1, 1), (result, text) => {
 
         expect(result.text).toBe(text);

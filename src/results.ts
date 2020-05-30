@@ -1,6 +1,6 @@
 import {Component, ParsedComponents, ParsedResult} from "./index";
 
-import dayjs from 'dayjs';
+import dayjs, {OpUnitType} from 'dayjs';
 
 export class ParsingComponents implements ParsedComponents {
     private knownValues: {[c: Component]: string|number}
@@ -137,6 +137,37 @@ export class ParsingComponents implements ParsedComponents {
 
     toString() {
         return `[ParsingComponents {knownValues: ${JSON.stringify(this.knownValues)}, impliedValues: ${JSON.stringify(this.impliedValues)}}]`;
+    }
+
+
+    static createRelativeFromRefDate(refDate:Date, fragments: {[c: OpUnitType]: number}) : ParsingComponents{
+        let date = dayjs(refDate);
+        for (const key in fragments) {
+            date = date.add(fragments[key], key);
+        }
+
+        const components = new ParsingComponents(refDate);
+        if (fragments['hour'] || fragments['minute'] || fragments['second']) {
+            components.assign('hour', date.hour());
+            components.assign('minute', date.minute());
+            components.assign('second', date.second());
+        }
+
+        if (fragments['d'] || fragments['month'] || fragments['year']) {
+            components.assign('day', date.date());
+            components.assign('month', date.month() + 1);
+            components.assign('year', date.year());
+        } else {
+            if (fragments['week']) {
+                components.imply('weekday', date.day());
+            }
+
+            components.imply('day', date.date());
+            components.imply('month', date.month() + 1);
+            components.imply('year', date.year());
+        }
+
+        return components;
     }
 }
 

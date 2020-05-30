@@ -222,14 +222,6 @@ test("Test - From now Expression", () => {
 
 test("Test - Strict mode", function() {
 
-    testUnexpectedResult(chrono.strict, '15 minute after', new Date(2012, 8-1, 3))
-
-    testUnexpectedResult(chrono.strict, 'a week ago, we did something', new Date(2012, 8-1, 3))
-
-    testUnexpectedResult(chrono.strict, '15 min from now', new Date(2012, 7, 10, 12, 14));
-
-    testUnexpectedResult(chrono.strict, 'a week from now, we did something', new Date(2012, 8 - 1, 3))
-
     testSingleCase(chrono.strict, '15 minutes from now', new Date(2012, 7, 10, 12, 14));
 
     testSingleCase(chrono.strict, '25 minutes later', new Date(2012, 7, 10, 12, 40), (result) => {

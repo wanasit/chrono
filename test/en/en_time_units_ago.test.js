@@ -250,10 +250,3 @@ test("Test - Nested time ago", function() {
     expect(results[0].start.get('minute')).toBe(26);
     expect(results[0].start.get('second')).toBe(11);
 });
-
-test("Test - Single Expression (Strict)", function() {
-
-    testUnexpectedResult(chrono.strict, '15 minute before', new Date(2012,7,10,12,14));
-
-    testUnexpectedResult(chrono.strict, 'a week ago, we did something', new Date(2012, 8-1, 3))
-});

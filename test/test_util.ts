@@ -32,7 +32,7 @@ export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckR
             checkResult(results[0], text);
         }
     } catch (e) {
-        debugHandler.executeBufferedBlocks();
+        //debugHandler.executeBufferedBlocks();
         throw e
     }
 
