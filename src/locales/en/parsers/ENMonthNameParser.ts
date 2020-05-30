@@ -1,31 +1,26 @@
-/*
-    
-    The parser for parsing month name and year.
-    
-    EX. 
-        - January
-        - January 2012
-        - January, 2012
-*/
-
-
 import {MONTH_DICTIONARY} from "../constants";
 import {Parser, ParsingContext} from "../../../chrono";
 import {findYearClosestToRef} from "../../../calculation/yearCalculation";
 import {matchAnyPattern} from "../../../utils/pattern";
+import {YEAR_PATTERN, parseYear} from "../constants";
 
 const PATTERN = new RegExp('(?<=^|\\D\\s+|[^\\w\\s])' +
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
     '\\s*' +
     '(?:' +
-        '[,-]?\\s*([0-9]{4})(\\s*BE|AD|BC)?' +
+        `[,-]?\\s*(${YEAR_PATTERN})?` +
     ')?' +
     '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
 
 const MONTH_NAME_GROUP = 1;
 const YEAR_GROUP = 2;
-const YEAR_BE_GROUP = 3;
 
+/**
+ * The parser for parsing month name and year.
+ * - January, 2012
+ * - January 2012
+ * - January
+ */
 export default class ENMonthNameParser implements Parser {
 
     pattern(): RegExp {return PATTERN; }
@@ -44,19 +39,7 @@ export default class ENMonthNameParser implements Parser {
         components.assign('month', month);
 
         if (match[YEAR_GROUP]) {
-            let year = parseInt(match[YEAR_GROUP]);
-            if(match[YEAR_BE_GROUP]){
-                if (match[YEAR_BE_GROUP].match(/BE/)) {
-                    // Buddhist Era
-                    year = year - 543;
-                } else if (match[YEAR_BE_GROUP].match(/BC/)) {
-                    // Before Christ
-                    year = -year;
-                }
-            } else if (year < 100){
-                year = year + 2000;
-            }
-
+            const year = parseYear(match[YEAR_GROUP]);
             components.assign('year', year)
         } else {
             const year = findYearClosestToRef(context.refDate, 1, month)

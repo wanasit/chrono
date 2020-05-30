@@ -183,6 +183,40 @@ export function parseOrdinalNumberPattern(match: string) : number {
     return parseInt(num);
 }
 
+
+//-----------------------------
+
+export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|[1-2][0-9]{3}|[5-9][0-9])`;
+export function parseYear(match: string) : number {
+    if (/BE/i.test(match)) {
+        // Buddhist Era
+        match = match.replace(/BE/i, '');
+        return parseInt(match) - 543;
+    }
+
+    if (/BC/i.test(match)){
+        // Before Christ
+        match = match.replace(/BC/i, '');
+        return -parseInt(match);
+    }
+
+    if (/AD/i.test(match)){
+        match = match.replace(/AD/i, '');
+        return parseInt(match);
+    }
+
+    let yearNumber = parseInt(match);
+    if (yearNumber < 100){
+        if (yearNumber > 50) {
+            yearNumber = yearNumber + 1900;
+        } else {
+            yearNumber = yearNumber + 2000;
+        }
+    }
+
+    return yearNumber;
+}
+
 //-----------------------------
 
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*`;

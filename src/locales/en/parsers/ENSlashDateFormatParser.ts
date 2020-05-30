@@ -1,6 +1,8 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingResult} from "../../../results";
 import dayjs from "dayjs";
+import {parseYear} from "../constants";
+import {findYearClosestToRef} from "../../../calculation/yearCalculation";
 
 
 const PATTERN = new RegExp('(\\W|^)' +
@@ -67,9 +69,6 @@ export default class ENSlashDateFormatParser implements Parser {
         }
 
         const result = context.createParsingResult(index, text);
-
-
-        let year = parseInt(match[YEAR_GROUP]) || dayjs(context.refDate).year();
         let month = parseInt(match[this.groupNumberMonth]);
         let day   = parseInt(match[this.groupNumberDay]);
 
@@ -87,19 +86,14 @@ export default class ENSlashDateFormatParser implements Parser {
             return null;
         }
 
-        if(year < 100){
-            if (year > 50) {
-                year = year + 1900;
-            } else {
-                year = year + 2000;
-            }
-        }
-
         result.start.assign('day', day);
         result.start.assign('month', month);
+
         if (match[YEAR_GROUP]) {
+            const year = parseYear(match[YEAR_GROUP]) || dayjs(context.refDate).year();
             result.start.assign('year', year);
         } else {
+            const year = findYearClosestToRef(context.refDate, day, month);
             result.start.imply('year', year);
         }
 

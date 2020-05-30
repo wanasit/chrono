@@ -2,7 +2,7 @@ import {Parser, ParsingContext} from "../../../chrono";
 import {findYearClosestToRef} from "../../../calculation/yearCalculation";
 import {MONTH_DICTIONARY, WEEKDAY_DICTIONARY} from "../constants";
 import {ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern} from "../constants";
-
+import {YEAR_PATTERN, parseYear} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
 
 const PATTERN = new RegExp('(?<=\\W|^)' +
@@ -19,7 +19,7 @@ const PATTERN = new RegExp('(?<=\\W|^)' +
     ')?' +
     '(?:' +
         '(?:-|\/|\\s*,?\\s*)' +
-        '(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' +
+        `(${YEAR_PATTERN})` +
     ')?' +
     '(?=\\W|$)(?!\\:\\d)', 'i');
 
@@ -28,9 +28,6 @@ const MONTH_NAME_GROUP = 2;
 const DATE_GROUP = 3;
 const DATE_TO_GROUP = 4;
 const YEAR_GROUP = 5;
-const YEAR_BE_GROUP = 6;
-const YEAR_GROUP2 = 7;
-const YEAR_BE_GROUP2 = 8;
 
 /**
  * The parser for parsing US's date format that begin with month's name.
@@ -58,21 +55,8 @@ export default class ENMonthNameMiddleEndianParser implements Parser {
             'day': day, 'month': month
         });
 
-        if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
-            let year = parseInt(match[YEAR_GROUP] || match[YEAR_GROUP2]);
-            const yearBE = match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2];
-            if (yearBE) {
-                if (/BE/i.test(yearBE)) {
-                    // Buddhist Era
-                    year = year - 543;
-                } else if (/BC/i.test(yearBE)) {
-                    // Before Christ
-                    year = -year;
-                }
-            } else if (year < 100){
-                year = year + 2000;
-            }
-
+        if (match[YEAR_GROUP]) {
+            const year = parseYear(match[YEAR_GROUP])
             components.assign('year', year)
         } else {
             const year = findYearClosestToRef(context.refDate, day, month)

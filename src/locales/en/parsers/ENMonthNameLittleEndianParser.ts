@@ -1,7 +1,8 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingResult} from "../../../results";
 import {findYearClosestToRef} from "../../../calculation/yearCalculation";
-import {MONTH_DICTIONARY, ORDINAL_WORD_DICTIONARY, WEEKDAY_DICTIONARY,} from "../constants";
+import {MONTH_DICTIONARY, WEEKDAY_DICTIONARY,} from "../constants";
+import {YEAR_PATTERN, parseYear} from "../constants";
 import {ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
 
@@ -18,11 +19,7 @@ const PATTERN = new RegExp('(?<=\\W|^)' +
         '(' + matchAnyPattern(MONTH_DICTIONARY) + ')' +
         '(?:' +
             '(?:-|\/|,?\\s*)' +
-            '((?:' + 
-                '[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|' +
-                '[1-2][0-9]{3}|' +
-                '[5-9][0-9]' +
-            ')(?![^\\s]\\d))' +
+            `(${YEAR_PATTERN}(?![^\\s]\\d))` +
         ')?' +
         '(?=\\W|$)', 'i'
     );
@@ -56,37 +53,9 @@ export default class ENMonthNameLittleEndianParser implements Parser {
         }
 
         if (match[YEAR_GROUP]) {
-            let year: string = match[YEAR_GROUP];
-            let yearNumber: number;
-            if (/BE/i.test(year)) {
-                // Buddhist Era
-                year = year.replace(/BE/i, '');
-                yearNumber = parseInt(year) - 543;
-            } else if (/BC/i.test(year)){
-                // Before Christ
-                year = year.replace(/BC/i, '');
-                yearNumber = -parseInt(year);
-            } else if (/AD/i.test(year)){
-                year = year.replace(/AD/i, '');
-                yearNumber = parseInt(year);
-            } else {
-                yearNumber = parseInt(year);
-                if (yearNumber < 100){
-                    if (yearNumber > 50) {
-                        yearNumber = yearNumber + 1900;
-                    } else {
-                        yearNumber = yearNumber + 2000;
-                    }
-                }
-            }
-
+            const yearNumber = parseYear(match[YEAR_GROUP])
             result.start.assign('year', yearNumber)
         } else {
-
-            context.debug(() => {
-                console.log(day, month)
-            });
-
             const year = findYearClosestToRef(context.refDate, day, month);
             result.start.imply('year', year)
         }
