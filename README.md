@@ -15,17 +15,6 @@ It is designed to handle most date/time format and extract information from any 
 * _Sat Aug 17 2013 18:40:39 GMT+0900 (JST)_
 * _2014-11-30T08:15:30-05:30_
 
-### What's changed in v2
-For Users
-* Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
-* The current supported languages are only `en` and `ja`. Other languages from v1 (`de`, `fr`, `nl`, `pt`, and `zh`) are under development.
-
-For contributors and advanced users
-* The project is rewritten in TypeScript
-* New [Parser](#parser) and [Refiner](#refiner) interface 
-* New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
-
-
 ### Installation
 
 With npm:
@@ -38,6 +27,16 @@ import * as chrono from 'chrono-node';
 
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
+
+### What's changed in v2
+For Users
+* Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
+* The current supported languages are only `en` and `ja`. Other languages from v1 (`de`, `fr`, `nl`, `pt`, and `zh`) are under development.
+
+For contributors and advanced users
+* The project is rewritten in TypeScript
+* New [Parser](#parser) and [Refiner](#refiner) interface 
+* New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
 
 ## Usage
 
