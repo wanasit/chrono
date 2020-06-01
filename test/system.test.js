@@ -1,5 +1,6 @@
 import * as chrono from '../src/';
-import {testSingleCase, testWithExpectedDate} from "./test_util";
+import {testSingleCase} from "./test_util";
+import {Meridiem} from "../src";
 
 //-------------------------------------
 
@@ -44,7 +45,7 @@ test("Test - Add custom parser", () => {
 
 test("Test - Add custom parser example", () => {
 
-	const custom = chrono.casual.copy();
+	const custom = chrono.casual.clone();
 	custom.parsers.push({
 		pattern: () => { return /\bChristmas\b/i },
 		extract: () => {
@@ -66,6 +67,7 @@ test("Test - Add custom parser example", () => {
 		expect(result.text).toBe('Christmas night');
 		expect(result.start.get('month')).toBe(12);
 		expect(result.start.get('day')).toBe(25);
+		expect(result.start.get('meridiem')).toBe(Meridiem.PM);
 		expect(result.start.get('meridiem')).toBe(1);
 	})
 
@@ -76,7 +78,7 @@ test("Test - Add custom parser example", () => {
 
 test("Test - Add custom refiner example", () => {
 
-	const custom = chrono.casual.copy();
+	const custom = chrono.casual.clone();
 	custom.refiners.push({
 		refine: (context, results) => {
 			// If there is no AM/PM (meridiem) specified,
@@ -85,7 +87,7 @@ test("Test - Add custom refiner example", () => {
 				if (!result.start.isCertain('meridiem') &&
 					result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
 
-					result.start.assign('meridiem', 1);
+					result.start.assign('meridiem', Meridiem.PM);
 					result.start.assign('hour', result.start.get('hour') + 12);
 				}
 			});

@@ -1,6 +1,7 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingResult} from "../../../results";
 import dayjs from "dayjs";
+import {Meridiem} from "../../../index";
 
 const FIRST_REG_PATTERN  = new RegExp("(?<!\w)(^|\\s|T)" +
     "(?:(?:at|from)\\s*)??" +
@@ -75,14 +76,14 @@ export default class ENTimeExpressionParser implements Parser {
 
         let hour = 0;
         let minute = 0;
-        let meridiem = -1;
+        let meridiem = null;
 
         // ----- Hours
         if (match[HOUR_GROUP].toLowerCase() == "noon"){
-            meridiem = 1;
+            meridiem = Meridiem.PM;
             hour = 12;
         } else if (match[HOUR_GROUP].toLowerCase() == "midnight") {
-            meridiem = 0;
+            meridiem = Meridiem.AM;
             hour = 0;
         } else {
             hour = parseInt(match[HOUR_GROUP]);
@@ -101,7 +102,7 @@ export default class ENTimeExpressionParser implements Parser {
         }
 
         if (hour >= 12) {
-            meridiem = 1;
+            meridiem = Meridiem.PM;
         }
 
         // ----- AM & PM
@@ -109,26 +110,30 @@ export default class ENTimeExpressionParser implements Parser {
             if(hour > 12) return null;
             const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
             if(ampm == "a"){
-                meridiem = 0;
-                if(hour == 12) hour = 0;
+                meridiem = Meridiem.AM;
+                if (hour == 12) {
+                    hour = 0;
+                }
             }
 
             if(ampm == "p"){
-                meridiem = 1;
-                if(hour != 12) hour += 12;
+                meridiem = Meridiem.PM;
+                if (hour != 12) {
+                    hour += 12;
+                }
             }
         }
 
         result.start.assign('hour', hour);
         result.start.assign('minute', minute);
 
-        if (meridiem >= 0) {
+        if (meridiem !== null) {
             result.start.assign('meridiem', meridiem);
         } else {
             if (hour < 12) {
-                result.start.imply('meridiem', 0);
+                result.start.imply('meridiem', Meridiem.AM);
             } else {
-                result.start.imply('meridiem', 1);
+                result.start.imply('meridiem', Meridiem.PM);
             }
         }
 
@@ -192,7 +197,7 @@ export default class ENTimeExpressionParser implements Parser {
         }
 
         if (hour >= 12) {
-            meridiem = 1;
+            meridiem = Meridiem.PM;
         }
 
         // ----- AM & PM
@@ -203,7 +208,7 @@ export default class ENTimeExpressionParser implements Parser {
 
             const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
             if(ampm == "a"){
-                meridiem = 0;
+                meridiem = Meridiem.AM;
                 if(hour == 12) {
                     hour = 0;
                     if (!result.end.isCertain('day')) {
@@ -213,14 +218,14 @@ export default class ENTimeExpressionParser implements Parser {
             }
 
             if(ampm == "p"){
-                meridiem = 1;
+                meridiem = Meridiem.PM;
                 if(hour != 12) hour += 12;
             }
 
             if (!result.start.isCertain('meridiem')) {
-                if (meridiem == 0) {
+                if (meridiem == Meridiem.AM) {
 
-                    result.start.imply('meridiem', 0);
+                    result.start.imply('meridiem', Meridiem.AM);
 
                     if (result.start.get('hour') == 12) {
                         result.start.assign('hour', 0);
@@ -228,7 +233,7 @@ export default class ENTimeExpressionParser implements Parser {
 
                 } else {
 
-                    result.start.imply('meridiem', 1);
+                    result.start.imply('meridiem', Meridiem.PM);
 
                     if (result.start.get('hour') != 12) {
                         result.start.assign('hour', result.start.get('hour') + 12);
@@ -244,13 +249,13 @@ export default class ENTimeExpressionParser implements Parser {
         if (meridiem >= 0) {
             result.end.assign('meridiem', meridiem);
         } else {
-            const startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
+            const startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == Meridiem.PM;
             if (startAtPM && result.start.get('hour') > hour) {
                 // 10pm - 1 (am)
-                result.end.imply('meridiem', 0);
+                result.end.imply('meridiem', Meridiem.AM);
 
             } else if (hour > 12) {
-                result.end.imply('meridiem', 1);
+                result.end.imply('meridiem', Meridiem.PM);
             }
         }
 

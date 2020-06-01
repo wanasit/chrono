@@ -3,8 +3,8 @@ import {Component, ParsedComponents, ParsedResult} from "./index";
 import dayjs, {OpUnitType} from 'dayjs';
 
 export class ParsingComponents implements ParsedComponents {
-    private knownValues: {[c: Component]: string|number}
-    private impliedValues: {[c: Component]: string|number}
+    private knownValues: {[c: Component]: number}
+    private impliedValues: {[c: Component]: number}
 
     constructor(
         refDate: Date,
@@ -28,7 +28,7 @@ export class ParsingComponents implements ParsedComponents {
         this.imply('millisecond', 0);
     }
 
-    get(component: Component) : (string | number | null) {
+    get(component: Component) : (number | null) {
 
         if (component in this.knownValues) {
             return this.knownValues[component];
@@ -53,13 +53,13 @@ export class ParsingComponents implements ParsedComponents {
         return Object.keys(this.knownValues) as Array<Component>
     }
 
-    imply(component: Component, value) : ParsingComponents {
+    imply(component: Component, value: number) : ParsingComponents {
         if (component in this.knownValues) return;
         this.impliedValues[component] = value;
         return this;
     }
 
-    assign(component: Component, value) : ParsingComponents{
+    assign(component: Component, value: number) : ParsingComponents{
         this.knownValues[component] = value;
         delete this.impliedValues[component];
         return this;

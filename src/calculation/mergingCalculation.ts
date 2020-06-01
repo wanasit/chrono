@@ -1,4 +1,5 @@
 import {ParsingComponents, ParsingResult} from "../results";
+import {Meridiem} from "../index";
 
 export function mergeDateTimeResult(
     dateResult: ParsingResult,
@@ -68,7 +69,7 @@ export function mergeDateTimeComponent(dateComponent: ParsingComponents, timeCom
         dateTimeComponent.imply('meridiem', timeComponent.get('meridiem'));
     }
 
-    if (dateTimeComponent.get('meridiem') == 1 && dateTimeComponent.get('hour') < 12) {
+    if (dateTimeComponent.get('meridiem') == Meridiem.PM && dateTimeComponent.get('hour') < 12) {
         if (timeComponent.isCertain('hour')) {
             dateTimeComponent.assign('hour', dateTimeComponent.get('hour') + 12);
         } else {

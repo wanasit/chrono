@@ -1,6 +1,7 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents, ParsingResult} from "../../../results";
 import dayjs from "dayjs";
+import {Meridiem} from "../../../index";
 
 export default class ENCasualDateParser implements Parser {
 
@@ -17,7 +18,7 @@ export default class ENCasualDateParser implements Parser {
         if(lowerText == 'tonight'){
             // Normally means this coming midnight
             component.imply('hour', 22);
-            component.imply('meridiem', 1);
+            component.imply('meridiem', Meridiem.PM);
 
         } else if (/^tomorrow|^tmr/.test(lowerText)) {
             // Check not "Tomorrow" on late night

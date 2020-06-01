@@ -55,7 +55,7 @@ export class Chrono {
         return results;
     }
 
-    copy() : Chrono{
+    clone() : Chrono{
         return new Chrono({
             parsers: [...this.parsers],
             refiners: [...this.refiners]

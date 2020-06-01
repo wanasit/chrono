@@ -1,4 +1,5 @@
 import {Parser, ParsingContext} from "../../../chrono";
+import {Meridiem} from "../../../index";
 
 export default class ENCasualTimeParser implements Parser {
 
@@ -9,23 +10,23 @@ export default class ENCasualTimeParser implements Parser {
         switch (match[1].toLowerCase()) {
 
             case 'afternoon':
-                component.imply('meridiem', 1);
+                component.imply('meridiem', Meridiem.PM);
                 component.imply('hour', 15);
                 break;
 
             case 'evening':
             case 'night':
-                component.imply('meridiem', 1);
+                component.imply('meridiem', Meridiem.PM);
                 component.imply('hour', 20);
                 break;
 
             case 'morning':
-                component.imply('meridiem', 0);
+                component.imply('meridiem', Meridiem.AM);
                 component.imply('hour', 6);
                 break;
 
             case 'noon':
-                component.imply('meridiem', 0);
+                component.imply('meridiem', Meridiem.AM);
                 component.imply('hour', 12);
                 break;
         }

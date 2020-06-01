@@ -1,5 +1,6 @@
 import * as chrono from '../../src/';
 import {testSingleCase, testUnexpectedResult} from '../test_util';
+import {Meridiem} from "../../src/";
 
 test("Test - Single Expression", function() {
 
@@ -230,7 +231,7 @@ test('Test - Random text', function() {
         expect(result.start.get('month')).toBe(1);
         expect(result.start.get('day')).toBe(1);
         expect(result.start.get('hour')).toBe(22);
-        expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(Meridiem.PM);
     });
 
     testSingleCase(chrono, 'tonight 8pm', new Date(2012, 1-1, 1, 12), (result, text) => {
@@ -240,7 +241,7 @@ test('Test - Random text', function() {
         expect(result.start.get('year') ).toBe(2012);
         expect(result.start.get('month')).toBe(1);
         expect(result.start.get('day')  ).toBe(1);
-        expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(Meridiem.PM);
     });
 
 
@@ -251,7 +252,7 @@ test('Test - Random text', function() {
         expect(result.start.get('year') ).toBe(2012);
         expect(result.start.get('month')).toBe(1);
         expect(result.start.get('day')  ).toBe(1);
-        expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(Meridiem.PM);
     });
 
 
@@ -262,7 +263,7 @@ test('Test - Random text', function() {
         expect(result.start.get('year') ).toBe(2012);
         expect(result.start.get('month')).toBe(1);
         expect(result.start.get('day')  ).toBe(2);
-        expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(Meridiem.PM);
     });
 
 
@@ -273,7 +274,7 @@ test('Test - Random text', function() {
         expect(result.start.get('year') ).toBe(2012);
         expect(result.start.get('month')).toBe(1);
         expect(result.start.get('day')  ).toBe(2);
-        expect(result.start.get('meridiem') ).toBe(1);
+        expect(result.start.get('meridiem') ).toBe(Meridiem.PM);
     });
 
 

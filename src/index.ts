@@ -31,14 +31,19 @@ export interface ParsedResult {
 }
 
 export interface ParsedComponents {
-    readonly get: (c: Component) => string | number
+    readonly get: (c: Component) => number
     readonly date: () => Date
 }
 
 export type Component =
     'year' | 'month' | 'day' | 'weekday' |
     'hour' | 'minute' | 'second' | 'millisecond' | 'meridiem' |
-    'timezoneOffset'
+    'timezoneOffset';
+
+export enum Meridiem {
+    AM = 0,
+    PM = 1
+}
 
 // export * as xx from './locales/xx'
 export * as en from './locales/en'
