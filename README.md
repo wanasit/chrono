@@ -1,28 +1,38 @@
 # Chrono (v2 preview)
 
-A natural language date parser in Javascript, designed for extracting date information from any given text. (Java version is also available [here](https://github.com/wanasit/chrono-java))
+A natural language date parser in Javascript. 
 
 [![Build Status](https://travis-ci.org/wanasit/chrono.svg?branch=master)](https://travis-ci.org/wanasit/chrono)
 [![Coverage Status](https://img.shields.io/coveralls/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
 
-Chrono supports most date and time formats, such as :
+It is designed to handle most date/time format and extract information from any given text:
 
-* Today, Tomorrow, Yesterday, Last Friday, etc
-* 17 August 2013 - 19 August 2013
-* This Friday from 13:00 - 16.00
-* 5 days ago
-* 2 weeks from now
-* Sat Aug 17 2013 18:40:39 GMT+0900 (JST)
-* 2014-11-30T08:15:30-05:30
+* _Today_, _Tomorrow_, _Yesterday_, _Last Friday_, etc
+* _17 August 2013 - 19 August 2013_
+* _This Friday from 13:00 - 16.00_
+* _5 days ago_
+* _2 weeks from now_
+* _Sat Aug 17 2013 18:40:39 GMT+0900 (JST)_
+* _2014-11-30T08:15:30-05:30_
 
-## Installation
+### What's changed in v2
+For Users
+* Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
+* The current supported languages are only `en` and `ja`. Other languages from v1 (`de`, `fr`, `nl`, `pt`, and `zh`) are under development.
 
-Just run:
+For contributors and advanced users
+* The project is rewritten in TypeScript
+* New [Parser](#parser) and [Refiner](#refiner) interface 
+* New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
+
+
+### Installation
+
+With npm:
 ```bash
-$ npm i --save chrono-node
+$ npm install --save chrono-node
 ```
     
-And start using chrono:
 ```javascript
 import * as chrono from 'chrono-node';
 
@@ -31,7 +41,7 @@ chrono.parseDate('An appointment on Sep 12-13');
 
 ## Usage
 
-Simply pass a string to function `chrono.parseDate` or `chrono.parse`. 
+Simply pass a `string` to functions `chrono.parseDate` or `chrono.parse`. 
 
 ```javascript
 import * as chrono from 'chrono-node';
@@ -49,7 +59,7 @@ chrono.parse('An appointment on Sep 12-13');
 
 For more advanced usage, here is the typescript definition of the `parse` function:
 ```typescript
-function parse(text: string, refDate?: Date, option?: ParsingOption): ParsedResult[] {...}
+parse(text: string, refDate?: Date, option?: ParsingOption): ParsedResult[] {...}
 ```
 
 #### Reference Date
@@ -81,7 +91,7 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 // Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
 
-## Parsed Results and Components
+### Parsed Results and Components
 
 #### ParsedResult
 * `refDate: Date` The [reference date](#reference-date) of this result
@@ -113,7 +123,7 @@ results[0].start.date();        // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
 results[0].end.date();  // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 ```
 
-## Strict vs Casual configuration
+### Strict vs Casual configuration
 
 Chrono comes with `strict` mode that parse only formal date patterns. 
 
@@ -131,7 +141,7 @@ chrono.casual.parseDate('2016-07-01');  // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 ```
 
-## Locales
+### Locales
 
 By default, Chrono is configured to handle **only international English**. 
 This differs from the previous version of Chrono that would try all locales by default.
@@ -224,11 +234,13 @@ custom.parseDate("This is at 2.30");
 custom.parseDate("This is at 2.30 AM");
 ```
 
-In the example, a custom refiner is created for assigning PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). The method must return an array of the new results (which, in this case, we modified those results in place).
+In the example, the custom refiner assigns PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). 
+The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). 
+The method must return an array of the new results (which, in this case, we modified those results in place).
 
 ## Development Guides
 
-This guide explains how to setup chrono project for prospective contributors.
+This guide explains how to set up chrono project for prospective contributors.
 
 ```bash
 # Clone and install library
@@ -238,7 +250,9 @@ $ npm install
 
 ```
 
-Parsing date from text is complicated. Sometimes, a small change can have effects on unexpected places. So, Chrono is a heavily tested library. Commits that break a test shouldn't be allowed in any condition.
+Parsing date from text is complicated. A small change can have effects on unexpected places. 
+So, Chrono is a heavily tested library. 
+Commits that break a test shouldn't be allowed in any condition.
 
 Chrono's unit testing is based-on [Jest](https://facebook.github.io/jest/). 
 
@@ -250,7 +264,8 @@ $ npm run test
 $ npm run watch
 ```
 
-Chrono's source files is in `src` directory. The built bundle (`dist/*`) is created by running [Webpack](https://webpack.js.org/) via the following command 
+Chrono's source files is in `src` directory. 
+The built bundle (`dist/*`) is created by running [Webpack](https://webpack.js.org/) via the following command 
 
 ```bash
 $ npm run build
