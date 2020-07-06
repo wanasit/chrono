@@ -64,6 +64,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "jest --watch",
+    "pretest": "eslint .",
     "test": "jest --coverage",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls",
     "version": "npm run build && git add -A dist"
