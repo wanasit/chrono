@@ -28,7 +28,7 @@ import * as chrono from 'chrono-node';
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
 
-### What's changed in v2
+### What's changed in the v2
 For Users
 * Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
 * The current supported languages are only `en` and `ja`. Other languages from v1 (`de`, `fr`, `nl`, `pt`, and `zh`) are under development.
