@@ -1,4 +1,4 @@
-import dayjs, {OpUnitType} from "dayjs";
+import {OpUnitType} from "dayjs";
 import {matchAnyPattern} from "../../utils/pattern";
 
 export const WEEKDAY_DICTIONARY: {[word: string]: number} = {

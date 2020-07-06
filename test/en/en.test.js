@@ -42,20 +42,20 @@ test('Test - Random text', function() {
     testSingleCase(chrono, 'SUN 15SEP 11:05 AM - 12:50 PM', (result) => {
         expect(result.text).toBe('SUN 15SEP 11:05 AM - 12:50 PM');
 
-        expect(result.end.get('hour', 12))
-        expect(result.end.get('minute', 50))
+        expect(result.end.get('hour')).toBe(12)
+        expect(result.end.get('minute')).toBe(50)
     })
 
     testSingleCase(chrono, 'FRI 13SEP 1:29 PM - FRI 13SEP 3:29 PM', (result) => {
         expect(result.text).toBe('FRI 13SEP 1:29 PM - FRI 13SEP 3:29 PM');
 
-        expect(result.start.get('day', 13))
-        expect(result.start.get('hour', 13))
-        expect(result.start.get('minute', 29))
+        expect(result.start.get('day')).toBe(13)
+        expect(result.start.get('hour')).toBe(13)
+        expect(result.start.get('minute')).toBe(29)
 
-        expect(result.end.get('day', 13))
-        expect(result.end.get('hour', 15))
-        expect(result.end.get('minute', 29))
+        expect(result.end.get('day')).toBe(13)
+        expect(result.end.get('hour')).toBe(15)
+        expect(result.end.get('minute')).toBe(29)
     })
 
     testSingleCase(chrono, '9:00 AM to 5:00 PM, Tuesday, 20 May 2013', (result) => {
@@ -156,8 +156,8 @@ test("Test - Parse multiple date results", function() {
         expect(result.start.get('hour')).toBe(15);
         expect(result.start.get('minute')).toBe(30);
 
-        expect(result.start.get('hour')).toBe(16);
-        expect(result.start.get('minute')).toBe(30);
+        expect(result.end.get('hour')).toBe(16);
+        expect(result.end.get('minute')).toBe(30);
     }
 });
 

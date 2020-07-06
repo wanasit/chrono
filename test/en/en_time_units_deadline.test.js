@@ -165,65 +165,58 @@ test("Test - Single Expression", () => {
 
 test("Test - Single Expression (Implied)", () => {
 
-    var text = "within 30 days";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    testSingleCase(chrono, 'within 30 days', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 
-    var text = "within 30 months";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    testSingleCase(chrono, 'within 30 months', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 
-    var text = "within 30 years";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    testSingleCase(chrono, 'within 30 years', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 
-    var text = "within 5 hours";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    testSingleCase(chrono, 'within 5 hours', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 
-    var text = "within 5 minutes";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    testSingleCase(chrono, 'within 5 minutes', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 
-    var text = "within 5 seconds";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
-
+    testSingleCase(chrono, 'within 5 seconds', new Date(2012,7,10,12,14), (result) => {
+        expect(!result.start.isCertain('year')).not.toBeNull();
+        expect(!result.start.isCertain('month')).not.toBeNull();
+        expect(!result.start.isCertain('day')).not.toBeNull();
+        expect(!result.start.isCertain('hour')).not.toBeNull();
+        expect(!result.start.isCertain('minute')).not.toBeNull();
+        expect(!result.start.isCertain('second')).not.toBeNull();
+    });
 });
 

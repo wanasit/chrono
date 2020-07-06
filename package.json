@@ -27,7 +27,7 @@
     ]
   },
   "eslintConfig": {
-    "ignorePatterns": ["webpack.config.js"],
+    "ignorePatterns": ["webpack.config.js", "dist/*.js"],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint",
@@ -39,7 +39,8 @@
       "plugin:jest/recommended"
     ],
     "rules": {
-      "@typescript-eslint/explicit-module-boundary-types": "off"
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "jest/expect-expect": "off"
     }
   },
   "devDependencies": {

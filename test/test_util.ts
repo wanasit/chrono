@@ -32,7 +32,7 @@ export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckR
             checkResult(results[0], text);
         }
     } catch (e) {
-        //debugHandler.executeBufferedBlocks();
+        debugHandler.executeBufferedBlocks();
         throw e
     }
 
@@ -62,6 +62,7 @@ export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?:
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace jest {
+        // noinspection JSUnusedGlobalSymbols
         interface Matchers<R> {
             toBeDate(date: Date): CustomMatcherResult;
             toBeSingleOnText(text: string): CustomMatcherResult;
@@ -69,6 +70,7 @@ declare global {
     }
 }
 
+// noinspection JSUnusedGlobalSymbols
 expect.extend({
 
     toBeDate(resultOrComponent, date) {

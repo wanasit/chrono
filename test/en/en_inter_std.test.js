@@ -1,5 +1,5 @@
 import * as chrono from '../../src/';
-import { testSingleCase, testWithExpectedDate } from '../test_util';
+import { testSingleCase } from '../test_util';
 
 test("Test - Single Expression", function() {
 

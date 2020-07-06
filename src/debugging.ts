@@ -1,4 +1,4 @@
-export type AsyncDebugBlock = () => any
+export type AsyncDebugBlock = () => unknown
 export type DebugConsume = (debugLog: AsyncDebugBlock) => void
 
 export interface DebugHandler {
@@ -15,7 +15,7 @@ export class BufferedDebugHandler implements DebugHandler {
         this.buffer.push(debugMsg)
     }
 
-    executeBufferedBlocks(): Array<any> {
+    executeBufferedBlocks(): Array<unknown> {
         const logs = this.buffer.map(block => block())
         this.buffer = []
         return logs

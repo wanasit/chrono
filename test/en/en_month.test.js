@@ -1,5 +1,5 @@
 import * as chrono from '../../src';
-import {testSingleCase, testWithExpectedDate, testUnexpectedResult} from '../test_util';
+import {testSingleCase} from '../test_util';
 
 test("Test - Month expression", function() {
 

@@ -4,7 +4,6 @@
 
 import {ParsingResult} from "../../results";
 import {MergingRefiner} from "../abstractRefiners";
-import {Component} from "../../index";
 
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
 
@@ -15,7 +14,7 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
             && textBetween.match(this.patternBetween()) != null;
     }
 
-    mergeResults(textBetween, fromResult, toResult, context): ParsingResult {
+    mergeResults(textBetween, fromResult, toResult): ParsingResult {
 
         if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
 

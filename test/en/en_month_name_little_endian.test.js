@@ -164,31 +164,27 @@ test("Test - Single expression", () => {
 
 test("Test - Single expression with separators", () => {
 
-    var text = "10-August 2012";
-    var expectDate = new Date(2012, 8-1, 10, 12, 0);
-    var result = chrono.parse(text, new Date(2012,7, 8))[0];
-    expect(result.text).toBe('10-August 2012');
-    expect(expectDate.getTime()).toBeCloseTo(result.start.date().getTime());
+    testSingleCase(chrono, '10-August 2012', new Date(2012,7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2012, 8-1, 10, 12, 0));
+    });
+
+    testSingleCase(chrono, '10-August-2012', new Date(2012,7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2012, 8-1, 10, 12, 0));
+    });
 
 
-    var text = "10-August-2012";
-    var expectDate = new Date(2012, 8-1, 10, 12, 0);
-    var result = chrono.parse(text, new Date(2012,7, 8))[0];
-    expect(result.text).toBe('10-August-2012');
-    expect(expectDate.getTime()).toBeCloseTo(result.start.date().getTime());
-
-    var text = "10/August 2012";
-    var expectDate = new Date(2012, 8-1, 10, 12, 0);
-    var result = chrono.parse(text, new Date(2012,7, 8))[0];
-    expect(result.text).toBe('10/August 2012');
-    expect(expectDate.getTime()).toBeCloseTo(result.start.date().getTime());
+    testSingleCase(chrono, '10/August 2012', new Date(2012,7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2012, 8-1, 10, 12, 0));
+    });
 
 
-    var text = "10/August/2012";
-    var expectDate = new Date(2012, 8-1, 10, 12, 0);
-    var result = chrono.parse(text, new Date(2012,7, 8))[0];
-    expect(result.text).toBe('10/August/2012');
-    expect(expectDate.getTime()).toBeCloseTo(result.start.date().getTime());
+    testSingleCase(chrono, '10/August/2012', new Date(2012,7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2012, 8-1, 10, 12, 0));
+    });
 });
 
 test("Test - Range expression", () => {
