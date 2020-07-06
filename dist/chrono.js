@@ -91,249 +91,81 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 87);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dayjs = __webpack_require__(2);
+!function(t,e){ true?module.exports=e():undefined}(this,function(){"use strict";var t="millisecond",e="second",n="minute",r="hour",i="day",s="week",u="month",o="quarter",a="year",h=/^(\d{4})-?(\d{1,2})-?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d{1,3})?$/,f=/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,c=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},d={s:c,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+c(r,2,"0")+":"+c(i,2,"0")},m:function(t,e){var n=12*(e.year()-t.year())+(e.month()-t.month()),r=t.clone().add(n,u),i=e-r<0,s=t.clone().add(n+(i?-1:1),u);return Number(-(n+(e-r)/(i?r-s:s-r))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(h){return{M:u,y:a,w:s,d:i,D:"date",h:r,m:n,s:e,ms:t,Q:o}[h]||String(h||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},$={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},l="en",m={};m[l]=$;var y=function(t){return t instanceof v},M=function(t,e,n){var r;if(!t)return l;if("string"==typeof t)m[t]&&(r=t),e&&(m[t]=e,r=t);else{var i=t.name;m[i]=t,r=i}return!n&&r&&(l=r),r||!n&&l},g=function(t,e){if(y(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new v(n)},D=d;D.l=M,D.i=y,D.w=function(t,e){return g(t,{locale:e.$L,utc:e.$u,$offset:e.$offset})};var v=function(){function c(t){this.$L=this.$L||M(t.locale,null,!0),this.parse(t)}var d=c.prototype;return d.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(D.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match(h);if(r)return n?new Date(Date.UTC(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)):new Date(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)}return new Date(e)}(t),this.init()},d.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},d.$utils=function(){return D},d.isValid=function(){return!("Invalid Date"===this.$d.toString())},d.isSame=function(t,e){var n=g(t);return this.startOf(e)<=n&&n<=this.endOf(e)},d.isAfter=function(t,e){return g(t)<this.startOf(e)},d.isBefore=function(t,e){return this.endOf(e)<g(t)},d.$g=function(t,e,n){return D.u(t)?this[e]:this.set(n,t)},d.year=function(t){return this.$g(t,"$y",a)},d.month=function(t){return this.$g(t,"$M",u)},d.day=function(t){return this.$g(t,"$W",i)},d.date=function(t){return this.$g(t,"$D","date")},d.hour=function(t){return this.$g(t,"$H",r)},d.minute=function(t){return this.$g(t,"$m",n)},d.second=function(t){return this.$g(t,"$s",e)},d.millisecond=function(e){return this.$g(e,"$ms",t)},d.unix=function(){return Math.floor(this.valueOf()/1e3)},d.valueOf=function(){return this.$d.getTime()},d.startOf=function(t,o){var h=this,f=!!D.u(o)||o,c=D.p(t),d=function(t,e){var n=D.w(h.$u?Date.UTC(h.$y,e,t):new Date(h.$y,e,t),h);return f?n:n.endOf(i)},$=function(t,e){return D.w(h.toDate()[t].apply(h.toDate("s"),(f?[0,0,0,0]:[23,59,59,999]).slice(e)),h)},l=this.$W,m=this.$M,y=this.$D,M="set"+(this.$u?"UTC":"");switch(c){case a:return f?d(1,0):d(31,11);case u:return f?d(1,m):d(0,m+1);case s:var g=this.$locale().weekStart||0,v=(l<g?l+7:l)-g;return d(f?y-v:y+(6-v),m);case i:case"date":return $(M+"Hours",0);case r:return $(M+"Minutes",1);case n:return $(M+"Seconds",2);case e:return $(M+"Milliseconds",3);default:return this.clone()}},d.endOf=function(t){return this.startOf(t,!1)},d.$set=function(s,o){var h,f=D.p(s),c="set"+(this.$u?"UTC":""),d=(h={},h[i]=c+"Date",h.date=c+"Date",h[u]=c+"Month",h[a]=c+"FullYear",h[r]=c+"Hours",h[n]=c+"Minutes",h[e]=c+"Seconds",h[t]=c+"Milliseconds",h)[f],$=f===i?this.$D+(o-this.$W):o;if(f===u||f===a){var l=this.clone().set("date",1);l.$d[d]($),l.init(),this.$d=l.set("date",Math.min(this.$D,l.daysInMonth())).toDate()}else d&&this.$d[d]($);return this.init(),this},d.set=function(t,e){return this.clone().$set(t,e)},d.get=function(t){return this[D.p(t)]()},d.add=function(t,o){var h,f=this;t=Number(t);var c=D.p(o),d=function(e){var n=g(f);return D.w(n.date(n.date()+Math.round(e*t)),f)};if(c===u)return this.set(u,this.$M+t);if(c===a)return this.set(a,this.$y+t);if(c===i)return d(1);if(c===s)return d(7);var $=(h={},h[n]=6e4,h[r]=36e5,h[e]=1e3,h)[c]||1,l=this.$d.getTime()+t*$;return D.w(l,this)},d.subtract=function(t,e){return this.add(-1*t,e)},d.format=function(t){var e=this;if(!this.isValid())return"Invalid Date";var n=t||"YYYY-MM-DDTHH:mm:ssZ",r=D.z(this),i=this.$locale(),s=this.$H,u=this.$m,o=this.$M,a=i.weekdays,h=i.months,c=function(t,r,i,s){return t&&(t[r]||t(e,n))||i[r].substr(0,s)},d=function(t){return D.s(s%12||12,t,"0")},$=i.meridiem||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:o+1,MM:D.s(o+1,2,"0"),MMM:c(i.monthsShort,o,h,3),MMMM:h[o]||h(this,n),D:this.$D,DD:D.s(this.$D,2,"0"),d:String(this.$W),dd:c(i.weekdaysMin,this.$W,a,2),ddd:c(i.weekdaysShort,this.$W,a,3),dddd:a[this.$W],H:String(s),HH:D.s(s,2,"0"),h:d(1),hh:d(2),a:$(s,u,!0),A:$(s,u,!1),m:String(u),mm:D.s(u,2,"0"),s:String(this.$s),ss:D.s(this.$s,2,"0"),SSS:D.s(this.$ms,3,"0"),Z:r};return n.replace(f,function(t,e){return e||l[t]||r.replace(":","")})},d.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},d.diff=function(t,h,f){var c,d=D.p(h),$=g(t),l=6e4*($.utcOffset()-this.utcOffset()),m=this-$,y=D.m(this,$);return y=(c={},c[a]=y/12,c[u]=y,c[o]=y/3,c[s]=(m-l)/6048e5,c[i]=(m-l)/864e5,c[r]=m/36e5,c[n]=m/6e4,c[e]=m/1e3,c)[d]||m,f?y:D.a(y)},d.daysInMonth=function(){return this.endOf(u).$D},d.$locale=function(){return m[this.$L]},d.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=M(t,e,!0);return r&&(n.$L=r),n},d.clone=function(){return D.w(this.$d,this)},d.toDate=function(){return new Date(this.valueOf())},d.toJSON=function(){return this.isValid()?this.toISOString():null},d.toISOString=function(){return this.$d.toISOString()},d.toString=function(){return this.$d.toUTCString()},c}();return g.prototype=v.prototype,g.extend=function(t,e){return t(e,v,g),g},g.locale=M,g.isDayjs=y,g.unix=function(t){return g(1e3*t)},g.en=m[l],g.Ls=m,g});
 
-exports.Parser = function (config) {
-  config = config || {};
-  var strictMode = config.strict;
-
-  this.isStrictMode = function () {
-    return strictMode == true;
-  };
-
-  this.pattern = function () {
-    return /./i;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    return null;
-  };
-
-  this.execute = function (text, ref, opt) {
-    var results = [];
-    var regex = this.pattern();
-    var remainingText = text;
-    var match = regex.exec(remainingText);
-
-    while (match) {
-      // Calculate match index on the full text;
-      match.index += text.length - remainingText.length;
-      var result = this.extract(text, ref, match, opt);
-
-      if (result) {
-        // If success, start from the end of the result
-        remainingText = text.substring(result.index + result.text.length);
-
-        if (!this.isStrictMode() || result.hasPossibleDates()) {
-          results.push(result);
-        }
-      } else {
-        // If fail, move on by 1
-        remainingText = text.substring(match.index + 1);
-      }
-
-      match = regex.exec(remainingText);
-    }
-
-    if (this.refiners) {
-      this.refiners.forEach(function () {
-        results = refiner.refine(results, text, options);
-      });
-    }
-
-    return results;
-  };
-};
-
-exports.findYearClosestToRef = function (ref, day, month) {
-  //Find the most appropriated year
-  var refMoment = dayjs(ref);
-  var dateMoment = refMoment;
-  dateMoment = dateMoment.month(month - 1);
-  dateMoment = dateMoment.date(day);
-  dateMoment = dateMoment.year(refMoment.year());
-  var nextYear = dateMoment.add(1, 'y');
-  var lastYear = dateMoment.add(-1, 'y');
-
-  if (Math.abs(nextYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
-    dateMoment = nextYear;
-  } else if (Math.abs(lastYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
-    dateMoment = lastYear;
-  }
-
-  return dateMoment.year();
-};
-
-exports.ENISOFormatParser = __webpack_require__(12).Parser;
-exports.ENDeadlineFormatParser = __webpack_require__(13).Parser;
-exports.ENRelativeDateFormatParser = __webpack_require__(14).Parser;
-exports.ENMonthNameLittleEndianParser = __webpack_require__(15).Parser;
-exports.ENMonthNameMiddleEndianParser = __webpack_require__(16).Parser;
-exports.ENMonthNameParser = __webpack_require__(17).Parser;
-exports.ENSlashDateFormatParser = __webpack_require__(18).Parser;
-exports.ENSlashDateFormatStartWithYearParser = __webpack_require__(19).Parser;
-exports.ENSlashMonthFormatParser = __webpack_require__(20).Parser;
-exports.ENTimeAgoFormatParser = __webpack_require__(21).Parser;
-exports.ENTimeExpressionParser = __webpack_require__(22).Parser;
-exports.ENTimeLaterFormatParser = __webpack_require__(23).Parser;
-exports.ENWeekdayParser = __webpack_require__(6).Parser;
-exports.ENCasualDateParser = __webpack_require__(24).Parser;
-exports.ENCasualTimeParser = __webpack_require__(25).Parser;
-exports.JPStandardParser = __webpack_require__(26).Parser;
-exports.JPCasualDateParser = __webpack_require__(28).Parser;
-exports.PTCasualDateParser = __webpack_require__(29).Parser;
-exports.PTDeadlineFormatParser = __webpack_require__(30).Parser;
-exports.PTMonthNameLittleEndianParser = __webpack_require__(31).Parser;
-exports.PTSlashDateFormatParser = __webpack_require__(33).Parser;
-exports.PTTimeAgoFormatParser = __webpack_require__(34).Parser;
-exports.PTTimeExpressionParser = __webpack_require__(35).Parser;
-exports.PTWeekdayParser = __webpack_require__(36).Parser;
-exports.ESCasualDateParser = __webpack_require__(37).Parser;
-exports.ESDeadlineFormatParser = __webpack_require__(38).Parser;
-exports.ESTimeAgoFormatParser = __webpack_require__(39).Parser;
-exports.ESTimeExpressionParser = __webpack_require__(40).Parser;
-exports.ESWeekdayParser = __webpack_require__(41).Parser;
-exports.ESMonthNameLittleEndianParser = __webpack_require__(42).Parser;
-exports.ESSlashDateFormatParser = __webpack_require__(44).Parser;
-exports.FRCasualDateParser = __webpack_require__(45).Parser;
-exports.FRDeadlineFormatParser = __webpack_require__(46).Parser;
-exports.FRMonthNameLittleEndianParser = __webpack_require__(47).Parser;
-exports.FRSlashDateFormatParser = __webpack_require__(48).Parser;
-exports.FRTimeAgoFormatParser = __webpack_require__(49).Parser;
-exports.FRTimeExpressionParser = __webpack_require__(50).Parser;
-exports.FRWeekdayParser = __webpack_require__(51).Parser;
-exports.FRRelativeDateFormatParser = __webpack_require__(52).Parser;
-exports.ZHHantDateParser = __webpack_require__(54).Parser;
-exports.ZHHantWeekdayParser = __webpack_require__(55).Parser;
-exports.ZHHantTimeExpressionParser = __webpack_require__(56).Parser;
-exports.ZHHantCasualDateParser = __webpack_require__(57).Parser;
-exports.ZHHantDeadlineFormatParser = __webpack_require__(58).Parser;
-exports.DEDeadlineFormatParser = __webpack_require__(59).Parser;
-exports.DEMonthNameLittleEndianParser = __webpack_require__(60).Parser;
-exports.DEMonthNameParser = __webpack_require__(61).Parser;
-exports.DESlashDateFormatParser = __webpack_require__(62).Parser;
-exports.DETimeAgoFormatParser = __webpack_require__(63).Parser;
-exports.DETimeExpressionParser = __webpack_require__(64).Parser;
-exports.DEWeekdayParser = __webpack_require__(65).Parser;
-exports.DECasualDateParser = __webpack_require__(66).Parser;
-exports.NLMonthNameParser = __webpack_require__(67).Parser;
-exports.NLMonthNameLittleEndianParser = __webpack_require__(68).Parser;
-exports.NLSlashDateFormatParser = __webpack_require__(69).Parser;
-exports.NLWeekdayParser = __webpack_require__(70).Parser;
-exports.NLTimeExpressionParser = __webpack_require__(71).Parser;
-exports.NLCasualDateParser = __webpack_require__(72).Parser;
-exports.NLCasualTimeParser = __webpack_require__(73).Parser;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParsedResult", function() { return ParsedResult; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParsedComponents", function() { return ParsedComponents; });
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "Chrono", function() { return /* binding */ chrono_Chrono; });
+__webpack_require__.d(__webpack_exports__, "ParsingContext", function() { return /* binding */ chrono_ParsingContext; });
+
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(0);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+
+// CONCATENATED MODULE: ./src/results.ts
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- // @ts-ignore
 
-var _dayjs2 = dayjs__WEBPACK_IMPORTED_MODULE_0___default.a;
-var ParsedResult = /*#__PURE__*/function () {
-  function ParsedResult(result) {
-    _classCallCheck(this, ParsedResult);
+var results_ParsingComponents = /*#__PURE__*/function () {
+  function ParsingComponents(refDate, knownComponents) {
+    _classCallCheck(this, ParsingComponents);
 
-    result = result || {};
-    this.ref = result.ref;
-    this.index = result.index;
-    this.text = result.text;
-    this.tags = result.tags || {};
-    this.start = new ParsedComponents(result.start, result.ref);
+    this.knownValues = {};
+    this.impliedValues = {};
 
-    if (result.end) {
-      this.end = new ParsedComponents(result.end, result.ref);
-    }
-  }
-
-  _createClass(ParsedResult, [{
-    key: "clone",
-    value: function clone() {
-      var result = new ParsedResult(this);
-      result.tags = JSON.parse(JSON.stringify(this.tags));
-      result.start = this.start.clone();
-
-      if (this.end) {
-        result.end = this.end.clone();
-      }
-
-      return result;
-    }
-  }, {
-    key: "date",
-    value: function date() {
-      return this.start.date();
-    }
-  }, {
-    key: "hasPossibleDates",
-    value: function hasPossibleDates() {
-      return this.start.isPossibleDate() && (!this.end || this.end.isPossibleDate());
-    }
-  }, {
-    key: "isOnlyWeekday",
-    value: function isOnlyWeekday() {
-      return this.start.isOnlyWeekdayComponent();
-    }
-  }, {
-    key: "isOnlyDayMonth",
-    value: function isOnlyDayMonth() {
-      return this.start.isOnlyDayMonthComponent();
-    }
-  }]);
-
-  return ParsedResult;
-}();
-var ParsedComponents = /*#__PURE__*/function () {
-  function ParsedComponents(components, ref) {
-    _classCallCheck(this, ParsedComponents);
-
-    this.knownValues = new Map();
-    this.impliedValues = new Map();
-
-    if (components) {
-      for (var key in components) {
-        this.knownValues[key] = components[key];
+    if (knownComponents) {
+      for (var key in knownComponents) {
+        this.knownValues[key] = knownComponents[key];
       }
     }
 
-    if (ref) {
-      ref = _dayjs2(ref);
-      this.imply('day', ref.date());
-      this.imply('month', ref.month() + 1);
-      this.imply('year', ref.year());
-    }
+    var refDayJs = dayjs_min_default()(refDate);
 
+    this.imply('day', refDayJs.date());
+    this.imply('month', refDayJs.month() + 1);
+    this.imply('year', refDayJs.year());
     this.imply('hour', 12);
     this.imply('minute', 0);
     this.imply('second', 0);
     this.imply('millisecond', 0);
   }
 
-  _createClass(ParsedComponents, [{
+  _createClass(ParsingComponents, [{
     key: "get",
     value: function get(component) {
-      if (component in this.knownValues) return this.knownValues[component];
-      if (component in this.impliedValues) return this.impliedValues[component];
+      if (component in this.knownValues) {
+        return this.knownValues[component];
+      }
+
+      if (component in this.impliedValues) {
+        return this.impliedValues[component];
+      }
+
+      return null;
+    }
+  }, {
+    key: "date",
+    value: function date() {
+      return this.dayjs().toDate();
     }
   }, {
     key: "isCertain",
@@ -341,24 +173,50 @@ var ParsedComponents = /*#__PURE__*/function () {
       return component in this.knownValues;
     }
   }, {
+    key: "getCertainComponents",
+    value: function getCertainComponents() {
+      return Object.keys(this.knownValues);
+    }
+  }, {
     key: "imply",
     value: function imply(component, value) {
       if (component in this.knownValues) return;
       this.impliedValues[component] = value;
+      return this;
     }
   }, {
     key: "assign",
     value: function assign(component, value) {
       this.knownValues[component] = value;
       delete this.impliedValues[component];
+      return this;
     }
   }, {
     key: "clone",
     value: function clone() {
-      var component = new ParsedComponents();
-      component.knownValues = JSON.parse(JSON.stringify(this.knownValues));
-      component.impliedValues = JSON.parse(JSON.stringify(this.impliedValues));
+      var component = new ParsingComponents(new Date());
+      component.knownValues = {};
+      component.impliedValues = {};
+
+      for (var key in this.knownValues) {
+        component.knownValues[key] = this.knownValues[key];
+      }
+
+      for (var _key in this.impliedValues) {
+        component.impliedValues[_key] = this.impliedValues[_key];
+      }
+
       return component;
+    }
+  }, {
+    key: "isOnlyDate",
+    value: function isOnlyDate() {
+      return !this.isCertain('hour') && !this.isCertain('minute') && !this.isCertain('second');
+    }
+  }, {
+    key: "isOnlyTime",
+    value: function isOnlyTime() {
+      return !this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
     }
   }, {
     key: "isOnlyWeekdayComponent",
@@ -371,13 +229,13 @@ var ParsedComponents = /*#__PURE__*/function () {
       return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
     }
   }, {
-    key: "isPossibleDate",
-    value: function isPossibleDate() {
+    key: "isValidDate",
+    value: function isValidDate() {
       var dateMoment = this.dayjs();
 
       if (this.isCertain('timezoneOffset')) {
         var adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();
-        dateMoment = dateMoment.add(adjustTimezoneOffset, 'minutes');
+        dateMoment = dateMoment.add(adjustTimezoneOffset, 'minute');
       }
 
       if (dateMoment.get('year') != this.get('year')) return false;
@@ -388,15 +246,9 @@ var ParsedComponents = /*#__PURE__*/function () {
       return true;
     }
   }, {
-    key: "date",
-    value: function date() {
-      var result = this.dayjs();
-      return result.toDate();
-    }
-  }, {
     key: "dayjs",
     value: function dayjs() {
-      var result = _dayjs2();
+      var result = dayjs_min_default()();
 
       result = result.year(this.get('year'));
       result = result.month(this.get('month') - 1);
@@ -407,105 +259,149 @@ var ParsedComponents = /*#__PURE__*/function () {
       result = result.millisecond(this.get('millisecond')); // Javascript Date Object return minus timezone offset
 
       var currentTimezoneOffset = result.utcOffset();
-      var targetTimezoneOffset = this.get('timezoneOffset') !== undefined ? this.get('timezoneOffset') : currentTimezoneOffset;
+      var targetTimezoneOffset = this.get('timezoneOffset') !== null ? this.get('timezoneOffset') : currentTimezoneOffset;
       var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
       result = result.add(-adjustTimezoneOffset, 'minute');
       return result;
     }
   }, {
-    key: "moment",
-    value: function moment() {
-      // Keep for compatibility
-      return this.dayjs();
+    key: "toString",
+    value: function toString() {
+      return "[ParsingComponents {knownValues: ".concat(JSON.stringify(this.knownValues), ", impliedValues: ").concat(JSON.stringify(this.impliedValues), "}]");
+    }
+  }], [{
+    key: "createRelativeFromRefDate",
+    value: function createRelativeFromRefDate(refDate, fragments) {
+      var date = dayjs_min_default()(refDate);
+
+      for (var key in fragments) {
+        date = date.add(fragments[key], key);
+      }
+
+      var components = new ParsingComponents(refDate);
+
+      if (fragments['hour'] || fragments['minute'] || fragments['second']) {
+        components.assign('hour', date.hour());
+        components.assign('minute', date.minute());
+        components.assign('second', date.second());
+      }
+
+      if (fragments['d'] || fragments['month'] || fragments['year']) {
+        components.assign('day', date.date());
+        components.assign('month', date.month() + 1);
+        components.assign('year', date.year());
+      } else {
+        if (fragments['week']) {
+          components.imply('weekday', date.day());
+        }
+
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.imply('year', date.year());
+      }
+
+      return components;
     }
   }]);
 
-  return ParsedComponents;
+  return ParsingComponents;
 }();
+var ParsingResult = /*#__PURE__*/function () {
+  function ParsingResult(refDate, index, text, start, end) {
+    _classCallCheck(this, ParsingResult);
 
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+    this.refDate = refDate;
+    this.index = index;
+    this.text = text;
+    this.start = start || new results_ParsingComponents(this.refDate);
+    this.end = end;
+  }
 
-!function(t,e){ true?module.exports=e():undefined}(this,function(){"use strict";var t="millisecond",e="second",n="minute",r="hour",i="day",s="week",u="month",o="quarter",a="year",h=/^(\d{4})-?(\d{1,2})-?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d{1,3})?$/,f=/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,c=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},d={s:c,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+c(r,2,"0")+":"+c(i,2,"0")},m:function(t,e){var n=12*(e.year()-t.year())+(e.month()-t.month()),r=t.clone().add(n,u),i=e-r<0,s=t.clone().add(n+(i?-1:1),u);return Number(-(n+(e-r)/(i?r-s:s-r))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(h){return{M:u,y:a,w:s,d:i,D:"date",h:r,m:n,s:e,ms:t,Q:o}[h]||String(h||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},$={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},l="en",m={};m[l]=$;var y=function(t){return t instanceof v},M=function(t,e,n){var r;if(!t)return l;if("string"==typeof t)m[t]&&(r=t),e&&(m[t]=e,r=t);else{var i=t.name;m[i]=t,r=i}return!n&&r&&(l=r),r||!n&&l},g=function(t,e){if(y(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new v(n)},D=d;D.l=M,D.i=y,D.w=function(t,e){return g(t,{locale:e.$L,utc:e.$u,$offset:e.$offset})};var v=function(){function c(t){this.$L=this.$L||M(t.locale,null,!0),this.parse(t)}var d=c.prototype;return d.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(D.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match(h);if(r)return n?new Date(Date.UTC(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)):new Date(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)}return new Date(e)}(t),this.init()},d.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},d.$utils=function(){return D},d.isValid=function(){return!("Invalid Date"===this.$d.toString())},d.isSame=function(t,e){var n=g(t);return this.startOf(e)<=n&&n<=this.endOf(e)},d.isAfter=function(t,e){return g(t)<this.startOf(e)},d.isBefore=function(t,e){return this.endOf(e)<g(t)},d.$g=function(t,e,n){return D.u(t)?this[e]:this.set(n,t)},d.year=function(t){return this.$g(t,"$y",a)},d.month=function(t){return this.$g(t,"$M",u)},d.day=function(t){return this.$g(t,"$W",i)},d.date=function(t){return this.$g(t,"$D","date")},d.hour=function(t){return this.$g(t,"$H",r)},d.minute=function(t){return this.$g(t,"$m",n)},d.second=function(t){return this.$g(t,"$s",e)},d.millisecond=function(e){return this.$g(e,"$ms",t)},d.unix=function(){return Math.floor(this.valueOf()/1e3)},d.valueOf=function(){return this.$d.getTime()},d.startOf=function(t,o){var h=this,f=!!D.u(o)||o,c=D.p(t),d=function(t,e){var n=D.w(h.$u?Date.UTC(h.$y,e,t):new Date(h.$y,e,t),h);return f?n:n.endOf(i)},$=function(t,e){return D.w(h.toDate()[t].apply(h.toDate("s"),(f?[0,0,0,0]:[23,59,59,999]).slice(e)),h)},l=this.$W,m=this.$M,y=this.$D,M="set"+(this.$u?"UTC":"");switch(c){case a:return f?d(1,0):d(31,11);case u:return f?d(1,m):d(0,m+1);case s:var g=this.$locale().weekStart||0,v=(l<g?l+7:l)-g;return d(f?y-v:y+(6-v),m);case i:case"date":return $(M+"Hours",0);case r:return $(M+"Minutes",1);case n:return $(M+"Seconds",2);case e:return $(M+"Milliseconds",3);default:return this.clone()}},d.endOf=function(t){return this.startOf(t,!1)},d.$set=function(s,o){var h,f=D.p(s),c="set"+(this.$u?"UTC":""),d=(h={},h[i]=c+"Date",h.date=c+"Date",h[u]=c+"Month",h[a]=c+"FullYear",h[r]=c+"Hours",h[n]=c+"Minutes",h[e]=c+"Seconds",h[t]=c+"Milliseconds",h)[f],$=f===i?this.$D+(o-this.$W):o;if(f===u||f===a){var l=this.clone().set("date",1);l.$d[d]($),l.init(),this.$d=l.set("date",Math.min(this.$D,l.daysInMonth())).toDate()}else d&&this.$d[d]($);return this.init(),this},d.set=function(t,e){return this.clone().$set(t,e)},d.get=function(t){return this[D.p(t)]()},d.add=function(t,o){var h,f=this;t=Number(t);var c=D.p(o),d=function(e){var n=g(f);return D.w(n.date(n.date()+Math.round(e*t)),f)};if(c===u)return this.set(u,this.$M+t);if(c===a)return this.set(a,this.$y+t);if(c===i)return d(1);if(c===s)return d(7);var $=(h={},h[n]=6e4,h[r]=36e5,h[e]=1e3,h)[c]||1,l=this.$d.getTime()+t*$;return D.w(l,this)},d.subtract=function(t,e){return this.add(-1*t,e)},d.format=function(t){var e=this;if(!this.isValid())return"Invalid Date";var n=t||"YYYY-MM-DDTHH:mm:ssZ",r=D.z(this),i=this.$locale(),s=this.$H,u=this.$m,o=this.$M,a=i.weekdays,h=i.months,c=function(t,r,i,s){return t&&(t[r]||t(e,n))||i[r].substr(0,s)},d=function(t){return D.s(s%12||12,t,"0")},$=i.meridiem||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:o+1,MM:D.s(o+1,2,"0"),MMM:c(i.monthsShort,o,h,3),MMMM:h[o]||h(this,n),D:this.$D,DD:D.s(this.$D,2,"0"),d:String(this.$W),dd:c(i.weekdaysMin,this.$W,a,2),ddd:c(i.weekdaysShort,this.$W,a,3),dddd:a[this.$W],H:String(s),HH:D.s(s,2,"0"),h:d(1),hh:d(2),a:$(s,u,!0),A:$(s,u,!1),m:String(u),mm:D.s(u,2,"0"),s:String(this.$s),ss:D.s(this.$s,2,"0"),SSS:D.s(this.$ms,3,"0"),Z:r};return n.replace(f,function(t,e){return e||l[t]||r.replace(":","")})},d.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},d.diff=function(t,h,f){var c,d=D.p(h),$=g(t),l=6e4*($.utcOffset()-this.utcOffset()),m=this-$,y=D.m(this,$);return y=(c={},c[a]=y/12,c[u]=y,c[o]=y/3,c[s]=(m-l)/6048e5,c[i]=(m-l)/864e5,c[r]=m/36e5,c[n]=m/6e4,c[e]=m/1e3,c)[d]||m,f?y:D.a(y)},d.daysInMonth=function(){return this.endOf(u).$D},d.$locale=function(){return m[this.$L]},d.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=M(t,e,!0);return r&&(n.$L=r),n},d.clone=function(){return D.w(this.$d,this)},d.toDate=function(){return new Date(this.valueOf())},d.toJSON=function(){return this.isValid()?this.toISOString():null},d.toISOString=function(){return this.$d.toISOString()},d.toString=function(){return this.$d.toUTCString()},c}();return g.prototype=v.prototype,g.extend=function(t,e){return t(e,v,g),g},g.locale=M,g.isDayjs=y,g.unix=function(t){return g(1e3*t)},g.en=m[l],g.Ls=m,g});
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.Refiner = function Refiner() {
-  this.refine = function (text, results, opt) {
-    return results;
-  };
-};
-
-exports.Filter = function Filter() {
-  exports.Refiner.call(this);
-
-  this.isValid = function (text, result, opt) {
-    return true;
-  };
-
-  this.refine = function (text, results, opt) {
-    var filteredResult = [];
-
-    for (var i = 0; i < results.length; i++) {
-      var result = results[i];
-
-      if (this.isValid(text, result, opt)) {
-        filteredResult.push(result);
-      }
+  _createClass(ParsingResult, [{
+    key: "clone",
+    value: function clone() {
+      var result = new ParsingResult(this.refDate, this.index, this.text);
+      result.start = this.start ? this.start.clone() : null;
+      result.end = this.end ? this.end.clone() : null;
+      return result;
     }
+  }, {
+    key: "date",
+    value: function date() {
+      return this.start.date();
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[ParsingResult {index: ".concat(this.index, ", text: '").concat(this.text, "', ...}]");
+    }
+  }]);
 
-    return filteredResult;
-  };
-}; // Common refiners
+  return ParsingResult;
+}();
+// CONCATENATED MODULE: ./src/utils/pattern.ts
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-exports.OverlapRemovalRefiner = __webpack_require__(74).Refiner;
-exports.ExtractTimezoneOffsetRefiner = __webpack_require__(75).Refiner;
-exports.ExtractTimezoneAbbrRefiner = __webpack_require__(76).Refiner;
-exports.ForwardDateRefiner = __webpack_require__(77).Refiner;
-exports.UnlikelyFormatFilter = __webpack_require__(78).Refiner; // en refiners
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-exports.ENMergeDateTimeRefiner = __webpack_require__(5).Refiner;
-exports.ENMergeDateRangeRefiner = __webpack_require__(9).Refiner;
-exports.ENPrioritizeSpecificDateRefiner = __webpack_require__(79).Refiner; // ja refiners
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
-exports.JPMergeDateRangeRefiner = __webpack_require__(80).Refiner; // fr refiners
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
-exports.FRMergeDateRangeRefiner = __webpack_require__(81).Refiner;
-exports.FRMergeDateTimeRefiner = __webpack_require__(82).Refiner; // de refiners
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-exports.DEMergeDateRangeRefiner = __webpack_require__(83).Refiner;
-exports.DEMergeDateTimeRefiner = __webpack_require__(84).Refiner; // nl refiners
+function extractTerms(dictionary) {
+  var keys;
 
-exports.NLMergeDateRangeRefiner = __webpack_require__(85).Refiner;
-exports.NLMergeDateTimeRefiner = __webpack_require__(86).Refiner;
+  if (dictionary instanceof Array) {
+    keys = _toConsumableArray(dictionary);
+  } else if (dictionary instanceof Map) {
+    keys = Array.from(dictionary.keys());
+  } else {
+    keys = Object.keys(dictionary);
+  }
 
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
+  return keys;
+}
+function matchAnyPattern(dictionary) {
+  // TODO: More efficient regex pattern by considering duplicated prefix
+  var joinedTerms = extractTerms(dictionary).sort(function (a, b) {
+    return b.length - a.length;
+  }).join('|').replace(/\./g, '\\.');
+  return "(?:".concat(joinedTerms, ")");
+}
+// CONCATENATED MODULE: ./src/locales/en/constants.ts
 
-exports.WEEKDAY_OFFSET = {
+var WEEKDAY_DICTIONARY = {
   'sunday': 0,
   'sun': 0,
+  'sun.': 0,
   'monday': 1,
   'mon': 1,
+  'mon.': 1,
   'tuesday': 2,
   'tue': 2,
+  'tue.': 2,
   'wednesday': 3,
   'wed': 3,
+  'wed.': 3,
   'thursday': 4,
+  'thurs': 4,
+  'thurs.': 4,
   'thur': 4,
+  'thur.': 4,
   'thu': 4,
+  'thu.': 4,
   'friday': 5,
   'fri': 5,
+  'fri.': 5,
   'saturday': 6,
-  'sat': 6
+  'sat': 6,
+  'sat.': 6
 };
-exports.MONTH_OFFSET = {
+var MONTH_DICTIONARY = {
   'january': 1,
   'jan': 1,
   'jan.': 1,
@@ -543,8 +439,7 @@ exports.MONTH_OFFSET = {
   'dec': 12,
   'dec.': 12
 };
-exports.MONTH_PATTERN = '(?:' + Object.keys(exports.MONTH_OFFSET).join('|').replace(/\./g, '\\.') + ')';
-exports.INTEGER_WORDS = {
+var INTEGER_WORD_DICTIONARY = {
   'one': 1,
   'two': 2,
   'three': 3,
@@ -558,8 +453,7 @@ exports.INTEGER_WORDS = {
   'eleven': 11,
   'twelve': 12
 };
-exports.INTEGER_WORDS_PATTERN = '(?:' + Object.keys(exports.INTEGER_WORDS).join('|') + ')';
-exports.ORDINAL_WORDS = {
+var ORDINAL_WORD_DICTIONARY = {
   'first': 1,
   'second': 2,
   'third': 3,
@@ -581,99 +475,1445 @@ exports.ORDINAL_WORDS = {
   'nineteenth': 19,
   'twentieth': 20,
   'twenty first': 21,
+  'twenty-first': 21,
   'twenty second': 22,
+  'twenty-second': 22,
   'twenty third': 23,
+  'twenty-third': 23,
   'twenty fourth': 24,
+  'twenty-fourth': 24,
   'twenty fifth': 25,
+  'twenty-fifth': 25,
   'twenty sixth': 26,
+  'twenty-sixth': 26,
   'twenty seventh': 27,
+  'twenty-seventh': 27,
   'twenty eighth': 28,
+  'twenty-eighth': 28,
   'twenty ninth': 29,
+  'twenty-ninth': 29,
   'thirtieth': 30,
-  'thirty first': 31
+  'thirty first': 31,
+  'thirty-first': 31
 };
-exports.ORDINAL_WORDS_PATTERN = '(?:' + Object.keys(exports.ORDINAL_WORDS).join('|').replace(/ /g, '[ -]') + ')';
-var TIME_UNIT = '(' + exports.INTEGER_WORDS_PATTERN + '|[0-9]+|[0-9]+\.[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' + '(sec(?:onds?)?|min(?:ute)?s?|h(?:r|rs|our|ours)?|weeks?|days?|months?|years?)\\s*';
-var TIME_UNIT_STRICT = '(?:[0-9]+|an?)\\s*' + '(?:seconds?|minutes?|hours?|days?)\\s*';
-var PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
-exports.TIME_UNIT_PATTERN = '(?:' + TIME_UNIT + ')+';
-exports.TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
+var TIME_UNIT_DICTIONARY = {
+  'sec': 'second',
+  'second': 'second',
+  'seconds': 'second',
+  'min': 'minute',
+  'mins': 'minute',
+  'minute': 'minute',
+  'minutes': 'minute',
+  'h': 'hour',
+  'hr': 'hour',
+  'hrs': 'hour',
+  'hour': 'hour',
+  'hours': 'hour',
+  'day': 'd',
+  'days': 'd',
+  'week': 'week',
+  'weeks': 'week',
+  'month': 'month',
+  'months': 'month',
+  'yr': 'year',
+  'year': 'year',
+  'years': 'year'
+}; //-----------------------------
 
-exports.extractDateTimeUnitFragments = function (timeunitText) {
+var NUMBER_PATTERN = "(?:".concat(matchAnyPattern(INTEGER_WORD_DICTIONARY), "|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few)");
+function parseNumberPattern(match) {
+  var num = match.toLowerCase();
+
+  if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
+    return INTEGER_WORD_DICTIONARY[num];
+  } else if (num === 'a' || num === 'an') {
+    return 1;
+  } else if (num.match(/few/)) {
+    return 3;
+  } else if (num.match(/half/)) {
+    return 0.5;
+  }
+
+  return parseFloat(num);
+} //-----------------------------
+
+var ORDINAL_NUMBER_PATTERN = "(?:".concat(matchAnyPattern(ORDINAL_WORD_DICTIONARY), "|[0-9]{1,2}(?:st|nd|rd|th)?)");
+function parseOrdinalNumberPattern(match) {
+  var num = match.toLowerCase();
+
+  if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
+    return ORDINAL_WORD_DICTIONARY[num];
+  }
+
+  num = num.replace(/(?:st|nd|rd|th)$/i, '');
+  return parseInt(num);
+} //-----------------------------
+
+var YEAR_PATTERN = "(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|[1-2][0-9]{3}|[5-9][0-9])";
+function parseYear(match) {
+  if (/BE/i.test(match)) {
+    // Buddhist Era
+    match = match.replace(/BE/i, '');
+    return parseInt(match) - 543;
+  }
+
+  if (/BC/i.test(match)) {
+    // Before Christ
+    match = match.replace(/BC/i, '');
+    return -parseInt(match);
+  }
+
+  if (/AD/i.test(match)) {
+    match = match.replace(/AD/i, '');
+    return parseInt(match);
+  }
+
+  var yearNumber = parseInt(match);
+
+  if (yearNumber < 100) {
+    if (yearNumber > 50) {
+      yearNumber = yearNumber + 1900;
+    } else {
+      yearNumber = yearNumber + 2000;
+    }
+  }
+
+  return yearNumber;
+} //-----------------------------
+
+var SINGLE_TIME_UNIT_PATTERN = "(".concat(NUMBER_PATTERN, ")\\s*(").concat(matchAnyPattern(TIME_UNIT_DICTIONARY), ")\\s*");
+var SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, 'i');
+var SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, '(?:');
+var TIME_UNITS_PATTERN = "(?:".concat(SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE, ")+");
+function parseTimeUnits(timeunitText) {
   var fragments = {};
   var remainingText = timeunitText;
-  var match = PATTERN_TIME_UNIT.exec(remainingText);
+  var match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
 
   while (match) {
-    collectDateTimeFragment(match, fragments);
+    collectDateTimeFragment(fragments, match);
     remainingText = remainingText.substring(match[0].length);
-    match = PATTERN_TIME_UNIT.exec(remainingText);
-  }
-
-  return fragments;
-};
-
-function collectDateTimeFragment(match, fragments) {
-  var num = match[1].toLowerCase();
-
-  if (exports.INTEGER_WORDS[num] !== undefined) {
-    num = exports.INTEGER_WORDS[num];
-  } else if (num === 'a' || num === 'an') {
-    num = 1;
-  } else if (num.match(/few/)) {
-    num = 3;
-  } else if (num.match(/half/)) {
-    num = 0.5;
-  } else {
-    num = parseFloat(num);
-  }
-
-  if (match[2].match(/^h/i)) {
-    fragments['hour'] = num;
-  } else if (match[2].match(/min/i)) {
-    fragments['minute'] = num;
-  } else if (match[2].match(/sec/i)) {
-    fragments['second'] = num;
-  } else if (match[2].match(/week/i)) {
-    fragments['week'] = num;
-  } else if (match[2].match(/day/i)) {
-    fragments['d'] = num;
-  } else if (match[2].match(/month/i)) {
-    fragments['month'] = num;
-  } else if (match[2].match(/year/i)) {
-    fragments['year'] = num;
+    match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
   }
 
   return fragments;
 }
 
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+function collectDateTimeFragment(fragments, match) {
+  var num = parseNumberPattern(match[1]);
+  var unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
+  fragments[unit] = num;
+}
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeUnitDeadlineFormatParser.ts
+function ENTimeUnitDeadlineFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENTimeUnitDeadlineFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENTimeUnitDeadlineFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENTimeUnitDeadlineFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENTimeUnitDeadlineFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var PATTERN = new RegExp("(?<=\\W|^)" + "(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
+var STRICT_PATTERN = new RegExp('(?<=\\W|^)' + "(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
+
+var ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser = /*#__PURE__*/function () {
+  function ENTimeUnitDeadlineFormatParser(strictMode) {
+    ENTimeUnitDeadlineFormatParser_classCallCheck(this, ENTimeUnitDeadlineFormatParser);
+
+    this.strictMode = strictMode;
+  }
+
+  ENTimeUnitDeadlineFormatParser_createClass(ENTimeUnitDeadlineFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return this.strictMode ? STRICT_PATTERN : PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var timeUnits = parseTimeUnits(match[1]);
+      return results_ParsingComponents.createRelativeFromRefDate(context.refDate, timeUnits);
+    }
+  }]);
+
+  return ENTimeUnitDeadlineFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/calculation/yearCalculation.ts
+
+function findYearClosestToRef(refDate, day, month) {
+  //Find the most appropriated year
+  var refMoment = dayjs_min_default()(refDate);
+  var dateMoment = refMoment;
+  dateMoment = dateMoment.month(month - 1);
+  dateMoment = dateMoment.date(day);
+  dateMoment = dateMoment.year(refMoment.year());
+  var nextYear = dateMoment.add(1, 'y');
+  var lastYear = dateMoment.add(-1, 'y');
+
+  if (Math.abs(nextYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
+    dateMoment = nextYear;
+  } else if (Math.abs(lastYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
+    dateMoment = lastYear;
+  }
+
+  return dateMoment.year();
+}
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENMonthNameLittleEndianParser.ts
+function ENMonthNameLittleEndianParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENMonthNameLittleEndianParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENMonthNameLittleEndianParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENMonthNameLittleEndianParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENMonthNameLittleEndianParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+var ENMonthNameLittleEndianParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:on\\s*?)?' + "(?:(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")\\s*,?\\s*)?") + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + '(?:\\s*' + '(?:to|\\-|\\–|until|through|till|\\s)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + ')?' + '(?:-|\/|\\s*(?:of)?\\s*)' + '(' + matchAnyPattern(MONTH_DICTIONARY) + ')' + '(?:' + '(?:-|\/|,?\\s*)' + "(".concat(YEAR_PATTERN, "(?![^\\s]\\d))") + ')?' + '(?=\\W|$)', 'i');
+var WEEKDAY_GROUP = 1;
+var DATE_GROUP = 2;
+var DATE_TO_GROUP = 3;
+var MONTH_NAME_GROUP = 4;
+var YEAR_GROUP = 5;
+
+var ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser = /*#__PURE__*/function () {
+  function ENMonthNameLittleEndianParser() {
+    ENMonthNameLittleEndianParser_classCallCheck(this, ENMonthNameLittleEndianParser);
+  }
+
+  ENMonthNameLittleEndianParser_createClass(ENMonthNameLittleEndianParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENMonthNameLittleEndianParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      //console.log(match)
+      var result = context.createParsingResult(match.index, match[0]);
+      var month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
+      var day = parseOrdinalNumberPattern(match[DATE_GROUP]);
+      result.start.assign('month', month);
+      result.start.assign('day', day);
+
+      if (match[WEEKDAY_GROUP]) {
+        var weekday = WEEKDAY_DICTIONARY[match[WEEKDAY_GROUP].toLowerCase()];
+        result.start.assign('weekday', weekday);
+      }
+
+      if (match[YEAR_GROUP]) {
+        var yearNumber = parseYear(match[YEAR_GROUP]);
+        result.start.assign('year', yearNumber);
+      } else {
+        var year = findYearClosestToRef(context.refDate, day, month);
+        result.start.imply('year', year);
+      }
+
+      if (match[DATE_TO_GROUP]) {
+        var endDate = parseOrdinalNumberPattern(match[DATE_TO_GROUP]);
+        result.end = result.start.clone();
+        result.end.assign('day', endDate);
+      }
+
+      return result;
+    }
+  }]);
+
+  return ENMonthNameLittleEndianParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENMonthNameMiddleEndianParser.ts
+function ENMonthNameMiddleEndianParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENMonthNameMiddleEndianParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENMonthNameMiddleEndianParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENMonthNameMiddleEndianParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENMonthNameMiddleEndianParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+var ENMonthNameMiddleEndianParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:' + '(?:on\\s*?)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '\\s*,?\\s*)?' + "(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '(?:-|\/|\\s*,?\\s*)' + "(".concat(ORDINAL_NUMBER_PATTERN, ")(?!\\s*(?:am|pm))\\s*") + '(?:' + '(?:to|\\-)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")\\s*") + ')?' + '(?:' + '(?:-|\/|\\s*,?\\s*)' + "(".concat(YEAR_PATTERN, ")") + ')?' + '(?=\\W|$)(?!\\:\\d)', 'i');
+var ENMonthNameMiddleEndianParser_WEEKDAY_GROUP = 1;
+var ENMonthNameMiddleEndianParser_MONTH_NAME_GROUP = 2;
+var ENMonthNameMiddleEndianParser_DATE_GROUP = 3;
+var ENMonthNameMiddleEndianParser_DATE_TO_GROUP = 4;
+var ENMonthNameMiddleEndianParser_YEAR_GROUP = 5;
+/**
+ * The parser for parsing US's date format that begin with month's name.
+ *  - January 13
+ *  - January 13, 2012
+ *  - January 13 - 15, 2012
+ *  - Tuesday, January 13, 2012
+ * Note: Watch out for:
+ *  - January 12:00
+ *  - January 12.44
+ *  - January 1222344
+ */
+
+var ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser = /*#__PURE__*/function () {
+  function ENMonthNameMiddleEndianParser() {
+    ENMonthNameMiddleEndianParser_classCallCheck(this, ENMonthNameMiddleEndianParser);
+  }
+
+  ENMonthNameMiddleEndianParser_createClass(ENMonthNameMiddleEndianParser, [{
+    key: "pattern",
+    value: function pattern(context) {
+      return ENMonthNameMiddleEndianParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var month = MONTH_DICTIONARY[match[ENMonthNameMiddleEndianParser_MONTH_NAME_GROUP].toLowerCase()];
+      var day = parseOrdinalNumberPattern(match[ENMonthNameMiddleEndianParser_DATE_GROUP]);
+      var components = context.createParsingComponents({
+        'day': day,
+        'month': month
+      });
+
+      if (match[ENMonthNameMiddleEndianParser_YEAR_GROUP]) {
+        var year = parseYear(match[ENMonthNameMiddleEndianParser_YEAR_GROUP]);
+        components.assign('year', year);
+      } else {
+        var _year = findYearClosestToRef(context.refDate, day, month);
+
+        components.imply('year', _year);
+      } // Weekday component
+
+
+      if (match[ENMonthNameMiddleEndianParser_WEEKDAY_GROUP]) {
+        var weekday = WEEKDAY_DICTIONARY[match[ENMonthNameMiddleEndianParser_WEEKDAY_GROUP].toLowerCase()];
+        components.assign('weekday', weekday);
+      }
+
+      if (!match[ENMonthNameMiddleEndianParser_DATE_TO_GROUP]) {
+        return components;
+      } // Text can be 'range' value. Such as 'January 12 - 13, 2012'
+
+
+      var endDate = parseOrdinalNumberPattern(match[ENMonthNameMiddleEndianParser_DATE_TO_GROUP]);
+      var result = context.createParsingResult(match.index, match[0]);
+      result.start = components;
+      result.end = components.clone();
+      result.end.assign('day', endDate);
+      return result;
+    }
+  }]);
+
+  return ENMonthNameMiddleEndianParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENMonthNameParser.ts
+function ENMonthNameParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENMonthNameParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENMonthNameParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENMonthNameParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENMonthNameParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var ENMonthNameParser_PATTERN = new RegExp('(?<=^|\\D\\s+|[^\\w\\s])' + "(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '\\s*' + '(?:' + "[,-]?\\s*(".concat(YEAR_PATTERN, ")?") + ')?' + '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
+var ENMonthNameParser_MONTH_NAME_GROUP = 1;
+var ENMonthNameParser_YEAR_GROUP = 2;
+/**
+ * The parser for parsing month name and year.
+ * - January, 2012
+ * - January 2012
+ * - January
+ */
+
+var ENMonthNameParser_ENMonthNameParser = /*#__PURE__*/function () {
+  function ENMonthNameParser() {
+    ENMonthNameParser_classCallCheck(this, ENMonthNameParser);
+  }
+
+  ENMonthNameParser_createClass(ENMonthNameParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENMonthNameParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      if (match[0].length <= 3) {
+        return null;
+      }
+
+      var components = context.createParsingComponents();
+      components.imply('day', 1);
+      var monthName = match[ENMonthNameParser_MONTH_NAME_GROUP];
+      var month = MONTH_DICTIONARY[monthName.toLowerCase()];
+      components.assign('month', month);
+
+      if (match[ENMonthNameParser_YEAR_GROUP]) {
+        var year = parseYear(match[ENMonthNameParser_YEAR_GROUP]);
+        components.assign('year', year);
+      } else {
+        var _year = findYearClosestToRef(context.refDate, 1, month);
+
+        components.imply('year', _year);
+      }
+
+      return components;
+    }
+  }]);
+
+  return ENMonthNameParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENSlashDateFormatParser.ts
+function ENSlashDateFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENSlashDateFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENSlashDateFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENSlashDateFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENSlashDateFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ENSlashDateFormatParser_PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:on\\s*?)?' + '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)' + '\\s*\\,?\\s*' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
+var DAYS_OFFSET = {
+  'sunday': 0,
+  'sun': 0,
+  'monday': 1,
+  'mon': 1,
+  'tuesday': 2,
+  'wednesday': 3,
+  'wed': 3,
+  'thursday': 4,
+  'thur': 4,
+  'friday': 5,
+  'fri': 5,
+  'saturday': 6,
+  'sat': 6
+};
+var OPENING_GROUP = 1;
+var ENDING_GROUP = 6;
+var ENSlashDateFormatParser_WEEKDAY_GROUP = 2;
+var FIRST_NUMBERS_GROUP = 3;
+var SECOND_NUMBERS_GROUP = 4;
+var ENSlashDateFormatParser_YEAR_GROUP = 5;
+
+var ENSlashDateFormatParser_ENSlashDateFormatParser = /*#__PURE__*/function () {
+  function ENSlashDateFormatParser(littleEndian) {
+    ENSlashDateFormatParser_classCallCheck(this, ENSlashDateFormatParser);
+
+    this.groupNumberMonth = littleEndian ? SECOND_NUMBERS_GROUP : FIRST_NUMBERS_GROUP;
+    this.groupNumberDay = littleEndian ? FIRST_NUMBERS_GROUP : SECOND_NUMBERS_GROUP;
+  }
+
+  ENSlashDateFormatParser_createClass(ENSlashDateFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENSlashDateFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      if (match[OPENING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
+        // Long skip, if there is some overlapping like:
+        // XX[/YY/ZZ]
+        // [XX/YY/]ZZ
+        match.index += match[0].length;
+        return;
+      }
+
+      var index = match.index + match[OPENING_GROUP].length;
+      var text = match[0].substr(match[OPENING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
+
+      if (text.match(/^\d\.\d$/) || text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) {
+        return;
+      } // MM/dd -> OK
+      // MM.dd -> NG
+
+
+      if (!match[ENSlashDateFormatParser_YEAR_GROUP] && match[0].indexOf('/') < 0) {
+        return;
+      }
+
+      var result = context.createParsingResult(index, text);
+      var month = parseInt(match[this.groupNumberMonth]);
+      var day = parseInt(match[this.groupNumberDay]);
+
+      if (month < 1 || month > 12) {
+        if (month > 12) {
+          if (day >= 1 && day <= 12 && month <= 31) {
+            var _ref = [month, day];
+            day = _ref[0];
+            month = _ref[1];
+          } else {
+            return null;
+          }
+        }
+      }
+
+      if (day < 1 || day > 31) {
+        return null;
+      }
+
+      result.start.assign('day', day);
+      result.start.assign('month', month);
+
+      if (match[ENSlashDateFormatParser_YEAR_GROUP]) {
+        var year = parseYear(match[ENSlashDateFormatParser_YEAR_GROUP]) || dayjs_min_default()(context.refDate).year();
+        result.start.assign('year', year);
+      } else {
+        var _year = findYearClosestToRef(context.refDate, day, month);
+
+        result.start.imply('year', _year);
+      } //Day of week
+
+
+      if (match[ENSlashDateFormatParser_WEEKDAY_GROUP]) {
+        result.start.assign('weekday', DAYS_OFFSET[match[ENSlashDateFormatParser_WEEKDAY_GROUP].toLowerCase()]);
+      }
+
+      return result;
+    }
+  }]);
+
+  return ENSlashDateFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENSlashDateFormatStartWithYearParser.ts
+function ENSlashDateFormatStartWithYearParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENSlashDateFormatStartWithYearParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENSlashDateFormatStartWithYearParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENSlashDateFormatStartWithYearParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENSlashDateFormatStartWithYearParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 /*
-    
+    Date format with slash "/" between numbers like ENSlashDateFormatParser,
+    but this parser expect year before month and date.
+    - YYYY/MM/DD
+    - YYYY-MM-DD
+    - YYYY.MM.DD
 */
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
 
-var Refiner = __webpack_require__(3).Refiner;
+var ENSlashDateFormatStartWithYearParser_PATTERN = new RegExp('(?<=\\W|^)' + '([0-9]{4})[\\.\\/]' + '(?:(' + matchAnyPattern(MONTH_DICTIONARY) + ')|([0-9]{1,2}))[\\.\\/]' + '([0-9]{1,2})' + '(?=\\W|$)', 'i');
+var YEAR_NUMBER_GROUP = 1;
+var ENSlashDateFormatStartWithYearParser_MONTH_NAME_GROUP = 2;
+var MONTH_NUMBER_GROUP = 3;
+var DATE_NUMBER_GROUP = 4;
 
-var PATTERN = new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
+var ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser = /*#__PURE__*/function () {
+  function ENSlashDateFormatStartWithYearParser() {
+    ENSlashDateFormatStartWithYearParser_classCallCheck(this, ENSlashDateFormatStartWithYearParser);
+  }
 
-var isDateOnly = exports.isDateOnly = function (result) {
-  return !result.start.isCertain('hour');
-};
+  ENSlashDateFormatStartWithYearParser_createClass(ENSlashDateFormatStartWithYearParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENSlashDateFormatStartWithYearParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var month = match[MONTH_NUMBER_GROUP] ? parseInt(match[MONTH_NUMBER_GROUP]) : MONTH_DICTIONARY[match[ENSlashDateFormatStartWithYearParser_MONTH_NAME_GROUP].toLowerCase()];
+      var year = parseInt(match[YEAR_NUMBER_GROUP]);
+      var day = parseInt(match[DATE_NUMBER_GROUP]);
+      return {
+        'day': day,
+        'month': month,
+        'year': year
+      };
+    }
+  }]);
 
-var isTimeOnly = exports.isTimeOnly = function (result) {
-  return !result.start.isCertain('month') && !result.start.isCertain('weekday');
-};
+  return ENSlashDateFormatStartWithYearParser;
+}();
 
-var isAbleToMerge = exports.isAbleToMerge = function (text, prevResult, curResult) {
-  var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
-  return textBetween.match(PATTERN);
-};
 
-var mergeDateTimeComponent = exports.mergeDateTimeComponent = function (dateComponent, timeComponent) {
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENSlashMonthFormatParser.ts
+function ENSlashMonthFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENSlashMonthFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENSlashMonthFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENSlashMonthFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENSlashMonthFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+var ENSlashMonthFormatParser_PATTERN = new RegExp('(?<=^|[^\\d/]\\s+|[^\\w\\s])' + '([0-9]|0[1-9]|1[012])/([0-9]{4})' + '(?=[^\\d/]|$)', 'i');
+var MONTH_GROUP = 1;
+var ENSlashMonthFormatParser_YEAR_GROUP = 2;
+/**
+ * Month/Year date format with slash "/" (also "-" and ".") between numbers
+ * - 11/05
+ * - 06/2005
+ */
+
+var ENSlashMonthFormatParser = /*#__PURE__*/function () {
+  function ENSlashMonthFormatParser() {
+    ENSlashMonthFormatParser_classCallCheck(this, ENSlashMonthFormatParser);
+  }
+
+  ENSlashMonthFormatParser_createClass(ENSlashMonthFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENSlashMonthFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var year = parseInt(match[ENSlashMonthFormatParser_YEAR_GROUP]);
+      var month = parseInt(match[MONTH_GROUP]);
+      return context.createParsingComponents().imply('day', 1).assign('month', month).assign('year', year);
+    }
+  }]);
+
+  return ENSlashMonthFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/ja/constants.ts
+/**
+ * to-hankaku.js
+ * convert to ascii code strings.
+ *
+ * @version 1.0.1
+ * @author think49
+ * @url https://gist.github.com/964592
+ * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)
+ */
+function toHankaku(text) {
+  return String(text).replace(/\u2019/g, "'").replace(/\u201D/g, "\"").replace(/\u3000/g, " ").replace(/\uFFE5/g, "\xA5").replace(/[\uFF01\uFF03-\uFF06\uFF08\uFF09\uFF0C-\uFF19\uFF1C-\uFF1F\uFF21-\uFF3B\uFF3D\uFF3F\uFF41-\uFF5B\uFF5D\uFF5E]/g, alphaNum);
+}
+
+function alphaNum(token) {
+  return String.fromCharCode(token.charCodeAt(0) - 65248);
+}
+// CONCATENATED MODULE: ./src/locales/ja/parsers/JPStandardParser.ts
+function JPStandardParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPStandardParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPStandardParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPStandardParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPStandardParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var JPStandardParser_PATTERN = /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+var SPECIAL_YEAR_GROUP = 1;
+var TYPICAL_YEAR_GROUP = 2;
+var ERA_GROUP = 3;
+var JPStandardParser_YEAR_NUMBER_GROUP = 4;
+var JPStandardParser_MONTH_GROUP = 5;
+var DAY_GROUP = 6;
+
+var JPStandardParser_JPStandardParser = /*#__PURE__*/function () {
+  function JPStandardParser() {
+    JPStandardParser_classCallCheck(this, JPStandardParser);
+  }
+
+  JPStandardParser_createClass(JPStandardParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return JPStandardParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var month = parseInt(toHankaku(match[JPStandardParser_MONTH_GROUP]));
+      var day = parseInt(toHankaku(match[DAY_GROUP]));
+      var components = context.createParsingComponents({
+        'day': day,
+        'month': month
+      });
+
+      if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match('同|今|本')) {
+        var moment = dayjs_min_default()(context.refDate);
+        components.assign('year', moment.year());
+      }
+
+      if (match[TYPICAL_YEAR_GROUP]) {
+        var yearNumText = match[JPStandardParser_YEAR_NUMBER_GROUP];
+        var year = yearNumText == '元' ? 1 : parseInt(toHankaku(yearNumText));
+
+        if (match[ERA_GROUP] == '令和') {
+          year += 2018;
+        } else if (match[ERA_GROUP] == '平成') {
+          year += 1988;
+        } else if (match[ERA_GROUP] == '昭和') {
+          year += 1925;
+        }
+
+        components.assign('year', year);
+      } else {
+        var _year = findYearClosestToRef(context.refDate, day, month);
+
+        components.imply('year', _year);
+      }
+
+      return components;
+    }
+  }]);
+
+  return JPStandardParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/common/abstractRefiners.ts
+function abstractRefiners_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function abstractRefiners_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function abstractRefiners_createClass(Constructor, protoProps, staticProps) { if (protoProps) abstractRefiners_defineProperties(Constructor.prototype, protoProps); if (staticProps) abstractRefiners_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Filter = /*#__PURE__*/function () {
+  function Filter() {
+    abstractRefiners_classCallCheck(this, Filter);
+  }
+
+  abstractRefiners_createClass(Filter, [{
+    key: "refine",
+    value: function refine(context, results) {
+      var _this = this;
+
+      return results.filter(function (r) {
+        return _this.isValid(context, r);
+      });
+    }
+  }]);
+
+  return Filter;
+}();
+var MergingRefiner = /*#__PURE__*/function () {
+  function MergingRefiner() {
+    abstractRefiners_classCallCheck(this, MergingRefiner);
+  }
+
+  abstractRefiners_createClass(MergingRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      var _this2 = this;
+
+      if (results.length < 2) {
+        return results;
+      }
+
+      var mergedResults = [];
+      var curResult = results[0];
+      var nextResult = null;
+
+      for (var i = 1; i < results.length; i++) {
+        nextResult = results[i];
+
+        var _textBetween = context.text.substring(curResult.index + curResult.text.length, nextResult.index);
+
+        if (!this.shouldMergeResults(_textBetween, curResult, nextResult, context)) {
+          mergedResults.push(curResult);
+          curResult = nextResult;
+        } else {
+          (function () {
+            var left = curResult;
+            var right = nextResult;
+
+            var mergedResult = _this2.mergeResults(_textBetween, left, right, context);
+
+            context.debug(function () {
+              console.log("".concat(_this2.constructor.name, " merged ").concat(left, " and ").concat(right, " into ").concat(mergedResult));
+            });
+            curResult = mergedResult;
+          })();
+        }
+      }
+
+      if (curResult != null) {
+        mergedResults.push(curResult);
+      }
+
+      return mergedResults;
+    }
+  }]);
+
+  return MergingRefiner;
+}();
+// CONCATENATED MODULE: ./src/common/refiners/AbstractMergeDateRangeRefiner.ts
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function AbstractMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function AbstractMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function AbstractMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+/*
+  
+*/
+
+
+var AbstractMergeDateRangeRefiner = /*#__PURE__*/function (_MergingRefiner) {
+  _inherits(AbstractMergeDateRangeRefiner, _MergingRefiner);
+
+  var _super = _createSuper(AbstractMergeDateRangeRefiner);
+
+  function AbstractMergeDateRangeRefiner() {
+    AbstractMergeDateRangeRefiner_classCallCheck(this, AbstractMergeDateRangeRefiner);
+
+    return _super.apply(this, arguments);
+  }
+
+  AbstractMergeDateRangeRefiner_createClass(AbstractMergeDateRangeRefiner, [{
+    key: "shouldMergeResults",
+    value: function shouldMergeResults(textBetween, currentResult, nextResult) {
+      return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
+    }
+  }, {
+    key: "mergeResults",
+    value: function mergeResults(textBetween, fromResult, toResult, context) {
+      if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
+        toResult.start.getCertainComponents().forEach(function (key) {
+          if (!fromResult.start.isCertain(key)) {
+            fromResult.start.assign(key, toResult.start.get(key));
+          }
+        });
+        fromResult.start.getCertainComponents().forEach(function (key) {
+          if (!toResult.start.isCertain(key)) {
+            toResult.start.assign(key, fromResult.start.get(key));
+          }
+        });
+      }
+
+      if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
+        var fromMoment = fromResult.start.dayjs();
+        var toMoment = toResult.start.dayjs();
+
+        if (fromResult.start.isOnlyWeekdayComponent() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
+          fromMoment = fromMoment.add(-7, 'days');
+          fromResult.start.imply('day', fromMoment.date());
+          fromResult.start.imply('month', fromMoment.month() + 1);
+          fromResult.start.imply('year', fromMoment.year());
+        } else if (toResult.start.isOnlyWeekdayComponent() && toMoment.add(7, 'days').isAfter(fromMoment)) {
+          toMoment = toMoment.add(7, 'days');
+          toResult.start.imply('day', toMoment.date());
+          toResult.start.imply('month', toMoment.month() + 1);
+          toResult.start.imply('year', toMoment.year());
+        } else {
+          var _ref = [fromResult, toResult];
+          toResult = _ref[0];
+          fromResult = _ref[1];
+        }
+      }
+
+      var result = fromResult.clone();
+      result.start = fromResult.start;
+      result.end = toResult.start;
+      result.index = Math.min(fromResult.index, toResult.index);
+
+      if (fromResult.index < toResult.index) {
+        result.text = fromResult.text + textBetween + toResult.text;
+      } else {
+        result.text = toResult.text + textBetween + fromResult.text;
+      }
+
+      return result;
+    }
+  }]);
+
+  return AbstractMergeDateRangeRefiner;
+}(MergingRefiner);
+
+
+// CONCATENATED MODULE: ./src/locales/ja/refiners/JPMergeDateRangeRefiner.ts
+function JPMergeDateRangeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return JPMergeDateRangeRefiner_typeof(obj); }
+
+function JPMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+function JPMergeDateRangeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) JPMergeDateRangeRefiner_setPrototypeOf(subClass, superClass); }
+
+function JPMergeDateRangeRefiner_setPrototypeOf(o, p) { JPMergeDateRangeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return JPMergeDateRangeRefiner_setPrototypeOf(o, p); }
+
+function JPMergeDateRangeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = JPMergeDateRangeRefiner_isNativeReflectConstruct(); return function () { var Super = JPMergeDateRangeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = JPMergeDateRangeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return JPMergeDateRangeRefiner_possibleConstructorReturn(this, result); }; }
+
+function JPMergeDateRangeRefiner_possibleConstructorReturn(self, call) { if (call && (JPMergeDateRangeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return JPMergeDateRangeRefiner_assertThisInitialized(self); }
+
+function JPMergeDateRangeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function JPMergeDateRangeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function JPMergeDateRangeRefiner_getPrototypeOf(o) { JPMergeDateRangeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return JPMergeDateRangeRefiner_getPrototypeOf(o); }
+
+
+/**
+ * Merging before and after results (see. AbstractMergeDateRangeRefiner)
+ * This implementation should provide Japanese connecting phases
+ * - 水曜日[ー]日曜日
+ * - 水曜日[から]日曜日
+ */
+
+var JPMergeDateRangeRefiner = /*#__PURE__*/function (_AbstractMergeDateRan) {
+  JPMergeDateRangeRefiner_inherits(JPMergeDateRangeRefiner, _AbstractMergeDateRan);
+
+  var _super = JPMergeDateRangeRefiner_createSuper(JPMergeDateRangeRefiner);
+
+  function JPMergeDateRangeRefiner() {
+    JPMergeDateRangeRefiner_classCallCheck(this, JPMergeDateRangeRefiner);
+
+    return _super.apply(this, arguments);
+  }
+
+  JPMergeDateRangeRefiner_createClass(JPMergeDateRangeRefiner, [{
+    key: "patternBetween",
+    value: function patternBetween() {
+      return /^\s*(から|ー|-)\s*$/i;
+    }
+  }]);
+
+  return JPMergeDateRangeRefiner;
+}(AbstractMergeDateRangeRefiner);
+
+
+// CONCATENATED MODULE: ./src/locales/ja/parsers/JPCasualDateParser.ts
+function JPCasualDateParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPCasualDateParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPCasualDateParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPCasualDateParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPCasualDateParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var JPCasualDateParser_PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
+
+var JPCasualDateParser_JPCasualDateParser = /*#__PURE__*/function () {
+  function JPCasualDateParser() {
+    JPCasualDateParser_classCallCheck(this, JPCasualDateParser);
+  }
+
+  JPCasualDateParser_createClass(JPCasualDateParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return JPCasualDateParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var text = match[0];
+      var date = dayjs_min_default()(context.refDate);
+      var components = context.createParsingComponents();
+
+      if (text == '今夜' || text == '今夕' || text == '今晩') {
+        components.imply('hour', 22);
+        components.assign('meridiem', Meridiem.PM);
+      } else if (text.match("今朝")) {
+        components.imply('hour', 6);
+        components.assign('meridiem', Meridiem.AM);
+      } else if (text == '明日') {
+        if (date.hour() > 4) {
+          // Check not "Tomorrow" on late night
+          date = date.add(1, 'day');
+        }
+      } else if (text == '昨日') {
+        date = date.add(-1, 'day');
+      }
+
+      components.assign('day', date.date());
+      components.assign('month', date.month() + 1);
+      components.assign('year', date.year());
+      return components;
+    }
+  }]);
+
+  return JPCasualDateParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/ja/index.ts
+
+
+
+
+// Shortcuts
+var casual = new chrono_Chrono(createCasualConfiguration());
+var strict = new chrono_Chrono(createConfiguration());
+function parse(text, ref, option) {
+  return casual.parse(text, ref, option);
+}
+function parseDate(text, ref, option) {
+  return casual.parseDate(text, ref, option);
+}
+function createCasualConfiguration() {
+  var option = createConfiguration();
+  option.parsers.unshift(new JPCasualDateParser_JPCasualDateParser());
+  return option;
+}
+function createConfiguration() {
+  return {
+    parsers: [new JPStandardParser_JPStandardParser()],
+    refiners: [new JPMergeDateRangeRefiner()]
+  };
+}
+// CONCATENATED MODULE: ./src/index.ts
+
+
+var src_strict = en_strict;
+var src_casual = en_casual;
+function src_parse(text, ref, option) {
+  return src_casual.parse(text, ref, option);
+}
+function src_parseDate(text, ref, option) {
+  return src_casual.parseDate(text, ref, option);
+}
+var Meridiem; // export * as xx from './locales/xx'
+
+(function (Meridiem) {
+  Meridiem[Meridiem["AM"] = 0] = "AM";
+  Meridiem[Meridiem["PM"] = 1] = "PM";
+})(Meridiem || (Meridiem = {}));
+
+
+
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeExpressionParser.ts
+function ENTimeExpressionParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENTimeExpressionParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENTimeExpressionParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENTimeExpressionParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENTimeExpressionParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var FIRST_REG_PATTERN = new RegExp("(?<!\w)(^|\\s|T)" + "(?:(?:at|from)\\s*)??" + "(\\d{1,4}|noon|midnight)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,6}))?" + ")?" + ")?" + "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?|o\\W*clock))?" + "(?=\\W|$)", 'i');
+var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,6}))?" + ")?" + ")?" + "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?|o\\W*clock|at night))?" + "(?=\\W|$)", 'i');
+var HOUR_GROUP = 2;
+var MINUTE_GROUP = 3;
+var SECOND_GROUP = 4;
+var MILLI_SECOND_GROUP = 5;
+var AM_PM_HOUR_GROUP = 6;
+
+var ENTimeExpressionParser_ENTimeExpressionParser = /*#__PURE__*/function () {
+  function ENTimeExpressionParser() {
+    ENTimeExpressionParser_classCallCheck(this, ENTimeExpressionParser);
+  }
+
+  ENTimeExpressionParser_createClass(ENTimeExpressionParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return FIRST_REG_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var refDate = dayjs_min_default()(context.refDate);
+      var result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
+
+      if (result.text.match(/^\d$/)) {
+        return null;
+      }
+
+      result.start.imply('day', refDate.date());
+      result.start.imply('month', refDate.month() + 1);
+      result.start.imply('year', refDate.year());
+      result = ENTimeExpressionParser.extractStartTimeComponent(result.clone(), match);
+
+      if (!result) {
+        return null;
+      }
+
+      var remainingText = match.input.substring(match.index + match[0].length);
+      match = SECOND_REG_PATTERN.exec(remainingText);
+
+      if (!match) {
+        return result;
+      } // Pattern "YY.YY -XXXX" is more like timezone offset
+
+
+      if (match[0].match(/^\s*([+-])\s*\d{3,4}$/)) {
+        return result;
+      }
+
+      var newResult = ENTimeExpressionParser.extractEndTimeComponent(result.clone(), match);
+      return newResult ? newResult : result;
+    }
+  }], [{
+    key: "extractStartTimeComponent",
+    value: function extractStartTimeComponent(result, match) {
+      var hour = 0;
+      var minute = 0;
+      var meridiem = null; // ----- Hours
+
+      if (match[HOUR_GROUP].toLowerCase() == "noon") {
+        meridiem = Meridiem.PM;
+        hour = 12;
+      } else if (match[HOUR_GROUP].toLowerCase() == "midnight") {
+        meridiem = Meridiem.AM;
+        hour = 0;
+      } else {
+        hour = parseInt(match[HOUR_GROUP]);
+      } // ----- Minutes
+
+
+      if (match[MINUTE_GROUP] != null) {
+        minute = parseInt(match[MINUTE_GROUP]);
+      } else if (hour > 100) {
+        minute = hour % 100;
+        hour = Math.floor(hour / 100);
+      }
+
+      if (minute >= 60 || hour > 24) {
+        return null;
+      }
+
+      if (hour >= 12) {
+        meridiem = Meridiem.PM;
+      } // ----- AM & PM
+
+
+      if (match[AM_PM_HOUR_GROUP] != null) {
+        if (hour > 12) return null;
+        var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+
+        if (ampm == "a") {
+          meridiem = Meridiem.AM;
+
+          if (hour == 12) {
+            hour = 0;
+          }
+        }
+
+        if (ampm == "p") {
+          meridiem = Meridiem.PM;
+
+          if (hour != 12) {
+            hour += 12;
+          }
+        }
+      }
+
+      result.start.assign('hour', hour);
+      result.start.assign('minute', minute);
+
+      if (meridiem !== null) {
+        result.start.assign('meridiem', meridiem);
+      } else {
+        if (hour < 12) {
+          result.start.imply('meridiem', Meridiem.AM);
+        } else {
+          result.start.imply('meridiem', Meridiem.PM);
+        }
+      } // ----- Millisecond
+
+
+      if (match[MILLI_SECOND_GROUP] != null) {
+        var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
+        if (millisecond >= 1000) return null;
+        result.start.assign('millisecond', millisecond);
+      } // ----- Second
+
+
+      if (match[SECOND_GROUP] != null) {
+        var second = parseInt(match[SECOND_GROUP]);
+        if (second >= 60) return null;
+        result.start.assign('second', second);
+      }
+
+      return result;
+    }
+  }, {
+    key: "extractEndTimeComponent",
+    value: function extractEndTimeComponent(result, match) {
+      result.end = result.start.clone(); // ----- Millisecond
+
+      if (match[MILLI_SECOND_GROUP] != null) {
+        var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
+        if (millisecond >= 1000) return null;
+        result.end.assign('millisecond', millisecond);
+      } // ----- Second
+
+
+      if (match[SECOND_GROUP] != null) {
+        var second = parseInt(match[SECOND_GROUP]);
+        if (second >= 60) return null;
+        result.end.assign('second', second);
+      }
+
+      var hour = parseInt(match[HOUR_GROUP]);
+      var minute = 0;
+      var meridiem = -1; // ----- Minute
+
+      if (match[MINUTE_GROUP] != null) {
+        minute = parseInt(match[MINUTE_GROUP]);
+      } else if (hour > 100) {
+        minute = hour % 100;
+        hour = Math.floor(hour / 100);
+      }
+
+      if (minute >= 60 || hour > 24) {
+        return null;
+      }
+
+      if (hour >= 12) {
+        meridiem = Meridiem.PM;
+      } // ----- AM & PM
+
+
+      if (match[AM_PM_HOUR_GROUP] != null) {
+        if (hour > 12) {
+          return null;
+        }
+
+        var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+
+        if (ampm == "a") {
+          meridiem = Meridiem.AM;
+
+          if (hour == 12) {
+            hour = 0;
+
+            if (!result.end.isCertain('day')) {
+              result.end.imply('day', result.end.get('day') + 1);
+            }
+          }
+        }
+
+        if (ampm == "p") {
+          meridiem = Meridiem.PM;
+          if (hour != 12) hour += 12;
+        }
+
+        if (!result.start.isCertain('meridiem')) {
+          if (meridiem == Meridiem.AM) {
+            result.start.imply('meridiem', Meridiem.AM);
+
+            if (result.start.get('hour') == 12) {
+              result.start.assign('hour', 0);
+            }
+          } else {
+            result.start.imply('meridiem', Meridiem.PM);
+
+            if (result.start.get('hour') != 12) {
+              result.start.assign('hour', result.start.get('hour') + 12);
+            }
+          }
+        }
+      }
+
+      result.text = result.text + match[0];
+      result.end.assign('hour', hour);
+      result.end.assign('minute', minute);
+
+      if (meridiem >= 0) {
+        result.end.assign('meridiem', meridiem);
+      } else {
+        var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == Meridiem.PM;
+
+        if (startAtPM && result.start.get('hour') > hour) {
+          // 10pm - 1 (am)
+          result.end.imply('meridiem', Meridiem.AM);
+        } else if (hour > 12) {
+          result.end.imply('meridiem', Meridiem.PM);
+        }
+      }
+
+      if (result.end.date().getTime() < result.start.date().getTime()) {
+        result.end.imply('day', result.end.get('day') + 1);
+      }
+
+      return result;
+    }
+  }]);
+
+  return ENTimeExpressionParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeUnitAgoFormatParser.ts
+function ENTimeUnitAgoFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENTimeUnitAgoFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENTimeUnitAgoFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENTimeUnitAgoFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENTimeUnitAgoFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ENTimeUnitAgoFormatParser_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(?:within\\s*)?' + '(' + TIME_UNITS_PATTERN + ')' + '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
+var ENTimeUnitAgoFormatParser_STRICT_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(?:within\\s*)?' + '(' + TIME_UNITS_PATTERN + ')' + 'ago(?=(?:\\W|$))', 'i');
+
+var ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser = /*#__PURE__*/function () {
+  function ENTimeUnitAgoFormatParser(strictMode) {
+    ENTimeUnitAgoFormatParser_classCallCheck(this, ENTimeUnitAgoFormatParser);
+
+    this.strictMode = strictMode;
+  }
+
+  ENTimeUnitAgoFormatParser_createClass(ENTimeUnitAgoFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return this.strictMode ? ENTimeUnitAgoFormatParser_STRICT_PATTERN : ENTimeUnitAgoFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var fragments = parseTimeUnits(match[1]);
+
+      for (var key in fragments) {
+        fragments[key] = -fragments[key];
+      }
+
+      return results_ParsingComponents.createRelativeFromRefDate(context.refDate, fragments);
+    }
+  }]);
+
+  return ENTimeUnitAgoFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeUnitLaterFormatParser.ts
+function ENTimeUnitLaterFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENTimeUnitLaterFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENTimeUnitLaterFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENTimeUnitLaterFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENTimeUnitLaterFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ENTimeUnitLaterFormatParser_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(' + TIME_UNITS_PATTERN + ')' + '(later|after|from now|henceforth|forward|out)' + '(?=(?:\\W|$))', 'i');
+var ENTimeUnitLaterFormatParser_STRICT_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(' + TIME_UNITS_PATTERN + ')' + '(later|from now)' + '(?=(?:\\W|$))', 'i');
+var GROUP_NUM_SUFFIX = 2;
+var GROUP_NUM_TIMEUNITS = 1;
+
+var ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser = /*#__PURE__*/function () {
+  function ENTimeUnitLaterFormatParser(strictMode) {
+    ENTimeUnitLaterFormatParser_classCallCheck(this, ENTimeUnitLaterFormatParser);
+
+    this.strictMode = strictMode;
+  }
+
+  ENTimeUnitLaterFormatParser_createClass(ENTimeUnitLaterFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return this.strictMode ? ENTimeUnitLaterFormatParser_STRICT_PATTERN : ENTimeUnitLaterFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var suffix = match[GROUP_NUM_SUFFIX].toLowerCase().trim();
+
+      if (!suffix) {
+        return null;
+      }
+
+      var fragments = parseTimeUnits(match[GROUP_NUM_TIMEUNITS]);
+      return results_ParsingComponents.createRelativeFromRefDate(context.refDate, fragments);
+    }
+  }]);
+
+  return ENTimeUnitLaterFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/refiners/ENMergeDateRangeRefiner.ts
+function ENMergeDateRangeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ENMergeDateRangeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { ENMergeDateRangeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ENMergeDateRangeRefiner_typeof(obj); }
+
+function ENMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ENMergeDateRangeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ENMergeDateRangeRefiner_setPrototypeOf(subClass, superClass); }
+
+function ENMergeDateRangeRefiner_setPrototypeOf(o, p) { ENMergeDateRangeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ENMergeDateRangeRefiner_setPrototypeOf(o, p); }
+
+function ENMergeDateRangeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = ENMergeDateRangeRefiner_isNativeReflectConstruct(); return function () { var Super = ENMergeDateRangeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = ENMergeDateRangeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return ENMergeDateRangeRefiner_possibleConstructorReturn(this, result); }; }
+
+function ENMergeDateRangeRefiner_possibleConstructorReturn(self, call) { if (call && (ENMergeDateRangeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return ENMergeDateRangeRefiner_assertThisInitialized(self); }
+
+function ENMergeDateRangeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ENMergeDateRangeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function ENMergeDateRangeRefiner_getPrototypeOf(o) { ENMergeDateRangeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ENMergeDateRangeRefiner_getPrototypeOf(o); }
+
+/*
+  
+*/
+
+/**
+ * Merging before and after results (see. AbstractMergeDateRangeRefiner)
+ * This implementation should provide English connecting phases
+ * - 2020-02-13 [to] 2020-02-13
+ * - Wednesday [-] Friday
+ */
+
+var ENMergeDateRangeRefiner = /*#__PURE__*/function (_AbstractMergeDateRan) {
+  ENMergeDateRangeRefiner_inherits(ENMergeDateRangeRefiner, _AbstractMergeDateRan);
+
+  var _super = ENMergeDateRangeRefiner_createSuper(ENMergeDateRangeRefiner);
+
+  function ENMergeDateRangeRefiner() {
+    ENMergeDateRangeRefiner_classCallCheck(this, ENMergeDateRangeRefiner);
+
+    return _super.apply(this, arguments);
+  }
+
+  ENMergeDateRangeRefiner_createClass(ENMergeDateRangeRefiner, [{
+    key: "patternBetween",
+    value: function patternBetween() {
+      return /^\s*(to|-)\s*$/i;
+    }
+  }]);
+
+  return ENMergeDateRangeRefiner;
+}(AbstractMergeDateRangeRefiner);
+
+
+// CONCATENATED MODULE: ./src/calculation/mergingCalculation.ts
+
+function mergeDateTimeResult(dateResult, timeResult) {
+  var result = dateResult.clone();
+  var beginDate = dateResult.start;
+  var beginTime = timeResult.start;
+  result.start = mergeDateTimeComponent(beginDate, beginTime);
+
+  if (dateResult.end != null || timeResult.end != null) {
+    var endDate = dateResult.end == null ? dateResult.start : dateResult.end;
+    var endTime = timeResult.end == null ? timeResult.start : timeResult.end;
+    var endDateTime = mergeDateTimeComponent(endDate, endTime);
+
+    if (dateResult.end == null && endDateTime.date().getTime() < result.start.date().getTime()) {
+      // Ex. 9pm - 1am
+      if (endDateTime.isCertain('day')) {
+        endDateTime.assign('day', endDateTime.get('day') + 1);
+      } else {
+        endDateTime.imply('day', endDateTime.get('day') + 1);
+      }
+    }
+
+    result.end = endDateTime;
+  }
+
+  return result;
+}
+function mergeDateTimeComponent(dateComponent, timeComponent) {
   var dateTimeComponent = dateComponent.clone();
 
   if (timeComponent.isCertain('hour')) {
@@ -699,13 +1939,17 @@ var mergeDateTimeComponent = exports.mergeDateTimeComponent = function (dateComp
     dateTimeComponent.imply('millisecond', timeComponent.get('millisecond'));
   }
 
+  if (timeComponent.isCertain('timezoneOffset')) {
+    dateTimeComponent.assign('timezoneOffset', timeComponent.get('timezoneOffset'));
+  }
+
   if (timeComponent.isCertain('meridiem')) {
     dateTimeComponent.assign('meridiem', timeComponent.get('meridiem'));
-  } else if (timeComponent.get('meridiem') !== undefined && dateTimeComponent.get('meridiem') === undefined) {
+  } else if (timeComponent.get('meridiem') != null && dateTimeComponent.get('meridiem') == null) {
     dateTimeComponent.imply('meridiem', timeComponent.get('meridiem'));
   }
 
-  if (dateTimeComponent.get('meridiem') == 1 && dateTimeComponent.get('hour') < 12) {
+  if (dateTimeComponent.get('meridiem') == Meridiem.PM && dateTimeComponent.get('hour') < 12) {
     if (timeComponent.isCertain('hour')) {
       dateTimeComponent.assign('hour', dateTimeComponent.get('hour') + 12);
     } else {
@@ -714,7174 +1958,133 @@ var mergeDateTimeComponent = exports.mergeDateTimeComponent = function (dateComp
   }
 
   return dateTimeComponent;
-};
-
-function mergeResult(text, dateResult, timeResult) {
-  var beginDate = dateResult.start;
-  var beginTime = timeResult.start;
-  var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
-
-  if (dateResult.end != null || timeResult.end != null) {
-    var endDate = dateResult.end == null ? dateResult.start : dateResult.end;
-    var endTime = timeResult.end == null ? timeResult.start : timeResult.end;
-    var endDateTime = mergeDateTimeComponent(endDate, endTime);
-
-    if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
-      // Ex. 9pm - 1am
-      if (endDateTime.isCertain('day')) {
-        endDateTime.assign('day', endDateTime.get('day') + 1);
-      } else {
-        endDateTime.imply('day', endDateTime.get('day') + 1);
-      }
-    }
-
-    dateResult.end = endDateTime;
-  }
-
-  dateResult.start = beginDateTime;
-  var startIndex = Math.min(dateResult.index, timeResult.index);
-  var endIndex = Math.max(dateResult.index + dateResult.text.length, timeResult.index + timeResult.text.length);
-  dateResult.index = startIndex;
-  dateResult.text = text.substring(startIndex, endIndex);
-
-  for (var tag in timeResult.tags) {
-    dateResult.tags[tag] = true;
-  }
-
-  dateResult.tags['ENMergeDateAndTimeRefiner'] = true;
-  return dateResult;
 }
+// CONCATENATED MODULE: ./src/common/refiners/AbstractMergeDateTimeRefiner.ts
+function AbstractMergeDateTimeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { AbstractMergeDateTimeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { AbstractMergeDateTimeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return AbstractMergeDateTimeRefiner_typeof(obj); }
 
-exports.Refiner = function ENMergeDateTimeRefiner() {
-  Refiner.call(this);
+function AbstractMergeDateTimeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
+function AbstractMergeDateTimeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
+function AbstractMergeDateTimeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) AbstractMergeDateTimeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) AbstractMergeDateTimeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
 
-      if (isDateOnly(prevResult) && isTimeOnly(currResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, prevResult, currResult);
-        currResult = results[i + 1];
-        i += 1;
-      } else if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, currResult, prevResult);
-        currResult = results[i + 1];
-        i += 1;
-      }
+function AbstractMergeDateTimeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) AbstractMergeDateTimeRefiner_setPrototypeOf(subClass, superClass); }
 
-      mergedResult.push(prevResult);
-    }
+function AbstractMergeDateTimeRefiner_setPrototypeOf(o, p) { AbstractMergeDateTimeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return AbstractMergeDateTimeRefiner_setPrototypeOf(o, p); }
 
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
+function AbstractMergeDateTimeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = AbstractMergeDateTimeRefiner_isNativeReflectConstruct(); return function () { var Super = AbstractMergeDateTimeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = AbstractMergeDateTimeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return AbstractMergeDateTimeRefiner_possibleConstructorReturn(this, result); }; }
 
-    return mergedResult;
-  };
-};
+function AbstractMergeDateTimeRefiner_possibleConstructorReturn(self, call) { if (call && (AbstractMergeDateTimeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return AbstractMergeDateTimeRefiner_assertThisInitialized(self); }
 
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+function AbstractMergeDateTimeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var dayjs = __webpack_require__(2);
+function AbstractMergeDateTimeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var DAYS_OFFSET = {
-  'sunday': 0,
-  'sun': 0,
-  'monday': 1,
-  'mon': 1,
-  'tuesday': 2,
-  'tues': 2,
-  'tue': 2,
-  'wednesday': 3,
-  'wed': 3,
-  'thursday': 4,
-  'thurs': 4,
-  'thur': 4,
-  'thu': 4,
-  'friday': 5,
-  'fri': 5,
-  'saturday': 6,
-  'sat': 6
-};
-var PATTERN = new RegExp('(\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:on\\s*?)?' + '(?:(this|last|past|next)\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(this|last|past|next)\\s*week)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifier) {
-  var startMoment = dayjs(ref);
-  var startMomentFixed = false;
-  var refOffset = startMoment.day();
-
-  if (modifier == 'last' || modifier == 'past') {
-    startMoment = startMoment.day(offset - 7);
-    startMomentFixed = true;
-  } else if (modifier == 'next') {
-    startMoment = startMoment.day(offset + 7);
-    startMomentFixed = true;
-  } else if (modifier == 'this') {
-    startMoment = startMoment.day(offset);
-  } else {
-    if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-      startMoment = startMoment.day(offset - 7);
-    } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-      startMoment = startMoment.day(offset + 7);
-    } else {
-      startMoment = startMoment.day(offset);
-    }
-  }
-
-  result.start.assign('weekday', offset);
-
-  if (startMomentFixed) {
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-  } else {
-    result.start.imply('day', startMoment.date());
-    result.start.imply('month', startMoment.month() + 1);
-    result.start.imply('year', startMoment.year());
-  }
-
-  return result;
-};
-
-exports.Parser = function ENWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-
-    if (offset === undefined) {
-      return null;
-    }
-
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-    var norm = prefix || postfix;
-    norm = norm || '';
-    norm = norm.toLowerCase();
-    exports.updateParsedComponent(result, ref, offset, norm);
-    result.tags['ENWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-var NUMBER = {
-  '零': 0,
-  '一': 1,
-  '二': 2,
-  '兩': 2,
-  '三': 3,
-  '四': 4,
-  '五': 5,
-  '六': 6,
-  '七': 7,
-  '八': 8,
-  '九': 9,
-  '十': 10,
-  '廿': 20,
-  '卅': 30
-};
-var WEEKDAY_OFFSET = {
-  '天': 0,
-  '日': 0,
-  '一': 1,
-  '二': 2,
-  '三': 3,
-  '四': 4,
-  '五': 5,
-  '六': 6
-};
-exports.NUMBER = NUMBER;
-exports.WEEKDAY_OFFSET = WEEKDAY_OFFSET;
-
-exports.zhStringToNumber = function (text) {
-  var number = 0;
-
-  for (var i = 0; i < text.length; i++) {
-    var _char = text[i];
-
-    if (_char === '十') {
-      number = number === 0 ? NUMBER[_char] : number * NUMBER[_char];
-    } else {
-      number += NUMBER[_char];
-    }
-  }
-
-  return number;
-};
-
-exports.zhStringToYear = function (text) {
-  var string = '';
-
-  for (var i = 0; i < text.length; i++) {
-    var _char2 = text[i];
-    string = string + NUMBER[_char2];
-  }
-
-  return parseInt(string);
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-exports.WEEKDAY_OFFSET = {
-  'sonntag': 0,
-  'so': 0,
-  'montag': 1,
-  'mo': 1,
-  'dienstag': 2,
-  'di': 2,
-  'mittwoch': 3,
-  'mi': 3,
-  'donnerstag': 4,
-  'do': 4,
-  'freitag': 5,
-  'fr': 5,
-  'samstag': 6,
-  'sa': 6
-};
-exports.MONTH_OFFSET = {
-  'januar': 1,
-  'jan': 1,
-  'jan.': 1,
-  'februar': 2,
-  'feb': 2,
-  'feb.': 2,
-  'märz': 3,
-  'maerz': 3,
-  'mär': 3,
-  'mär.': 3,
-  'mrz': 3,
-  'mrz.': 3,
-  'april': 4,
-  'apr': 4,
-  'apr.': 4,
-  'mai': 5,
-  'juni': 6,
-  'jun': 6,
-  'jun.': 6,
-  'juli': 7,
-  'jul': 7,
-  'jul.': 7,
-  'august': 8,
-  'aug': 8,
-  'aug.': 8,
-  'september': 9,
-  'sep': 9,
-  'sep.': 9,
-  'sept': 9,
-  'sept.': 9,
-  'oktober': 10,
-  'okt': 10,
-  'okt.': 10,
-  'november': 11,
-  'nov': 11,
-  'nov.': 11,
-  'dezember': 12,
-  'dez': 12,
-  'dez.': 12
-};
-exports.INTEGER_WORDS_PATTERN = '(?:eins|zwei|drei|vier|fünf|fuenf|sechs|sieben|acht|neun|zehn|elf|zwölf|zwoelf)';
-exports.INTEGER_WORDS = {
-  'eins': 1,
-  'zwei': 2,
-  'drei': 3,
-  'vier': 4,
-  'fünf': 5,
-  'fuenf': 5,
-  'sechs': 6,
-  'sieben': 7,
-  'acht': 8,
-  'neun': 9,
-  'zehn': 10,
-  'elf': 11,
-  'zwölf': 12,
-  'zwoelf': 12
-};
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+function AbstractMergeDateTimeRefiner_getPrototypeOf(o) { AbstractMergeDateTimeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return AbstractMergeDateTimeRefiner_getPrototypeOf(o); }
 
 /*
-  
+
 */
-var Refiner = __webpack_require__(3).Refiner;
 
-exports.Refiner = function ENMergeDateRangeRefiner() {
-  Refiner.call(this);
 
-  this.pattern = function () {
-    return /^\s*(to|\-)\s*$/i;
-  };
 
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
+var AbstractMergeDateTimeRefiner_ENMergeDateTimeRefiner = /*#__PURE__*/function (_MergingRefiner) {
+  AbstractMergeDateTimeRefiner_inherits(ENMergeDateTimeRefiner, _MergingRefiner);
 
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
+  var _super = AbstractMergeDateTimeRefiner_createSuper(ENMergeDateTimeRefiner);
 
-      if (!prevResult.end && !currResult.end && this.isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = this.mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      }
+  function ENMergeDateTimeRefiner() {
+    AbstractMergeDateTimeRefiner_classCallCheck(this, ENMergeDateTimeRefiner);
 
-      mergedResult.push(prevResult);
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-
-  this.isAbleToMerge = function (text, result1, result2) {
-    var begin = result1.index + result1.text.length;
-    var end = result2.index;
-    var textBetween = text.substring(begin, end);
-    return textBetween.match(this.pattern());
-  };
-
-  this.mergeResult = function (text, fromResult, toResult) {
-    if (!fromResult.isOnlyWeekday() && !toResult.isOnlyWeekday()) {
-      var timeKeys = {
-        'hour': true,
-        'minute': true,
-        'second': true
-      };
-
-      for (var key in toResult.start.knownValues) {
-        if (!fromResult.start.isCertain(key)) {
-          fromResult.start.assign(key, toResult.start.get(key));
-        }
-      }
-
-      for (var key in fromResult.start.knownValues) {
-        if (!toResult.start.isCertain(key)) {
-          toResult.start.assign(key, fromResult.start.get(key));
-        }
-      }
-    }
-
-    if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
-      var fromMoment = fromResult.start.dayjs();
-      var toMoment = toResult.start.dayjs();
-
-      if (fromResult.isOnlyWeekday() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
-        fromMoment = fromMoment.add(-7, 'days');
-        fromResult.start.imply('day', fromMoment.date());
-        fromResult.start.imply('month', fromMoment.month() + 1);
-        fromResult.start.imply('year', fromMoment.year());
-      } else if (toResult.isOnlyWeekday() && toMoment.add(7, 'days').isAfter(fromMoment)) {
-        toMoment = toMoment.add(7, 'days');
-        toResult.start.imply('day', toMoment.date());
-        toResult.start.imply('month', toMoment.month() + 1);
-        toResult.start.imply('year', toMoment.year());
-      } else {
-        var tmp = toResult;
-        toResult = fromResult;
-        fromResult = tmp;
-      }
-    }
-
-    fromResult.end = toResult.start;
-
-    for (var tag in toResult.tags) {
-      fromResult.tags[tag] = true;
-    }
-
-    var startIndex = Math.min(fromResult.index, toResult.index);
-    var endIndex = Math.max(fromResult.index + fromResult.text.length, toResult.index + toResult.text.length);
-    fromResult.index = startIndex;
-    fromResult.text = text.substring(startIndex, endIndex);
-    fromResult.tags[this.constructor.name] = true;
-    return fromResult;
-  };
-};
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-exports.WEEKDAY_OFFSET = {
-  'dimanche': 0,
-  'dim': 0,
-  'lundi': 1,
-  'lun': 1,
-  'mardi': 2,
-  'mar': 2,
-  'mercredi': 3,
-  'mer': 3,
-  'jeudi': 4,
-  'jeu': 4,
-  'vendredi': 5,
-  'ven': 5,
-  'samedi': 6,
-  'sam': 6
-};
-exports.MONTH_OFFSET = {
-  'janvier': 1,
-  'jan': 1,
-  'jan.': 1,
-  'février': 2,
-  'fév': 2,
-  'fév.': 2,
-  'fevrier': 2,
-  'fev': 2,
-  'fev.': 2,
-  'mars': 3,
-  'mar': 3,
-  'mar.': 3,
-  'avril': 4,
-  'avr': 4,
-  'avr.': 4,
-  'mai': 5,
-  'juin': 6,
-  'jun': 6,
-  'juillet': 7,
-  'jul': 7,
-  'jul.': 7,
-  'août': 8,
-  'aout': 8,
-  'septembre': 9,
-  'sep': 9,
-  'sep.': 9,
-  'sept': 9,
-  'sept.': 9,
-  'octobre': 10,
-  'oct': 10,
-  'oct.': 10,
-  'novembre': 11,
-  'nov': 11,
-  'nov.': 11,
-  'décembre': 12,
-  'decembre': 12,
-  'dec': 12,
-  'dec.': 12
-};
-exports.INTEGER_WORDS_PATTERN = '(?:un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize)';
-exports.INTEGER_WORDS = {
-  'un': 1,
-  'deux': 2,
-  'trois': 3,
-  'quatre': 4,
-  'cinq': 5,
-  'six': 6,
-  'sept': 7,
-  'huit': 8,
-  'neuf': 9,
-  'dix': 10,
-  'onze': 11,
-  'douze': 12,
-  'treize': 13
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-exports.WEEKDAY_OFFSET = {
-  'zondag': 0,
-  'zo': 0,
-  'zo.': 0,
-  'maandag': 1,
-  'ma': 1,
-  'ma.': 1,
-  'dinsdag': 2,
-  'di': 2,
-  'di.': 2,
-  'woensdag': 3,
-  'wo': 3,
-  'wo.': 3,
-  'donderdag': 4,
-  'do': 4,
-  'do.': 4,
-  'vrijdag': 5,
-  'vr': 5,
-  'vr.': 5,
-  'zaterdag': 6,
-  'za': 6,
-  'za.': 6
-};
-exports.WEEKDAY_PATTERN = '(?:' + Object.keys(exports.WEEKDAY_OFFSET).join('|').replace(/\./g, '\\.') + ')';
-exports.MONTH_OFFSET = {
-  'januari': 1,
-  'jan': 1,
-  'jan.': 1,
-  'februari': 2,
-  'feb': 2,
-  'feb.': 2,
-  'maart': 3,
-  'mrt': 3,
-  'mrt.': 3,
-  'april': 4,
-  'apr': 4,
-  'apr.': 4,
-  'mei': 5,
-  'juni': 6,
-  'jun': 6,
-  'jun.': 6,
-  'juli': 7,
-  'jul': 7,
-  'jul.': 7,
-  'augustus': 8,
-  'aug': 8,
-  'aug.': 8,
-  'september': 9,
-  'sep': 9,
-  'sep.': 9,
-  'sept': 9,
-  'sept.': 9,
-  'oktober': 10,
-  'okt': 10,
-  'okt.': 10,
-  'november': 11,
-  'nov': 11,
-  'nov.': 11,
-  'december': 12,
-  'dec': 12,
-  'dec.': 12
-};
-exports.MONTH_PATTERN = '(?:' + Object.keys(exports.MONTH_OFFSET).join('|').replace(/\./g, '\\.') + ')';
-exports.INTEGER_WORDS = {
-  'een': 1,
-  'één': 1,
-  'twee': 2,
-  'drie': 3,
-  'vier': 4,
-  'vijf': 5,
-  'zes': 6,
-  'zeven': 7,
-  'acht': 8,
-  'negen': 9,
-  'tien': 10,
-  'elf': 11,
-  'twaalf': 12
-};
-exports.INTEGER_WORDS_PATTERN = '(?:' + Object.keys(exports.INTEGER_WORDS).join('|') + ')';
-exports.ORDINAL_WORDS = {
-  'eerste': 1,
-  'tweede': 2,
-  'derde': 3,
-  'vierde': 4,
-  'vijfde': 5,
-  'zesde': 6,
-  'zevende': 7,
-  'achste': 8,
-  'negende': 9,
-  'tiende': 10,
-  'elfde': 11,
-  'twaalfde': 12,
-  'dertiende': 13,
-  'veertiende': 14,
-  'vijftiende': 15,
-  'zestiende': 16,
-  'zeventiende': 17,
-  'achttiende': 18,
-  'negentiende': 19,
-  'twintigste': 20,
-  'eenentwintigste': 21,
-  'tweeëntwintigste': 22,
-  'drieëntwintigste': 23,
-  'vierentwintigste': 24,
-  'vijfentwintigste': 25,
-  'zesentwintigste': 26,
-  'zevenentwintigste': 27,
-  'achtentwintigste': 28,
-  'negenentwintigste': 29,
-  'dertigste': 30,
-  'eenendertigste': 31
-};
-exports.ORDINAL_WORDS_PATTERN = '(?:' + Object.keys(exports.ORDINAL_WORDS).join('|').replace(/ /g, '[ -]') + ')';
-var TIME_UNIT = '(' + exports.INTEGER_WORDS_PATTERN + '|[0-9]+|[0-9]+\.[0-9]+|en(?:\\s*few)?|half)\\s*' + '(sec(?:onde?)?|min(?:uten)?s?|(?:uur|uren)?|weken?|dagen?|maanden?|jaren?)\\s*';
-var TIME_UNIT_STRICT = '(?:[0-9]+?)\\s*' + '(?:seconden?|(?:minuut|minuten)|(?:uur|uren)|(?:dag|dagen))\\s*';
-var PATTERN_TIME_UNIT = new RegExp(TIME_UNIT, 'i');
-exports.TIME_UNIT_PATTERN = '(?:' + TIME_UNIT + ')+';
-exports.TIME_UNIT_STRICT_PATTERN = '(?:' + TIME_UNIT_STRICT + ')+';
-
-exports.extractDateTimeUnitFragments = function (timeunitText) {
-  var fragments = {};
-  var remainingText = timeunitText;
-  var match = PATTERN_TIME_UNIT.exec(remainingText);
-
-  while (match) {
-    collectDateTimeFragment(match, fragments);
-    remainingText = remainingText.substring(match[0].length);
-    match = PATTERN_TIME_UNIT.exec(remainingText);
+    return _super.apply(this, arguments);
   }
 
-  return fragments;
-};
-
-function collectDateTimeFragment(match, fragments) {
-  var num = match[1].toLowerCase();
-
-  if (exports.INTEGER_WORDS[num] !== undefined) {
-    num = exports.INTEGER_WORDS[num];
-  } else if (num.match(/half/)) {
-    num = 0.5;
-  } else {
-    num = parseFloat(num);
-  }
-
-  if (match[2].match(/^(?:uur|uren)/i)) {
-    fragments['hour'] = num;
-  } else if (match[2].match(/min/i)) {
-    fragments['minute'] = num;
-  } else if (match[2].match(/sec/i)) {
-    fragments['second'] = num;
-  } else if (match[2].match(/week/i)) {
-    fragments['week'] = num;
-  } else if (match[2].match(/dag/i)) {
-    fragments['d'] = num;
-  } else if (match[2].match(/maand/i)) {
-    fragments['month'] = num;
-  } else if (match[2].match(/jaar/i)) {
-    fragments['year'] = num;
-  }
-
-  return fragments;
-}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    ISO 8601
-    http://www.w3.org/TR/NOTE-datetime
-    - YYYY-MM-DD
-    - YYYY-MM-DDThh:mmTZD
-    - YYYY-MM-DDThh:mm:ssTZD
-    - YYYY-MM-DDThh:mm:ss.sTZD 
-    - TZD = (Z or +hh:mm or -hh:mm)
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})' + '(?:T' //..
-+ '([0-9]{1,2}):([0-9]{1,2})' // hh:mm
-+ '(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?' // :ss.s
-+ '(?:Z|([+-]\\d{2}):?(\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)
-+ ')?' //..
-+ '(?=\\W|$)', 'i');
-var YEAR_NUMBER_GROUP = 2;
-var MONTH_NUMBER_GROUP = 3;
-var DATE_NUMBER_GROUP = 4;
-var HOUR_NUMBER_GROUP = 5;
-var MINUTE_NUMBER_GROUP = 6;
-var SECOND_NUMBER_GROUP = 7;
-var MILLISECOND_NUMBER_GROUP = 8;
-var TZD_HOUR_OFFSET_GROUP = 9;
-var TZD_MINUTE_OFFSET_GROUP = 10;
-
-exports.Parser = function ENISOFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));
-    result.start.assign('month', parseInt(match[MONTH_NUMBER_GROUP]));
-    result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));
-
-    if (dayjs(result.start.get('month')) > 12 || dayjs(result.start.get('month')) < 1 || dayjs(result.start.get('day')) > 31 || dayjs(result.start.get('day')) < 1) {
-      return null;
+  AbstractMergeDateTimeRefiner_createClass(ENMergeDateTimeRefiner, [{
+    key: "shouldMergeResults",
+    value: function shouldMergeResults(textBetween, currentResult, nextResult) {
+      return (currentResult.start.isOnlyDate() && nextResult.start.isOnlyTime() || nextResult.start.isOnlyDate() && currentResult.start.isOnlyTime()) && textBetween.match(this.patternBetween()) != null;
     }
-
-    if (match[HOUR_NUMBER_GROUP] != null) {
-      result.start.assign('hour', parseInt(match[HOUR_NUMBER_GROUP]));
-      result.start.assign('minute', parseInt(match[MINUTE_NUMBER_GROUP]));
-
-      if (match[SECOND_NUMBER_GROUP] != null) {
-        result.start.assign('second', parseInt(match[SECOND_NUMBER_GROUP]));
-      }
-
-      if (match[MILLISECOND_NUMBER_GROUP] != null) {
-        result.start.assign('millisecond', parseInt(match[MILLISECOND_NUMBER_GROUP]));
-      }
-
-      if (match[TZD_HOUR_OFFSET_GROUP] == null) {
-        result.start.assign('timezoneOffset', 0);
-      } else {
-        var minuteOffset = 0;
-        var hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);
-        if (match[TZD_MINUTE_OFFSET_GROUP] != null) minuteOffset = parseInt(match[TZD_MINUTE_OFFSET_GROUP]);
-        var offset = hourOffset * 60;
-
-        if (offset < 0) {
-          offset -= minuteOffset;
-        } else {
-          offset += minuteOffset;
-        }
-
-        result.start.assign('timezoneOffset', offset);
-      }
-    }
-
-    result.tags['ENISOFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('(\\W|^)' + '(within|in)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?(?:\\s*few)?|half(?:\\s*an?)?)\\s*' + '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)\\s*' + '(?=\\W|$)', 'i');
-var STRICT_PATTERN = new RegExp('(\\W|^)' + '(within|in)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|an?)\\s*' + '(seconds?|minutes?|hours?|days?)\\s*' + '(?=\\W|$)', 'i');
-
-exports.Parser = function ENDeadlineFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = match[3].toLowerCase();
-
-    if (util.INTEGER_WORDS[num] !== undefined) {
-      num = util.INTEGER_WORDS[num];
-    } else if (num === 'a' || num === 'an') {
-      num = 1;
-    } else if (num.match(/few/i)) {
-      num = 3;
-    } else if (num.match(/half/i)) {
-      num = 0.5;
-    } else {
-      num = parseInt(num);
-    }
-
-    var date = dayjs(ref);
-
-    if (match[4].match(/day|week|month|year/i)) {
-      if (match[4].match(/day/i)) {
-        date = date.add(num, 'd');
-      } else if (match[4].match(/week/i)) {
-        date = date.add(num * 7, 'd');
-      } else if (match[4].match(/month/i)) {
-        date = date.add(num, 'month');
-      } else if (match[4].match(/year/i)) {
-        date = date.add(num, 'year');
-      }
-
-      result.start.imply('year', date.year());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('day', date.date());
+  }, {
+    key: "mergeResults",
+    value: function mergeResults(textBetween, currentResult, nextResult) {
+      var result = currentResult.start.isOnlyDate() ? mergeDateTimeResult(currentResult, nextResult) : mergeDateTimeResult(nextResult, currentResult);
+      result.index = currentResult.index;
+      result.text = currentResult.text + textBetween + nextResult.text;
       return result;
     }
+  }]);
 
-    if (match[4].match(/hour/i)) {
-      date = date.add(num, 'hour');
-    } else if (match[4].match(/min/i)) {
-      date = date.add(num, 'minute');
-    } else if (match[4].match(/second/i)) {
-      date = date.add(num, 'second');
-    }
+  return ENMergeDateTimeRefiner;
+}(MergingRefiner);
 
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.imply('hour', date.hour());
-    result.start.imply('minute', date.minute());
-    result.start.imply('second', date.second());
-    result.tags['ENDeadlineFormatParser'] = true;
-    return result;
-  };
-};
 
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+// CONCATENATED MODULE: ./src/locales/en/refiners/ENMergeDateTimeRefiner.ts
+function ENMergeDateTimeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ENMergeDateTimeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { ENMergeDateTimeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ENMergeDateTimeRefiner_typeof(obj); }
 
-var dayjs = __webpack_require__(2);
+function ENMergeDateTimeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Parser = __webpack_require__(0).Parser;
+function ENMergeDateTimeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var ParsedResult = __webpack_require__(1).ParsedResult;
+function ENMergeDateTimeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENMergeDateTimeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENMergeDateTimeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
 
-var util = __webpack_require__(4);
+function ENMergeDateTimeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ENMergeDateTimeRefiner_setPrototypeOf(subClass, superClass); }
 
-var PATTERN = new RegExp('(\\W|^)' + '(this|next|last|past)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|few|half(?:\\s*an?)?)?\\s*' + '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' + '(?=\\W|$)', 'i');
-var MODIFIER_WORD_GROUP = 2;
-var MULTIPLIER_WORD_GROUP = 3;
-var RELATIVE_WORD_GROUP = 4;
+function ENMergeDateTimeRefiner_setPrototypeOf(o, p) { ENMergeDateTimeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ENMergeDateTimeRefiner_setPrototypeOf(o, p); }
 
-exports.Parser = function ENRelativeDateFormatParser() {
-  Parser.apply(this, arguments);
+function ENMergeDateTimeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = ENMergeDateTimeRefiner_isNativeReflectConstruct(); return function () { var Super = ENMergeDateTimeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = ENMergeDateTimeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return ENMergeDateTimeRefiner_possibleConstructorReturn(this, result); }; }
 
-  this.pattern = function () {
-    return PATTERN;
-  };
+function ENMergeDateTimeRefiner_possibleConstructorReturn(self, call) { if (call && (ENMergeDateTimeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return ENMergeDateTimeRefiner_assertThisInitialized(self); }
 
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var modifier = match[MODIFIER_WORD_GROUP].toLowerCase().match(/^next/) ? 1 : -1;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    result.tags['ENRelativeDateFormatParser'] = true;
-    var num = match[MULTIPLIER_WORD_GROUP] === undefined ? '' : match[3].toLowerCase();
+function ENMergeDateTimeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    if (util.INTEGER_WORDS[num] !== undefined) {
-      num = util.INTEGER_WORDS[num];
-    } else if (num === '') {
-      num = 1;
-    } else if (num.match(/few/i)) {
-      num = 3;
-    } else if (num.match(/half/i)) {
-      num = 0.5;
-    } else {
-      num = parseInt(num);
-    }
+function ENMergeDateTimeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-    num *= modifier;
-    var date = dayjs(ref);
+function ENMergeDateTimeRefiner_getPrototypeOf(o) { ENMergeDateTimeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ENMergeDateTimeRefiner_getPrototypeOf(o); }
 
-    if (match[MODIFIER_WORD_GROUP].toLowerCase().match(/^this/)) {
-      if (match[MULTIPLIER_WORD_GROUP]) {
-        return null;
-      }
-
-      if (match[RELATIVE_WORD_GROUP].match(/day|week|month|year/i)) {
-        // This week
-        if (match[RELATIVE_WORD_GROUP].match(/week/i)) {
-          date = date.add(-date.get('d'), 'd');
-          result.start.imply('day', date.date());
-          result.start.imply('month', date.month() + 1);
-          result.start.imply('year', date.year());
-        } // This month
-        else if (match[RELATIVE_WORD_GROUP].match(/month/i)) {
-            date = date.add(-date.date() + 1, 'd');
-            result.start.imply('day', date.date());
-            result.start.assign('year', date.year());
-            result.start.assign('month', date.month() + 1);
-          } // This year
-          else if (match[RELATIVE_WORD_GROUP].match(/year/i)) {
-              date = date.add(-date.date() + 1, 'd');
-              date = date.add(-date.month(), 'month');
-              result.start.imply('day', date.date());
-              result.start.imply('month', date.month() + 1);
-              result.start.assign('year', date.year());
-            }
-
-        return result;
-      }
-    }
-
-    if (match[RELATIVE_WORD_GROUP].match(/day|week|month|year/i)) {
-      if (match[RELATIVE_WORD_GROUP].match(/day/i)) {
-        date = date.add(num, 'd');
-        result.start.assign('year', date.year());
-        result.start.assign('month', date.month() + 1);
-        result.start.assign('day', date.date());
-      } else if (match[RELATIVE_WORD_GROUP].match(/week/i)) {
-        date = date.add(num * 7, 'd'); // We don't know the exact date for next/last week so we imply
-        // them
-
-        result.start.imply('day', date.date());
-        result.start.imply('month', date.month() + 1);
-        result.start.imply('year', date.year());
-      } else if (match[RELATIVE_WORD_GROUP].match(/month/i)) {
-        date = date.add(num, 'month'); // We don't know the exact day for next/last month
-
-        result.start.imply('day', date.date());
-        result.start.assign('year', date.year());
-        result.start.assign('month', date.month() + 1);
-      } else if (match[RELATIVE_WORD_GROUP].match(/year/i)) {
-        date = date.add(num, 'year'); // We don't know the exact day for month on next/last year
-
-        result.start.imply('day', date.date());
-        result.start.imply('month', date.month() + 1);
-        result.start.assign('year', date.year());
-      }
-
-      return result;
-    }
-
-    if (match[RELATIVE_WORD_GROUP].match(/hour/i)) {
-      date = date.add(num, 'hour');
-      result.start.imply('minute', date.minute());
-      result.start.imply('second', date.second());
-    } else if (match[RELATIVE_WORD_GROUP].match(/min/i)) {
-      date = date.add(num, 'minute');
-      result.start.assign('minute', date.minute());
-      result.start.imply('second', date.second());
-    } else if (match[RELATIVE_WORD_GROUP].match(/second/i)) {
-      date = date.add(num, 'second');
-      result.start.assign('second', date.second());
-      result.start.assign('minute', date.minute());
-    }
-
-    result.start.assign('hour', date.hour());
-    result.start.assign('year', date.year());
-    result.start.assign('month', date.month() + 1);
-    result.start.assign('day', date.date());
-    return result;
-  };
-};
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:on\\s*?)?' + '(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\s*,?\\s*)?' + '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')' + '(?:\\s*' + '(?:to|\\-|\\–|until|through|till|\\s)\\s*' + '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')' + ')?' + '(?:-|\/|\\s*(?:of)?\\s*)' + '(' + util.MONTH_PATTERN + ')' + '(?:' + '(?:-|\/|,?\\s*)' + '((?:' + '[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|' + '[1-2][0-9]{3}|' + '[5-9][0-9]' + ')(?![^\\s]\\d))' + ')?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_NUM_GROUP = 4;
-var DATE_TO_GROUP = 5;
-var DATE_TO_NUM_GROUP = 6;
-var MONTH_NAME_GROUP = 7;
-var YEAR_GROUP = 8;
-
-exports.Parser = function ENMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_NUM_GROUP] ? parseInt(match[DATE_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_GROUP].trim().replace('-', ' ').toLowerCase()];
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-
-      if (/BE/i.test(year)) {
-        // Buddhist Era
-        year = year.replace(/BE/i, '');
-        year = parseInt(year) - 543;
-      } else if (/BC/i.test(year)) {
-        // Before Christ
-        year = year.replace(/BC/i, '');
-        year = -parseInt(year);
-      } else if (/AD/i.test(year)) {
-        year = year.replace(/AD/i, '');
-        year = parseInt(year);
-      } else {
-        year = parseInt(year);
-
-        if (year < 100) {
-          if (year > 50) {
-            year = year + 1900;
-          } else {
-            year = year + 2000;
-          }
-        }
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 January 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      var endDate = match[DATE_TO_NUM_GROUP] ? parseInt(match[DATE_TO_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_TO_GROUP].trim().replace('-', ' ').toLowerCase()];
-      result.end = result.start.clone();
-      result.end.assign('day', endDate);
-    }
-
-    result.tags['ENMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-    The parser for parsing US's date format that begin with month's name.
-
-    EX.
-        - January 13
-        - January 13, 2012
-        - January 13 - 15, 2012
-        - Tuesday, January 13, 2012
-
-    Watch out for:
-        - January 12:00
-        - January 12.44
-        - January 1222344
-*/
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:on\\s*?)?' + '(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sun\\.?|Mon\\.?|Tue\\.?|Wed\\.?|Thu\\.?|Fri\\.?|Sat\\.?)' + '\\s*,?\\s*)?' + '(' + util.MONTH_PATTERN + ')' + '(?:-|\/|\\s*,?\\s*)' + '(([0-9]{1,2})(?:st|nd|rd|th)?|' + util.ORDINAL_WORDS_PATTERN + ')(?!\\s*(?:am|pm))\\s*' + '' + '(?:' + '(?:to|\\-)\\s*' + '(([0-9]{1,2})(?:st|nd|rd|th)?| ' + util.ORDINAL_WORDS_PATTERN + ')\\s*' + ')?' + '(?:' + '(?:-|\/|\\s*,?\\s*)' + '(?:([0-9]{4})\\s*(BE|AD|BC)?|([0-9]{1,4})\\s*(AD|BC))\\s*' + ')?' + '(?=\\W|$)(?!\\:\\d)', 'i');
-var WEEKDAY_GROUP = 2;
-var MONTH_NAME_GROUP = 3;
-var DATE_GROUP = 4;
-var DATE_NUM_GROUP = 5;
-var DATE_TO_GROUP = 6;
-var DATE_TO_NUM_GROUP = 7;
-var YEAR_GROUP = 8;
-var YEAR_BE_GROUP = 9;
-var YEAR_GROUP2 = 10;
-var YEAR_BE_GROUP2 = 11;
-
-exports.Parser = function ENMonthNameMiddleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_NUM_GROUP] ? parseInt(match[DATE_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_GROUP].trim().replace('-', ' ').toLowerCase()];
-    var year = null;
-
-    if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
-      year = match[YEAR_GROUP] || match[YEAR_GROUP2];
-      year = parseInt(year);
-      var yearBE = match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2];
-
-      if (yearBE) {
-        if (/BE/i.test(yearBE)) {
-          // Buddhist Era
-          year = year - 543;
-        } else if (/BC/i.test(yearBE)) {
-          // Before Christ
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as 'January 12 - 13, 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      var endDate = match[DATE_TO_NUM_GROUP] ? endDate = parseInt(match[DATE_TO_NUM_GROUP]) : util.ORDINAL_WORDS[match[DATE_TO_GROUP].replace('-', ' ').trim().toLowerCase()];
-      result.end = result.start.clone();
-      result.end.assign('day', endDate);
-    }
-
-    result.tags['ENMonthNameMiddleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    
-    The parser for parsing month name and year.
-    
-    EX. 
-        - January
-        - January 2012
-        - January, 2012
-*/
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' + '(' + util.MONTH_PATTERN + ')' + '\\s*' + '(?:' + '[,-]?\\s*([0-9]{4})(\\s*BE|AD|BC)?' + ')?' + '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
-var MONTH_NAME_GROUP = 2;
-var YEAR_GROUP = 3;
-var YEAR_BE_GROUP = 4;
-
-exports.Parser = function ENMonthNameParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var day = 1;
-    var monthName = match[MONTH_NAME_GROUP];
-    var month = util.MONTH_OFFSET[monthName.toLowerCase()];
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (match[YEAR_BE_GROUP].match(/BE/)) {
-          // Buddhist Era
-          year = year - 543;
-        } else if (match[YEAR_BE_GROUP].match(/BC/)) {
-          // Before Christ
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    }
-
-    if (result.text.match(/^\w{3}$/)) {
-      return false;
-    }
-
-    result.tags['ENMonthNameParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Tuesday 11/3/2015 
-    - 11/3/2015
-    - 11/3
-
-    By default the paser us "middle-endien" format (US English),
-    then fallback to little-endian if failed.
-    - 11/3/2015 = November 3rd, 2015
-    - 23/4/2015 = April 23th, 2015
-
-    If "littleEndian" config is set, the parser will try the little-endian first. 
-    - 11/3/2015 = March 11th, 2015
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:on\\s*?)?' + '((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)' + '\\s*\\,?\\s*' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var DAYS_OFFSET = {
-  'sunday': 0,
-  'sun': 0,
-  'monday': 1,
-  'mon': 1,
-  'tuesday': 2,
-  'wednesday': 3,
-  'wed': 3,
-  'thursday': 4,
-  'thur': 4,
-  'friday': 5,
-  'fri': 5,
-  'saturday': 6,
-  'sat': 6
-};
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6;
-var WEEKDAY_GROUP = 2;
-var FIRST_NUMBERS_GROUP = 3;
-var SECOND_NUMBERS_GROUP = 4;
-var YEAR_GROUP = 5;
-
-exports.Parser = function ENSlashDateFormatParser(config) {
-  Parser.apply(this, arguments);
-  config = config || {};
-  var littleEndian = config.littleEndian;
-  var MONTH_GROUP = littleEndian ? SECOND_NUMBERS_GROUP : FIRST_NUMBERS_GROUP;
-  var DAY_GROUP = littleEndian ? FIRST_NUMBERS_GROUP : SECOND_NUMBERS_GROUP;
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var date = null;
-    var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    month = parseInt(month);
-    day = parseInt(day);
-    year = parseInt(year);
-
-    if (month < 1 || month > 12) {
-      if (month > 12) {
-        // dd/mm/yyyy date format if day looks like a month, and month
-        // looks like a day.
-        if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
-          // unambiguous
-          var tday = month;
-          month = day;
-          day = tday;
-        } else {
-          // both month and day are <= 12
-          return null;
-        }
-      }
-    }
-
-    if (day < 1 || day > 31) return null;
-
-    if (year < 100) {
-      if (year > 50) {
-        year = year + 1900;
-      } else {
-        year = year + 2000;
-      }
-    }
-
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-
-    if (match[YEAR_GROUP]) {
-      result.start.assign('year', year);
-    } else {
-      result.start.imply('year', year);
-    } //Day of week
-
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['ENSlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" between numbers like ENSlashDateFormatParser,
-    but this parser expect year before month and date. 
-    - YYYY/MM/DD
-    - YYYY-MM-DD
-    - YYYY.MM.DD
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('(\\W|^)' + '([0-9]{4})[\\-\\.\\/]' + '((?:' + util.MONTH_PATTERN + '|[0-9]{1,2}))[\\-\\.\\/]' + '([0-9]{1,2})' + '(?=\\W|$)', 'i');
-var YEAR_NUMBER_GROUP = 2;
-var MONTH_NUMBER_GROUP = 3;
-var DATE_NUMBER_GROUP = 4;
-
-exports.Parser = function ENSlashDateFormatStartWithYearParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    var month = match[MONTH_NUMBER_GROUP].toLowerCase();
-    month = util.MONTH_OFFSET[month] | month;
-    result.start.assign('year', parseInt(match[YEAR_NUMBER_GROUP]));
-    result.start.assign('month', parseInt(month));
-    result.start.assign('day', parseInt(match[DATE_NUMBER_GROUP]));
-
-    if (dayjs(result.start.get('month')) > 12 || dayjs(result.start.get('month')) < 1 || dayjs(result.start.get('day')) > 31 || dayjs(result.start.get('day')) < 1) {
-      return null;
-    }
-
-    result.tags['ENDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Month/Year date format with slash "/" (also "-" and ".") between numbers 
-    - 11/05
-    - 06/2005
-*/
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(^|[^\\d/]\\s+|[^\\w\\s])' + '([0-9]|0[1-9]|1[012])/([0-9]{4})' + '(?=[^\\d/]|$)', 'i');
-var OPENNING_GROUP = 1;
-var MONTH_GROUP = 2;
-var YEAR_GROUP = 3;
-
-exports.Parser = function ENSlashMonthFormatParser(argument) {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length).trim();
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    var year = match[YEAR_GROUP];
-    var month = match[MONTH_GROUP];
-    var day = 1;
-    month = parseInt(month);
-    year = parseInt(year);
-    result.start.imply('day', day);
-    result.start.assign('month', month);
-    result.start.assign('year', year);
-    result.tags['ENSlashMonthFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('' + '(\\W|^)' + '(?:within\\s*)?' + '(' + util.TIME_UNIT_PATTERN + ')' + '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
-var STRICT_PATTERN = new RegExp('' + '(\\W|^)' + '(?:within\\s*)?' + '(' + util.TIME_UNIT_STRICT_PATTERN + ')' + 'ago(?=(?:\\W|$))', 'i');
-
-exports.Parser = function ENTimeAgoFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var fragments = util.extractDateTimeUnitFragments(match[2]);
-    var date = dayjs(ref);
-
-    for (var key in fragments) {
-      date = date.add(-fragments[key], key);
-    }
-
-    if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      result.start.assign('second', date.second());
-      result.tags['ENTimeAgoFormatParser'] = true;
-    }
-
-    if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {
-      result.start.assign('day', date.date());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('year', date.year());
-    } else {
-      if (fragments['week'] > 0) {
-        result.start.imply('weekday', date.day());
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:at|from)\\s*)??" + "(\\d{1,4}|noon|midnight)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,6}))?" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|to|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,6}))?" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?|O\\W*CLOCK))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var MILLI_SECOND_GROUP = 5;
-var AM_PM_HOUR_GROUP = 6;
-
-exports.Parser = function ENTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlapped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['ENTimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Millisecond
-
-    if (match[MILLI_SECOND_GROUP] != null) {
-      var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
-      if (millisecond >= 1000) return null;
-      result.start.assign('millisecond', millisecond);
-    } // ----- Second
-
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (match[HOUR_GROUP].toLowerCase() == "noon") {
-      meridiem = 1;
-      hour = 12;
-    } else if (match[HOUR_GROUP].toLowerCase() == "midnight") {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM  
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } else {
-      if (hour < 12) {
-        result.start.imply('meridiem', 0);
-      } else {
-        result.start.imply('meridiem', 1);
-      }
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Millisecond
-
-    if (match[MILLI_SECOND_GROUP] != null) {
-      var millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
-      if (millisecond >= 1000) return null;
-      result.end.assign('millisecond', millisecond);
-    } // ----- Second
-
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM 
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    } else {
-      var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
-
-      if (startAtPM && result.start.get('hour') > hour) {
-        // 10pm - 1 (am)
-        result.end.imply('meridiem', 0);
-      } else if (hour > 12) {
-        result.end.imply('meridiem', 1);
-      }
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(4);
-
-var PATTERN = new RegExp('' +
-/*match[1]*/
-'(\\W|^)' +
-/*match[2]*/
-'(in )?' +
-/*match[3]*/
-'(' + util.TIME_UNIT_PATTERN + ')' +
-/*match[4]*/
-'(later|after|from now|henceforth|forward|out)?' +
-/*match[5]*/
-'(?=(?:\\W|$))', 'i');
-var STRICT_PATTERN = new RegExp('' +
-/*match[1]*/
-'(\\W|^)' +
-/*match[2]*/
-'(in )?' +
-/*match[3]*/
-'(' + util.TIME_UNIT_STRICT_PATTERN + ')' +
-/*match[4]*/
-'(later|from now)?' +
-/*match[5]*/
-'(?=(?:\\W|$))', 'i');
-
-exports.Parser = function ENTimeLaterFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var prefix = match[2];
-    var suffix = match[4];
-    if (!prefix && !suffix) return null;
-    var preamble = match[1];
-    var text = match[0].substr(preamble.length, match[0].length - preamble.length);
-    var index = match.index + preamble.length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var fragments = util.extractDateTimeUnitFragments(match[3]);
-    var date = dayjs(ref);
-
-    for (var key in fragments) {
-      date = date.add(fragments[key], key);
-    }
-
-    if (fragments['hour'] > 0 || fragments['minute'] > 0 || fragments['second'] > 0) {
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      result.start.assign('second', date.second());
-      result.tags['ENTimeAgoFormatParser'] = true;
-    }
-
-    if (fragments['d'] > 0 || fragments['month'] > 0 || fragments['year'] > 0) {
-      result.start.assign('day', date.date());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('year', date.year());
-    } else {
-      if (fragments['week'] > 0) {
-        result.start.imply('weekday', date.day());
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)(now|today|tonight|last\s*night|(?:tomorrow|tmr|yesterday)\s*|tomorrow|tmr|yesterday)(?=\W|$)/i;
-
-exports.Parser = function ENCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-    var lowerText = text.toLowerCase();
-
-    if (lowerText == 'tonight') {
-      // Normally means this coming midnight
-      result.start.imply('hour', 22);
-      result.start.imply('meridiem', 1);
-    } else if (/^tomorrow|^tmr/.test(lowerText)) {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (/^yesterday/.test(lowerText)) {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (lowerText.match(/last\s*night/)) {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText.match("now")) {
-      result.start.assign('hour', refMoment.hour());
-      result.start.assign('minute', refMoment.minute());
-      result.start.assign('second', refMoment.second());
-      result.start.assign('millisecond', refMoment.millisecond());
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['ENCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)((this)?\s*(morning|afternoon|evening|noon|night))/i;
-var TIME_MATCH = 4;
-
-exports.Parser = function ENCasualTimeParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    if (!match[TIME_MATCH]) TIME_MATCH = 3;
-
-    switch (match[TIME_MATCH].toLowerCase()) {
-      case 'afternoon':
-        result.start.imply('meridiem', 1);
-        result.start.imply('hour', 15);
-        break;
-
-      case 'evening':
-      case 'night':
-        result.start.imply('meridiem', 1);
-        result.start.imply('hour', 20);
-        break;
-
-      case 'morning':
-        result.start.imply('meridiem', 0);
-        result.start.imply('hour', 6);
-        break;
-
-      case 'noon':
-        result.start.imply('meridiem', 0);
-        result.start.imply('hour', 12);
-        break;
-    }
-
-    result.tags['ENCasualTimeParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(27);
-
-var PATTERN = /(?:(同|今|本|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
-var SPECIAL_YEAR_GROUP = 1;
-var TYPICAL_YEAR_GROUP = 2;
-var ERA_GROUP = 3;
-var YEAR_NUMBER_GROUP = 4;
-var MONTH_GROUP = 5;
-var DAY_GROUP = 6;
-
-exports.Parser = function JPStandardParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0],
-      index: match.index,
-      ref: ref
-    });
-    var month = match[MONTH_GROUP];
-    month = util.toHankaku(month);
-    month = parseInt(month);
-    var day = match[DAY_GROUP];
-    day = util.toHankaku(day);
-    day = parseInt(day);
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-
-    if (match[TYPICAL_YEAR_GROUP]) {
-      var year = match[YEAR_NUMBER_GROUP];
-
-      if (year == '元') {
-        year = 1;
-      } else {
-        year = util.toHankaku(year);
-        year = parseInt(year);
-      }
-
-      if (match[ERA_GROUP] == '令和') {
-        year += 2018;
-      } else if (match[ERA_GROUP] == '平成') {
-        year += 1988;
-      } else if (match[ERA_GROUP] == '昭和') {
-        year += 1925;
-      }
-
-      result.start.assign('year', year);
-    } else if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match('同|今|本')) {
-      var moment = dayjs(ref);
-      result.start.assign('year', moment.year());
-    } else {
-      var _year = parser.findYearClosestToRef(ref, day, month);
-
-      result.start.imply('year', _year);
-    }
-
-    result.tags['JPStandardParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
 
 /**
- * to-hankaku.js
- * convert to ascii code strings.
- *
- * @version 1.0.1
- * @author think49
- * @url https://gist.github.com/964592
- * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)
- */
-exports.toHankaku = function (String, fromCharCode) {
-  function toHankaku(string) {
-    return String(string).replace(/\u2019/g, "'").replace(/\u201D/g, "\"").replace(/\u3000/g, " ").replace(/\uFFE5/g, "\xA5").replace(/[\uFF01\uFF03-\uFF06\uFF08\uFF09\uFF0C-\uFF19\uFF1C-\uFF1F\uFF21-\uFF3B\uFF3D\uFF3F\uFF41-\uFF5B\uFF5D\uFF5E]/g, alphaNum);
-  }
-
-  function alphaNum(token) {
-    return fromCharCode(token.charCodeAt(0) - 65248);
-  }
-
-  return toHankaku;
-}(String, String.fromCharCode);
-/**
- * to-zenkaku.js
- * convert to multi byte strings.
- *
- * @version 1.0.2
- * @author think49
- * @url https://gist.github.com/964592
- * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)
+ * Merging date-only result and time-only result (see. AbstractMergeDateTimeRefiner).
+ * This implementation should provide English connecting phases
+ * - 2020-02-13 [at] 6pm
+ * - Tomorrow [after] 7am
  */
 
+var ENMergeDateTimeRefiner_ENMergeDateTimeRefiner = /*#__PURE__*/function (_AbstractMergeDateTim) {
+  ENMergeDateTimeRefiner_inherits(ENMergeDateTimeRefiner, _AbstractMergeDateTim);
 
-exports.toZenkaku = function (String, fromCharCode) {
-  function toZenkaku(string) {
-    return String(string).replace(/\u0020/g, "\u3000").replace(/\u0022/g, "\u201D").replace(/\u0027/g, "\u2019").replace(/\u00A5/g, "\uFFE5").replace(/[!#-&(),-9\u003C-?A-[\u005D_a-{}~]/g, alphaNum);
+  var _super = ENMergeDateTimeRefiner_createSuper(ENMergeDateTimeRefiner);
+
+  function ENMergeDateTimeRefiner() {
+    ENMergeDateTimeRefiner_classCallCheck(this, ENMergeDateTimeRefiner);
+
+    return _super.apply(this, arguments);
   }
 
-  function alphaNum(token) {
-    return fromCharCode(token.charCodeAt(0) + 65248);
-  }
-
-  return toZenkaku;
-}(String, String.fromCharCode);
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
-
-exports.Parser = function JPCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index;
-    var text = match[0];
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-
-    if (text == '今夜' || text == '今夕' || text == '今晩') {
-      // Normally means this coming midnight 
-      result.start.imply('hour', 22);
-      result.start.imply('meridiem', 1);
-    } else if (text == '明日') {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 4) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (text == '昨日') {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (text.match("今朝")) {
-      result.start.imply('hour', 6);
-      result.start.imply('meridiem', 0);
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['JPCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-/*
-  Valid patterns:
-  - esta manhã -> today in the morning
-  - esta tarde -> today in the afternoon/evening
-  - esta noite -> tonight
-  - ontem de -> yesterday in the morning
-  - ontem a tarde -> yesterday in the afternoon/evening
-  - ontem a noite -> yesterday at night
-  - amanhã de manhã -> tomorrow in the morning
-  - amanhã a tarde -> tomorrow in the afternoon/evening
-  - amanhã a noite -> tomorrow at night
-  - hoje -> today
-  - ontem -> yesterday
-  - amanhã -> tomorrow
- */
-
-
-var PATTERN = /(\W|^)(agora|esta\s*(manhã|tarde|noite)|(ontem|amanhã)\s*(de|à)\s*(manhã|tarde|noite)|hoje|amanhã|ontem|noite)(?=\W|$)/i;
-
-exports.Parser = function PTCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-    var lowerText = text.toLowerCase().replace(/\s+/g, ' ');
-
-    if (lowerText == 'amanhã') {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (lowerText == 'ontem') {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (lowerText == 'noite') {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText.match("esta")) {
-      var secondMatch = match[3].toLowerCase();
-
-      if (secondMatch == "tarde") {
-        result.start.imply('hour', 18);
-      } else if (secondMatch == "manhã") {
-        result.start.imply('hour', 6);
-      } else if (secondMatch == "noite") {
-        // Normally means this coming midnight
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      }
-    } else if (lowerText.match(/de|à/)) {
-      var firstMatch = match[4].toLowerCase();
-
-      if (firstMatch === 'ontem') {
-        startMoment = startMoment.add(-1, 'day');
-      } else if (firstMatch === 'amanhã') {
-        startMoment = startMoment.add(1, 'day');
-      }
-
-      var secondMatch = match[6].toLowerCase();
-
-      if (secondMatch == "tarde") {
-        result.start.imply('hour', 18);
-      } else if (secondMatch == "manhã") {
-        result.start.imply('hour', 9);
-      } else if (secondMatch == "noite") {
-        // Normally means this coming midnight
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      }
-    } else if (lowerText.match("agora")) {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['PTCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)(dentro\s*de|em|em*até)\s*([0-9]+|mei[oa]|uma?)\s*(minutos?|horas?|dias?)\s*(?=(?:\W|$))/i;
-
-exports.Parser = function PTDeadlineFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = parseInt(match[3]);
-
-    if (isNaN(num)) {
-      if (match[3].match(/(meio|meia)/)) {
-        num = 0.5;
-      } else {
-        num = 1;
-      }
-    }
-
-    var date = dayjs(ref);
-
-    if (match[4].match(/dia/)) {
-      date = date.add(num, 'd');
-      result.start.assign('year', date.year());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('day', date.date());
-      return result;
-    }
-
-    if (match[4].match(/hora/)) {
-      date = date.add(num, 'hour');
-    } else if (match[4].match(/minuto/)) {
-      date = date.add(num, 'minute');
-    }
-
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.assign('hour', date.hour());
-    result.start.assign('minute', date.minute());
-    result.tags['PTDeadlineFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(32);
-
-var DAYS_OFFSET = util.WEEKDAY_OFFSET;
-var PATTERN = new RegExp('(\\W|^)' + '(?:(domingo|segunda|segunda-feira|terça|terça-feira|quarta|quarta-feira|quinta|quinta-feira|sexta|sexta-feira|sábado|sabado|dom|seg|ter|qua|qui|sex|sab)\\s*,?\\s*)?' + '([0-9]{1,2})(?:º|ª|°)?' + '(?:\\s*(?:desde|de|\\-|\\–|ao?|\\s)\\s*([0-9]{1,2})(?:º|ª|°)?)?\\s*(?:de)?\\s*' + '(Jan(?:eiro|\\.)?|Fev(?:ereiro|\\.)?|Mar(?:ço|\\.)?|Abr(?:il|\\.)?|Mai(?:o|\\.)?|Jun(?:ho|\\.)?|Jul(?:ho|\\.)?|Ago(?:sto|\\.)?|Set(?:embro|\\.)?|Out(?:ubro|\\.)?|Nov(?:embro|\\.)?|Dez(?:embro|\\.)?)' + '(?:\\s*(?:de?)?(\\s*[0-9]{1,4}(?![^\\s]\\d))(\\s*[ad]\\.?\\s*c\\.?|a\\.?\\s*d\\.?)?)?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
-
-exports.Parser = function PTMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_GROUP];
-    day = parseInt(day);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (/a\.?\s*c\.?/i.test(match[YEAR_BE_GROUP])) {
-          // antes de Cristo
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 January 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      result.end = result.start.clone();
-      result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
-    }
-
-    result.tags['PTMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-exports.WEEKDAY_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'segunda': 1,
-  'segunda-feira': 1,
-  'seg': 1,
-  'terça': 2,
-  'terca': 2,
-  'terça-feira': 2,
-  'terca-feira': 2,
-  'ter': 2,
-  'quarta': 3,
-  'quarta-feira': 3,
-  'qua': 3,
-  'quinta': 4,
-  'quinta-feira': 4,
-  'qui': 4,
-  'sexta': 5,
-  'sexta-feira': 5,
-  'sex': 5,
-  'sábado': 6,
-  'sabado': 6,
-  'sab': 6
-};
-exports.MONTH_OFFSET = {
-  'janeiro': 1,
-  'jan': 1,
-  'jan.': 1,
-  'fevereiro': 2,
-  'fev': 2,
-  'fev.': 2,
-  'março': 3,
-  'mar': 3,
-  'mar.': 3,
-  'abril': 4,
-  'abr': 4,
-  'abr.': 4,
-  'maio': 5,
-  'mai': 5,
-  'mai.': 5,
-  'junho': 6,
-  'jun': 6,
-  'jun.': 6,
-  'julho': 7,
-  'jul': 7,
-  'jul.': 7,
-  'agosto': 8,
-  'ago': 8,
-  'ago.': 8,
-  'setembro': 9,
-  'set': 9,
-  'set.': 9,
-  'outubro': 10,
-  'out': 10,
-  'out.': 10,
-  'novembro': 11,
-  'nov': 11,
-  'nov.': 11,
-  'dezembro': 12,
-  'dez': 12,
-  'dez.': 12
-};
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Martes 3/11/2015
-    - 3/11/2015
-    - 3/11
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '((?:domingo|dom|segunda|segunda-feira|seg|terça|terça-feira|ter|quarta|quarta-feira|qua|quinta|quinta-feira|qui|sexta|sexta-feira|sex|s[áa]bado|sab))' + '\\s*\\,?\\s*' + ')?' + '([0-1]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var DAYS_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'segunda': 1,
-  'segunda-feira': 1,
-  'seg': 1,
-  'terça': 2,
-  'terça-feira': 2,
-  'ter': 2,
-  'quarta': 3,
-  'quarta-feira': 3,
-  'qua': 3,
-  'quinta': 4,
-  'quinta-feira': 4,
-  'qui': 4,
-  'sexta': 5,
-  'sexta-feira': 5,
-  'sex': 5,
-  'sábado': 6,
-  'sabado': 6,
-  'sab': 6
-};
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6; // in Spanish we use day/month/year
-
-var WEEKDAY_GROUP = 2;
-var MONTH_GROUP = 4;
-var DAY_GROUP = 3;
-var YEAR_GROUP = 5;
-
-exports.Parser = function PTSlashDateFormatParser(argument) {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var date = null;
-    var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    month = parseInt(month);
-    day = parseInt(day);
-    year = parseInt(year);
-
-    if (month < 1 || month > 12) {
-      if (month > 12) {
-        // dd/mm/yyyy date format if day looks like a month, and month
-        // looks like a day.
-        if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
-          // unambiguous
-          var tday = month;
-          month = day;
-          day = tday;
-        } else {
-          // both month and day are <= 12
-          return null;
-        }
-      }
-    }
-
-    if (day < 1 || day > 31) return null;
-
-    if (year < 100) {
-      if (year > 50) {
-        year = year + 1900;
-      } else {
-        year = year + 2000;
-      }
-    }
-
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-    result.start.assign('year', year); //Day of week
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['PTSlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)há\s*([0-9]+|mei[oa]|uma?)\s*(minutos?|horas?|semanas?|dias?|mes(es)?|anos?)(?=(?:\W|$))/i;
-
-exports.Parser = function PTTimeAgoFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = parseInt(match[2]);
-
-    if (isNaN(num)) {
-      if (match[2].match(/mei/)) {
-        num = 0.5;
-      } else {
-        num = 1;
-      }
-    }
-
-    var date = dayjs(ref);
-
-    if (match[3].match(/hora/) || match[3].match(/minuto/)) {
-      if (match[3].match(/hora/)) {
-        date = date.add(-num, 'hour');
-      } else if (match[3].match(/minuto/)) {
-        date = date.add(-num, 'minute');
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      result.tags['PTTimeAgoFormatParser'] = true;
-      return result;
-    }
-
-    if (match[3].match(/semana/)) {
-      date = date.add(-num, 'week');
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.imply('weekday', date.day());
-      return result;
-    }
-
-    if (match[3].match(/dia/)) {
-      date = date.add(-num, 'd');
-    }
-
-    if (match[3].match(/mes/)) {
-      date = date.add(-num, 'month');
-    }
-
-    if (match[3].match(/ano/)) {
-      date = date.add(-num, 'year');
-    }
-
-    result.start.assign('day', date.date());
-    result.start.assign('month', date.month() + 1);
-    result.start.assign('year', date.year());
-    return result;
-  };
-};
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:ao?|às?|das|da|de|do)\\s*)?" + "(\\d{1,4}|meio-dia|meia-noite|meio dia|meia noite)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|a(?:o)?|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var AM_PM_HOUR_GROUP = 5;
-
-exports.Parser = function PTTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['PTTimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (match[HOUR_GROUP].toLowerCase().match(/meio\-di/)) {
-      meridiem = 1;
-      hour = 12;
-    } else if (match[HOUR_GROUP].toLowerCase() == "meia-noite") {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-
-      if (match[AM_PM_HOUR_GROUP][0].toLowerCase() == "a") {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      }
-
-      if (match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    } else if (hour >= 12) {
-      meridiem = 1;
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var updateParsedComponent = __webpack_require__(6).updateParsedComponent;
-
-var DAYS_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'segunda': 1,
-  'segunda-feira': 1,
-  'seg': 1,
-  'terça': 2,
-  'terça-feira': 2,
-  'ter': 2,
-  'quarta': 3,
-  'quarta-feira': 3,
-  'qua': 3,
-  'quinta': 4,
-  'quinta-feira': 4,
-  'qui': 4,
-  'sexta': 5,
-  'sexta-feira': 5,
-  'sex': 5,
-  'sábado': 6,
-  'sabado': 6,
-  'sab': 6
-};
-var PATTERN = new RegExp('(\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:(este|esta|passado|pr[oó]ximo)\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(este|esta|passado|pr[óo]ximo)\\s*semana)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.Parser = function PTWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-    if (offset === undefined) return null;
-    var modifier = null;
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-
-    if (prefix || postfix) {
-      var norm = prefix || postfix;
-      norm = norm.toLowerCase();
-
-      if (norm == 'passado') {
-        modifier = 'this';
-      } else if (norm == 'próximo' || norm == 'proximo') {
-        modifier = 'next';
-      } else if (norm == 'este') {
-        modifier = 'this';
-      }
-    }
-
-    updateParsedComponent(result, ref, offset, modifier);
-    result.tags['PTWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-/*
-  Valid patterns:
-  - esta mañana -> today in the morning
-  - esta tarde -> today in the afternoon/evening
-  - esta noche -> tonight
-  - ayer por la mañana -> yesterday in the morning
-  - ayer por la tarde -> yesterday in the afternoon/evening
-  - ayer por la noche -> yesterday at night
-  - mañana por la mañana -> tomorrow in the morning
-  - mañana por la tarde -> tomorrow in the afternoon/evening
-  - mañana por la noche -> tomorrow at night
-  - anoche -> tomorrow at night
-  - hoy -> today
-  - ayer -> yesterday
-  - mañana -> tomorrow
- */
-
-
-var PATTERN = /(\W|^)(ahora|esta\s*(mañana|tarde|noche)|(ayer|mañana)\s*por\s*la\s*(mañana|tarde|noche)|hoy|mañana|ayer|anoche)(?=\W|$)/i;
-
-exports.Parser = function ESCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-    var lowerText = text.toLowerCase().replace(/\s+/g, ' ');
-
-    if (lowerText == 'mañana') {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (lowerText == 'ayer') {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (lowerText == 'anoche') {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText.match("esta")) {
-      var secondMatch = match[3].toLowerCase();
-
-      if (secondMatch == "tarde") {
-        result.start.imply('hour', 18);
-      } else if (secondMatch == "mañana") {
-        result.start.imply('hour', 6);
-      } else if (secondMatch == "noche") {
-        // Normally means this coming midnight
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      }
-    } else if (lowerText.match(/por\s*la/)) {
-      var firstMatch = match[4].toLowerCase();
-
-      if (firstMatch === 'ayer') {
-        startMoment = startMoment.add(-1, 'day');
-      } else if (firstMatch === 'mañana') {
-        startMoment = startMoment.add(1, 'day');
-      }
-
-      var secondMatch = match[5].toLowerCase();
-
-      if (secondMatch == "tarde") {
-        result.start.imply('hour', 18);
-      } else if (secondMatch == "mañana") {
-        result.start.imply('hour', 9);
-      } else if (secondMatch == "noche") {
-        // Normally means this coming midnight
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      }
-    } else if (lowerText.match("ahora")) {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['ESCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)(dentro\s*de|en)\s*([0-9]+|medi[oa]|una?)\s*(minutos?|horas?|d[ií]as?)\s*(?=(?:\W|$))/i;
-
-exports.Parser = function ESDeadlineFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = parseInt(match[3]);
-
-    if (isNaN(num)) {
-      if (match[3].match(/medi/)) {
-        num = 0.5;
-      } else {
-        num = 1;
-      }
-    }
-
-    var date = dayjs(ref);
-
-    if (match[4].match(/d[ií]a/)) {
-      date = date.add(num, 'd');
-      result.start.assign('year', date.year());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('day', date.date());
-      return result;
-    }
-
-    if (match[4].match(/hora/)) {
-      date = date.add(num, 'hour');
-    } else if (match[4].match(/minuto/)) {
-      date = date.add(num, 'minute');
-    }
-
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.assign('hour', date.hour());
-    result.start.assign('minute', date.minute());
-    result.tags['ESDeadlineFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)hace\s*([0-9]+|medi[oa]|una?)\s*(minutos?|horas?|semanas?|d[ií]as?|mes(es)?|años?)(?=(?:\W|$))/i;
-
-exports.Parser = function ESTimeAgoFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = parseInt(match[2]);
-
-    if (isNaN(num)) {
-      if (match[2].match(/medi/)) {
-        num = 0.5;
-      } else {
-        num = 1;
-      }
-    }
-
-    var date = dayjs(ref);
-
-    if (match[3].match(/hora/) || match[3].match(/minuto/)) {
-      if (match[3].match(/hora/)) {
-        date = date.add(-num, 'hour');
-      } else if (match[3].match(/minuto/)) {
-        date = date.add(-num, 'minute');
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      result.tags['ESTimeAgoFormatParser'] = true;
-      return result;
-    }
-
-    if (match[3].match(/semana/)) {
-      date = date.add(-num, 'week');
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.imply('weekday', date.day());
-      return result;
-    }
-
-    if (match[3].match(/d[ií]a/)) {
-      date = date.add(-num, 'd');
-    }
-
-    if (match[3].match(/mes/)) {
-      date = date.add(-num, 'month');
-    }
-
-    if (match[3].match(/año/)) {
-      date = date.add(-num, 'year');
-    }
-
-    result.start.assign('day', date.date());
-    result.start.assign('month', date.month() + 1);
-    result.start.assign('year', date.year());
-    return result;
-  };
-};
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:a las?|al?|desde|de)\\s*)?" + "(\\d{1,4}|mediod[ií]a|medianoche)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|a(?:\s*las)?|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var AM_PM_HOUR_GROUP = 5;
-
-exports.Parser = function ESTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['ESTimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (match[HOUR_GROUP].toLowerCase().match(/mediod/)) {
-      meridiem = 1;
-      hour = 12;
-    } else if (match[HOUR_GROUP].toLowerCase() == "medianoche") {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-
-      if (match[AM_PM_HOUR_GROUP][0].toLowerCase() == "a") {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      }
-
-      if (match[AM_PM_HOUR_GROUP][0].toLowerCase() == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    } else if (hour >= 12) {
-      meridiem = 1;
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var updateParsedComponent = __webpack_require__(6).updateParsedComponent;
-
-var DAYS_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'lunes': 1,
-  'lun': 1,
-  'martes': 2,
-  'mar': 2,
-  'miercoles': 3,
-  'miércoles': 3,
-  'mie': 3,
-  'jueves': 4,
-  'jue': 4,
-  'viernes': 5,
-  'vier': 5,
-  'sabado': 6,
-  'sábado': 6,
-  'sab': 6
-};
-var PATTERN = new RegExp('(\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:(este|pasado|pr[oó]ximo)\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(este|pasado|pr[óo]ximo)\\s*week)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.Parser = function ESWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-    if (offset === undefined) return null;
-    var modifier = null;
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-
-    if (prefix || postfix) {
-      var norm = prefix || postfix;
-      norm = norm.toLowerCase();
-
-      if (norm == 'pasado') {
-        modifier = 'this';
-      } else if (norm == 'próximo' || norm == 'proximo') {
-        modifier = 'next';
-      } else if (norm == 'este') {
-        modifier = 'this';
-      }
-    }
-
-    updateParsedComponent(result, ref, offset, modifier);
-    result.tags['ESWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(43);
-
-var DAYS_OFFSET = util.WEEKDAY_OFFSET;
-var PATTERN = new RegExp('(\\W|^)' + '(?:(Domingo|Lunes|Martes|Miércoles|Miercoles|Jueves|Viernes|Sábado|Sabado|Dom|Lun|Mar|Mie|Jue|Vie|Sab)\\s*,?\\s*)?' + '([0-9]{1,2})(?:º|ª|°)?' + '(?:\\s*(?:desde|de|\\-|\\–|al?|hasta|\\s)\\s*([0-9]{1,2})(?:º|ª|°)?)?\\s*(?:de)?\\s*' + '(Ene(?:ro|\\.)?|Feb(?:rero|\\.)?|Mar(?:zo|\\.)?|Abr(?:il|\\.)?|May(?:o|\\.)?|Jun(?:io|\\.)?|Jul(?:io|\\.)?|Ago(?:sto|\\.)?|Sep(?:tiembre|\\.)?|Set(?:iembre|\\.)?|Oct(?:ubre|\\.)?|Nov(?:iembre|\\.)?|Dic(?:iembre|\\.)?)' + '(?:\\s*(?:del?)?(\\s*[0-9]{1,4}(?![^\\s]\\d))(\\s*[ad]\\.?\\s*c\\.?|a\\.?\\s*d\\.?)?)?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
-
-exports.Parser = function ESMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_GROUP];
-    day = parseInt(day);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (/a\.?\s*c\.?/i.test(match[YEAR_BE_GROUP])) {
-          // antes de Cristo
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 January 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      result.end = result.start.clone();
-      result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
-    }
-
-    result.tags['ESMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-exports.WEEKDAY_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'lunes': 1,
-  'lun': 1,
-  'martes': 2,
-  'mar': 2,
-  'miércoles': 3,
-  'miercoles': 3,
-  'mie': 3,
-  'jueves': 4,
-  'jue': 4,
-  'viernes': 5,
-  'vie': 5,
-  'sábado': 6,
-  'sabado': 6,
-  'sab': 6
-};
-exports.MONTH_OFFSET = {
-  'enero': 1,
-  'ene': 1,
-  'ene.': 1,
-  'febrero': 2,
-  'feb': 2,
-  'feb.': 2,
-  'marzo': 3,
-  'mar': 3,
-  'mar.': 3,
-  'abril': 4,
-  'abr': 4,
-  'abr.': 4,
-  'mayo': 5,
-  'may': 5,
-  'may.': 5,
-  'junio': 6,
-  'jun': 6,
-  'jun.': 6,
-  'julio': 7,
-  'jul': 7,
-  'jul.': 7,
-  'agosto': 8,
-  'ago': 8,
-  'ago.': 8,
-  'septiembre': 9,
-  'sep': 9,
-  'sept': 9,
-  'sep.': 9,
-  'sept.': 9,
-  'octubre': 10,
-  'oct': 10,
-  'oct.': 10,
-  'noviembre': 11,
-  'nov': 11,
-  'nov.': 11,
-  'diciembre': 12,
-  'dic': 12,
-  'dic.': 12
-};
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Martes 3/11/2015
-    - 3/11/2015
-    - 3/11
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '((?:domingo|dom|lunes|lun|martes|mar|mi[ée]rcoles|mie|jueves|jue|viernes|vie|s[áa]bado|sab))' + '\\s*\\,?\\s*' + ')?' + '([0-1]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var DAYS_OFFSET = {
-  'domingo': 0,
-  'dom': 0,
-  'lunes': 1,
-  'lun': 1,
-  'martes': 2,
-  'mar': 2,
-  'miercoles': 3,
-  'miércoles': 3,
-  'mie': 3,
-  'jueves': 4,
-  'jue': 4,
-  'viernes': 5,
-  'vier': 5,
-  'sábado': 6,
-  'sabado': 6,
-  'sab': 6
-};
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6; // in Spanish we use day/month/year
-
-var WEEKDAY_GROUP = 2;
-var MONTH_GROUP = 4;
-var DAY_GROUP = 3;
-var YEAR_GROUP = 5;
-
-exports.Parser = function ESSlashDateFormatParser(argument) {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var date = null;
-    var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    month = parseInt(month);
-    day = parseInt(day);
-    year = parseInt(year);
-
-    if (month < 1 || month > 12) {
-      if (month > 12) {
-        // dd/mm/yyyy date format if day looks like a month, and month
-        // looks like a day.
-        if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
-          // unambiguous
-          var tday = month;
-          month = day;
-          day = tday;
-        } else {
-          // both month and day are <= 12
-          return null;
-        }
-      }
-    }
-
-    if (day < 1 || day > 31) return null;
-
-    if (year < 100) {
-      if (year > 50) {
-        year = year + 1900;
-      } else {
-        year = year + 2000;
-      }
-    }
-
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-    result.start.assign('year', year); //Day of week
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['ESSlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)(maintenant|aujourd'hui|ajd|cette\s*nuit|la\s*veille|(demain|hier)(\s*(matin|soir|aprem|après-midi))?|ce\s*(matin|soir)|cet\s*(après-midi|aprem))(?=\W|$)/i;
-
-exports.Parser = function FRCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-    var lowerText = text.toLowerCase();
-
-    if (lowerText.match(/demain/)) {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    }
-
-    if (lowerText.match(/hier/)) {
-      startMoment = startMoment.add(-1, 'day');
-    }
-
-    if (lowerText.match(/cette\s*nuit/)) {
-      // Normally means this coming midnight
-      result.start.imply('hour', 22);
-      result.start.imply('meridiem', 1);
-    } else if (lowerText.match(/la\s*veille/)) {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText.match(/(après-midi|aprem)/)) {
-      result.start.imply('hour', 14);
-    } else if (lowerText.match(/(soir)/)) {
-      result.start.imply('hour', 18);
-    } else if (lowerText.match(/matin/)) {
-      result.start.imply('hour', 8);
-    } else if (lowerText.match("maintenant")) {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['FRCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(10);
-
-var PATTERN = new RegExp('(\\W|^)' + '(dans|en)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|une?|(?:\\s*quelques)?|demi(?:\\s*|-?)?)\\s*' + '(secondes?|min(?:ute)?s?|heures?|jours?|semaines?|mois|années?)\\s*' + '(?=\\W|$)', 'i');
-var STRICT_PATTERN = new RegExp('(\\W|^)' + '(dans|en)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|un?)\\s*' + '(secondes?|minutes?|heures?|jours?)\\s*' + '(?=\\W|$)', 'i');
-
-exports.Parser = function FRDeadlineFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = match[3];
-
-    if (util.INTEGER_WORDS[num] !== undefined) {
-      num = util.INTEGER_WORDS[num];
-    } else if (num === 'un' || num === 'une') {
-      num = 1;
-    } else if (num.match(/quelques?/i)) {
-      num = 3;
-    } else if (num.match(/demi-?/i)) {
-      num = 0.5;
-    } else {
-      num = parseInt(num);
-    }
-
-    var date = dayjs(ref);
-
-    if (match[4].match(/jour|semaine|mois|année/i)) {
-      if (match[4].match(/jour/)) {
-        date = date.add(num, 'd');
-      } else if (match[4].match(/semaine/i)) {
-        date = date.add(num * 7, 'd');
-      } else if (match[4].match(/mois/i)) {
-        date = date.add(num, 'month');
-      } else if (match[4].match(/année/i)) {
-        date = date.add(num, 'year');
-      }
-
-      result.start.assign('year', date.year());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('day', date.date());
-      return result;
-    }
-
-    if (match[4].match(/heure/i)) {
-      date = date.add(num, 'hour');
-    } else if (match[4].match(/min/i)) {
-      date = date.add(num, 'minutes');
-    } else if (match[4].match(/secondes/i)) {
-      date = date.add(num, 'second');
-    }
-
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.assign('hour', date.hour());
-    result.start.assign('minute', date.minute());
-    result.start.assign('second', date.second());
-    result.tags['FRDeadlineFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(10);
-
-var DAYS_OFFSET = util.WEEKDAY_OFFSET;
-var PATTERN = new RegExp('(\\W|^)' + '(?:(Dimanche|Lundi|Mardi|mercredi|Jeudi|Vendredi|Samedi|Dim|Lun|Mar|Mer|Jeu|Ven|Sam)\\s*,?\\s*)?' + '([0-9]{1,2}|1er)' + '(?:\\s*(?:au|\\-|\\–|jusqu\'au?|\\s)\\s*([0-9]{1,2})(?:er)?)?\\s*(?:de)?\\s*' + '(Jan(?:vier|\\.)?|F[ée]v(?:rier|\\.)?|Mars|Avr(?:il|\\.)?|Mai|Juin|Juil(?:let|\\.)?|Ao[uû]t|Sept(?:embre|\\.)?|Oct(?:obre|\\.)?|Nov(?:embre|\\.)?|d[ée]c(?:embre|\\.)?)' + '(?:\\s*(\\s*[0-9]{1,4}(?![^\\s]\\d))(?:\\s*(AC|[ap]\\.?\\s*c(?:h(?:r)?)?\\.?\\s*n\\.?))?)?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
-
-exports.Parser = function FRMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_GROUP];
-    day = parseInt(day);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (/a/i.test(match[YEAR_BE_GROUP])) {
-          // Ante Christe natum
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 janvier 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      result.end = result.start.clone();
-      result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
-    }
-
-    result.tags['FRMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Martes 3/11/2015
-    - 3/11/2015
-    - 3/11
-*/
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '((?:dimanche|dim|lundi|lun|mardi|mar|mercredi|mer|jeudi|jeu|vendredi|ven|samedi|sam|le))' + '\\s*\\,?\\s*' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var DAYS_OFFSET = {
-  'dimanche': 0,
-  'dim': 0,
-  'lundi': 1,
-  'lun': 1,
-  'mardi': 2,
-  'mar': 2,
-  'mercredi': 3,
-  'mer': 3,
-  'jeudi': 4,
-  'jeu': 4,
-  'vendredi': 5,
-  'ven': 5,
-  'samedi': 6,
-  'sam': 6
-};
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6; // In French we use day/month/year
-
-var WEEKDAY_GROUP = 2;
-var DAY_GROUP = 3;
-var MONTH_GROUP = 4;
-var YEAR_GROUP = 5;
-
-exports.Parser = function FRSlashDateFormatParser(argument) {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var date = null;
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    day = parseInt(day);
-    month = parseInt(month);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (month < 1 || month > 12) {
-      if (month > 12) {
-        // dd/mm/yyyy date format if day looks like a month, and month looks like a day.
-        if (day >= 1 && day <= 12 && month >= 13 && month <= 31) {
-          // unambiguous
-          var tday = month;
-          month = day;
-          day = tday;
-        } else {
-          // both month and day are <= 12
-          return null;
-        }
-      }
-    }
-
-    if (day < 1 || day > 31) return null;
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Day of week
-
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['FRSlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)il y a\s*([0-9]+|une?)\s*(minutes?|heures?|semaines?|jours?|mois|années?|ans?)(?=(?:\W|$))/i;
-
-exports.Parser = function FRTimeAgoFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    result.tags['FRTimeAgoFormatParser'] = true;
-    var num = parseInt(match[2]);
-
-    if (isNaN(num)) {
-      if (match[2].match(/demi/)) {
-        num = 0.5;
-      } else {
-        num = 1;
-      }
-    }
-
-    var date = dayjs(ref);
-
-    if (match[3].match(/heure/) || match[3].match(/minute/)) {
-      if (match[3].match(/heure/)) {
-        date = date.add(-num, 'hour');
-      } else if (match[3].match(/minute/)) {
-        date = date.add(-num, 'minute');
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      return result;
-    }
-
-    if (match[3].match(/semaine/)) {
-      date = date.add(-num, 'week');
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.imply('weekday', date.day());
-      return result;
-    }
-
-    if (match[3].match(/jour/)) {
-      date = date.add(-num, 'd');
-    }
-
-    if (match[3].match(/mois/)) {
-      date = date.add(-num, 'month');
-    }
-
-    if (match[3].match(/années?|ans?/)) {
-      date = date.add(-num, 'year');
-    }
-
-    result.start.assign('day', date.date());
-    result.start.assign('month', date.month() + 1);
-    result.start.assign('year', date.year());
-    return result;
-  };
-};
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:[àa])\\s*)?" + "(\\d{1,2}(?:h)?|midi|minuit)" + "(?:" + "(?:\\.|\\:|\\：|h)(\\d{1,2})(?:m)?" + "(?:" + "(?:\\:|\\：|m)(\\d{0,2})(?:s)?" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|[àa]|\\?)\\s*" + "(\\d{1,2}(?:h)?)" + "(?:" + "(?:\\.|\\:|\\：|h)(\\d{1,2})(?:m)?" + "(?:" + "(?:\\.|\\:|\\：|m)(\\d{1,2})(?:s)?" + ")?" + ")?" + "(?:\\s*(A\\.M\\.|P\\.M\\.|AM?|PM?))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var AM_PM_HOUR_GROUP = 5;
-
-exports.Parser = function FRTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['FRTimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (match[HOUR_GROUP].toLowerCase() == "midi") {
-      meridiem = 1;
-      hour = 12;
-    } else if (match[HOUR_GROUP].toLowerCase() == "minuit") {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    } else {
-      var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
-
-      if (startAtPM && result.start.get('hour') > hour) {
-        // 10pm - 1 (am)
-        result.end.imply('meridiem', 0);
-      } else if (hour > 12) {
-        result.end.imply('meridiem', 1);
-      }
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var updateParsedComponent = __webpack_require__(6).updateParsedComponent;
-
-var DAYS_OFFSET = {
-  'dimanche': 0,
-  'dim': 0,
-  'lundi': 1,
-  'lun': 1,
-  'mardi': 2,
-  'mar': 2,
-  'mercredi': 3,
-  'mer': 3,
-  'jeudi': 4,
-  'jeu': 4,
-  'vendredi': 5,
-  'ven': 5,
-  'samedi': 6,
-  'sam': 6
-};
-var PATTERN = new RegExp('(\\s|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:(ce)\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(dernier|prochain)\\s*)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.Parser = function FRWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-    if (offset === undefined) return null;
-    var modifier = null;
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-
-    if (prefix || postfix) {
-      var norm = prefix || postfix;
-      norm = norm.toLowerCase();
-
-      if (norm == 'dernier') {
-        modifier = 'last';
-      } else if (norm == 'prochain') {
-        modifier = 'next';
-      } else if (norm == 'ce') {
-        modifier = 'this';
-      }
-    }
-
-    updateParsedComponent(result, ref, offset, modifier);
-    result.tags['FRWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var quarterOfYear = __webpack_require__(53);
-
-var dayjs = __webpack_require__(2);
-
-dayjs.extend(quarterOfYear);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(10);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:les?|la|l\'|du|des?)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|\\d+)?\\s*' + '(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?)?\\s*' + '(secondes?|min(?:ute)?s?|heures?|jours?|semaines?|mois|trimestres?|années?)\\s*' + '(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?)?' + '(?=\\W|$)', 'i');
-var MULTIPLIER_GROUP = 2;
-var MODIFIER_1_GROUP = 3;
-var RELATIVE_WORD_GROUP = 4;
-var MODIFIER_2_GROUP = 5;
-
-exports.Parser = function FRRelativeDateFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length); // Multiplier
-
-    var multiplier = match[MULTIPLIER_GROUP] === undefined ? '1' : match[MULTIPLIER_GROUP];
-
-    if (util.INTEGER_WORDS[multiplier] !== undefined) {
-      multiplier = util.INTEGER_WORDS[multiplier];
-    } else {
-      multiplier = parseInt(multiplier);
-    } // Modifier
-
-
-    var modifier = match[MODIFIER_1_GROUP] === undefined ? match[MODIFIER_2_GROUP] === undefined ? '' : match[MODIFIER_2_GROUP].toLowerCase() : match[MODIFIER_1_GROUP].toLowerCase();
-
-    if (!modifier) {
-      // At least one modifier is mandatory to match this parser
-      return;
-    }
-
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    result.tags['FRRelativeDateFormatParser'] = true;
-    var modifierFactor;
-
-    switch (true) {
-      case /prochaine?s?/.test(modifier):
-      case /suivants?/.test(modifier):
-        modifierFactor = 1;
-        break;
-
-      case /derni[eè]re?s?/.test(modifier):
-      case /pass[ée]e?s?/.test(modifier):
-      case /pr[ée]c[ée]dents?/.test(modifier):
-        modifierFactor = -1;
-        break;
-    }
-
-    var total = multiplier * modifierFactor;
-    var dateFrom = dayjs(ref);
-    var dateTo = dayjs(ref);
-    var relative = match[RELATIVE_WORD_GROUP];
-    var startOf;
-
-    switch (true) {
-      case /secondes?/.test(relative):
-        dateFrom = dateFrom.add(total, 's');
-        dateTo = dateTo.add(modifierFactor, 's');
-        startOf = 'second';
-        break;
-
-      case /min(?:ute)?s?/.test(relative):
-        dateFrom = dateFrom.add(total, 'm');
-        dateTo = dateTo.add(modifierFactor, 'm');
-        startOf = 'minute';
-        break;
-
-      case /heures?/.test(relative):
-        dateFrom = dateFrom.add(total, 'h');
-        dateTo = dateTo.add(modifierFactor, 'h');
-        startOf = 'hour';
-        break;
-
-      case /jours?/.test(relative):
-        dateFrom = dateFrom.add(total, 'd');
-        dateTo = dateTo.add(modifierFactor, 'd');
-        startOf = 'day';
-        break;
-
-      case /semaines?/.test(relative):
-        dateFrom = dateFrom.add(total, 'w');
-        dateTo = dateTo.add(modifierFactor, 'w');
-        startOf = 'week';
-        break;
-
-      case /mois?/.test(relative):
-        dateFrom = dateFrom.add(total, 'M');
-        dateTo = dateTo.add(modifierFactor, 'M');
-        startOf = 'month';
-        break;
-
-      case /trimestres?/.test(relative):
-        dateFrom = dateFrom.add(total, 'Q');
-        dateTo = dateTo.add(modifierFactor, 'Q');
-        startOf = 'quarter';
-        break;
-
-      case /années?/.test(relative):
-        dateFrom = dateFrom.add(total, 'y');
-        dateTo = dateTo.add(modifierFactor, 'y');
-        startOf = 'year';
-        break;
-    } // if we go forward, switch the start and end dates
-
-
-    if (modifierFactor > 0) {
-      var dateTmp = dateFrom;
-      dateFrom = dateTo;
-      dateTo = dateTmp;
-    } // Get start and end of dates
-
-
-    dateFrom = dateFrom.startOf(startOf);
-    dateTo = dateTo.endOf(startOf);
-
-    if (startOf == 'week') {
-      // Weekday in FR start on Sat?
-      dateFrom = dateFrom.add(1, 'd');
-      dateTo = dateTo.add(1, 'd');
-    } // Assign results
-
-
-    result.start.assign('year', dateFrom.year());
-    result.start.assign('month', dateFrom.month() + 1);
-    result.start.assign('day', dateFrom.date());
-    result.start.assign('minute', dateFrom.minute());
-    result.start.assign('second', dateFrom.second());
-    result.start.assign('hour', dateFrom.hour());
-    result.start.assign('millisecond', dateFrom.millisecond());
-    result.end = result.start.clone();
-    result.end.assign('year', dateTo.year());
-    result.end.assign('month', dateTo.month() + 1);
-    result.end.assign('day', dateTo.date());
-    result.end.assign('minute', dateTo.minute());
-    result.end.assign('second', dateTo.second());
-    result.end.assign('hour', dateTo.hour());
-    result.end.assign('millisecond', dateTo.millisecond());
-    return result;
-  };
-};
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(t,n){ true?module.exports=n():undefined}(this,function(){"use strict";var t="month",n="quarter";return function(r,i){var e=i.prototype;e.quarter=function(t){return this.$utils().u(t)?Math.ceil((this.month()+1)/3):this.month(this.month()%3+3*(t-1))};var u=e.add;e.add=function(r,i){return r=Number(r),this.$utils().p(i)===n?this.add(3*r,t):u.bind(this)(r,i)};var s=e.startOf;e.startOf=function(r,i){var e=this.$utils(),u=!!e.u(i)||i;if(e.p(r)===n){var a=this.quarter()-1;return u?this.month(3*a).startOf(t).startOf("day"):this.month(3*a+2).endOf(t).endOf("day")}return s.bind(this)(r,i)}}});
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(7);
-
-var PATTERN = new RegExp('(\\d{2,4}|[' + Object.keys(util.NUMBER).join('') + ']{2,4})?' + '(?:\\s*)' + '(?:年)?' + '(?:[\\s|,|，]*)' + '(\\d{1,2}|[' + Object.keys(util.NUMBER).join('') + ']{1,2})' + '(?:\\s*)' + '(?:月)' + '(?:\\s*)' + '(\\d{1,2}|[' + Object.keys(util.NUMBER).join('') + ']{1,2})?' + '(?:\\s*)' + '(?:日|號)?');
-var YEAR_GROUP = 1;
-var MONTH_GROUP = 2;
-var DAY_GROUP = 3;
-
-exports.Parser = function ZHHantDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var startMoment = dayjs(ref);
-    var result = new ParsedResult({
-      text: match[0],
-      index: match.index,
-      ref: ref
-    }); //Month
-
-    var month = parseInt(match[MONTH_GROUP]);
-    if (isNaN(month)) month = util.zhStringToNumber(match[MONTH_GROUP]);
-    result.start.assign('month', month); //Day
-
-    if (match[DAY_GROUP]) {
-      var day = parseInt(match[DAY_GROUP]);
-      if (isNaN(day)) day = util.zhStringToNumber(match[DAY_GROUP]);
-      result.start.assign('day', day);
-    } else {
-      result.start.imply('day', startMoment.date());
-    } //Year
-
-
-    if (match[YEAR_GROUP]) {
-      var year = parseInt(match[YEAR_GROUP]);
-      if (isNaN(year)) year = util.zhStringToYear(match[YEAR_GROUP]);
-      result.start.assign('year', year);
-    } else {
-      result.start.imply('year', startMoment.year());
-    }
-
-    result.tags.ZHHantDateParser = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var updateParsedComponent = __webpack_require__(6).updateParsedComponent;
-
-var util = __webpack_require__(7);
-
-var PATTERN = new RegExp('(上|今|下|這|呢)?' + '(?:個)?' + '(?:星期|禮拜)' + '(' + Object.keys(util.WEEKDAY_OFFSET).join('|') + ')');
-var PREFIX_GROUP = 1;
-var WEEKDAY_GROUP = 2;
-
-exports.Parser = function ZHHantWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index;
-    text = match[0];
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP];
-    var offset = util.WEEKDAY_OFFSET[dayOfWeek];
-    if (offset === undefined) return null;
-    var modifier = null;
-    var prefix = match[PREFIX_GROUP];
-
-    if (prefix == '上') {
-      modifier = 'last';
-    } else if (prefix == '下') {
-      modifier = 'next';
-    } else if (prefix == '今' || prefix == '這' || prefix == '呢') {
-      modifier = 'this';
-    }
-
-    updateParsedComponent(result, ref, offset, modifier);
-    result.tags['ZHHantWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var util = __webpack_require__(7);
-
-var patternString1 = '(?:由|從|自)?' + '(?:' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(早|朝|晚)|' + '(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨))|' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(?:日|天)' + '(?:[\\s,，]*)' + '(?:(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨)))?' + ')?' + '(?:[\\s,，]*)' + '(?:(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+)(?:\\s*)(?:點|時|:|：)' + '(?:\\s*)' + '(\\d+|半|正|整|[' + Object.keys(util.NUMBER).join('') + ']+)?(?:\\s*)(?:分|:|：)?' + '(?:\\s*)' + '(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+)?(?:\\s*)(?:秒)?)' + '(?:\\s*(A\.M\.|P\.M\.|AM?|PM?))?';
-var patternString2 = '(?:\\s*(?:到|至|\\-|\\–|\\~|\\〜)\\s*)' + '(?:' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(早|朝|晚)|' + '(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨))|' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(?:日|天)' + '(?:[\\s,，]*)' + '(?:(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨)))?' + ')?' + '(?:[\\s,，]*)' + '(?:(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+)(?:\\s*)(?:點|時|:|：)' + '(?:\\s*)' + '(\\d+|半|正|整|[' + Object.keys(util.NUMBER).join('') + ']+)?(?:\\s*)(?:分|:|：)?' + '(?:\\s*)' + '(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+)?(?:\\s*)(?:秒)?)' + '(?:\\s*(A\.M\.|P\.M\.|AM?|PM?))?';
-var FIRST_REG_PATTERN = new RegExp(patternString1, 'i');
-var SECOND_REG_PATTERN = new RegExp(patternString2, 'i');
-var DAY_GROUP_1 = 1;
-var ZH_AM_PM_HOUR_GROUP_1 = 2;
-var ZH_AM_PM_HOUR_GROUP_2 = 3;
-var DAY_GROUP_3 = 4;
-var ZH_AM_PM_HOUR_GROUP_3 = 5;
-var HOUR_GROUP = 6;
-var MINUTE_GROUP = 7;
-var SECOND_GROUP = 8;
-var AM_PM_HOUR_GROUP = 9;
-
-exports.Parser = function ZHHantTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index;
-    result.text = match[0];
-    result.tags.ZHTimeExpressionParser = true;
-    var startMoment = refMoment.clone(); // ----- Day
-
-    if (match[DAY_GROUP_1]) {
-      var day1 = match[DAY_GROUP_1];
-
-      if (day1 == '明' || day1 == '聽') {
-        // Check not "Tomorrow" on late night
-        if (refMoment.hour() > 1) {
-          startMoment.add(1, 'day');
-        }
-      } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
-        startMoment.add(-1, 'day');
-      } else if (day1 == "前") {
-        startMoment.add(-2, 'day');
-      } else if (day1 == "大前") {
-        startMoment.add(-3, 'day');
-      } else if (day1 == "後") {
-        startMoment.add(2, 'day');
-      } else if (day1 == "大後") {
-        startMoment.add(3, 'day');
-      }
-
-      result.start.assign('day', startMoment.date());
-      result.start.assign('month', startMoment.month() + 1);
-      result.start.assign('year', startMoment.year());
-    } else if (match[DAY_GROUP_3]) {
-      var day3 = match[DAY_GROUP_3];
-
-      if (day3 == '明' || day3 == '聽') {
-        startMoment.add(1, 'day');
-      } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
-        startMoment.add(-1, 'day');
-      } else if (day3 == "前") {
-        startMoment.add(-2, 'day');
-      } else if (day3 == "大前") {
-        startMoment.add(-3, 'day');
-      } else if (day3 == "後") {
-        startMoment.add(2, 'day');
-      } else if (day3 == "大後") {
-        startMoment.add(3, 'day');
-      }
-
-      result.start.assign('day', startMoment.date());
-      result.start.assign('month', startMoment.month() + 1);
-      result.start.assign('year', startMoment.year());
-    } else {
-      result.start.imply('day', startMoment.date());
-      result.start.imply('month', startMoment.month() + 1);
-      result.start.imply('year', startMoment.year());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP]) {
-      var second = parseInt(match[SECOND_GROUP]);
-
-      if (isNaN(second)) {
-        second = util.zhStringToNumber(match[SECOND_GROUP]);
-      }
-
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    }
-
-    hour = parseInt(match[HOUR_GROUP]);
-
-    if (isNaN(hour)) {
-      hour = util.zhStringToNumber(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP]) {
-      if (match[MINUTE_GROUP] == '半') {
-        minute = 30;
-      } else if (match[MINUTE_GROUP] == '正' || match[MINUTE_GROUP] == '整') {
-        minute = 0;
-      } else {
-        minute = parseInt(match[MINUTE_GROUP]);
-
-        if (isNaN(minute)) {
-          minute = util.zhStringToNumber(match[MINUTE_GROUP]);
-        }
-      }
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP]) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_1]) {
-      var zhAMPMString1 = match[ZH_AM_PM_HOUR_GROUP_1];
-      var zhAMPM1 = zhAMPMString1[0];
-
-      if (zhAMPM1 == '朝' || zhAMPM1 == '早') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM1 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_2]) {
-      var zhAMPMString2 = match[ZH_AM_PM_HOUR_GROUP_2];
-      var zhAMPM2 = zhAMPMString2[0];
-
-      if (zhAMPM2 == '上' || zhAMPM2 == '朝' || zhAMPM2 == '早' || zhAMPM2 == '凌') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM2 == '下' || zhAMPM2 == '晏' || zhAMPM2 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_3]) {
-      var zhAMPMString3 = match[ZH_AM_PM_HOUR_GROUP_3];
-      var zhAMPM3 = zhAMPMString3[0];
-
-      if (zhAMPM3 == '上' || zhAMPM3 == '朝' || zhAMPM3 == '早' || zhAMPM3 == '凌') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM3 == '下' || zhAMPM3 == '晏' || zhAMPM3 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } else {
-      if (hour < 12) {
-        result.start.imply('meridiem', 0);
-      } else {
-        result.start.imply('meridiem', 1);
-      }
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    }
-
-    var endMoment = startMoment.clone();
-    result.end = new ParsedComponents(null, null); // ----- Day
-
-    if (match[DAY_GROUP_1]) {
-      var day1 = match[DAY_GROUP_1];
-
-      if (day1 == '明' || day1 == '聽') {
-        // Check not "Tomorrow" on late night
-        if (refMoment.hour() > 1) {
-          endMoment.add(1, 'day');
-        }
-      } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
-        endMoment.add(-1, 'day');
-      } else if (day1 == "前") {
-        endMoment.add(-2, 'day');
-      } else if (day1 == "大前") {
-        endMoment.add(-3, 'day');
-      } else if (day1 == "後") {
-        endMoment.add(2, 'day');
-      } else if (day1 == "大後") {
-        endMoment.add(3, 'day');
-      }
-
-      result.end.assign('day', endMoment.date());
-      result.end.assign('month', endMoment.month() + 1);
-      result.end.assign('year', endMoment.year());
-    } else if (match[DAY_GROUP_3]) {
-      var day3 = match[DAY_GROUP_3];
-
-      if (day3 == '明' || day3 == '聽') {
-        endMoment.add(1, 'day');
-      } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
-        endMoment.add(-1, 'day');
-      } else if (day3 == "前") {
-        endMoment.add(-2, 'day');
-      } else if (day3 == "大前") {
-        endMoment.add(-3, 'day');
-      } else if (day3 == "後") {
-        endMoment.add(2, 'day');
-      } else if (day3 == "大後") {
-        endMoment.add(3, 'day');
-      }
-
-      result.end.assign('day', endMoment.date());
-      result.end.assign('month', endMoment.month() + 1);
-      result.end.assign('year', endMoment.year());
-    } else {
-      result.end.imply('day', endMoment.date());
-      result.end.imply('month', endMoment.month() + 1);
-      result.end.imply('year', endMoment.year());
-    }
-
-    hour = 0;
-    minute = 0;
-    meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP]) {
-      var second = parseInt(match[SECOND_GROUP]);
-
-      if (isNaN(second)) {
-        second = util.zhStringToNumber(match[SECOND_GROUP]);
-      }
-
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[HOUR_GROUP]);
-
-    if (isNaN(hour)) {
-      hour = util.zhStringToNumber(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP]) {
-      if (match[MINUTE_GROUP] == '半') {
-        minute = 30;
-      } else if (match[MINUTE_GROUP] == '正' || match[MINUTE_GROUP] == '整') {
-        minute = 0;
-      } else {
-        minute = parseInt(match[MINUTE_GROUP]);
-
-        if (isNaN(minute)) {
-          minute = util.zhStringToNumber(match[MINUTE_GROUP]);
-        }
-      }
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP]) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-
-      if (ampm == "a") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      }
-
-      if (ampm == "p") {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_1]) {
-      var zhAMPMString1 = match[ZH_AM_PM_HOUR_GROUP_1];
-      var zhAMPM1 = zhAMPMString1[0];
-
-      if (zhAMPM1 == '朝' || zhAMPM1 == '早') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM1 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_2]) {
-      var zhAMPMString2 = match[ZH_AM_PM_HOUR_GROUP_2];
-      var zhAMPM2 = zhAMPMString2[0];
-
-      if (zhAMPM2 == '上' || zhAMPM2 == '朝' || zhAMPM2 == '早' || zhAMPM2 == '凌') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM2 == '下' || zhAMPM2 == '晏' || zhAMPM2 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    } else if (match[ZH_AM_PM_HOUR_GROUP_3]) {
-      var zhAMPMString3 = match[ZH_AM_PM_HOUR_GROUP_3];
-      var zhAMPM3 = zhAMPMString3[0];
-
-      if (zhAMPM3 == '上' || zhAMPM3 == '朝' || zhAMPM3 == '早' || zhAMPM3 == '凌') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else if (zhAMPM3 == '下' || zhAMPM3 == '晏' || zhAMPM3 == '晚') {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    } else {
-      var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
-
-      if (startAtPM && result.start.get('hour') > hour) {
-        // 10pm - 1 (am)
-        result.end.imply('meridiem', 0);
-      } else if (hour > 12) {
-        result.end.imply('meridiem', 1);
-      }
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(而家|立(?:刻|即)|即刻)|' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(早|朝|晚)|' + '(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨))|' + '(今|明|前|大前|後|大後|聽|昨|尋|琴)(?:日|天)' + '(?:[\\s|,|，]*)' + '(?:(上(?:午|晝)|朝(?:早)|早(?:上)|下(?:午|晝)|晏(?:晝)|晚(?:上)|夜(?:晚)?|中(?:午)|凌(?:晨)))?', 'i');
-var NOW_GROUP = 1;
-var DAY_GROUP_1 = 2;
-var TIME_GROUP_1 = 3;
-var TIME_GROUP_2 = 4;
-var DAY_GROUP_3 = 5;
-var TIME_GROUP_3 = 6;
-
-exports.Parser = function ZHHantCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    text = match[0];
-    var index = match.index;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var startMoment = refMoment;
-
-    if (match[NOW_GROUP]) {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    } else if (match[DAY_GROUP_1]) {
-      var day1 = match[DAY_GROUP_1];
-      var time1 = match[TIME_GROUP_1];
-
-      if (day1 == '明' || day1 == '聽') {
-        // Check not "Tomorrow" on late night
-        if (refMoment.hour() > 1) {
-          startMoment = startMoment.add(1, 'day');
-        }
-      } else if (day1 == '昨' || day1 == '尋' || day1 == '琴') {
-        startMoment = startMoment.add(-1, 'day');
-      } else if (day1 == "前") {
-        startMoment = startMoment.add(-2, 'day');
-      } else if (day1 == "大前") {
-        startMoment = startMoment.add(-3, 'day');
-      } else if (day1 == "後") {
-        startMoment = startMoment.add(2, 'day');
-      } else if (day1 == "大後") {
-        startMoment = startMoment.add(3, 'day');
-      }
-
-      if (time1 == '早' || time1 == '朝') {
-        result.start.imply('hour', 6);
-      } else if (time1 == '晚') {
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      }
-    } else if (match[TIME_GROUP_2]) {
-      var timeString2 = match[TIME_GROUP_2];
-      var time2 = timeString2[0];
-
-      if (time2 == '早' || time2 == '朝' || time2 == '上') {
-        result.start.imply('hour', 6);
-      } else if (time2 == '下' || time2 == '晏') {
-        result.start.imply('hour', 15);
-        result.start.imply('meridiem', 1);
-      } else if (time2 == '中') {
-        result.start.imply('hour', 12);
-        result.start.imply('meridiem', 1);
-      } else if (time2 == '夜' || time2 == '晚') {
-        result.start.imply('hour', 22);
-        result.start.imply('meridiem', 1);
-      } else if (time2 == '凌') {
-        result.start.imply('hour', 0);
-      }
-    } else if (match[DAY_GROUP_3]) {
-      var day3 = match[DAY_GROUP_3];
-
-      if (day3 == '明' || day3 == '聽') {
-        // Check not "Tomorrow" on late night
-        if (refMoment.hour() > 1) {
-          startMoment = startMoment.add(1, 'day');
-        }
-      } else if (day3 == '昨' || day3 == '尋' || day3 == '琴') {
-        startMoment = startMoment.add(-1, 'day');
-      } else if (day3 == "前") {
-        startMoment = startMoment.add(-2, 'day');
-      } else if (day3 == "大前") {
-        startMoment = startMoment.add(-3, 'day');
-      } else if (day3 == "後") {
-        startMoment = startMoment.add(2, 'day');
-      } else if (day3 == "大後") {
-        startMoment = startMoment.add(3, 'day');
-      }
-
-      var timeString3 = match[TIME_GROUP_3];
-
-      if (timeString3) {
-        var time3 = timeString3[0];
-
-        if (time3 == '早' || time3 == '朝' || time3 == '上') {
-          result.start.imply('hour', 6);
-        } else if (time3 == '下' || time3 == '晏') {
-          result.start.imply('hour', 15);
-          result.start.imply('meridiem', 1);
-        } else if (time3 == '中') {
-          result.start.imply('hour', 12);
-          result.start.imply('meridiem', 1);
-        } else if (time3 == '夜' || time3 == '晚') {
-          result.start.imply('hour', 22);
-          result.start.imply('meridiem', 1);
-        } else if (time3 == '凌') {
-          result.start.imply('hour', 0);
-        }
-      }
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags.ZHHantCasualDateParser = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(7);
-
-var PATTERN = new RegExp('(\\d+|[' + Object.keys(util.NUMBER).join('') + ']+|半|幾)(?:\\s*)' + '(?:個)?' + '(秒(?:鐘)?|分鐘|小時|鐘|日|天|星期|禮拜|月|年)' + '(?:(?:之|過)?後|(?:之)?內)', 'i');
-var NUMBER_GROUP = 1;
-var UNIT_GROUP = 2;
-
-exports.Parser = function ZHHantCasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index;
-    text = match[0];
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var number = parseInt(match[NUMBER_GROUP]);
-
-    if (isNaN(number)) {
-      number = util.zhStringToNumber(match[NUMBER_GROUP]);
-    }
-
-    if (isNaN(number)) {
-      var string = match[NUMBER_GROUP];
-
-      if (string === '幾') {
-        number = 3;
-      } else if (string === '半') {
-        number = 0.5;
-      } else {
-        //just in case
-        return null;
-      }
-    }
-
-    var date = dayjs(ref);
-    var unit = match[UNIT_GROUP];
-    var unitAbbr = unit[0];
-
-    if (unitAbbr.match(/[日天星禮月年]/)) {
-      if (unitAbbr == '日' || unitAbbr == '天') {
-        date = date.add(number, 'd');
-      } else if (unitAbbr == '星' || unitAbbr == '禮') {
-        date = date.add(number * 7, 'd');
-      } else if (unitAbbr == '月') {
-        date = date.add(number, 'month');
-      } else if (unitAbbr == '年') {
-        date = date.add(number, 'year');
-      }
-
-      result.start.assign('year', date.year());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('day', date.date());
-      return result;
-    }
-
-    if (unitAbbr == '秒') {
-      date = date.add(number, 'second');
-    } else if (unitAbbr == '分') {
-      date = date.add(number, 'minute');
-    } else if (unitAbbr == '小' || unitAbbr == '鐘') {
-      date = date.add(number, 'hour');
-    }
-
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.assign('hour', date.hour());
-    result.start.assign('minute', date.minute());
-    result.start.assign('second', date.second());
-    result.tags.ZHHantDeadlineFormatParser = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(8);
-
-var PATTERN = new RegExp('(\\W|^)' + '(in|nach)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|einigen|eine[rm]\\s*halben|eine[rm])\\s*' + '(sekunden?|min(?:ute)?n?|stunden?|tag(?:en)?|wochen?|monat(?:en)?|jahr(?:en)?)\\s*' + '(?=\\W|$)', 'i');
-var STRICT_PATTERN = new RegExp('(\\W|^)' + '(in|nach)\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|eine(?:r|m)?)\\s*' + '(sekunden?|minuten?|stunden?|tag(?:en)?)\\s*' + '(?=\\W|$)', 'i');
-
-exports.Parser = function DEDeadlineFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = match[3].toLowerCase();
-
-    if (util.INTEGER_WORDS[num] !== undefined) {
-      num = util.INTEGER_WORDS[num];
-    } else if (num === 'einer' || num === 'einem') {
-      num = 1;
-    } else if (num === 'einigen') {
-      num = 3;
-    } else if (/halben/.test(num)) {
-      num = 0.5;
-    } else {
-      num = parseInt(num);
-    }
-
-    var date = dayjs(ref);
-
-    if (/tag|woche|monat|jahr/i.test(match[4])) {
-      if (/tag/i.test(match[4])) {
-        date = date.add(num, 'd');
-      } else if (/woche/i.test(match[4])) {
-        date = date.add(num * 7, 'd');
-      } else if (/monat/i.test(match[4])) {
-        date = date.add(num, 'month');
-      } else if (/jahr/i.test(match[4])) {
-        date = date.add(num, 'year');
-      }
-
-      result.start.assign('year', date.year());
-      result.start.assign('month', date.month() + 1);
-      result.start.assign('day', date.date());
-      return result;
-    }
-
-    if (/stunde/i.test(match[4])) {
-      date = date.add(num, 'hour');
-    } else if (/min/i.test(match[4])) {
-      date = date.add(num, 'minute');
-    } else if (/sekunde/i.test(match[4])) {
-      date = date.add(num, 'second');
-    }
-
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.assign('hour', date.hour());
-    result.start.assign('minute', date.minute());
-    result.start.assign('second', date.second());
-    result.tags['DEDeadlineFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(8);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:am\\s*?)?' + '(?:(Sonntag|Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|So|Mo|Di|Mi|Do|Fr|Sa)\\s*,?\\s*)?' + '(?:den\\s*)?' + '([0-9]{1,2})\\.' + '(?:\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\s)\\s*([0-9]{1,2})\\.)?\\s*' + '(Jan(?:uar|\\.)?|Feb(?:ruar|\\.)?|Mär(?:z|\\.)?|Maerz|Mrz\\.?|Apr(?:il|\\.)?|Mai|Jun(?:i|\\.)?|Jul(?:i|\\.)?|Aug(?:ust|\\.)?|Sep(?:t|t\\.|tember|\\.)?|Okt(?:ober|\\.)?|Nov(?:ember|\\.)?|Dez(?:ember|\\.)?)' + '(?:' + ',?\\s*([0-9]{1,4}(?![^\\s]\\d))' + '(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?' + ')?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-var YEAR_BE_GROUP = 7;
-
-exports.Parser = function DEMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_GROUP];
-    day = parseInt(day);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (/v/i.test(match[YEAR_BE_GROUP])) {
-          // v.Chr.
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 January 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      result.end = result.start.clone();
-      result.end.assign('day', parseInt(match[DATE_TO_GROUP]));
-    }
-
-    result.tags['DEMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    
-    The parser for parsing month name and year.
-    
-    EX. 
-        - Januar
-        - Januar 2012
-*/
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(8);
-
-var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' + '(Jan\\.?|Januar|Feb\\.?|Februar|Mär\\.?|M(?:ä|ae)rz|Mrz\\.?|Apr\\.?|April|Mai\\.?|Jun\\.?|Juni|Jul\\.?|Juli|Aug\\.?|August|Sep\\.?|Sept\\.?|September|Okt\\.?|Oktober|Nov\\.?|November|Dez\\.?|Dezember)' + '\\s*' + '(?:' + ',?\\s*(?:([0-9]{4})(\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?|([0-9]{1,4})\\s*([vn]\\.?\\s*C(?:hr)?\\.?))' + ')?' + '(?=[^\\s\\w]|$)', 'i');
-var MONTH_NAME_GROUP = 2;
-var YEAR_GROUP = 3;
-var YEAR_BE_GROUP = 4;
-var YEAR_GROUP2 = 5;
-var YEAR_BE_GROUP2 = 6;
-
-exports.Parser = function ENMonthNameParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = 1;
-    var year = null;
-
-    if (match[YEAR_GROUP] || match[YEAR_GROUP2]) {
-      year = match[YEAR_GROUP] || match[YEAR_GROUP2];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2]) {
-        if (/v/i.test(match[YEAR_BE_GROUP] || match[YEAR_BE_GROUP2])) {
-          // v.Chr.
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    }
-
-    if (this.isStrictMode() && result.text.match(/^\w+$/)) {
-      return false;
-    }
-
-    result.tags['DEMonthNameParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - Tuesday 11/3/2015
-    - 11/3/2015
-    - 11/3
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:am\\s*?)?' + '((?:sonntag|so|montag|mo|dienstag|di|mittwoch|mi|donnerstag|do|freitag|fr|samstag|sa))' + '\\s*\\,?\\s*' + '(?:den\\s*)?' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var DAYS_OFFSET = {
-  'sonntag': 0,
-  'so': 0,
-  'montag': 1,
-  'mo': 1,
-  'dienstag': 2,
-  'di': 2,
-  'mittwoch': 3,
-  'mi': 3,
-  'donnerstag': 4,
-  'do': 4,
-  'freitag': 5,
-  'fr': 5,
-  'samstag': 6,
-  'sa': 6
-};
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6;
-var WEEKDAY_GROUP = 2;
-var DAY_GROUP = 3;
-var MONTH_GROUP = 4;
-var YEAR_GROUP = 5;
-
-exports.Parser = function DESlashDateFormatParser(argument) {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    month = parseInt(month);
-    day = parseInt(day);
-    year = parseInt(year);
-    if (month < 1 || month > 12) return null;
-    if (day < 1 || day > 31) return null;
-
-    if (year < 100) {
-      if (year > 50) {
-        year = year + 1900;
-      } else {
-        year = year + 2000;
-      }
-    }
-
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-    result.start.assign('year', year); //Day of week
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['DESlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(8);
-
-var PATTERN = new RegExp('' + '(\\W|^)vor\\s*' + '(' + util.INTEGER_WORDS_PATTERN + '|[0-9]+|einigen|eine[rm]\\s*halben|eine[rm])\\s*' + '(sekunden?|min(?:ute)?n?|stunden?|wochen?|tag(?:en)?|monat(?:en)?|jahr(?:en)?)\\s*' + '(?=(?:\\W|$))', 'i');
-var STRICT_PATTERN = new RegExp('' + '(\\W|^)vor\\s*' + '([0-9]+|eine(?:r|m))\\s*' + '(sekunden?|minuten?|stunden?|tag(?:en)?)' + '(?=(?:\\W|$))', 'i');
-
-exports.Parser = function DETimeAgoFormatParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return this.isStrictMode() ? STRICT_PATTERN : PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var text = match[0];
-    text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var num = match[2].toLowerCase();
-
-    if (util.INTEGER_WORDS[num] !== undefined) {
-      num = util.INTEGER_WORDS[num];
-    } else if (num === 'einer' || num === 'einem') {
-      num = 1;
-    } else if (num === 'einigen') {
-      num = 3;
-    } else if (/halben/.test(num)) {
-      num = 0.5;
-    } else {
-      num = parseInt(num);
-    }
-
-    var date = dayjs(ref);
-
-    if (/stunde|min|sekunde/i.test(match[3])) {
-      if (/stunde/i.test(match[3])) {
-        date = date.add(-num, 'hour');
-      } else if (/min/i.test(match[3])) {
-        date = date.add(-num, 'minute');
-      } else if (/sekunde/i.test(match[3])) {
-        date = date.add(-num, 'second');
-      }
-
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.assign('hour', date.hour());
-      result.start.assign('minute', date.minute());
-      result.start.assign('second', date.second());
-      result.tags['DETimeAgoFormatParser'] = true;
-      return result;
-    }
-
-    if (/woche/i.test(match[3])) {
-      date = date.add(-num, 'week');
-      result.start.imply('day', date.date());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('year', date.year());
-      result.start.imply('weekday', date.day());
-      return result;
-    }
-
-    if (/tag/i.test(match[3])) {
-      date = date.add(-num, 'd');
-    }
-
-    if (/monat/i.test(match[3])) {
-      date = date.add(-num, 'month');
-    }
-
-    if (/jahr/i.test(match[3])) {
-      date = date.add(-num, 'year');
-    }
-
-    result.start.assign('day', date.date());
-    result.start.assign('month', date.month() + 1);
-    result.start.assign('year', date.year());
-    return result;
-  };
-};
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:um|von)\\s*)?" + "(\\d{1,4}|mittags?|mitternachts?)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})" + ")?" + ")?" + "(?:\\s*uhr)?" + "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|bis|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + ")?" + ")?" + "(?:\\s*(morgens|vormittags|mittags|nachmittags|abends|nachts))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var AM_PM_HOUR_GROUP = 5;
-
-exports.Parser = function DETimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['DETimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (/mittags?/i.test(match[HOUR_GROUP])) {
-      meridiem = 1;
-      hour = 12;
-    } else if (/mitternachts?/i.test(match[HOUR_GROUP])) {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-
-      if (ampm === 'morgens' || ampm === 'vormittags') {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } else {
-      if (hour < 12) {
-        result.start.imply('meridiem', 0);
-      } else {
-        result.start.imply('meridiem', 1);
-      }
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-
-      if (ampm === 'morgens' || ampm === 'vormittags') {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      } else {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    } else {
-      var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
-
-      if (startAtPM && result.start.get('hour') > hour) {
-        // 10pm - 1 (am)
-        result.end.imply('meridiem', 0);
-      } else if (hour > 12) {
-        result.end.imply('meridiem', 1);
-      }
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var DAYS_OFFSET = {
-  'sonntag': 0,
-  'so': 0,
-  'montag': 1,
-  'mo': 1,
-  'dienstag': 2,
-  'di': 2,
-  'mittwoch': 3,
-  'mi': 3,
-  'donnerstag': 4,
-  'do': 4,
-  'freitag': 5,
-  'fr': 5,
-  'samstag': 6,
-  'sa': 6
-};
-var PATTERN = new RegExp('(\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:a[mn]\\s*?)?' + '(?:(diese[mn]|letzte[mn]|n(?:ä|ae)chste[mn])\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(diese|letzte|n(?:ä|ae)chste)\\s*woche)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.Parser = function DEWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-    if (offset === undefined) return null;
-    var startMoment = dayjs(ref);
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-    var refOffset = startMoment.day();
-    var norm = prefix || postfix;
-    norm = norm || '';
-    norm = norm.toLowerCase();
-
-    if (/letzte/.test(norm)) {
-      startMoment = startMoment.day(offset - 7);
-    } else if (/n(?:ä|ae)chste/.test(norm)) {
-      startMoment = startMoment.day(offset + 7);
-    } else if (/diese/.test(norm)) {
-      if (opt.forwardDate && refOffset > offset) {
-        startMoment = startMoment.day(offset + 7);
-      } else {
-        startMoment = startMoment.day(offset);
-      }
-    } else {
-      if (opt.forwardDate && refOffset > offset) {
-        startMoment = startMoment.day(offset + 7);
-      } else if (!opt.forwardDate && Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-        startMoment = startMoment.day(offset - 7);
-      } else if (!opt.forwardDate && Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-        startMoment = startMoment.day(offset + 7);
-      } else {
-        startMoment = startMoment.day(offset);
-      }
-    }
-
-    result.start.assign('weekday', offset);
-    result.start.imply('day', startMoment.date());
-    result.start.imply('month', startMoment.month() + 1);
-    result.start.imply('year', startMoment.year());
-    return result;
-  };
-};
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)(' + 'jetzt|' + '(?:heute|diesen)\\s*(morgen|vormittag|mittag|nachmittag|abend)|' + '(?:heute|diese)\\s*nacht|' + 'heute|' + '(?:(?:ü|ue)ber)?morgen(?:\\s*(morgen|vormittag|mittag|nachmittag|abend|nacht))?|' + '(?:vor)?gestern(?:\\s*(morgen|vormittag|mittag|nachmittag|abend|nacht))?|' + 'letzte\\s*nacht' + ')(?=\\W|$)', 'i');
-
-exports.Parser = function DECasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var lowerText = text.toLowerCase();
-    var startMoment = refMoment;
-
-    if (/(?:heute|diese)\s*nacht/.test(lowerText)) {
-      // Normally means this coming midnight
-      result.start.imply('hour', 22);
-      result.start.imply('meridiem', 1);
-    } else if (/^(?:ü|ue)bermorgen/.test(lowerText)) {
-      startMoment = startMoment.add(refMoment.hour() > 1 ? 2 : 1, 'day');
-    } else if (/^morgen/.test(lowerText)) {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (/^gestern/.test(lowerText)) {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (/^vorgestern/.test(lowerText)) {
-      startMoment = startMoment.add(-2, 'day');
-    } else if (/letzte\s*nacht/.test(lowerText)) {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText === 'jetzt') {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    }
-
-    var secondMatch = match[3] || match[4] || match[5];
-
-    if (secondMatch) {
-      switch (secondMatch.toLowerCase()) {
-        case 'morgen':
-          result.start.imply('hour', 6);
-          break;
-
-        case 'vormittag':
-          result.start.imply('hour', 9);
-          break;
-
-        case 'mittag':
-          result.start.imply('hour', 12);
-          break;
-
-        case 'nachmittag':
-          result.start.imply('hour', 15);
-          result.start.imply('meridiem', 1);
-          break;
-
-        case 'abend':
-          result.start.imply('hour', 18);
-          result.start.imply('meridiem', 1);
-          break;
-
-        case 'nacht':
-          result.start.imply('hour', 0);
-          break;
-      }
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['DECasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-    The parser for parsing month name and year.
-
-    EX.
-        - januari
-        - januari 2012
-        - januari, 2012
-*/
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(11);
-
-var PATTERN = new RegExp('(^|\\D\\s+|[^\\w\\s])' + '(' + util.MONTH_PATTERN + ')' + '\\s*' + '(?:' + '[,-]?\\s*([0-9]{4})(\\s*BE|n\.Chr\.|v\.Chr\.)?' + ')?' + '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
-var MONTH_NAME_GROUP = 2;
-var YEAR_GROUP = 3;
-var YEAR_BE_GROUP = 4;
-
-exports.Parser = function ENMonthNameParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var day = 1;
-    var monthName = match[MONTH_NAME_GROUP];
-    var month = util.MONTH_OFFSET[monthName.toLowerCase()];
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-      year = parseInt(year);
-
-      if (match[YEAR_BE_GROUP]) {
-        if (match[YEAR_BE_GROUP].match(/BE/)) {
-          // Buddhist Era
-          year = year - 543;
-        } else if (match[YEAR_BE_GROUP].match(/v\.Chr\./)) {
-          // Before Christ
-          year = -year;
-        }
-      } else if (year < 100) {
-        year = year + 2000;
-      }
-    }
-
-    if (year) {
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.imply('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    }
-
-    if (result.text.match(/^\w{3}$/)) {
-      return false;
-    }
-
-    result.tags['NLMonthNameParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var parser = __webpack_require__(0);
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(11);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:op\\s*?)?' + '(?:' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*,?\\s*)?' + '([0-9]{1,2})\.?' + '(?:\\s*(?:tot|\\-|\\–|tot en met|t\\/m)\\s*([0-9]{1,2})\.?)?\\s*' + '(' + util.MONTH_PATTERN + ')' + '(?:' + '(?:-|\/|,?\\s*)' + '((?:' + '[1-9][0-9]{0,3}\\s*(?:BE|n\.Chr\.|v\.Chr\.)|' + '[1-2][0-9]{3}|' + '[5-9][0-9]' + ')(?![^\\s]\\d))' + ')?' + '(?=\\W|$)', 'i');
-var WEEKDAY_GROUP = 2;
-var DATE_GROUP = 3;
-var DATE_TO_GROUP = 4;
-var MONTH_NAME_GROUP = 5;
-var YEAR_GROUP = 6;
-
-exports.Parser = function ENMonthNameLittleEndianParser() {
-  parser.Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var result = new ParsedResult({
-      text: match[0].substr(match[1].length, match[0].length - match[1].length),
-      index: match.index + match[1].length,
-      ref: ref
-    });
-    var month = match[MONTH_NAME_GROUP];
-    month = util.MONTH_OFFSET[month.toLowerCase()];
-    var day = match[DATE_GROUP];
-    day = parseInt(day);
-    var year = null;
-
-    if (match[YEAR_GROUP]) {
-      year = match[YEAR_GROUP];
-
-      if (/BE/i.test(year)) {
-        // Buddhist Era
-        year = year.replace(/BE/i, '');
-        year = parseInt(year) - 543;
-      } else if (/v\.Chr\./i.test(year)) {
-        // Before Christ
-        year = year.replace(/v\.Chr\./i, '');
-        year = -parseInt(year);
-      } else if (/n\.Chr\./i.test(year)) {
-        year = year.replace(/n\.Chr\./i, '');
-        year = parseInt(year);
-      } else {
-        year = parseInt(year);
-
-        if (year < 100) {
-          if (year > 50) {
-            year = year + 1900;
-          } else {
-            year = year + 2000;
-          }
-        }
-      }
-    }
-
-    if (year) {
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.assign('year', year);
-    } else {
-      year = parser.findYearClosestToRef(ref, day, month);
-      result.start.assign('day', day);
-      result.start.assign('month', month);
-      result.start.imply('year', year);
-    } // Weekday component
-
-
-    if (match[WEEKDAY_GROUP]) {
-      var weekday = match[WEEKDAY_GROUP];
-      weekday = util.WEEKDAY_OFFSET[weekday.toLowerCase()];
-      result.start.assign('weekday', weekday);
-    } // Text can be 'range' value. Such as '12 - 13 januari 2012'
-
-
-    if (match[DATE_TO_GROUP]) {
-      var endDate = parseInt(match[DATE_TO_GROUP]);
-      result.end = result.start.clone();
-      result.end.assign('day', endDate);
-    }
-
-    result.tags['NLMonthNameLittleEndianParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    Date format with slash "/" (also "-" and ".") between numbers
-    - dinsdag 11/3/2015
-    - 11/3/2015
-    - 11/3
-    - dinsdag 11.mrt.15
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var util = __webpack_require__(11);
-
-var PATTERN = new RegExp('(\\W|^)' + '(?:' + '(?:op\\s*?)?' + '(' + util.WEEKDAY_PATTERN + ')' + '\\s*\\,?\\s*' + '(?:de\\s*)?' + ')?' + '([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-1]{0,1}[0-9]{1}|' + util.MONTH_PATTERN + ')' + '(?:' + '[\\/\\.\\-]' + '([0-9]{4}\s*\,?\s*|[0-9]{2}\s*\,?\s*)' + ')?' + '(\\W|$)', 'i');
-var OPENNING_GROUP = 1;
-var ENDING_GROUP = 6;
-var WEEKDAY_GROUP = 2;
-var DAY_GROUP = 3;
-var MONTH_GROUP = 4;
-var YEAR_GROUP = 5;
-
-exports.Parser = function DESlashDateFormatParser(argument) {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    if (match[OPENNING_GROUP] == '/' || match[ENDING_GROUP] == '/') {
-      // Long skip, if there is some overlapping like:
-      // XX[/YY/ZZ]
-      // [XX/YY/]ZZ
-      match.index += match[0].length;
-      return;
-    }
-
-    var index = match.index + match[OPENNING_GROUP].length;
-    var text = match[0].substr(match[OPENNING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
-    var result = new ParsedResult({
-      text: text,
-      index: index,
-      ref: ref
-    });
-    if (text.match(/^\d\.\d$/)) return;
-    if (text.match(/^\d\.\d{1,2}\.\d{1,2}$/)) return; // MM/dd -> OK
-    // MM.dd -> NG
-
-    if (!match[YEAR_GROUP] && match[0].indexOf('/') < 0) return;
-    var year = match[YEAR_GROUP] || dayjs(ref).year() + '';
-    var month = match[MONTH_GROUP];
-    var day = match[DAY_GROUP];
-    month = parseInt(month);
-
-    if (!month) {
-      month = util.MONTH_OFFSET[match[MONTH_GROUP].trim().toLowerCase()];
-    }
-
-    day = parseInt(day);
-    year = parseInt(year);
-    if (month < 1 || month > 12) return null;
-    if (day < 1 || day > 31) return null;
-
-    if (year < 100) {
-      if (year > 50) {
-        year = year + 1900;
-      } else {
-        year = year + 2000;
-      }
-    }
-
-    result.start.assign('day', day);
-    result.start.assign('month', month);
-    result.start.assign('year', year); //Day of week
-
-    if (match[WEEKDAY_GROUP]) {
-      result.start.assign('weekday', util.WEEKDAY_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
-    }
-
-    result.tags['NLSlashDateFormatParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var DAYS_OFFSET = {
-  'zondag': 0,
-  'zo': 0,
-  'maandag': 1,
-  'ma': 1,
-  'dinsdag': 2,
-  'di': 2,
-  'woensdag': 3,
-  'wo': 3,
-  'donderdag': 4,
-  'do': 4,
-  'vrijdag': 5,
-  'vr': 5,
-  'zaterdag': 6,
-  'za': 6
-};
-var PATTERN = new RegExp('(\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:on\\s*?)?' + '(?:(deze|afgelopen|vorige|volgende|komende)\\s*(?:week)?\\s*)?' + '(' + Object.keys(DAYS_OFFSET).join('|') + ')' + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(deze|afgelopen|vorige|volgende|komende)\\s*week)?' + '(?=\\W|$)', 'i');
-var PREFIX_GROUP = 2;
-var WEEKDAY_GROUP = 3;
-var POSTFIX_GROUP = 4;
-
-exports.updateParsedComponent = function updateParsedComponent(result, ref, offset, modifier) {
-  var startMoment = dayjs(ref);
-  var startMomentFixed = false;
-  var refOffset = startMoment.day();
-
-  if (modifier == 'afgelopen' || modifier == 'vorige') {
-    startMoment = startMoment.day(offset - 7);
-    startMomentFixed = true;
-  } else if (modifier == 'volgende') {
-    startMoment = startMoment.day(offset + 7);
-    startMomentFixed = true;
-  } else if (modifier == 'deze' || modifier == 'komende') {
-    startMoment = startMoment.day(offset);
-  } else {
-    if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-      startMoment = startMoment.day(offset - 7);
-    } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-      startMoment = startMoment.day(offset + 7);
-    } else {
-      startMoment = startMoment.day(offset);
-    }
-  }
-
-  result.start.assign('weekday', offset);
-
-  if (startMomentFixed) {
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-  } else {
-    result.start.imply('day', startMoment.date());
-    result.start.imply('month', startMoment.month() + 1);
-    result.start.imply('year', startMoment.year());
-  }
-
-  return result;
-};
-
-exports.Parser = function NLWeekdayParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var index = match.index + match[1].length;
-    var text = match[0].substr(match[1].length, match[0].length - match[1].length);
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-    var offset = DAYS_OFFSET[dayOfWeek];
-
-    if (offset === undefined) {
-      return null;
-    }
-
-    var prefix = match[PREFIX_GROUP];
-    var postfix = match[POSTFIX_GROUP];
-    var norm = prefix || postfix;
-    norm = norm || '';
-    norm = norm.toLowerCase();
-    exports.updateParsedComponent(result, ref, offset, norm);
-    result.tags['NLWeekdayParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-
-*/
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var FIRST_REG_PATTERN = new RegExp("(^|\\s|T)" + "(?:(?:om|van)\\s*)?" + "(\\d{1,4}|tussen de middag|middernachts?)" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\:|\\：)(\\d{2})" + ")?" + ")?" + "(?:\\s*uur)?" + "(?:\\s*(\'s morgens|\'s ochtends|in de ochtend|\'s middags|in de middag|\'s avonds|in de avond|\'s nachts))?" + "(?=\\W|$)", 'i');
-var SECOND_REG_PATTERN = new RegExp("^\\s*" + "(\\-|\\–|\\~|\\〜|tot|\\?)\\s*" + "(\\d{1,4})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + "(?:" + "(?:\\.|\\:|\\：)(\\d{1,2})" + ")?" + ")?" + "(?:\\s*(\'s morgens|\'s ochtends|in de ochtend|\'s middags|in de middag|\'s avonds|in de avond|\'s nachts))?" + "(?=\\W|$)", 'i');
-var HOUR_GROUP = 2;
-var MINUTE_GROUP = 3;
-var SECOND_GROUP = 4;
-var AM_PM_HOUR_GROUP = 5;
-
-exports.Parser = function NLTimeExpressionParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return FIRST_REG_PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    // This pattern can be overlaped Ex. [12] AM, 1[2] AM
-    if (match.index > 0 && text[match.index - 1].match(/\w/)) return null;
-    var refMoment = dayjs(ref);
-    var result = new ParsedResult();
-    result.ref = ref;
-    result.index = match.index + match[1].length;
-    result.text = match[0].substring(match[1].length);
-    result.tags['NLTimeExpressionParser'] = true;
-    result.start.imply('day', refMoment.date());
-    result.start.imply('month', refMoment.month() + 1);
-    result.start.imply('year', refMoment.year());
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.start.assign('second', second);
-    } // ----- Hours
-
-
-    if (/tussen de middag/i.test(match[HOUR_GROUP])) {
-      meridiem = 1;
-      hour = 12;
-    } else if (/middernachts?/i.test(match[HOUR_GROUP])) {
-      meridiem = 0;
-      hour = 0;
-    } else {
-      hour = parseInt(match[HOUR_GROUP]);
-    } // ----- Minutes
-
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-
-      if (ampm === "'s ochtends" || ampm === 'in de ochtend' || ampm === "'s morgens") {
-        meridiem = 0;
-        if (hour == 12) hour = 0;
-      } else {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-    }
-
-    result.start.assign('hour', hour);
-    result.start.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.start.assign('meridiem', meridiem);
-    } else {
-      if (hour < 12) {
-        result.start.imply('meridiem', 0);
-      } else {
-        result.start.imply('meridiem', 1);
-      }
-    } // ==============================================================
-    //                  Extracting the 'to' chunk
-    // ==============================================================
-
-
-    match = SECOND_REG_PATTERN.exec(text.substring(result.index + result.text.length));
-
-    if (!match) {
-      // Not accept number only result
-      if (result.text.match(/^\d+$/)) {
-        return null;
-      }
-
-      return result;
-    } // Pattern "YY.YY -XXXX" is more like timezone offset
-
-
-    if (match[0].match(/^\s*(\+|\-)\s*\d{3,4}$/)) {
-      return result;
-    }
-
-    if (result.end == null) {
-      result.end = new ParsedComponents(null, result.start.date());
-    }
-
-    var hour = 0;
-    var minute = 0;
-    var meridiem = -1; // ----- Second
-
-    if (match[SECOND_GROUP] != null) {
-      var second = parseInt(match[SECOND_GROUP]);
-      if (second >= 60) return null;
-      result.end.assign('second', second);
-    }
-
-    hour = parseInt(match[2]); // ----- Minute
-
-    if (match[MINUTE_GROUP] != null) {
-      minute = parseInt(match[MINUTE_GROUP]);
-      if (minute >= 60) return result;
-    } else if (hour > 100) {
-      minute = hour % 100;
-      hour = parseInt(hour / 100);
-    }
-
-    if (minute >= 60) {
-      return null;
-    }
-
-    if (hour > 24) {
-      return null;
-    }
-
-    if (hour >= 12) {
-      meridiem = 1;
-    } // ----- AM & PM
-
-
-    if (match[AM_PM_HOUR_GROUP] != null) {
-      if (hour > 12) return null;
-      var ampm = match[AM_PM_HOUR_GROUP].toLowerCase();
-
-      if (ampm === '\'s ochtends' || ampm === 'in de ochtend' || ampm === '\'s morgens') {
-        meridiem = 0;
-
-        if (hour == 12) {
-          hour = 0;
-
-          if (!result.end.isCertain('day')) {
-            result.end.imply('day', result.end.get('day') + 1);
-          }
-        }
-      } else {
-        meridiem = 1;
-        if (hour != 12) hour += 12;
-      }
-
-      if (!result.start.isCertain('meridiem')) {
-        if (meridiem == 0) {
-          result.start.imply('meridiem', 0);
-
-          if (result.start.get('hour') == 12) {
-            result.start.assign('hour', 0);
-          }
-        } else {
-          result.start.imply('meridiem', 1);
-
-          if (result.start.get('hour') != 12) {
-            result.start.assign('hour', result.start.get('hour') + 12);
-          }
-        }
-      }
-    }
-
-    result.text = result.text + match[0];
-    result.end.assign('hour', hour);
-    result.end.assign('minute', minute);
-
-    if (meridiem >= 0) {
-      result.end.assign('meridiem', meridiem);
-    } else {
-      var startAtPM = result.start.isCertain('meridiem') && result.start.get('meridiem') == 1;
-
-      if (startAtPM && result.start.get('hour') > hour) {
-        // 10pm - 1 (am)
-        result.end.imply('meridiem', 0);
-      } else if (hour > 12) {
-        result.end.imply('meridiem', 1);
-      }
-    }
-
-    if (result.end.date().getTime() < result.start.date().getTime()) {
-      result.end.imply('day', result.end.get('day') + 1);
-    }
-
-    return result;
-  };
-};
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dayjs = __webpack_require__(2);
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = new RegExp('(\\W|^)(' + 'nu|' + 'vroeg in de ochtend|' + '(?:van|deze)\\s*(morgen|ochtend|middag|avond)|' + '\'s morgens|\'s ochtends|tussen de middag|\'s middags|\'s avonds|' + '(?:deze|van)\\s*nacht|' + 'vandaag|' + '(?:over)?morgen(?:\\s*(ochtend|middag|avond|nacht))?|' + '(?:eer)?gister(?:\\s*(ochtend|middag|avond|nacht))?|' + 'afgelopen\\s*nacht' + ')(?=\\W|$)', 'i');
-
-exports.Parser = function DECasualDateParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    var refMoment = dayjs(ref);
-    var lowerText = text.toLowerCase();
-    var startMoment = refMoment;
-
-    if (/(?:van|deze)\s*nacht/.test(lowerText)) {
-      // Normally means this coming midnight
-      result.start.imply('hour', 22);
-      result.start.imply('meridiem', 1);
-    } else if (/^overmorgen/.test(lowerText)) {
-      startMoment = startMoment.add(refMoment.hour() > 1 ? 2 : 1, 'day');
-    } else if (/^morgen/.test(lowerText)) {
-      // Check not "Tomorrow" on late night
-      if (refMoment.hour() > 1) {
-        startMoment = startMoment.add(1, 'day');
-      }
-    } else if (/^gisteren/.test(lowerText)) {
-      startMoment = startMoment.add(-1, 'day');
-    } else if (/^eergisteren/.test(lowerText)) {
-      startMoment = startMoment.add(-2, 'day');
-    } else if (/afgelopen\s*nacht/.test(lowerText)) {
-      result.start.imply('hour', 0);
-
-      if (refMoment.hour() > 6) {
-        startMoment = startMoment.add(-1, 'day');
-      }
-    } else if (lowerText === 'nu') {
-      result.start.imply('hour', refMoment.hour());
-      result.start.imply('minute', refMoment.minute());
-      result.start.imply('second', refMoment.second());
-      result.start.imply('millisecond', refMoment.millisecond());
-    }
-
-    var secondMatch = match[3] || match[4] || match[5];
-
-    if (secondMatch) {
-      switch (secondMatch.toLowerCase()) {
-        case 'vroeg in de ochtend':
-          result.start.imply('hour', 6);
-          break;
-
-        case 'ochtend':
-        case 'morgen':
-        case '\'s ochtends':
-        case '\'s morgends':
-          result.start.imply('hour', 9);
-          break;
-
-        case 'tussen de middag':
-          result.start.imply('hour', 12);
-          break;
-
-        case 'middag':
-        case 'in de middag':
-        case '\'s middags':
-          result.start.imply('hour', 15);
-          result.start.imply('meridiem', 1);
-          break;
-
-        case 'avond':
-        case "'s avonds":
-          result.start.imply('hour', 18);
-          result.start.imply('meridiem', 1);
-          break;
-
-        case 'nacht':
-        case "'s nachts":
-          result.start.imply('hour', 0);
-          break;
-      }
-    }
-
-    result.start.assign('day', startMoment.date());
-    result.start.assign('month', startMoment.month() + 1);
-    result.start.assign('year', startMoment.year());
-    result.tags['NLCasualDateParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Parser = __webpack_require__(0).Parser;
-
-var ParsedResult = __webpack_require__(1).ParsedResult;
-
-var PATTERN = /(\W|^)((deze)?\s*('s morgens|'s ochtends|in de ochtend|'s middags|in de middag|'s avonds|in de avond|'s nachts|ochtend|tussen de middag|middag|avond|nacht))/i;
-var TIME_MATCH = 4;
-
-exports.Parser = function ENCasualTimeParser() {
-  Parser.apply(this, arguments);
-
-  this.pattern = function () {
-    return PATTERN;
-  };
-
-  this.extract = function (text, ref, match, opt) {
-    var text = match[0].substr(match[1].length);
-    var index = match.index + match[1].length;
-    var result = new ParsedResult({
-      index: index,
-      text: text,
-      ref: ref
-    });
-    if (!match[TIME_MATCH]) TIME_MATCH = 3;
-
-    switch (match[TIME_MATCH].toLowerCase()) {
-      case 'middag':
-      case 'in de middag':
-      case '\'s middags':
-        result.start.imply('meridiem', 1);
-        result.start.imply('hour', 15);
-        break;
-
-      case 'avond':
-      case 'in de avond':
-      case '\'s avonds':
-        result.start.imply('meridiem', 1);
-        result.start.imply('hour', 20);
-        break;
-
-      case 'middernacht':
-      case 'nacht':
-      case '\'s nachts':
-        result.start.imply('meridiem', 0);
-        result.start.imply('hour', 0);
-        break;
-
-      case 'ochtend':
-      case '\s morgens':
-      case '\s ochtends':
-      case 'in de ochtend':
-        result.start.imply('meridiem', 0);
-        result.start.imply('hour', 9);
-        break;
-
-      case 'tussen de middag':
-        result.start.imply('meridiem', 0);
-        result.start.imply('hour', 12);
-        break;
-    }
-
-    result.tags['NLCasualTimeParser'] = true;
-    return result;
-  };
-};
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var Refiner = __webpack_require__(3).Refiner;
-
-exports.Refiner = function OverlapRemovalRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var filteredResults = [];
-    var prevResult = results[0];
-
-    for (var i = 1; i < results.length; i++) {
-      var result = results[i]; // If overlap, compare the length and discard the shorter one
-
-      if (result.index < prevResult.index + prevResult.text.length) {
-        if (result.text.length > prevResult.text.length) {
-          prevResult = result;
-        }
-      } else {
-        filteredResults.push(prevResult);
-        prevResult = result;
-      }
-    } // The last one
-
-
-    if (prevResult != null) {
-      filteredResults.push(prevResult);
+  ENMergeDateTimeRefiner_createClass(ENMergeDateTimeRefiner, [{
+    key: "patternBetween",
+    value: function patternBetween() {
+      return new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
     }
-
-    return filteredResults;
-  };
-};
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var Refiner = __webpack_require__(3).Refiner;
-
-var TIMEZONE_OFFSET_PATTERN = new RegExp("^\\s*(GMT|UTC)?(\\+|\\-)(\\d{1,2}):?(\\d{2})", 'i');
-var TIMEZONE_OFFSET_SIGN_GROUP = 2;
-var TIMEZONE_OFFSET_HOUR_OFFSET_GROUP = 3;
-var TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP = 4;
-
-exports.Refiner = function ExtractTimezoneOffsetRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    results.forEach(function (result) {
-      if (result.start.isCertain('timezoneOffset')) {
-        return;
-      }
-
-      var match = TIMEZONE_OFFSET_PATTERN.exec(text.substring(result.index + result.text.length));
-
-      if (!match) {
-        return;
-      }
+  }]);
 
-      var hourOffset = parseInt(match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]);
-      var minuteOffset = parseInt(match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP]);
-      var timezoneOffset = hourOffset * 60 + minuteOffset;
+  return ENMergeDateTimeRefiner;
+}(AbstractMergeDateTimeRefiner_ENMergeDateTimeRefiner);
 
-      if (match[TIMEZONE_OFFSET_SIGN_GROUP] === '-') {
-        timezoneOffset = -timezoneOffset;
-      }
 
-      if (result.end != null) {
-        result.end.assign('timezoneOffset', timezoneOffset);
-      }
+// CONCATENATED MODULE: ./src/common/refiners/ExtractTimezoneAbbrRefiner.ts
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-      result.start.assign('timezoneOffset', timezoneOffset);
-      result.text += match[0];
-      result.tags['ExtractTimezoneOffsetRefiner'] = true;
-    });
-    return results;
-  };
-};
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-/*
+function ExtractTimezoneAbbrRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-*/
-var Refiner = __webpack_require__(3).Refiner; // Map ABBR -> Offset in minute
+function ExtractTimezoneAbbrRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
+function ExtractTimezoneAbbrRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) ExtractTimezoneAbbrRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) ExtractTimezoneAbbrRefiner_defineProperties(Constructor, staticProps); return Constructor; }
 
+// Map ABBR -> Offset in minute
 var TIMEZONE_NAME_PATTERN = new RegExp("^\\s*\\(?([A-Z]{2,4})\\)?(?=\\W|$)", 'i');
 var DEFAULT_TIMEZONE_ABBR_MAP = {
   "ACDT": 630,
@@ -8077,989 +2280,947 @@ var DEFAULT_TIMEZONE_ABBR_MAP = {
   "YEKT": 360
 };
 
-exports.Refiner = function ExtractTimezoneAbbrRefiner(config) {
-  Refiner.call(this, arguments);
+var ExtractTimezoneAbbrRefiner = /*#__PURE__*/function () {
+  function ExtractTimezoneAbbrRefiner(timezoneOverrides) {
+    ExtractTimezoneAbbrRefiner_classCallCheck(this, ExtractTimezoneAbbrRefiner);
 
-  this.refine = function (text, results, opt) {
-    var timezones = new Object(DEFAULT_TIMEZONE_ABBR_MAP);
+    this.timezone = _objectSpread(_objectSpread({}, DEFAULT_TIMEZONE_ABBR_MAP), timezoneOverrides);
+  }
 
-    if (opt.timezones) {
-      for (var name in opt.timezones) {
-        timezones[name] = opt.timezones[name];
-      }
+  ExtractTimezoneAbbrRefiner_createClass(ExtractTimezoneAbbrRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      var timezones = _objectSpread(_objectSpread({}, this.timezone), context.option.timezones);
+
+      results.forEach(function (result) {
+        var suffix = context.text.substring(result.index + result.text.length);
+        var match = TIMEZONE_NAME_PATTERN.exec(suffix);
+
+        if (match) {
+          var timezoneAbbr = match[1].toUpperCase();
+
+          if (timezones[timezoneAbbr] === undefined) {
+            return;
+          }
+
+          var timezoneOffset = timezones[timezoneAbbr];
+
+          if (!result.start.isCertain('timezoneOffset')) {
+            result.start.assign('timezoneOffset', timezoneOffset);
+          }
+
+          if (result.end != null && !result.end.isCertain('timezoneOffset')) {
+            result.end.assign('timezoneOffset', timezoneOffset);
+          }
+
+          result.text += match[0];
+        }
+      });
+      return results;
     }
+  }]);
 
-    results.forEach(function (result) {
-      if (!result.tags['ENTimeExpressionParser'] && !result.tags['ZHTimeExpressionParser'] && !result.tags['FRTimeExpressionParser'] && !result.tags['DETimeExpressionParser']) {
-        return;
-      }
+  return ExtractTimezoneAbbrRefiner;
+}();
 
-      var match = TIMEZONE_NAME_PATTERN.exec(text.substring(result.index + result.text.length));
 
-      if (match) {
-        var timezoneAbbr = match[1].toUpperCase();
+// CONCATENATED MODULE: ./src/common/refiners/ExtractTimezoneOffsetRefiner.ts
+function ExtractTimezoneOffsetRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-        if (timezones[timezoneAbbr] === undefined) {
+function ExtractTimezoneOffsetRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ExtractTimezoneOffsetRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) ExtractTimezoneOffsetRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) ExtractTimezoneOffsetRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+/*
+  
+*/
+var TIMEZONE_OFFSET_PATTERN = new RegExp("^\\s*(GMT|UTC)?([+-])(\\d{1,2}):?(\\d{2})", 'i');
+var TIMEZONE_OFFSET_SIGN_GROUP = 2;
+var TIMEZONE_OFFSET_HOUR_OFFSET_GROUP = 3;
+var TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP = 4;
+
+var ExtractTimezoneOffsetRefiner = /*#__PURE__*/function () {
+  function ExtractTimezoneOffsetRefiner() {
+    ExtractTimezoneOffsetRefiner_classCallCheck(this, ExtractTimezoneOffsetRefiner);
+  }
+
+  ExtractTimezoneOffsetRefiner_createClass(ExtractTimezoneOffsetRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      results.forEach(function (result) {
+        if (result.start.isCertain('timezoneOffset')) {
           return;
         }
 
-        var timezoneOffset = timezones[timezoneAbbr];
+        var suffix = context.text.substring(result.index + result.text.length);
+        var match = TIMEZONE_OFFSET_PATTERN.exec(suffix);
 
-        if (!result.start.isCertain('timezoneOffset')) {
-          result.start.assign('timezoneOffset', timezoneOffset);
+        if (!match) {
+          return;
         }
 
-        if (result.end != null && !result.end.isCertain('timezoneOffset')) {
+        context.debug(function () {
+          console.log("Extracting timezone: '".concat(match[0], "' into : ").concat(result));
+        });
+        var hourOffset = parseInt(match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]);
+        var minuteOffset = parseInt(match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP]);
+        var timezoneOffset = hourOffset * 60 + minuteOffset;
+
+        if (match[TIMEZONE_OFFSET_SIGN_GROUP] === '-') {
+          timezoneOffset = -timezoneOffset;
+        }
+
+        if (result.end != null) {
           result.end.assign('timezoneOffset', timezoneOffset);
         }
 
+        result.start.assign('timezoneOffset', timezoneOffset);
         result.text += match[0];
-        result.tags['ExtractTimezoneAbbrRefiner'] = true;
-      }
-    });
-    return results;
-  };
-};
+      });
+      return results;
+    }
+  }]);
 
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
+  return ExtractTimezoneOffsetRefiner;
+}();
+
+
+// CONCATENATED MODULE: ./src/common/refiners/OverlapRemovalRefiner.ts
+function OverlapRemovalRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function OverlapRemovalRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function OverlapRemovalRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) OverlapRemovalRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) OverlapRemovalRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+/*
+  
+*/
+var OverlapRemovalRefiner = /*#__PURE__*/function () {
+  function OverlapRemovalRefiner() {
+    OverlapRemovalRefiner_classCallCheck(this, OverlapRemovalRefiner);
+  }
+
+  OverlapRemovalRefiner_createClass(OverlapRemovalRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      if (results.length < 2) {
+        return results;
+      }
+
+      var filteredResults = [];
+      var prevResult = results[0];
+
+      for (var i = 1; i < results.length; i++) {
+        var result = results[i]; // If overlap, compare the length and discard the shorter one
+
+        if (result.index < prevResult.index + prevResult.text.length) {
+          if (result.text.length > prevResult.text.length) {
+            prevResult = result;
+          }
+        } else {
+          filteredResults.push(prevResult);
+          prevResult = result;
+        }
+      } // The last one
+
+
+      if (prevResult != null) {
+        filteredResults.push(prevResult);
+      }
+
+      return filteredResults;
+    }
+  }]);
+
+  return OverlapRemovalRefiner;
+}();
+
+
+// CONCATENATED MODULE: ./src/common/refiners/ForwardDateRefiner.ts
+function ForwardDateRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ForwardDateRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ForwardDateRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) ForwardDateRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) ForwardDateRefiner_defineProperties(Constructor, staticProps); return Constructor; }
 
 /*
     Enforce 'forwardDate' option to on the results. When there are missing component,
     e.g. "March 12-13 (without year)" or "Thursday", the refiner will try to adjust the result
     into the future instead of the past.
 */
-var dayjs = __webpack_require__(2);
 
-var Refiner = __webpack_require__(3).Refiner;
 
-exports.Refiner = function ForwardDateRefiner() {
-  Refiner.call(this);
+var ForwardDateRefiner_ForwardDateRefiner = /*#__PURE__*/function () {
+  function ForwardDateRefiner() {
+    ForwardDateRefiner_classCallCheck(this, ForwardDateRefiner);
+  }
 
-  this.refine = function (text, results, opt) {
-    if (!opt['forwardDate']) {
+  ForwardDateRefiner_createClass(ForwardDateRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      if (!context.option.forwardDate) {
+        return results;
+      }
+
+      results.forEach(function (result) {
+        var refMoment = dayjs_min_default()(context.refDate);
+
+        if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
+          for (var i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
+            result.start.imply('year', result.start.get('year') + 1);
+            context.debug(function () {
+              console.log("Forward yearly adjusted for ".concat(result, " (").concat(result.start, ")"));
+            });
+
+            if (result.end && !result.end.isCertain('year')) {
+              result.end.imply('year', result.end.get('year') + 1);
+              context.debug(function () {
+                console.log("Forward yearly adjusted for ".concat(result, " (").concat(result.end, ")"));
+              });
+            }
+          }
+        }
+
+        if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
+          if (refMoment.day() > result.start.get('weekday')) {
+            refMoment = refMoment.day(result.start.get('weekday') + 7);
+          } else {
+            refMoment = refMoment.day(result.start.get('weekday'));
+          }
+
+          result.start.imply('day', refMoment.date());
+          result.start.imply('month', refMoment.month() + 1);
+          result.start.imply('year', refMoment.year());
+          context.debug(function () {
+            console.log("Forward weekly adjusted for ".concat(result, " (").concat(result.start, ")"));
+          });
+
+          if (result.end && result.end.isOnlyWeekdayComponent()) {
+            // Adjust date to the coming week
+            if (refMoment.day() > result.end.get('weekday')) {
+              refMoment = refMoment.day(result.end.get('weekday') + 7);
+            } else {
+              refMoment = refMoment.day(result.end.get('weekday'));
+            }
+
+            result.end.imply('day', refMoment.date());
+            result.end.imply('month', refMoment.month() + 1);
+            result.end.imply('year', refMoment.year());
+            context.debug(function () {
+              console.log("Forward weekly adjusted for ".concat(result, " (").concat(result.end, ")"));
+            });
+          }
+        }
+      });
       return results;
     }
+  }]);
 
-    results.forEach(function (result) {
-      var refMoment = dayjs(result.ref);
+  return ForwardDateRefiner;
+}();
 
-      if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
-        // Adjust year into the future
-        for (var i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
-          result.start.imply('year', result.start.get('year') + 1);
 
-          if (result.end && !result.end.isCertain('year')) {
-            result.end.imply('year', result.end.get('year') + 1);
-          }
-        }
+// CONCATENATED MODULE: ./src/common/refiners/UnlikelyFormatFilter.ts
+function UnlikelyFormatFilter_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UnlikelyFormatFilter_typeof = function _typeof(obj) { return typeof obj; }; } else { UnlikelyFormatFilter_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UnlikelyFormatFilter_typeof(obj); }
 
-        result.tags['ForwardDateRefiner'] = true;
+function UnlikelyFormatFilter_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function UnlikelyFormatFilter_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function UnlikelyFormatFilter_createClass(Constructor, protoProps, staticProps) { if (protoProps) UnlikelyFormatFilter_defineProperties(Constructor.prototype, protoProps); if (staticProps) UnlikelyFormatFilter_defineProperties(Constructor, staticProps); return Constructor; }
+
+function UnlikelyFormatFilter_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) UnlikelyFormatFilter_setPrototypeOf(subClass, superClass); }
+
+function UnlikelyFormatFilter_setPrototypeOf(o, p) { UnlikelyFormatFilter_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return UnlikelyFormatFilter_setPrototypeOf(o, p); }
+
+function UnlikelyFormatFilter_createSuper(Derived) { var hasNativeReflectConstruct = UnlikelyFormatFilter_isNativeReflectConstruct(); return function () { var Super = UnlikelyFormatFilter_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = UnlikelyFormatFilter_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return UnlikelyFormatFilter_possibleConstructorReturn(this, result); }; }
+
+function UnlikelyFormatFilter_possibleConstructorReturn(self, call) { if (call && (UnlikelyFormatFilter_typeof(call) === "object" || typeof call === "function")) { return call; } return UnlikelyFormatFilter_assertThisInitialized(self); }
+
+function UnlikelyFormatFilter_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function UnlikelyFormatFilter_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function UnlikelyFormatFilter_getPrototypeOf(o) { UnlikelyFormatFilter_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UnlikelyFormatFilter_getPrototypeOf(o); }
+
+
+
+var UnlikelyFormatFilter = /*#__PURE__*/function (_Filter) {
+  UnlikelyFormatFilter_inherits(UnlikelyFormatFilter, _Filter);
+
+  var _super = UnlikelyFormatFilter_createSuper(UnlikelyFormatFilter);
+
+  function UnlikelyFormatFilter() {
+    UnlikelyFormatFilter_classCallCheck(this, UnlikelyFormatFilter);
+
+    return _super.apply(this, arguments);
+  }
+
+  UnlikelyFormatFilter_createClass(UnlikelyFormatFilter, [{
+    key: "isValid",
+    value: function isValid(context, result) {
+      if (result.text.replace(' ', '').match(/^\d*(\.\d*)?$/)) {
+        context.debug(function () {
+          console.log("Removing unlikely result '".concat(result.text, "'"));
+        });
+        return false;
       }
 
-      if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
-        // Adjust date to the coming week
-        if (refMoment.day() > result.start.get('weekday')) {
-          refMoment = refMoment.day(result.start.get('weekday') + 7);
+      if (!result.start.isValidDate()) {
+        context.debug(function () {
+          console.log("Removing invalid result: ".concat(result, " (").concat(result.start, ")"));
+        });
+        return false;
+      }
+
+      if (result.end && !result.end.isValidDate()) {
+        context.debug(function () {
+          console.log("Removing invalid result: ".concat(result, " (").concat(result.end, ")"));
+        });
+        return false;
+      }
+
+      return true;
+    }
+  }]);
+
+  return UnlikelyFormatFilter;
+}(Filter);
+
+
+// CONCATENATED MODULE: ./src/common/parsers/ISOFormatParser.ts
+function ISOFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ISOFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ISOFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ISOFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ISOFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+// ISO 8601
+// http://www.w3.org/TR/NOTE-datetime
+// - YYYY-MM-DD
+// - YYYY-MM-DDThh:mmTZD
+// - YYYY-MM-DDThh:mm:ssTZD
+// - YYYY-MM-DDThh:mm:ss.sTZD
+// - TZD = (Z or +hh:mm or -hh:mm)
+var ISOFormatParser_PATTERN = new RegExp('(?<=\\W|^)' + '([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})' + '(?:T' //..
++ '([0-9]{1,2}):([0-9]{1,2})' // hh:mm
++ '(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?' // :ss.s
++ '(?:Z|([+-]\\d{2}):?(\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)
++ ')?' //..
++ '(?=\\W|$)', 'i');
+var ISOFormatParser_YEAR_NUMBER_GROUP = 1;
+var ISOFormatParser_MONTH_NUMBER_GROUP = 2;
+var ISOFormatParser_DATE_NUMBER_GROUP = 3;
+var HOUR_NUMBER_GROUP = 4;
+var MINUTE_NUMBER_GROUP = 5;
+var SECOND_NUMBER_GROUP = 6;
+var MILLISECOND_NUMBER_GROUP = 7;
+var TZD_HOUR_OFFSET_GROUP = 8;
+var TZD_MINUTE_OFFSET_GROUP = 9;
+
+var ISOFormatParser = /*#__PURE__*/function () {
+  function ISOFormatParser() {
+    ISOFormatParser_classCallCheck(this, ISOFormatParser);
+  }
+
+  ISOFormatParser_createClass(ISOFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ISOFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var components = {};
+      components['year'] = parseInt(match[ISOFormatParser_YEAR_NUMBER_GROUP]);
+      components['month'] = parseInt(match[ISOFormatParser_MONTH_NUMBER_GROUP]);
+      components['day'] = parseInt(match[ISOFormatParser_DATE_NUMBER_GROUP]);
+
+      if (match[HOUR_NUMBER_GROUP] != null) {
+        components['hour'] = parseInt(match[HOUR_NUMBER_GROUP]);
+        components['minute'] = parseInt(match[MINUTE_NUMBER_GROUP]);
+
+        if (match[SECOND_NUMBER_GROUP] != null) {
+          components['second'] = parseInt(match[SECOND_NUMBER_GROUP]);
+        }
+
+        if (match[MILLISECOND_NUMBER_GROUP] != null) {
+          components['millisecond'] = parseInt(match[MILLISECOND_NUMBER_GROUP]);
+        }
+
+        if (match[TZD_HOUR_OFFSET_GROUP] == null) {
+          components['timezoneOffset'] = 0;
         } else {
-          refMoment = refMoment.day(result.start.get('weekday'));
-        }
+          var hourOffset = parseInt(match[TZD_HOUR_OFFSET_GROUP]);
+          var minuteOffset = 0;
 
-        result.start.imply('day', refMoment.date());
-        result.start.imply('month', refMoment.month() + 1);
-        result.start.imply('year', refMoment.year());
-        result.tags['ForwardDateRefiner'] = true;
-      }
-    });
-    return results;
-  };
-};
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var Filter = __webpack_require__(3).Filter;
-
-exports.Refiner = function UnlikelyFormatFilter() {
-  Filter.call(this);
-
-  this.isValid = function (text, result, opt) {
-    if (result.text.replace(' ', '').match(/^\d*(\.\d*)?$/)) {
-      return false;
-    }
-
-    return true;
-  };
-};
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-*/
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var Refiner = __webpack_require__(3).Refiner;
-
-var PATTERN = new RegExp("^\\s*(at|after|before|on|,|-|\\(|\\))?\\s*$");
-
-function isMoreSpecific(prevResult, currResult) {
-  var moreSpecific = false;
-
-  if (prevResult.start.isCertain('year')) {
-    if (!currResult.start.isCertain('year')) {
-      moreSpecific = true;
-    } else {
-      if (prevResult.start.isCertain('month')) {
-        if (!currResult.start.isCertain('month')) {
-          moreSpecific = true;
-        } else {
-          if (prevResult.start.isCertain('day') && !currResult.start.isCertain('day')) {
-            moreSpecific = true;
+          if (match[TZD_MINUTE_OFFSET_GROUP] != null) {
+            minuteOffset = parseInt(match[TZD_MINUTE_OFFSET_GROUP]);
           }
-        }
-      }
-    }
-  }
 
-  return moreSpecific;
-}
+          var offset = hourOffset * 60;
 
-function isAbleToMerge(text, prevResult, currResult) {
-  var textBetween = text.substring(prevResult.index + prevResult.text.length, currResult.index); // Only accepts merge if one of them comes from casual relative date
+          if (offset < 0) {
+            offset -= minuteOffset;
+          } else {
+            offset += minuteOffset;
+          }
 
-  var includesRelativeResult = prevResult.tags['ENRelativeDateFormatParser'] || currResult.tags['ENRelativeDateFormatParser']; // We assume they refer to the same date if all date fields are implied
-
-  var referToSameDate = !prevResult.start.isCertain('day') && !prevResult.start.isCertain('month') && !prevResult.start.isCertain('year'); // If both years are certain, that determines if they refer to the same date
-  // but with one more specific than the other
-
-  if (prevResult.start.isCertain('year') && currResult.start.isCertain('year')) referToSameDate = prevResult.start.get('year') === currResult.start.get('year'); // We now test with the next level (month) if they refer to the same date
-
-  if (prevResult.start.isCertain('month') && currResult.start.isCertain('month')) referToSameDate = prevResult.start.get('month') === currResult.start.get('month') && referToSameDate;
-  return includesRelativeResult && textBetween.match(PATTERN) && referToSameDate;
-}
-
-function mergeResult(text, specificResult, nonSpecificResult) {
-  var specificDate = specificResult.start;
-  var nonSpecificDate = nonSpecificResult.start;
-  var startIndex = Math.min(specificResult.index, nonSpecificResult.index);
-  var endIndex = Math.max(specificResult.index + specificResult.text.length, nonSpecificResult.index + nonSpecificResult.text.length);
-  specificResult.index = startIndex;
-  specificResult.text = text.substring(startIndex, endIndex);
-
-  for (var tag in nonSpecificResult.tags) {
-    specificResult.tags[tag] = true;
-  }
-
-  specificResult.tags['ENPrioritizeSpecificDateRefiner'] = true;
-  return specificResult;
-}
-
-exports.Refiner = function ENPrioritizeSpecificDateRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
-
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
-
-      if (isMoreSpecific(prevResult, currResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      } else if (isMoreSpecific(currResult, prevResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, currResult, prevResult);
-        currResult = null;
-        i += 1;
-      }
-
-      mergedResult.push(prevResult);
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-};
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var ENMergeDateRangeRefiner = __webpack_require__(9).Refiner;
-
-exports.Refiner = function JPMergeDateRangeRefiner() {
-  ENMergeDateRangeRefiner.call(this);
-
-  this.pattern = function () {
-    return /^\s*(から|ー)\s*$/i;
-  };
-};
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var Refiner = __webpack_require__(3).Refiner;
-
-exports.Refiner = function FRMergeDateRangeRefiner() {
-  Refiner.call(this);
-
-  this.pattern = function () {
-    return /^\s*(à|a|\-)\s*$/i;
-  };
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
-
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
-
-      if (!prevResult.end && !currResult.end && this.isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = this.mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      }
-
-      mergedResult.push(prevResult);
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-
-  this.isAbleToMerge = function (text, result1, result2) {
-    var begin = result1.index + result1.text.length;
-    var end = result2.index;
-    var textBetween = text.substring(begin, end);
-    return textBetween.match(this.pattern());
-  };
-
-  this.isWeekdayResult = function (result) {
-    return result.start.isCertain('weekday') && !result.start.isCertain('day');
-  };
-
-  this.mergeResult = function (text, fromResult, toResult) {
-    if (!this.isWeekdayResult(fromResult) && !this.isWeekdayResult(toResult)) {
-      for (var key in toResult.start.knownValues) {
-        if (!fromResult.start.isCertain(key)) {
-          fromResult.start.assign(key, toResult.start.get(key));
+          components['timezoneOffset'] = offset;
         }
       }
 
-      for (var key in fromResult.start.knownValues) {
-        if (!toResult.start.isCertain(key)) {
-          toResult.start.assign(key, fromResult.start.get(key));
-        }
-      }
+      return components;
     }
+  }]);
 
-    if (fromResult.start.date().getTime() > toResult.start.date()) {
-      var tmp = toResult;
-      toResult = fromResult;
-      fromResult = tmp;
-    }
+  return ISOFormatParser;
+}();
 
-    fromResult.end = toResult.start;
-
-    for (var tag in toResult.tags) {
-      fromResult.tags[tag] = true;
-    }
-
-    var startIndex = Math.min(fromResult.index, toResult.index);
-    var endIndex = Math.max(fromResult.index + fromResult.text.length, toResult.index + toResult.text.length);
-    fromResult.index = startIndex;
-    fromResult.text = text.substring(startIndex, endIndex);
-    fromResult.tags[this.constructor.name] = true;
-    return fromResult;
-  };
-};
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    
-*/
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var Refiner = __webpack_require__(3).Refiner;
-
-var mergeDateTimeComponent = __webpack_require__(5).mergeDateTimeComponent;
-
-var PATTERN = new RegExp("^\\s*(T|à|a|vers|de|,|-)?\\s*$");
-
-function isDateOnly(result) {
-  return !result.start.isCertain('hour') || result.tags['FRCasualDateParser'];
-}
-
-function isTimeOnly(result) {
-  return !result.start.isCertain('month') && !result.start.isCertain('weekday');
-}
-
-function isAbleToMerge(text, prevResult, curResult) {
-  var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
-  return textBetween.match(PATTERN);
-}
-
-function mergeResult(text, dateResult, timeResult) {
-  var beginDate = dateResult.start;
-  var beginTime = timeResult.start;
-  var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
-
-  if (dateResult.end != null || timeResult.end != null) {
-    var endDate = dateResult.end == null ? dateResult.start : dateResult.end;
-    var endTime = timeResult.end == null ? timeResult.start : timeResult.end;
-    var endDateTime = mergeDateTimeComponent(endDate, endTime);
-
-    if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
-      // Ex. 9pm - 1am
-      if (endDateTime.isCertain('day')) {
-        endDateTime.assign('day', endDateTime.get('day') + 1);
-      } else {
-        endDateTime.imply('day', endDateTime.get('day') + 1);
-      }
-    }
-
-    dateResult.end = endDateTime;
-  }
-
-  dateResult.start = beginDateTime;
-  var startIndex = Math.min(dateResult.index, timeResult.index);
-  var endIndex = Math.max(dateResult.index + dateResult.text.length, timeResult.index + timeResult.text.length);
-  dateResult.index = startIndex;
-  dateResult.text = text.substring(startIndex, endIndex);
-
-  for (var tag in timeResult.tags) {
-    dateResult.tags[tag] = true;
-  }
-
-  dateResult.tags['FRMergeDateAndTimeRefiner'] = true;
-  return dateResult;
-}
-
-exports.Refiner = function FRMergeDateTimeRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
-
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
-
-      if (isDateOnly(prevResult) && isTimeOnly(currResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      } else if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, currResult, prevResult);
-        currResult = null;
-        i += 1;
-      }
-
-      mergedResult.push(prevResult);
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-};
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  
-*/
-var ENMergeDateRangeRefiner = __webpack_require__(9).Refiner;
-
-exports.Refiner = function DEMergeDateRangeRefiner() {
-  ENMergeDateRangeRefiner.call(this);
-
-  this.pattern = function () {
-    return /^\s*(bis(?:\s*(?:am|zum))?|\-)\s*$/i;
-  };
-};
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-    
-*/
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var Refiner = __webpack_require__(3).Refiner;
-
-var mergeDateTimeComponent = __webpack_require__(5).mergeDateTimeComponent;
-
-var isDateOnly = __webpack_require__(5).isDateOnly;
-
-var isTimeOnly = __webpack_require__(5).isTimeOnly;
-
-var PATTERN = new RegExp("^\\s*(T|um|am|,|-)?\\s*$");
-
-function isAbleToMerge(text, prevResult, curResult) {
-  var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
-  return textBetween.match(PATTERN);
-}
-
-function mergeResult(text, dateResult, timeResult) {
-  var beginDate = dateResult.start;
-  var beginTime = timeResult.start;
-  var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
-
-  if (dateResult.end != null || timeResult.end != null) {
-    var endDate = dateResult.end == null ? dateResult.start : dateResult.end;
-    var endTime = timeResult.end == null ? timeResult.start : timeResult.end;
-    var endDateTime = mergeDateTimeComponent(endDate, endTime);
-
-    if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
-      // Ex. 9pm - 1am
-      if (endDateTime.isCertain('day')) {
-        endDateTime.assign('day', endDateTime.get('day') + 1);
-      } else {
-        endDateTime.imply('day', endDateTime.get('day') + 1);
-      }
-    }
-
-    dateResult.end = endDateTime;
-  }
-
-  dateResult.start = beginDateTime;
-  var startIndex = Math.min(dateResult.index, timeResult.index);
-  var endIndex = Math.max(dateResult.index + dateResult.text.length, timeResult.index + timeResult.text.length);
-  dateResult.index = startIndex;
-  dateResult.text = text.substring(startIndex, endIndex);
-
-  for (var tag in timeResult.tags) {
-    dateResult.tags[tag] = true;
-  }
-
-  dateResult.tags['DEMergeDateAndTimeRefiner'] = true;
-  return dateResult;
-}
-
-exports.Refiner = function DEMergeDateTimeRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
-
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
-
-      if (isDateOnly(prevResult) && isTimeOnly(currResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, prevResult, currResult);
-        currResult = null;
-        i += 1;
-      } else if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, currResult, prevResult);
-        currResult = null;
-        i += 1;
-      }
-
-      mergedResult.push(prevResult);
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-};
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-*/
-var ENMergeDateRangeRefiner = __webpack_require__(9).Refiner;
-
-exports.Refiner = function NLMergeDateRangeRefiner() {
-  ENMergeDateRangeRefiner.call(this);
-
-  this.pattern = function () {
-    return /^\s*(tot|t\/m|tot en met|\-)\s*$/i;
-  };
-};
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-
-*/
-var ParsedComponents = __webpack_require__(1).ParsedComponents;
-
-var Refiner = __webpack_require__(3).Refiner;
-
-var mergeDateTimeComponent = __webpack_require__(5).mergeDateTimeComponent;
-
-var isDateOnly = __webpack_require__(5).isDateOnly;
-
-var isTimeOnly = __webpack_require__(5).isTimeOnly;
-
-var PATTERN = new RegExp("^\\s*(T|op|om|voor|na|van|,|-)\\s*$");
-
-function isAbleToMerge(text, prevResult, curResult) {
-  var textBetween = text.substring(prevResult.index + prevResult.text.length, curResult.index);
-  return textBetween.match(PATTERN);
-}
-
-function mergeResult(text, dateResult, timeResult) {
-  var beginDate = dateResult.start;
-  var beginTime = timeResult.start;
-  var beginDateTime = mergeDateTimeComponent(beginDate, beginTime);
-
-  if (dateResult.end != null || timeResult.end != null) {
-    var endDate = dateResult.end == null ? dateResult.start : dateResult.end;
-    var endTime = timeResult.end == null ? timeResult.start : timeResult.end;
-    var endDateTime = mergeDateTimeComponent(endDate, endTime);
-
-    if (dateResult.end == null && endDateTime.date().getTime() < beginDateTime.date().getTime()) {
-      // Ex. 9pm - 1am
-      if (endDateTime.isCertain('day')) {
-        endDateTime.assign('day', endDateTime.get('day') + 1);
-      } else {
-        endDateTime.imply('day', endDateTime.get('day') + 1);
-      }
-    }
-
-    dateResult.end = endDateTime;
-  }
-
-  dateResult.start = beginDateTime;
-  var startIndex = Math.min(dateResult.index, timeResult.index);
-  var endIndex = Math.max(dateResult.index + dateResult.text.length, timeResult.index + timeResult.text.length);
-  dateResult.index = startIndex;
-  dateResult.text = text.substring(startIndex, endIndex);
-
-  for (var tag in timeResult.tags) {
-    dateResult.tags[tag] = true;
-  }
-
-  dateResult.tags['NLMergeDateAndTimeRefiner'] = true;
-  return dateResult;
-}
-
-exports.Refiner = function NLMergeDateTimeRefiner() {
-  Refiner.call(this);
-
-  this.refine = function (text, results, opt) {
-    if (results.length < 2) return results;
-    var mergedResult = [];
-    var currResult = null;
-    var prevResult = null;
-
-    for (var i = 1; i < results.length; i++) {
-      currResult = results[i];
-      prevResult = results[i - 1];
-
-      if (isDateOnly(currResult) && isTimeOnly(prevResult) && isAbleToMerge(text, prevResult, currResult)) {
-        prevResult = mergeResult(text, currResult, prevResult);
-        currResult = null;
-        i += 1;
-        mergedResult.push(prevResult);
-      } else if (!isTimeOnly(prevResult)) {
-        mergedResult.push(prevResult);
-      }
-    }
-
-    if (currResult != null) {
-      mergedResult.push(currResult);
-    }
-
-    return mergedResult;
-  };
-};
-
-/***/ }),
-/* 87 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "Chrono", function() { return /* binding */ chrono_Chrono; });
-__webpack_require__.d(__webpack_exports__, "options", function() { return /* binding */ options; });
-__webpack_require__.d(__webpack_exports__, "parser", function() { return /* binding */ chrono_parser; });
-__webpack_require__.d(__webpack_exports__, "refiner", function() { return /* binding */ chrono_refiner; });
-__webpack_require__.d(__webpack_exports__, "Parser", function() { return /* binding */ Parser; });
-__webpack_require__.d(__webpack_exports__, "Refiner", function() { return /* binding */ Refiner; });
-__webpack_require__.d(__webpack_exports__, "Filter", function() { return /* binding */ Filter; });
-__webpack_require__.d(__webpack_exports__, "ParsedResult", function() { return /* binding */ ParsedResult; });
-__webpack_require__.d(__webpack_exports__, "ParsedComponents", function() { return /* binding */ ParsedComponents; });
-__webpack_require__.d(__webpack_exports__, "strict", function() { return /* binding */ strict; });
-__webpack_require__.d(__webpack_exports__, "casual", function() { return /* binding */ casual; });
-__webpack_require__.d(__webpack_exports__, "en", function() { return /* binding */ chrono_en; });
-__webpack_require__.d(__webpack_exports__, "en_GB", function() { return /* binding */ chrono_en_GB; });
-__webpack_require__.d(__webpack_exports__, "de", function() { return /* binding */ chrono_de; });
-__webpack_require__.d(__webpack_exports__, "nl", function() { return /* binding */ chrono_nl; });
-__webpack_require__.d(__webpack_exports__, "pt", function() { return /* binding */ chrono_pt; });
-__webpack_require__.d(__webpack_exports__, "es", function() { return /* binding */ chrono_es; });
-__webpack_require__.d(__webpack_exports__, "fr", function() { return /* binding */ chrono_fr; });
-__webpack_require__.d(__webpack_exports__, "ja", function() { return /* binding */ chrono_ja; });
-__webpack_require__.d(__webpack_exports__, "parse", function() { return /* binding */ parse; });
-__webpack_require__.d(__webpack_exports__, "parseDate", function() { return /* binding */ parseDate; });
-
-// NAMESPACE OBJECT: ./src/configurations.ts
-var configurations_namespaceObject = {};
-__webpack_require__.r(configurations_namespaceObject);
-__webpack_require__.d(configurations_namespaceObject, "mergeConfigurations", function() { return mergeConfigurations; });
-__webpack_require__.d(configurations_namespaceObject, "commonPostProcessing", function() { return commonPostProcessing; });
-__webpack_require__.d(configurations_namespaceObject, "strictOption", function() { return strictOption; });
-__webpack_require__.d(configurations_namespaceObject, "casualOption", function() { return casualOption; });
-__webpack_require__.d(configurations_namespaceObject, "de", function() { return configurations_de; });
-__webpack_require__.d(configurations_namespaceObject, "nl", function() { return configurations_nl; });
-__webpack_require__.d(configurations_namespaceObject, "en", function() { return configurations_en; });
-__webpack_require__.d(configurations_namespaceObject, "en_GB", function() { return en_GB; });
-__webpack_require__.d(configurations_namespaceObject, "ja", function() { return configurations_ja; });
-__webpack_require__.d(configurations_namespaceObject, "pt", function() { return configurations_pt; });
-__webpack_require__.d(configurations_namespaceObject, "es", function() { return configurations_es; });
-__webpack_require__.d(configurations_namespaceObject, "fr", function() { return configurations_fr; });
-__webpack_require__.d(configurations_namespaceObject, "zh", function() { return configurations_zh; });
-
-// EXTERNAL MODULE: ./src/parsers/parser.js
-var parser = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./src/refiners/refiner.js
-var refiner = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./src/configurations.ts
 
 
-function mergeConfigurations(options) {
-  var addedTypes = {};
-  var mergedOption = {
-    parsers: [],
-    refiners: []
-  };
-  options.forEach(function (option) {
-    if (option.call) {
-      option = option.call();
-    }
 
-    if (option.parsers) {
-      option.parsers.forEach(function (p) {
-        if (!addedTypes[p.constructor]) {
-          mergedOption.parsers.push(p);
-          addedTypes[p.constructor] = true;
-        }
-      });
-    }
 
-    if (option.refiners) {
-      option.refiners.forEach(function (r) {
-        if (!addedTypes[r.constructor]) {
-          mergedOption.refiners.push(r);
-          addedTypes[r.constructor] = true;
-        }
-      });
-    }
-  });
-  return mergedOption;
+
+
+function includeCommonConfiguration(configuration) {
+  configuration.parsers.unshift(new ISOFormatParser());
+  configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner());
+  configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner());
+  configuration.refiners.unshift(new OverlapRemovalRefiner());
+  configuration.refiners.push(new ForwardDateRefiner_ForwardDateRefiner());
+  configuration.refiners.push(new UnlikelyFormatFilter());
+  return configuration;
 }
-function commonPostProcessing() {
-  return {
-    refiners: [// These should be after all other refiners
-    new refiner["ExtractTimezoneOffsetRefiner"](), new refiner["ExtractTimezoneAbbrRefiner"](), new refiner["UnlikelyFormatFilter"]()]
-  };
-} // -------------------------------------------------------------
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENCasualDateParser.ts
+function ENCasualDateParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function strictOption() {
-  var strictConfig = {
-    strict: true
-  };
-  return mergeConfigurations([configurations_en(strictConfig), configurations_de(strictConfig), configurations_nl(strictConfig), configurations_pt(strictConfig), configurations_es(strictConfig), configurations_fr(strictConfig), configurations_ja(), configurations_zh(), commonPostProcessing()]);
+function ENCasualDateParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENCasualDateParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENCasualDateParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENCasualDateParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ENCasualDateParser_ENCasualDateParser = /*#__PURE__*/function () {
+  function ENCasualDateParser() {
+    ENCasualDateParser_classCallCheck(this, ENCasualDateParser);
+  }
+
+  ENCasualDateParser_createClass(ENCasualDateParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return /(?<=\W|^)(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var targetDate = dayjs_min_default()(context.refDate);
+      var lowerText = match[0].toLowerCase();
+      var component = context.createParsingComponents();
+
+      if (lowerText == 'tonight') {
+        // Normally means this coming midnight
+        component.imply('hour', 22);
+        component.imply('meridiem', Meridiem.PM);
+      } else if (/^tomorrow|^tmr/.test(lowerText)) {
+        // Check not "Tomorrow" on late night
+        if (targetDate.hour() > 1) {
+          targetDate = targetDate.add(1, 'day');
+        }
+      } else if (/^yesterday/.test(lowerText)) {
+        targetDate = targetDate.add(-1, 'day');
+      } else if (lowerText.match(/last\s*night/)) {
+        component.imply('hour', 0);
+
+        if (targetDate.hour() > 6) {
+          targetDate = targetDate.add(-1, 'day');
+        }
+      } else if (lowerText.match("now")) {
+        component.assign('hour', targetDate.hour());
+        component.assign('minute', targetDate.minute());
+        component.assign('second', targetDate.second());
+        component.assign('millisecond', targetDate.millisecond());
+      }
+
+      component.assign('day', targetDate.date());
+      component.assign('month', targetDate.month() + 1);
+      component.assign('year', targetDate.year());
+      return component;
+    }
+  }]);
+
+  return ENCasualDateParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENCasualTimeParser.ts
+function ENCasualTimeParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENCasualTimeParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENCasualTimeParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENCasualTimeParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENCasualTimeParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ENCasualTimeParser_ENCasualTimeParser = /*#__PURE__*/function () {
+  function ENCasualTimeParser() {
+    ENCasualTimeParser_classCallCheck(this, ENCasualTimeParser);
+  }
+
+  ENCasualTimeParser_createClass(ENCasualTimeParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return /(?<=\W|^)(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var component = context.createParsingComponents();
+
+      switch (match[1].toLowerCase()) {
+        case 'afternoon':
+          component.imply('meridiem', Meridiem.PM);
+          component.imply('hour', 15);
+          break;
+
+        case 'evening':
+        case 'night':
+          component.imply('meridiem', Meridiem.PM);
+          component.imply('hour', 20);
+          break;
+
+        case 'morning':
+          component.imply('meridiem', Meridiem.AM);
+          component.imply('hour', 6);
+          break;
+
+        case 'noon':
+          component.imply('meridiem', Meridiem.AM);
+          component.imply('hour', 12);
+          break;
+      }
+
+      return component;
+    }
+  }]);
+
+  return ENCasualTimeParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENWeekdayParser.ts
+function ENWeekdayParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENWeekdayParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENWeekdayParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENWeekdayParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENWeekdayParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ENWeekdayParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:on\\s*?)?' + '(?:(this|last|past|next)\\s*)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(this|last|past|next)\\s*week)?' + '(?=\\W|$)', 'i');
+var PREFIX_GROUP = 1;
+var ENWeekdayParser_WEEKDAY_GROUP = 2;
+var POSTFIX_GROUP = 3;
+
+var ENWeekdayParser_ENWeekdayParser = /*#__PURE__*/function () {
+  function ENWeekdayParser() {
+    ENWeekdayParser_classCallCheck(this, ENWeekdayParser);
+  }
+
+  ENWeekdayParser_createClass(ENWeekdayParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENWeekdayParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var dayOfWeek = match[ENWeekdayParser_WEEKDAY_GROUP].toLowerCase();
+      var offset = WEEKDAY_DICTIONARY[dayOfWeek];
+
+      if (offset === undefined) {
+        return null;
+      }
+
+      var prefix = match[PREFIX_GROUP];
+      var postfix = match[POSTFIX_GROUP];
+      var modifier = prefix || postfix;
+      modifier = modifier || '';
+      modifier = modifier.toLowerCase();
+      var date = this.extractWeekday(context.refDate, offset, modifier);
+      return context.createParsingComponents().assign('weekday', offset).imply('day', date.date()).imply('month', date.month() + 1).imply('year', date.year());
+    }
+  }, {
+    key: "extractWeekday",
+    value: function extractWeekday(refDate, offset, modifier) {
+      var date = dayjs_min_default()(refDate);
+      var refOffset = date.day();
+
+      if (modifier == 'last' || modifier == 'past') {
+        date = date.day(offset - 7);
+      } else if (modifier == 'next') {
+        date = date.day(offset + 7);
+      } else if (modifier == 'this') {
+        date = date.day(offset);
+      } else {
+        if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
+          date = date.day(offset - 7);
+        } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
+          date = date.day(offset + 7);
+        } else {
+          date = date.day(offset);
+        }
+      }
+
+      return date;
+    }
+  }]);
+
+  return ENWeekdayParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/parsers/ENRelativeDateFormatParser.ts
+function ENRelativeDateFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ENRelativeDateFormatParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ENRelativeDateFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENRelativeDateFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENRelativeDateFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ENRelativeDateFormatParser_PATTERN = new RegExp('(?<=\\W|^)' + '(this|next|last|past)\\s*' + "(".concat(NUMBER_PATTERN, ")?\\s*") + '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' + '(?=\\W|$)', 'i');
+var MODIFIER_WORD_GROUP = 1;
+var MULTIPLIER_WORD_GROUP = 2;
+var RELATIVE_WORD_GROUP = 3;
+
+var ENRelativeDateFormatParser_ENRelativeDateFormatParser = /*#__PURE__*/function () {
+  function ENRelativeDateFormatParser() {
+    ENRelativeDateFormatParser_classCallCheck(this, ENRelativeDateFormatParser);
+  }
+
+  ENRelativeDateFormatParser_createClass(ENRelativeDateFormatParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return ENRelativeDateFormatParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      if (match[MODIFIER_WORD_GROUP].toLowerCase().match(/^this/)) {
+        if (match[MULTIPLIER_WORD_GROUP]) {
+          return null;
+        }
+
+        return this.extractThisReference(context, match[RELATIVE_WORD_GROUP]);
+      }
+
+      var modifier = match[MODIFIER_WORD_GROUP].toLowerCase().match(/^next/) ? 1 : -1;
+      var parsedNum = match[MULTIPLIER_WORD_GROUP] ? parseNumberPattern(match[MULTIPLIER_WORD_GROUP]) : 1;
+      var unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
+
+      if (unitWord.match(/day|week|month|year/i)) {
+        return this.extractDateReference(context, unitWord, parsedNum * modifier);
+      } else {
+        return this.extractTimeReference(context, unitWord, parsedNum * modifier);
+      }
+    }
+  }, {
+    key: "extractTimeReference",
+    value: function extractTimeReference(context, timeUnitWord, num) {
+      var components = context.createParsingComponents();
+      var date = dayjs_min_default()(context.refDate);
+
+      if (timeUnitWord.match(/hour/i)) {
+        date = date.add(num, 'hour');
+        components.imply('minute', date.minute());
+        components.imply('second', date.second());
+      } else if (timeUnitWord.match(/min/i)) {
+        date = date.add(num, 'minute');
+        components.assign('minute', date.minute());
+        components.imply('second', date.second());
+      } else if (timeUnitWord.match(/second/i)) {
+        date = date.add(num, 'second');
+        components.assign('second', date.second());
+        components.assign('minute', date.minute());
+      }
+
+      components.assign('hour', date.hour());
+      components.assign('year', date.year());
+      components.assign('month', date.month() + 1);
+      components.assign('day', date.date());
+      return components;
+    }
+  }, {
+    key: "extractDateReference",
+    value: function extractDateReference(context, dateUnitWord, num) {
+      var components = context.createParsingComponents();
+      var date = dayjs_min_default()(context.refDate);
+
+      if (dateUnitWord.match(/day/i)) {
+        date = date.add(num, 'd');
+        components.assign('year', date.year());
+        components.assign('month', date.month() + 1);
+        components.assign('day', date.date());
+      } else if (dateUnitWord.match(/week/i)) {
+        date = date.add(num * 7, 'd'); // We don't know the exact date for next/last week so we imply them
+
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.imply('year', date.year());
+      } else if (dateUnitWord.match(/month/i)) {
+        date = date.add(num, 'month'); // We don't know the exact day for next/last month
+
+        components.imply('day', date.date());
+        components.assign('year', date.year());
+        components.assign('month', date.month() + 1);
+      } else if (dateUnitWord.match(/year/i)) {
+        date = date.add(num, 'year'); // We don't know the exact day for month on next/last year
+
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.assign('year', date.year());
+      }
+
+      return components;
+    }
+  }, {
+    key: "extractThisReference",
+    value: function extractThisReference(context, relativeWord) {
+      var components = context.createParsingComponents();
+      var date = dayjs_min_default()(context.refDate); // This week
+
+      if (relativeWord.match(/week/i)) {
+        date = date.add(-date.get('d'), 'd');
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.imply('year', date.year());
+      } // This month
+      else if (relativeWord.match(/month/i)) {
+          date = date.add(-date.date() + 1, 'd');
+          components.imply('day', date.date());
+          components.assign('year', date.year());
+          components.assign('month', date.month() + 1);
+        } // This year
+        else if (relativeWord.match(/year/i)) {
+            date = date.add(-date.date() + 1, 'd');
+            date = date.add(-date.month(), 'month');
+            components.imply('day', date.date());
+            components.imply('month', date.month() + 1);
+            components.assign('year', date.year());
+          }
+
+      return components;
+    }
+  }]);
+
+  return ENRelativeDateFormatParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/en/index.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Shortcuts
+
+var en_casual = new chrono_Chrono(en_createCasualConfiguration(false));
+var en_strict = new chrono_Chrono(en_createConfiguration(true, false));
+var GB = new chrono_Chrono(en_createConfiguration(false, true));
+function en_parse(text, ref, option) {
+  return en_casual.parse(text, ref, option);
 }
-function casualOption() {
-  return mergeConfigurations([configurations_en.casual, // Some German abbriviate overlap with common English
-  configurations_de({
-    strict: true
-  }), configurations_nl(), configurations_pt(), configurations_es(), configurations_fr(), configurations_ja(), configurations_zh(), commonPostProcessing]);
-} // -------------------------------------------------------------
-
-var configurations_de = function de(config) {
-  return {
-    parsers: [new parser["DEDeadlineFormatParser"](config), new parser["DEMonthNameLittleEndianParser"](config), new parser["DEMonthNameParser"](config), new parser["DESlashDateFormatParser"](config), new parser["DETimeAgoFormatParser"](config), new parser["DETimeExpressionParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"](), new refiner["DEMergeDateTimeRefiner"](), new refiner["DEMergeDateRangeRefiner"]()]
-  };
-};
-
-configurations_de.casual = function () {
-  var option = configurations_de({
-    strict: false
+function en_parseDate(text, ref, option) {
+  return en_casual.parseDate(text, ref, option);
+}
+function en_createCasualConfiguration() {
+  var littleEndian = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var option = en_createConfiguration(false, littleEndian);
+  option.parsers.unshift(new ENCasualDateParser_ENCasualDateParser());
+  option.parsers.unshift(new ENCasualTimeParser_ENCasualTimeParser());
+  option.parsers.unshift(new ENWeekdayParser_ENWeekdayParser());
+  option.parsers.unshift(new ENRelativeDateFormatParser_ENRelativeDateFormatParser());
+  return option;
+}
+function en_createConfiguration() {
+  var strictMode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var littleEndian = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return includeCommonConfiguration({
+    parsers: [new ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser(strictMode), new ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser(), new ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser(), new ENMonthNameParser_ENMonthNameParser(), new ENSlashDateFormatParser_ENSlashDateFormatParser(littleEndian), new ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser(), new ENSlashMonthFormatParser(), new ENTimeExpressionParser_ENTimeExpressionParser(), new ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser(strictMode), new ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser(strictMode)],
+    refiners: [new ENMergeDateTimeRefiner_ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()]
   });
-  option.parsers.unshift(new parser["DECasualDateParser"]());
-  option.parsers.unshift(new parser["DEWeekdayParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_nl = function nl(config) {
-  return {
-    parsers: [new parser["NLMonthNameLittleEndianParser"](config), new parser["NLMonthNameParser"](config), new parser["NLSlashDateFormatParser"](config), new parser["NLTimeExpressionParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"](), new refiner["NLMergeDateTimeRefiner"](), new refiner["NLMergeDateRangeRefiner"]()]
-  };
-};
-
-configurations_nl.casual = function () {
-  var option = configurations_nl({
-    strict: false
-  });
-  option.parsers.unshift(new parser["NLCasualDateParser"]());
-  option.parsers.unshift(new parser["NLCasualTimeParser"]());
-  option.parsers.unshift(new parser["NLWeekdayParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_en = function en(config) {
-  return {
-    parsers: [new parser["ENISOFormatParser"](config), new parser["ENDeadlineFormatParser"](config), new parser["ENMonthNameLittleEndianParser"](config), new parser["ENMonthNameMiddleEndianParser"](config), new parser["ENMonthNameParser"](config), new parser["ENSlashDateFormatParser"](config), new parser["ENSlashDateFormatStartWithYearParser"](config), new parser["ENSlashMonthFormatParser"](config), new parser["ENTimeAgoFormatParser"](config), new parser["ENTimeLaterFormatParser"](config), new parser["ENTimeExpressionParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"](), // English
-    new refiner["ENMergeDateTimeRefiner"](), new refiner["ENMergeDateRangeRefiner"](), new refiner["ENPrioritizeSpecificDateRefiner"]()]
-  };
-};
-
-configurations_en.casual = function (config) {
-  config = config || {};
-  config.strict = false;
-  var option = configurations_en(config); // en
-
-  option.parsers.unshift(new parser["ENCasualDateParser"]());
-  option.parsers.unshift(new parser["ENCasualTimeParser"]());
-  option.parsers.unshift(new parser["ENWeekdayParser"]());
-  option.parsers.unshift(new parser["ENRelativeDateFormatParser"]());
-  return option;
-};
-
-var en_GB = function en_GB(config) {
-  config = config || {};
-  config.littleEndian = true;
-  return configurations_en(config);
-};
-
-en_GB.casual = function (config) {
-  config = config || {};
-  config.littleEndian = true;
-  return configurations_en.casual(config);
-}; // -------------------------------------------------------------
-
-
-var configurations_ja = function ja() {
-  return {
-    parsers: [new parser["JPStandardParser"]()],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"](), new refiner["JPMergeDateRangeRefiner"]()]
-  };
-};
-
-configurations_ja.casual = function () {
-  var option = configurations_ja();
-  option.parsers.unshift(new parser["JPCasualDateParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_pt = function pt(config) {
-  return {
-    parsers: [new parser["PTTimeAgoFormatParser"](config), new parser["PTDeadlineFormatParser"](config), new parser["PTTimeExpressionParser"](config), new parser["PTMonthNameLittleEndianParser"](config), new parser["PTSlashDateFormatParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"]()]
-  };
-};
-
-configurations_pt.casual = function () {
-  var option = configurations_pt({
-    strict: false
-  });
-  option.parsers.unshift(new parser["PTCasualDateParser"]());
-  option.parsers.unshift(new parser["PTWeekdayParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_es = function es(config) {
-  return {
-    parsers: [new parser["ESTimeAgoFormatParser"](config), new parser["ESDeadlineFormatParser"](config), new parser["ESTimeExpressionParser"](config), new parser["ESMonthNameLittleEndianParser"](config), new parser["ESSlashDateFormatParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"]()]
-  };
-};
-
-configurations_es.casual = function () {
-  var option = configurations_es({
-    strict: false
-  });
-  option.parsers.unshift(new parser["ESCasualDateParser"]());
-  option.parsers.unshift(new parser["ESWeekdayParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_fr = function fr(config) {
-  return {
-    parsers: [new parser["FRDeadlineFormatParser"](config), new parser["FRMonthNameLittleEndianParser"](config), new parser["FRSlashDateFormatParser"](config), new parser["FRTimeAgoFormatParser"](config), new parser["FRTimeExpressionParser"](config)],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"](), new refiner["FRMergeDateRangeRefiner"](), new refiner["FRMergeDateTimeRefiner"]()]
-  };
-};
-
-configurations_fr.casual = function () {
-  var option = configurations_fr({
-    strict: false
-  });
-  option.parsers.unshift(new parser["FRCasualDateParser"]());
-  option.parsers.unshift(new parser["FRWeekdayParser"]());
-  option.parsers.unshift(new parser["FRRelativeDateFormatParser"]());
-  return option;
-}; // -------------------------------------------------------------
-
-
-var configurations_zh = function zh() {
-  return {
-    parsers: [new parser["ZHHantDateParser"](), new parser["ZHHantWeekdayParser"](), new parser["ZHHantTimeExpressionParser"](), new parser["ZHHantCasualDateParser"](), new parser["ZHHantDeadlineFormatParser"]()],
-    refiners: [new refiner["OverlapRemovalRefiner"](), new refiner["ForwardDateRefiner"]()]
-  };
-};
-// EXTERNAL MODULE: ./src/result.ts
-var result = __webpack_require__(1);
-
+}
 // CONCATENATED MODULE: ./src/chrono.ts
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function chrono_toConsumableArray(arr) { return chrono_arrayWithoutHoles(arr) || chrono_iterableToArray(arr) || chrono_unsupportedIterableToArray(arr) || chrono_nonIterableSpread(); }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function chrono_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function chrono_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return chrono_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return chrono_arrayLikeToArray(o, minLen); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+function chrono_iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function chrono_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return chrono_arrayLikeToArray(arr); }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function chrono_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function chrono_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function chrono_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function chrono_createClass(Constructor, protoProps, staticProps) { if (protoProps) chrono_defineProperties(Constructor.prototype, protoProps); if (staticProps) chrono_defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 var chrono_Chrono = /*#__PURE__*/function () {
   function Chrono(configuration) {
-    _classCallCheck(this, Chrono);
+    chrono_classCallCheck(this, Chrono);
 
-    configuration = configuration || casualOption();
-    this.parsers = _toConsumableArray(configuration.parsers);
-    this.refiners = _toConsumableArray(configuration.refiners);
+    configuration = configuration || en_createCasualConfiguration();
+    this.parsers = chrono_toConsumableArray(configuration.parsers);
+    this.refiners = chrono_toConsumableArray(configuration.refiners);
   }
 
-  _createClass(Chrono, [{
-    key: "parse",
-    value: function parse(text, refDate, opt) {
-      refDate = refDate || new Date();
-      opt = opt || {};
-      opt.forwardDate = opt.forwardDate || opt.forwardDate;
-      var allResults = [];
-      this.parsers.forEach(function (parser) {
-        var results = parser.execute(text, refDate, opt);
-        allResults = allResults.concat(results);
-      });
-      allResults.sort(function (a, b) {
-        return a.index - b.index;
-      });
-      this.refiners.forEach(function (refiner) {
-        allResults = refiner.refine(text, allResults, opt);
-      });
-      return allResults;
-    }
-  }, {
+  chrono_createClass(Chrono, [{
     key: "parseDate",
     value: function parseDate(text, refDate, opt) {
       var results = this.parse(text, refDate, opt);
+      return results.length > 0 ? results[0].start.date() : null;
+    }
+  }, {
+    key: "parse",
+    value: function parse(text, refDate, opt) {
+      var context = new chrono_ParsingContext(text, refDate || new Date(), opt || {});
+      var results = [];
+      this.parsers.forEach(function (parser) {
+        var parsedResults = Chrono.executeParser(context, parser);
+        results = results.concat(parsedResults);
+      });
+      results.sort(function (a, b) {
+        return a.index - b.index;
+      });
+      this.refiners.forEach(function (refiner) {
+        results = refiner.refine(context, results);
+      });
+      return results;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Chrono({
+        parsers: chrono_toConsumableArray(this.parsers),
+        refiners: chrono_toConsumableArray(this.refiners)
+      });
+    }
+  }], [{
+    key: "executeParser",
+    value: function executeParser(context, parser) {
+      var results = [];
+      var pattern = parser.pattern(context);
+      var originalText = context.text;
+      var remainingText = context.text;
+      var match = pattern.exec(remainingText);
 
-      if (results.length > 0) {
-        return results[0].start.date();
+      var _loop = function _loop() {
+        // Calculate match index on the full text;
+        var index = match.index + originalText.length - remainingText.length;
+        match.index = index;
+        var result = parser.extract(context, match);
+
+        if (!result) {
+          // If fail, move on by 1
+          remainingText = originalText.substring(index + 1);
+          match = pattern.exec(remainingText);
+          return "continue";
+        }
+
+        var parsedResult = null;
+
+        if (result instanceof ParsingResult) {
+          parsedResult = result;
+        } else if (result instanceof results_ParsingComponents) {
+          parsedResult = context.createParsingResult(index, match[0]);
+          parsedResult.start = result;
+        } else {
+          parsedResult = context.createParsingResult(index, match[0], result);
+        }
+
+        '09/25/2017 10:31:50.522 P';
+        context.debug(function () {
+          return console.log("".concat(parser.constructor.name, " extracted result ").concat(parsedResult));
+        });
+        results.push(parsedResult);
+        remainingText = originalText.substring(index + parsedResult.text.length);
+        match = pattern.exec(remainingText);
+      };
+
+      while (match) {
+        var _ret = _loop();
+
+        if (_ret === "continue") continue;
       }
 
-      return null;
+      return results;
     }
   }]);
 
   return Chrono;
 }();
+var chrono_ParsingContext = /*#__PURE__*/function () {
+  function ParsingContext(text, refDate, option) {
+    chrono_classCallCheck(this, ParsingContext);
 
+    this.text = text;
+    this.refDate = refDate;
+    this.option = option;
+  }
 
+  chrono_createClass(ParsingContext, [{
+    key: "createParsingComponents",
+    value: function createParsingComponents(components) {
+      return new results_ParsingComponents(this.refDate, components);
+    }
+  }, {
+    key: "createParsingResult",
+    value: function createParsingResult(index, textOrEndIndex, startComponents, endComponents) {
+      var text = typeof textOrEndIndex === 'string' ? textOrEndIndex : this.text.substring(index, textOrEndIndex);
+      var start = startComponents ? this.createParsingComponents(startComponents) : null;
+      var end = endComponents ? this.createParsingComponents(endComponents) : null;
+      return new ParsingResult(this.refDate, index, text, start, end);
+    }
+  }, {
+    key: "debug",
+    value: function debug(block) {
+      if (this.option.debug) {
+        if (this.option.debug instanceof Function) {
+          this.option.debug(block);
+        } else {
+          var handler = this.option.debug;
+          handler.debug(block);
+        }
+      }
+    }
+  }]);
 
-var options = configurations_namespaceObject;
-var chrono_parser = parser;
-var chrono_refiner = refiner;
-var Parser = chrono_parser.Parser;
-var Refiner = chrono_refiner.Refiner;
-var Filter = chrono_refiner.Filter;
-var ParsedResult = result["ParsedResult"];
-var ParsedComponents = result["ParsedComponents"];
-var strict = new chrono_Chrono(options.strictOption());
-var casual = new chrono_Chrono(options.casualOption());
-var chrono_en = new chrono_Chrono(options.mergeConfigurations([options.en.casual, options.commonPostProcessing]));
-var chrono_en_GB = new chrono_Chrono(options.mergeConfigurations([options.en_GB.casual, options.commonPostProcessing]));
-var chrono_de = new chrono_Chrono(options.mergeConfigurations([options.de.casual, options.en, options.commonPostProcessing]));
-var chrono_nl = new chrono_Chrono(options.mergeConfigurations([options.nl.casual, options.en, options.commonPostProcessing]));
-var chrono_pt = new chrono_Chrono(options.mergeConfigurations([options.pt.casual, options.en, options.commonPostProcessing]));
-var chrono_es = new chrono_Chrono(options.mergeConfigurations([options.es.casual, options.en, options.commonPostProcessing]));
-var chrono_fr = new chrono_Chrono(options.mergeConfigurations([options.fr.casual, options.en, options.commonPostProcessing]));
-var chrono_ja = new chrono_Chrono(options.mergeConfigurations([options.ja.casual, options.en, options.commonPostProcessing]));
-function parse() {
-  return casual.parse.apply(casual, arguments);
-}
-function parseDate() {
-  return casual.parseDate.apply(casual, arguments);
-}
+  return ParsingContext;
+}();
 
 /***/ })
 /******/ ]);
