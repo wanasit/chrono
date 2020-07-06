@@ -2,7 +2,7 @@ import * as chrono from '../../src/';
 import {testSingleCase, testUnexpectedResult} from '../test_util';
 import {Meridiem} from "../../src/";
 
-test("Test - Single Expression", function() {
+test("Test - Single Expression", () => {
 
 
     testSingleCase(chrono.casual, 'The Deadline is now', new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
@@ -122,7 +122,7 @@ test("Test - Single Expression", function() {
 });
 
 
-test("Test - Combined Expression", function() {
+test("Test - Combined Expression", () => {
 
 
     testSingleCase(chrono.casual, 'The Deadline is today 5PM', new Date(2012, 7, 10, 12), (result) => {
@@ -140,7 +140,7 @@ test("Test - Combined Expression", function() {
 });
 
 
-test("Test - Casual date range", function() {
+test("Test - Casual date range", () => {
 
     testSingleCase(chrono.casual, 'The event is today - next friday', new Date(2012, 7, 4, 12), (result) => {
         expect(result.index).toBe(13);
@@ -190,7 +190,7 @@ test("Test - Casual date range", function() {
 });
 
 
-test("Test - Casual time implication", function() {
+test("Test - Casual time implication", () => {
 
     testSingleCase(chrono.casual, 'annual leave from today morning to tomorrow', new Date(2012, 8-1, 4, 12), (result) => {
         expect(result.text).toBe('today morning to tomorrow');
@@ -222,7 +222,7 @@ test("Test - Casual time implication", function() {
 })
 
 
-test('Test - Random text', function() {
+test('Test - Random text', () => {
 
     testSingleCase(chrono, 'tonight', new Date(2012, 1-1, 1, 12), (result, text) => {
 
@@ -346,8 +346,34 @@ test('Test - Random text', function() {
     });
 });
 
+test('Test - Casual time with timezone', () => {
 
-test('Test - Random negative text', function() {
+    testSingleCase(chrono, 'Jan 1, 2020 Morning UTC',(result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2020);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(6);
+
+        expect(result.start.get('timezoneOffset')).toStrictEqual(0);
+        expect(result).toBeDate(new Date('2020-01-01T06:00:00.000Z'))
+    });
+
+    testSingleCase(chrono, 'Jan 1, 2020 Evening JST',(result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2020);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(20);
+
+        expect(result.start.get('timezoneOffset')).toStrictEqual(540);
+        expect(result).toBeDate(new Date('Wed Jan 01 2020 20:00:00 GMT+0900 (Japan Standard Time)'))
+    });
+})
+
+test('Test - Random negative text', () => {
 
     testUnexpectedResult(chrono, 'notoday');
 
