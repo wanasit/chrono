@@ -1,4 +1,4 @@
-# Chrono (v2 preview)
+# Chrono (v2)
 
 A natural language date parser in Javascript. 
 
@@ -37,6 +37,8 @@ For contributors and advanced users
 * The project is rewritten in TypeScript
 * New [Parser](#parser) and [Refiner](#refiner) interface 
 * New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
+
+Note: [v1.x.x](https://github.com/wanasit/chrono/tree/v1) will still be supported for the time being.
 
 ## Usage
 
