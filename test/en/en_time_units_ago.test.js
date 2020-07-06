@@ -225,28 +225,31 @@ test("Test - Single Expression (Casual)", function() {
 
 test("Test - Nested time ago", function() {
 
-    var text = "15 hours 29 min ago";
-    var results = chrono.parse(text, new Date(2012,7,10,22,30));
-    expect(results.length).toBe(1);
-    expect(results[0].text).toBe('15 hours 29 min ago');
-    expect(results[0].start.get('day')).toBe(10);
-    expect(results[0].start.get('hour')).toBe(7);
-    expect(results[0].start.get('minute')).toBe(1);
+    testSingleCase(chrono, '15 hours 29 min ago', new Date(2012,7,10,22,30), (result) => {
+        expect(result.text).toBe('15 hours 29 min ago');
+        expect(result.start.get('day')).toBe(10);
+        expect(result.start.get('hour')).toBe(7);
+        expect(result.start.get('minute')).toBe(1);
+    });
 
-    var text = "1 day 21 hours ago ";
-    var results = chrono.parse(text, new Date(2012,7,10,22,30));
-    expect(results.length).toBe(1);
-    expect(results[0].text).toBe('1 day 21 hours ago');
-    expect(results[0].start.get('day')).toBe(9);
-    expect(results[0].start.get('hour')).toBe(1);
-    expect(results[0].start.get('minute')).toBe(30);
+    testSingleCase(chrono, '1 day 21 hours ago ', new Date(2012,7,10,22,30), (result) => {
+        expect(result.text).toBe('1 day 21 hours ago');
+        expect(result.start.get('day')).toBe(9);
+        expect(result.start.get('hour')).toBe(1);
+        expect(result.start.get('minute')).toBe(30);
+    });
 
-    var text = "3 min 49 sec ago ";
-    var results = chrono.parse(text, new Date(2012,7,10,22,30));
-    expect(results.length).toBe(1);
-    expect(results[0].text).toBe('3 min 49 sec ago');
-    expect(results[0].start.get('day')).toBe(10);
-    expect(results[0].start.get('hour')).toBe(22);
-    expect(results[0].start.get('minute')).toBe(26);
-    expect(results[0].start.get('second')).toBe(11);
+    testSingleCase(chrono, '3 min 49 sec ago ', new Date(2012,7,10,22,30), (result) => {
+        expect(result.text).toBe('3 min 49 sec ago');
+        expect(result.start.get('day')).toBe(10);
+        expect(result.start.get('hour')).toBe(22);
+        expect(result.start.get('minute')).toBe(26);
+        expect(result.start.get('second')).toBe(11);
+    });
+});
+
+test("Test - Negative cases", function() {
+    testUnexpectedResult(chrono, '15 hours 29 min')
+    testUnexpectedResult(chrono, 'a few hour')
+    testUnexpectedResult(chrono, '5 days')
 });

@@ -19,6 +19,21 @@ test("Test - Load modules", function() {
 	expect(chrono.strict).toBeDefined();
 });
 
+test("Test - Basic parse date functions", function() {
+
+	expect(chrono.parseDate("7:00PM July 5th, 2020"))
+		.toStrictEqual(new Date(2020, 7-1, 5, 19))
+
+	expect(chrono.en.parseDate("7:00PM July 5th, 2020"))
+		.toStrictEqual(new Date(2020, 7-1, 5, 19))
+
+	expect(chrono.strict.parseDate("7:00PM July 5th, 2020"))
+		.toStrictEqual(new Date(2020, 7-1, 5, 19))
+
+	expect(chrono.casual.parseDate("7:00PM July 5th, 2020"))
+		.toStrictEqual(new Date(2020, 7-1, 5, 19))
+});
+
 test("Test - Add custom parser", () => {
     const customParser = {
 		pattern: () => { return /(\d{1,2})(st|nd|rd|th)/i },
@@ -106,8 +121,6 @@ test("Test - Add custom refiner example", () => {
 		expect(result.start.get('hour')).toBe(2);
 		expect(result.start.get('minute')).toBe(30);
 	})
-
-
 });
 
 test("Test - Compare with native js", ()=> {
