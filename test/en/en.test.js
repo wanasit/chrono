@@ -153,10 +153,10 @@ test("Test - Parse multiple date results", function() {
         const result = results[1];
         expect(result.text).toBe('3:30-4:30pm');
 
-        expect(result.start.get('hour')).toBe(3);
+        expect(result.start.get('hour')).toBe(15);
         expect(result.start.get('minute')).toBe(30);
 
-        expect(result.start.get('hour')).toBe(4);
+        expect(result.start.get('hour')).toBe(16);
         expect(result.start.get('minute')).toBe(30);
     }
 });
