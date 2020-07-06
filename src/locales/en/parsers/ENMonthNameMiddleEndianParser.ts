@@ -11,14 +11,14 @@ const PATTERN = new RegExp('(?<=\\W|^)' +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
     '\\s*,?\\s*)?' +
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-    '(?:-|\/|\\s*,?\\s*)' +
+    '(?:-|/|\\s*,?\\s*)' +
     `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*`+
     '(?:' +
         '(?:to|\\-)\\s*' +
         `(${ORDINAL_NUMBER_PATTERN})\\s*` +
     ')?' +
     '(?:' +
-        '(?:-|\/|\\s*,?\\s*)' +
+        '(?:-|/|\\s*,?\\s*)' +
         `(${YEAR_PATTERN})` +
     ')?' +
     '(?=\\W|$)(?!\\:\\d)', 'i');
@@ -42,7 +42,7 @@ const YEAR_GROUP = 5;
  */
 export default class ENMonthNameMiddleEndianParser implements Parser {
 
-    pattern(context: ParsingContext): RegExp {
+    pattern(): RegExp {
         return PATTERN;
     }
 

@@ -3,7 +3,7 @@ import {ParsingResult} from "../../../results";
 import dayjs from "dayjs";
 import {Meridiem} from "../../../index";
 
-const FIRST_REG_PATTERN  = new RegExp("(?<!\w)(^|\\s|T)" +
+const FIRST_REG_PATTERN  = new RegExp("(^|\\s|T)" +
     "(?:(?:at|from)\\s*)??" +
     "(\\d{1,4}|noon|midnight)" +
     "(?:" +

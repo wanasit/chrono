@@ -15,10 +15,10 @@ const PATTERN = new RegExp('(?<=\\W|^)' +
             '(?:to|\\-|\\–|until|through|till|\\s)\\s*' +
             `(${ORDINAL_NUMBER_PATTERN})` +
         ')?' + 
-        '(?:-|\/|\\s*(?:of)?\\s*)' +
+        '(?:-|/|\\s*(?:of)?\\s*)' +
         '(' + matchAnyPattern(MONTH_DICTIONARY) + ')' +
         '(?:' +
-            '(?:-|\/|,?\\s*)' +
+            '(?:-|/|,?\\s*)' +
             `(${YEAR_PATTERN}(?![^\\s]\\d))` +
         ')?' +
         '(?=\\W|$)', 'i'
