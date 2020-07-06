@@ -12,6 +12,16 @@ test("Test - Date + Time Expression", function() {
     })
 });
 
+test("Test - Time Expression", function() {
+
+    testSingleCase(chrono, 'between 3:30-4:30pm', new Date(2020,7-1,6), (result) => {
+        expect(result.text).toBe('3:30-4:30pm')
+
+        expect(result.start).toBeDate(new Date(2020, 7-1, 6, 15, 30))
+        expect(result.end).toBeDate(new Date(2020, 7-1, 6, 16, 30))
+    })
+});
+
 
 
 test('Test - Random text', function() {
@@ -120,6 +130,37 @@ test("Test - Wikipedia Texts", function() {
         expect(result.text).toBe('Sunday, October 16, 2011');
     }
 });
+
+
+test("Test - Parse multiple date results", function() {
+
+    const text = 'I will see you at 2:30. If not I will see you somewhere between 3:30-4:30pm';
+    const results = chrono.parse(text, new Date(2020,7-1,6));
+    expect(results.length).toBe(2);
+
+    {
+        const result = results[0];
+        expect(result.text).toBe('at 2:30');
+        expect(result.start.get('year')).toBe(2020);
+        expect(result.start.get('month')).toBe(7);
+        expect(result.start.get('day')).toBe(6);
+        expect(result.start.get('hour')).toBe(2);
+
+        expect(result.end).toBeNull()
+    }
+
+    {
+        const result = results[1];
+        expect(result.text).toBe('3:30-4:30pm');
+
+        expect(result.start.get('hour')).toBe(3);
+        expect(result.start.get('minute')).toBe(30);
+
+        expect(result.start.get('hour')).toBe(4);
+        expect(result.start.get('minute')).toBe(30);
+    }
+});
+
 
 
 

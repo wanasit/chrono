@@ -57,7 +57,7 @@ export default class ENTimeExpressionParser implements Parser {
             return null;
         }
 
-        const remainingText = match.input.substring(match.index + match[0].length)
+        const remainingText = context.text.substring(match.index + match[0].length)
         match = SECOND_REG_PATTERN.exec(remainingText);
         if (!match) {
             return result;
