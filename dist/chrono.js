@@ -110,235 +110,36 @@ return /******/ (function(modules) { // webpackBootstrap
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "Chrono", function() { return /* binding */ chrono_Chrono; });
-__webpack_require__.d(__webpack_exports__, "ParsingContext", function() { return /* binding */ chrono_ParsingContext; });
+__webpack_require__.d(__webpack_exports__, "Chrono", function() { return /* reexport */ chrono_Chrono; });
+__webpack_require__.d(__webpack_exports__, "strict", function() { return /* binding */ src_strict; });
+__webpack_require__.d(__webpack_exports__, "casual", function() { return /* binding */ src_casual; });
+__webpack_require__.d(__webpack_exports__, "parse", function() { return /* binding */ src_parse; });
+__webpack_require__.d(__webpack_exports__, "parseDate", function() { return /* binding */ src_parseDate; });
+__webpack_require__.d(__webpack_exports__, "Meridiem", function() { return /* binding */ Meridiem; });
+__webpack_require__.d(__webpack_exports__, "en", function() { return /* reexport */ en_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "ja", function() { return /* reexport */ ja_namespaceObject; });
 
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(0);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// NAMESPACE OBJECT: ./src/locales/en/index.ts
+var en_namespaceObject = {};
+__webpack_require__.r(en_namespaceObject);
+__webpack_require__.d(en_namespaceObject, "casual", function() { return casual; });
+__webpack_require__.d(en_namespaceObject, "strict", function() { return strict; });
+__webpack_require__.d(en_namespaceObject, "GB", function() { return GB; });
+__webpack_require__.d(en_namespaceObject, "parse", function() { return parse; });
+__webpack_require__.d(en_namespaceObject, "parseDate", function() { return parseDate; });
+__webpack_require__.d(en_namespaceObject, "createCasualConfiguration", function() { return createCasualConfiguration; });
+__webpack_require__.d(en_namespaceObject, "createConfiguration", function() { return createConfiguration; });
 
-// CONCATENATED MODULE: ./src/results.ts
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+// NAMESPACE OBJECT: ./src/locales/ja/index.ts
+var ja_namespaceObject = {};
+__webpack_require__.r(ja_namespaceObject);
+__webpack_require__.d(ja_namespaceObject, "casual", function() { return ja_casual; });
+__webpack_require__.d(ja_namespaceObject, "strict", function() { return ja_strict; });
+__webpack_require__.d(ja_namespaceObject, "parse", function() { return ja_parse; });
+__webpack_require__.d(ja_namespaceObject, "parseDate", function() { return ja_parseDate; });
+__webpack_require__.d(ja_namespaceObject, "createCasualConfiguration", function() { return ja_createCasualConfiguration; });
+__webpack_require__.d(ja_namespaceObject, "createConfiguration", function() { return ja_createConfiguration; });
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-var results_ParsingComponents = /*#__PURE__*/function () {
-  function ParsingComponents(refDate, knownComponents) {
-    _classCallCheck(this, ParsingComponents);
-
-    this.knownValues = {};
-    this.impliedValues = {};
-
-    if (knownComponents) {
-      for (var key in knownComponents) {
-        this.knownValues[key] = knownComponents[key];
-      }
-    }
-
-    var refDayJs = dayjs_min_default()(refDate);
-
-    this.imply('day', refDayJs.date());
-    this.imply('month', refDayJs.month() + 1);
-    this.imply('year', refDayJs.year());
-    this.imply('hour', 12);
-    this.imply('minute', 0);
-    this.imply('second', 0);
-    this.imply('millisecond', 0);
-  }
-
-  _createClass(ParsingComponents, [{
-    key: "get",
-    value: function get(component) {
-      if (component in this.knownValues) {
-        return this.knownValues[component];
-      }
-
-      if (component in this.impliedValues) {
-        return this.impliedValues[component];
-      }
-
-      return null;
-    }
-  }, {
-    key: "date",
-    value: function date() {
-      return this.dayjs().toDate();
-    }
-  }, {
-    key: "isCertain",
-    value: function isCertain(component) {
-      return component in this.knownValues;
-    }
-  }, {
-    key: "getCertainComponents",
-    value: function getCertainComponents() {
-      return Object.keys(this.knownValues);
-    }
-  }, {
-    key: "imply",
-    value: function imply(component, value) {
-      if (component in this.knownValues) return;
-      this.impliedValues[component] = value;
-      return this;
-    }
-  }, {
-    key: "assign",
-    value: function assign(component, value) {
-      this.knownValues[component] = value;
-      delete this.impliedValues[component];
-      return this;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      var component = new ParsingComponents(new Date());
-      component.knownValues = {};
-      component.impliedValues = {};
-
-      for (var key in this.knownValues) {
-        component.knownValues[key] = this.knownValues[key];
-      }
-
-      for (var _key in this.impliedValues) {
-        component.impliedValues[_key] = this.impliedValues[_key];
-      }
-
-      return component;
-    }
-  }, {
-    key: "isOnlyDate",
-    value: function isOnlyDate() {
-      return !this.isCertain('hour') && !this.isCertain('minute') && !this.isCertain('second');
-    }
-  }, {
-    key: "isOnlyTime",
-    value: function isOnlyTime() {
-      return !this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
-    }
-  }, {
-    key: "isOnlyWeekdayComponent",
-    value: function isOnlyWeekdayComponent() {
-      return this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
-    }
-  }, {
-    key: "isOnlyDayMonthComponent",
-    value: function isOnlyDayMonthComponent() {
-      return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
-    }
-  }, {
-    key: "isValidDate",
-    value: function isValidDate() {
-      var dateMoment = this.dayjs();
-
-      if (this.isCertain('timezoneOffset')) {
-        var adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();
-        dateMoment = dateMoment.add(adjustTimezoneOffset, 'minute');
-      }
-
-      if (dateMoment.get('year') != this.get('year')) return false;
-      if (dateMoment.get('month') != this.get('month') - 1) return false;
-      if (dateMoment.get('date') != this.get('day')) return false;
-      if (dateMoment.get('hour') != this.get('hour')) return false;
-      if (dateMoment.get('minute') != this.get('minute')) return false;
-      return true;
-    }
-  }, {
-    key: "dayjs",
-    value: function dayjs() {
-      var result = dayjs_min_default()();
-
-      result = result.year(this.get('year'));
-      result = result.month(this.get('month') - 1);
-      result = result.date(this.get('day'));
-      result = result.hour(this.get('hour'));
-      result = result.minute(this.get('minute'));
-      result = result.second(this.get('second'));
-      result = result.millisecond(this.get('millisecond')); // Javascript Date Object return minus timezone offset
-
-      var currentTimezoneOffset = result.utcOffset();
-      var targetTimezoneOffset = this.get('timezoneOffset') !== null ? this.get('timezoneOffset') : currentTimezoneOffset;
-      var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
-      result = result.add(-adjustTimezoneOffset, 'minute');
-      return result;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[ParsingComponents {knownValues: ".concat(JSON.stringify(this.knownValues), ", impliedValues: ").concat(JSON.stringify(this.impliedValues), "}]");
-    }
-  }], [{
-    key: "createRelativeFromRefDate",
-    value: function createRelativeFromRefDate(refDate, fragments) {
-      var date = dayjs_min_default()(refDate);
-
-      for (var key in fragments) {
-        date = date.add(fragments[key], key);
-      }
-
-      var components = new ParsingComponents(refDate);
-
-      if (fragments['hour'] || fragments['minute'] || fragments['second']) {
-        components.assign('hour', date.hour());
-        components.assign('minute', date.minute());
-        components.assign('second', date.second());
-      }
-
-      if (fragments['d'] || fragments['month'] || fragments['year']) {
-        components.assign('day', date.date());
-        components.assign('month', date.month() + 1);
-        components.assign('year', date.year());
-      } else {
-        if (fragments['week']) {
-          components.imply('weekday', date.day());
-        }
-
-        components.imply('day', date.date());
-        components.imply('month', date.month() + 1);
-        components.imply('year', date.year());
-      }
-
-      return components;
-    }
-  }]);
-
-  return ParsingComponents;
-}();
-var ParsingResult = /*#__PURE__*/function () {
-  function ParsingResult(refDate, index, text, start, end) {
-    _classCallCheck(this, ParsingResult);
-
-    this.refDate = refDate;
-    this.index = index;
-    this.text = text;
-    this.start = start || new results_ParsingComponents(this.refDate);
-    this.end = end;
-  }
-
-  _createClass(ParsingResult, [{
-    key: "clone",
-    value: function clone() {
-      var result = new ParsingResult(this.refDate, this.index, this.text);
-      result.start = this.start ? this.start.clone() : null;
-      result.end = this.end ? this.end.clone() : null;
-      return result;
-    }
-  }, {
-    key: "date",
-    value: function date() {
-      return this.start.date();
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[ParsingResult {index: ".concat(this.index, ", text: '").concat(this.text, "', ...}]");
-    }
-  }]);
-
-  return ParsingResult;
-}();
 // CONCATENATED MODULE: ./src/utils/pattern.ts
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -604,6 +405,232 @@ function collectDateTimeFragment(fragments, match) {
   var unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
   fragments[unit] = num;
 }
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(0);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+
+// CONCATENATED MODULE: ./src/results.ts
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var results_ParsingComponents = /*#__PURE__*/function () {
+  function ParsingComponents(refDate, knownComponents) {
+    _classCallCheck(this, ParsingComponents);
+
+    this.knownValues = {};
+    this.impliedValues = {};
+
+    if (knownComponents) {
+      for (var key in knownComponents) {
+        this.knownValues[key] = knownComponents[key];
+      }
+    }
+
+    var refDayJs = dayjs_min_default()(refDate);
+
+    this.imply('day', refDayJs.date());
+    this.imply('month', refDayJs.month() + 1);
+    this.imply('year', refDayJs.year());
+    this.imply('hour', 12);
+    this.imply('minute', 0);
+    this.imply('second', 0);
+    this.imply('millisecond', 0);
+  }
+
+  _createClass(ParsingComponents, [{
+    key: "get",
+    value: function get(component) {
+      if (component in this.knownValues) {
+        return this.knownValues[component];
+      }
+
+      if (component in this.impliedValues) {
+        return this.impliedValues[component];
+      }
+
+      return null;
+    }
+  }, {
+    key: "date",
+    value: function date() {
+      return this.dayjs().toDate();
+    }
+  }, {
+    key: "isCertain",
+    value: function isCertain(component) {
+      return component in this.knownValues;
+    }
+  }, {
+    key: "getCertainComponents",
+    value: function getCertainComponents() {
+      return Object.keys(this.knownValues);
+    }
+  }, {
+    key: "imply",
+    value: function imply(component, value) {
+      if (component in this.knownValues) return;
+      this.impliedValues[component] = value;
+      return this;
+    }
+  }, {
+    key: "assign",
+    value: function assign(component, value) {
+      this.knownValues[component] = value;
+      delete this.impliedValues[component];
+      return this;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      var component = new ParsingComponents(new Date());
+      component.knownValues = {};
+      component.impliedValues = {};
+
+      for (var key in this.knownValues) {
+        component.knownValues[key] = this.knownValues[key];
+      }
+
+      for (var _key in this.impliedValues) {
+        component.impliedValues[_key] = this.impliedValues[_key];
+      }
+
+      return component;
+    }
+  }, {
+    key: "isOnlyDate",
+    value: function isOnlyDate() {
+      return !this.isCertain('hour') && !this.isCertain('minute') && !this.isCertain('second');
+    }
+  }, {
+    key: "isOnlyTime",
+    value: function isOnlyTime() {
+      return !this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
+    }
+  }, {
+    key: "isOnlyWeekdayComponent",
+    value: function isOnlyWeekdayComponent() {
+      return this.isCertain('weekday') && !this.isCertain('day') && !this.isCertain('month');
+    }
+  }, {
+    key: "isOnlyDayMonthComponent",
+    value: function isOnlyDayMonthComponent() {
+      return this.isCertain('day') && this.isCertain('month') && !this.isCertain('year');
+    }
+  }, {
+    key: "isValidDate",
+    value: function isValidDate() {
+      var dateMoment = this.dayjs();
+
+      if (this.isCertain('timezoneOffset')) {
+        var adjustTimezoneOffset = this.get('timezoneOffset') - dateMoment.utcOffset();
+        dateMoment = dateMoment.add(adjustTimezoneOffset, 'minute');
+      }
+
+      if (dateMoment.get('year') != this.get('year')) return false;
+      if (dateMoment.get('month') != this.get('month') - 1) return false;
+      if (dateMoment.get('date') != this.get('day')) return false;
+      if (dateMoment.get('hour') != this.get('hour')) return false;
+      if (dateMoment.get('minute') != this.get('minute')) return false;
+      return true;
+    }
+  }, {
+    key: "dayjs",
+    value: function dayjs() {
+      var result = dayjs_min_default()();
+
+      result = result.year(this.get('year'));
+      result = result.month(this.get('month') - 1);
+      result = result.date(this.get('day'));
+      result = result.hour(this.get('hour'));
+      result = result.minute(this.get('minute'));
+      result = result.second(this.get('second'));
+      result = result.millisecond(this.get('millisecond')); // Javascript Date Object return minus timezone offset
+
+      var currentTimezoneOffset = result.utcOffset();
+      var targetTimezoneOffset = this.get('timezoneOffset') !== null ? this.get('timezoneOffset') : currentTimezoneOffset;
+      var adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
+      result = result.add(-adjustTimezoneOffset, 'minute');
+      return result;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[ParsingComponents {knownValues: ".concat(JSON.stringify(this.knownValues), ", impliedValues: ").concat(JSON.stringify(this.impliedValues), "}]");
+    }
+  }], [{
+    key: "createRelativeFromRefDate",
+    value: function createRelativeFromRefDate(refDate, fragments) {
+      var date = dayjs_min_default()(refDate);
+
+      for (var key in fragments) {
+        date = date.add(fragments[key], key);
+      }
+
+      var components = new ParsingComponents(refDate);
+
+      if (fragments['hour'] || fragments['minute'] || fragments['second']) {
+        components.assign('hour', date.hour());
+        components.assign('minute', date.minute());
+        components.assign('second', date.second());
+      }
+
+      if (fragments['d'] || fragments['month'] || fragments['year']) {
+        components.assign('day', date.date());
+        components.assign('month', date.month() + 1);
+        components.assign('year', date.year());
+      } else {
+        if (fragments['week']) {
+          components.imply('weekday', date.day());
+        }
+
+        components.imply('day', date.date());
+        components.imply('month', date.month() + 1);
+        components.imply('year', date.year());
+      }
+
+      return components;
+    }
+  }]);
+
+  return ParsingComponents;
+}();
+var ParsingResult = /*#__PURE__*/function () {
+  function ParsingResult(refDate, index, text, start, end) {
+    _classCallCheck(this, ParsingResult);
+
+    this.refDate = refDate;
+    this.index = index;
+    this.text = text;
+    this.start = start || new results_ParsingComponents(this.refDate);
+    this.end = end;
+  }
+
+  _createClass(ParsingResult, [{
+    key: "clone",
+    value: function clone() {
+      var result = new ParsingResult(this.refDate, this.index, this.text);
+      result.start = this.start ? this.start.clone() : null;
+      result.end = this.end ? this.end.clone() : null;
+      return result;
+    }
+  }, {
+    key: "date",
+    value: function date() {
+      return this.start.date();
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[ParsingResult {index: ".concat(this.index, ", text: '").concat(this.text, "', ...}]");
+    }
+  }]);
+
+  return ParsingResult;
+}();
 // CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeUnitDeadlineFormatParser.ts
 function ENTimeUnitDeadlineFormatParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1075,423 +1102,6 @@ var ENSlashMonthFormatParser = /*#__PURE__*/function () {
 }();
 
 
-// CONCATENATED MODULE: ./src/locales/ja/constants.ts
-/**
- * to-hankaku.js
- * convert to ascii code strings.
- *
- * @version 1.0.1
- * @author think49
- * @url https://gist.github.com/964592
- * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)
- */
-function toHankaku(text) {
-  return String(text).replace(/\u2019/g, "'").replace(/\u201D/g, "\"").replace(/\u3000/g, " ").replace(/\uFFE5/g, "\xA5").replace(/[\uFF01\uFF03-\uFF06\uFF08\uFF09\uFF0C-\uFF19\uFF1C-\uFF1F\uFF21-\uFF3B\uFF3D\uFF3F\uFF41-\uFF5B\uFF5D\uFF5E]/g, alphaNum);
-}
-
-function alphaNum(token) {
-  return String.fromCharCode(token.charCodeAt(0) - 65248);
-}
-// CONCATENATED MODULE: ./src/locales/ja/parsers/JPStandardParser.ts
-function JPStandardParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function JPStandardParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function JPStandardParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPStandardParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPStandardParser_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var JPStandardParser_PATTERN = /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
-var SPECIAL_YEAR_GROUP = 1;
-var TYPICAL_YEAR_GROUP = 2;
-var ERA_GROUP = 3;
-var JPStandardParser_YEAR_NUMBER_GROUP = 4;
-var JPStandardParser_MONTH_GROUP = 5;
-var DAY_GROUP = 6;
-
-var JPStandardParser_JPStandardParser = /*#__PURE__*/function () {
-  function JPStandardParser() {
-    JPStandardParser_classCallCheck(this, JPStandardParser);
-  }
-
-  JPStandardParser_createClass(JPStandardParser, [{
-    key: "pattern",
-    value: function pattern() {
-      return JPStandardParser_PATTERN;
-    }
-  }, {
-    key: "extract",
-    value: function extract(context, match) {
-      var month = parseInt(toHankaku(match[JPStandardParser_MONTH_GROUP]));
-      var day = parseInt(toHankaku(match[DAY_GROUP]));
-      var components = context.createParsingComponents({
-        'day': day,
-        'month': month
-      });
-
-      if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match('同|今|本')) {
-        var moment = dayjs_min_default()(context.refDate);
-        components.assign('year', moment.year());
-      }
-
-      if (match[TYPICAL_YEAR_GROUP]) {
-        var yearNumText = match[JPStandardParser_YEAR_NUMBER_GROUP];
-        var year = yearNumText == '元' ? 1 : parseInt(toHankaku(yearNumText));
-
-        if (match[ERA_GROUP] == '令和') {
-          year += 2018;
-        } else if (match[ERA_GROUP] == '平成') {
-          year += 1988;
-        } else if (match[ERA_GROUP] == '昭和') {
-          year += 1925;
-        }
-
-        components.assign('year', year);
-      } else {
-        var _year = findYearClosestToRef(context.refDate, day, month);
-
-        components.imply('year', _year);
-      }
-
-      return components;
-    }
-  }]);
-
-  return JPStandardParser;
-}();
-
-
-// CONCATENATED MODULE: ./src/common/abstractRefiners.ts
-function abstractRefiners_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function abstractRefiners_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function abstractRefiners_createClass(Constructor, protoProps, staticProps) { if (protoProps) abstractRefiners_defineProperties(Constructor.prototype, protoProps); if (staticProps) abstractRefiners_defineProperties(Constructor, staticProps); return Constructor; }
-
-var Filter = /*#__PURE__*/function () {
-  function Filter() {
-    abstractRefiners_classCallCheck(this, Filter);
-  }
-
-  abstractRefiners_createClass(Filter, [{
-    key: "refine",
-    value: function refine(context, results) {
-      var _this = this;
-
-      return results.filter(function (r) {
-        return _this.isValid(context, r);
-      });
-    }
-  }]);
-
-  return Filter;
-}();
-var MergingRefiner = /*#__PURE__*/function () {
-  function MergingRefiner() {
-    abstractRefiners_classCallCheck(this, MergingRefiner);
-  }
-
-  abstractRefiners_createClass(MergingRefiner, [{
-    key: "refine",
-    value: function refine(context, results) {
-      var _this2 = this;
-
-      if (results.length < 2) {
-        return results;
-      }
-
-      var mergedResults = [];
-      var curResult = results[0];
-      var nextResult = null;
-
-      for (var i = 1; i < results.length; i++) {
-        nextResult = results[i];
-
-        var _textBetween = context.text.substring(curResult.index + curResult.text.length, nextResult.index);
-
-        if (!this.shouldMergeResults(_textBetween, curResult, nextResult, context)) {
-          mergedResults.push(curResult);
-          curResult = nextResult;
-        } else {
-          (function () {
-            var left = curResult;
-            var right = nextResult;
-
-            var mergedResult = _this2.mergeResults(_textBetween, left, right, context);
-
-            context.debug(function () {
-              console.log("".concat(_this2.constructor.name, " merged ").concat(left, " and ").concat(right, " into ").concat(mergedResult));
-            });
-            curResult = mergedResult;
-          })();
-        }
-      }
-
-      if (curResult != null) {
-        mergedResults.push(curResult);
-      }
-
-      return mergedResults;
-    }
-  }]);
-
-  return MergingRefiner;
-}();
-// CONCATENATED MODULE: ./src/common/refiners/AbstractMergeDateRangeRefiner.ts
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function AbstractMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function AbstractMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function AbstractMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-/*
-  
-*/
-
-
-var AbstractMergeDateRangeRefiner = /*#__PURE__*/function (_MergingRefiner) {
-  _inherits(AbstractMergeDateRangeRefiner, _MergingRefiner);
-
-  var _super = _createSuper(AbstractMergeDateRangeRefiner);
-
-  function AbstractMergeDateRangeRefiner() {
-    AbstractMergeDateRangeRefiner_classCallCheck(this, AbstractMergeDateRangeRefiner);
-
-    return _super.apply(this, arguments);
-  }
-
-  AbstractMergeDateRangeRefiner_createClass(AbstractMergeDateRangeRefiner, [{
-    key: "shouldMergeResults",
-    value: function shouldMergeResults(textBetween, currentResult, nextResult) {
-      return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
-    }
-  }, {
-    key: "mergeResults",
-    value: function mergeResults(textBetween, fromResult, toResult) {
-      if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
-        toResult.start.getCertainComponents().forEach(function (key) {
-          if (!fromResult.start.isCertain(key)) {
-            fromResult.start.assign(key, toResult.start.get(key));
-          }
-        });
-        fromResult.start.getCertainComponents().forEach(function (key) {
-          if (!toResult.start.isCertain(key)) {
-            toResult.start.assign(key, fromResult.start.get(key));
-          }
-        });
-      }
-
-      if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
-        var fromMoment = fromResult.start.dayjs();
-        var toMoment = toResult.start.dayjs();
-
-        if (fromResult.start.isOnlyWeekdayComponent() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
-          fromMoment = fromMoment.add(-7, 'days');
-          fromResult.start.imply('day', fromMoment.date());
-          fromResult.start.imply('month', fromMoment.month() + 1);
-          fromResult.start.imply('year', fromMoment.year());
-        } else if (toResult.start.isOnlyWeekdayComponent() && toMoment.add(7, 'days').isAfter(fromMoment)) {
-          toMoment = toMoment.add(7, 'days');
-          toResult.start.imply('day', toMoment.date());
-          toResult.start.imply('month', toMoment.month() + 1);
-          toResult.start.imply('year', toMoment.year());
-        } else {
-          var _ref = [fromResult, toResult];
-          toResult = _ref[0];
-          fromResult = _ref[1];
-        }
-      }
-
-      var result = fromResult.clone();
-      result.start = fromResult.start;
-      result.end = toResult.start;
-      result.index = Math.min(fromResult.index, toResult.index);
-
-      if (fromResult.index < toResult.index) {
-        result.text = fromResult.text + textBetween + toResult.text;
-      } else {
-        result.text = toResult.text + textBetween + fromResult.text;
-      }
-
-      return result;
-    }
-  }]);
-
-  return AbstractMergeDateRangeRefiner;
-}(MergingRefiner);
-
-
-// CONCATENATED MODULE: ./src/locales/ja/refiners/JPMergeDateRangeRefiner.ts
-function JPMergeDateRangeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return JPMergeDateRangeRefiner_typeof(obj); }
-
-function JPMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function JPMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function JPMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
-
-function JPMergeDateRangeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) JPMergeDateRangeRefiner_setPrototypeOf(subClass, superClass); }
-
-function JPMergeDateRangeRefiner_setPrototypeOf(o, p) { JPMergeDateRangeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return JPMergeDateRangeRefiner_setPrototypeOf(o, p); }
-
-function JPMergeDateRangeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = JPMergeDateRangeRefiner_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = JPMergeDateRangeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = JPMergeDateRangeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return JPMergeDateRangeRefiner_possibleConstructorReturn(this, result); }; }
-
-function JPMergeDateRangeRefiner_possibleConstructorReturn(self, call) { if (call && (JPMergeDateRangeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return JPMergeDateRangeRefiner_assertThisInitialized(self); }
-
-function JPMergeDateRangeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function JPMergeDateRangeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function JPMergeDateRangeRefiner_getPrototypeOf(o) { JPMergeDateRangeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return JPMergeDateRangeRefiner_getPrototypeOf(o); }
-
-
-/**
- * Merging before and after results (see. AbstractMergeDateRangeRefiner)
- * This implementation should provide Japanese connecting phases
- * - 水曜日[ー]日曜日
- * - 水曜日[から]日曜日
- */
-
-var JPMergeDateRangeRefiner = /*#__PURE__*/function (_AbstractMergeDateRan) {
-  JPMergeDateRangeRefiner_inherits(JPMergeDateRangeRefiner, _AbstractMergeDateRan);
-
-  var _super = JPMergeDateRangeRefiner_createSuper(JPMergeDateRangeRefiner);
-
-  function JPMergeDateRangeRefiner() {
-    JPMergeDateRangeRefiner_classCallCheck(this, JPMergeDateRangeRefiner);
-
-    return _super.apply(this, arguments);
-  }
-
-  JPMergeDateRangeRefiner_createClass(JPMergeDateRangeRefiner, [{
-    key: "patternBetween",
-    value: function patternBetween() {
-      return /^\s*(から|ー|-)\s*$/i;
-    }
-  }]);
-
-  return JPMergeDateRangeRefiner;
-}(AbstractMergeDateRangeRefiner);
-
-
-// CONCATENATED MODULE: ./src/locales/ja/parsers/JPCasualDateParser.ts
-function JPCasualDateParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function JPCasualDateParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function JPCasualDateParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPCasualDateParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPCasualDateParser_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var JPCasualDateParser_PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
-
-var JPCasualDateParser_JPCasualDateParser = /*#__PURE__*/function () {
-  function JPCasualDateParser() {
-    JPCasualDateParser_classCallCheck(this, JPCasualDateParser);
-  }
-
-  JPCasualDateParser_createClass(JPCasualDateParser, [{
-    key: "pattern",
-    value: function pattern() {
-      return JPCasualDateParser_PATTERN;
-    }
-  }, {
-    key: "extract",
-    value: function extract(context, match) {
-      var text = match[0];
-      var date = dayjs_min_default()(context.refDate);
-      var components = context.createParsingComponents();
-
-      if (text == '今夜' || text == '今夕' || text == '今晩') {
-        components.imply('hour', 22);
-        components.assign('meridiem', Meridiem.PM);
-      } else if (text.match("今朝")) {
-        components.imply('hour', 6);
-        components.assign('meridiem', Meridiem.AM);
-      } else if (text == '明日') {
-        if (date.hour() > 4) {
-          // Check not "Tomorrow" on late night
-          date = date.add(1, 'day');
-        }
-      } else if (text == '昨日') {
-        date = date.add(-1, 'day');
-      }
-
-      components.assign('day', date.date());
-      components.assign('month', date.month() + 1);
-      components.assign('year', date.year());
-      return components;
-    }
-  }]);
-
-  return JPCasualDateParser;
-}();
-
-
-// CONCATENATED MODULE: ./src/locales/ja/index.ts
-
-
-
-
-// Shortcuts
-var casual = new chrono_Chrono(createCasualConfiguration());
-var strict = new chrono_Chrono(createConfiguration());
-function parse(text, ref, option) {
-  return casual.parse(text, ref, option);
-}
-function parseDate(text, ref, option) {
-  return casual.parseDate(text, ref, option);
-}
-function createCasualConfiguration() {
-  var option = createConfiguration();
-  option.parsers.unshift(new JPCasualDateParser_JPCasualDateParser());
-  return option;
-}
-function createConfiguration() {
-  return {
-    parsers: [new JPStandardParser_JPStandardParser()],
-    refiners: [new JPMergeDateRangeRefiner()]
-  };
-}
-// CONCATENATED MODULE: ./src/index.ts
-
-
-var src_strict = en_strict;
-var src_casual = en_casual;
-function src_parse(text, ref, option) {
-  return src_casual.parse(text, ref, option);
-}
-function src_parseDate(text, ref, option) {
-  return src_casual.parseDate(text, ref, option);
-}
-var Meridiem; // export * as xx from './locales/xx'
-
-(function (Meridiem) {
-  Meridiem[Meridiem["AM"] = 0] = "AM";
-  Meridiem[Meridiem["PM"] = 1] = "PM";
-})(Meridiem || (Meridiem = {}));
-
-
-
-
-
 // CONCATENATED MODULE: ./src/locales/en/parsers/ENTimeExpressionParser.ts
 function ENTimeExpressionParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1828,6 +1438,182 @@ var ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser = /*#__PURE__*/funct
 
   return ENTimeUnitLaterFormatParser;
 }();
+
+
+// CONCATENATED MODULE: ./src/common/abstractRefiners.ts
+function abstractRefiners_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function abstractRefiners_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function abstractRefiners_createClass(Constructor, protoProps, staticProps) { if (protoProps) abstractRefiners_defineProperties(Constructor.prototype, protoProps); if (staticProps) abstractRefiners_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Filter = /*#__PURE__*/function () {
+  function Filter() {
+    abstractRefiners_classCallCheck(this, Filter);
+  }
+
+  abstractRefiners_createClass(Filter, [{
+    key: "refine",
+    value: function refine(context, results) {
+      var _this = this;
+
+      return results.filter(function (r) {
+        return _this.isValid(context, r);
+      });
+    }
+  }]);
+
+  return Filter;
+}();
+var MergingRefiner = /*#__PURE__*/function () {
+  function MergingRefiner() {
+    abstractRefiners_classCallCheck(this, MergingRefiner);
+  }
+
+  abstractRefiners_createClass(MergingRefiner, [{
+    key: "refine",
+    value: function refine(context, results) {
+      var _this2 = this;
+
+      if (results.length < 2) {
+        return results;
+      }
+
+      var mergedResults = [];
+      var curResult = results[0];
+      var nextResult = null;
+
+      for (var i = 1; i < results.length; i++) {
+        nextResult = results[i];
+
+        var _textBetween = context.text.substring(curResult.index + curResult.text.length, nextResult.index);
+
+        if (!this.shouldMergeResults(_textBetween, curResult, nextResult, context)) {
+          mergedResults.push(curResult);
+          curResult = nextResult;
+        } else {
+          (function () {
+            var left = curResult;
+            var right = nextResult;
+
+            var mergedResult = _this2.mergeResults(_textBetween, left, right, context);
+
+            context.debug(function () {
+              console.log("".concat(_this2.constructor.name, " merged ").concat(left, " and ").concat(right, " into ").concat(mergedResult));
+            });
+            curResult = mergedResult;
+          })();
+        }
+      }
+
+      if (curResult != null) {
+        mergedResults.push(curResult);
+      }
+
+      return mergedResults;
+    }
+  }]);
+
+  return MergingRefiner;
+}();
+// CONCATENATED MODULE: ./src/common/refiners/AbstractMergeDateRangeRefiner.ts
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function AbstractMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function AbstractMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function AbstractMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) AbstractMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+/*
+  
+*/
+
+
+var AbstractMergeDateRangeRefiner = /*#__PURE__*/function (_MergingRefiner) {
+  _inherits(AbstractMergeDateRangeRefiner, _MergingRefiner);
+
+  var _super = _createSuper(AbstractMergeDateRangeRefiner);
+
+  function AbstractMergeDateRangeRefiner() {
+    AbstractMergeDateRangeRefiner_classCallCheck(this, AbstractMergeDateRangeRefiner);
+
+    return _super.apply(this, arguments);
+  }
+
+  AbstractMergeDateRangeRefiner_createClass(AbstractMergeDateRangeRefiner, [{
+    key: "shouldMergeResults",
+    value: function shouldMergeResults(textBetween, currentResult, nextResult) {
+      return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
+    }
+  }, {
+    key: "mergeResults",
+    value: function mergeResults(textBetween, fromResult, toResult) {
+      if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
+        toResult.start.getCertainComponents().forEach(function (key) {
+          if (!fromResult.start.isCertain(key)) {
+            fromResult.start.assign(key, toResult.start.get(key));
+          }
+        });
+        fromResult.start.getCertainComponents().forEach(function (key) {
+          if (!toResult.start.isCertain(key)) {
+            toResult.start.assign(key, fromResult.start.get(key));
+          }
+        });
+      }
+
+      if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
+        var fromMoment = fromResult.start.dayjs();
+        var toMoment = toResult.start.dayjs();
+
+        if (fromResult.start.isOnlyWeekdayComponent() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
+          fromMoment = fromMoment.add(-7, 'days');
+          fromResult.start.imply('day', fromMoment.date());
+          fromResult.start.imply('month', fromMoment.month() + 1);
+          fromResult.start.imply('year', fromMoment.year());
+        } else if (toResult.start.isOnlyWeekdayComponent() && toMoment.add(7, 'days').isAfter(fromMoment)) {
+          toMoment = toMoment.add(7, 'days');
+          toResult.start.imply('day', toMoment.date());
+          toResult.start.imply('month', toMoment.month() + 1);
+          toResult.start.imply('year', toMoment.year());
+        } else {
+          var _ref = [fromResult, toResult];
+          toResult = _ref[0];
+          fromResult = _ref[1];
+        }
+      }
+
+      var result = fromResult.clone();
+      result.start = fromResult.start;
+      result.end = toResult.start;
+      result.index = Math.min(fromResult.index, toResult.index);
+
+      if (fromResult.index < toResult.index) {
+        result.text = fromResult.text + textBetween + toResult.text;
+      } else {
+        result.text = toResult.text + textBetween + fromResult.text;
+      }
+
+      return result;
+    }
+  }]);
+
+  return AbstractMergeDateRangeRefiner;
+}(MergingRefiner);
 
 
 // CONCATENATED MODULE: ./src/locales/en/refiners/ENMergeDateRangeRefiner.ts
@@ -3022,52 +2808,6 @@ var ENRelativeDateFormatParser_ENRelativeDateFormatParser = /*#__PURE__*/functio
 }();
 
 
-// CONCATENATED MODULE: ./src/locales/en/index.ts
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // Shortcuts
-
-var en_casual = new chrono_Chrono(en_createCasualConfiguration(false));
-var en_strict = new chrono_Chrono(en_createConfiguration(true, false));
-var GB = new chrono_Chrono(en_createConfiguration(false, true));
-function en_parse(text, ref, option) {
-  return en_casual.parse(text, ref, option);
-}
-function en_parseDate(text, ref, option) {
-  return en_casual.parseDate(text, ref, option);
-}
-function en_createCasualConfiguration() {
-  var littleEndian = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  var option = en_createConfiguration(false, littleEndian);
-  option.parsers.unshift(new ENCasualDateParser_ENCasualDateParser());
-  option.parsers.unshift(new ENCasualTimeParser_ENCasualTimeParser());
-  option.parsers.unshift(new ENWeekdayParser_ENWeekdayParser());
-  option.parsers.unshift(new ENRelativeDateFormatParser_ENRelativeDateFormatParser());
-  return option;
-}
-function en_createConfiguration() {
-  var strictMode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-  var littleEndian = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  return includeCommonConfiguration({
-    parsers: [new ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser(strictMode), new ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser(), new ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser(), new ENMonthNameParser_ENMonthNameParser(), new ENSlashDateFormatParser_ENSlashDateFormatParser(littleEndian), new ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser(), new ENSlashMonthFormatParser(), new ENTimeExpressionParser_ENTimeExpressionParser(), new ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser(strictMode), new ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser(strictMode)],
-    refiners: [new ENMergeDateTimeRefiner_ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()]
-  });
-}
 // CONCATENATED MODULE: ./src/chrono.ts
 function chrono_toConsumableArray(arr) { return chrono_arrayWithoutHoles(arr) || chrono_iterableToArray(arr) || chrono_unsupportedIterableToArray(arr) || chrono_nonIterableSpread(); }
 
@@ -3093,7 +2833,7 @@ var chrono_Chrono = /*#__PURE__*/function () {
   function Chrono(configuration) {
     chrono_classCallCheck(this, Chrono);
 
-    configuration = configuration || en_createCasualConfiguration();
+    configuration = configuration || createCasualConfiguration();
     this.parsers = chrono_toConsumableArray(configuration.parsers);
     this.refiners = chrono_toConsumableArray(configuration.refiners);
   }
@@ -3221,6 +2961,293 @@ var chrono_ParsingContext = /*#__PURE__*/function () {
 
   return ParsingContext;
 }();
+// CONCATENATED MODULE: ./src/locales/en/index.ts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Shortcuts
+
+var casual = new chrono_Chrono(createCasualConfiguration(false));
+var strict = new chrono_Chrono(createConfiguration(true, false));
+var GB = new chrono_Chrono(createConfiguration(false, true));
+function parse(text, ref, option) {
+  return casual.parse(text, ref, option);
+}
+function parseDate(text, ref, option) {
+  return casual.parseDate(text, ref, option);
+}
+function createCasualConfiguration() {
+  var littleEndian = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var option = createConfiguration(false, littleEndian);
+  option.parsers.unshift(new ENCasualDateParser_ENCasualDateParser());
+  option.parsers.unshift(new ENCasualTimeParser_ENCasualTimeParser());
+  option.parsers.unshift(new ENWeekdayParser_ENWeekdayParser());
+  option.parsers.unshift(new ENRelativeDateFormatParser_ENRelativeDateFormatParser());
+  return option;
+}
+function createConfiguration() {
+  var strictMode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var littleEndian = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return includeCommonConfiguration({
+    parsers: [new ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser(strictMode), new ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser(), new ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser(), new ENMonthNameParser_ENMonthNameParser(), new ENSlashDateFormatParser_ENSlashDateFormatParser(littleEndian), new ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser(), new ENSlashMonthFormatParser(), new ENTimeExpressionParser_ENTimeExpressionParser(), new ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser(strictMode), new ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser(strictMode)],
+    refiners: [new ENMergeDateTimeRefiner_ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()]
+  });
+}
+// CONCATENATED MODULE: ./src/locales/ja/constants.ts
+/**
+ * to-hankaku.js
+ * convert to ascii code strings.
+ *
+ * @version 1.0.1
+ * @author think49
+ * @url https://gist.github.com/964592
+ * @license http://www.opensource.org/licenses/mit-license.php (The MIT License)
+ */
+function toHankaku(text) {
+  return String(text).replace(/\u2019/g, "'").replace(/\u201D/g, "\"").replace(/\u3000/g, " ").replace(/\uFFE5/g, "\xA5").replace(/[\uFF01\uFF03-\uFF06\uFF08\uFF09\uFF0C-\uFF19\uFF1C-\uFF1F\uFF21-\uFF3B\uFF3D\uFF3F\uFF41-\uFF5B\uFF5D\uFF5E]/g, alphaNum);
+}
+
+function alphaNum(token) {
+  return String.fromCharCode(token.charCodeAt(0) - 65248);
+}
+// CONCATENATED MODULE: ./src/locales/ja/parsers/JPStandardParser.ts
+function JPStandardParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPStandardParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPStandardParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPStandardParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPStandardParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var JPStandardParser_PATTERN = /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+var SPECIAL_YEAR_GROUP = 1;
+var TYPICAL_YEAR_GROUP = 2;
+var ERA_GROUP = 3;
+var JPStandardParser_YEAR_NUMBER_GROUP = 4;
+var JPStandardParser_MONTH_GROUP = 5;
+var DAY_GROUP = 6;
+
+var JPStandardParser_JPStandardParser = /*#__PURE__*/function () {
+  function JPStandardParser() {
+    JPStandardParser_classCallCheck(this, JPStandardParser);
+  }
+
+  JPStandardParser_createClass(JPStandardParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return JPStandardParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var month = parseInt(toHankaku(match[JPStandardParser_MONTH_GROUP]));
+      var day = parseInt(toHankaku(match[DAY_GROUP]));
+      var components = context.createParsingComponents({
+        'day': day,
+        'month': month
+      });
+
+      if (match[SPECIAL_YEAR_GROUP] && match[SPECIAL_YEAR_GROUP].match('同|今|本')) {
+        var moment = dayjs_min_default()(context.refDate);
+        components.assign('year', moment.year());
+      }
+
+      if (match[TYPICAL_YEAR_GROUP]) {
+        var yearNumText = match[JPStandardParser_YEAR_NUMBER_GROUP];
+        var year = yearNumText == '元' ? 1 : parseInt(toHankaku(yearNumText));
+
+        if (match[ERA_GROUP] == '令和') {
+          year += 2018;
+        } else if (match[ERA_GROUP] == '平成') {
+          year += 1988;
+        } else if (match[ERA_GROUP] == '昭和') {
+          year += 1925;
+        }
+
+        components.assign('year', year);
+      } else {
+        var _year = findYearClosestToRef(context.refDate, day, month);
+
+        components.imply('year', _year);
+      }
+
+      return components;
+    }
+  }]);
+
+  return JPStandardParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/ja/refiners/JPMergeDateRangeRefiner.ts
+function JPMergeDateRangeRefiner_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return typeof obj; }; } else { JPMergeDateRangeRefiner_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return JPMergeDateRangeRefiner_typeof(obj); }
+
+function JPMergeDateRangeRefiner_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPMergeDateRangeRefiner_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPMergeDateRangeRefiner_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPMergeDateRangeRefiner_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPMergeDateRangeRefiner_defineProperties(Constructor, staticProps); return Constructor; }
+
+function JPMergeDateRangeRefiner_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) JPMergeDateRangeRefiner_setPrototypeOf(subClass, superClass); }
+
+function JPMergeDateRangeRefiner_setPrototypeOf(o, p) { JPMergeDateRangeRefiner_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return JPMergeDateRangeRefiner_setPrototypeOf(o, p); }
+
+function JPMergeDateRangeRefiner_createSuper(Derived) { var hasNativeReflectConstruct = JPMergeDateRangeRefiner_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = JPMergeDateRangeRefiner_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = JPMergeDateRangeRefiner_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return JPMergeDateRangeRefiner_possibleConstructorReturn(this, result); }; }
+
+function JPMergeDateRangeRefiner_possibleConstructorReturn(self, call) { if (call && (JPMergeDateRangeRefiner_typeof(call) === "object" || typeof call === "function")) { return call; } return JPMergeDateRangeRefiner_assertThisInitialized(self); }
+
+function JPMergeDateRangeRefiner_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function JPMergeDateRangeRefiner_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function JPMergeDateRangeRefiner_getPrototypeOf(o) { JPMergeDateRangeRefiner_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return JPMergeDateRangeRefiner_getPrototypeOf(o); }
+
+
+/**
+ * Merging before and after results (see. AbstractMergeDateRangeRefiner)
+ * This implementation should provide Japanese connecting phases
+ * - 水曜日[ー]日曜日
+ * - 水曜日[から]日曜日
+ */
+
+var JPMergeDateRangeRefiner = /*#__PURE__*/function (_AbstractMergeDateRan) {
+  JPMergeDateRangeRefiner_inherits(JPMergeDateRangeRefiner, _AbstractMergeDateRan);
+
+  var _super = JPMergeDateRangeRefiner_createSuper(JPMergeDateRangeRefiner);
+
+  function JPMergeDateRangeRefiner() {
+    JPMergeDateRangeRefiner_classCallCheck(this, JPMergeDateRangeRefiner);
+
+    return _super.apply(this, arguments);
+  }
+
+  JPMergeDateRangeRefiner_createClass(JPMergeDateRangeRefiner, [{
+    key: "patternBetween",
+    value: function patternBetween() {
+      return /^\s*(から|ー|-)\s*$/i;
+    }
+  }]);
+
+  return JPMergeDateRangeRefiner;
+}(AbstractMergeDateRangeRefiner);
+
+
+// CONCATENATED MODULE: ./src/locales/ja/parsers/JPCasualDateParser.ts
+function JPCasualDateParser_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function JPCasualDateParser_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function JPCasualDateParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) JPCasualDateParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) JPCasualDateParser_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var JPCasualDateParser_PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
+
+var JPCasualDateParser_JPCasualDateParser = /*#__PURE__*/function () {
+  function JPCasualDateParser() {
+    JPCasualDateParser_classCallCheck(this, JPCasualDateParser);
+  }
+
+  JPCasualDateParser_createClass(JPCasualDateParser, [{
+    key: "pattern",
+    value: function pattern() {
+      return JPCasualDateParser_PATTERN;
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var text = match[0];
+      var date = dayjs_min_default()(context.refDate);
+      var components = context.createParsingComponents();
+
+      if (text == '今夜' || text == '今夕' || text == '今晩') {
+        components.imply('hour', 22);
+        components.assign('meridiem', Meridiem.PM);
+      } else if (text.match("今朝")) {
+        components.imply('hour', 6);
+        components.assign('meridiem', Meridiem.AM);
+      } else if (text == '明日') {
+        if (date.hour() > 4) {
+          // Check not "Tomorrow" on late night
+          date = date.add(1, 'day');
+        }
+      } else if (text == '昨日') {
+        date = date.add(-1, 'day');
+      }
+
+      components.assign('day', date.date());
+      components.assign('month', date.month() + 1);
+      components.assign('year', date.year());
+      return components;
+    }
+  }]);
+
+  return JPCasualDateParser;
+}();
+
+
+// CONCATENATED MODULE: ./src/locales/ja/index.ts
+
+
+
+
+// Shortcuts
+var ja_casual = new chrono_Chrono(ja_createCasualConfiguration());
+var ja_strict = new chrono_Chrono(ja_createConfiguration());
+function ja_parse(text, ref, option) {
+  return ja_casual.parse(text, ref, option);
+}
+function ja_parseDate(text, ref, option) {
+  return ja_casual.parseDate(text, ref, option);
+}
+function ja_createCasualConfiguration() {
+  var option = ja_createConfiguration();
+  option.parsers.unshift(new JPCasualDateParser_JPCasualDateParser());
+  return option;
+}
+function ja_createConfiguration() {
+  return {
+    parsers: [new JPStandardParser_JPStandardParser()],
+    refiners: [new JPMergeDateRangeRefiner()]
+  };
+}
+// CONCATENATED MODULE: ./src/index.ts
+
+
+var src_strict = strict;
+var src_casual = casual;
+function src_parse(text, ref, option) {
+  return src_casual.parse(text, ref, option);
+}
+function src_parseDate(text, ref, option) {
+  return src_casual.parseDate(text, ref, option);
+}
+var Meridiem; // export * as xx from './locales/xx'
+
+(function (Meridiem) {
+  Meridiem[Meridiem["AM"] = 0] = "AM";
+  Meridiem[Meridiem["PM"] = 1] = "PM";
+})(Meridiem || (Meridiem = {}));
+
+
+
+
+
 
 /***/ })
 /******/ ]);

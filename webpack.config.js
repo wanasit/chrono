@@ -4,8 +4,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: {
-        'chrono': path.resolve(__dirname, 'src/chrono.ts'),
-        'chrono.min': path.resolve(__dirname, 'src/chrono.ts')
+        'chrono': path.resolve(__dirname, 'src/index.ts'),
+        'chrono.min': path.resolve(__dirname, 'src/index.ts')
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
