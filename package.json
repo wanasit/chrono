@@ -11,7 +11,7 @@
     "testURL": "http://localhost/"
   },
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "directories": {
     "source": "./src",
     "test": "./test"
@@ -27,7 +27,10 @@
     ]
   },
   "eslintConfig": {
-    "ignorePatterns": ["webpack.config.js", "dist/*.js"],
+    "ignorePatterns": [
+      "webpack.config.js",
+      "dist/*.js"
+    ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint",
