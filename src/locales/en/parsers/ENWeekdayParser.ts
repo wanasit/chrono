@@ -4,7 +4,7 @@ import {WEEKDAY_DICTIONARY} from "../constants";
 import dayjs, {Dayjs} from "dayjs";
 import {matchAnyPattern} from "../../../utils/pattern";
 
-const PATTERN = new RegExp('(?<=\\W|^)' +
+const PATTERN = new RegExp(
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
     '(?:on\\s*?)?' +
     '(?:(this|last|past|next)\\s*)?' +

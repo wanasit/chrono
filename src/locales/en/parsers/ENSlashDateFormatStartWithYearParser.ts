@@ -9,8 +9,7 @@ import {matchAnyPattern} from "../../../utils/pattern";
     - YYYY-MM-DD
     - YYYY.MM.DD
 */
-const PATTERN = new RegExp('(?<=\\W|^)'
-    + '([0-9]{4})[\\.\\/]'
+const PATTERN = new RegExp('([0-9]{4})[\\.\\/]'
     + '(?:(' + matchAnyPattern(MONTH_DICTIONARY) + ')|([0-9]{1,2}))[\\.\\/]'
     + '([0-9]{1,2})'
     + '(?=\\W|$)', 'i');

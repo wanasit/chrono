@@ -10,7 +10,7 @@ import {mergeDateTimeResult} from "../../calculation/mergingCalculation";
 
 export default abstract class ENMergeDateTimeRefiner extends MergingRefiner {
 
-    abstract patternBetween: () => RegExp
+    abstract patternBetween(): RegExp
 
     shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
         return (

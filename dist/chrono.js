@@ -153,6 +153,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+function patternWithWordBreak(regExp) {
+  return RegExp('' + regExp.source);
+}
 function extractTerms(dictionary) {
   var keys;
 
@@ -640,8 +643,8 @@ function ENTimeUnitDeadlineFormatParser_createClass(Constructor, protoProps, sta
 
 
 
-var PATTERN = new RegExp("(?<=\\W|^)" + "(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
-var STRICT_PATTERN = new RegExp('(?<=\\W|^)' + "(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
+var PATTERN = new RegExp("(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
+var STRICT_PATTERN = new RegExp("(?:within|in)\\s*" + '(' + TIME_UNITS_PATTERN + ')' + "(?=\\W|$)", 'i');
 
 var ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser = /*#__PURE__*/function () {
   function ENTimeUnitDeadlineFormatParser(strictMode) {
@@ -699,7 +702,7 @@ function ENMonthNameLittleEndianParser_createClass(Constructor, protoProps, stat
 
 
 
-var ENMonthNameLittleEndianParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:on\\s*?)?' + "(?:(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")\\s*,?\\s*)?") + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + '(?:\\s*' + '(?:to|\\-|\\–|until|through|till|\\s)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + ')?' + '(?:-|/|\\s*(?:of)?\\s*)' + '(' + matchAnyPattern(MONTH_DICTIONARY) + ')' + '(?:' + '(?:-|/|,?\\s*)' + "(".concat(YEAR_PATTERN, "(?![^\\s]\\d))") + ')?' + '(?=\\W|$)', 'i');
+var ENMonthNameLittleEndianParser_PATTERN = new RegExp('(?:on\\s*?)?' + "(?:(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")\\s*,?\\s*)?") + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + '(?:\\s*' + '(?:to|\\-|\\–|until|through|till|\\s)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")") + ')?' + '(?:-|/|\\s*(?:of)?\\s*)' + '(' + matchAnyPattern(MONTH_DICTIONARY) + ')' + '(?:' + '(?:-|/|,?\\s*)' + "(".concat(YEAR_PATTERN, "(?![^\\s]\\d))") + ')?' + '(?=\\W|$)', 'i');
 var WEEKDAY_GROUP = 1;
 var DATE_GROUP = 2;
 var DATE_TO_GROUP = 3;
@@ -765,7 +768,7 @@ function ENMonthNameMiddleEndianParser_createClass(Constructor, protoProps, stat
 
 
 
-var ENMonthNameMiddleEndianParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:' + '(?:on\\s*?)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '\\s*,?\\s*)?' + "(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '(?:-|/|\\s*,?\\s*)' + "(".concat(ORDINAL_NUMBER_PATTERN, ")(?!\\s*(?:am|pm))\\s*") + '(?:' + '(?:to|\\-)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")\\s*") + ')?' + '(?:' + '(?:-|/|\\s*,?\\s*)' + "(".concat(YEAR_PATTERN, ")") + ')?' + '(?=\\W|$)(?!\\:\\d)', 'i');
+var ENMonthNameMiddleEndianParser_PATTERN = new RegExp('(?:' + '(?:on\\s*?)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '\\s*,?\\s*)?' + "(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '(?:-|/|\\s*,?\\s*)' + "(".concat(ORDINAL_NUMBER_PATTERN, ")(?!\\s*(?:am|pm))\\s*") + '(?:' + '(?:to|\\-)\\s*' + "(".concat(ORDINAL_NUMBER_PATTERN, ")\\s*") + ')?' + '(?:' + '(?:-|/|\\s*,?\\s*)' + "(".concat(YEAR_PATTERN, ")") + ')?' + '(?=\\W|$)(?!\\:\\d)', 'i');
 var ENMonthNameMiddleEndianParser_WEEKDAY_GROUP = 1;
 var ENMonthNameMiddleEndianParser_MONTH_NAME_GROUP = 2;
 var ENMonthNameMiddleEndianParser_DATE_GROUP = 3;
@@ -847,7 +850,7 @@ function ENMonthNameParser_createClass(Constructor, protoProps, staticProps) { i
 
 
 
-var ENMonthNameParser_PATTERN = new RegExp('(?<=^|\\D\\s+|[^\\w\\s])' + "(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '\\s*' + '(?:' + "[,-]?\\s*(".concat(YEAR_PATTERN, ")?") + ')?' + '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
+var ENMonthNameParser_PATTERN = new RegExp("(".concat(matchAnyPattern(MONTH_DICTIONARY), ")") + '\\s*' + '(?:' + "[,-]?\\s*(".concat(YEAR_PATTERN, ")?") + ')?' + '(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)', 'i');
 var ENMonthNameParser_MONTH_NAME_GROUP = 1;
 var ENMonthNameParser_YEAR_GROUP = 2;
 /**
@@ -1029,7 +1032,7 @@ function ENSlashDateFormatStartWithYearParser_createClass(Constructor, protoProp
     - YYYY.MM.DD
 */
 
-var ENSlashDateFormatStartWithYearParser_PATTERN = new RegExp('(?<=\\W|^)' + '([0-9]{4})[\\.\\/]' + '(?:(' + matchAnyPattern(MONTH_DICTIONARY) + ')|([0-9]{1,2}))[\\.\\/]' + '([0-9]{1,2})' + '(?=\\W|$)', 'i');
+var ENSlashDateFormatStartWithYearParser_PATTERN = new RegExp('([0-9]{4})[\\.\\/]' + '(?:(' + matchAnyPattern(MONTH_DICTIONARY) + ')|([0-9]{1,2}))[\\.\\/]' + '([0-9]{1,2})' + '(?=\\W|$)', 'i');
 var YEAR_NUMBER_GROUP = 1;
 var ENSlashDateFormatStartWithYearParser_MONTH_NAME_GROUP = 2;
 var MONTH_NUMBER_GROUP = 3;
@@ -1070,7 +1073,7 @@ function ENSlashMonthFormatParser_defineProperties(target, props) { for (var i =
 
 function ENSlashMonthFormatParser_createClass(Constructor, protoProps, staticProps) { if (protoProps) ENSlashMonthFormatParser_defineProperties(Constructor.prototype, protoProps); if (staticProps) ENSlashMonthFormatParser_defineProperties(Constructor, staticProps); return Constructor; }
 
-var ENSlashMonthFormatParser_PATTERN = new RegExp('(?<=^|[^\\d/]\\s+|[^\\w\\s])' + '([0-9]|0[1-9]|1[012])/([0-9]{4})' + '(?=[^\\d/]|$)', 'i');
+var ENSlashMonthFormatParser_PATTERN = new RegExp('([0-9]|0[1-9]|1[012])/([0-9]{4})' + '', 'i');
 var MONTH_GROUP = 1;
 var ENSlashMonthFormatParser_YEAR_GROUP = 2;
 /**
@@ -1364,7 +1367,7 @@ function ENTimeUnitAgoFormatParser_createClass(Constructor, protoProps, staticPr
 
 
 
-var ENTimeUnitAgoFormatParser_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(?:within\\s*)?' + '(' + TIME_UNITS_PATTERN + ')' + '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
+var ENTimeUnitAgoFormatParser_PATTERN = new RegExp('' + '(?:within\\s*)?' + '(' + TIME_UNITS_PATTERN + ')' + '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 var ENTimeUnitAgoFormatParser_STRICT_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(?:within\\s*)?' + '(' + TIME_UNITS_PATTERN + ')' + 'ago(?=(?:\\W|$))', 'i');
 
 var ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser = /*#__PURE__*/function () {
@@ -1405,8 +1408,8 @@ function ENTimeUnitLaterFormatParser_createClass(Constructor, protoProps, static
 
 
 
-var ENTimeUnitLaterFormatParser_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(' + TIME_UNITS_PATTERN + ')' + '(later|after|from now|henceforth|forward|out)' + '(?=(?:\\W|$))', 'i');
-var ENTimeUnitLaterFormatParser_STRICT_PATTERN = new RegExp('' + '(?<=\\W|^)' + '(' + TIME_UNITS_PATTERN + ')' + '(later|from now)' + '(?=(?:\\W|$))', 'i');
+var ENTimeUnitLaterFormatParser_PATTERN = new RegExp('' + '(' + TIME_UNITS_PATTERN + ')' + '(later|after|from now|henceforth|forward|out)' + '(?=(?:\\W|$))', 'i');
+var ENTimeUnitLaterFormatParser_STRICT_PATTERN = new RegExp('' + '(' + TIME_UNITS_PATTERN + ')' + '(later|from now)' + '(?=(?:\\W|$))', 'i');
 var GROUP_NUM_SUFFIX = 2;
 var GROUP_NUM_TIMEUNITS = 1;
 
@@ -2388,7 +2391,7 @@ function ISOFormatParser_createClass(Constructor, protoProps, staticProps) { if 
 // - YYYY-MM-DDThh:mm:ssTZD
 // - YYYY-MM-DDThh:mm:ss.sTZD
 // - TZD = (Z or +hh:mm or -hh:mm)
-var ISOFormatParser_PATTERN = new RegExp('(?<=\\W|^)' + '([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})' + '(?:T' //..
+var ISOFormatParser_PATTERN = new RegExp('([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})' + '(?:T' //..
 + '([0-9]{1,2}):([0-9]{1,2})' // hh:mm
 + '(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?' // :ss.s
 + '(?:Z|([+-]\\d{2}):?(\\d{2})?)?' // TZD (Z or ±hh:mm or ±hhmm or ±hh)
@@ -2464,6 +2467,46 @@ var ISOFormatParser = /*#__PURE__*/function () {
 }();
 
 
+// CONCATENATED MODULE: ./src/utils/ParserWithWordEndingDetection.ts
+function ParserWithWordEndingDetection_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ParserWithWordEndingDetection_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ParserWithWordEndingDetection_createClass(Constructor, protoProps, staticProps) { if (protoProps) ParserWithWordEndingDetection_defineProperties(Constructor.prototype, protoProps); if (staticProps) ParserWithWordEndingDetection_defineProperties(Constructor, staticProps); return Constructor; }
+
+function createParserWithWordBoundaryDetection(parser) {
+  return new ParserWithWordEndingDetection(parser);
+}
+var ParserWithWordEndingDetection = /*#__PURE__*/function () {
+  function ParserWithWordEndingDetection(parser) {
+    ParserWithWordEndingDetection_classCallCheck(this, ParserWithWordEndingDetection);
+
+    this.original = parser;
+  }
+
+  ParserWithWordEndingDetection_createClass(ParserWithWordEndingDetection, [{
+    key: "pattern",
+    value: function pattern(context) {
+      var originalPattern = this.original.pattern(context);
+      return new RegExp("(\\W|^)".concat(originalPattern.source), originalPattern.flags);
+    }
+  }, {
+    key: "extract",
+    value: function extract(context, match) {
+      var header = match[1];
+      match.index = match.index + header.length;
+      match[0] = match[0].substring(header.length);
+
+      for (var i = 2; i < match.length; i++) {
+        match[i - 1] = match[i];
+      }
+
+      return this.original.extract(context, match);
+    }
+  }]);
+
+  return ParserWithWordEndingDetection;
+}();
 // CONCATENATED MODULE: ./src/configurations.ts
 
 
@@ -2471,8 +2514,9 @@ var ISOFormatParser = /*#__PURE__*/function () {
 
 
 
+
 function includeCommonConfiguration(configuration) {
-  configuration.parsers.unshift(new ISOFormatParser());
+  configuration.parsers.unshift(createParserWithWordBoundaryDetection(new ISOFormatParser()));
   configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner());
   configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner());
   configuration.refiners.unshift(new OverlapRemovalRefiner());
@@ -2498,7 +2542,7 @@ var ENCasualDateParser_ENCasualDateParser = /*#__PURE__*/function () {
   ENCasualDateParser_createClass(ENCasualDateParser, [{
     key: "pattern",
     value: function pattern() {
-      return /(?<=\W|^)(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
+      return /(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
     }
   }, {
     key: "extract",
@@ -2559,7 +2603,7 @@ var ENCasualTimeParser_ENCasualTimeParser = /*#__PURE__*/function () {
   ENCasualTimeParser_createClass(ENCasualTimeParser, [{
     key: "pattern",
     value: function pattern() {
-      return /(?<=\W|^)(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i;
+      return /(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i;
     }
   }, {
     key: "extract",
@@ -2607,7 +2651,7 @@ function ENWeekdayParser_createClass(Constructor, protoProps, staticProps) { if 
 
 
 
-var ENWeekdayParser_PATTERN = new RegExp('(?<=\\W|^)' + '(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:on\\s*?)?' + '(?:(this|last|past|next)\\s*)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(this|last|past|next)\\s*week)?' + '(?=\\W|$)', 'i');
+var ENWeekdayParser_PATTERN = new RegExp('(?:(?:\\,|\\(|\\（)\\s*)?' + '(?:on\\s*?)?' + '(?:(this|last|past|next)\\s*)?' + "(".concat(matchAnyPattern(WEEKDAY_DICTIONARY), ")") + '(?:\\s*(?:\\,|\\)|\\）))?' + '(?:\\s*(this|last|past|next)\\s*week)?' + '(?=\\W|$)', 'i');
 var PREFIX_GROUP = 1;
 var ENWeekdayParser_WEEKDAY_GROUP = 2;
 var POSTFIX_GROUP = 3;
@@ -2679,7 +2723,7 @@ function ENRelativeDateFormatParser_createClass(Constructor, protoProps, staticP
 
 
 
-var ENRelativeDateFormatParser_PATTERN = new RegExp('(?<=\\W|^)' + '(this|next|last|past)\\s*' + "(".concat(NUMBER_PATTERN, ")?\\s*") + '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' + '(?=\\W|$)', 'i');
+var ENRelativeDateFormatParser_PATTERN = new RegExp('(this|next|last|past)\\s*' + "(".concat(NUMBER_PATTERN, ")?\\s*") + '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' + '(?=\\W|$)', 'i');
 var MODIFIER_WORD_GROUP = 1;
 var MULTIPLIER_WORD_GROUP = 2;
 var RELATIVE_WORD_GROUP = 3;
@@ -2896,13 +2940,12 @@ var chrono_Chrono = /*#__PURE__*/function () {
         if (result instanceof ParsingResult) {
           parsedResult = result;
         } else if (result instanceof results_ParsingComponents) {
-          parsedResult = context.createParsingResult(index, match[0]);
+          parsedResult = context.createParsingResult(match.index, match[0]);
           parsedResult.start = result;
         } else {
-          parsedResult = context.createParsingResult(index, match[0], result);
+          parsedResult = context.createParsingResult(match.index, match[0], result);
         }
 
-        '09/25/2017 10:31:50.522 P';
         context.debug(function () {
           return console.log("".concat(parser.constructor.name, " extracted result ").concat(parsedResult));
         });
@@ -2979,6 +3022,7 @@ var chrono_ParsingContext = /*#__PURE__*/function () {
 
 
 
+
  // Shortcuts
 
 var casual = new chrono_Chrono(createCasualConfiguration(false));
@@ -2993,17 +3037,17 @@ function parseDate(text, ref, option) {
 function createCasualConfiguration() {
   var littleEndian = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var option = createConfiguration(false, littleEndian);
-  option.parsers.unshift(new ENCasualDateParser_ENCasualDateParser());
-  option.parsers.unshift(new ENCasualTimeParser_ENCasualTimeParser());
-  option.parsers.unshift(new ENWeekdayParser_ENWeekdayParser());
-  option.parsers.unshift(new ENRelativeDateFormatParser_ENRelativeDateFormatParser());
+  option.parsers.unshift(createParserWithWordBoundaryDetection(new ENCasualDateParser_ENCasualDateParser()));
+  option.parsers.unshift(createParserWithWordBoundaryDetection(new ENCasualTimeParser_ENCasualTimeParser()));
+  option.parsers.unshift(createParserWithWordBoundaryDetection(new ENWeekdayParser_ENWeekdayParser()));
+  option.parsers.unshift(createParserWithWordBoundaryDetection(new ENRelativeDateFormatParser_ENRelativeDateFormatParser()));
   return option;
 }
 function createConfiguration() {
   var strictMode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
   var littleEndian = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   return includeCommonConfiguration({
-    parsers: [new ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser(strictMode), new ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser(), new ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser(), new ENMonthNameParser_ENMonthNameParser(), new ENSlashDateFormatParser_ENSlashDateFormatParser(littleEndian), new ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser(), new ENSlashMonthFormatParser(), new ENTimeExpressionParser_ENTimeExpressionParser(), new ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser(strictMode), new ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser(strictMode)],
+    parsers: [createParserWithWordBoundaryDetection(new ENTimeUnitDeadlineFormatParser_ENTimeUnitDeadlineFormatParser(strictMode)), createParserWithWordBoundaryDetection(new ENMonthNameLittleEndianParser_ENMonthNameLittleEndianParser()), createParserWithWordBoundaryDetection(new ENMonthNameMiddleEndianParser_ENMonthNameMiddleEndianParser()), createParserWithWordBoundaryDetection(new ENMonthNameParser_ENMonthNameParser()), new ENSlashDateFormatParser_ENSlashDateFormatParser(littleEndian), createParserWithWordBoundaryDetection(new ENSlashDateFormatStartWithYearParser_ENSlashDateFormatStartWithYearParser()), createParserWithWordBoundaryDetection(new ENSlashMonthFormatParser()), new ENTimeExpressionParser_ENTimeExpressionParser(), createParserWithWordBoundaryDetection(new ENTimeUnitAgoFormatParser_ENTimeUnitAgoFormatParser(strictMode)), createParserWithWordBoundaryDetection(new ENTimeUnitLaterFormatParser_ENTimeUnitLaterFormatParser(strictMode))],
     refiners: [new ENMergeDateTimeRefiner_ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()]
   });
 }

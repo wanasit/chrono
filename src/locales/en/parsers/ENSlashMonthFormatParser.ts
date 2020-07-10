@@ -1,9 +1,9 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
 
-const PATTERN = new RegExp('(?<=^|[^\\d/]\\s+|[^\\w\\s])' +
+const PATTERN = new RegExp(
     '([0-9]|0[1-9]|1[012])/([0-9]{4})' +
-    '(?=[^\\d/]|$)', 'i');
+    '', 'i');
 
 const MONTH_GROUP = 1;
 const YEAR_GROUP = 2;

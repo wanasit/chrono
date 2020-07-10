@@ -4,7 +4,7 @@ import {findYearClosestToRef} from "../../../calculation/yearCalculation";
 import {matchAnyPattern} from "../../../utils/pattern";
 import {YEAR_PATTERN, parseYear} from "../constants";
 
-const PATTERN = new RegExp('(?<=^|\\D\\s+|[^\\w\\s])' +
+const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
     '\\s*' +
     '(?:' +

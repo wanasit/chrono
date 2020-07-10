@@ -7,7 +7,6 @@ import {ParsingComponents} from "../../../results";
 
 
 const PATTERN = new RegExp('' +
-    '(?<=\\W|^)' +
     '(?:within\\s*)?' +
     '(' + TIME_UNITS_PATTERN + ')' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');

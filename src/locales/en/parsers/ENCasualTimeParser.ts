@@ -3,7 +3,7 @@ import {Meridiem} from "../../../index";
 
 export default class ENCasualTimeParser implements Parser {
 
-    pattern() { return /(?<=\W|^)(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i; }
+    pattern() { return /(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i; }
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
         const component = context.createParsingComponents()

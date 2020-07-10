@@ -7,7 +7,7 @@ import {MergingRefiner} from "../abstractRefiners";
 
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
 
-    abstract patternBetween: () => RegExp
+    abstract patternBetween(): RegExp
 
     shouldMergeResults(textBetween, currentResult, nextResult): boolean {
         return (!currentResult.end && !nextResult.end)

@@ -2,13 +2,13 @@ import {TIME_UNITS_PATTERN, parseTimeUnits} from '../constants';
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
 
-const PATTERN = new RegExp(`(?<=\\W|^)` +
+const PATTERN = new RegExp(
     `(?:within|in)\\s*` +
     '(' + TIME_UNITS_PATTERN + ')' +
     `(?=\\W|$)`, 'i'
 );
 
-const STRICT_PATTERN = new RegExp('(?<=\\W|^)' +
+const STRICT_PATTERN = new RegExp(
     `(?:within|in)\\s*` +
     '(' + TIME_UNITS_PATTERN + ')' +
     `(?=\\W|$)`, 'i'

@@ -88,12 +88,11 @@ export class Chrono {
             if (result instanceof ParsingResult) {
                 parsedResult = result;
             } else if (result instanceof ParsingComponents) {
-                parsedResult = context.createParsingResult(index, match[0])
+                parsedResult = context.createParsingResult(match.index, match[0])
                 parsedResult.start = result
             } else {
-                parsedResult = context.createParsingResult(index, match[0], result)
+                parsedResult = context.createParsingResult(match.index, match[0], result)
             }
-            '09/25/2017 10:31:50.522 P'
 
             context.debug(() =>
                 console.log(`${parser.constructor.name} extracted result ${parsedResult}`))

@@ -4,7 +4,7 @@ import {ParsingComponents} from "../../../results";
 import dayjs from "dayjs";
 
 
-const PATTERN = new RegExp('(?<=\\W|^)' +
+const PATTERN = new RegExp(
     '(this|next|last|past)\\s*' +
     `(${NUMBER_PATTERN})?\\s*` +
     '(seconds?|min(?:ute)?s?|hours?|days?|weeks?|months?|years?)(?=\\s*)' +

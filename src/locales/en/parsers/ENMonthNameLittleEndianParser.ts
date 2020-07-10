@@ -7,7 +7,7 @@ import {ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
 
 
-const PATTERN = new RegExp('(?<=\\W|^)' +
+const PATTERN = new RegExp(
         '(?:on\\s*?)?' +
         `(?:(${matchAnyPattern(WEEKDAY_DICTIONARY)})\\s*,?\\s*)?` +
         `(${ORDINAL_NUMBER_PATTERN})` +

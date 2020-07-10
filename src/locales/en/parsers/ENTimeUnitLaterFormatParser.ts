@@ -7,14 +7,12 @@ import {ParsingComponents} from "../../../results";
 
 
 const PATTERN = new RegExp('' +
-    '(?<=\\W|^)' +
     '(' + TIME_UNITS_PATTERN + ')' +
     '(later|after|from now|henceforth|forward|out)' +
     '(?=(?:\\W|$))',
 'i');
 
 const STRICT_PATTERN = new RegExp('' +
-    '(?<=\\W|^)' +
     '(' + TIME_UNITS_PATTERN + ')' +
     '(later|from now)' +
     '(?=(?:\\W|$))',

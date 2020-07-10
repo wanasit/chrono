@@ -6,7 +6,7 @@ import {Meridiem} from "../../../index";
 export default class ENCasualDateParser implements Parser {
 
     pattern(): RegExp {
-        return /(?<=\W|^)(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
+        return /(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
