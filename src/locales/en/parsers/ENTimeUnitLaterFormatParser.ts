@@ -4,6 +4,7 @@ import {
     TIME_UNITS_PATTERN
 } from "../constants";
 import {ParsingComponents} from "../../../results";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 
 const PATTERN = new RegExp('' +
@@ -21,13 +22,15 @@ const STRICT_PATTERN = new RegExp('' +
 const GROUP_NUM_SUFFIX = 2
 const GROUP_NUM_TIMEUNITS = 1
 
-export default class ENTimeUnitLaterFormatParser implements Parser {
+export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
 
-    constructor(private strictMode: boolean) {}
+    constructor(private strictMode: boolean) {
+        super();
+    }
 
-    pattern(): RegExp { return this.strictMode ? STRICT_PATTERN : PATTERN; }
+    innerPattern(): RegExp { return this.strictMode ? STRICT_PATTERN : PATTERN; }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
 
         const suffix = match[GROUP_NUM_SUFFIX].toLowerCase().trim();
         if (!suffix) {

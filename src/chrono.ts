@@ -9,9 +9,9 @@ export interface Configuration {
 }
 
 export interface Parser {
-    pattern: (context: ParsingContext) => RegExp,
-    extract: (context: ParsingContext, match: RegExpMatchArray) =>
-        (ParsingComponents | ParsingResult | {[c: Component]: string|number} | null)
+    pattern(context: ParsingContext): RegExp,
+    extract(context: ParsingContext, match: RegExpMatchArray):
+        (ParsingComponents | ParsingResult | {[c in Component]?: number} | null)
 }
 
 export interface Refiner {
@@ -28,7 +28,7 @@ export class Chrono {
         this.refiners = [...configuration.refiners];
     }
 
-    parseDate(text, refDate, opt): Date {
+    parseDate(text, refDate?, opt?): Date {
         const results = this.parse(text, refDate, opt);
         return (results.length > 0) ? results[0].start.date() : null;
     }
@@ -113,14 +113,14 @@ export class ParsingContext implements DebugHandler {
         readonly option: ParsingOption
     ) {}
 
-    createParsingComponents(components?: {[c: Component]: string|number}) : ParsingComponents {
+    createParsingComponents(components?: {[c in Component]?: number}) : ParsingComponents {
         return new ParsingComponents(this.refDate, components)
     }
 
     createParsingResult(
         index: number, textOrEndIndex: number | string,
-        startComponents?: {[c: Component]: string|number},
-        endComponents?: {[c: Component]: string|number}
+        startComponents?: {[c in Component]?: number},
+        endComponents?: {[c in Component]?: number}
     ) : ParsingResult {
 
         const text = (typeof textOrEndIndex === 'string') ? textOrEndIndex :

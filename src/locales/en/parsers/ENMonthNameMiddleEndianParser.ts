@@ -4,6 +4,7 @@ import {MONTH_DICTIONARY, WEEKDAY_DICTIONARY} from "../constants";
 import {ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern} from "../constants";
 import {YEAR_PATTERN, parseYear} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
     '(?:' +
@@ -40,13 +41,13 @@ const YEAR_GROUP = 5;
  *  - January 12.44
  *  - January 1222344
  */
-export default class ENMonthNameMiddleEndianParser implements Parser {
+export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {
+    innerPattern(): RegExp {
         return PATTERN;
     }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
 
         const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
         const day = parseOrdinalNumberPattern(match[DATE_GROUP]);

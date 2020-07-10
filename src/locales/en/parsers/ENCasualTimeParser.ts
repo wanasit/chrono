@@ -1,11 +1,12 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {Meridiem} from "../../../index";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-export default class ENCasualTimeParser implements Parser {
+export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern() { return /(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i; }
+    innerPattern() { return /(?:this)?\s*(morning|afternoon|evening|night|noon)(?=\W|$)/i; }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const component = context.createParsingComponents()
         switch (match[1].toLowerCase()) {
 

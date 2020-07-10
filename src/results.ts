@@ -3,18 +3,18 @@ import {Component, ParsedComponents, ParsedResult} from "./index";
 import dayjs, {OpUnitType} from 'dayjs';
 
 export class ParsingComponents implements ParsedComponents {
-    private knownValues: {[c: Component]: number}
-    private impliedValues: {[c: Component]: number}
+    private knownValues: {[c in Component]?: number}
+    private impliedValues: {[c in Component]?: number}
 
     constructor(
         refDate: Date,
-        knownComponents?: {[c: Component]: string|number},
+        knownComponents?: {[c in Component]?: number},
     ) {
         this.knownValues = {};
         this.impliedValues = {};
         if (knownComponents) {
             for (const key in knownComponents) {
-                this.knownValues[key] = knownComponents[key];
+                this.knownValues[key as Component] = knownComponents[key as Component];
             }
         }
 
@@ -28,7 +28,7 @@ export class ParsingComponents implements ParsedComponents {
         this.imply('millisecond', 0);
     }
 
-    get(component: Component) : (number | null) {
+    get(component: Component) : (number | undefined) {
 
         if (component in this.knownValues) {
             return this.knownValues[component];
@@ -54,7 +54,9 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     imply(component: Component, value: number) : ParsingComponents {
-        if (component in this.knownValues) return;
+        if (component in this.knownValues) {
+            return this;
+        }
         this.impliedValues[component] = value;
         return this;
     }
@@ -71,11 +73,11 @@ export class ParsingComponents implements ParsedComponents {
         component.impliedValues = {};
 
         for (const key in this.knownValues) {
-            component.knownValues[key] = this.knownValues[key];
+            component.knownValues[key as Component] = this.knownValues[key as Component];
         }
 
         for (const key in this.impliedValues) {
-            component.impliedValues[key] = this.impliedValues[key];
+            component.impliedValues[key as Component] = this.impliedValues[key as Component];
         }
 
         return component;
@@ -107,8 +109,8 @@ export class ParsingComponents implements ParsedComponents {
         if (dateMoment.get('year') != this.get('year')) return false;
         if (dateMoment.get('month') != this.get('month')-1) return false;
         if (dateMoment.get('date') != this.get('day')) return false;
-        if (dateMoment.get('hour') != this.get('hour')) return false;
-        if (dateMoment.get('minute') != this.get('minute')) return false;
+        if (this.get('hour') != null && dateMoment.get('hour') != this.get('hour')) return false;
+        if (this.get('minute') != null && dateMoment.get('minute') != this.get('minute')) return false;
 
         return true;
     }
@@ -140,10 +142,10 @@ export class ParsingComponents implements ParsedComponents {
     }
 
 
-    static createRelativeFromRefDate(refDate:Date, fragments: {[c: OpUnitType]: number}) : ParsingComponents{
+    static createRelativeFromRefDate(refDate:Date, fragments: {[c in OpUnitType]?: number}) : ParsingComponents{
         let date = dayjs(refDate);
         for (const key in fragments) {
-            date = date.add(fragments[key], key);
+            date = date.add(fragments[key as OpUnitType], key as OpUnitType);
         }
 
         const components = new ParsingComponents(refDate);

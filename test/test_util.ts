@@ -9,8 +9,8 @@ type CheckResult = (p: ParsedResult, text: string) => void
 
 export function testSingleCase(chrono: ChronoLike, text: string, checkResult?: CheckResult);
 export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckResult?: Date | CheckResult, checkResult?: CheckResult);
+export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckResult?: Date | CheckResult, optionOrCheckResult?: ParsingOption| CheckResult, checkResult?: CheckResult);
 export function testSingleCase(chrono: ChronoLike, text: string, refDateOrCheckResult?: Date | CheckResult, optionOrCheckResult?: ParsingOption| CheckResult, checkResult?: CheckResult) {
-
     if (checkResult === undefined && typeof optionOrCheckResult === "function") {
         checkResult = optionOrCheckResult;
         optionOrCheckResult = undefined;

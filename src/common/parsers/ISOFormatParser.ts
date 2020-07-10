@@ -1,5 +1,6 @@
 import {Parser, ParsingContext} from "../../chrono";
 import {Component} from "../../index";
+import {AbstractParserWithWordBoundaryChecking} from "./AbstractParserWithWordBoundary";
 
 // ISO 8601
 // http://www.w3.org/TR/NOTE-datetime
@@ -27,14 +28,14 @@ const MILLISECOND_NUMBER_GROUP = 7;
 const TZD_HOUR_OFFSET_GROUP = 8;
 const TZD_MINUTE_OFFSET_GROUP = 9;
 
-export default class ISOFormatParser implements Parser {
+export default class ISOFormatParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {
+    innerPattern(): RegExp {
         return PATTERN;
     }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) : {[component: Component]: string | number}{
-        const components: {[component: Component]: string | number} = {}
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
+        const components: {[component in Component]?: number} = {}
         components['year'] = parseInt(match[YEAR_NUMBER_GROUP])
         components['month'] = parseInt(match[MONTH_NUMBER_GROUP])
         components['day'] = parseInt(match[DATE_NUMBER_GROUP])

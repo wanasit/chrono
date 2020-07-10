@@ -3,6 +3,7 @@ import {Parser, ParsingContext} from "../../../chrono";
 import {findYearClosestToRef} from "../../../calculation/yearCalculation";
 import {matchAnyPattern} from "../../../utils/pattern";
 import {YEAR_PATTERN, parseYear} from "../constants";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
@@ -21,11 +22,11 @@ const YEAR_GROUP = 2;
  * - January 2012
  * - January
  */
-export default class ENMonthNameParser implements Parser {
+export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {return PATTERN; }
+    innerPattern(): RegExp {return PATTERN; }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
 
         if (match[0].length <= 3) {
             return null;

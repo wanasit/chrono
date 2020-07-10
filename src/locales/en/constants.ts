@@ -226,7 +226,7 @@ const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\(
 
 export const TIME_UNITS_PATTERN = `(?:${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})+`;
 
-export function parseTimeUnits(timeunitText) : {[c: OpUnitType]: number} {
+export function parseTimeUnits(timeunitText) : {[c in OpUnitType]?: number} {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);

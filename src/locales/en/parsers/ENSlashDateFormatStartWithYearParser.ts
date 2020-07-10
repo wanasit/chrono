@@ -1,6 +1,7 @@
 import {Parser, ParsingContext} from "../../../chrono";
 import {MONTH_DICTIONARY} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 /*
     Date format with slash "/" between numbers like ENSlashDateFormatParser,
@@ -19,11 +20,11 @@ const MONTH_NAME_GROUP = 2;
 const MONTH_NUMBER_GROUP = 3;
 const DATE_NUMBER_GROUP  = 4;
 
-export default class ENSlashDateFormatStartWithYearParser implements Parser {
+export default class ENSlashDateFormatStartWithYearParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp { return PATTERN; }
+    innerPattern(): RegExp { return PATTERN; }
 
-    extract(context: ParsingContext, match: RegExpMatchArray) {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
 
         const month = match[MONTH_NUMBER_GROUP] ? parseInt(match[MONTH_NUMBER_GROUP]) :
             MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];

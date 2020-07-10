@@ -5,6 +5,7 @@ import {MONTH_DICTIONARY, WEEKDAY_DICTIONARY,} from "../constants";
 import {YEAR_PATTERN, parseYear} from "../constants";
 import {ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern} from "../constants";
 import {matchAnyPattern} from "../../../utils/pattern";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 
 const PATTERN = new RegExp(
@@ -30,13 +31,13 @@ const DATE_TO_GROUP = 3;
 const MONTH_NAME_GROUP = 4;
 const YEAR_GROUP = 5;
 
-export default class ENMonthNameLittleEndianParser implements Parser {
+export default class ENMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {
+    innerPattern(): RegExp {
         return PATTERN;
     }
 
-    extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         //console.log(match)
 
         const result = context.createParsingResult(match.index, match[0]);

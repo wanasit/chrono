@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "inlineSources": false,
+    "inlineSourceMap": false,
+    "noEmit": false,
+    "declaration": true,
+    "stripInternal": true,
+    "outDir": "dist",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "importHelpers": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "target": "es5"
+  },
+  "include": [
+    "src",
+    "test"
+  ]
+}

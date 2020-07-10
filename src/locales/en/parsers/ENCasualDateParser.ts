@@ -2,14 +2,15 @@ import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents, ParsingResult} from "../../../results";
 import dayjs from "dayjs";
 import {Meridiem} from "../../../index";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-export default class ENCasualDateParser implements Parser {
+export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {
+    innerPattern(context: ParsingContext): RegExp {
         return /(now|today|tonight|last\s*night|tomorrow|tmr|yesterday)(?=\W|$)/i;
     }
 
-    extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
 
         let targetDate = dayjs(context.refDate);
         const lowerText = match[0].toLowerCase();

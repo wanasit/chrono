@@ -95,9 +95,11 @@ test("Test - Single Expression", function() {
         expect(result.text).toBe('令和2年5月1日');
 
         expect(result.start).not.toBeNull();
-        expect(result.start.knownValues.year).toBe(2020);
+        expect(result.start.get('year')).toBe(2020);
         expect(result.start.get('month')).toBe(5);
         expect(result.start.get('day')).toBe(1);
+
+        expect(result.start.isCertain('year')).toBeTruthy();
 
         expect(result.start).toBeDate(new Date(2020, 5-1, 1, 12));
     });

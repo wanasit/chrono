@@ -11,18 +11,18 @@ test("Test - Create & manipulate date results", () => {
 	expect(components.date()).toBeDefined();
 
 	// undefined
-	expect(components.get('dayOfWeek')).toBeNull(undefined);
-	expect(components.isCertain('dayOfWeek')).toBe(false);
+	expect(components.get('weekday')).toBeNull();
+	expect(components.isCertain('weekday')).toBe(false);
 
 	// "imply"
-	components.imply('dayOfWeek', 1);
-	expect(components.get('dayOfWeek')).toBe(1);
-	expect(components.isCertain('dayOfWeek')).toBe(false);
+	components.imply('weekday', 1);
+	expect(components.get('weekday')).toBe(1);
+	expect(components.isCertain('weekday')).toBe(false);
 
 	// "assign" overrides "imply"
-	components.assign('dayOfWeek', 2);
-	expect(components.get('dayOfWeek')).toBe(2);
-	expect(components.isCertain('dayOfWeek')).toBe(true);
+	components.assign('weekday', 2);
+	expect(components.get('weekday')).toBe(2);
+	expect(components.isCertain('weekday')).toBe(true);
 
 	// "imply" doesn't overrides "assign"
 	components.imply('year', 2013);
@@ -68,17 +68,17 @@ test("Test - Calendar Checking", () => {
 	}
 
 	{
-		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:24});
+		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24, hour:24});
 		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
-		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:12, minute: 60});
+		const components = new ParsingComponents(refDate, {year: 2014, month: 11, day: 24, hour:12, minute: 60});
 		expect(components.isValidDate()).toBe(false);
 	}
 
 	{
-		const components = new ParsingComponents({year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
+		const components = new ParsingComponents(refDate,{year: 2014, month: 11, day: 24, hour:12, minute: 30, second: 60});
 		expect(components.isValidDate()).toBe(false);
 	}
 });

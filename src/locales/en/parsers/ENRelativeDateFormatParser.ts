@@ -2,6 +2,7 @@ import {NUMBER_PATTERN, parseNumberPattern} from "../constants";
 import {Parser, ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
 import dayjs from "dayjs";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 
 const PATTERN = new RegExp(
@@ -15,10 +16,11 @@ const MODIFIER_WORD_GROUP = 1;
 const MULTIPLIER_WORD_GROUP = 2;
 const RELATIVE_WORD_GROUP = 3;
 
-export default class ENRelativeDateFormatParser implements Parser {
+export default class ENRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {return PATTERN; }
-    extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    innerPattern(): RegExp {return PATTERN; }
+
+    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         if (match[MODIFIER_WORD_GROUP].toLowerCase().match(/^this/)) {
             if (match[MULTIPLIER_WORD_GROUP]) {
                 return null;

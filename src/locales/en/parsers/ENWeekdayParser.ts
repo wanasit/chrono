@@ -3,6 +3,7 @@ import {ParsingComponents} from "../../../results";
 import {WEEKDAY_DICTIONARY} from "../constants";
 import dayjs, {Dayjs} from "dayjs";
 import {matchAnyPattern} from "../../../utils/pattern";
+import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
     '(?:(?:\\,|\\(|\\（)\\s*)?' +
@@ -17,13 +18,13 @@ const PREFIX_GROUP = 1;
 const WEEKDAY_GROUP = 2;
 const POSTFIX_GROUP = 3;
 
-export default class ENWeekdayParser implements Parser {
+export default class ENWeekdayParser extends AbstractParserWithWordBoundaryChecking {
 
-    pattern(): RegExp {
+    innerPattern(): RegExp {
         return PATTERN;
     }
 
-    extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
 
         const dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         const offset = WEEKDAY_DICTIONARY[dayOfWeek];

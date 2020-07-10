@@ -172,7 +172,7 @@ Chrono’s extraction pipeline configuration consists of `parsers: Parser[]` and
 interface Parser {
     pattern: (context: ParsingContext) => RegExp,
     extract: (context: ParsingContext, match: RegExpMatchArray) =>
-        (ParsingComponents | ParsingResult | {[c: Component]: string|number} | null)
+        (ParsingComponents | ParsingResult | {[c in Component]?: number} | null)
 }
 ```
 
