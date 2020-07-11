@@ -153,6 +153,10 @@ export class ParsingComponents implements ParsedComponents {
             components.assign('hour', date.hour());
             components.assign('minute', date.minute());
             components.assign('second', date.second());
+        } else {
+            components.imply('hour', date.hour());
+            components.imply('minute', date.minute());
+            components.imply('second', date.second());
         }
 
         if (fragments['d'] || fragments['month'] || fragments['year']) {

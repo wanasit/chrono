@@ -12,7 +12,7 @@ test("Test - Single Expression", () => {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(15);
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 15, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 15));
     });
 
 
@@ -26,7 +26,7 @@ test("Test - Single Expression", () => {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(15);
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 15, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 15));
     });
 
 
@@ -39,7 +39,7 @@ test("Test - Single Expression", () => {
         expect(result.start.get('month')).toBe(8);
         expect(result.start.get('day')).toBe(20);
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 20, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 20));
     });
 
 
@@ -93,7 +93,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within two weeks');
 
-        expect(result.start).toBeDate(new Date(2012, 7, 24, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 24, 12, 14));
     });
 
 
@@ -101,7 +101,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within a month');
 
-        expect(result.start).toBeDate(new Date(2012, 8, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 8, 10, 12, 14));
     });
 
 
@@ -109,7 +109,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within a few months');
 
-        expect(result.start).toBeDate(new Date(2012, 10, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 10, 10, 12, 14));
     });
 
 
@@ -117,7 +117,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within one year');
 
-        expect(result.start).toBeDate(new Date(2013, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2013, 7, 10, 12, 14));
     });
 
 
@@ -125,7 +125,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within one Year');
 
-        expect(result.start).toBeDate(new Date(2013, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2013, 7, 10, 12, 14));
     });
 
 
@@ -133,7 +133,7 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('within One year');
 
-        expect(result.start).toBeDate(new Date(2013, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2013, 7, 10, 12, 14));
     });
 
 
@@ -158,7 +158,6 @@ test("Test - Single Expression", () => {
         expect(result.start.get('year')).toBe(2016);
         expect(result.start.get('month')).toBe(10);
         expect(result.start.get('day')).toBe(8);
-        expect(result.start.get('hour')).toBe(12);
     });
 
 });
@@ -220,3 +219,24 @@ test("Test - Single Expression (Implied)", () => {
     });
 });
 
+
+test("Test - Implied time values", () => {
+
+    testSingleCase(chrono, 'in 24 hours', new Date(2020, 7 - 1, 10, 12, 14), (result) => {
+
+        expect(result.start.get('hour')).toBe(12)
+        expect(result.start.get('minute')).toBe(14)
+        expect(result.start.get('day')).toBe(11)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('year')).toBe(2020)
+    });
+
+    testSingleCase(chrono, 'in one day', new Date(2020, 7 - 1, 10, 12, 14), (result) => {
+
+        expect(result.start.get('hour')).toBe(12)
+        expect(result.start.get('minute')).toBe(14)
+        expect(result.start.get('day')).toBe(11)
+        expect(result.start.get('month')).toBe(7)
+        expect(result.start.get('year')).toBe(2020)
+    });
+})

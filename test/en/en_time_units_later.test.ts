@@ -3,7 +3,7 @@ import { testSingleCase } from '../test_util';
 
 test("Test - Later Expression", function() {
 
-    testSingleCase(chrono, '2 days later', new Date(2012,7,10), (result) => {
+    testSingleCase(chrono, '2 days later', new Date(2012,7,10, 12), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(8);
@@ -44,7 +44,7 @@ test("Test - Later Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('3 week later');
 
-        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 12));
+        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 10, 0));
     });
 });
 
@@ -58,7 +58,7 @@ test("Test - From now Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 days from now');
 
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 12));
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
     });
 
     testSingleCase(chrono, '10 days from now, we did something', new Date(2012, 7, 10), (result) => {
@@ -70,7 +70,7 @@ test("Test - From now Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('10 days from now');
 
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 20, 12));
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 20));
     });
 
     testSingleCase(chrono, '15 minute from now', new Date(2012, 7, 10, 12, 14), (result) => {
@@ -166,7 +166,7 @@ test("Test - From now Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 Days from now');
 
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 12));
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
     });
 
 
@@ -188,7 +188,7 @@ test("Test - From now Expression", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe('A days from now');
 
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 12));
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11));
     });
 
     testSingleCase(chrono, 'a min out', new Date(2012, 7, 10, 12, 14), (result) => {
