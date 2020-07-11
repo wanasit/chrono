@@ -34,17 +34,18 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test"
+      "pre-commit": "npm run lint && npm run test:silent"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build",
     "lint": "npm run lint:src & npm run lint:test",
-    "lint:src": "prettier --write src",
-    "lint:test": "prettier --write test",
+    "lint:src": "prettier --write src --loglevel=warn",
+    "lint:test": "prettier --write test --loglevel=warn",
     "watch": "jest --watch",
     "test": "jest --coverage",
+    "test:silent": "jest --silent",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
