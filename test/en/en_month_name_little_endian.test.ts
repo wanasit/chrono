@@ -389,6 +389,25 @@ test("Test - little endian date followed by time", () => {
     });
 });
 
+test("Test - year 90's parsing", () => {
+
+    testSingleCase(chrono, '3 Aug 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('3 Aug 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(3);
+    });
+
+    testSingleCase(chrono, '9 Aug 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('9 Aug 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(9);
+    });
+})
+
 test("Test - Forward Option", () => {
 
     testSingleCase(chrono.casual, '22-23 Feb at 7pm', new Date(2016, 3-1, 15), (result) => {

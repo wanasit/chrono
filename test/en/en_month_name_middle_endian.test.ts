@@ -363,6 +363,25 @@ test("Test - Forward Option", () => {
     });
 });
 
+test("Test - year 90's parsing", () => {
+
+    testSingleCase(chrono, 'Aug 9, 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('Aug 9, 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(9);
+    });
+
+    testSingleCase(chrono, 'Aug 9 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('Aug 9 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+        expect(result.start.get('day')).toBe(9);
+    });
+})
+
 test("Test - Impossible Dates (Strict Mode)", () => {
 
     testUnexpectedResult(chrono.strict, 'August 32, 2014');

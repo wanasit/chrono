@@ -108,7 +108,6 @@ test("Test - Month slash expression", function() {
     });
 
     testSingleCase(chrono, '09/2012', new Date(2012,7,10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get('year')).toBe(2012);
         expect(result.start.get('month')).toBe(9);
 
@@ -120,3 +119,20 @@ test("Test - Month slash expression", function() {
 
 });
 
+
+test("Test - year 90's parsing", () => {
+
+    testSingleCase(chrono, 'Aug 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('Aug 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+    });
+
+    testSingleCase(chrono, '96 Aug 96', new Date(2012,7,10), (result) => {
+        expect(result.text).toBe('Aug 96');
+
+        expect(result.start.get('year')).toBe(1996);
+        expect(result.start.get('month')).toBe(8);
+    });
+})

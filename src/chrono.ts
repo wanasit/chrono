@@ -79,7 +79,7 @@ export class Chrono {
             const result = parser.extract(context, match);
             if (!result) {
                 // If fail, move on by 1
-                remainingText = originalText.substring(index + 1);
+                remainingText = originalText.substring(match.index + 1);
                 match = pattern.exec(remainingText);
                 continue;
             }

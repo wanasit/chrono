@@ -41,6 +41,7 @@ export function createCasualConfiguration(littleEndian = false) : Configuration 
     option.parsers.unshift(new ENCasualDateParser());
     option.parsers.unshift(new ENCasualTimeParser());
     option.parsers.unshift(new ENWeekdayParser());
+    option.parsers.unshift(new ENMonthNameParser());
     option.parsers.unshift(new ENRelativeDateFormatParser());
     return option;
 }
@@ -51,7 +52,6 @@ export function createConfiguration(strictMode= true, littleEndian = false) : Co
             new ENTimeUnitDeadlineFormatParser(strictMode),
             new ENMonthNameLittleEndianParser(),
             new ENMonthNameMiddleEndianParser(),
-            new ENMonthNameParser(),
             new ENSlashDateFormatParser(littleEndian),
             new ENSlashDateFormatStartWithYearParser(),
             new ENSlashMonthFormatParser(),
