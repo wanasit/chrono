@@ -6,6 +6,11 @@
     "type": "git",
     "url": "https://github.com/wanasit/chrono.git"
   },
+  "eslintConfig": {
+    "rules": {
+      "padding-line-between-statements": "off"
+    }
+  },
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
@@ -22,6 +27,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "jest": "^26.1.0",
+    "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   },

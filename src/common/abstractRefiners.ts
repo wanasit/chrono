@@ -1,23 +1,30 @@
-import {ParsingContext, Refiner} from "../chrono";
-import {ParsingResult} from "../results";
+import { ParsingContext, Refiner } from "../chrono";
+import { ParsingResult } from "../results";
 
 export abstract class Filter implements Refiner {
-
     abstract isValid(context: ParsingContext, result: ParsingResult): boolean;
 
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-        return results.filter(r => this.isValid(context, r));
+        return results.filter((r) => this.isValid(context, r));
     }
 }
 
 export abstract class MergingRefiner implements Refiner {
+    abstract shouldMergeResults(
+        textBetween: string,
+        currentResult: ParsingResult,
+        nextResult: ParsingResult,
+        context: ParsingContext
+    ): boolean;
 
-    abstract shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context: ParsingContext): boolean;
-
-    abstract mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context: ParsingContext): ParsingResult;
+    abstract mergeResults(
+        textBetween: string,
+        currentResult: ParsingResult,
+        nextResult: ParsingResult,
+        context: ParsingContext
+    ): ParsingResult;
 
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-
         if (results.length < 2) {
             return results;
         }
@@ -26,7 +33,7 @@ export abstract class MergingRefiner implements Refiner {
         let curResult = results[0];
         let nextResult = null;
 
-        for (let i=1; i<results.length; i++){
+        for (let i = 1; i < results.length; i++) {
             nextResult = results[i];
 
             const textBetween = context.text.substring(curResult.index + curResult.text.length, nextResult.index);
@@ -38,8 +45,8 @@ export abstract class MergingRefiner implements Refiner {
                 const right = nextResult;
                 const mergedResult = this.mergeResults(textBetween, left, right, context);
                 context.debug(() => {
-                    console.log(`${this.constructor.name} merged ${left} and ${right} into ${mergedResult}`)
-                })
+                    console.log(`${this.constructor.name} merged ${left} and ${right} into ${mergedResult}`);
+                });
 
                 curResult = mergedResult;
             }
