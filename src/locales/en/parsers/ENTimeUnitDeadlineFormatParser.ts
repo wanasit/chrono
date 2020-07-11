@@ -1,10 +1,10 @@
 import {TIME_UNITS_PATTERN, parseTimeUnits} from '../constants';
-import {Parser, ParsingContext} from "../../../chrono";
+import {ParsingContext} from "../../../chrono";
 import {ParsingComponents} from "../../../results";
 import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(?:within|in)\\s*` +
+    `(?:within|in|\\+)\\s*` +
     '(' + TIME_UNITS_PATTERN + ')' +
     `(?=\\W|$)`, 'i'
 );

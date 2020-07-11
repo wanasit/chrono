@@ -8,12 +8,10 @@ import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/Ab
 
 
 const PATTERN = new RegExp('' +
-    '(?:within\\s*)?' +
     '(' + TIME_UNITS_PATTERN + ')' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 
 const STRICT_PATTERN = new RegExp('' +
-    '(?:within\\s*)?' +
     '(' + TIME_UNITS_PATTERN + ')' +
     'ago(?=(?:\\W|$))', 'i');
 

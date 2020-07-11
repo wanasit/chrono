@@ -222,7 +222,14 @@ test("Test - From now Expression", () => {
 
 test("Test - Strict mode", function() {
 
-    testSingleCase(chrono.strict, '15 minutes from now', new Date(2012, 7, 10, 12, 14));
+    testSingleCase(chrono.strict, '15 minutes from now', new Date(2012, 7, 10, 12, 14), (result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+        expect(result.start.get('minute')).toBe(29);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 29));
+    })
 
     testSingleCase(chrono.strict, '25 minutes later', new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);

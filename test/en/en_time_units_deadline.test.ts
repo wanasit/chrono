@@ -1,5 +1,5 @@
 import * as chrono from '../../src';
-import {testSingleCase} from '../test_util';
+import {testSingleCase, testUnexpectedResult} from '../test_util';
 
 test("Test - Single Expression", () => {
 
@@ -240,3 +240,31 @@ test("Test - Implied time values", () => {
         expect(result.start.get('year')).toBe(2020)
     });
 })
+
+test("Test - '+' sign", () => {
+
+    testSingleCase(chrono.casual, '+15 minutes', new Date(2012, 7-1, 10, 12, 14), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+        expect(result.start.get('minute')).toBe(29);
+
+        expect(result.start).toBeDate(new Date(2012, 7-1, 10, 12, 29));
+    });
+
+    testSingleCase(chrono.casual, '+15min', new Date(2012, 7-1, 10, 12, 14), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get('hour')).toBe(12);
+        expect(result.start.get('minute')).toBe(29);
+
+        expect(result.start).toBeDate(new Date(2012, 7-1, 10, 12, 29));
+    });
+
+    testSingleCase(chrono.casual, '+1 day 2 hour', new Date(2012, 7-1, 10, 12, 14), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get('day')).toBe(11);
+        expect(result.start.get('hour')).toBe(14);
+        expect(result.start.get('minute')).toBe(14);
+
+        expect(result.start).toBeDate(new Date(2012, 7-1, 11, 14, 14));
+    });
+});
