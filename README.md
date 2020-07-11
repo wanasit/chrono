@@ -27,6 +27,12 @@ import * as chrono from 'chrono-node';
 
 chrono.parseDate('An appointment on Sep 12-13'); 
 ```
+For Node.js:
+```javascript
+const chrono = require('chrono-node');
+
+// or `import chrono from 'chrono-node'` for ECMAScript
+```
 
 ### What's changed in the v2
 For Users
@@ -45,7 +51,7 @@ Note: [v1.x.x](https://github.com/wanasit/chrono/tree/v1) will still be supporte
 Simply pass a `string` to functions `chrono.parseDate` or `chrono.parse`. 
 
 ```javascript
-import chrono from 'chrono-node';
+import * as chrono from 'chrono-node';
 
 chrono.parseDate('An appointment on Sep 12-13');
 // Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
