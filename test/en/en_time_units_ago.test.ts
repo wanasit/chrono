@@ -12,7 +12,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 days ago');
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 5, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 5));
     });
 
     testSingleCase(chrono, '10 days ago, we did something', new Date(2012,7,10), (result) => {
@@ -24,7 +24,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('10 days ago');
 
-        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 12));
+        expect(result.start).toBeDate(new Date(2012, 7-1, 31));
     });
 
 
@@ -130,7 +130,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 Days ago');
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 5, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 5));
     });
 
 
@@ -153,7 +153,7 @@ test("Test - Single Expression", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('A days ago');
 
-        expect(result.start).toBeDate(new Date(2012, 8-1, 9, 12));
+        expect(result.start).toBeDate(new Date(2012, 8-1, 9));
     });
 
 
@@ -180,7 +180,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 months ago');
 
-        expect(result.start).toBeDate(new Date(2012, 3-1, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 3-1, 10));
     });
 
     testSingleCase(chrono, '5 years ago, we did something', new Date(2012, 8-1,10), (result) => {
@@ -192,7 +192,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('5 years ago');
 
-        expect(result.start).toBeDate(new Date(2007, 8-1, 10, 12));
+        expect(result.start).toBeDate(new Date(2007, 8-1, 10));
     });
 
 
@@ -205,7 +205,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('a week ago');
 
-        expect(result.start).toBeDate(new Date(2012, 7-1, 27, 12));
+        expect(result.start).toBeDate(new Date(2012, 7-1, 27));
     });
 
 
@@ -218,7 +218,7 @@ test("Test - Single Expression (Casual)", function() {
         expect(result.index).toBe(0);
         expect(result.text).toBe('a few days ago');
 
-        expect(result.start).toBeDate(new Date(2012, 7-1, 31, 12));
+        expect(result.start).toBeDate(new Date(2012, 7-1, 31));
     });
 });
 
