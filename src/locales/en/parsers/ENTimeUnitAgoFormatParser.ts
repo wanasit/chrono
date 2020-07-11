@@ -13,7 +13,6 @@ const PATTERN = new RegExp('' +
     '(?:ago|before|earlier)(?=(?:\\W|$))', 'i');
 
 const STRICT_PATTERN = new RegExp('' +
-    '(?<=\\W|^)' +
     '(?:within\\s*)?' +
     '(' + TIME_UNITS_PATTERN + ')' +
     'ago(?=(?:\\W|$))', 'i');
