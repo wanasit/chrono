@@ -7,9 +7,7 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  * - 水曜日[から]日曜日
  */
 export default class JPMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
-
     patternBetween(): RegExp {
-        return /^\s*(から|ー|-)\s*$/i ;
+        return /^\s*(から|ー|-)\s*$/i;
     }
 }
-

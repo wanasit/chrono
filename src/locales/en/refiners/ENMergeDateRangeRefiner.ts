@@ -2,7 +2,6 @@
   
 */
 
-
 import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMergeDateRangeRefiner";
 
 /**
@@ -12,9 +11,7 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  * - Wednesday [-] Friday
  */
 export default class ENMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
-
     patternBetween(): RegExp {
         return /^\s*(to|-)\s*$/i;
     }
 }
-

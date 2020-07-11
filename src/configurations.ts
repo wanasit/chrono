@@ -1,4 +1,4 @@
-import {Configuration} from "./chrono";
+import { Configuration } from "./chrono";
 
 import ExtractTimezoneAbbrRefiner from "./common/refiners/ExtractTimezoneAbbrRefiner";
 import ExtractTimezoneOffsetRefiner from "./common/refiners/ExtractTimezoneOffsetRefiner";
@@ -8,13 +8,12 @@ import UnlikelyFormatFilter from "./common/refiners/UnlikelyFormatFilter";
 import ISOFormatParser from "./common/parsers/ISOFormatParser";
 
 export function includeCommonConfiguration(configuration: Configuration): Configuration {
+    configuration.parsers.unshift(new ISOFormatParser());
 
-    configuration.parsers.unshift(new ISOFormatParser())
-
-    configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner())
-    configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner())
-    configuration.refiners.unshift(new OverlapRemovalRefiner())
-    configuration.refiners.push(new ForwardDateRefiner())
-    configuration.refiners.push(new UnlikelyFormatFilter())
+    configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner());
+    configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner());
+    configuration.refiners.unshift(new OverlapRemovalRefiner());
+    configuration.refiners.push(new ForwardDateRefiner());
+    configuration.refiners.push(new UnlikelyFormatFilter());
     return configuration;
 }

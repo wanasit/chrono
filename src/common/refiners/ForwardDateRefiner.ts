@@ -4,66 +4,62 @@
     into the future instead of the past.
 */
 
-import {ParsingContext, Refiner} from "../../chrono";
-import {ParsingResult} from "../../results";
+import { ParsingContext, Refiner } from "../../chrono";
+import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
 
 export default class ForwardDateRefiner implements Refiner {
-
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-
         if (!context.option.forwardDate) {
             return results;
         }
 
-        results.forEach(function(result) {
+        results.forEach(function (result) {
             let refMoment = dayjs(context.refDate);
 
             if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
-
-                for (let i=0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
-                    result.start.imply('year', result.start.get('year') + 1);
+                for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
+                    result.start.imply("year", result.start.get("year") + 1);
                     context.debug(() => {
-                        console.log(`Forward yearly adjusted for ${result} (${result.start})`)
+                        console.log(`Forward yearly adjusted for ${result} (${result.start})`);
                     });
 
-                    if (result.end && !result.end.isCertain('year')) {
-                        result.end.imply('year', result.end.get('year') + 1);
+                    if (result.end && !result.end.isCertain("year")) {
+                        result.end.imply("year", result.end.get("year") + 1);
                         context.debug(() => {
-                            console.log(`Forward yearly adjusted for ${result} (${result.end})`)
+                            console.log(`Forward yearly adjusted for ${result} (${result.end})`);
                         });
                     }
                 }
             }
 
             if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
-
-                if (refMoment.day() > result.start.get('weekday')) {
-                    refMoment = refMoment.day(result.start.get('weekday') + 7);
+                if (refMoment.day() > result.start.get("weekday")) {
+                    refMoment = refMoment.day(result.start.get("weekday") + 7);
                 } else {
-                    refMoment = refMoment.day(<number>result.start.get('weekday'));
+                    refMoment = refMoment.day(<number>result.start.get("weekday"));
                 }
 
-                result.start.imply('day', refMoment.date());
-                result.start.imply('month', refMoment.month() + 1);
-                result.start.imply('year', refMoment.year());
+                result.start.imply("day", refMoment.date());
+                result.start.imply("month", refMoment.month() + 1);
+                result.start.imply("year", refMoment.year());
                 context.debug(() => {
-                    console.log(`Forward weekly adjusted for ${result} (${result.start})`)
+                    console.log(`Forward weekly adjusted for ${result} (${result.start})`);
                 });
 
                 if (result.end && result.end.isOnlyWeekdayComponent()) {
                     // Adjust date to the coming week
-                    if (refMoment.day() > result.end.get('weekday')) {
-                        refMoment = refMoment.day(result.end.get('weekday') + 7);
+                    if (refMoment.day() > result.end.get("weekday")) {
+                        refMoment = refMoment.day(result.end.get("weekday") + 7);
                     } else {
-                        refMoment = refMoment.day(<number>result.end.get('weekday'));
+                        refMoment = refMoment.day(<number>result.end.get("weekday"));
                     }
 
-                    result.end.imply('day', refMoment.date());
-                    result.end.imply('month', refMoment.month() + 1);
-                    result.end.imply('year', refMoment.year());
+                    result.end.imply("day", refMoment.date());
+                    result.end.imply("month", refMoment.month() + 1);
+                    result.end.imply("year", refMoment.year());
                     context.debug(() => {
-                        console.log(`Forward weekly adjusted for ${result} (${result.end})`)
+                        console.log(`Forward weekly adjusted for ${result} (${result.end})`);
                     });
                 }
             }

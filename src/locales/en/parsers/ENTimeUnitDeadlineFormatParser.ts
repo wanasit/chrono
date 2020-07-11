@@ -1,22 +1,13 @@
-import {TIME_UNITS_PATTERN, parseTimeUnits} from '../constants';
-import {ParsingContext} from "../../../chrono";
-import {ParsingComponents} from "../../../results";
-import {AbstractParserWithWordBoundaryChecking} from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { TIME_UNITS_PATTERN, parseTimeUnits } from "../constants";
+import { ParsingContext } from "../../../chrono";
+import { ParsingComponents } from "../../../results";
+import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-const PATTERN = new RegExp(
-    `(?:within|in|\\+)\\s*` +
-    '(' + TIME_UNITS_PATTERN + ')' +
-    `(?=\\W|$)`, 'i'
-);
+const PATTERN = new RegExp(`(?:within|in|\\+)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
 
-const STRICT_PATTERN = new RegExp(
-    `(?:within|in)\\s*` +
-    '(' + TIME_UNITS_PATTERN + ')' +
-    `(?=\\W|$)`, 'i'
-);
+const STRICT_PATTERN = new RegExp(`(?:within|in)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
 
 export default class ENTimeUnitDeadlineFormatParser extends AbstractParserWithWordBoundaryChecking {
-
     constructor(private strictMode: boolean) {
         super();
     }

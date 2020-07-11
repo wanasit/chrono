@@ -1,26 +1,28 @@
-import {ParsingComponents, ParsingResult} from "./results";
-import {Component, ParsedResult, ParsingOption} from "./index";
-import {AsyncDebugBlock, DebugHandler} from "./debugging";
-import {createCasualConfiguration} from './locales/en';
+import { ParsingComponents, ParsingResult } from "./results";
+import { Component, ParsedResult, ParsingOption } from "./index";
+import { AsyncDebugBlock, DebugHandler } from "./debugging";
+import { createCasualConfiguration } from "./locales/en";
 
 export interface Configuration {
-    parsers: Parser[],
-    refiners: Refiner[]
+    parsers: Parser[];
+    refiners: Refiner[];
 }
 
 export interface Parser {
-    pattern(context: ParsingContext): RegExp,
-    extract(context: ParsingContext, match: RegExpMatchArray):
-        (ParsingComponents | ParsingResult | {[c in Component]?: number} | null)
+    pattern(context: ParsingContext): RegExp;
+    extract(
+        context: ParsingContext,
+        match: RegExpMatchArray
+    ): ParsingComponents | ParsingResult | { [c in Component]?: number } | null;
 }
 
 export interface Refiner {
-    refine: (context: ParsingContext, results: ParsingResult[]) => ParsingResult[]
+    refine: (context: ParsingContext, results: ParsingResult[]) => ParsingResult[];
 }
 
 export class Chrono {
-    parsers: Array<Parser>
-    refiners: Array<Refiner>
+    parsers: Array<Parser>;
+    refiners: Array<Refiner>;
 
     constructor(configuration?: Configuration) {
         configuration = configuration || createCasualConfiguration();
@@ -30,13 +32,11 @@ export class Chrono {
 
     parseDate(text, refDate?, opt?): Date {
         const results = this.parse(text, refDate, opt);
-        return (results.length > 0) ? results[0].start.date() : null;
+        return results.length > 0 ? results[0].start.date() : null;
     }
 
     parse(text: string, refDate?: Date, opt?: ParsingOption): ParsedResult[] {
-        const context = new ParsingContext(text,
-            refDate || new Date(),
-            opt || {})
+        const context = new ParsingContext(text, refDate || new Date(), opt || {});
 
         let results = [];
         this.parsers.forEach((parser) => {
@@ -55,11 +55,11 @@ export class Chrono {
         return results;
     }
 
-    clone() : Chrono{
+    clone(): Chrono {
         return new Chrono({
             parsers: [...this.parsers],
-            refiners: [...this.refiners]
-        })
+            refiners: [...this.refiners],
+        });
     }
 
     private static executeParser(context: ParsingContext, parser: Parser) {
@@ -71,9 +71,8 @@ export class Chrono {
         let match = pattern.exec(remainingText);
 
         while (match) {
-
             // Calculate match index on the full text;
-            const index = match.index + originalText.length - remainingText.length
+            const index = match.index + originalText.length - remainingText.length;
             match.index = index;
 
             const result = parser.extract(context, match);
@@ -88,14 +87,13 @@ export class Chrono {
             if (result instanceof ParsingResult) {
                 parsedResult = result;
             } else if (result instanceof ParsingComponents) {
-                parsedResult = context.createParsingResult(match.index, match[0])
-                parsedResult.start = result
+                parsedResult = context.createParsingResult(match.index, match[0]);
+                parsedResult.start = result;
             } else {
-                parsedResult = context.createParsingResult(match.index, match[0], result)
+                parsedResult = context.createParsingResult(match.index, match[0], result);
             }
 
-            context.debug(() =>
-                console.log(`${parser.constructor.name} extracted result ${parsedResult}`))
+            context.debug(() => console.log(`${parser.constructor.name} extracted result ${parsedResult}`));
 
             results.push(parsedResult);
             remainingText = originalText.substring(index + parsedResult.text.length);
@@ -107,38 +105,33 @@ export class Chrono {
 }
 
 export class ParsingContext implements DebugHandler {
-    constructor(
-        readonly text: string,
-        readonly refDate: Date,
-        readonly option: ParsingOption
-    ) {}
+    constructor(readonly text: string, readonly refDate: Date, readonly option: ParsingOption) {}
 
-    createParsingComponents(components?: {[c in Component]?: number}) : ParsingComponents {
-        return new ParsingComponents(this.refDate, components)
+    createParsingComponents(components?: { [c in Component]?: number }): ParsingComponents {
+        return new ParsingComponents(this.refDate, components);
     }
 
     createParsingResult(
-        index: number, textOrEndIndex: number | string,
-        startComponents?: {[c in Component]?: number},
-        endComponents?: {[c in Component]?: number}
-    ) : ParsingResult {
+        index: number,
+        textOrEndIndex: number | string,
+        startComponents?: { [c in Component]?: number },
+        endComponents?: { [c in Component]?: number }
+    ): ParsingResult {
+        const text = typeof textOrEndIndex === "string" ? textOrEndIndex : this.text.substring(index, textOrEndIndex);
 
-        const text = (typeof textOrEndIndex === 'string') ? textOrEndIndex :
-            this.text.substring(index, textOrEndIndex)
+        const start = startComponents ? this.createParsingComponents(startComponents) : null;
+        const end = endComponents ? this.createParsingComponents(endComponents) : null;
 
-        const start = startComponents ? this.createParsingComponents(startComponents) : null
-        const end = endComponents ? this.createParsingComponents(endComponents) : null
-
-        return new ParsingResult(this.refDate, index, text, start, end)
+        return new ParsingResult(this.refDate, index, text, start, end);
     }
 
     debug(block: AsyncDebugBlock): void {
         if (this.option.debug) {
             if (this.option.debug instanceof Function) {
-                this.option.debug(block)
+                this.option.debug(block);
             } else {
                 const handler: DebugHandler = <DebugHandler>this.option.debug;
-                handler.debug(block)
+                handler.debug(block);
             }
         }
     }

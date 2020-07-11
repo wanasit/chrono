@@ -1,5 +1,3 @@
-
-
 import ENTimeUnitDeadlineFormatParser from "./parsers/ENTimeUnitDeadlineFormatParser";
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
@@ -13,30 +11,30 @@ import ENTimeUnitLaterFormatParser from "./parsers/ENTimeUnitLaterFormatParser";
 import ENMergeDateRangeRefiner from "./refiners/ENMergeDateRangeRefiner";
 import ENMergeDateTimeRefiner from "./refiners/ENMergeDateTimeRefiner";
 
-import {includeCommonConfiguration} from "../../configurations";
+import { includeCommonConfiguration } from "../../configurations";
 import ENCasualDateParser from "./parsers/ENCasualDateParser";
 import ENCasualTimeParser from "./parsers/ENCasualTimeParser";
 import ENWeekdayParser from "./parsers/ENWeekdayParser";
 import ENRelativeDateFormatParser from "./parsers/ENRelativeDateFormatParser";
 
-import {ParsedResult, ParsingOption} from "../../index";
-import {Chrono, Configuration} from "../../chrono";
+import { ParsedResult, ParsingOption } from "../../index";
+import { Chrono, Configuration } from "../../chrono";
 
 // Shortcuts
-export const casual = new Chrono(createCasualConfiguration(false))
-export const strict = new Chrono(createConfiguration(true, false))
+export const casual = new Chrono(createCasualConfiguration(false));
+export const strict = new Chrono(createConfiguration(true, false));
 
-export const GB = new Chrono(createConfiguration(false, true))
+export const GB = new Chrono(createConfiguration(false, true));
 
 export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
-export function parseDate(text: string, ref?: Date, option?: ParsingOption) : Date {
+export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }
 
-export function createCasualConfiguration(littleEndian = false) : Configuration {
+export function createCasualConfiguration(littleEndian = false): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new ENCasualDateParser());
     option.parsers.unshift(new ENCasualTimeParser());
@@ -46,7 +44,7 @@ export function createCasualConfiguration(littleEndian = false) : Configuration 
     return option;
 }
 
-export function createConfiguration(strictMode= true, littleEndian = false) : Configuration {
+export function createConfiguration(strictMode = true, littleEndian = false): Configuration {
     return includeCommonConfiguration({
         parsers: [
             new ENTimeUnitDeadlineFormatParser(strictMode),
@@ -59,10 +57,6 @@ export function createConfiguration(strictMode= true, littleEndian = false) : Co
             new ENTimeUnitAgoFormatParser(strictMode),
             new ENTimeUnitLaterFormatParser(strictMode),
         ],
-        refiners: [
-            new ENMergeDateTimeRefiner(),
-            new ENMergeDateRangeRefiner()
-        ]
+        refiners: [new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
     });
 }
-

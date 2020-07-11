@@ -2,49 +2,45 @@
   
 */
 
-import {ParsingResult} from "../../results";
-import {MergingRefiner} from "../abstractRefiners";
+import { ParsingResult } from "../../results";
+import { MergingRefiner } from "../abstractRefiners";
 
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
-
-    abstract patternBetween(): RegExp
+    abstract patternBetween(): RegExp;
 
     shouldMergeResults(textBetween, currentResult, nextResult): boolean {
-        return (!currentResult.end && !nextResult.end)
-            && textBetween.match(this.patternBetween()) != null;
+        return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
     }
 
     mergeResults(textBetween, fromResult, toResult): ParsingResult {
-
         if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
-
-            toResult.start.getCertainComponents().forEach(key => {
+            toResult.start.getCertainComponents().forEach((key) => {
                 if (!fromResult.start.isCertain(key)) {
                     fromResult.start.assign(key, toResult.start.get(key));
                 }
-            })
+            });
 
-            fromResult.start.getCertainComponents().forEach(key => {
+            fromResult.start.getCertainComponents().forEach((key) => {
                 if (!toResult.start.isCertain(key)) {
                     toResult.start.assign(key, fromResult.start.get(key));
                 }
-            })
+            });
         }
 
         if (fromResult.start.date().getTime() > toResult.start.date().getTime()) {
             let fromMoment = fromResult.start.dayjs();
             let toMoment = toResult.start.dayjs();
 
-            if (fromResult.start.isOnlyWeekdayComponent() && fromMoment.add(-7, 'days').isBefore(toMoment)) {
-                fromMoment = fromMoment.add(-7, 'days');
-                fromResult.start.imply('day', fromMoment.date());
-                fromResult.start.imply('month', fromMoment.month() + 1);
-                fromResult.start.imply('year', fromMoment.year());
-            } else if (toResult.start.isOnlyWeekdayComponent() && toMoment.add(7, 'days').isAfter(fromMoment)) {
-                toMoment = toMoment.add(7, 'days');
-                toResult.start.imply('day', toMoment.date());
-                toResult.start.imply('month', toMoment.month() + 1);
-                toResult.start.imply('year', toMoment.year());
+            if (fromResult.start.isOnlyWeekdayComponent() && fromMoment.add(-7, "days").isBefore(toMoment)) {
+                fromMoment = fromMoment.add(-7, "days");
+                fromResult.start.imply("day", fromMoment.date());
+                fromResult.start.imply("month", fromMoment.month() + 1);
+                fromResult.start.imply("year", fromMoment.year());
+            } else if (toResult.start.isOnlyWeekdayComponent() && toMoment.add(7, "days").isAfter(fromMoment)) {
+                toMoment = toMoment.add(7, "days");
+                toResult.start.imply("day", toMoment.date());
+                toResult.start.imply("month", toMoment.month() + 1);
+                toResult.start.imply("year", toMoment.year());
             } else {
                 [toResult, fromResult] = [fromResult, toResult];
             }
@@ -63,4 +59,3 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
         return result;
     }
 }
-

@@ -11,4 +11,3 @@ export default class ENMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner
         return new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
     }
 }
-
