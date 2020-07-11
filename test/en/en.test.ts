@@ -20,9 +20,15 @@ test("Test - Time Expression", function() {
         expect(result.start).toBeDate(new Date(2020, 7-1, 6, 15, 30))
         expect(result.end).toBeDate(new Date(2020, 7-1, 6, 16, 30))
     })
+
+    testSingleCase(chrono, '9:00 PST', new Date(2020,7-1,6), (result) => {
+        expect(result.text).toBe('9:00 PST')
+
+        expect(result.start.get('hour')).toBe(9)
+        expect(result.start.get('minute')).toBe(0)
+        expect(result.start.get('timezoneOffset')).toBe(-480)
+    })
 });
-
-
 
 test('Test - Random text', function() {
 
