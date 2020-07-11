@@ -27,6 +27,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "watch": "jest --watch",
     "test": "jest --coverage",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
