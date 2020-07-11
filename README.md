@@ -44,7 +44,7 @@ For contributors and advanced users
 * New [Parser](#parser) and [Refiner](#refiner) interface 
 * New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
 
-Note: [v1.x.x](https://github.com/wanasit/chrono/tree/v1) will still be supported for the time being.
+**Note: [v1.x.x](https://github.com/wanasit/chrono/tree/v1.x.x) will still be supported for the time being.**
 
 ## Usage
 
