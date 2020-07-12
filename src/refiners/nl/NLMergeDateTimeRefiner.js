@@ -79,7 +79,7 @@ exports.Refiner = function NLMergeDateTimeRefiner() {
                 currResult = null;
                 i += 1;
                 mergedResult.push(prevResult);
-            }else if(!isTimeOnly(prevResult)){
+            } else {
                 mergedResult.push(prevResult);
             }
 

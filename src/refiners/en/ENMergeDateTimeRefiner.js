@@ -4,7 +4,7 @@
 var ParsedComponents = require('../../result').ParsedComponents;
 var Refiner = require('../refiner').Refiner;
 
-var PATTERN = new RegExp("^\\s*(T|at|after|before|on|of|,|-)?\\s*$");
+var PATTERN = new RegExp("^[ ]*(T|at|after|before|on|of|,|-)?[ ]*$");
 
 var isDateOnly = exports.isDateOnly = function(result) {
     return !result.start.isCertain('hour');

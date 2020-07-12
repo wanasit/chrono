@@ -379,3 +379,30 @@ test('Test - Random negative text', function() {
 
     testUnexpectedResult(chrono, 'jan');
 });
+
+test('Test - Casual time with timezone', function() {
+
+    testSingleCase(chrono, 'Jan 1, 2020 Morning UTC',(result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2020);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(6);
+
+        expect(result.start.get('timezoneOffset')).toStrictEqual(0);
+        expect(result).toBeDate(new Date('2020-01-01T06:00:00.000Z'))
+    });
+
+    testSingleCase(chrono, 'Jan 1, 2020 Evening JST',(result, text) => {
+
+        expect(result.text).toBe(text);
+        expect(result.start.get('year')).toBe(2020);
+        expect(result.start.get('month')).toBe(1);
+        expect(result.start.get('day')).toBe(1);
+        expect(result.start.get('hour')).toBe(20);
+
+        expect(result.start.get('timezoneOffset')).toStrictEqual(540);
+        expect(result).toBeDate(new Date('Wed Jan 01 2020 20:00:00 GMT+0900 (Japan Standard Time)'))
+    });
+})

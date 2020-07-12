@@ -246,5 +246,32 @@ test("Test - Wikipedia Texts", function() {
 });
 
 
+test("Test - Multi-result parsing", function() {
+
+    const text = 'I will see you at 2:30. If not I will see you somewhere between 3:30-4:30pm';
+    const results = chrono.parse(text, new Date(2020,7-1,11));
+
+    expect(results.length).toBe(2);
+
+    {
+        const result = results[0];
+        expect(result.text).toBe('at 2:30');
+        expect(result.start.get('hour')).toBe(2);
+        expect(result.start.get('minute')).toBe(30);
+    }
+
+    {
+        const result = results[1];
+        expect(result.text).toBe('3:30-4:30pm');
+        
+        expect(result.start.get('hour')).toBe(15);
+        expect(result.start.get('minute')).toBe(30);
+
+        expect(result.end.get('hour')).toBe(16);
+        expect(result.end.get('minute')).toBe(30);
+    }
+});
+
+
 
 

@@ -15,7 +15,7 @@ export function testSingleCase(chrono, text, refDateOrResultCheck, optionOrResul
     const results = chrono.parse(text, refDateOrResultCheck, optionOrResultCheck);
     expect(results).toBeSingleOnText(text);
 
-    resultCheck(results[0]);
+    resultCheck(results[0], text);
 }
 
 export function testWithExpectedDate(chrono, text, expectedDate) {
