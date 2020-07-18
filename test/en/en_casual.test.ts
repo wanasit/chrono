@@ -19,7 +19,7 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 8, 9, 10, 11));
     });
 
-    testSingleCase(chrono.casual, "The Deadline is today", new Date(2012, 7, 10, 12), (result) => {
+    testSingleCase(chrono.casual, "The Deadline is today", new Date(2012, 7, 10, 14, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("today");
 
@@ -28,10 +28,10 @@ test("Test - Single Expression", () => {
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 14, 12));
     });
 
-    testSingleCase(chrono.casual, "The Deadline is Tomorrow", new Date(2012, 7, 10, 12), (result) => {
+    testSingleCase(chrono.casual, "The Deadline is Tomorrow", new Date(2012, 7, 10, 17, 10), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("Tomorrow");
 
@@ -40,7 +40,7 @@ test("Test - Single Expression", () => {
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(11);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 11, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 17, 10));
     });
 
     // Say.."Tomorrow" in the late night (1 AM)
