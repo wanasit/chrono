@@ -10,7 +10,7 @@ test("Test - Create & manipulate date results", () => {
     expect(components.date()).toBeDefined();
 
     // undefined
-    expect(components.get("weekday")).toBeNull();
+    expect(components.get("weekday")).toBeUndefined();
     expect(components.isCertain("weekday")).toBe(false);
 
     // "imply"

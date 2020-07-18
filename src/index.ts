@@ -32,7 +32,7 @@ export interface ParsedResult {
 
 export interface ParsedComponents {
     readonly isCertain: (c: Component) => boolean;
-    readonly get: (c: Component) => number | undefined;
+    readonly get: (c: Component) => number | null;
     readonly date: () => Date;
 }
 
