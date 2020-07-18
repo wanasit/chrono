@@ -189,7 +189,7 @@ User can create a new parser for supporting new date formats or languages
  by providing RegExp pattern `pattern()` and extracting result or components from the RegExp match `extract()`.
 
 ```javascript
-const custom = chrono.casual.copy();
+const custom = chrono.casual.clone();
 custom.parsers.push({
     pattern: () => { return /\bChristmas\b/i },
     extract: (context, match) => {
@@ -215,7 +215,7 @@ interface Refiner {
 Refiner is a higher level module for improving or manipulating the results. User can add a new type of refiner to customize Chrono's results or to add some custom logic to Chrono.
 
 ```javascript
-const custom = chrono.casual.copy();
+const custom = chrono.casual.clone();
 custom.refiners.push({
     refine: (context, results) => {
         // If there is no AM/PM (meridiem) specified,
