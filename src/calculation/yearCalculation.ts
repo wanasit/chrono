@@ -1,5 +1,23 @@
 import dayjs from "dayjs";
 
+/**
+ * Find the most likely year, from a raw number. For example:
+ * 1997 => 1997
+ * 97 => 1997
+ * 12 => 2012
+ */
+export function findMostLikelyADYear(yearNumber: number): number {
+    if (yearNumber < 100) {
+        if (yearNumber > 50) {
+            yearNumber = yearNumber + 1900;
+        } else {
+            yearNumber = yearNumber + 2000;
+        }
+    }
+
+    return yearNumber;
+}
+
 export function findYearClosestToRef(refDate: Date, day: number, month: number): number {
     //Find the most appropriated year
     const refMoment = dayjs(refDate);

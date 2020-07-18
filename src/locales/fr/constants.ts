@@ -1,6 +1,5 @@
 import { OpUnitType } from "dayjs";
 import { matchAnyPattern } from "../../utils/pattern";
-import { findMostLikelyADYear } from "../../calculation/yearCalculation";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     sunday: 0,
@@ -84,54 +83,10 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     twelve: 12,
 };
 
-export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
-    first: 1,
-    second: 2,
-    third: 3,
-    fourth: 4,
-    fifth: 5,
-    sixth: 6,
-    seventh: 7,
-    eighth: 8,
-    ninth: 9,
-    tenth: 10,
-    eleventh: 11,
-    twelfth: 12,
-    thirteenth: 13,
-    fourteenth: 14,
-    fifteenth: 15,
-    sixteenth: 16,
-    seventeenth: 17,
-    eighteenth: 18,
-    nineteenth: 19,
-    twentieth: 20,
-    "twenty first": 21,
-    "twenty-first": 21,
-    "twenty second": 22,
-    "twenty-second": 22,
-    "twenty third": 23,
-    "twenty-third": 23,
-    "twenty fourth": 24,
-    "twenty-fourth": 24,
-    "twenty fifth": 25,
-    "twenty-fifth": 25,
-    "twenty sixth": 26,
-    "twenty-sixth": 26,
-    "twenty seventh": 27,
-    "twenty-seventh": 27,
-    "twenty eighth": 28,
-    "twenty-eighth": 28,
-    "twenty ninth": 29,
-    "twenty-ninth": 29,
-    thirtieth: 30,
-    "thirty first": 31,
-    "thirty-first": 31,
-};
-
 export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     sec: "second",
-    second: "second",
-    seconds: "second",
+    seconde: "second",
+    secondes: "second",
     min: "minute",
     mins: "minute",
     minute: "minute",
@@ -139,17 +94,15 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     h: "hour",
     hr: "hour",
     hrs: "hour",
-    hour: "hour",
-    hours: "hour",
-    day: "d",
-    days: "d",
-    week: "week",
-    weeks: "week",
-    month: "month",
-    months: "month",
-    yr: "year",
-    year: "year",
-    years: "year",
+    heure: "hour",
+    heures: "hour",
+    jour: "d",
+    jours: "d",
+    semaine: "week",
+    semaines: "week",
+    mois: "month",
+    année: "year",
+    années: "year",
 };
 
 //-----------------------------
@@ -175,13 +128,9 @@ export function parseNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:st|nd|rd|th)?)`;
+export const ORDINAL_NUMBER_PATTERN = `(?:[0-9]{1,2}(?:st|nd|rd|th)?)`;
 export function parseOrdinalNumberPattern(match: string): number {
     let num = match.toLowerCase();
-    if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
-        return ORDINAL_WORD_DICTIONARY[num];
-    }
-
     num = num.replace(/(?:st|nd|rd|th)$/i, "");
     return parseInt(num);
 }
@@ -207,8 +156,16 @@ export function parseYear(match: string): number {
         return parseInt(match);
     }
 
-    const rawYearNumber = parseInt(match);
-    return findMostLikelyADYear(rawYearNumber);
+    let yearNumber = parseInt(match);
+    if (yearNumber < 100) {
+        if (yearNumber > 50) {
+            yearNumber = yearNumber + 1900;
+        } else {
+            yearNumber = yearNumber + 2000;
+        }
+    }
+
+    return yearNumber;
 }
 
 //-----------------------------

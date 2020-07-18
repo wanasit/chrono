@@ -50,6 +50,7 @@ export function testSingleCase(
         }
     } catch (e) {
         debugHandler.executeBufferedBlocks();
+        e.stack = e.stack.replace(/[^\n]*at .*test_util.*\n/g, "");
         throw e;
     }
 }
@@ -67,6 +68,7 @@ export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?:
         expect(results).toHaveLength(0);
     } catch (e) {
         debugHandler.executeBufferedBlocks();
+        e.stack = e.stack.replace(/[^\n]*at .*test_util.*\n/g, "");
         throw e;
     }
 }

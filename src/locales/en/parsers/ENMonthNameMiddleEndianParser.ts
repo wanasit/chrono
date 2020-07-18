@@ -7,11 +7,7 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    "(?:" +
-        "(?:on\\s*?)?" +
-        `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "\\s*,?\\s*)?" +
-        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:-|/|\\s*,?\\s*)" +
         `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*` +
         "(?:" +
@@ -26,18 +22,16 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const WEEKDAY_GROUP = 1;
-const MONTH_NAME_GROUP = 2;
-const DATE_GROUP = 3;
-const DATE_TO_GROUP = 4;
-const YEAR_GROUP = 5;
+const MONTH_NAME_GROUP = 1;
+const DATE_GROUP = 2;
+const DATE_TO_GROUP = 3;
+const YEAR_GROUP = 4;
 
 /**
  * The parser for parsing US's date format that begin with month's name.
  *  - January 13
  *  - January 13, 2012
  *  - January 13 - 15, 2012
- *  - Tuesday, January 13, 2012
  * Note: Watch out for:
  *  - January 12:00
  *  - January 12.44
@@ -66,12 +60,6 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
         } else {
             const year = findYearClosestToRef(context.refDate, day, month);
             components.imply("year", year);
-        }
-
-        // Weekday component
-        if (match[WEEKDAY_GROUP]) {
-            const weekday = WEEKDAY_DICTIONARY[match[WEEKDAY_GROUP].toLowerCase()];
-            components.assign("weekday", weekday);
         }
 
         if (!match[DATE_TO_GROUP]) {

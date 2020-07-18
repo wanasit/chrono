@@ -2,6 +2,9 @@ import { Parser, ParsingContext } from "../../chrono";
 import { ParsingComponents, ParsingResult } from "../../results";
 import { Component } from "../../index";
 
+/**
+ *
+ */
 export abstract class AbstractParserWithWordBoundaryChecking implements Parser {
     abstract innerPattern(context: ParsingContext): RegExp;
     abstract innerExtract(

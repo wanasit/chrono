@@ -2,7 +2,6 @@ import ENTimeUnitDeadlineFormatParser from "./parsers/ENTimeUnitDeadlineFormatPa
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
-import ENSlashDateFormatParser from "./parsers/ENSlashDateFormatParser";
 import ENSlashDateFormatStartWithYearParser from "./parsers/ENSlashDateFormatStartWithYearParser";
 import ENSlashMonthFormatParser from "./parsers/ENSlashMonthFormatParser";
 import ENTimeExpressionParser from "./parsers/ENTimeExpressionParser";
@@ -19,6 +18,8 @@ import ENRelativeDateFormatParser from "./parsers/ENRelativeDateFormatParser";
 
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
+import MergeWeekdayComponentRefiner from "../../common/refiners/MergeWeekdayComponentRefiner";
+import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration(false));
@@ -38,25 +39,28 @@ export function createCasualConfiguration(littleEndian = false): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new ENCasualDateParser());
     option.parsers.unshift(new ENCasualTimeParser());
-    option.parsers.unshift(new ENWeekdayParser());
     option.parsers.unshift(new ENMonthNameParser());
     option.parsers.unshift(new ENRelativeDateFormatParser());
     return option;
 }
 
 export function createConfiguration(strictMode = true, littleEndian = false): Configuration {
-    return includeCommonConfiguration({
-        parsers: [
-            new ENTimeUnitDeadlineFormatParser(strictMode),
-            new ENMonthNameLittleEndianParser(),
-            new ENMonthNameMiddleEndianParser(),
-            new ENSlashDateFormatParser(littleEndian),
-            new ENSlashDateFormatStartWithYearParser(),
-            new ENSlashMonthFormatParser(),
-            new ENTimeExpressionParser(),
-            new ENTimeUnitAgoFormatParser(strictMode),
-            new ENTimeUnitLaterFormatParser(strictMode),
-        ],
-        refiners: [new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
-    });
+    return includeCommonConfiguration(
+        {
+            parsers: [
+                new SlashDateFormatParser(littleEndian),
+                new ENTimeUnitDeadlineFormatParser(strictMode),
+                new ENMonthNameLittleEndianParser(),
+                new ENMonthNameMiddleEndianParser(),
+                new ENWeekdayParser(),
+                new ENSlashDateFormatStartWithYearParser(),
+                new ENSlashMonthFormatParser(),
+                new ENTimeExpressionParser(),
+                new ENTimeUnitAgoFormatParser(strictMode),
+                new ENTimeUnitLaterFormatParser(strictMode),
+            ],
+            refiners: [new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
+        },
+        strictMode
+    );
 }

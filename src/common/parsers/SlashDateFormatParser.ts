@@ -1,16 +1,17 @@
-import { Parser, ParsingContext } from "../../../chrono";
-import { ParsingResult } from "../../../results";
+import { Parser, ParsingContext } from "../../chrono";
+import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
-import { parseYear } from "../constants";
-import { findYearClosestToRef } from "../../../calculation/yearCalculation";
+import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/yearCalculation";
 
+/**
+ * Date format with slash "/" (or dot ".") between numbers.
+ * For examples:
+ * - 7/10
+ * - 7/12/2020
+ * - 7.12.2020
+ */
 const PATTERN = new RegExp(
     "(\\W|^)" +
-        "(?:" +
-        "(?:on\\s*?)?" +
-        "((?:sun|mon|tues?|wed(?:nes)?|thu(?:rs?)?|fri|sat(?:ur)?)(?:day)?)" +
-        "\\s*\\,?\\s*" +
-        ")?" +
         "([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})" +
         "(?:" +
         "[\\/\\.\\-]" +
@@ -20,33 +21,15 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const DAYS_OFFSET = {
-    sunday: 0,
-    sun: 0,
-    monday: 1,
-    mon: 1,
-    tuesday: 2,
-    wednesday: 3,
-    wed: 3,
-    thursday: 4,
-    thur: 4,
-    friday: 5,
-    fri: 5,
-    saturday: 6,
-    sat: 6,
-};
-
 const OPENING_GROUP = 1;
-const ENDING_GROUP = 6;
+const ENDING_GROUP = 5;
 
-const WEEKDAY_GROUP = 2;
+const FIRST_NUMBERS_GROUP = 2;
+const SECOND_NUMBERS_GROUP = 3;
 
-const FIRST_NUMBERS_GROUP = 3;
-const SECOND_NUMBERS_GROUP = 4;
+const YEAR_GROUP = 4;
 
-const YEAR_GROUP = 5;
-
-export default class ENSlashDateFormatParser implements Parser {
+export default class SlashDateFormatParser implements Parser {
     groupNumberMonth: number;
     groupNumberDay: number;
 
@@ -104,16 +87,12 @@ export default class ENSlashDateFormatParser implements Parser {
         result.start.assign("month", month);
 
         if (match[YEAR_GROUP]) {
-            const year = parseYear(match[YEAR_GROUP]) || dayjs(context.refDate).year();
+            const rawYearNumber = parseInt(match[YEAR_GROUP]);
+            const year = findMostLikelyADYear(rawYearNumber);
             result.start.assign("year", year);
         } else {
             const year = findYearClosestToRef(context.refDate, day, month);
             result.start.imply("year", year);
-        }
-
-        //Day of week
-        if (match[WEEKDAY_GROUP]) {
-            result.start.assign("weekday", DAYS_OFFSET[match[WEEKDAY_GROUP].toLowerCase()]);
         }
 
         return result;

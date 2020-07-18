@@ -9,7 +9,6 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 
 const PATTERN = new RegExp(
     "(?:on\\s*?)?" +
-        `(?:(${matchAnyPattern(WEEKDAY_DICTIONARY)})\\s*,?\\s*)?` +
         `(${ORDINAL_NUMBER_PATTERN})` +
         "(?:\\s*" +
         "(?:to|\\-|\\–|until|through|till|\\s)\\s*" +
@@ -27,11 +26,10 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const WEEKDAY_GROUP = 1;
-const DATE_GROUP = 2;
-const DATE_TO_GROUP = 3;
-const MONTH_NAME_GROUP = 4;
-const YEAR_GROUP = 5;
+const DATE_GROUP = 1;
+const DATE_TO_GROUP = 2;
+const MONTH_NAME_GROUP = 3;
+const YEAR_GROUP = 4;
 
 export default class ENMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -53,11 +51,6 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
 
         result.start.assign("month", month);
         result.start.assign("day", day);
-
-        if (match[WEEKDAY_GROUP]) {
-            const weekday = WEEKDAY_DICTIONARY[match[WEEKDAY_GROUP].toLowerCase()];
-            result.start.assign("weekday", weekday);
-        }
 
         if (match[YEAR_GROUP]) {
             const yearNumber = parseYear(match[YEAR_GROUP]);

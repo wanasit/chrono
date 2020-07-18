@@ -27,6 +27,10 @@ test("Test - Time Expression", function () {
     });
 });
 
+test("Test - Strict Mode", function () {
+    testUnexpectedResult(chrono.strict, "Tuesday");
+});
+
 test("Test - Random text", function () {
     testSingleCase(chrono, "Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013", (result) => {
         expect(result.text).toBe("02.07.2013");
