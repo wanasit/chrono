@@ -7,7 +7,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8h10");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -26,7 +25,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8h10m");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -45,7 +43,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8h10m00");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -64,7 +61,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8h10m00s");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -83,7 +79,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8:10 PM");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(20);
         expect(result.start.get("minute")).toBe(10);
         expect(result.start.isCertain("second")).toBe(false);
@@ -96,7 +91,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8h10 PM");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(20);
         expect(result.start.get("minute")).toBe(10);
         expect(result.start.isCertain("second")).toBe(false);
@@ -109,7 +103,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("1230pm");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(30);
         expect(result.start.isCertain("second")).toBe(false);
@@ -122,7 +115,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("5:16p");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(16);
         expect(result.start.isCertain("second")).toBe(false);
@@ -135,7 +127,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("5h16p");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(16);
         expect(result.start.isCertain("second")).toBe(false);
@@ -148,7 +139,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("5h16mp");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(16);
         expect(result.start.isCertain("second")).toBe(false);
@@ -161,7 +151,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("5:16 p.m.");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(16);
         expect(result.start.isCertain("second")).toBe(false);
@@ -174,7 +163,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("5h16 p.m.");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(16);
         expect(result.start.isCertain("second")).toBe(false);
@@ -187,7 +175,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(4);
         expect(result.text).toBe("à 6.13 AM");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(6);
         expect(result.start.get("minute")).toBe(13);
 
@@ -198,7 +185,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("13h-15h");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(13);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("meridiem")).toBe(1);
@@ -217,7 +203,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("13-15h");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(13);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("meridiem")).toBe(1);
@@ -236,7 +221,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("1-3pm");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(13);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("meridiem")).toBe(1);
@@ -255,7 +239,6 @@ test("Test - Single Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("11pm-2");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(23);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("meridiem")).toBe(1);
@@ -276,7 +259,6 @@ test("Test - Range Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8:10 - 12.32");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -309,7 +291,6 @@ test("Test - Range Expression", function () {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8:10 - 12h32");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(8);
         expect(result.start.get("minute")).toBe(10);
 
@@ -339,7 +320,6 @@ test("Test - Range Expression", function () {
     });
 
     testSingleCase(chrono.fr, " de 6:30pm à 11:00pm ", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(18);
         expect(result.start.get("minute")).toBe(30);
         expect(result.start.get("meridiem")).toBe(1);
@@ -352,6 +332,18 @@ test("Test - Range Expression", function () {
         expect(result.end.get("meridiem")).toBe(1);
 
         expect(result.end).toBeDate(new Date(2012, 7, 10, 23, 0));
+    });
+
+    testSingleCase(chrono.fr, " 2012 à 10:12:59", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(6);
+        expect(result.text).toBe("à 10:12:59");
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(12);
+        expect(result.start.get("second")).toBe(59);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end).toBeNull();
     });
 });
 
@@ -382,37 +374,37 @@ test("Test - Date + Time Expression", function () {
         expect(result.start).toBeDate(new Date(2014, 4 - 1, 18, 3, 0));
     });
 
-    // testSingleCase(chrono.fr, "Quelque chose se passe le 10 Août 2012 à 10:12:59", new Date(2012, 7, 10), (result) => {
-    //     expect(result.index).toBe(26);
-    //     expect(result.text).toBe("10 Août 2012 à 10:12:59");
-    //
-    //     expect(result.start.get("year")).toBe(2012);
-    //     expect(result.start.get("month")).toBe(8);
-    //     expect(result.start.get("day")).toBe(10);
-    //     expect(result.start.get("hour")).toBe(10);
-    //     expect(result.start.get("minute")).toBe(12);
-    //     expect(result.start.get("second")).toBe(59);
-    //     expect(result.start.get("millisecond")).toBe(0);
-    //     expect(result.start.isCertain("millisecond")).toBe(false);
-    //
-    //     expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 10, 12, 59));
-    // });
-    //
-    // testSingleCase(chrono.fr, "Quelque chose se passe le 15juin 2016 20h", new Date(2016, 6, 10), (result) => {
-    //     expect(result.index).toBe(26);
-    //     expect(result.text).toBe("15juin 2016 20h");
-    //
-    //     expect(result.start.get("year")).toBe(2016);
-    //     expect(result.start.get("month")).toBe(6);
-    //     expect(result.start.get("day")).toBe(15);
-    //     expect(result.start.get("hour")).toBe(20);
-    //     expect(result.start.get("minute")).toBe(0);
-    //     expect(result.start.get("second")).toBe(0);
-    //     expect(result.start.get("millisecond")).toBe(0);
-    //     expect(result.start.isCertain("millisecond")).toBe(false);
-    //
-    //     expect(result.start).toBeDate(new Date(2016, 6 - 1, 15, 20, 0, 0));
-    // });
+    testSingleCase(chrono.fr, "Quelque chose se passe le 10 Août 2012 à 10:12:59", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(26);
+        expect(result.text).toBe("10 Août 2012 à 10:12:59");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(12);
+        expect(result.start.get("second")).toBe(59);
+        expect(result.start.get("millisecond")).toBe(0);
+        expect(result.start.isCertain("millisecond")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 10, 12, 59));
+    });
+
+    testSingleCase(chrono.fr, "Quelque chose se passe le 15juin 2016 20h", new Date(2016, 6, 10), (result) => {
+        expect(result.index).toBe(26);
+        expect(result.text).toBe("15juin 2016 20h");
+
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(15);
+        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("millisecond")).toBe(0);
+        expect(result.start.isCertain("millisecond")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2016, 6 - 1, 15, 20, 0, 0));
+    });
 
     testSingleCase(
         chrono.fr,
@@ -588,9 +580,9 @@ test("Test - Random date + time expression", function () {
         expect(result.text).toBe(text);
     });
 
-    // testSingleCase(chrono.fr, "Mercredi, 3 juil 2013 14h", (result, text) => {
-    //     expect(result.text).toBe(text);
-    // });
+    testSingleCase(chrono.fr, "Mercredi, 3 juil 2013 14h", (result, text) => {
+        expect(result.text).toBe(text);
+    });
 
     testUnexpectedResult(chrono.fr, "that I need to know or am I covered?");
 });

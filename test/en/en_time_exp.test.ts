@@ -7,6 +7,11 @@ test("Test - Parsing text offset", function () {
         expect(result.index).toBe(2);
         expect(result.text).toBe("11 AM");
     });
+
+    testSingleCase(chrono, "2020 at  11 AM ", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.index).toBe(5);
+        expect(result.text).toBe("at  11 AM");
+    });
 });
 
 test("Test - Time expression", function () {

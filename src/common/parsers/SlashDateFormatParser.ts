@@ -13,10 +13,7 @@ import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/ye
 const PATTERN = new RegExp(
     "([^\\d]|^)" +
         "([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})" +
-        "(?:" +
-        "[\\/\\.\\-]" +
-        "([0-9]{4}\\s*\\,?\\s*|[0-9]{2}\\s*\\,?\\s*)" +
-        ")?" +
+        "(?:[\\/\\.\\-]([0-9]{4}|[0-9]{2}))?" +
         "(\\W|$)",
     "i"
 );
@@ -52,7 +49,10 @@ export default class SlashDateFormatParser implements Parser {
         }
 
         const index = match.index + match[OPENING_GROUP].length;
-        const text = match[0].substr(match[OPENING_GROUP].length, match[0].length - match[ENDING_GROUP].length);
+        const text = match[0].substr(
+            match[OPENING_GROUP].length,
+            match[0].length - match[OPENING_GROUP].length - match[ENDING_GROUP].length
+        );
 
         // '1.12', '1.12.12' is more like a version numbers
         if (text.match(/^\d\.\d$/) || text.match(/^\d\.\d{1,2}\.\d{1,2}\s*$/)) {

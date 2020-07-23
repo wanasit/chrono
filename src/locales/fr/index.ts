@@ -9,6 +9,7 @@ import FRMergeDateTimeRefiner from "./refiners/FRMergeDateTimeRefiner";
 import FRMergeDateRangeRefiner from "./refiners/FRMergeDateRangeRefiner";
 import FRWeekdayParser from "./parsers/FRWeekdayParser";
 import FRSpecificTimeExpressionParser from "./parsers/FRSpecificTimeExpressionParser";
+import FRMonthNameLittleEndianParser from "./parsers/FRMonthNameLittleEndianParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -34,6 +35,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
+                new FRMonthNameLittleEndianParser(),
                 new FRTimeExpressionParser(),
                 new FRSpecificTimeExpressionParser(),
                 new FRWeekdayParser(),

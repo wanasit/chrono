@@ -92,23 +92,23 @@ test("Test - Single Expression", function () {
 });
 
 test("Test - Weekday Overlap", function () {
-    // testSingleCase(chrono.fr, "Dimanche 7 décembre 2014", new Date(2012, 7, 9), (result) => {
-    //     expect(result.index).toBe(0);
-    //     expect(result.text).toBe("Dimanche 7 décembre 2014");
-    //
-    //     expect(result.start).not.toBeNull();
-    //     expect(result.start.get("year")).toBe(2014);
-    //     expect(result.start.get("month")).toBe(12);
-    //     expect(result.start.get("day")).toBe(7);
-    //     expect(result.start.get("weekday")).toBe(0);
-    //
-    //     expect(result.start.isCertain("day")).toBe(true);
-    //     expect(result.start.isCertain("month")).toBe(true);
-    //     expect(result.start.isCertain("year")).toBe(true);
-    //     expect(result.start.isCertain("weekday")).toBe(true);
-    //
-    //     expect(result.start).toBeDate(new Date(2014, 12 - 1, 7, 12));
-    // });
+    testSingleCase(chrono.fr, "Dimanche 7 décembre 2014", new Date(2012, 7, 9), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("Dimanche 7 décembre 2014");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2014);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("weekday")).toBe(0);
+
+        expect(result.start.isCertain("day")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("weekday")).toBe(true);
+
+        expect(result.start).toBeDate(new Date(2014, 12 - 1, 7, 12));
+    });
 
     testSingleCase(chrono.fr, "Dimanche 7/12/2014", new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);

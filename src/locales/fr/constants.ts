@@ -38,6 +38,7 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
     "juin": 6,
     "jun": 6,
     "juillet": 7,
+    "juil": 7,
     "jul": 7,
     "jul.": 7,
     "août": 8,
@@ -120,31 +121,25 @@ export function parseNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const ORDINAL_NUMBER_PATTERN = `(?:[0-9]{1,2}(?:st|nd|rd|th)?)`;
+export const ORDINAL_NUMBER_PATTERN = `(?:[0-9]{1,2}(?:er)?)`;
 export function parseOrdinalNumberPattern(match: string): number {
     let num = match.toLowerCase();
-    num = num.replace(/(?:st|nd|rd|th)$/i, "");
+    num = num.replace(/(?:er)$/i, "");
     return parseInt(num);
 }
 
 //-----------------------------
-
-export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|[1-2][0-9]{3}|[5-9][0-9])`;
+// 88 p. Chr. n.
+// 234 AC
+export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:AC|AD|p\\.\\s*C(?:hr?)?\\.\\s*n\\.)|[1-2][0-9]{3}|[5-9][0-9])`;
 export function parseYear(match: string): number {
-    if (/BE/i.test(match)) {
-        // Buddhist Era
-        match = match.replace(/BE/i, "");
-        return parseInt(match) - 543;
-    }
-
-    if (/BC/i.test(match)) {
-        // Before Christ
+    if (/AC/i.test(match)) {
         match = match.replace(/BC/i, "");
         return -parseInt(match);
     }
 
-    if (/AD/i.test(match)) {
-        match = match.replace(/AD/i, "");
+    if (/AD/i.test(match) || /C/i.test(match)) {
+        match = match.replace(/[^\d]+/i, "");
         return parseInt(match);
     }
 

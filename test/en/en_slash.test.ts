@@ -1,6 +1,13 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult, testWithExpectedDate } from "../test_util";
 
+test("Test - Parsing Offset Expression", function () {
+    testSingleCase(chrono, "    04/2016   ", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(4);
+        expect(result.text).toBe("04/2016");
+    });
+});
+
 test("Test - Single Expression", function () {
     testSingleCase(chrono, "The event is going ahead (04/2016)", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();

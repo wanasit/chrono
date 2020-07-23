@@ -162,18 +162,18 @@ test("Test - Combined Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 11, 17));
     });
 
-    // testSingleCase(chrono.fr, "La deadline est demain matin 11h", new Date(2012, 7, 10, 12), (result) => {
-    //     expect(result.index).toBe(16);
-    //     expect(result.text).toBe("demain matin 11h");
-    //
-    //     expect(result.start).not.toBeNull();
-    //     expect(result.start.get("year")).toBe(2012);
-    //     expect(result.start.get("month")).toBe(8);
-    //     expect(result.start.get("day")).toBe(11);
-    //     expect(result.start.get("hour")).toBe(11);
-    //
-    //     expect(result.start).toBeDate(new Date(2012, 7, 11, 11));
-    // });
+    testSingleCase(chrono.fr, "La deadline est demain matin 11h", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(16);
+        expect(result.text).toBe("demain matin 11h");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(11);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 11));
+    });
 });
 
 //

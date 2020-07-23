@@ -41,8 +41,13 @@ export default class FRSpecificTimeExpressionParser implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult | null {
-        const refDate = dayjs(context.refDate);
         let result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
+
+        // This looks more like a year e.g. 2020
+        if (result.text.match(/^\d{4}$/)) {
+            match.index += match[0].length;
+            return null;
+        }
 
         result.start = FRSpecificTimeExpressionParser.extractTimeComponent(result.start.clone(), match);
         if (!result.start) {
@@ -57,10 +62,6 @@ export default class FRSpecificTimeExpressionParser implements Parser {
             if (result.end) {
                 result.text += secondMatch[0];
             }
-        }
-
-        if (result.text.match(/^\d+$/)) {
-            return null;
         }
 
         return result;
