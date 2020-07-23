@@ -84,8 +84,14 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             return result;
         }
 
-        const newResult = AbstractTimeExpressionParser.extractEndTimeComponent(result.clone(), match);
-        return newResult ? newResult : result;
+        result.end = this.extractFollowingTimeComponents(context, match, result);
+        if (result.end) {
+            if (result.end) {
+                result.text += match[0];
+            }
+        }
+
+        return result;
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
@@ -109,7 +115,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             return null;
         }
 
-        if (hour >= 12) {
+        if (hour > 12) {
             meridiem = Meridiem.PM;
         }
 
@@ -164,68 +170,19 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return components;
     }
 
-    private static extractStartTimeComponent(result: ParsingResult, match: RegExpMatchArray): ParsingResult | null {
-        let hour = 0;
-        let minute = 0;
-        let meridiem = null;
-
-        // ----- Hours
-        hour = parseInt(match[HOUR_GROUP]);
-
-        // ----- Minutes
-        if (match[MINUTE_GROUP] != null) {
-            minute = parseInt(match[MINUTE_GROUP]);
-        } else if (hour > 100) {
-            minute = hour % 100;
-            hour = Math.floor(hour / 100);
-        }
-
-        if (minute >= 60 || hour > 24) {
-            return null;
-        }
-
-        if (hour >= 12) {
-            meridiem = Meridiem.PM;
-        }
-
-        // ----- AM & PM
-        if (match[AM_PM_HOUR_GROUP] != null) {
-            if (hour > 12) return null;
-            const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
-            if (ampm == "a") {
-                meridiem = Meridiem.AM;
-                if (hour == 12) {
-                    hour = 0;
-                }
-            }
-
-            if (ampm == "p") {
-                meridiem = Meridiem.PM;
-                if (hour != 12) {
-                    hour += 12;
-                }
-            }
-        }
-
-        result.start.assign("hour", hour);
-        result.start.assign("minute", minute);
-
-        if (meridiem !== null) {
-            result.start.assign("meridiem", meridiem);
-        } else {
-            if (hour < 12) {
-                result.start.imply("meridiem", Meridiem.AM);
-            } else {
-                result.start.imply("meridiem", Meridiem.PM);
-            }
-        }
+    extractFollowingTimeComponents(
+        context: ParsingContext,
+        match: RegExpMatchArray,
+        result: ParsingResult
+    ): null | ParsingComponents {
+        const components = context.createParsingComponents();
 
         // ----- Millisecond
         if (match[MILLI_SECOND_GROUP] != null) {
             const millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
             if (millisecond >= 1000) return null;
 
-            result.start.assign("millisecond", millisecond);
+            components.assign("millisecond", millisecond);
         }
 
         // ----- Second
@@ -233,29 +190,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             const second = parseInt(match[SECOND_GROUP]);
             if (second >= 60) return null;
 
-            result.start.assign("second", second);
-        }
-
-        return result;
-    }
-
-    private static extractEndTimeComponent(result: ParsingResult, match: RegExpMatchArray): ParsingResult | null {
-        result.end = result.start.clone();
-
-        // ----- Millisecond
-        if (match[MILLI_SECOND_GROUP] != null) {
-            const millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
-            if (millisecond >= 1000) return null;
-
-            result.end.assign("millisecond", millisecond);
-        }
-
-        // ----- Second
-        if (match[SECOND_GROUP] != null) {
-            const second = parseInt(match[SECOND_GROUP]);
-            if (second >= 60) return null;
-
-            result.end.assign("second", second);
+            components.assign("second", second);
         }
 
         let hour = parseInt(match[HOUR_GROUP]);
@@ -289,8 +224,8 @@ export abstract class AbstractTimeExpressionParser implements Parser {
                 meridiem = Meridiem.AM;
                 if (hour == 12) {
                     hour = 0;
-                    if (!result.end.isCertain("day")) {
-                        result.end.imply("day", result.end.get("day") + 1);
+                    if (!components.isCertain("day")) {
+                        components.imply("day", components.get("day") + 1);
                     }
                 }
             }
@@ -317,28 +252,32 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             }
         }
 
-        result.text = result.text + match[0];
-        result.end.assign("hour", hour);
-        result.end.assign("minute", minute);
+        components.assign("hour", hour);
+        components.assign("minute", minute);
 
         if (meridiem >= 0) {
-            result.end.assign("meridiem", meridiem);
+            components.assign("meridiem", meridiem);
         } else {
-            const startAtPM = result.start.isCertain("meridiem") && result.start.get("meridiem") == Meridiem.PM;
-            if (startAtPM && result.start.get("hour") > hour) {
-                // 10pm - 1 (am)
-                result.end.delete("meridiem");
-                result.end.imply("meridiem", Meridiem.AM);
+            const startAtPM = result.start.isCertain("meridiem") && result.start.get("hour") > 12;
+            if (startAtPM) {
+                if (result.start.get("hour") - 12 > hour) {
+                    // 10pm - 1 (am)
+                    components.imply("meridiem", Meridiem.AM);
+                } else if (hour <= 12) {
+                    components.assign("hour", hour + 12);
+                    components.assign("meridiem", Meridiem.PM);
+                }
             } else if (hour > 12) {
-                result.end.delete("meridiem");
-                result.end.imply("meridiem", Meridiem.PM);
+                components.imply("meridiem", Meridiem.PM);
+            } else if (hour <= 12) {
+                components.imply("meridiem", Meridiem.AM);
             }
         }
 
-        if (result.end.date().getTime() < result.start.date().getTime()) {
-            result.end.imply("day", result.end.get("day") + 1);
+        if (components.date().getTime() < result.start.date().getTime()) {
+            components.imply("day", components.get("day") + 1);
         }
 
-        return result;
+        return components;
     }
 }

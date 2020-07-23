@@ -92,16 +92,14 @@ test("Test - Single Expression", () => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("August 10, 8 AD");
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(8, 8 - 1, 10, 12);
+        const expectDate = new Date(8, 8 - 1, 10, 12);
         expectDate.setFullYear(8);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start).toBeDate(expectDate);
     });
 
     testSingleCase(chrono, "The Deadline is Tuesday, January 10", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("Tuesday, January 10");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2013);
         expect(result.start.get("month")).toBe(1);
         expect(result.start.get("day")).toBe(10);
@@ -111,35 +109,30 @@ test("Test - Single Expression", () => {
     });
 
     testSingleCase(chrono, "Sun, Mar. 6, 2016", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono, "Sun, March 6, 2016", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono, "Sun., March 6, 2016", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono, "Sunday, March 6, 2016", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono, "Sunday, March 6, 2016", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
@@ -147,10 +140,18 @@ test("Test - Single Expression", () => {
 
     testSingleCase(chrono, "Sunday, March, 6th 2016", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("Sunday, March, 6th 2016");
-        expect(result.start).not.toBeNull();
+
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(6);
+    });
+
+    testSingleCase(chrono, "Wed, Jan 20th, 2016             ", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("Wed, Jan 20th, 2016");
+
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(20);
     });
 });
 

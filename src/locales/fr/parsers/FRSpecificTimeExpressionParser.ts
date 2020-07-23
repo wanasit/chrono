@@ -51,10 +51,8 @@ export default class FRSpecificTimeExpressionParser implements Parser {
         }
 
         const remainingText = context.text.substring(match.index + match[0].length);
-        context.debug(() => console.log(remainingText));
         const secondMatch = SECOND_REG_PATTERN.exec(remainingText);
         if (secondMatch) {
-            context.debug(() => console.log(secondMatch));
             result.end = FRSpecificTimeExpressionParser.extractTimeComponent(result.start.clone(), secondMatch);
             if (result.end) {
                 result.text += secondMatch[0];
