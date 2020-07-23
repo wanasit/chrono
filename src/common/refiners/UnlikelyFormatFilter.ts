@@ -47,6 +47,14 @@ export default class UnlikelyFormatFilter extends Filter {
             return false;
         }
 
+        if (result.start.isOnlyTime() && (!result.start.isCertain("hour") || !result.start.isCertain("minute"))) {
+            context.debug(() => {
+                console.log(`(Strict) Removing uncertain time component: ${result} (${result.end})`);
+            });
+
+            return false;
+        }
+
         return true;
     }
 }

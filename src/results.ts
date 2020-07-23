@@ -63,6 +63,11 @@ export class ParsingComponents implements ParsedComponents {
         return this;
     }
 
+    delete(component: Component) {
+        delete this.knownValues[component];
+        delete this.impliedValues[component];
+    }
+
     clone(): ParsingComponents {
         const component = new ParsingComponents(new Date());
         component.knownValues = {};

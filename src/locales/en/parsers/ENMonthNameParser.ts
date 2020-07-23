@@ -1,6 +1,6 @@
 import { MONTH_DICTIONARY } from "../constants";
-import { Parser, ParsingContext } from "../../../chrono";
-import { findYearClosestToRef } from "../../../calculation/yearCalculation";
+import { ParsingContext } from "../../../chrono";
+import { findYearClosestToRef } from "../../../calculation/years";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { YEAR_PATTERN, parseYear } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";

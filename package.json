@@ -6,10 +6,8 @@
     "type": "git",
     "url": "https://github.com/wanasit/chrono.git"
   },
-  "eslintConfig": {
-    "rules": {
-      "padding-line-between-statements": "off"
-    }
+  "prettier": {
+    "quoteProps": "preserve"
   },
   "jest": {
     "verbose": true,

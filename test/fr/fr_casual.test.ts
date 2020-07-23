@@ -123,6 +123,16 @@ test("Test - Single Expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 18));
     });
+
+    testSingleCase(chrono.fr, "a midi", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(12);
+    });
+
+    testSingleCase(chrono.fr, "à minuit", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(0);
+    });
 });
 
 test("Test - Combined Expression", function () {

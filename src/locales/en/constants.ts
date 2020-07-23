@@ -1,6 +1,6 @@
 import { OpUnitType } from "dayjs";
 import { matchAnyPattern } from "../../utils/pattern";
-import { findMostLikelyADYear } from "../../calculation/yearCalculation";
+import { findMostLikelyADYear } from "../../calculation/years";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     sunday: 0,

@@ -1,5 +1,5 @@
-import { Parser, ParsingContext } from "../../../chrono";
-import { findYearClosestToRef } from "../../../calculation/yearCalculation";
+import { ParsingContext } from "../../../chrono";
+import { findYearClosestToRef } from "../../../calculation/years";
 import { MONTH_DICTIONARY, WEEKDAY_DICTIONARY } from "../constants";
 import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants";
 import { YEAR_PATTERN, parseYear } from "../constants";

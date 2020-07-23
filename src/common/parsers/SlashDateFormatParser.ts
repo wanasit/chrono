@@ -1,7 +1,7 @@
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
-import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/yearCalculation";
+import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/years";
 
 /**
  * Date format with slash "/" (or dot ".") between numbers.
@@ -11,7 +11,7 @@ import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/ye
  * - 7.12.2020
  */
 const PATTERN = new RegExp(
-    "(\\W|^)" +
+    "([^\\d]|^)" +
         "([0-3]{0,1}[0-9]{1})[\\/\\.\\-]([0-3]{0,1}[0-9]{1})" +
         "(?:" +
         "[\\/\\.\\-]" +

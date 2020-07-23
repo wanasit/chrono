@@ -299,22 +299,6 @@ test("Test - Random text", () => {
         expect(result.start.get("day")).toBe(1);
         expect(result.start.get("hour")).toBe(15);
     });
-
-    testSingleCase(chrono, "11 at night", new Date(2016, 10 - 1, 1, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("year")).toBe(2016);
-        expect(result.start.get("month")).toBe(10);
-        expect(result.start.get("day")).toBe(1);
-        expect(result.start.get("hour")).toBe(23);
-    });
-
-    testSingleCase(chrono, "11 tonight", new Date(2016, 10 - 1, 1, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("year")).toBe(2016);
-        expect(result.start.get("month")).toBe(10);
-        expect(result.start.get("day")).toBe(1);
-        expect(result.start.get("hour")).toBe(23);
-    });
 });
 
 test("Test - Casual time with timezone", () => {

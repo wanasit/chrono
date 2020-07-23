@@ -10,6 +10,6 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  */
 export default class FRMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
     patternBetween(): RegExp {
-        return /^\s*(à|a|\\-)\s*$/i;
+        return /^\s*(à|a|-)\s*$/i;
     }
 }

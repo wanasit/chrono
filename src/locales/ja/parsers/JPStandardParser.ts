@@ -1,6 +1,6 @@
 import { Parser, ParsingContext } from "../../../chrono";
 import { toHankaku } from "../constants";
-import { findYearClosestToRef } from "../../../calculation/yearCalculation";
+import { findYearClosestToRef } from "../../../calculation/years";
 
 import dayjs from "dayjs";
 
