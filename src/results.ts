@@ -130,7 +130,7 @@ export class ParsingComponents implements ParsedComponents {
         // Javascript Date Object return minus timezone offset
         const currentTimezoneOffset = result.utcOffset();
         const targetTimezoneOffset =
-            this.get("timezoneOffset") !== undefined ? this.get("timezoneOffset") : currentTimezoneOffset;
+            this.get("timezoneOffset") !== null ? this.get("timezoneOffset") : currentTimezoneOffset;
 
         const adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
         result = result.add(-adjustTimezoneOffset, "minute");
