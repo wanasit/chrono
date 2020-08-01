@@ -155,24 +155,28 @@ export class ParsingComponents implements ParsedComponents {
             components.assign("hour", date.hour());
             components.assign("minute", date.minute());
             components.assign("second", date.second());
-        } else {
-            components.imply("hour", date.hour());
-            components.imply("minute", date.minute());
-            components.imply("second", date.second());
-        }
 
-        if (fragments["d"] || fragments["month"] || fragments["year"]) {
             components.assign("day", date.date());
             components.assign("month", date.month() + 1);
             components.assign("year", date.year());
         } else {
-            if (fragments["week"]) {
-                components.imply("weekday", date.day());
-            }
+            components.imply("hour", date.hour());
+            components.imply("minute", date.minute());
+            components.imply("second", date.second());
 
-            components.imply("day", date.date());
-            components.imply("month", date.month() + 1);
-            components.imply("year", date.year());
+            if (fragments["d"]) {
+                components.assign("day", date.date());
+                components.assign("month", date.month() + 1);
+                components.assign("year", date.year());
+            } else {
+                if (fragments["week"]) {
+                    components.imply("weekday", date.day());
+                }
+
+                components.imply("day", date.date());
+                components.imply("month", date.month() + 1);
+                components.imply("year", date.year());
+            }
         }
 
         return components;

@@ -1,6 +1,7 @@
 import { OpUnitType } from "dayjs";
 import { matchAnyPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
+import { TimeUnits } from "../../utils/timeunits";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     sunday: 0,
@@ -123,7 +124,7 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "twenty-eighth": 28,
     "twenty ninth": 29,
     "twenty-ninth": 29,
-    thirtieth: 30,
+    "thirtieth": 30,
     "thirty first": 31,
     "thirty-first": 31,
 };
@@ -147,6 +148,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     weeks: "week",
     month: "month",
     months: "month",
+    y: "year",
     yr: "year",
     year: "year",
     years: "year",
@@ -218,9 +220,9 @@ const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
 const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
 
-export const TIME_UNITS_PATTERN = `(?:${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})+`;
+export const TIME_UNITS_PATTERN = `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
 
-export function parseTimeUnits(timeunitText): { [c in OpUnitType]?: number } {
+export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);

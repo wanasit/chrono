@@ -2,6 +2,7 @@ import { Parser, ParsingContext } from "../../../chrono";
 import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { reverseTimeUnits } from "../../../utils/timeunits";
 
 const PATTERN = new RegExp("" + "(" + TIME_UNITS_PATTERN + ")" + "(?:ago|before|earlier)(?=(?:\\W|$))", "i");
 
@@ -17,11 +18,9 @@ export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBou
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const fragments = parseTimeUnits(match[1]);
-        for (const key in fragments) {
-            fragments[key] = -fragments[key];
-        }
+        const timeUnits = parseTimeUnits(match[1]);
+        const outputTimeUnits = reverseTimeUnits(timeUnits);
 
-        return ParsingComponents.createRelativeFromRefDate(context.refDate, fragments);
+        return ParsingComponents.createRelativeFromRefDate(context.refDate, outputTimeUnits);
     }
 }

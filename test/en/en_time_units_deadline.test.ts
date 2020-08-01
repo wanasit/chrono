@@ -153,51 +153,6 @@ test("Test - Single Expression (Implied)", () => {
         expect(!result.start.isCertain("minute")).not.toBeNull();
         expect(!result.start.isCertain("second")).not.toBeNull();
     });
-
-    testSingleCase(chrono, "within 30 months", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(!result.start.isCertain("year")).not.toBeNull();
-        expect(!result.start.isCertain("month")).not.toBeNull();
-        expect(!result.start.isCertain("day")).not.toBeNull();
-        expect(!result.start.isCertain("hour")).not.toBeNull();
-        expect(!result.start.isCertain("minute")).not.toBeNull();
-        expect(!result.start.isCertain("second")).not.toBeNull();
-    });
-
-    testSingleCase(chrono, "within 30 years", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(!result.start.isCertain("year")).not.toBeNull();
-        expect(!result.start.isCertain("month")).not.toBeNull();
-        expect(!result.start.isCertain("day")).not.toBeNull();
-        expect(!result.start.isCertain("hour")).not.toBeNull();
-        expect(!result.start.isCertain("minute")).not.toBeNull();
-        expect(!result.start.isCertain("second")).not.toBeNull();
-    });
-
-    testSingleCase(chrono, "within 5 hours", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(!result.start.isCertain("year")).not.toBeNull();
-        expect(!result.start.isCertain("month")).not.toBeNull();
-        expect(!result.start.isCertain("day")).not.toBeNull();
-        expect(!result.start.isCertain("hour")).not.toBeNull();
-        expect(!result.start.isCertain("minute")).not.toBeNull();
-        expect(!result.start.isCertain("second")).not.toBeNull();
-    });
-
-    testSingleCase(chrono, "within 5 minutes", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(!result.start.isCertain("year")).not.toBeNull();
-        expect(!result.start.isCertain("month")).not.toBeNull();
-        expect(!result.start.isCertain("day")).not.toBeNull();
-        expect(!result.start.isCertain("hour")).not.toBeNull();
-        expect(!result.start.isCertain("minute")).not.toBeNull();
-        expect(!result.start.isCertain("second")).not.toBeNull();
-    });
-
-    testSingleCase(chrono, "within 5 seconds", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(!result.start.isCertain("year")).not.toBeNull();
-        expect(!result.start.isCertain("month")).not.toBeNull();
-        expect(!result.start.isCertain("day")).not.toBeNull();
-        expect(!result.start.isCertain("hour")).not.toBeNull();
-        expect(!result.start.isCertain("minute")).not.toBeNull();
-        expect(!result.start.isCertain("second")).not.toBeNull();
-    });
 });
 
 test("Test - Implied time values", () => {
@@ -218,29 +173,78 @@ test("Test - Implied time values", () => {
     });
 });
 
-test("Test - '+' sign", () => {
-    testSingleCase(chrono.casual, "+15 minutes", new Date(2012, 7 - 1, 10, 12, 14), (result, text) => {
+test("Test - Time units' certainty", () => {
+    testSingleCase(chrono, "in 2 minute", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
         expect(result.text).toBe(text);
-        expect(result.start.get("hour")).toBe(12);
-        expect(result.start.get("minute")).toBe(29);
-
-        expect(result.start).toBeDate(new Date(2012, 7 - 1, 10, 12, 29));
-    });
-
-    testSingleCase(chrono.casual, "+15min", new Date(2012, 7 - 1, 10, 12, 14), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("hour")).toBe(12);
-        expect(result.start.get("minute")).toBe(29);
-
-        expect(result.start).toBeDate(new Date(2012, 7 - 1, 10, 12, 29));
-    });
-
-    testSingleCase(chrono.casual, "+1 day 2 hour", new Date(2012, 7 - 1, 10, 12, 14), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
         expect(result.start.get("hour")).toBe(14);
-        expect(result.start.get("minute")).toBe(14);
+        expect(result.start.get("minute")).toBe(54);
 
-        expect(result.start).toBeDate(new Date(2012, 7 - 1, 11, 14, 14));
+        expect(result.start.isCertain("year")).toBeTruthy();
+        expect(result.start.isCertain("month")).toBeTruthy();
+        expect(result.start.isCertain("day")).toBeTruthy();
+        expect(result.start.isCertain("hour")).toBeTruthy();
+        expect(result.start.isCertain("minute")).toBeTruthy();
+    });
+
+    testSingleCase(chrono, "in 2hour", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(16);
+        expect(result.start.get("minute")).toBe(52);
+
+        expect(result.start.isCertain("year")).toBeTruthy();
+        expect(result.start.isCertain("month")).toBeTruthy();
+        expect(result.start.isCertain("day")).toBeTruthy();
+        expect(result.start.isCertain("hour")).toBeTruthy();
+        expect(result.start.isCertain("minute")).toBeTruthy();
+    });
+
+    testSingleCase(chrono, "in a few year", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2019);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(52);
+
+        expect(result.start.isCertain("month")).toBeFalsy();
+        expect(result.start.isCertain("day")).toBeFalsy();
+        expect(result.start.isCertain("hour")).toBeFalsy();
+        expect(result.start.isCertain("minute")).toBeFalsy();
+    });
+
+    testSingleCase(chrono, "within 12 month", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2017);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(52);
+
+        expect(result.start.isCertain("year")).toBeFalsy();
+        expect(result.start.isCertain("month")).toBeFalsy();
+        expect(result.start.isCertain("day")).toBeFalsy();
+        expect(result.start.isCertain("hour")).toBeFalsy();
+        expect(result.start.isCertain("minute")).toBeFalsy();
+    });
+
+    testSingleCase(chrono, "within 3 days", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(4);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(52);
+
+        expect(result.start.isCertain("year")).toBeTruthy();
+        expect(result.start.isCertain("month")).toBeTruthy();
+        expect(result.start.isCertain("day")).toBeTruthy();
+        expect(result.start.isCertain("hour")).toBeFalsy();
+        expect(result.start.isCertain("minute")).toBeFalsy();
     });
 });

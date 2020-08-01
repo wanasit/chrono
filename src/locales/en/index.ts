@@ -1,4 +1,4 @@
-import ENTimeUnitDeadlineFormatParser from "./parsers/ENTimeUnitDeadlineFormatParser";
+import ENTimeUnitWithinFormatParser from "./parsers/ENTimeUnitWithinFormatParser";
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
@@ -18,8 +18,8 @@ import ENRelativeDateFormatParser from "./parsers/ENRelativeDateFormatParser";
 
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
-import MergeWeekdayComponentRefiner from "../../common/refiners/MergeWeekdayComponentRefiner";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
+import ENTimeUnitCasualRelativeFormatParser from "./parsers/ENTimeUnitCasualRelativeFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration(false));
@@ -41,6 +41,7 @@ export function createCasualConfiguration(littleEndian = false): Configuration {
     option.parsers.unshift(new ENCasualTimeParser());
     option.parsers.unshift(new ENMonthNameParser());
     option.parsers.unshift(new ENRelativeDateFormatParser());
+    option.parsers.unshift(new ENTimeUnitCasualRelativeFormatParser());
     return option;
 }
 
@@ -49,7 +50,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
-                new ENTimeUnitDeadlineFormatParser(strictMode),
+                new ENTimeUnitWithinFormatParser(),
                 new ENMonthNameLittleEndianParser(),
                 new ENMonthNameMiddleEndianParser(),
                 new ENWeekdayParser(),

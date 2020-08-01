@@ -3,17 +3,9 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-const PATTERN = new RegExp(`(?:within|in|\\+)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
-
-const STRICT_PATTERN = new RegExp(`(?:within|in)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
-
-export default class ENTimeUnitDeadlineFormatParser extends AbstractParserWithWordBoundaryChecking {
-    constructor(private strictMode: boolean) {
-        super();
-    }
-
+export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
-        return this.strictMode ? STRICT_PATTERN : PATTERN;
+        return new RegExp(`(?:within|in)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
