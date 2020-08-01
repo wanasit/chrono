@@ -29,10 +29,6 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         const offset = WEEKDAY_DICTIONARY[dayOfWeek];
-        if (offset === undefined) {
-            return null;
-        }
-
         const prefix = match[PREFIX_GROUP];
         const postfix = match[POSTFIX_GROUP];
         let modifierWord = prefix || postfix;

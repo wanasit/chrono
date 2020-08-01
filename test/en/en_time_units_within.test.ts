@@ -1,7 +1,7 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 
-test("Test - Single Expression", () => {
+test("Test - The normal within expression", () => {
     testSingleCase(chrono, "we have to make something in 5 days.", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(26);
         expect(result.text).toBe("in 5 days");
@@ -141,6 +141,48 @@ test("Test - Single Expression", () => {
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(8);
+    });
+});
+
+test("Test - The within expression with certain keywords", () => {
+    testSingleCase(chrono, "In  about 5 hours", new Date(2012, 8 - 1, 10, 12, 49), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("minute")).toBe(49);
+    });
+
+    testSingleCase(chrono, "within around 3 hours", new Date(2012, 8 - 1, 10, 12, 49), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(15);
+        expect(result.start.get("minute")).toBe(49);
+    });
+
+    testSingleCase(chrono, "In several hours", new Date(2012, 8 - 1, 10, 12, 49), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(19);
+        expect(result.start.get("minute")).toBe(49);
+    });
+
+    testSingleCase(chrono, "In a couple of days", new Date(2012, 8 - 1, 10, 12, 49), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(49);
     });
 });
 

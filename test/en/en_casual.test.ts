@@ -118,13 +118,21 @@ test("Test - Combined Expression", () => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("today 5PM");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
         expect(result.start.get("hour")).toBe(17);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 17));
+    });
+
+    testSingleCase(chrono.casual, "Tomorrow at noon", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 12));
     });
 });
 

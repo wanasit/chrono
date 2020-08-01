@@ -158,7 +158,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few)`;
+)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few|several|a?\\s*couple\\s*(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
@@ -170,6 +170,10 @@ export function parseNumberPattern(match: string): number {
         return 3;
     } else if (num.match(/half/)) {
         return 0.5;
+    } else if (num.match(/couple/)) {
+        return 2;
+    } else if (num.match(/several/)) {
+        return 7;
     }
 
     return parseFloat(num);
@@ -220,7 +224,9 @@ const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
 const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
 
-export const TIME_UNITS_PATTERN = `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
+export const TIME_UNITS_PATTERN =
+    `(?:(?:about|around)\\s*)?` +
+    `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};
