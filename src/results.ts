@@ -25,7 +25,7 @@ export class ParsingComponents implements ParsedComponents {
         this.imply("millisecond", 0);
     }
 
-    get(component: Component): number | undefined {
+    get(component: Component): number | null {
         if (component in this.knownValues) {
             return this.knownValues[component];
         }
@@ -34,7 +34,7 @@ export class ParsingComponents implements ParsedComponents {
             return this.impliedValues[component];
         }
 
-        return undefined;
+        return null;
     }
 
     date(): Date {

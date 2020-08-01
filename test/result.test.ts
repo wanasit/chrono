@@ -9,8 +9,8 @@ test("Test - Create & manipulate date results", () => {
     expect(components.get("day")).toBe(24);
     expect(components.date()).toBeDefined();
 
-    // undefined
-    expect(components.get("weekday")).toBeUndefined();
+    // null
+    expect(components.get("weekday")).toBeNull();
     expect(components.isCertain("weekday")).toBe(false);
 
     // "imply"
