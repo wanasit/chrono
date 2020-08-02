@@ -54,6 +54,7 @@ export enum Meridiem {
 }
 
 // export * as xx from './locales/xx'
+export * as de from "./locales/de";
 export * as en from "./locales/en";
 export * as fr from "./locales/fr";
 export * as ja from "./locales/ja";

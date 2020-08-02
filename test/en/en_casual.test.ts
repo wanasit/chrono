@@ -111,6 +111,22 @@ test("Test - Single Expression", () => {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 20));
     });
+
+    testSingleCase(chrono.casual, "The Deadline is midnight ", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("midnight");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(0);
+    });
+
+    testSingleCase(chrono.casual, "The Deadline was midnight ", new Date(2012, 7, 10, 1), (result) => {
+        expect(result.text).toBe("midnight");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(0);
+    });
 });
 
 test("Test - Combined Expression", () => {

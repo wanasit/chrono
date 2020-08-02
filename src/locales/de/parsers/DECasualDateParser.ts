@@ -4,19 +4,32 @@ import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { addImpliedTimeUnits } from "../../../utils/timeunits";
+import DECasualTimeParser from "./DECasualTimeParser";
+
+const PATTERN = new RegExp(
+    `(jetzt|heute|morgen|übermorgen|uebermorgen|gestern|vorgestern|letzte\\s*nacht)` +
+        `(?:\\s*(morgen|vormittag|mittags?|nachmittag|abend|nacht|mitternacht))?` +
+        `(?=\\W|$)`,
+    "i"
+);
+
+const DATE_GROUP = 1;
+const TIME_GROUP = 2;
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(now|today|tonight|midnight|tomorrow|tmr|yesterday|last\s*night)(?=\W|$)/i;
+        return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
         let targetDate = dayjs(context.refDate);
-        const lowerText = match[0].toLowerCase();
-        const component = context.createParsingComponents();
+        const dateKeyword = (match[DATE_GROUP] || "").toLowerCase();
+        const timeKeyword = (match[TIME_GROUP] || "").toLowerCase();
 
-        switch (lowerText) {
-            case "now":
+        let component = context.createParsingComponents();
+        switch (dateKeyword) {
+            case "jetzt":
                 assignSimilarDate(component, targetDate);
                 component.assign("hour", targetDate.hour());
                 component.assign("minute", targetDate.minute());
@@ -24,38 +37,35 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
                 component.assign("millisecond", targetDate.millisecond());
                 break;
 
-            case "today":
+            case "heute":
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
                 break;
 
-            case "tonight":
-                component.imply("hour", 22);
-                component.imply("meridiem", Meridiem.PM);
-                assignSimilarDate(component, targetDate);
-                break;
-
-            case "tomorrow":
-            case "tmr":
+            case "morgen":
                 assignTheNextDay(component, targetDate);
                 break;
 
-            case "midnight":
-                // Check not "Tomorrow" on late night
+            case "übermorgen":
+            case "uebermorgen":
+                targetDate = targetDate.add(1, "day");
                 assignTheNextDay(component, targetDate);
-                component.imply("hour", 0);
-                component.imply("minute", 0);
-                component.imply("second", 0);
                 break;
 
-            case "yesterday":
+            case "gestern":
                 targetDate = targetDate.add(-1, "day");
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
                 break;
 
+            case "vorgestern":
+                targetDate = targetDate.add(-2, "day");
+                assignSimilarDate(component, targetDate);
+                implySimilarTime(component, targetDate);
+                break;
+
             default:
-                if (lowerText.match(/last\s*night/)) {
+                if (dateKeyword.match(/letzte\s*nacht/)) {
                     if (targetDate.hour() > 6) {
                         targetDate = targetDate.add(-1, "day");
                     }
@@ -65,6 +75,10 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
                 }
 
                 break;
+        }
+
+        if (timeKeyword) {
+            component = DECasualTimeParser.extractTimeComponents(component, timeKeyword);
         }
 
         return component;
