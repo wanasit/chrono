@@ -1,7 +1,8 @@
 import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
+import { Chrono } from "./chrono";
 
-export { Chrono } from "./chrono";
+export { en, Chrono };
 export const strict = en.strict;
 export const casual = en.casual;
 
@@ -53,8 +54,8 @@ export enum Meridiem {
     PM = 1,
 }
 
-// export * as xx from './locales/xx'
-export * as de from "./locales/de";
-export * as en from "./locales/en";
-export * as fr from "./locales/fr";
-export * as ja from "./locales/ja";
+// Export all locales
+import * as de from "./locales/de";
+import * as fr from "./locales/fr";
+import * as ja from "./locales/ja";
+export { de, fr, ja };
