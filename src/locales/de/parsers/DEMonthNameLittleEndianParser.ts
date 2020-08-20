@@ -22,7 +22,7 @@ const DATE_TO_GROUP = 2;
 const MONTH_NAME_GROUP = 3;
 const YEAR_GROUP = 4;
 
-export default class FRMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
+export default class DEMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
