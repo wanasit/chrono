@@ -17,7 +17,7 @@ const PATTERN = new RegExp(
 const DATE_GROUP = 1;
 const TIME_GROUP = 2;
 
-export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
+export default class DECasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
         return PATTERN;
     }
