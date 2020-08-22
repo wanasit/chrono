@@ -1,6 +1,7 @@
 import * as chrono from "../src/";
 import { testSingleCase } from "./test_util";
 import { Meridiem } from "../src";
+import UnlikelyFormatFilter from "../src/common/refiners/UnlikelyFormatFilter";
 
 //-------------------------------------
 
@@ -115,6 +116,17 @@ test("Test - Add custom refiner example", () => {
 
     testSingleCase(custom, "This is at 2.30 AM", (result) => {
         expect(result.text).toBe("at 2.30 AM");
+        expect(result.start.get("hour")).toBe(2);
+        expect(result.start.get("minute")).toBe(30);
+    });
+});
+
+test("Test - Remove custom refiner example", () => {
+    const custom = chrono.casual.clone();
+    custom.refiners = custom.refiners.filter((r) => !(r instanceof UnlikelyFormatFilter));
+
+    testSingleCase(custom, "This is at 2.30", (result) => {
+        expect(result.text).toBe("at 2.30");
         expect(result.start.get("hour")).toBe(2);
         expect(result.start.get("minute")).toBe(30);
     });

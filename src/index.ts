@@ -58,4 +58,5 @@ export enum Meridiem {
 import * as de from "./locales/de";
 import * as fr from "./locales/fr";
 import * as ja from "./locales/ja";
-export { de, fr, ja };
+import * as pt from "./locales/pt";
+export { de, fr, ja, pt };
