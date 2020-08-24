@@ -1,6 +1,8 @@
 import { Component, ParsedComponents, ParsedResult } from "./index";
 
-import dayjs, { OpUnitType } from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import dayjs, { OpUnitType, QUnitType } from "dayjs";
+dayjs.extend(quarterOfYear);
 
 export class ParsingComponents implements ParsedComponents {
     private knownValues: { [c in Component]?: number };
@@ -144,7 +146,10 @@ export class ParsingComponents implements ParsedComponents {
         )}}]`;
     }
 
-    static createRelativeFromRefDate(refDate: Date, fragments: { [c in OpUnitType]?: number }): ParsingComponents {
+    static createRelativeFromRefDate(
+        refDate: Date,
+        fragments: { [c in OpUnitType | QUnitType]?: number }
+    ): ParsingComponents {
         let date = dayjs(refDate);
         for (const key in fragments) {
             date = date.add(fragments[key as OpUnitType], key as OpUnitType);

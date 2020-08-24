@@ -1,7 +1,7 @@
-import { OpUnitType } from "dayjs";
+import { OpUnitType, QUnitType } from "dayjs";
 import { ParsingComponents } from "../results";
 
-export type TimeUnits = { [c in OpUnitType]?: number };
+export type TimeUnits = { [c in OpUnitType | QUnitType]?: number };
 
 export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
     const reversed = {};
@@ -10,7 +10,7 @@ export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
         reversed[key] = -timeUnits[key];
     }
 
-    return reversed;
+    return reversed as TimeUnits;
 }
 
 export function addImpliedTimeUnits(components: ParsingComponents, timeUnits: TimeUnits): ParsingComponents {

@@ -10,6 +10,9 @@ import FRMergeDateRangeRefiner from "./refiners/FRMergeDateRangeRefiner";
 import FRWeekdayParser from "./parsers/FRWeekdayParser";
 import FRSpecificTimeExpressionParser from "./parsers/FRSpecificTimeExpressionParser";
 import FRMonthNameLittleEndianParser from "./parsers/FRMonthNameLittleEndianParser";
+import FRTimeUnitAgoFormatParser from "./parsers/FRTimeUnitAgoFormatParser";
+import FRTimeUnitWithinFormatParser from "./parsers/FRTimeUnitWithinFormatParser";
+import FRTimeUnitRelativeFormatParser from "./parsers/FRTimeUnitRelativeFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -27,6 +30,7 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new FRCasualDateParser());
     option.parsers.unshift(new FRCasualTimeParser());
+    option.parsers.unshift(new FRTimeUnitRelativeFormatParser());
     return option;
 }
 
@@ -38,6 +42,8 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new FRMonthNameLittleEndianParser(),
                 new FRTimeExpressionParser(),
                 new FRSpecificTimeExpressionParser(),
+                new FRTimeUnitAgoFormatParser(),
+                new FRTimeUnitWithinFormatParser(),
                 new FRWeekdayParser(),
             ],
             refiners: [new FRMergeDateTimeRefiner(), new FRMergeDateRangeRefiner()],

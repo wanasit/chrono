@@ -1,4 +1,4 @@
-import { OpUnitType } from "dayjs";
+import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern } from "../../utils/pattern";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
@@ -76,7 +76,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "treize": 13,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
     "sec": "second",
     "seconde": "second",
     "secondes": "second",
@@ -94,6 +94,9 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     "semaine": "week",
     "semaines": "week",
     "mois": "month",
+    "trimestre": "quarter",
+    "trimestres": "quarter",
+    "ans": "year",
     "année": "year",
     "années": "year",
 };
@@ -102,17 +105,17 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few)`;
+)}|[0-9]+|[0-9]+\\.[0-9]+|une?|quelques?|demi-?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
-    } else if (num === "a" || num === "an") {
+    } else if (num === "une" || num === "un") {
         return 1;
-    } else if (num.match(/few/)) {
+    } else if (num.match(/quelques?/)) {
         return 3;
-    } else if (num.match(/half/)) {
+    } else if (num.match(/demi-?/)) {
         return 0.5;
     }
 
@@ -164,7 +167,7 @@ const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\(
 
 export const TIME_UNITS_PATTERN = `(?:${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})+`;
 
-export function parseTimeUnits(timeunitText): { [c in OpUnitType]?: number } {
+export function parseTimeUnits(timeunitText): { [c in OpUnitType | QUnitType]?: number } {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -173,7 +176,7 @@ export function parseTimeUnits(timeunitText): { [c in OpUnitType]?: number } {
         remainingText = remainingText.substring(match[0].length);
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
-    return fragments;
+    return fragments as { [c in OpUnitType | QUnitType]?: number };
 }
 
 function collectDateTimeFragment(fragments, match) {
