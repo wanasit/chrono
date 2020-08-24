@@ -1,13 +1,13 @@
-import { ParsingContext } from "../../../chrono";
+import { Parser, ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
 
-export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
+export default class PTCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(now|today|tonight|tomorrow|tmr|yesterday|last\s*night)(?=\W|$)/i;
+        return /(agora|hoje|amanha|amanhã|ontem)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
@@ -16,7 +16,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
         const component = context.createParsingComponents();
 
         switch (lowerText) {
-            case "now":
+            case "agora":
                 assignSimilarDate(component, targetDate);
                 component.assign("hour", targetDate.hour());
                 component.assign("minute", targetDate.minute());
@@ -24,38 +24,20 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
                 component.assign("millisecond", targetDate.millisecond());
                 break;
 
-            case "today":
+            case "hoje":
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
                 break;
 
-            case "tonight":
-                component.imply("hour", 22);
-                component.imply("meridiem", Meridiem.PM);
-                assignSimilarDate(component, targetDate);
-                break;
-
-            case "tomorrow":
-            case "tmr":
+            case "amanha":
+            case "amanhã":
                 assignTheNextDay(component, targetDate);
                 break;
 
-            case "yesterday":
+            case "ontem":
                 targetDate = targetDate.add(-1, "day");
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
-                break;
-
-            default:
-                if (lowerText.match(/last\s*night/)) {
-                    if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "day");
-                    }
-
-                    assignSimilarDate(component, targetDate);
-                    component.imply("hour", 0);
-                }
-
                 break;
         }
 

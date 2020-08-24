@@ -7,6 +7,8 @@ import PTTimeExpressionParser from "./parsers/PTTimeExpressionParser";
 import PTMergeDateTimeRefiner from "./refiners/PTMergeDateTimeRefiner";
 import PTMergeDateRangeRefiner from "./refiners/PTMergeDateRangeRefiner";
 import PTMonthNameLittleEndianParser from "./parsers/PTMonthNameLittleEndianParser";
+import PTCasualDateParser from "./parsers/PTCasualDateParser";
+import PTCasualTimeParser from "./parsers/PTCasualTimeParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -22,6 +24,8 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
 
 export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
+    option.parsers.push(new PTCasualDateParser());
+    option.parsers.push(new PTCasualTimeParser());
     return option;
 }
 

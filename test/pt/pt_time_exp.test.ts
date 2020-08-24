@@ -172,14 +172,4 @@ test("Test - Random date + time expression", function () {
     testSingleCase(chrono.pt, "às 12", (result, text) => {
         expect(result.text).toBe(text);
     });
-
-    // testSingleCase(chrono.pt, "ao meio-dia", (result, text) => {
-    //     expect(result.text).toBe(text);
-    //     expect(result.start.get("hour")).toBe(12);
-    //     expect(result.start.get("hour")).toBe(12);
-    // });
-    //
-    // testSingleCase(chrono.pt, "a meia-noite", (result, text) => {
-    //     expect(result.text).toBe(text);
-    // });
 });
