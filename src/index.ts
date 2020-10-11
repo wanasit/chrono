@@ -59,4 +59,5 @@ import * as de from "./locales/de";
 import * as fr from "./locales/fr";
 import * as ja from "./locales/ja";
 import * as pt from "./locales/pt";
-export { de, fr, ja, pt };
+import * as nl from "./locales/nl";
+export { de, fr, ja, pt, nl };
