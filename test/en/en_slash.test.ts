@@ -138,56 +138,6 @@ test("Test - Single Expression Little-Endian with Month name", function () {
     });
 });
 
-test("Test - Single Expression Start with Year", function () {
-    testSingleCase(chrono, "2012/8/10", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("2012/8/10");
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
-    });
-
-    testSingleCase(chrono, "The Deadline is 2012/8/10", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(16);
-        expect(result.text).toBe("2012/8/10");
-
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
-    });
-
-    testSingleCase(chrono.strict, "2014/2/28", (result) => {
-        expect(result.text).toBe("2014/2/28");
-    });
-
-    testSingleCase(chrono.strict, "2014/12/28", (result) => {
-        expect(result.text).toBe("2014/12/28");
-    });
-});
-
-test("Test - Single Expression Start with Year and Month Name", function () {
-    testSingleCase(chrono, "2012/Aug/10", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("2012/Aug/10");
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
-    });
-
-    testSingleCase(chrono, "The Deadline is 2012/aug/10", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(16);
-        expect(result.text).toBe("2012/aug/10");
-
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
-    });
-});
-
 test("Test - Range Expression", function () {
     testSingleCase(chrono.en, "8/10/2012 - 8/15/2012", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);

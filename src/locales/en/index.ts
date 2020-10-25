@@ -2,7 +2,7 @@ import ENTimeUnitWithinFormatParser from "./parsers/ENTimeUnitWithinFormatParser
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
-import ENSlashDateFormatStartWithYearParser from "./parsers/ENSlashDateFormatStartWithYearParser";
+import ENCasualYearMonthDayParser from "./parsers/ENCasualYearMonthDayParser";
 import ENSlashMonthFormatParser from "./parsers/ENSlashMonthFormatParser";
 import ENTimeExpressionParser from "./parsers/ENTimeExpressionParser";
 import ENTimeUnitAgoFormatParser from "./parsers/ENTimeUnitAgoFormatParser";
@@ -54,7 +54,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
                 new ENMonthNameLittleEndianParser(),
                 new ENMonthNameMiddleEndianParser(),
                 new ENWeekdayParser(),
-                new ENSlashDateFormatStartWithYearParser(),
+                new ENCasualYearMonthDayParser(),
                 new ENSlashMonthFormatParser(),
                 new ENTimeExpressionParser(),
                 new ENTimeUnitAgoFormatParser(strictMode),
