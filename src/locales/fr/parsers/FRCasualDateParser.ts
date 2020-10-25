@@ -1,9 +1,10 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import * as references from "../../../common/casualReferences";
 
 export default class FRCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -17,24 +18,16 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "maintenant":
-                assignSimilarDate(component, targetDate);
-                assignSimilarTime(component, targetDate);
-                break;
+                return references.now(context.refDate);
 
             case "aujourd'hui":
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
-
-            case "demain":
-                assignTheNextDay(component, targetDate);
-                break;
+                return references.today(context.refDate);
 
             case "hier":
-                targetDate = targetDate.add(-1, "day");
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
+                return references.yesterday(context.refDate);
+
+            case "demain":
+                return references.tomorrow(context.refDate);
 
             default:
                 if (lowerText.match(/cette\s*nuit/)) {

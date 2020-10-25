@@ -1,11 +1,10 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
-import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
-import { addImpliedTimeUnits } from "../../../utils/timeunits";
 import DECasualTimeParser from "./DECasualTimeParser";
+import * as references from "../../../common/casualReferences";
 
 const PATTERN = new RegExp(
     `(jetzt|heute|morgen|übermorgen|uebermorgen|gestern|vorgestern|letzte\\s*nacht)` +
@@ -30,16 +29,11 @@ export default class DECasualDateParser extends AbstractParserWithWordBoundaryCh
         let component = context.createParsingComponents();
         switch (dateKeyword) {
             case "jetzt":
-                assignSimilarDate(component, targetDate);
-                component.assign("hour", targetDate.hour());
-                component.assign("minute", targetDate.minute());
-                component.assign("second", targetDate.second());
-                component.assign("millisecond", targetDate.millisecond());
+                component = references.now(context.refDate);
                 break;
 
             case "heute":
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
+                component = references.today(context.refDate);
                 break;
 
             case "morgen":

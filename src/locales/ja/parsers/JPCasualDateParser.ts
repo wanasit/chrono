@@ -1,6 +1,7 @@
 import { Parser, ParsingContext } from "../../../chrono";
 import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
+import * as references from "../../../common/casualReferences";
 
 const PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
 
@@ -15,19 +16,24 @@ export default class JPCasualDateParser implements Parser {
         let date = dayjs(context.refDate);
         const components = context.createParsingComponents();
 
+        switch (text) {
+            case "昨日":
+                return references.yesterday(context.refDate);
+
+            case "明日":
+                return references.tomorrow(context.refDate);
+
+            case "今日":
+            case "当日":
+                return references.today(context.refDate);
+        }
+
         if (text == "今夜" || text == "今夕" || text == "今晩") {
             components.imply("hour", 22);
             components.assign("meridiem", Meridiem.PM);
         } else if (text.match("今朝")) {
             components.imply("hour", 6);
             components.assign("meridiem", Meridiem.AM);
-        } else if (text == "明日") {
-            if (date.hour() > 4) {
-                // Check not "Tomorrow" on late night
-                date = date.add(1, "day");
-            }
-        } else if (text == "昨日") {
-            date = date.add(-1, "day");
         }
 
         components.assign("day", date.date());

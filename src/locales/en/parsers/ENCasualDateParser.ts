@@ -1,9 +1,9 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
-import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { assignSimilarDate } from "../../../utils/dayjs";
+import * as references from "../../../common/casualReferences";
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -17,34 +17,20 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "now":
-                assignSimilarDate(component, targetDate);
-                component.assign("hour", targetDate.hour());
-                component.assign("minute", targetDate.minute());
-                component.assign("second", targetDate.second());
-                component.assign("millisecond", targetDate.millisecond());
-                break;
+                return references.now(context.refDate);
 
             case "today":
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
+                return references.today(context.refDate);
 
-            case "tonight":
-                component.imply("hour", 22);
-                component.imply("meridiem", Meridiem.PM);
-                assignSimilarDate(component, targetDate);
-                break;
+            case "yesterday":
+                return references.yesterday(context.refDate);
 
             case "tomorrow":
             case "tmr":
-                assignTheNextDay(component, targetDate);
-                break;
+                return references.tomorrow(context.refDate);
 
-            case "yesterday":
-                targetDate = targetDate.add(-1, "day");
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
+            case "tonight":
+                return references.tonight(context.refDate);
 
             default:
                 if (lowerText.match(/last\s*night/)) {

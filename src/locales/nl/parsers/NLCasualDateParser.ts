@@ -1,9 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
-import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import * as references from "../../../common/casualReferences";
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -11,40 +9,25 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 
         switch (lowerText) {
             case "nu":
-                assignSimilarDate(component, targetDate);
-                component.assign("hour", targetDate.hour());
-                component.assign("minute", targetDate.minute());
-                component.assign("second", targetDate.second());
-                component.assign("millisecond", targetDate.millisecond());
-                break;
+                return references.now(context.refDate);
 
             case "vandaag":
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
-
-            case "vanacht":
-                component.imply("hour", 22);
-                component.imply("meridiem", Meridiem.PM);
-                assignSimilarDate(component, targetDate);
-                break;
+                return references.today(context.refDate);
 
             case "morgen":
             case "morgend":
-                assignTheNextDay(component, targetDate);
-                break;
+                return references.tomorrow(context.refDate);
 
             case "gisteren":
-                targetDate = targetDate.add(-1, "day");
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
-                break;
+                return references.yesterday(context.refDate);
+
+            case "vanacht":
+                return references.tonight(context.refDate);
         }
 
         return component;
