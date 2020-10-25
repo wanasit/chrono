@@ -1,6 +1,5 @@
-import { Parser, ParsingContext } from "../../../chrono";
-import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
+import { ParsingContext } from "../../../chrono";
+import { ParsingComponents } from "../../../results";
 import { Meridiem } from "../../../index";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 

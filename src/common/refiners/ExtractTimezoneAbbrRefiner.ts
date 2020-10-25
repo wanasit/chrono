@@ -216,6 +216,10 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
                 }
 
                 const timezoneOffset = timezones[timezoneAbbr];
+                context.debug(() => {
+                    console.log(`Extracting timezone: '${timezoneAbbr}' into : ${timezoneOffset}`);
+                });
+
                 if (!result.start.isCertain("timezoneOffset")) {
                     result.start.assign("timezoneOffset", timezoneOffset);
                 }
