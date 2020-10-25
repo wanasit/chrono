@@ -142,6 +142,21 @@ test("Test - The normal within expression", () => {
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(8);
     });
+
+    testSingleCase(chrono, "In around 5 hours", new Date(2016, 10 - 1, 1, 13), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(18);
+    });
+
+    testSingleCase(chrono, "In about ~5 hours", new Date(2016, 10 - 1, 1, 13), (result, text) => {
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(18);
+    });
 });
 
 test("Test - The within expression with certain keywords", () => {
