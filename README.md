@@ -109,8 +109,9 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 * `date: () => Date` Create a javascript Date
 
 #### ParsedComponents
-* `get(component)`            Get known or implied value for the component
-* `date()`                    Create a javascript Date
+* `get: (c: Component) => number | null`    Get known or implied value for the component
+* `isCertain: (c: Component) => boolean`    Check if the component has a known value
+* `date: () => Date`    Create a javascript Date
 
 For example:
 ```js
