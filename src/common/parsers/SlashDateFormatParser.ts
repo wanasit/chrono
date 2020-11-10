@@ -4,9 +4,10 @@ import dayjs from "dayjs";
 import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/years";
 
 /**
- * Date format with slash "/" (or dot ".") between numbers.
- * For examples:
+ * Date format with slash "/", dash "-", or dot "." between numbers.
+ * For example:
  * - 7/10
+ * - 7-10
  * - 7/12/2020
  * - 7.12.2020
  */
@@ -59,9 +60,9 @@ export default class SlashDateFormatParser implements Parser {
             return;
         }
 
-        // MM/dd -> OK
+        // MM/dd or MM-dd -> OK
         // MM.dd -> NG
-        if (!match[YEAR_GROUP] && match[0].indexOf("/") < 0) {
+        if (!match[YEAR_GROUP] && !/[/\-]/.test(text)) {
             return;
         }
 
