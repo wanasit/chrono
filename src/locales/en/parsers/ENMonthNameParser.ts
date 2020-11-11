@@ -30,7 +30,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        if (match[0].length <= 3) {
+        if (match[0].length <= 3 && !MONTH_DICTIONARY[match[0].toLowerCase()]) {
             return null;
         }
 
