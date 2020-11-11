@@ -39,6 +39,13 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
     });
 
+    testSingleCase(chrono.fr, "pour 5 minutes", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("pour 5 minutes");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
+    });
+
     testSingleCase(chrono.fr, "en 1 heure", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("en 1 heure");
