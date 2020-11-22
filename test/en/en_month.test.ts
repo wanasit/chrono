@@ -1,47 +1,59 @@
 import * as chrono from "../../src";
 import { testSingleCase } from "../test_util";
 
-test("Test - Month expression", function () {
+test("Test - Month-Year expression", function () {
     testSingleCase(chrono, "September 2012", (result) => {
-        expect(result.index).toBe(0);
         expect(result.text).toBe("September 2012");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
 
     testSingleCase(chrono, "Sept 2012", (result) => {
-        expect(result.index).toBe(0);
         expect(result.text).toBe("Sept 2012");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
 
     testSingleCase(chrono, "Sep 2012", (result) => {
-        expect(result.index).toBe(0);
         expect(result.text).toBe("Sep 2012");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
 
     testSingleCase(chrono, "Sep. 2012", (result) => {
-        expect(result.index).toBe(0);
         expect(result.text).toBe("Sep. 2012");
 
-        expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
@@ -55,6 +67,23 @@ test("Test - Month expression", function () {
         expect(result.text).toBe("Sep-2012");
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
+    });
+});
+
+test("Test - Month-Only expression", function () {
+    testSingleCase(chrono, "In January", new Date(2020, 11 - 1, 22), (result) => {
+        expect(result.text).toContain("January");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2021, 1 - 1, 1, 12));
     });
 });
 
