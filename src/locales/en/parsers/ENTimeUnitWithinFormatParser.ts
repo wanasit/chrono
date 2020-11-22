@@ -6,7 +6,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return new RegExp(
-            `(?:within|in)\\s*(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?` +
+            `(?:within|in|for)\\s*(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?` +
                 "(" +
                 TIME_UNITS_PATTERN +
                 ")" +
