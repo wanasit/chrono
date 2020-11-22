@@ -290,8 +290,8 @@ test("Test - Time units' certainty", () => {
         expect(result.start.get("hour")).toBe(14);
         expect(result.start.get("minute")).toBe(52);
 
-        expect(result.start.isCertain("year")).toBeFalsy();
-        expect(result.start.isCertain("month")).toBeFalsy();
+        expect(result.start.isCertain("year")).toBeTruthy();
+        expect(result.start.isCertain("month")).toBeTruthy();
         expect(result.start.isCertain("day")).toBeFalsy();
         expect(result.start.isCertain("hour")).toBeFalsy();
         expect(result.start.isCertain("minute")).toBeFalsy();

@@ -179,8 +179,17 @@ export class ParsingComponents implements ParsedComponents {
                 }
 
                 components.imply("day", date.date());
-                components.imply("month", date.month() + 1);
-                components.imply("year", date.year());
+                if (fragments["month"]) {
+                    components.assign("month", date.month() + 1);
+                    components.assign("year", date.year());
+                } else {
+                    components.imply("month", date.month() + 1);
+                    if (fragments["year"]) {
+                        components.assign("year", date.year());
+                    } else {
+                        components.imply("year", date.year());
+                    }
+                }
             }
         }
 
