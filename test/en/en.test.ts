@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
+import ENTimeExpressionParser from "../../src/locales/en/parsers/ENTimeExpressionParser";
 
 test("Test - Date + Time Expression", function () {
     testSingleCase(chrono, "Something happen on 2014-04-18 13:00 - 16:00 as", (result) => {
@@ -161,4 +162,18 @@ test("Test - Parse multiple date results", function () {
         expect(result.end.get("hour")).toBe(16);
         expect(result.end.get("minute")).toBe(30);
     }
+});
+
+test("Test - Customize by removing time extraction", () => {
+    const custom = chrono.en.casual.clone();
+    custom.parsers = custom.parsers.filter((p) => !(p instanceof ENTimeExpressionParser));
+
+    custom.parse("Thursday 9AM");
+
+    testSingleCase(custom, "Thursday 9AM", new Date(2020, 11 - 1, 29), (result, text) => {
+        expect(result.text).toBe("Thursday");
+        expect(result.start.get("year")).toBe(2020);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(26);
+    });
 });
