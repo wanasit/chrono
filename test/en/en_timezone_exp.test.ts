@@ -45,3 +45,50 @@ test("Test - Parsing date with GMT offset", function () {
         expect(result.start.get("timezoneOffset")).toBe(2 * 60);
     });
 });
+
+test("Test - Parsing date with timezone abbreviation", function () {
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am", (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("timezoneOffset")).toBe(null);
+    });
+
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am JST", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+
+        // JST GMT+9:00
+        expect(result.start.get("timezoneOffset")).toBe(9 * 60);
+    });
+
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am GMT+0900 (JST)", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+
+        // JST GMT+9:00
+        expect(result.start.get("timezoneOffset")).toBe(9 * 60);
+    });
+});
+
+test("Test - Not parsing timezone from relative date", function () {
+    const refDate = new Date(2020, 11 - 1, 14, 13, 48, 22);
+
+    testSingleCase(chrono, "in 1 hour get eggs and milk", refDate, (result, text) => {
+        expect(result.text).toBe("in 1 hour");
+        expect(result.start.get("timezoneOffset")).toBe(-refDate.getTimezoneOffset());
+    });
+
+    testSingleCase(chrono, "in 1 hour GMT", refDate, (result, text) => {
+        expect(result.text).toBe("in 1 hour");
+        expect(result.start.get("timezoneOffset")).toBe(-refDate.getTimezoneOffset());
+    });
+
+    testSingleCase(chrono, "in 1 day get eggs and milk", refDate, (result, text) => {
+        expect(result.text).toBe("in 1 day");
+        expect(result.start.get("timezoneOffset")).toBe(-refDate.getTimezoneOffset());
+    });
+});

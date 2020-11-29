@@ -160,6 +160,7 @@ export class ParsingComponents implements ParsedComponents {
             components.assign("hour", date.hour());
             components.assign("minute", date.minute());
             components.assign("second", date.second());
+            components.assign("timezoneOffset", date.utcOffset());
 
             components.assign("day", date.date());
             components.assign("month", date.month() + 1);
@@ -168,6 +169,7 @@ export class ParsingComponents implements ParsedComponents {
             components.imply("hour", date.hour());
             components.imply("minute", date.minute());
             components.imply("second", date.second());
+            components.imply("timezoneOffset", date.utcOffset());
 
             if (fragments["d"]) {
                 components.assign("day", date.date());

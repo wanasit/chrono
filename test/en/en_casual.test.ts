@@ -15,7 +15,9 @@ test("Test - Single Expression", () => {
         expect(result.start.get("minute")).toBe(9);
         expect(result.start.get("second")).toBe(10);
         expect(result.start.get("millisecond")).toBe(11);
+        expect(result.start.get("timezoneOffset")).toBe(result.refDate.getTimezoneOffset() * -1);
 
+        expect(result.start).toBeDate(result.refDate);
         expect(result.start).toBeDate(new Date(2012, 7, 10, 8, 9, 10, 11));
     });
 

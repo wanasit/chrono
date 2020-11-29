@@ -209,26 +209,36 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
         results.forEach((result) => {
             const suffix = context.text.substring(result.index + result.text.length);
             const match = TIMEZONE_NAME_PATTERN.exec(suffix);
-            if (match) {
-                const timezoneAbbr = match[1].toUpperCase();
-                if (timezones[timezoneAbbr] === undefined) {
-                    return;
-                }
+            if (!match) {
+                return;
+            }
 
-                const timezoneOffset = timezones[timezoneAbbr];
-                context.debug(() => {
-                    console.log(`Extracting timezone: '${timezoneAbbr}' into : ${timezoneOffset}`);
-                });
+            const timezoneAbbr = match[1].toUpperCase();
+            if (timezones[timezoneAbbr] === undefined) {
+                return;
+            }
 
-                if (!result.start.isCertain("timezoneOffset")) {
-                    result.start.assign("timezoneOffset", timezoneOffset);
-                }
+            const extractedTimezoneOffset = timezones[timezoneAbbr];
+            context.debug(() => {
+                console.log(`Extracting timezone: '${timezoneAbbr}' into : ${extractedTimezoneOffset}`);
+            });
 
-                if (result.end != null && !result.end.isCertain("timezoneOffset")) {
-                    result.end.assign("timezoneOffset", timezoneOffset);
-                }
+            // We may already have extracted the offset e.g. "11 am GMT+0900 (JST)"
+            // - if they are equal, we also want to take the abbreviation text into result
+            // - if they are not equal, we trust the offset more
+            const currentTimezoneOffset = result.start.get("timezoneOffset");
+            if (currentTimezoneOffset !== null && extractedTimezoneOffset != currentTimezoneOffset) {
+                return;
+            }
 
-                result.text += match[0];
+            result.text += match[0];
+
+            if (!result.start.isCertain("timezoneOffset")) {
+                result.start.assign("timezoneOffset", extractedTimezoneOffset);
+            }
+
+            if (result.end != null && !result.end.isCertain("timezoneOffset")) {
+                result.end.assign("timezoneOffset", extractedTimezoneOffset);
             }
         });
 

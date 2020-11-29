@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase } from "../test_util";
+import { ParsingResult } from "../../src/results";
 
 test("Test - 'This' expressions", () => {
     testSingleCase(chrono, "this week", new Date(2017, 11 - 1, 19, 12), (result, text) => {
@@ -78,6 +79,14 @@ test("Test - Past relative expressions", () => {
 });
 
 test("Test - Future relative expressions", () => {
+    testSingleCase(chrono, "next hour", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(13);
+    });
+
     testSingleCase(chrono, "next week", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
@@ -119,4 +128,75 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("day")).toBe(false);
         expect(result.start.isCertain("hour")).toBe(false);
     });
+});
+
+test("Test - Relative date components' certainty", () => {
+    const refDate = new Date(2016, 10 - 1, 7, 12);
+
+    testSingleCase(chrono, "next hour", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("hour")).toBe(13);
+        expect(result.start.get("timezoneOffset")).toBe(refDate.getTimezoneOffset() * -1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(true);
+        expect(result.start.isCertain("hour")).toBe(true);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+    });
+
+    testSingleCase(chrono, "next month", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("timezoneOffset")).toBe(refDate.getTimezoneOffset() * -1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
+});
+
+test("Test - Relative date components' certainty and imply timezone", () => {
+    const refDate = new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)");
+
+    {
+        const text = "now";
+        const result = chrono.parse(text, refDate)[0] as ParsingResult;
+
+        expect(result.text).toBe(text);
+        result.start.imply("timezoneOffset", 60);
+
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"));
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 5:24:13 GMT+0100"));
+    }
+
+    {
+        const text = "tomorrow at 5pm";
+        const result = chrono.parse(text, refDate)[0] as ParsingResult;
+
+        expect(result.text).toBe(text);
+        result.start.imply("timezoneOffset", 60);
+
+        expect(result).toBeDate(new Date("Sun Dec 1 2020 1:00:00 GMT+0900 (Japan Standard Time)"));
+        expect(result).toBeDate(new Date("Sun Nov 30 2020 17:00:00 GMT+0100"));
+    }
+
+    {
+        const text = "in 10 minutes";
+        const result = chrono.parse(text, refDate)[0] as ParsingResult;
+
+        expect(result.text).toBe(text);
+        result.start.imply("timezoneOffset", 60);
+
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 13:34:13 GMT+0900 (Japan Standard Time)"));
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 5:34:13 GMT+0100"));
+    }
 });
