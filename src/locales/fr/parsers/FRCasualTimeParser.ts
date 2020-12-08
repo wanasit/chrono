@@ -1,9 +1,7 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../../../utils/dayjs";
 
 export default class FRCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {

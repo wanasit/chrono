@@ -1,4 +1,4 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import dayjs from "dayjs";
@@ -6,7 +6,7 @@ import { assignTheNextDay } from "../../../utils/dayjs";
 
 export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:this)?\s*(namiddag|avond|middernacht|ochtend|middag|\'s middags|\'s avonds|\'s ochtends)(?=\W|$)/i;
+        return /(?:this)?\s*(namiddag|avond|middernacht|ochtend|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {

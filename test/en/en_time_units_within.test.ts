@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
+import { testSingleCase } from "../test_util";
 
 test("Test - The normal within expression", () => {
     testSingleCase(chrono, "we have to make something in 5 days.", new Date(2012, 7, 10), (result) => {

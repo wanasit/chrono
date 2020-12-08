@@ -151,12 +151,12 @@ test("Test - Random text", function () {
         expect(result.start.get("weekday")).toBe(5);
     });
 
-    testSingleCase(chrono.pt, "ao meio-dia", new Date(2020, 8, 1, 11), (result, text) => {
+    testSingleCase(chrono.pt, "ao meio-dia", new Date(2020, 8, 1, 11), (result) => {
         expect(result.start.get("hour")).toBe(12);
         expect(result.start).toBeDate(new Date(2020, 8, 1, 12));
     });
 
-    testSingleCase(chrono.pt, "a meia-noite", new Date(2020, 8, 1, 11), (result, text) => {
+    testSingleCase(chrono.pt, "a meia-noite", new Date(2020, 8, 1, 11), (result) => {
         expect(result.start.get("hour")).toBe(0);
         expect(result.start).toBeDate(new Date(2020, 8, 2));
     });

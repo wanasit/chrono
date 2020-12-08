@@ -1,6 +1,5 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
-import { Meridiem } from "../../src";
 
 test("Test - fr - modifier mandatory just after", function () {
     testUnexpectedResult(chrono.fr, "le mois d'avril");

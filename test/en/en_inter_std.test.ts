@@ -8,8 +8,8 @@ test("Test - Single Expression", function () {
         expect(result.start.get("month")).toBe(2);
         expect(result.start.get("day")).toBe(7);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2013, 1, 7, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2013, 1, 7, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 

@@ -1,4 +1,4 @@
-import { parseNumberPattern, TIME_UNIT_DICTIONARY } from "../constants";
+import { TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import dayjs from "dayjs";

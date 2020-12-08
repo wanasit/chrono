@@ -15,9 +15,9 @@ const PATTERN = new RegExp(
     "i"
 );
 
-var PREFIX_GROUP = 1;
-var WEEKDAY_GROUP = 2;
-var POSTFIX_GROUP = 3;
+const PREFIX_GROUP = 1;
+const WEEKDAY_GROUP = 2;
+const POSTFIX_GROUP = 3;
 
 export default class PTWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -30,10 +30,6 @@ export default class PTWeekdayParser extends AbstractParserWithWordBoundaryCheck
         if (offset === undefined) {
             return null;
         }
-
-        let suffix = match[POSTFIX_GROUP];
-        suffix = suffix || "";
-        suffix = suffix.toLowerCase();
 
         const prefix = match[PREFIX_GROUP];
         const postfix = match[POSTFIX_GROUP];

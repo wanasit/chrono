@@ -1,11 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
 
-enum Modifier {
-    THIS,
-    NEXT,
-    LAST,
-}
-
 export function toDayJSWeekday(refDate: Date, offset: number, modifier?: "this" | "next" | "last"): Dayjs {
     if (!modifier) {
         return toDayJSClosestWeekday(refDate, offset);

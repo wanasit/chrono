@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { findYearClosestToRef } from "../../../calculation/years";
-import { MONTH_DICTIONARY, WEEKDAY_DICTIONARY } from "../../en/constants";
+import { MONTH_DICTIONARY } from "../../en/constants";
 import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../../en/constants";
 import { YEAR_PATTERN, parseYear } from "../../en/constants";
 import { matchAnyPattern } from "../../../utils/pattern";

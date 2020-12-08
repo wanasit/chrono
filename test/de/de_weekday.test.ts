@@ -1,6 +1,5 @@
 import * as chrono from "../../src/";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
-import { Meridiem } from "../../src/";
+import { testSingleCase } from "../test_util";
 
 test("Test - Simple Weekday Expression", () => {
     testSingleCase(chrono.de, "Montag", new Date(2012, 7, 9), (result) => {

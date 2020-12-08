@@ -54,8 +54,8 @@ test("Test - Single expression", function () {
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(88, 8 - 1, 10, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(88, 8 - 1, 10, 12);
         expectDate.setFullYear(88);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });

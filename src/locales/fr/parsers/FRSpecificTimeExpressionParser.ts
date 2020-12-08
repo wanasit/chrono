@@ -1,6 +1,4 @@
-import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 import { Parser, ParsingContext } from "../../../chrono";
-import dayjs from "dayjs";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import { Meridiem } from "../../../index";
 
@@ -41,7 +39,7 @@ export default class FRSpecificTimeExpressionParser implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult | null {
-        let result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
+        const result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
 
         // This looks more like a year e.g. 2020
         if (result.text.match(/^\d{4}$/)) {

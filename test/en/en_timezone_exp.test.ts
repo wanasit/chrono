@@ -1,6 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
-import { Meridiem } from "../../src";
+import { testSingleCase } from "../test_util";
 
 test("Test - Parsing date with UTC offset", function () {
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am utc+02:45 ", (result, text) => {

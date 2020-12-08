@@ -1,4 +1,4 @@
-import { Parser, ParsingContext } from "../../chrono";
+import { ParsingContext } from "../../chrono";
 import { Component } from "../../index";
 import { AbstractParserWithWordBoundaryChecking } from "./AbstractParserWithWordBoundary";
 
@@ -11,11 +11,11 @@ import { AbstractParserWithWordBoundaryChecking } from "./AbstractParserWithWord
 // - TZD = (Z or +hh:mm or -hh:mm)
 const PATTERN = new RegExp(
     "([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})" +
-    "(?:T" + //..
-    "([0-9]{1,2}):([0-9]{1,2})" + // hh:mm
-    "(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?" + // :ss.s
-    "(?:Z|([+-]\\d{2}):?(\\d{2})?)?" + // TZD (Z or ±hh:mm or ±hhmm or ±hh)
-    ")?" + //..
+        "(?:T" + //..
+        "([0-9]{1,2}):([0-9]{1,2})" + // hh:mm
+        "(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?" + // :ss.s
+        "(?:Z|([+-]\\d{2}):?(\\d{2})?)?" + // TZD (Z or ±hh:mm or ±hhmm or ±hh)
+        ")?" + //..
         "(?=\\W|$)",
     "i"
 );

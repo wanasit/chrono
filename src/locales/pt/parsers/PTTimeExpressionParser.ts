@@ -1,6 +1,4 @@
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
-import { ParsingComponents, ParsingResult } from "../../../results";
-import { ParsingContext } from "../../../chrono";
 
 export default class PTTimeExpressionParser extends AbstractTimeExpressionParser {
     primaryPrefix(): string {
