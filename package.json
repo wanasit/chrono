@@ -53,5 +53,34 @@
   },
   "dependencies": {
     "dayjs": "^1.8.29"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "modules": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "reportUnusedDisableDirectives": true,
+    "rules": {
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "prefer-const": "warn"
+    }
   }
 }
