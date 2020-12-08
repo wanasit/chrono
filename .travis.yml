@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "11"
-  - "13"
+  - "12"
+  - "14"
+  - "15"
 after_success:
   - npm run coveralls
