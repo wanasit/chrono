@@ -80,6 +80,7 @@
     "reportUnusedDisableDirectives": true,
     "rules": {
       "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
       "prefer-const": "warn"
     }
   }
