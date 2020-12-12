@@ -1,7 +1,6 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { WEEKDAY_DICTIONARY } from "../constants";
-import dayjs, { Dayjs } from "dayjs";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { toDayJSWeekday } from "../../../calculation/weeks";

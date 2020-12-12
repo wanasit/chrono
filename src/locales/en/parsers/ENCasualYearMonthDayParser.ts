@@ -1,4 +1,4 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { MONTH_DICTIONARY } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";

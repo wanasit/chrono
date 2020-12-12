@@ -1,6 +1,5 @@
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingResult } from "../../results";
-import dayjs from "dayjs";
 import { findMostLikelyADYear, findYearClosestToRef } from "../../calculation/years";
 
 /**

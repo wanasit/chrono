@@ -13,7 +13,7 @@ export default class JPCasualDateParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray) {
         const text = match[0];
 
-        let date = dayjs(context.refDate);
+        const date = dayjs(context.refDate);
         const components = context.createParsingComponents();
 
         switch (text) {

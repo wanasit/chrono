@@ -139,7 +139,7 @@ test("Test - Casual time expression", function () {
         expect(result.start.get("second")).toBe(0);
     });
 
-    testSingleCase(chrono.de, "um Mitternacht", new Date(2012, 7, 10, 12), (result, text) => {
+    testSingleCase(chrono.de, "um Mitternacht", new Date(2012, 7, 10, 12), (result) => {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(11);
@@ -148,7 +148,7 @@ test("Test - Casual time expression", function () {
         expect(result.start.get("second")).toBe(0);
     });
 
-    testSingleCase(chrono.de, "um Mitternacht", new Date(2012, 7, 10, 1), (result, text) => {
+    testSingleCase(chrono.de, "um Mitternacht", new Date(2012, 7, 10, 1), (result) => {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);

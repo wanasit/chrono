@@ -1,6 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
-import { Meridiem } from "../../src";
+import { testSingleCase } from "../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.fr, "il y a 5 jours, on a fait quelque chose", new Date(2012, 8 - 1, 10), (result) => {

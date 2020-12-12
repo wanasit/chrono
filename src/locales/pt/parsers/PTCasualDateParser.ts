@@ -1,8 +1,6 @@
-import { Parser, ParsingContext } from "../../../chrono";
+import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";
 
 export default class PTCasualDateParser extends AbstractParserWithWordBoundaryChecking {
@@ -11,7 +9,6 @@ export default class PTCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 

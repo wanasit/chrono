@@ -1,11 +1,5 @@
-import { Parser, ParsingContext } from "../../../chrono";
-import {
-    NUMBER_PATTERN,
-    parseNumberPattern,
-    parseTimeUnits,
-    TIME_UNIT_DICTIONARY,
-    TIME_UNITS_PATTERN,
-} from "../constants";
+import { ParsingContext } from "../../../chrono";
+import { NUMBER_PATTERN, parseNumberPattern, TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
@@ -18,7 +12,7 @@ export default class FRTimeUnitAgoFormatParser extends AbstractParserWithWordBou
 
     innerPattern(): RegExp {
         return new RegExp(
-            `(?:les?|la|l\'|du|des?)\\s*` +
+            `(?:les?|la|l'|du|des?)\\s*` +
                 `(${NUMBER_PATTERN})?` +
                 `(?:\\s*(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?))?` +
                 `\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})` +

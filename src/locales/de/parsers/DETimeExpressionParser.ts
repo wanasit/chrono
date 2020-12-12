@@ -1,5 +1,5 @@
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
-import { ParsingComponents, ParsingResult } from "../../../results";
+import { ParsingComponents } from "../../../results";
 import { ParsingContext } from "../../../chrono";
 import { Meridiem } from "../../../index";
 

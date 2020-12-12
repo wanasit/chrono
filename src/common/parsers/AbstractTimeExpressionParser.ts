@@ -3,7 +3,7 @@ import { ParsingComponents, ParsingResult } from "../../results";
 import { Meridiem } from "../../index";
 import dayjs from "dayjs";
 
-function primaryTimePattern(primaryPrefix: String, primarySuffix: String) {
+function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
     return new RegExp(
         "(^|\\s|T)" +
             `${primaryPrefix}` +
@@ -20,7 +20,7 @@ function primaryTimePattern(primaryPrefix: String, primarySuffix: String) {
     );
 }
 
-function followingTimeExpression(followingPhase: String, followingSuffix: String) {
+function followingTimeExpression(followingPhase: string, followingSuffix: string) {
     return new RegExp(
         `^(${followingPhase})` +
             "(\\d{1,4})" +
@@ -60,7 +60,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         const refDate = dayjs(context.refDate);
-        let result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
+        const result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
 
         result.start.imply("day", refDate.date());
         result.start.imply("month", refDate.month() + 1);

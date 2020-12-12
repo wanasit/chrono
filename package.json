@@ -24,6 +24,10 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/jest": "^26.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
@@ -32,15 +36,16 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run test:silent"
+      "pre-commit": "npm run prettier && npm run test:silent"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build",
-    "lint": "npm run lint:src & npm run lint:test",
-    "lint:src": "prettier --write src --loglevel=warn",
-    "lint:test": "prettier --write test --loglevel=warn",
+    "eslint": "eslint src test",
+    "prettier": "npm run prettier:src && npm run prettier:test",
+    "prettier:src": "prettier --write src --loglevel=warn",
+    "prettier:test": "prettier --write test --loglevel=warn",
     "watch": "jest --watch",
     "test": "jest --coverage",
     "test:silent": "jest --silent",
@@ -48,5 +53,35 @@
   },
   "dependencies": {
     "dayjs": "^1.8.29"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "modules": true
+      },
+      "project": "./tsconfig.json"
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier",
+      "prettier/@typescript-eslint"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "reportUnusedDisableDirectives": true,
+    "rules": {
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
+      "prefer-const": "warn"
+    }
   }
 }

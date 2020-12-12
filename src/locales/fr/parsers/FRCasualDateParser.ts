@@ -3,7 +3,7 @@ import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";
 
 export default class FRCasualDateParser extends AbstractParserWithWordBoundaryChecking {

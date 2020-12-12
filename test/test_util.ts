@@ -79,6 +79,7 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace jest {
         // noinspection JSUnusedGlobalSymbols
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         interface Matchers<R> {
             toBeDate(date: Date): CustomMatcherResult;
             toBeSingleOnText(text: string): CustomMatcherResult;

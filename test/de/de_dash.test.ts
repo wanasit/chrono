@@ -1,5 +1,5 @@
 import * as chrono from "../../src/";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
+import { testSingleCase } from "../test_util";
 
 test("Test - Should handle de dayname dd-mm-yy", () => {
     testSingleCase(chrono.de, "30.12.16", (result) => {

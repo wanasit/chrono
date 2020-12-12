@@ -10,7 +10,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 const PATTERN = new RegExp(
     "(?:on\\s*?)?" +
         `(${ORDINAL_NUMBER_PATTERN})` +
-        `(?:\\s*(?:au|\\-|\\–|jusqu\'au?|\\s)\\s*(${ORDINAL_NUMBER_PATTERN}))?` +
+        `(?:\\s*(?:au|\\-|\\–|jusqu'au?|\\s)\\s*(${ORDINAL_NUMBER_PATTERN}))?` +
         `(?:-|/|\\s*(?:de)?\\s*)` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `(?:(?:-|/|,?\\s*)(${YEAR_PATTERN}(?![^\\s]\\d)))?` +
