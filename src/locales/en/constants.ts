@@ -236,14 +236,12 @@ export function parseYear(match: string): number {
 //-----------------------------
 
 const SINGLE_TIME_PATTERN = matchAnyPattern(TIME_UNIT_DICTIONARY);
-console.log(SINGLE_TIME_PATTERN);
 const SINGLE_TIME_UNIT_PATTERN = createUnitPattern(SINGLE_TIME_PATTERN);
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
 
 
 const FULL_UNIT_PATTERN = matchAnyPattern(FULL_TIME_UNIT_DICTIONARY);
-console.log(FULL_UNIT_PATTERN);
 const FULL_TIME_UNIT_PATTERN = createUnitPattern(FULL_UNIT_PATTERN);
 const FULL_TIME_UNIT_REGEX = new RegExp(FULL_TIME_UNIT_PATTERN, "i");
 const FULL_TIME_UNIT_PATTERN_NO_CAPTURE = FULL_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
@@ -266,7 +264,6 @@ export function parseTimeUnits(timeunitText, useShorts = false): TimeUnits {
 
     let match = REGEX.exec(remainingText);
     while (match) {
-        console.log(`Match: ${match} \n Match[1]: ${match[1]}`)
         collectDateTimeFragment(fragments, match, DICT);
         remainingText = remainingText.substring(match[0].length);
         match = REGEX.exec(remainingText);
