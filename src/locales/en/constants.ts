@@ -148,6 +148,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     hrs: "hour",
     hour: "hour",
     hours: "hour",
+    d: "d",
     day: "d",
     days: "d",
     w: "week",
