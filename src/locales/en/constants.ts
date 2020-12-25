@@ -152,6 +152,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     day: "d",
     days: "d",
     w: "week",
+    wk: "week",
     week: "week",
     weeks: "week",
     month: "month",
