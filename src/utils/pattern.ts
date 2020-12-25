@@ -1,4 +1,4 @@
-type DictionaryLike = string[] | { [word: string]: unknown } | Map<string, unknown>;
+export type DictionaryLike = string[] | { [word: string]: unknown } | Map<string, unknown>;
 
 export function patternWithWordBreak(regExp: RegExp): RegExp {
     return RegExp("" + regExp.source);
