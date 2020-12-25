@@ -2,6 +2,7 @@ import { OpUnitType } from "dayjs";
 import { matchAnyPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
+import { DictionaryLike } from "../../utils/pattern";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     sunday: 0,
@@ -134,11 +135,9 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
 };
 
 export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
-    s: "second",
     sec: "second",
     second: "second",
     seconds: "second",
-    m: "minute",
     min: "minute",
     mins: "minute",
     minute: "minute",
@@ -148,11 +147,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     hrs: "hour",
     hour: "hour",
     hours: "hour",
-    d: "d",
     day: "d",
     days: "d",
-    w: "week",
-    wk: "week",
     week: "week",
     weeks: "week",
     month: "month",
@@ -162,6 +158,17 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     year: "year",
     years: "year",
 };
+
+export const SHORT_TIME_UNIT_DICTIONARY: { [letter:string]: OpUnitType } = {
+    ms: "millisecond",
+    s: "second",
+    m: "minute",
+    d: "d",
+    w: "week",
+    wk: "week",
+}
+
+export const FULL_TIME_UNIT_DICTIONARY = { ...TIME_UNIT_DICTIONARY, ...SHORT_TIME_UNIT_DICTIONARY }
 
 //-----------------------------
 
@@ -228,29 +235,51 @@ export function parseYear(match: string): number {
 
 //-----------------------------
 
-const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*`;
+const SINGLE_TIME_PATTERN = matchAnyPattern(TIME_UNIT_DICTIONARY);
+console.log(SINGLE_TIME_PATTERN);
+const SINGLE_TIME_UNIT_PATTERN = createUnitPattern(SINGLE_TIME_PATTERN);
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
-
 const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
+
+
+const FULL_UNIT_PATTERN = matchAnyPattern(FULL_TIME_UNIT_DICTIONARY);
+console.log(FULL_UNIT_PATTERN);
+const FULL_TIME_UNIT_PATTERN = createUnitPattern(FULL_UNIT_PATTERN);
+const FULL_TIME_UNIT_REGEX = new RegExp(FULL_TIME_UNIT_PATTERN, "i");
+const FULL_TIME_UNIT_PATTERN_NO_CAPTURE = FULL_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
+
+
 
 export const TIME_UNITS_PATTERN =
     `(?:(?:about|around)\\s*)?` +
     `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
 
-export function parseTimeUnits(timeunitText): TimeUnits {
+export const FULL_TIME_UNITS_PATTERN =
+    `(?:(?:about|around)\\s*)?` +
+    `${FULL_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${FULL_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
+
+export function parseTimeUnits(timeunitText, useShorts = false): TimeUnits {
     const fragments = {};
     let remainingText = timeunitText;
-    let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
+    const REGEX = useShorts ? FULL_TIME_UNIT_REGEX : SINGLE_TIME_UNIT_REGEX;
+    const DICT = useShorts ? FULL_TIME_UNIT_DICTIONARY : TIME_UNIT_DICTIONARY;
+
+    let match = REGEX.exec(remainingText);
     while (match) {
-        collectDateTimeFragment(fragments, match);
+        console.log(`Match: ${match} \n Match[1]: ${match[1]}`)
+        collectDateTimeFragment(fragments, match, DICT);
         remainingText = remainingText.substring(match[0].length);
-        match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
+        match = REGEX.exec(remainingText);
     }
     return fragments;
 }
 
-function collectDateTimeFragment(fragments, match) {
+function collectDateTimeFragment(fragments, match, DICT: DictionaryLike) {
     const num = parseNumberPattern(match[1]);
-    const unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
+    const unit = DICT[match[2].toLowerCase()];
     fragments[unit] = num;
+}
+
+function createUnitPattern(pattern: string): string {
+    return `(${NUMBER_PATTERN})\\s*(${pattern})\\s*`;
 }
