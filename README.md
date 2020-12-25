@@ -104,13 +104,13 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 const referenceDate = new Date(2012, 7, 25);
 // Sat Aug 25 2012 00:00:00 GMT+0200 (CEST)
 
-chrono.parse('in 25 minutes', referenceDate);
+chrono.parseDate('in 25 minutes', referenceDate);
 // Sat Aug 25 2012 00:25:00 GMT+0200 (CEST) -- adds 25 minutes
 
-chrono.parse('in 25m', referenceDate);
+chrono.parseDate('in 25m', referenceDate);
 // null -- does not understand 25m
 
-chrono.parse('in 25m', referenceDate, { useShorts: true });
+chrono.parseDate('in 25m', referenceDate, { useShorts: true });
 // 'Sat Aug 25 2012 00:25:00 GMT+0200 (CEST)' -- allows 25m to parse as 25 minutes
 ```
 
