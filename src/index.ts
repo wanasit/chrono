@@ -16,6 +16,7 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
 
 export interface ParsingOption {
     forwardDate?: boolean;
+    useShorts?: boolean;
     debug?: DebugHandler | DebugConsume;
     timezones?: { string: number };
 }
