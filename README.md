@@ -111,7 +111,7 @@ chrono.parseDate('in 25m', referenceDate);
 // null -- does not understand 25m
 
 chrono.parseDate('in 25m', referenceDate, { useShorts: true });
-// 'Sat Aug 25 2012 00:25:00 GMT+0200 (CEST)' -- allows 25m to parse as 25 minutes
+// Sat Aug 25 2012 00:25:00 GMT+0200 (CEST) -- allows 25m to parse as 25 minutes
 ```
 
 ### Parsed Results and Components
