@@ -2,6 +2,7 @@ import { Component, ParsedComponents, ParsedResult } from "./index";
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { OpUnitType, QUnitType } from "dayjs";
+import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
 dayjs.extend(quarterOfYear);
 
 export class ParsingComponents implements ParsedComponents {
@@ -157,19 +158,10 @@ export class ParsingComponents implements ParsedComponents {
 
         const components = new ParsingComponents(refDate);
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
-            components.assign("hour", date.hour());
-            components.assign("minute", date.minute());
-            components.assign("second", date.second());
-            components.assign("timezoneOffset", date.utcOffset());
-
-            components.assign("day", date.date());
-            components.assign("month", date.month() + 1);
-            components.assign("year", date.year());
+            assignSimilarTime(components, date);
+            assignSimilarDate(components, date);
         } else {
-            components.imply("hour", date.hour());
-            components.imply("minute", date.minute());
-            components.imply("second", date.second());
-            components.imply("timezoneOffset", date.utcOffset());
+            implySimilarTime(components, date);
 
             if (fragments["d"]) {
                 components.assign("day", date.date());
