@@ -42,9 +42,8 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 11, 12));
     });
 
-    // Say.."Demain" in the late night (1 AM)
     testSingleCase(chrono.fr, "La deadline est demain", new Date(2012, 7, 10, 1), (result) => {
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 1));
     });
 
     testSingleCase(chrono.fr, "La deadline était hier", new Date(2012, 7, 10, 12), (result) => {

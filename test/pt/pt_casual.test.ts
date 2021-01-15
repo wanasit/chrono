@@ -43,7 +43,7 @@ test("Test - Single Expression", function () {
     });
 
     testSingleCase(chrono.pt, "O prazo é Amanhã", new Date(2012, 7, 10, 1), (result) => {
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 1));
     });
 
     testSingleCase(chrono.pt, "O prazo foi ontem", new Date(2012, 7, 10, 12), (result) => {

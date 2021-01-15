@@ -1,21 +1,10 @@
 import { ParsingComponents } from "../results";
 import dayjs from "dayjs";
 
-/**
- * Assign the next day or 'tomorrow'.
- * This includes checking for edge cases e.g. mentioned 'tomorrow' after midnight
- */
 export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
-    if (targetDayJs.hour() > 1) {
-        targetDayJs = targetDayJs.add(1, "day");
-        assignSimilarDate(component, targetDayJs);
-        implySimilarTime(component, targetDayJs);
-    } else {
-        assignSimilarDate(component, targetDayJs);
-        component.imply("hour", 12);
-        component.imply("minute", 0);
-        component.imply("second", 0);
-    }
+    targetDayJs = targetDayJs.add(1, "day");
+    assignSimilarDate(component, targetDayJs);
+    implySimilarTime(component, targetDayJs);
 }
 
 export function assignSimilarDate(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {

@@ -45,9 +45,8 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 11, 17, 10));
     });
 
-    // Say.."Tomorrow" in the late night (1 AM)
     testSingleCase(chrono.casual, "The Deadline is Tomorrow", new Date(2012, 7, 10, 1), (result) => {
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 1));
     });
 
     testSingleCase(chrono.casual, "The Deadline was yesterday", new Date(2012, 7, 10, 12), (result) => {
@@ -122,11 +121,13 @@ test("Test - Single Expression", () => {
         expect(result.start.get("hour")).toBe(0);
     });
 
+    // "Midnight" at 0~1AM, assume it's the coming midnight of following day
+    // This is similar to "Tomorrow" at 0~1AM
     testSingleCase(chrono.casual, "The Deadline was midnight ", new Date(2012, 7, 10, 1), (result) => {
         expect(result.text).toBe("midnight");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("day")).toBe(11);
         expect(result.start.get("hour")).toBe(0);
     });
 });

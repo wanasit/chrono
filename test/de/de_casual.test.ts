@@ -40,12 +40,11 @@ test("Test - Casual date expression", function () {
         //expect(result.start.get("hour")).toBe(8);
     });
 
-    // Say.."Tomorrow" in the late night (1 AM)
-    testSingleCase(chrono.de, "Die Deadline ist morgen", new Date(2012, 7, 10, 1), (result) => {
+    testSingleCase(chrono.de, "Die Deadline ist morgen", new Date(2012, 8 - 1, 10, 1), (result) => {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-        //expect(result.start.get("hour")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(1);
     });
 
     testSingleCase(chrono.de, "Die Deadline war gestern", new Date(2012, 7, 10, 12), (result) => {
