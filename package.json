@@ -15,7 +15,7 @@
     "preset": "ts-jest"
   },
   "license": "MIT",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "directories": {
     "source": "./src",
     "test": "./test"
@@ -80,7 +80,12 @@
     "reportUnusedDisableDirectives": true,
     "rules": {
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "args": "none"
+        }
+      ],
       "prefer-const": "warn"
     }
   }
