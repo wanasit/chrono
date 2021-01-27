@@ -4,9 +4,11 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp {
+    innerPattern(context: ParsingContext): RegExp {
+        const prefix = context.option.forwardDate ? "" : "(?:within|in|for)\\s*";
         return new RegExp(
-            `(?:within|in|for)\\s*(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?` +
+            prefix +
+                `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?` +
                 "(" +
                 TIME_UNITS_PATTERN +
                 ")" +
