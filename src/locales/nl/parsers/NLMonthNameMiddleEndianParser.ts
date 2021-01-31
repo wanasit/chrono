@@ -1,30 +1,33 @@
 import { ParsingContext } from "../../../chrono";
 import { findYearClosestToRef } from "../../../calculation/years";
-import { MONTH_DICTIONARY } from "../../nl/constants";
-import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../../nl/constants";
-import { YEAR_PATTERN, parseYear } from "../../nl/constants";
+import { MONTH_DICTIONARY } from "../constants";
+import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants";
+import { YEAR_PATTERN, parseYear } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${ORDINAL_NUMBER_PATTERN})(?!\\s*)\\s*` +
-        "(?:" +
-        "(?:to|\\-)\\s*" +
-        `(${ORDINAL_NUMBER_PATTERN})\\s*` +
+        "(?:on\\s*?)?" +
+        `(${ORDINAL_NUMBER_PATTERN})` +
+        "(?:\\s*" +
+        "(?:tot|\\-|\\–|until|through|till|\\s)\\s*" +
+        `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
+        "(?:-|/|\\s*(?:of)?\\s*)" +
+        "(" +
+        matchAnyPattern(MONTH_DICTIONARY) +
+        ")" +
         "(?:" +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${YEAR_PATTERN})` +
+        "(?:-|/|,?\\s*)" +
+        `(${YEAR_PATTERN}(?![^\\s]\\d))` +
         ")?" +
-        "(?=\\W|$)(?!\\:\\d)",
-    "i"
+        "(?=\\W|$)",
+        "i"
 );
 
-const MONTH_NAME_GROUP = 1;
-const DATE_GROUP = 2;
-const DATE_TO_GROUP = 3;
+const MONTH_NAME_GROUP = 3;
+const DATE_GROUP = 1;
+const DATE_TO_GROUP = 2;
 const YEAR_GROUP = 4;
 
 /**

@@ -1,7 +1,7 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 
-/*test("Test - Single expression", () => {
+test("Test - Single expression", () => {
     testSingleCase(chrono.nl, "10 augustus 2012", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -115,9 +115,9 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
         expect(result.start).toBeDate(new Date(2013, 1 - 1, 10, 12));
     });
 
-    testSingleCase(chrono.nl, "31ste maart, 2016", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "31ste maart 2016", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("31ste maart, 2016");
+        expect(result.text).toBe("31ste maart 2016");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
@@ -127,9 +127,9 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
         expect(result.start).toBeDate(new Date(2016, 3 - 1, 31, 12));
     });
 
-    testSingleCase(chrono.nl, "23ste februari, 2016", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "23ste februari 2016", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("23ste februari, 2016");
+        expect(result.text).toBe("23ste februari 2016");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
@@ -140,27 +140,6 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
     });
 });
 
-test("Test - Single expression with separators", () => {
-    testSingleCase(chrono.nl, "10-augustus 2012", new Date(2012, 7, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result).toBeDate(new Date(2012, 8 - 1, 10, 12, 0));
-    });
-
-    testSingleCase(chrono.nl, "10-augustus-2012", new Date(2012, 7, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result).toBeDate(new Date(2012, 8 - 1, 10, 12, 0));
-    });
-
-    testSingleCase(chrono.nl, "10/augustus 2012", new Date(2012, 7, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result).toBeDate(new Date(2012, 8 - 1, 10, 12, 0));
-    });
-
-    testSingleCase(chrono.nl, "10/augustus/2012", new Date(2012, 7, 8), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result).toBeDate(new Date(2012, 8 - 1, 10, 12, 0));
-    });
-});
 
 test("Test - Range expression", () => {
     testSingleCase(chrono.nl, "10 - 22 augustus 2012", new Date(2012, 7, 10), (result) => {
@@ -182,9 +161,9 @@ test("Test - Range expression", () => {
         expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
     });
 
-    testSingleCase(chrono.nl, "10 to 22 augustus 2012", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "10 tot 22 augustus 2012", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("10 to 22 augustus 2012");
+        expect(result.text).toBe("10 tot 22 augustus 2012");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -280,8 +259,8 @@ test("Test - Combined expression", () => {
 });
 
 test("Test - Ordinal Words", () => {
-    testSingleCase(chrono.nl, "Twenty-fourth of May", new Date(2012, 7, 10), (result) => {
-        expect(result.text).toBe("Twenty-fourth of May");
+    testSingleCase(chrono.nl, "vierentwintigste mei", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("vierentwintigste mei");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -289,8 +268,8 @@ test("Test - Ordinal Words", () => {
         expect(result.start.get("day")).toBe(24);
     });
 
-    testSingleCase(chrono.nl, "Eighth to eleventh May 2010", new Date(2012, 7, 10), (result) => {
-        expect(result.text).toBe("Eighth to eleventh May 2010");
+    testSingleCase(chrono.nl, "achtste tot elfde mei 2010", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("achtste tot elfde mei 2010");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2010);
@@ -305,41 +284,28 @@ test("Test - Ordinal Words", () => {
 });
 
 test("Test - little endian date followed by time", () => {
-    testSingleCase(chrono.nl, "24th October, 9 am", new Date(2017, 7 - 1, 7, 15), (result) => {
-        expect(result.text).toBe("24th October, 9 am");
+    testSingleCase(chrono.nl, "24ste oktober, 9:00", new Date(2017, 7 - 1, 7, 15), (result) => {
+        expect(result.text).toBe("24ste oktober, 9:00");
         expect(result.start.get("day")).toBe(24);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("hour")).toBe(9);
     });
 
-    testSingleCase(chrono.nl, "24th October, 9 pm", new Date(2017, 7 - 1, 7, 15), (result) => {
-        expect(result.text).toBe("24th October, 9 pm");
+    testSingleCase(chrono.nl, "24ste oktober, 21:00", new Date(2017, 7 - 1, 7, 15), (result) => {
+        expect(result.text).toBe("24ste oktober, 21:00");
         expect(result.start.get("day")).toBe(24);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("hour")).toBe(21);
     });
 
-    testSingleCase(chrono.nl, "24 October, 9 pm", new Date(2017, 7 - 1, 7, 15), (result) => {
-        expect(result.text).toBe("24 October, 9 pm");
+    testSingleCase(chrono.nl, "24 oktober, 21:00", new Date(2017, 7 - 1, 7, 15), (result) => {
+        expect(result.text).toBe("24 oktober, 21:00");
         expect(result.start.get("day")).toBe(24);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("hour")).toBe(21);
-    });
-
-    testSingleCase(chrono.nl, "24 October, 9 p.m.", new Date(2017, 7 - 1, 7, 15), (result) => {
-        expect(result.text).toBe("24 October, 9 p.m.");
-        expect(result.start.get("day")).toBe(24);
-        expect(result.start.get("month")).toBe(10);
-        expect(result.start.get("hour")).toBe(21);
-    });
-
-    testSingleCase(chrono.nl, "24 October 10 o clock", new Date(2017, 7 - 1, 7, 15), (result) => {
-        expect(result.text).toBe("24 October 10 o clock");
-        expect(result.start.get("day")).toBe(24);
-        expect(result.start.get("month")).toBe(10);
-        expect(result.start.get("hour")).toBe(10);
     });
 });
+
 
 test("Test - year 90's parsing", () => {
     testSingleCase(chrono.nl, "03 aug 96", new Date(2012, 7, 10), (result) => {
@@ -366,6 +332,7 @@ test("Test - year 90's parsing", () => {
         expect(result.start.get("day")).toBe(9);
     });
 });
+
 
 test("Test - Forward Option", () => {
     testSingleCase(chrono.nl, "22-23 februari om 19:00", new Date(2016, 3 - 1, 15), (result) => {
@@ -401,4 +368,4 @@ test("Test - Impossible Dates (Strict Mode)", function () {
     testUnexpectedResult(chrono.strict, "32 augustus", new Date(2012, 7, 10));
 
     testUnexpectedResult(chrono.strict, "29 februari", new Date(2013, 7, 10));
-});*/
+});
