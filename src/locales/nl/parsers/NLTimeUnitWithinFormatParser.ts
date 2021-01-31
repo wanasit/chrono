@@ -1,9 +1,9 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits } from "../../en/constants";
+import { TIME_UNITS_PATTERN, parseTimeUnits } from "../../nl/constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return new RegExp(`(?:binnen|in)\\s*` + "(" + TIME_UNITS_PATTERN + ")" + `(?=\\W|$)`, "i");
     }

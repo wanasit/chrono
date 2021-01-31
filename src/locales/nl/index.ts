@@ -11,6 +11,7 @@ import NLWeekdayParser from "./parsers/NLWeekdayParser";
 import NLMonthNameMiddleEndianParser from "./parsers/NLMonthNameMiddleEndianParser";
 import NLMonthNameParser from "./parsers/NLMonthNameParser";
 import NLSlashMonthFormatParser from "./parsers/NLSlashMonthFormatParser";
+import NLTimeExpressionParser from "./parsers/NLTimeExpressionParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -37,6 +38,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
             parsers: [
                 new SlashDateFormatParser(littleEndian),
                 new NLTimeUnitWithinFormatParser(),
+                new NLTimeExpressionParser(),
                 new NLWeekdayParser(),
                 new NLMonthNameMiddleEndianParser(),
                 new NLMonthNameParser(),

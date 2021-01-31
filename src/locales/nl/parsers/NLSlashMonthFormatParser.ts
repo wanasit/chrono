@@ -12,7 +12,7 @@ const YEAR_GROUP = 2;
  * - 11/05
  * - 06/2005
  */
-export default class ENSlashMonthFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLSlashMonthFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }

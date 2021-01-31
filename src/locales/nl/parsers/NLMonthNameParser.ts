@@ -4,9 +4,12 @@ import { findYearClosestToRef } from "../../../calculation/years";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { YEAR_PATTERN, parseYear } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ORDINAL_NUMBER_PATTERN } from "../../nl/constants";
+import { parseOrdinalNumberPattern } from "../../../../dist/locales/nl/constants";
 
 const PATTERN = new RegExp(
-    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+    `(${ORDINAL_NUMBER_PATTERN})\\s*` +
+        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "\\s*" +
         "(?:" +
         `[,-]?\\s*(${YEAR_PATTERN})?` +
@@ -15,8 +18,9 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const MONTH_NAME_GROUP = 1;
-const YEAR_GROUP = 2;
+const DAY_GROUP = 1;
+const MONTH_NAME_GROUP = 2;
+const YEAR_GROUP = 3;
 
 /**
  * The parser for parsing month name and year.
@@ -24,7 +28,7 @@ const YEAR_GROUP = 2;
  * - January 2012
  * - January
  */
-export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLMonthNameParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -35,7 +39,12 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
         }
 
         const components = context.createParsingComponents();
-        components.imply("day", 1);
+
+        const day = parseOrdinalNumberPattern(match[DAY_GROUP]);
+        if (day > 31) {
+            return null;
+        }
+        components.assign("day", day);
 
         const monthName = match[MONTH_NAME_GROUP];
         const month = MONTH_DICTIONARY[monthName.toLowerCase()];

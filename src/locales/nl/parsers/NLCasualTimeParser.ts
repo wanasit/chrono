@@ -4,15 +4,16 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import dayjs from "dayjs";
 import { assignTheNextDay } from "../../../utils/dayjs";
 
-export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:this)?\s*(namiddag|avond|middernacht|ochtend|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
+        return /(?:this)?\s*(namiddag|vanavond|avond|vannacht|middernacht|vanochtend|ochtend|vanmiddag|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const targetDate = dayjs(context.refDate);
         const component = context.createParsingComponents();
 
+        // TODO provide "deze middag, deze avond, deze nacht"
         switch (match[1].toLowerCase()) {
             case "namiddag":
             case "'s namiddags":
@@ -20,6 +21,7 @@ export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 15);
                 break;
 
+            case "vanavond":
             case "avond":
             case "'s avonds'":
                 component.imply("meridiem", Meridiem.PM);

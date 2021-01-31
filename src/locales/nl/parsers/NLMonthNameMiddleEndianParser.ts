@@ -1,8 +1,8 @@
 import { ParsingContext } from "../../../chrono";
 import { findYearClosestToRef } from "../../../calculation/years";
-import { MONTH_DICTIONARY } from "../../en/constants";
-import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../../en/constants";
-import { YEAR_PATTERN, parseYear } from "../../en/constants";
+import { MONTH_DICTIONARY } from "../../nl/constants";
+import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../../nl/constants";
+import { YEAR_PATTERN, parseYear } from "../../nl/constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
@@ -37,7 +37,7 @@ const YEAR_GROUP = 4;
  *  - January 12.44
  *  - January 1222344
  */
-export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
