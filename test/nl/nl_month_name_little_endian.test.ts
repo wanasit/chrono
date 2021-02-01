@@ -140,7 +140,6 @@ test("Test - Single expression", () => {
     });
 });
 
-
 test("Test - Range expression", () => {
     testSingleCase(chrono.nl, "10 - 22 augustus 2012", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
@@ -306,7 +305,6 @@ test("Test - little endian date followed by time", () => {
     });
 });
 
-
 test("Test - year 90's parsing", () => {
     testSingleCase(chrono.nl, "03 aug 96", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("03 aug 96");
@@ -332,7 +330,6 @@ test("Test - year 90's parsing", () => {
         expect(result.start.get("day")).toBe(9);
     });
 });
-
 
 test("Test - Forward Option", () => {
     testSingleCase(chrono.nl, "22-23 februari om 19:00", new Date(2016, 3 - 1, 15), (result) => {

@@ -7,7 +7,7 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-        "(?:on\\s*?)?" +
+    "(?:on\\s*?)?" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         "(?:\\s*" +
         "(?:tot|\\-|\\–|until|through|till|\\s)\\s*" +
@@ -22,7 +22,7 @@ const PATTERN = new RegExp(
         `(${YEAR_PATTERN}(?![^\\s]\\d))` +
         ")?" +
         "(?=\\W|$)",
-        "i"
+    "i"
 );
 
 const MONTH_NAME_GROUP = 3;
@@ -31,14 +31,19 @@ const DATE_TO_GROUP = 2;
 const YEAR_GROUP = 4;
 
 /**
- * The parser for parsing US's date format that begin with month's name.
- *  - January 13
- *  - January 13, 2012
- *  - January 13 - 15, 2012
- * Note: Watch out for:
- *  - January 12:00
- *  - January 12.44
- *  - January 1222344
+ * The parser for parsing BE/NL date format with month's name in full writing
+ *  - 1 januari 2019
+ *  - 01 januari 2019
+ *  - 10 januari 2019
+ *  - 13 januari
+ *  - 10 - 25 maart
+ *  - 10 - 25 maart 2019
+ *  - 1 aug 2019
+ *  - 1 september 200 voor Christus
+ *  - 1 september 2002 na Christus
+ *  - 19 januari 87
+ *  - 12de juli 2013
+ *  - 1ste november 2013
  */
 export default class NLMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
