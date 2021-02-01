@@ -20,29 +20,23 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 6, 12));
     });
 
-    testSingleCase(
-        chrono.nl,
-        "maandag (forward dates only)",
-        new Date(2012, 7, 9),
-        { forwardDate: true },
-        (result) => {
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("maandag");
+    testSingleCase(chrono.nl, "maandag (forward dates only)", new Date(2012, 7, 9), { forwardDate: true }, (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("maandag");
 
-            expect(result.start).not.toBeNull();
-            expect(result.start.get("year")).toBe(2012);
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(13);
-            expect(result.start.get("weekday")).toBe(1);
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("weekday")).toBe(1);
 
-            expect(result.start.isCertain("day")).toBe(false);
-            expect(result.start.isCertain("month")).toBe(false);
-            expect(result.start.isCertain("year")).toBe(false);
-            expect(result.start.isCertain("weekday")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("weekday")).toBe(true);
 
-            expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
+    });
 
     testSingleCase(chrono.nl, "donderdag", new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);

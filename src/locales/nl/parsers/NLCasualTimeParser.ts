@@ -29,6 +29,7 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 break;
 
             case "middernacht":
+            case "vannacht":
                 assignTheNextDay(component, targetDate);
                 component.imply("hour", 0);
                 component.imply("minute", 0);

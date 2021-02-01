@@ -26,9 +26,6 @@ export default class NLCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             case "gisteren":
                 return references.yesterday(context.refDate);
-
-            case "vanacht":
-                return references.tonight(context.refDate);
         }
 
         return component;

@@ -122,16 +122,16 @@ test("Test - Single Expression", () => {
         expect(result.start.get("hour")).toBe(20);
     });
 
-    /* not implemented
+
     // "Midnight" at 0~1AM, assume it's the coming midnight of following day
     // This is similar to "Tomorrow" at 0~1AM
-    testSingleCase(chrono.casual, "The Deadline was midnight ", new Date(2012, 7, 10, 1), (result) => {
-        expect(result.text).toBe("midnight");
+    testSingleCase(chrono.nl, "The Deadline is om middernacht ", new Date(2012, 7, 10, 1), (result) => {
+        expect(result.text).toBe("middernacht");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(11);
         expect(result.start.get("hour")).toBe(0);
-    });*/
+    });
 });
 
 test("Test - Combined Expression", () => {
