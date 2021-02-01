@@ -368,11 +368,4 @@ test("Test - Random negative text", () => {
     testUnexpectedResult(chrono.nl, "noway");
 
     testUnexpectedResult(chrono.nl, "knowledge");
-
-    // TODO fix this, should we allow mar and jan?
-    /*
-    testUnexpectedResult(chrono.nl, "mar");
-
-    testUnexpectedResult(chrono.nl, "jan");
-    */
 });

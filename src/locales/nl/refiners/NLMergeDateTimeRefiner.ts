@@ -8,6 +8,6 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  */
 export default class NLMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(om|na|voor|,|-)?\\s*$");
+        return new RegExp("^\\s*(om|na|voor|in de|,|-)?\\s*$");
     }
 }

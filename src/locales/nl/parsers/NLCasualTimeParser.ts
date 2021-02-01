@@ -6,7 +6,7 @@ import { assignTheNextDay } from "../../../utils/dayjs";
 
 export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:this)?\s*(namiddag|vanavond|avond|vannacht|middernacht|vanochtend|ochtend|vanmiddag|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
+        return /(?:deze)?\s*(namiddag|vanavond|avond|vannacht|middernacht|vanochtend|ochtend|vanmiddag|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {

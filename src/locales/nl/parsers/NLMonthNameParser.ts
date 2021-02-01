@@ -30,10 +30,6 @@ export default class NLMonthNameParser extends AbstractParserWithWordBoundaryChe
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        if (match[0].length <= 2) {
-            return null;
-        }
-
         const components = context.createParsingComponents();
         components.imply("day", 1);
 

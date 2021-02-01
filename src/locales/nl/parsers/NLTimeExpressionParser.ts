@@ -4,11 +4,11 @@ import { ParsingContext } from "../../../chrono";
 
 export default class NLTimeExpressionParser extends AbstractTimeExpressionParser {
     primaryPrefix(): string {
-        return "(?:(?:[àa])\\s*)?";
+        return "(?:(?:om)\\s*)?";
     }
 
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|[àa]|\\?)\\s*";
+        return "\\s*(?:\\-|\\–|\\~|\\〜|om|\\?)\\s*";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
