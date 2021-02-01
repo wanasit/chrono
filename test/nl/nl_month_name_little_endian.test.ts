@@ -356,13 +356,3 @@ test("Test - Forward Option", () => {
         expect(result.end.get("hour")).toBe(19);
     });
 });
-
-test("Test - Impossible Dates (Strict Mode)", function () {
-    testUnexpectedResult(chrono.strict, "32 augustus 2014", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono.strict, "29 februari 2014", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono.strict, "32 augustus", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono.strict, "29 februari", new Date(2013, 7, 10));
-});

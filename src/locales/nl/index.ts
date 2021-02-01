@@ -37,12 +37,12 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
-                new NLTimeUnitWithinFormatParser(),
-                new NLTimeExpressionParser(),
-                new NLWeekdayParser(),
                 new NLMonthNameMiddleEndianParser(),
                 new NLMonthNameParser(),
+                new NLTimeExpressionParser(),
+                new NLTimeUnitWithinFormatParser(),
                 new NLSlashMonthFormatParser(),
+                new NLWeekdayParser(),
             ],
             refiners: [new NLMergeDateTimeRefiner(), new NLMergeDateRangeRefiner()],
         },
