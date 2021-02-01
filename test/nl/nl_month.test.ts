@@ -171,11 +171,10 @@ test("Test - year 90's parsing", () => {
         expect(result.start.get("month")).toBe(8);
     });
 
-    // TODO fix this, if parsed as "6 aug 96" in the NLMonthNameMiddleEndianParser
-    /*testSingleCase(chrono.nl, "96 aug 96", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "96 aug 96", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("aug 96");
 
         expect(result.start.get("year")).toBe(1996);
         expect(result.start.get("month")).toBe(8);
-    });*/
+    });
 });
