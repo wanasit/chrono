@@ -8,10 +8,10 @@ import { toDayJSWeekday } from "../../../calculation/weeks";
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
         "(?:on\\s*?)?" +
-        "(?:(deze|last|vorige|volgende)\\s*)?" +
+        "(?:(deze|vorige|volgende)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
         "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(deze|last|vorige|volgende)\\s*week)?" +
+        "(?:\\s*(deze|vorige|volgende)\\s*week)?" +
         "(?=\\W|$)",
     "i"
 );
@@ -35,7 +35,7 @@ export default class NLWeekdayParser extends AbstractParserWithWordBoundaryCheck
         modifierWord = modifierWord.toLowerCase();
 
         let modifier = null;
-        if (modifierWord == "last" || modifierWord == "vorige") {
+        if (modifierWord == "vorige") {
             modifier = "last";
         } else if (modifierWord == "volgende") {
             modifier = "next";
