@@ -9,25 +9,25 @@ test("Test - Parsing Offset Expression", function () {
 });
 
 test("Test - Single Expression", function () {
-    testSingleCase(chrono.nl, "The event is going ahead (04/2016)", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "Het evenement gaat door (04/2016)", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(4);
         expect(result.start.get("day")).toBe(1);
 
-        expect(result.index).toBe(26);
+        expect(result.index).toBe(25);
         expect(result.text).toBe("04/2016");
 
         expect(result.start).toBeDate(new Date(2016, 4 - 1, 1, 12));
     });
 
-    testSingleCase(chrono.nl, "Published: 06/2004", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.nl, "Gepubliceerd: 06/2004", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2004);
         expect(result.start.get("month")).toBe(6);
         expect(result.start.get("day")).toBe(1);
 
-        expect(result.index).toBe(11);
+        expect(result.index).toBe(14);
         expect(result.text).toBe("06/2004");
 
         expect(result.start).toBeDate(new Date(2004, 6 - 1, 1, 12));
@@ -77,15 +77,15 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 10 - 1, 8, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is 8/10/2012", new Date(2012, 10 - 1, 8), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is 8/10/2012", new Date(2012, 10 - 1, 8), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("8/10/2012");
 
         expect(result.start).toBeDate(new Date(2012, 10 - 1, 8, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is dinsdag 11/3/2015", new Date(2015, 10, 3), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is dinsdag 11/3/2015", new Date(2015, 10, 3), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("dinsdag 11/3/2015");
 
         expect(result.start).toBeDate(new Date(2015, 2, 11, 12));

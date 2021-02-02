@@ -64,8 +64,8 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is vorige vrijdag...", new Date(2012, 7, 9), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is vorige vrijdag...", new Date(2012, 7, 9), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("vorige vrijdag");
 
         expect(result.start).not.toBeNull();
@@ -77,42 +77,44 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 3, 12));
     });
 
-    testSingleCase(chrono.nl, "Let's have a meeting on vrijdag volgende week", new Date(2015, 3, 18), (result) => {
-        expect(result.index).toBe(21);
-        expect(result.text).toBe("on vrijdag volgende week");
-
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2015);
-        expect(result.start.get("month")).toBe(4);
-        expect(result.start.get("day")).toBe(24);
-        expect(result.start.get("weekday")).toBe(5);
-
-        expect(result.start).toBeDate(new Date(2015, 3, 24, 12));
-    });
-
+    // TODO: should be "volgende week vrijdag"
     testSingleCase(
         chrono.nl,
-        "I plan on taking the day off on dinsdag, volgende week",
+        "Laten we een meeting hebben op vrijdag volgende week",
         new Date(2015, 3, 18),
         (result) => {
-            expect(result.index).toBe(29);
-            expect(result.text).toBe("on dinsdag, volgende week");
+            expect(result.index).toBe(31);
+            expect(result.text).toBe("vrijdag volgende week");
 
             expect(result.start).not.toBeNull();
             expect(result.start.get("year")).toBe(2015);
             expect(result.start.get("month")).toBe(4);
-            expect(result.start.get("day")).toBe(21);
-            expect(result.start.get("weekday")).toBe(2);
+            expect(result.start.get("day")).toBe(24);
+            expect(result.start.get("weekday")).toBe(5);
 
-            expect(result.start).toBeDate(new Date(2015, 3, 21, 12));
+            expect(result.start).toBeDate(new Date(2015, 3, 24, 12));
         }
     );
+
+    // TODO: should be "volgende week dinsdag"
+    testSingleCase(chrono.nl, "Ik plan een vrije dag op dinsdag, volgende week", new Date(2015, 3, 18), (result) => {
+        expect(result.index).toBe(25);
+        expect(result.text).toBe("dinsdag, volgende week");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2015);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(21);
+        expect(result.start.get("weekday")).toBe(2);
+
+        expect(result.start).toBeDate(new Date(2015, 3, 21, 12));
+    });
 });
 
 test("Test - Weekday With Casual Time", function () {
-    testSingleCase(chrono.nl, "Lets meet on dinsdag ochtend", new Date(2015, 3, 18), (result) => {
-        expect(result.index).toBe(10);
-        expect(result.text).toBe("on dinsdag ochtend");
+    testSingleCase(chrono.nl, "Laten we op dinsdag ochtend afspreken", new Date(2015, 3, 18), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("dinsdag ochtend");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2015);

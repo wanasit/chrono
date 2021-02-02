@@ -77,8 +77,8 @@ test("Test - Single expression", () => {
         expect(result.start).toBeDate(new Date(2013, 9 - 1, 15, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is 10 augustus", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is 10 augustus", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("10 augustus");
 
         expect(result.start).not.toBeNull();
@@ -89,8 +89,8 @@ test("Test - Single expression", () => {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is dinsdag, 10 januari", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is dinsdag, 10 januari", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("dinsdag, 10 januari");
 
         expect(result.start).not.toBeNull();
@@ -102,8 +102,8 @@ test("Test - Single expression", () => {
         expect(result.start).toBeDate(new Date(2013, 1 - 1, 10, 12));
     });
 
-    testSingleCase(chrono.nl, "The Deadline is di, 10 januari", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(16);
+    testSingleCase(chrono.nl, "De deadline is di, 10 januari", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(15);
         expect(result.text).toBe("di, 10 januari");
 
         expect(result.start).not.toBeNull();
