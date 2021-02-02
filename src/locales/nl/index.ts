@@ -44,7 +44,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new NLTimeUnitWithinFormatParser(),
                 new NLSlashMonthFormatParser(),
                 new NLWeekdayParser(),
-                new NLCasualYearMonthDayParser()
+                new NLCasualYearMonthDayParser(),
             ],
             refiners: [new NLMergeDateTimeRefiner(), new NLMergeDateRangeRefiner()],
         },
