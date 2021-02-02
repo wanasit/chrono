@@ -222,34 +222,34 @@ test("Test - Casual time implication", () => {
 });
 
 test("Test - Random text", () => {
-    testSingleCase(chrono, "tonight", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "vanavond", new Date(2012, 1 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(1);
         expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono.nl, "vanavond 22:00", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(22);
-        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
-    });
-
-    testSingleCase(chrono, "tonight 8pm", new Date(2012, 1 - 1, 1, 12), (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("hour")).toBe(20);
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(1);
         expect(result.start.get("day")).toBe(1);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
 
-    testSingleCase(chrono, "tonight at 8", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "vanavond om 21:00", new Date(2012, 1 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
-        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("hour")).toBe(21);
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(1);
         expect(result.start.get("day")).toBe(1);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
 
-    testSingleCase(chrono, "tomorrow before 4pm", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "morgen voor 16:00", new Date(2012, 1 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(16);
         expect(result.start.get("year")).toBe(2012);
@@ -258,7 +258,7 @@ test("Test - Random text", () => {
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
 
-    testSingleCase(chrono, "tomorrow after 4pm", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "morgen na 16:00", new Date(2012, 1 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(16);
         expect(result.start.get("year")).toBe(2012);
@@ -267,17 +267,12 @@ test("Test - Random text", () => {
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
 
-    testSingleCase(chrono, "thurs", (result, text) => {
+    testSingleCase(chrono.nl, "donderdag", (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("weekday")).toBe(4);
     });
 
-    testSingleCase(chrono, "thurs", (result, text) => {
-        expect(result.text).toBe(text);
-        expect(result.start.get("weekday")).toBe(4);
-    });
-
-    testSingleCase(chrono, "this evening", new Date(2016, 10 - 1, 1), (result, text) => {
+    testSingleCase(chrono.nl, "deze avond", new Date(2016, 10 - 1, 1), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
@@ -285,7 +280,7 @@ test("Test - Random text", () => {
         expect(result.start.get("hour")).toBe(20);
     });
 
-    testSingleCase(chrono, "yesterday afternoon", new Date(2016, 10 - 1, 1), (result, text) => {
+    testSingleCase(chrono.nl, "gisteren namiddag", new Date(2016, 10 - 1, 1), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(9);
@@ -293,7 +288,7 @@ test("Test - Random text", () => {
         expect(result.start.get("hour")).toBe(15);
     });
 
-    testSingleCase(chrono, "tomorrow morning", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+    testSingleCase(chrono.nl, "morgen ochtend", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
@@ -301,7 +296,7 @@ test("Test - Random text", () => {
         expect(result.start.get("hour")).toBe(6);
     });
 
-    testSingleCase(chrono, "this afternoon at 3", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+    testSingleCase(chrono.nl, "deze namiddag om 15:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
