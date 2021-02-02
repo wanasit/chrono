@@ -162,10 +162,9 @@ test("Test - Range Expression", function () {
 test("Test - Splitter variances patterns", function () {
     const expectDate = new Date(2015, 5 - 1, 25, 12, 0);
 
-    // TODO fix YMD date format
-    // testWithExpectedDate(chrono.nl, "2015-05-25", expectDate);
-    // testWithExpectedDate(chrono.nl, "2015/05/25", expectDate);
-    // testWithExpectedDate(chrono.nl, "2015.05.25", expectDate);
+    testWithExpectedDate(chrono.nl, "2015-05-25", expectDate);
+    testWithExpectedDate(chrono.nl, "2015/05/25", expectDate);
+    testWithExpectedDate(chrono.nl, "2015.05.25", expectDate);
     testWithExpectedDate(chrono.nl, "25-05-2015", expectDate);
     testWithExpectedDate(chrono.nl, "25/05/2015", expectDate);
     testWithExpectedDate(chrono.nl, "25.05.2015", expectDate);
