@@ -1,4 +1,4 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits } from "../../nl/constants";
+import { TIME_UNITS_PATTERN, parseTimeUnits } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
