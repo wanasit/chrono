@@ -131,9 +131,73 @@ test("Test - Combined Expression", () => {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 17));
     });
+});
 
-    // TODO should be "morgenmiddag"
-    testSingleCase(chrono.nl, "morgen middag", new Date(2012, 8 - 1, 10, 14), (result) => {
+test("Test - Casual combined datetime expressions", () => {
+    testSingleCase(chrono.nl, "gisterenochtend", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(6);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 9, 6));
+    });
+
+    testSingleCase(chrono.nl, "gisterenmiddag", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 9, 12));
+    });
+
+    testSingleCase(chrono.nl, "gisterenavond", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(20);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 9, 20));
+    });
+
+    testSingleCase(chrono.nl, "vanochtend", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(6);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 6));
+    });
+
+    testSingleCase(chrono.nl, "vanmiddag", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+    });
+
+    testSingleCase(chrono.nl, "vanavond", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(20);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 20));
+    });
+
+    testSingleCase(chrono.nl, "morgenochtend", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(6);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 6));
+    });
+
+    testSingleCase(chrono.nl, "morgenmiddag", new Date(2012, 8 - 1, 10, 14), (result) => {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(11);
@@ -141,7 +205,16 @@ test("Test - Combined Expression", () => {
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 12));
     });
-});
+
+    testSingleCase(chrono.nl, "morgenavond", new Date(2012, 8 - 1, 10, 14), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(20);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 20));
+    });
+})
 
 test("Test - Casual date range", () => {
     testSingleCase(chrono.nl, "Het evenement is vandaag - volgende vrijdag", new Date(2012, 7, 4, 12), (result) => {
@@ -188,13 +261,12 @@ test("Test - Casual date range", () => {
 });
 
 test("Test - Casual time implication", () => {
-    // TODO should be "morgennamiddag"
     testSingleCase(
         chrono.nl,
-        "jaarlijks verlof vanaf vandaag tot morgen namiddag",
+        "jaarlijks verlof vanaf vandaag tot morgennamiddag",
         new Date(2012, 8 - 1, 4, 12),
         (result) => {
-            expect(result.text).toBe("vandaag tot morgen namiddag");
+            expect(result.text).toBe("vandaag tot morgennamiddag");
 
             expect(result.start.get("month")).toBe(8);
             expect(result.start.get("day")).toBe(4);
@@ -287,8 +359,7 @@ test("Test - Random text", () => {
         expect(result.start.get("hour")).toBe(20);
     });
 
-    // TODO: should be "gisterennamiddag"
-    testSingleCase(chrono.nl, "gisteren namiddag", new Date(2016, 10 - 1, 1), (result, text) => {
+    testSingleCase(chrono.nl, "gisterennamiddag", new Date(2016, 10 - 1, 1), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(9);
@@ -296,8 +367,7 @@ test("Test - Random text", () => {
         expect(result.start.get("hour")).toBe(15);
     });
 
-    // TODO: should be "morgenochtend"
-    testSingleCase(chrono.nl, "morgen ochtend", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+    testSingleCase(chrono.nl, "morgenochtend", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);

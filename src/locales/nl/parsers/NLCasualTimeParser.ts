@@ -9,7 +9,7 @@ const MOMENT_GROUP = 2;
 
 export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(deze)?\s*(namiddag|vanavond|avond|vannacht|middernacht|vanochtend|ochtend|vanmiddag|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
+        return /(deze)?\s*(namiddag|avond|middernacht|ochtend|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
@@ -29,7 +29,6 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 15);
                 break;
 
-            case "vanavond":
             case "avond":
             case "'s avonds'":
                 component.imply("meridiem", Meridiem.PM);

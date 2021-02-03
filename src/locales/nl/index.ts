@@ -13,6 +13,7 @@ import NLMonthNameParser from "./parsers/NLMonthNameParser";
 import NLSlashMonthFormatParser from "./parsers/NLSlashMonthFormatParser";
 import NLTimeExpressionParser from "./parsers/NLTimeExpressionParser";
 import NLCasualYearMonthDayParser from "./parsers/NLCasualYearMonthDayParser";
+import NLCasualDateTimeParser from "./parsers/NLCasualDateTimeParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -30,6 +31,7 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new NLCasualDateParser());
     option.parsers.unshift(new NLCasualTimeParser());
+    option.parsers.unshift(new NLCasualDateTimeParser());
     return option;
 }
 

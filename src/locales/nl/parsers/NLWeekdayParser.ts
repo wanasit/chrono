@@ -7,11 +7,9 @@ import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
-        "(?:on\\s*?)?" +
-        "(?:(deze|vorige|volgende)\\s*)?" +
+        "(?:op\\s*?)?" +
+        "(?:(deze|vorige|volgende)\\s*(?:week\\s*)?)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(deze|vorige|volgende)\\s*week)?" +
         "(?=\\W|$)",
     "i"
 );
