@@ -20,6 +20,7 @@ export default class NLCasualDateParser extends AbstractParserWithWordBoundaryCh
                 return references.today(context.refDate);
 
             case "morgen":
+            case "morgend":
                 return references.tomorrow(context.refDate);
 
             case "gisteren":
