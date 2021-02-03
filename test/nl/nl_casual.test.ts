@@ -310,6 +310,15 @@ test("Test - Random text", () => {
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
 
+    testSingleCase(chrono.nl, "middag", new Date(2012, 1 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+    });
+
     testSingleCase(chrono.nl, "vanavond 22:00", new Date(2012, 1 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(22);
