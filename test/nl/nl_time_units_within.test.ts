@@ -66,27 +66,29 @@ test("Test - The normal within expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
     });
 
-    testSingleCase(chrono.nl, "Binnen de 5 minuten moet een auto zich verzetten", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("Binnen de 5 minuten");
+    testSingleCase(
+        chrono.nl,
+        "Binnen de 5 minuten moet een auto zich verzetten",
+        new Date(2012, 7, 10, 12, 14),
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("Binnen de 5 minuten");
 
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
-    });
+            expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
+        }
+    );
 
-    testSingleCase(chrono.nl, "Binnen 5 seconden moet een auto zich verzetten", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("Binnen 5 seconden");
+    testSingleCase(
+        chrono.nl,
+        "Binnen 5 seconden moet een auto zich verzetten",
+        new Date(2012, 7, 10, 12, 14),
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("Binnen 5 seconden");
 
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 14, 5));
-    });
-
-    // TODO fix
-    testSingleCase(chrono, "within half an hour", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("within half an hour");
-
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 44));
-    });
+            expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 14, 5));
+        }
+    );
 
     testSingleCase(chrono.nl, "Binnen de 2 weken", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
@@ -101,15 +103,6 @@ test("Test - The normal within expression", () => {
 
         expect(result.start).toBeDate(new Date(2012, 8, 10, 12, 14));
     });
-
-    // TODO fix
-    testSingleCase(chrono, "within a few months", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("within a few months");
-
-        expect(result.start).toBeDate(new Date(2012, 10, 10, 12, 14));
-    });
-
 
     testSingleCase(chrono.nl, "Binnen een jaar", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
