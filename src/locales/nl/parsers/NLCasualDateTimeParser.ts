@@ -1,29 +1,28 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import * as references from "../../../common/casualReferences";
-import {Meridiem} from "../../../index";
-import {assignSimilarDate, assignTheNextDay} from "../../../utils/dayjs";
+import { Meridiem } from "../../../index";
+import { assignSimilarDate, assignTheNextDay } from "../../../utils/dayjs";
 import dayjs from "dayjs";
 
 /*
-* Find combined words
-* - morgenochtend
-* - morgenmiddag
-* - morgennamiddag
-* - morgenavond
-* - morgennacht
-* - vanochtend
-* - vanmiddag
-* - vannamiddag
-* - vanavond
-* - vannacht
-* - gisterenochtend
-* - gisterenmiddag
-* - gisterennamiddag
-* - gisterenavond
-* - gisterennacht
-* */
+ * Find combined words
+ * - morgenochtend
+ * - morgenmiddag
+ * - morgennamiddag
+ * - morgenavond
+ * - morgennacht
+ * - vanochtend
+ * - vanmiddag
+ * - vannamiddag
+ * - vanavond
+ * - vannacht
+ * - gisterenochtend
+ * - gisterenmiddag
+ * - gisterennamiddag
+ * - gisterenavond
+ * - gisterennacht
+ * */
 
 const DATE_GROUP = 1;
 const TIME_OF_DAY_GROUP = 2;

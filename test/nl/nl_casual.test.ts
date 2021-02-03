@@ -214,7 +214,7 @@ test("Test - Casual combined datetime expressions", () => {
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 20));
     });
-})
+});
 
 test("Test - Casual date range", () => {
     testSingleCase(chrono.nl, "Het evenement is vandaag - volgende vrijdag", new Date(2012, 7, 4, 12), (result) => {
