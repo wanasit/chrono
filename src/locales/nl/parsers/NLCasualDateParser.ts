@@ -5,7 +5,7 @@ import * as references from "../../../common/casualReferences";
 
 export default class NLCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(nu|vandaag|morgen|gisteren)(?=\W|$)/i;
+        return /(nu|vandaag|morgen|morgend|gisteren)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
