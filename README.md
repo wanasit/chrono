@@ -98,6 +98,22 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 // Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
 
+`useShorts` (boolean) parses short-hands (currently only `en` locale) such as s, m, d, etc.
+
+```javascript
+const referenceDate = new Date(2012, 7, 25);
+// Sat Aug 25 2012 00:00:00 GMT+0200 (CEST)
+
+chrono.parseDate('in 25 minutes', referenceDate);
+// Sat Aug 25 2012 00:25:00 GMT+0200 (CEST) -- adds 25 minutes
+
+chrono.parseDate('in 25m', referenceDate);
+// null -- does not understand 25m
+
+chrono.parseDate('in 25m', referenceDate, { useShorts: true });
+// Sat Aug 25 2012 00:25:00 GMT+0200 (CEST) -- allows 25m to parse as 25 minutes
+```
+
 ### Parsed Results and Components
 
 #### ParsedResult
