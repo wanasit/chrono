@@ -103,6 +103,8 @@ test("Test - Random non-date patterns", function () {
     testUnexpectedResult(chrono, "Version: 1.1.30");
 
     testUnexpectedResult(chrono, "Version: 1.10.30");
+
+    testUnexpectedResult(chrono, "at 6.5 kilograms");
 });
 
 test("Test - Wikipedia Texts", function () {

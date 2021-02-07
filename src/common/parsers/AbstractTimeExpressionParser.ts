@@ -75,13 +75,12 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         const remainingText = context.text.substring(match.index + match[0].length);
         const followingPattern = followingTimeExpression(this.followingPhase(), this.followingSuffix());
         match = followingPattern.exec(remainingText);
-        if (!match) {
-            return result;
-        }
-
-        // Pattern "YY.YY -XXXX" is more like timezone offset
-        if (match[0].match(/^\s*([+-])\s*\d{3,4}$/)) {
-            return result;
+        if (
+            !match ||
+            // Pattern "YY.YY -XXXX" is more like timezone offset
+            match[0].match(/^\s*([+-])\s*\d{3,4}$/)
+        ) {
+            return AbstractTimeExpressionParser.checkAndReturnStartTime(result);
         }
 
         result.end = this.extractFollowingTimeComponents(context, match, result);
@@ -105,6 +104,11 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
         // ----- Minutes
         if (match[MINUTE_GROUP] != null) {
+            if (match[MINUTE_GROUP].length == 1 && !match[AM_PM_HOUR_GROUP]) {
+                // Skip single digit minute e.g. "at 1.1 xx"
+                return null;
+            }
+
             minute = parseInt(match[MINUTE_GROUP]);
         } else if (hour > 100) {
             minute = hour % 100;
@@ -279,5 +283,14 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         }
 
         return components;
+    }
+
+    private static checkAndReturnStartTime(result) {
+        // Single digit (e.g "1") should not be counted as time expression
+        if (result.text.match(/^\d$/)) {
+            return null;
+        }
+
+        return result;
     }
 }
