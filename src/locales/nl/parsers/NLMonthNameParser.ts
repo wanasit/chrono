@@ -7,8 +7,8 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 
 const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        "\\s*" +
-        "(?:" +
+        `\\s*` +
+        `(?:` +
         `[,-]?\\s*(${YEAR_PATTERN})?` +
         ")?" +
         "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
@@ -20,20 +20,16 @@ const YEAR_GROUP = 2;
 
 /**
  * The parser for parsing month name and year.
- * - January, 2012
- * - January 2012
- * - January
+ * - januari, 2012
+ * - januari 2012
+ * - januari
  */
-export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLMonthNameParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        if (match[0].length <= 3) {
-            return null;
-        }
-
         const components = context.createParsingComponents();
         components.imply("day", 1);
 

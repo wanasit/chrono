@@ -3,9 +3,9 @@ import { ParsingComponents, ParsingResult } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import * as references from "../../../common/casualReferences";
 
-export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(nu|vandaag|vanacht|morgen|morgend|gisteren)(?=\W|$)/i;
+        return /(nu|vandaag|morgen|morgend|gisteren)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
@@ -25,9 +25,6 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             case "gisteren":
                 return references.yesterday(context.refDate);
-
-            case "vanacht":
-                return references.tonight(context.refDate);
         }
 
         return component;

@@ -4,16 +4,25 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import dayjs from "dayjs";
 import { assignTheNextDay } from "../../../utils/dayjs";
 
-export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
+const DAY_GROUP = 1;
+const MOMENT_GROUP = 2;
+
+export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:this)?\s*(namiddag|avond|middernacht|ochtend|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
+        return /(deze)?\s*(namiddag|avond|middernacht|ochtend|middag|'s middags|'s avonds|'s ochtends)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const targetDate = dayjs(context.refDate);
         const component = context.createParsingComponents();
 
-        switch (match[1].toLowerCase()) {
+        if (match[DAY_GROUP] === "deze") {
+            component.assign("day", context.refDate.getDate());
+            component.assign("month", context.refDate.getMonth() + 1);
+            component.assign("year", context.refDate.getFullYear());
+        }
+
+        switch (match[MOMENT_GROUP].toLowerCase()) {
             case "namiddag":
             case "'s namiddags":
                 component.imply("meridiem", Meridiem.PM);

@@ -213,7 +213,7 @@ const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
 
 export const TIME_UNITS_PATTERN =
-    `(?:(?:about|around)\\s*)?` +
+    `(?:(?:binnen|in)\\s*)?` +
     `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
 
 export function parseTimeUnits(timeunitText): TimeUnits {

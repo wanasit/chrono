@@ -11,6 +11,9 @@ import NLWeekdayParser from "./parsers/NLWeekdayParser";
 import NLMonthNameMiddleEndianParser from "./parsers/NLMonthNameMiddleEndianParser";
 import NLMonthNameParser from "./parsers/NLMonthNameParser";
 import NLSlashMonthFormatParser from "./parsers/NLSlashMonthFormatParser";
+import NLTimeExpressionParser from "./parsers/NLTimeExpressionParser";
+import NLCasualYearMonthDayParser from "./parsers/NLCasualYearMonthDayParser";
+import NLCasualDateTimeParser from "./parsers/NLCasualDateTimeParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -28,6 +31,7 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new NLCasualDateParser());
     option.parsers.unshift(new NLCasualTimeParser());
+    option.parsers.unshift(new NLCasualDateTimeParser());
     return option;
 }
 
@@ -36,11 +40,13 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
-                new NLTimeUnitWithinFormatParser(),
-                new NLWeekdayParser(),
                 new NLMonthNameMiddleEndianParser(),
                 new NLMonthNameParser(),
+                new NLTimeExpressionParser(),
+                new NLTimeUnitWithinFormatParser(),
                 new NLSlashMonthFormatParser(),
+                new NLWeekdayParser(),
+                new NLCasualYearMonthDayParser(),
             ],
             refiners: [new NLMergeDateTimeRefiner(), new NLMergeDateRangeRefiner()],
         },

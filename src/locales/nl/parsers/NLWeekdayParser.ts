@@ -1,17 +1,15 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { WEEKDAY_DICTIONARY } from "../../en/constants";
+import { WEEKDAY_DICTIONARY } from "../../nl/constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
-        "(?:on\\s*?)?" +
-        "(?:(this|last|past|next)\\s*)?" +
+        "(?:op\\s*?)?" +
+        "(?:(deze|vorige|volgende)\\s*(?:week\\s*)?)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(this|last|past|next)\\s*week)?" +
         "(?=\\W|$)",
     "i"
 );
@@ -20,7 +18,7 @@ const PREFIX_GROUP = 1;
 const WEEKDAY_GROUP = 2;
 const POSTFIX_GROUP = 3;
 
-export default class ENWeekdayParser extends AbstractParserWithWordBoundaryChecking {
+export default class NLWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -35,11 +33,11 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
         modifierWord = modifierWord.toLowerCase();
 
         let modifier = null;
-        if (modifierWord == "last" || modifierWord == "past") {
+        if (modifierWord == "vorige") {
             modifier = "last";
-        } else if (modifierWord == "next") {
+        } else if (modifierWord == "volgende") {
             modifier = "next";
-        } else if (modifierWord == "this") {
+        } else if (modifierWord == "deze") {
             modifier = "this";
         }
 
