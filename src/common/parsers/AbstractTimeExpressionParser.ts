@@ -80,7 +80,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             // Pattern "YY.YY -XXXX" is more like timezone offset
             match[0].match(/^\s*([+-])\s*\d{3,4}$/)
         ) {
-            return AbstractTimeExpressionParser.checkAndReturnStartTime(result);
+            return AbstractTimeExpressionParser.checkAndReturnWithoutFollowingPattern(result);
         }
 
         result.end = this.extractFollowingTimeComponents(context, match, result);
@@ -285,10 +285,27 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return components;
     }
 
-    private static checkAndReturnStartTime(result) {
+    private static checkAndReturnWithoutFollowingPattern(result) {
         // Single digit (e.g "1") should not be counted as time expression
         if (result.text.match(/^\d$/)) {
             return null;
+        }
+
+        // If it ends only with numbers or dots
+        const endingWithNumbers = result.text.match(/[^\d:.](\d[\d.]+)$/);
+        if (endingWithNumbers) {
+            const endingNumbers: string = endingWithNumbers[1];
+
+            // If it ends only with dot single digit, e.g. "at 1.2"
+            if (endingNumbers.includes(".") && !endingNumbers.match(/\d(\.\d{2})+$/)) {
+                return null;
+            }
+
+            // If it ends only with numbers above 24, e.g. "at 25"
+            const endingNumberVal = parseInt(endingNumbers);
+            if (endingNumberVal > 24) {
+                return null;
+            }
         }
 
         return result;

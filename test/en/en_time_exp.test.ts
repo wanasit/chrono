@@ -228,8 +228,34 @@ test("Test - Time range's meridiem handling", function () {
     });
 });
 
-test("Test - Parsing negative cases", function () {
+test("Test - Parsing causal positive cases", function () {
+    testSingleCase(chrono.casual, "at 1", (result) => {
+        expect(result.text).toBe("at 1");
+        expect(result.start.get("hour")).toBe(1);
+    });
+
+    testSingleCase(chrono.casual, "at 12", (result) => {
+        expect(result.text).toBe("at 12");
+        expect(result.start.get("hour")).toBe(12);
+    });
+
+    testSingleCase(chrono.casual, "at 12.30", (result) => {
+        expect(result.text).toBe("at 12.30");
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(30);
+    });
+});
+
+test("Test - Parsing negative cases : [year-like] pattern", function () {
     testUnexpectedResult(chrono, "2020");
 
     testUnexpectedResult(chrono, "2020  ");
+});
+
+test("Test - Parsing negative cases : 'at [some numbers]'", function () {
+    testUnexpectedResult(chrono, "I'm at 101,194 points!");
+
+    testUnexpectedResult(chrono, "I'm at 101 points!");
+
+    testUnexpectedResult(chrono, "I'm at 10.1");
 });
