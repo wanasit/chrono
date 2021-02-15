@@ -311,4 +311,19 @@ test("Test - Time units' certainty", () => {
         expect(result.start.isCertain("hour")).toBeFalsy();
         expect(result.start.isCertain("minute")).toBeFalsy();
     });
+
+    testSingleCase(chrono, "give it 2 months", new Date(2016, 10 - 1, 1, 14, 52), { forwardDate: true }, (result) => {
+        expect(result.text).toBe("2 months");
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(52);
+
+        expect(result.start.isCertain("year")).toBeTruthy();
+        expect(result.start.isCertain("month")).toBeTruthy();
+        expect(result.start.isCertain("day")).toBeFalsy();
+        expect(result.start.isCertain("hour")).toBeFalsy();
+        expect(result.start.isCertain("minute")).toBeFalsy();
+    });
 });
