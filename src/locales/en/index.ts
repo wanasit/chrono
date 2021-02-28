@@ -56,7 +56,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
                 new ENWeekdayParser(),
                 new ENCasualYearMonthDayParser(),
                 new ENSlashMonthFormatParser(),
-                new ENTimeExpressionParser(),
+                new ENTimeExpressionParser(strictMode),
                 new ENTimeUnitAgoFormatParser(strictMode),
                 new ENTimeUnitLaterFormatParser(strictMode),
             ],

@@ -3,16 +3,20 @@ import { ParsingComponents, ParsingResult } from "../../results";
 import { Meridiem } from "../../index";
 import dayjs from "dayjs";
 
+// prettier-ignore
 function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
     return new RegExp(
         "(^|\\s|T)" +
             `${primaryPrefix}` +
             "(\\d{1,4})" +
             "(?:" +
-            "(?:\\.|\\:|\\：)(\\d{1,2})" +
-            "(?:" +
-            "(?:\\:|\\：)(\\d{2})(?:\\.(\\d{1,6}))?" +
-            ")?" +
+                "(?:\\.|\\:|\\：)" +
+                "(\\d{1,2})" +
+                "(?:" +
+                    "(?:\\:|\\：)" +
+                    "(\\d{2})" +
+                    "(?:\\.(\\d{1,6}))?" +
+                ")?" +
             ")?" +
             "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
             `${primarySuffix}`,
@@ -20,15 +24,18 @@ function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
     );
 }
 
+// prettier-ignore
 function followingTimeExpression(followingPhase: string, followingSuffix: string) {
     return new RegExp(
         `^(${followingPhase})` +
             "(\\d{1,4})" +
             "(?:" +
-            "(?:\\.|\\:|\\：)(\\d{1,2})" +
-            "(?:" +
-            "(?:\\.|\\:|\\：)(\\d{1,2})(?:\\.(\\d{1,6}))?" +
-            ")?" +
+                "(?:\\.|\\:|\\：)" +
+                "(\\d{1,2})" +
+                "(?:" +
+                    "(?:\\.|\\:|\\：)" +
+                    "(\\d{1,2})(?:\\.(\\d{1,6}))?" +
+                ")?" +
             ")?" +
             "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
             `${followingSuffix}`,
@@ -45,6 +52,11 @@ const AM_PM_HOUR_GROUP = 6;
 export abstract class AbstractTimeExpressionParser implements Parser {
     abstract primaryPrefix(): string;
     abstract followingPhase(): string;
+    strictMode: boolean;
+
+    constructor(strictMode = false) {
+        this.strictMode = strictMode;
+    }
 
     primarySuffix(): string {
         return "(?=\\W|$)";
@@ -80,7 +92,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             // Pattern "YY.YY -XXXX" is more like timezone offset
             match[0].match(/^\s*([+-])\s*\d{3,4}$/)
         ) {
-            return AbstractTimeExpressionParser.checkAndReturnWithoutFollowingPattern(result);
+            return this.checkAndReturnWithoutFollowingPattern(result);
         }
 
         result.end = this.extractFollowingTimeComponents(context, match, result);
@@ -93,7 +105,11 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return result;
     }
 
-    extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
+    extractPrimaryTimeComponents(
+        context: ParsingContext,
+        match: RegExpMatchArray,
+        strict = false
+    ): null | ParsingComponents {
         const components = context.createParsingComponents();
         let hour = 0;
         let minute = 0;
@@ -111,6 +127,10 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
             minute = parseInt(match[MINUTE_GROUP]);
         } else if (hour > 100) {
+            if (this.strictMode) {
+                return null;
+            }
+
             minute = hour % 100;
             hour = Math.floor(hour / 100);
         }
@@ -285,7 +305,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         return components;
     }
 
-    private static checkAndReturnWithoutFollowingPattern(result) {
+    private checkAndReturnWithoutFollowingPattern(result) {
         // Single digit (e.g "1") should not be counted as time expression
         if (result.text.match(/^\d$/)) {
             return null;
@@ -295,6 +315,11 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         const endingWithNumbers = result.text.match(/[^\d:.](\d[\d.]+)$/);
         if (endingWithNumbers) {
             const endingNumbers: string = endingWithNumbers[1];
+
+            // In strict mode (e.g. "at 1" or "at 1.2"), this should not be accepted
+            if (this.strictMode) {
+                return null;
+            }
 
             // If it ends only with dot single digit, e.g. "at 1.2"
             if (endingNumbers.includes(".") && !endingNumbers.match(/\d(\.\d{2})+$/)) {

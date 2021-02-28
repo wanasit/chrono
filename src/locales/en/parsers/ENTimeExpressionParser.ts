@@ -4,6 +4,10 @@ import { Meridiem } from "../../../index";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 
 export default class ENTimeExpressionParser extends AbstractTimeExpressionParser {
+    constructor(strictMode) {
+        super(strictMode);
+    }
+
     followingPhase(): string {
         return "\\s*(?:\\-|\\–|\\~|\\〜|to|\\?)\\s*";
     }

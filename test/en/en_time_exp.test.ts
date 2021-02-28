@@ -259,3 +259,15 @@ test("Test - Parsing negative cases : 'at [some numbers]'", function () {
 
     testUnexpectedResult(chrono, "I'm at 10.1");
 });
+
+test("Test - Parsing negative cases (Strict)", function () {
+    testUnexpectedResult(chrono.strict, "I'm at 101,194 points!");
+
+    testUnexpectedResult(chrono.strict, "I'm at 101 points!");
+
+    testUnexpectedResult(chrono.strict, "I'm at 10.1");
+
+    testUnexpectedResult(chrono.strict, "I'm at 10");
+
+    testUnexpectedResult(chrono.strict, "2020");
+});

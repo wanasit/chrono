@@ -9,14 +9,20 @@ import { AbstractParserWithWordBoundaryChecking } from "./AbstractParserWithWord
 // - YYYY-MM-DDThh:mm:ssTZD
 // - YYYY-MM-DDThh:mm:ss.sTZD
 // - TZD = (Z or +hh:mm or -hh:mm)
+
+// prettier-ignore
 const PATTERN = new RegExp(
     "([0-9]{4})\\-([0-9]{1,2})\\-([0-9]{1,2})" +
-        "(?:T" + //..
+    "(?:T" + //..
         "([0-9]{1,2}):([0-9]{1,2})" + // hh:mm
-        "(?::([0-9]{1,2})(?:\\.(\\d{1,4}))?)?" + // :ss.s
-        "(?:Z|([+-]\\d{2}):?(\\d{2})?)?" + // TZD (Z or ±hh:mm or ±hhmm or ±hh)
-        ")?" + //..
-        "(?=\\W|$)",
+        "(?:" +
+            ":([0-9]{1,2})(?:\\.(\\d{1,4}))?" +
+        ")?" + // :ss.s
+        "(?:" +
+            "Z|([+-]\\d{2}):?(\\d{2})?" +
+        ")?" + // TZD (Z or ±hh:mm or ±hhmm or ±hh)
+    ")?" +
+    "(?=\\W|$)",
     "i"
 );
 
