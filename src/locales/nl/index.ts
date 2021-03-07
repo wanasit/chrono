@@ -1,3 +1,9 @@
+/**
+ * Chrono components for Dutch support (*parsers*, *refiners*, and *configuration*)
+ *
+ * @module
+ */
+
 import { includeCommonConfiguration } from "../../configurations";
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
@@ -35,6 +41,9 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     return option;
 }
 
+/**
+ * @ignore (to be documented later)
+ */
 export function createConfiguration(strictMode = true, littleEndian = true): Configuration {
     return includeCommonConfiguration(
         {

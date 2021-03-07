@@ -1,3 +1,9 @@
+/**
+ * Chrono components for English support (*parsers*, *refiners*, and *configuration*)
+ *
+ * @module
+ */
+
 import ENTimeUnitWithinFormatParser from "./parsers/ENTimeUnitWithinFormatParser";
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
@@ -21,20 +27,39 @@ import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ENTimeUnitCasualRelativeFormatParser from "./parsers/ENTimeUnitCasualRelativeFormatParser";
 
-// Shortcuts
+/**
+ * Chrono object configured for parsing *casual* English
+ */
 export const casual = new Chrono(createCasualConfiguration(false));
+
+/**
+ * Chrono object configured for parsing *strict* English
+ */
 export const strict = new Chrono(createConfiguration(true, false));
 
+/**
+ * Chrono object configured for parsing *UK-style* English
+ */
 export const GB = new Chrono(createConfiguration(false, true));
 
+/**
+ * A shortcut for en.casual.parse()
+ */
 export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
+/**
+ * A shortcut for en.casual.parseDate()
+ */
 export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }
 
+/**
+ * Create a default *casual* {@Link Configuration} for English chrono.
+ * It calls {@Link createConfiguration} and includes additional parsers.
+ */
 export function createCasualConfiguration(littleEndian = false): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new ENCasualDateParser());
@@ -45,6 +70,12 @@ export function createCasualConfiguration(littleEndian = false): Configuration {
     return option;
 }
 
+/**
+ * Create a default {@Link Configuration} for English chrono
+ *
+ * @param strictMode If the timeunit mentioning should be strict, not casual
+ * @param littleEndian If format should be date-first/littleEndian (e.g. en_UK), not month-first/middleEndian (e.g. en_US)
+ */
 export function createConfiguration(strictMode = true, littleEndian = false): Configuration {
     return includeCommonConfiguration(
         {

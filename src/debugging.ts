@@ -1,10 +1,16 @@
 export type AsyncDebugBlock = () => unknown;
 export type DebugConsume = (debugLog: AsyncDebugBlock) => void;
 
+/**
+ * @internal
+ */
 export interface DebugHandler {
     debug: DebugConsume;
 }
 
+/**
+ * @internal
+ */
 export class BufferedDebugHandler implements DebugHandler {
     private buffer: Array<AsyncDebugBlock>;
     constructor() {

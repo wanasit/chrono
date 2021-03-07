@@ -19,5 +19,13 @@
   "include": [
     "src",
     "test"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs",
+    "name": "Chrono",
+    "readme": "none",
+    "includeVersion": true,
+    "theme": "default"
+  }
 }
