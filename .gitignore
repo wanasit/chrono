@@ -12,3 +12,6 @@ coverage/
 .DS_Store
 .vscode
 .settings
+
+# Do not put the generated documentation in master
+docs/
