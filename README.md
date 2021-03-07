@@ -246,6 +246,10 @@ In the example, the custom refiner assigns PM to parsing results with ambiguous 
 The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). 
 The method must return an array of the new results (which, in this case, we modified those results in place).
 
+### More documentation
+
+Checkout the Typescript Documentation in the project's [Github page](http://wanasit.github.io/chrono/).
+
 ## Development Guides
 
 This guide explains how to set up chrono project for prospective contributors.
