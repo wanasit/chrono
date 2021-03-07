@@ -3,11 +3,26 @@ import { Component, ParsedResult, ParsingOption } from "./index";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
 import { createCasualConfiguration } from "./locales/en";
 
+/**
+ * Chrono configuration.
+ * It is simply an ordered list of parsers and refiners
+ */
 export interface Configuration {
     parsers: Parser[];
     refiners: Refiner[];
 }
 
+/**
+ * A abstraction for Chrono *Parser*.
+ *
+ * Each parser should recognize and handle a certain date format.
+ * Chrono uses multiple parses (and refiners) together for parsing the input.
+ *
+ * The parser implementation must provide {@Link pattern | pattern()} for the date format.
+ *
+ * The {@Link extract | extract()} method is called with the pattern's *match*.
+ * The matching and extracting is controlled and adjusted to avoid for overlapping results.
+ */
 export interface Parser {
     pattern(context: ParsingContext): RegExp;
     extract(
@@ -16,10 +31,19 @@ export interface Parser {
     ): ParsingComponents | ParsingResult | { [c in Component]?: number } | null;
 }
 
+/**
+ * A abstraction for Chrono *Refiner*.
+ *
+ * Each refiner takes the list of results (from parsers or other refiners) and returns another list of results.
+ * Chrono applies each refiner in order and return the output from the last refiner.
+ */
 export interface Refiner {
     refine: (context: ParsingContext, results: ParsingResult[]) => ParsingResult[];
 }
 
+/**
+ * The Chrono object.
+ */
 export class Chrono {
     parsers: Array<Parser>;
     refiners: Array<Refiner>;
@@ -30,13 +54,27 @@ export class Chrono {
         this.refiners = [...configuration.refiners];
     }
 
-    parseDate(text, refDate?, opt?): Date {
-        const results = this.parse(text, refDate, opt);
+    /**
+     * Create a shallow copy of the Chrono object with the same configuration (`parsers` and `refiners`)
+     */
+    clone(): Chrono {
+        return new Chrono({
+            parsers: [...this.parsers],
+            refiners: [...this.refiners],
+        });
+    }
+
+    /**
+     * A shortcut for calling {@Link parse | parse() } then transform the result into Javascript's Date object
+     * @return Date object created from the first parse result
+     */
+    parseDate(text: string, referenceDate?: Date, option?: ParsingOption): Date | null {
+        const results = this.parse(text, referenceDate, option);
         return results.length > 0 ? results[0].start.date() : null;
     }
 
-    parse(text: string, refDate?: Date, opt?: ParsingOption): ParsedResult[] {
-        const context = new ParsingContext(text, refDate || new Date(), opt || {});
+    parse(text: string, referenceDate?: Date, option?: ParsingOption): ParsedResult[] {
+        const context = new ParsingContext(text, referenceDate || new Date(), option || {});
 
         let results = [];
         this.parsers.forEach((parser) => {
@@ -53,13 +91,6 @@ export class Chrono {
         });
 
         return results;
-    }
-
-    clone(): Chrono {
-        return new Chrono({
-            parsers: [...this.parsers],
-            refiners: [...this.refiners],
-        });
     }
 
     private static executeParser(context: ParsingContext, parser: Parser) {

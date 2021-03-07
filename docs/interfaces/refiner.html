@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Meridiem | Chrono - v2.2.0</title>
+	<title>Refiner | Chrono - v2.2.0</title>
 	<meta name="description" content="Documentation for Chrono - v2.2.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,51 +55,81 @@
 					<a href="../index.html">Chrono - v2.2.0</a>
 				</li>
 				<li>
-					<a href="meridiem.html">Meridiem</a>
+					<a href="refiner.html">Refiner</a>
 				</li>
 			</ul>
-			<h1>Enumeration Meridiem</h1>
+			<h1>Interface Refiner</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A abstraction for Chrono <em>Refiner</em>.</p>
+					</div>
+					<p>Each refiner takes the list of results (from parsers or other refiners) and returns another list of results.
+					Chrono applies each refiner in order and return the output from the last refiner.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Refiner</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="meridiem.html#am" class="tsd-kind-icon">AM</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="meridiem.html#pm" class="tsd-kind-icon">PM</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="refiner.html#refine" class="tsd-kind-icon">refine</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="am" class="tsd-anchor"></a>
-					<h3>AM</h3>
-					<div class="tsd-signature tsd-kind-icon">AM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="refine" class="tsd-anchor"></a>
+					<h3>refine</h3>
+					<div class="tsd-signature tsd-kind-icon">refine<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingContext</span>, results<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L82">index.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/chrono.ts#L41">chrono.ts:41</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="pm" class="tsd-anchor"></a>
-					<h3>PM</h3>
-					<div class="tsd-signature tsd-kind-icon">PM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 1</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L83">index.ts:83</a></li>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingContext</span>, results<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>context: <span class="tsd-signature-type">ParsingContext</span></h5>
+											</li>
+											<li>
+												<h5>results: <span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol">[]</span></h4>
+									</li>
+								</ul>
+							</li>
 						</ul>
-					</aside>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -113,39 +143,36 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="../enums/meridiem.html" class="tsd-kind-icon">Meridiem</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/chrono.html" class="tsd-kind-icon">Chrono</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parsedcomponents.html" class="tsd-kind-icon">Parsed<wbr>Components</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parser.html" class="tsd-kind-icon">Parser</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-enum">
-						<a href="meridiem.html" class="tsd-kind-icon">Meridiem</a>
+					<li class="current tsd-kind-interface">
+						<a href="refiner.html" class="tsd-kind-icon">Refiner</a>
 						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="meridiem.html#am" class="tsd-kind-icon">AM</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="meridiem.html#pm" class="tsd-kind-icon">PM</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="refiner.html#refine" class="tsd-kind-icon">refine</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/chrono.html" class="tsd-kind-icon">Chrono</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/parsedcomponents.html" class="tsd-kind-icon">Parsed<wbr>Components</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/parser.html" class="tsd-kind-icon">Parser</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/refiner.html" class="tsd-kind-icon">Refiner</a>
-					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../index.html#component" class="tsd-kind-icon">Component</a>
 					</li>

@@ -1,3 +1,9 @@
+/**
+ * Chrono components for Portuguese support (*parsers*, *refiners*, and *configuration*)
+ *
+ * @module
+ */
+
 import { includeCommonConfiguration } from "../../configurations";
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
@@ -22,6 +28,9 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
     return casual.parseDate(text, ref, option);
 }
 
+/**
+ * @ignore (to be documented later)
+ */
 export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.push(new PTCasualDateParser());
@@ -29,6 +38,9 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     return option;
 }
 
+/**
+ * @ignore (to be documented later)
+ */
 export function createConfiguration(strictMode = true, littleEndian = true): Configuration {
     return includeCommonConfiguration(
         {

@@ -42,6 +42,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "document": "typedoc",
     "prepare": "npm run build",
     "eslint": "eslint src test",
     "prettier": "npm run prettier:src && npm run prettier:test",

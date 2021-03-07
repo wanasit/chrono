@@ -1,6 +1,9 @@
 import { ParsingContext, Refiner } from "../chrono";
 import { ParsingResult } from "../results";
 
+/**
+ * A special type of {@link Refiner} to filter the results
+ */
 export abstract class Filter implements Refiner {
     abstract isValid(context: ParsingContext, result: ParsingResult): boolean;
 
@@ -9,6 +12,9 @@ export abstract class Filter implements Refiner {
     }
 }
 
+/**
+ * A special type of {@link Refiner} to merge consecutive results
+ */
 export abstract class MergingRefiner implements Refiner {
     abstract shouldMergeResults(
         textBetween: string,

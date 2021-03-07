@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ParsingOption | chrono-node</title>
-	<meta name="description" content="Documentation for chrono-node">
+	<title>ParsingOption | Chrono - v2.2.0</title>
+	<meta name="description" content="Documentation for Chrono - v2.2.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">chrono-node</a>
+					<a href="../index.html" class="title">Chrono - v2.2.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">chrono-node</a>
+					<a href="../index.html">Chrono - v2.2.0</a>
 				</li>
 				<li>
 					<a href="parsingoption.html">ParsingOption</a>
@@ -80,7 +80,6 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="parsingoption.html#debug" class="tsd-kind-icon">debug</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="parsingoption.html#forwarddate" class="tsd-kind-icon">forward<wbr>Date</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="parsingoption.html#timezones" class="tsd-kind-icon">timezones</a></li>
 							</ul>
@@ -91,24 +90,20 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="debug" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> debug</h3>
-					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DebugHandler</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">DebugConsume</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/fbbd996/src/index.ts#L19">index.ts:19</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="forwarddate" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> forward<wbr>Date</h3>
 					<div class="tsd-signature tsd-kind-icon">forward<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/fbbd996/src/index.ts#L18">index.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L12">index.ts:12</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>To parse only forward dates (the results should be after the reference date).
+							This effects date/time implication (e.g. weekday or time mentioning)</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="timezones" class="tsd-anchor"></a>
@@ -116,9 +111,14 @@
 					<div class="tsd-signature tsd-kind-icon">timezones<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/fbbd996/src/index.ts#L20">index.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L17">index.ts:17</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Additional timezone keywords for the parsers to recognize</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -134,7 +134,7 @@
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class=" ">
-						<a href="../modules.html">Exports</a>
+						<a href="../index.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -152,14 +152,14 @@
 					<li class=" tsd-kind-interface">
 						<a href="parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parser.html" class="tsd-kind-icon">Parser</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
 						<a href="parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="parsingoption.html#debug" class="tsd-kind-icon">debug</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="parsingoption.html#forwarddate" class="tsd-kind-icon">forward<wbr>Date</a>
 							</li>
@@ -170,20 +170,23 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="refiner.html" class="tsd-kind-icon">Refiner</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="../modules.html#component" class="tsd-kind-icon">Component</a>
+						<a href="../index.html#component" class="tsd-kind-icon">Component</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../modules.html#casual" class="tsd-kind-icon">casual</a>
+						<a href="../index.html#casual" class="tsd-kind-icon">casual</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="../modules.html#strict" class="tsd-kind-icon">strict</a>
+						<a href="../index.html#strict" class="tsd-kind-icon">strict</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../modules.html#parse" class="tsd-kind-icon">parse</a>
+						<a href="../index.html#parse" class="tsd-kind-icon">parse</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="../modules.html#parsedate" class="tsd-kind-icon">parse<wbr>Date</a>
+						<a href="../index.html#parsedate" class="tsd-kind-icon">parse<wbr>Date</a>
 					</li>
 				</ul>
 			</nav>
@@ -201,6 +204,7 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 		</div>
 	</div>

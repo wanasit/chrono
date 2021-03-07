@@ -1,3 +1,9 @@
+/**
+ * Chrono components for Japanese support (*parsers*, *refiners*, and *configuration*)
+ *
+ * @module
+ */
+
 import JPStandardParser from "./parsers/JPStandardParser";
 import JPMergeDateRangeRefiner from "./refiners/JPMergeDateRangeRefiner";
 import JPCasualDateParser from "./parsers/JPCasualDateParser";
@@ -17,12 +23,18 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
     return casual.parseDate(text, ref, option);
 }
 
+/**
+ * @ignore (to be documented later)
+ */
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration();
     option.parsers.unshift(new JPCasualDateParser());
     return option;
 }
 
+/**
+ * @ignore (to be documented later)
+ */
 export function createConfiguration(): Configuration {
     return {
         parsers: [new JPStandardParser()],

@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>chrono-node</title>
-	<meta name="description" content="Documentation for chrono-node">
+	<title>Chrono - v2.2.0</title>
+	<meta name="description" content="Documentation for Chrono - v2.2.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<script async src="assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">chrono-node</a>
+					<a href="index.html" class="title">Chrono - v2.2.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,273 +50,196 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<h1>chrono-node</h1>
+			<h1>Chrono - v2.2.0</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#chrono-v2" id="chrono-v2" style="color: inherit; text-decoration: none;">
-					<h1>Chrono (v2)</h1>
-				</a>
-				<p>A natural language date parser in Javascript. </p>
-				<p><a href="https://travis-ci.org/wanasit/chrono"><img src="https://travis-ci.org/wanasit/chrono.svg?branch=master" alt="Build Status"></a>
-				<a href="https://coveralls.io/r/wanasit/chrono?branch=master"><img src="https://img.shields.io/coveralls/wanasit/chrono.svg" alt="Coverage Status"></a></p>
-				<p>It is designed to handle most date/time format and extract information from any given text:</p>
-				<ul>
-					<li><em>Today</em>, <em>Tomorrow</em>, <em>Yesterday</em>, <em>Last Friday</em>, etc</li>
-					<li><em>17 August 2013 - 19 August 2013</em></li>
-					<li><em>This Friday from 13:00 - 16.00</em></li>
-					<li><em>5 days ago</em></li>
-					<li><em>2 weeks from now</em></li>
-					<li><em>Sat Aug 17 2013 18:40:39 GMT+0900 (JST)</em></li>
-					<li><em>2014-11-30T08:15:30-05:30</em></li>
-				</ul>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h3>Installation</h3>
-				</a>
-				<p>With npm:</p>
-				<pre><code class="language-bash"><span style="color: #000000">$ npm install --save chrono-node</span>
-</code></pre>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">chrono</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;chrono-node&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;An appointment on Sep 12-13&#039;</span><span style="color: #000000">); </span>
-</code></pre>
-				<p>For Node.js:</p>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">chrono</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;chrono-node&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// or `import chrono from &#039;chrono-node&#039;` for ECMAScript</span>
-</code></pre>
-				<a href="#what39s-changed-in-the-v2" id="what39s-changed-in-the-v2" style="color: inherit; text-decoration: none;">
-					<h3>What&#39;s changed in the v2</h3>
-				</a>
-				<p>For Users</p>
-				<ul>
-					<li>Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.</li>
-					<li>The current fully supported languages are <code>en</code>, <code>ja</code>, and <code>fr</code> (<code>de</code> and <code>pt</code> are partially supported). Other languages from v1 (<code>nl</code> and <code>zh</code>) are under development.</li>
-				</ul>
-				<p>For contributors and advanced users</p>
-				<ul>
-					<li>The project is rewritten in TypeScript</li>
-					<li>New <a href="#parser">Parser</a> and <a href="#refiner">Refiner</a> interface </li>
-					<li>New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. <code>locales/en</code>)</li>
-				</ul>
-				<p><strong>Note: <a href="https://github.com/wanasit/chrono/tree/v1.x.x">v1.x.x</a> will still be supported for the time being.</strong></p>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<p>Simply pass a <code>string</code> to functions <code>chrono.parseDate</code> or <code>chrono.parse</code>. </p>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">chrono</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;chrono-node&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;An appointment on Sep 12-13&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)</span>
-<span style="color: #000000">    </span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;An appointment on Sep 12-13&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">/* [{ </span>
-<span style="color: #008000">    index: 18,</span>
-<span style="color: #008000">    text: &#039;Sep 12-13&#039;,</span>
-<span style="color: #008000">    start: ...</span>
-<span style="color: #008000">}] */</span>
-</code></pre>
-				<p>For more advanced usage, here is the typescript definition of the <code>parse</code> function:</p>
-				<pre><code class="language-typescript"><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">text</span><span style="color: #000000">: </span><span style="color: #001080">string</span><span style="color: #000000">, </span><span style="color: #001080">refDate</span><span style="color: #000000">?: </span><span style="color: #267F99">Date</span><span style="color: #000000">, </span><span style="color: #001080">option</span><span style="color: #000000">?: </span><span style="color: #001080">ParsingOption</span><span style="color: #000000">): </span><span style="color: #001080">ParsedResult</span><span style="color: #000000">[] {...}</span>
-</code></pre>
-				<a href="#reference-date" id="reference-date" style="color: inherit; text-decoration: none;">
-					<h4>Reference Date</h4>
-				</a>
-				<p>Today&#39;s &quot;Friday&quot; is different from last month&#39;s &quot;Friday&quot;.
-					The meaning of the referenced dates depends on when they are mentioned.
-				Chrono lets you define a reference date using <code>chrono.parse(text, ref)</code> and <code>chrono.parseDate(text, ref)</code>.    </p>
-				<pre><code class="language-javascript"><span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">2012</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">23</span><span style="color: #000000">)); </span>
-<span style="color: #008000">// Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)</span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">2012</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">)); </span>
-<span style="color: #008000">// Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)</span>
-</code></pre>
-				<a href="#parsing-options" id="parsing-options" style="color: inherit; text-decoration: none;">
-					<h3>Parsing Options</h3>
-				</a>
-				<p><code>forwardDate</code> (boolean) to assume the results should happen after the reference date (forward into the future)</p>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">referenceDate</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Date</span><span style="color: #000000">(</span><span style="color: #098658">2012</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">25</span><span style="color: #000000">);</span>
-<span style="color: #008000">// Sat Aug 25 2012 00:00:00 GMT+0900 -- The reference date was Saturday</span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">, </span><span style="color: #001080">referenceDate</span><span style="color: #000000">);</span>
-<span style="color: #008000">// Fri Aug 24 2012 12:00:00 GMT+0900 (JST) -- The day before was Friday</span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">, </span><span style="color: #001080">referenceDate</span><span style="color: #000000">, { </span><span style="color: #001080">forwardDate:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> });</span>
-<span style="color: #008000">// Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday</span>
-</code></pre>
-				<a href="#parsed-results-and-components" id="parsed-results-and-components" style="color: inherit; text-decoration: none;">
-					<h3>Parsed Results and Components</h3>
-				</a>
-				<a href="#parsedresult" id="parsedresult" style="color: inherit; text-decoration: none;">
-					<h4>ParsedResult</h4>
-				</a>
-				<ul>
-					<li><code>refDate: Date</code> The <a href="#reference-date">reference date</a> of this result</li>
-					<li><code>index: number</code> The location within the input text of this result  </li>
-					<li><code>text: string</code>  The text this result that appears in the input </li>
-					<li><code>start: ParsedComponents</code> The parsed date components as a <a href="#parsedcomponents">ParsedComponents</a> object</li>
-					<li><code>end?: ParsedComponents</code>  Similar to <code>start</code></li>
-					<li><code>date: () =&gt; Date</code> Create a javascript Date</li>
-				</ul>
-				<a href="#parsedcomponents" id="parsedcomponents" style="color: inherit; text-decoration: none;">
-					<h4>ParsedComponents</h4>
-				</a>
-				<ul>
-					<li><code>get: (c: Component) =&gt; number | null</code>    Get known or implied value for the component</li>
-					<li><code>isCertain: (c: Component) =&gt; boolean</code>    Check if the component has a known value</li>
-					<li><code>date: () =&gt; Date</code>    Create a javascript Date</li>
-				</ul>
-				<p>For example:</p>
-				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">results</span><span style="color: #000000"> = </span><span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;I have an appointment tomorrow from 10 to 11 AM&#039;</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">index</span><span style="color: #000000">;     </span><span style="color: #008000">// 15</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">text</span><span style="color: #000000">;      </span><span style="color: #008000">// &#039;tomorrow from 10 to 11 AM&#039;</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">refDate</span><span style="color: #000000">;   </span><span style="color: #008000">// Sat Dec 13 2014 21:50:14 GMT-0600 (CST)</span>
-
-<span style="color: #008000">// `start` is Sat Dec 14 2014 10:00:00</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;day&#039;</span><span style="color: #000000">);    </span><span style="color: #008000">// 14 (the 14th, the day after refDate)</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;month&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// 12 (or December)</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hour&#039;</span><span style="color: #000000">);   </span><span style="color: #008000">// 10 </span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">date</span><span style="color: #000000">();        </span><span style="color: #008000">// Sun Dec 14 2014 10:00:00 GMT-0600 (CST)</span>
-
-<span style="color: #000000">...</span>
-<span style="color: #001080">results</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">].</span><span style="color: #001080">end</span><span style="color: #000000">.</span><span style="color: #795E26">date</span><span style="color: #000000">();  </span><span style="color: #008000">// Sun Dec 14 2014 11:00:00 GMT-0600 (CST)</span>
-</code></pre>
-				<a href="#strict-vs-casual-configuration" id="strict-vs-casual-configuration" style="color: inherit; text-decoration: none;">
-					<h3>Strict vs Casual configuration</h3>
-				</a>
-				<p>Chrono comes with <code>strict</code> mode that parse only formal date patterns. </p>
-				<pre><code class="language-js"><span style="color: #008000">// &#039;strict&#039; mode</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">strict</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Today&#039;</span><span style="color: #000000">);       </span><span style="color: #008000">// null</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">strict</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">);      </span><span style="color: #008000">// null</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">strict</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;2016-07-01&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// Fri Jul 01 2016 12:00:00 ...</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">strict</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Jul 01 2016&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// Fri Jul 01 2016 12:00:00 ...</span>
-
-<span style="color: #008000">// &#039;casual&#039; mode (default) </span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Today&#039;</span><span style="color: #000000">);              </span><span style="color: #008000">// Thu Jun 30 2016 12:00:00 ...</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">casual</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Friday&#039;</span><span style="color: #000000">);      </span><span style="color: #008000">// Fri Jul 01 2016 12:00:00 ...</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">casual</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;2016-07-01&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// Fri Jul 01 2016 12:00:00 ...</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">casual</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Jul 01 2016&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// Fri Jul 01 2016 12:00:00 ...</span>
-</code></pre>
-				<a href="#locales" id="locales" style="color: inherit; text-decoration: none;">
-					<h3>Locales</h3>
-				</a>
-				<p>By default, Chrono is configured to handle <strong>only international English</strong>.
-				This differs from the previous version of Chrono that would try all locales by default.</p>
-				<p>There are several locales supported contributed by multiple developers under <code>./locales</code> directory.</p>
-				<pre><code class="language-js"><span style="color: #008000">// default English (US)</span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;6/10/2018&#039;</span><span style="color: #000000">);    </span>
-
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">en</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;6/10/2018&#039;</span><span style="color: #000000">); </span>
-<span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">ja</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;昭和６４年１月７日&#039;</span><span style="color: #000000">); </span>
-</code></pre>
-				<p>Current supported locale options are: <code>en</code>, <code>ja</code></p>
-				<a href="#customize-chrono" id="customize-chrono" style="color: inherit; text-decoration: none;">
-					<h2>Customize Chrono</h2>
-				</a>
-				<p>Chrono’s extraction pipeline configuration consists of <code>parsers: Parser[]</code> and <code>refiners: Refiner[]</code>.</p>
-				<ul>
-					<li>First, each parser independently extracts patterns from input text input and create parsing results  (<a href="#parsedresult">ParsingResult</a>).</li>
-					<li>Then, the parsing results are combined, sorted, and refined with the refiners. In the refining phase, the results can be filtered-out, merged, or attached with additional information.</li>
-				</ul>
-				<a href="#parser" id="parser" style="color: inherit; text-decoration: none;">
-					<h3>Parser</h3>
-				</a>
-				<pre><code class="language-typescript"><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">Parser</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #795E26">pattern</span><span style="color: #000000">: (</span><span style="color: #001080">context</span><span style="color: #000000">: </span><span style="color: #267F99">ParsingContext</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">RegExp</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #795E26">extract</span><span style="color: #000000">: (</span><span style="color: #001080">context</span><span style="color: #000000">: </span><span style="color: #267F99">ParsingContext</span><span style="color: #000000">, </span><span style="color: #001080">match</span><span style="color: #000000">: </span><span style="color: #267F99">RegExpMatchArray</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span>
-<span style="color: #000000">        (</span><span style="color: #267F99">ParsingComponents</span><span style="color: #000000"> | </span><span style="color: #267F99">ParsingResult</span><span style="color: #000000"> | {[</span><span style="color: #267F99">c</span><span style="color: #000000"> </span><span style="color: #0000FF">in</span><span style="color: #000000"> </span><span style="color: #267F99">Component</span><span style="color: #000000">]?: </span><span style="color: #267F99">number</span><span style="color: #000000">} | </span><span style="color: #267F99">null</span><span style="color: #000000">)</span>
-<span style="color: #000000">}</span>
-</code></pre>
-				<p>Parser is a module for low-level pattern-based parsing.
-				Ideally, each parser should be designed to handle a single specific date format. </p>
-				<p>User can create a new parser for supporting new date formats or languages
-				by providing RegExp pattern <code>pattern()</code> and extracting result or components from the RegExp match <code>extract()</code>.</p>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">custom</span><span style="color: #000000"> = </span><span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">casual</span><span style="color: #000000">.</span><span style="color: #795E26">clone</span><span style="color: #000000">();</span>
-<span style="color: #001080">custom</span><span style="color: #000000">.</span><span style="color: #001080">parsers</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #795E26">pattern</span><span style="color: #001080">:</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span><span style="color: #AF00DB">return</span><span style="color: #811F3F"> /</span><span style="color: #EE0000">\b</span><span style="color: #811F3F">Christmas</span><span style="color: #EE0000">\b</span><span style="color: #811F3F">/</span><span style="color: #0000FF">i</span><span style="color: #000000"> },</span>
-<span style="color: #000000">    </span><span style="color: #795E26">extract</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">match</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> {</span>
-<span style="color: #000000">            </span><span style="color: #001080">day:</span><span style="color: #000000"> </span><span style="color: #098658">25</span><span style="color: #000000">, </span><span style="color: #001080">month:</span><span style="color: #000000"> </span><span style="color: #098658">12</span>
-<span style="color: #000000">        }</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #001080">custom</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;I&#039;ll arrive at 2.30AM on Christmas night&quot;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// Wed Dec 25 2013 02:30:00 GMT+0900 (JST)</span>
-<span style="color: #008000">// &#039;at 2.30AM on Christmas&#039;</span>
-</code></pre>
-				<a href="#refiner" id="refiner" style="color: inherit; text-decoration: none;">
-					<h3>Refiner</h3>
-				</a>
-				<pre><code class="language-typescript"><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">Refiner</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #795E26">refine</span><span style="color: #000000">: (</span><span style="color: #001080">context</span><span style="color: #000000">: </span><span style="color: #267F99">ParsingContext</span><span style="color: #000000">, </span><span style="color: #001080">results</span><span style="color: #000000">: </span><span style="color: #267F99">ParsingResult</span><span style="color: #000000">[]) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">ParsingResult</span><span style="color: #000000">[]</span>
-<span style="color: #000000">}</span>
-</code></pre>
-				<p>Refiner is a higher level module for improving or manipulating the results. User can add a new type of refiner to customize Chrono&#39;s results or to add some custom logic to Chrono.</p>
-				<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">custom</span><span style="color: #000000"> = </span><span style="color: #001080">chrono</span><span style="color: #000000">.</span><span style="color: #001080">casual</span><span style="color: #000000">.</span><span style="color: #795E26">clone</span><span style="color: #000000">();</span>
-<span style="color: #001080">custom</span><span style="color: #000000">.</span><span style="color: #001080">refiners</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #795E26">refine</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">results</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">        </span><span style="color: #008000">// If there is no AM/PM (meridiem) specified,</span>
-<span style="color: #000000">        </span><span style="color: #008000">//  let all time between 1:00 - 4:00 be PM (13.00 - 16.00)</span>
-<span style="color: #000000">        </span><span style="color: #001080">results</span><span style="color: #000000">.</span><span style="color: #795E26">forEach</span><span style="color: #000000">((</span><span style="color: #001080">result</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">            </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (!</span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">isCertain</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;meridiem&#039;</span><span style="color: #000000">) &amp;&amp;</span>
-<span style="color: #000000">                </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hour&#039;</span><span style="color: #000000">) &gt;= </span><span style="color: #098658">1</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hour&#039;</span><span style="color: #000000">) &lt; </span><span style="color: #098658">4</span><span style="color: #000000">) {</span>
-
-<span style="color: #000000">                </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">assign</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;meridiem&#039;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">);</span>
-<span style="color: #000000">                </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">assign</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hour&#039;</span><span style="color: #000000">, </span><span style="color: #001080">result</span><span style="color: #000000">.</span><span style="color: #001080">start</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;hour&#039;</span><span style="color: #000000">) + </span><span style="color: #098658">12</span><span style="color: #000000">);</span>
-<span style="color: #000000">            }</span>
-<span style="color: #000000">        });</span>
-<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">results</span><span style="color: #000000">;</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">});</span>
-
-<span style="color: #008000">// This will be parsed as PM.</span>
-<span style="color: #008000">// &gt; Tue Dec 16 2014 14:30:00 GMT-0600 (CST) </span>
-<span style="color: #001080">custom</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;This is at 2.30&quot;</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// Unless the &#039;AM&#039; part is specified</span>
-<span style="color: #008000">// &gt; Tue Dec 16 2014 02:30:00 GMT-0600 (CST)</span>
-<span style="color: #001080">custom</span><span style="color: #000000">.</span><span style="color: #795E26">parseDate</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;This is at 2.30 AM&quot;</span><span style="color: #000000">);</span>
-</code></pre>
-				<p>In the example, the custom refiner assigns PM to parsing results with ambiguous <a href="http://en.wikipedia.org/wiki/12-hour_clock">meridiem</a>.
-					The <code>refine</code> method of the refiner class will be called with parsing <a href="#parsedresult">results</a> (from <a href="#parser">parsers</a> or other previous refiners).
-				The method must return an array of the new results (which, in this case, we modified those results in place).</p>
-				<a href="#development-guides" id="development-guides" style="color: inherit; text-decoration: none;">
-					<h2>Development Guides</h2>
-				</a>
-				<p>This guide explains how to set up chrono project for prospective contributors.</p>
-				<pre><code class="language-bash"><span style="color: #008000"># Clone and install library</span>
-<span style="color: #000000">$ git clone https://github.com/wanasit/chrono.git chrono</span>
-<span style="color: #000000">$ </span><span style="color: #795E26">cd</span><span style="color: #000000"> chrono</span>
-<span style="color: #000000">$ npm install</span>
-
-</code></pre>
-				<p>Parsing date from text is complicated. A small change can have effects on unexpected places.
-					So, Chrono is a heavily tested library.
-				Commits that break a test shouldn&#39;t be allowed in any condition.</p>
-				<p>Chrono&#39;s unit testing is based-on <a href="https://facebook.github.io/jest/">Jest</a>. </p>
-				<pre><code class="language-bash"><span style="color: #008000"># Run the test</span>
-<span style="color: #000000">$ npm run </span><span style="color: #795E26">test</span>
-
-<span style="color: #008000"># Run the test in watch mode</span>
-<span style="color: #000000">$ npm run watch</span>
-</code></pre>
-				<p>Chrono&#39;s source files is in <code>src</code> directory.
-				The built bundle (<code>dist/*</code>) is created by running <a href="https://webpack.js.org/">Webpack</a> via the following command </p>
-				<pre><code class="language-bash"><span style="color: #000000">$ npm run build</span>
-</code></pre>
-			</div>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace"><a href="modules/de.html" class="tsd-kind-icon">de</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/en.html" class="tsd-kind-icon">en</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/fr.html" class="tsd-kind-icon">fr</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/ja.html" class="tsd-kind-icon">ja</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/nl.html" class="tsd-kind-icon">nl</a></li>
+								<li class="tsd-kind-namespace"><a href="modules/pt.html" class="tsd-kind-icon">pt</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum"><a href="enums/meridiem.html" class="tsd-kind-icon">Meridiem</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class"><a href="classes/chrono.html" class="tsd-kind-icon">Chrono</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface"><a href="interfaces/parsedcomponents.html" class="tsd-kind-icon">Parsed<wbr>Components</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/parser.html" class="tsd-kind-icon">Parser</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/refiner.html" class="tsd-kind-icon">Refiner</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias"><a href="index.html#component" class="tsd-kind-icon">Component</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable"><a href="index.html#casual" class="tsd-kind-icon">casual</a></li>
+								<li class="tsd-kind-variable"><a href="index.html#strict" class="tsd-kind-icon">strict</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="index.html#parse" class="tsd-kind-icon">parse</a></li>
+								<li class="tsd-kind-function"><a href="index.html#parsedate" class="tsd-kind-icon">parse<wbr>Date</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="component" class="tsd-anchor"></a>
+					<h3>Component</h3>
+					<div class="tsd-signature tsd-kind-icon">Component<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;year&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;month&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;day&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;weekday&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;hour&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;minute&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;second&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;millisecond&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;meridiem&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;timezoneOffset&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L69">index.ts:69</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="casual" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> casual</h3>
+					<div class="tsd-signature tsd-kind-icon">casual<span class="tsd-signature-symbol">:</span> <a href="classes/chrono.html" class="tsd-signature-type" data-tsd-kind="Class">Chrono</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L102">index.ts:102</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A shortcut for <a href="modules/en.html">chrono.en.casual</a></p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="strict" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> strict</h3>
+					<div class="tsd-signature tsd-kind-icon">strict<span class="tsd-signature-symbol">:</span> <a href="classes/chrono.html" class="tsd-signature-type" data-tsd-kind="Class">Chrono</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L97">index.ts:97</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A shortcut for <a href="modules/en.html">chrono.en.strict</a></p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="parse" class="tsd-anchor"></a>
+					<h3>parse</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">parse<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, ref<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span>, option<span class="tsd-signature-symbol">?: </span><a href="interfaces/parsingoption.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsingOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/parsedresult.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsedResult</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L107">index.ts:107</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A shortcut for <a href="modules/en.html">chrono.en.casual.parse()</a></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ref: <span class="tsd-signature-type">Date</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="interfaces/parsingoption.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsingOption</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/parsedresult.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsedResult</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="parsedate" class="tsd-anchor"></a>
+					<h3>parse<wbr>Date</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Date<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, ref<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Date</span>, option<span class="tsd-signature-symbol">?: </span><a href="interfaces/parsingoption.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsingOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L114">index.ts:114</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A shortcut for <a href="modules/en.html">chrono.en.casual.parseDate()</a></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>text: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> ref: <span class="tsd-signature-type">Date</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <a href="interfaces/parsingoption.html" class="tsd-signature-type" data-tsd-kind="Interface">ParsingOption</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
+					<li class="current ">
+						<a href="index.html">Exports</a>
 					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="modules/de.html">de</a>
@@ -353,22 +276,28 @@
 						<a href="interfaces/parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/parser.html" class="tsd-kind-icon">Parser</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/refiner.html" class="tsd-kind-icon">Refiner</a>
+					</li>
 					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#component" class="tsd-kind-icon">Component</a>
+						<a href="index.html#component" class="tsd-kind-icon">Component</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="modules.html#casual" class="tsd-kind-icon">casual</a>
+						<a href="index.html#casual" class="tsd-kind-icon">casual</a>
 					</li>
 					<li class=" tsd-kind-variable">
-						<a href="modules.html#strict" class="tsd-kind-icon">strict</a>
+						<a href="index.html#strict" class="tsd-kind-icon">strict</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="modules.html#parse" class="tsd-kind-icon">parse</a>
+						<a href="index.html#parse" class="tsd-kind-icon">parse</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="modules.html#parsedate" class="tsd-kind-icon">parse<wbr>Date</a>
+						<a href="index.html#parsedate" class="tsd-kind-icon">parse<wbr>Date</a>
 					</li>
 				</ul>
 			</nav>
@@ -386,6 +315,7 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 		</div>
 	</div>

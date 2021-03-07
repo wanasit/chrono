@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ParsedComponents | Chrono - v2.2.0</title>
+	<title>Parser | Chrono - v2.2.0</title>
 	<meta name="description" content="Documentation for Chrono - v2.2.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../index.html">Chrono - v2.2.0</a>
 				</li>
 				<li>
-					<a href="parsedcomponents.html">ParsedComponents</a>
+					<a href="parser.html">Parser</a>
 				</li>
 			</ul>
-			<h1>Interface ParsedComponents</h1>
+			<h1>Interface Parser</h1>
 		</div>
 	</div>
 </header>
@@ -68,21 +68,20 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A collection of parsed date/time components (e.g. day, hour, minute, ..., etc).</p>
+						<p>A abstraction for Chrono <em>Parser</em>.</p>
 					</div>
-					<p>Each parsed component has three different levels of certainty.</p>
-					<ul>
-						<li><em>Certain</em> (or <em>Known</em>): The component is directly mentioned and parsed.</li>
-						<li><em>Implied</em>: The component is not directly mentioned, but implied by other parsed information.</li>
-						<li><em>Unknown</em>: Completely no mention of the component.</li>
-					</ul>
+					<p>Each parser should recognize and handle a certain date format.
+					Chrono uses multiple parses (and refiners) together for parsing the input.</p>
+					<p>The parser implementation must provide <a href="parser.html#pattern">pattern()</a> for the date format.</p>
+					<p>The <a href="parser.html#extract">extract()</a> method is called with the pattern&#39;s <em>match</em>.
+					The matching and extracting is controlled and adjusted to avoid for overlapping results.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ParsedComponents</span>
+						<span class="target">Parser</span>
 					</li>
 				</ul>
 			</section>
@@ -93,9 +92,8 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parsedcomponents.html#date" class="tsd-kind-icon">date</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parsedcomponents.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parsedcomponents.html#iscertain" class="tsd-kind-icon">is<wbr>Certain</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parser.html#extract" class="tsd-kind-icon">extract</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="parser.html#pattern" class="tsd-kind-icon">pattern</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,76 +102,51 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="date" class="tsd-anchor"></a>
-					<h3>date</h3>
+					<a name="extract" class="tsd-anchor"></a>
+					<h3>extract</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">date<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+						<li class="tsd-signature tsd-kind-icon">extract<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingContext</span>, match<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExpMatchArray</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingComponents</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>day<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>hour<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>meridiem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>millisecond<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>minute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>month<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>second<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>timezoneOffset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>weekday<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>year<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L66">index.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/chrono.ts#L28">chrono.ts:28</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
-							<p>a javascript date object.</p>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>context: <span class="tsd-signature-type">ParsingContext</span></h5>
+								</li>
+								<li>
+									<h5>match: <span class="tsd-signature-type">RegExpMatchArray</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ParsingComponents</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ParsingResult</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>day<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>hour<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>meridiem<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>millisecond<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>minute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>month<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>second<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>timezoneOffset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>weekday<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>year<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
+					<a name="pattern" class="tsd-anchor"></a>
+					<h3>pattern</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>component<span class="tsd-signature-symbol">: </span><a href="../index.html#component" class="tsd-signature-type" data-tsd-kind="Type alias">Component</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+						<li class="tsd-signature tsd-kind-icon">pattern<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ParsingContext</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L61">index.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/chrono.ts#L27">chrono.ts:27</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get the component value for either <em>Certain</em> or <em>Implied</em> value.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>component: <a href="../index.html#component" class="tsd-signature-type" data-tsd-kind="Type alias">Component</a></h5>
+									<h5>context: <span class="tsd-signature-type">ParsingContext</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="iscertain" class="tsd-anchor"></a>
-					<h3>is<wbr>Certain</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Certain<span class="tsd-signature-symbol">(</span>component<span class="tsd-signature-symbol">: </span><a href="../index.html#component" class="tsd-signature-type" data-tsd-kind="Type alias">Component</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wanasit/chrono/blob/3d044ee/src/index.ts#L56">index.ts:56</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Check the component certainly if the component is <em>Certain</em> (or <em>Known</em>)</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>component: <a href="../index.html#component" class="tsd-signature-type" data-tsd-kind="Type alias">Component</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RegExp</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -195,30 +168,27 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/chrono.html" class="tsd-kind-icon">Chrono</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parsedcomponents.html" class="tsd-kind-icon">Parsed<wbr>Components</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="parsedcomponents.html" class="tsd-kind-icon">Parsed<wbr>Components</a>
+						<a href="parser.html" class="tsd-kind-icon">Parser</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="parsedcomponents.html#date" class="tsd-kind-icon">date</a>
+								<a href="parser.html#extract" class="tsd-kind-icon">extract</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="parsedcomponents.html#get" class="tsd-kind-icon">get</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="parsedcomponents.html#iscertain" class="tsd-kind-icon">is<wbr>Certain</a>
+								<a href="parser.html#pattern" class="tsd-kind-icon">pattern</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="parsedresult.html" class="tsd-kind-icon">Parsed<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="parser.html" class="tsd-kind-icon">Parser</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="parsingoption.html" class="tsd-kind-icon">Parsing<wbr>Option</a>
 					</li>
