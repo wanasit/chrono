@@ -1,5 +1,5 @@
 import { OpUnitType } from "dayjs";
-import { matchAnyPattern } from "../../utils/pattern";
+import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
 
@@ -207,14 +207,10 @@ export function parseYear(match: string): number {
 
 //-----------------------------
 
-const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*`;
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
-
-export const TIME_UNITS_PATTERN =
-    `(?:(?:binnen|in)\\s*)?` +
-    `${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE}\\s*(?:,?\\s*${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})*`;
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:binnen|in)\\s*)?`, SINGLE_TIME_UNIT_PATTERN);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};

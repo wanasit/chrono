@@ -1,5 +1,5 @@
 import { OpUnitType, QUnitType } from "dayjs";
-import { matchAnyPattern } from "../../utils/pattern";
+import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "dimanche": 0,
@@ -160,12 +160,10 @@ export function parseYear(match: string): number {
 
 //-----------------------------
 
-const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*`;
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-const SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE = SINGLE_TIME_UNIT_PATTERN.replace(/\((?!\?)/g, "(?:");
-
-export const TIME_UNITS_PATTERN = `(?:${SINGLE_TIME_UNIT_PATTERN_NO_CAPTURE})+`;
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);
 
 export function parseTimeUnits(timeunitText): { [c in OpUnitType | QUnitType]?: number } {
     const fragments = {};

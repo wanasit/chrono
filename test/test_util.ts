@@ -1,5 +1,5 @@
 import { BufferedDebugHandler } from "../src/debugging";
-import { ParsedResult, ParsingOption } from "../src";
+import { en, ParsedResult, ParsingOption } from "../src";
 
 interface ChronoLike {
     parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[];
@@ -71,6 +71,13 @@ export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?:
         e.stack = e.stack.replace(/[^\n]*at .*test_util.*\n/g, "");
         throw e;
     }
+}
+
+export function measureMilliSec(block: () => void): number {
+    const startTime = new Date().getMilliseconds();
+    block();
+    const endTime = new Date().getMilliseconds();
+    return endTime - startTime;
 }
 
 // --------------------------------------------------
