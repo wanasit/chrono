@@ -205,7 +205,8 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
     }
 
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-        const timezones = { ...this.timezone, ...context.option.timezones };
+        const timezoneOverrides = context.option.timezones ?? {};
+
         results.forEach((result) => {
             const suffix = context.text.substring(result.index + result.text.length);
             const match = TIMEZONE_NAME_PATTERN.exec(suffix);
@@ -214,11 +215,11 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
             }
 
             const timezoneAbbr = match[1].toUpperCase();
-            if (timezones[timezoneAbbr] === undefined) {
+            const extractedTimezoneOffset = timezoneOverrides[timezoneAbbr] ?? this.timezone[timezoneAbbr] ?? null;
+            if (extractedTimezoneOffset === null) {
                 return;
             }
 
-            const extractedTimezoneOffset = timezones[timezoneAbbr];
             context.debug(() => {
                 console.log(`Extracting timezone: '${timezoneAbbr}' into : ${extractedTimezoneOffset}`);
             });

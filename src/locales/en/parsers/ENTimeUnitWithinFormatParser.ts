@@ -3,18 +3,20 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
+const PATTERN_WITH_PREFIX = new RegExp(
+    `(?:within|in|for)\\s*` +
+        `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    "i"
+);
+
+const PATTERN_WITHOUT_PREFIX = new RegExp(
+    `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    "i"
+);
+
 export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        const prefix = context.option.forwardDate ? "" : "(?:within|in|for)\\s*";
-        return new RegExp(
-            prefix +
-                `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?` +
-                "(" +
-                TIME_UNITS_PATTERN +
-                ")" +
-                `(?=\\W|$)`,
-            "i"
-        );
+        return context.option.forwardDate ? PATTERN_WITHOUT_PREFIX : PATTERN_WITH_PREFIX;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

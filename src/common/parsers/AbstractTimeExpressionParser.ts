@@ -25,7 +25,7 @@ function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
 }
 
 // prettier-ignore
-function followingTimeExpression(followingPhase: string, followingSuffix: string) {
+function followingTimePatten(followingPhase: string, followingSuffix: string) {
     return new RegExp(
         `^(${followingPhase})` +
             "(\\d{1,4})" +
@@ -67,7 +67,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     pattern(context: ParsingContext): RegExp {
-        return primaryTimePattern(this.primaryPrefix(), this.primarySuffix());
+        return this.getPrimaryTimePatternThroughCache();
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
@@ -85,7 +85,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         }
 
         const remainingText = context.text.substring(match.index + match[0].length);
-        const followingPattern = followingTimeExpression(this.followingPhase(), this.followingSuffix());
+        const followingPattern = this.getFollowingTimePatternThroughCache();
         match = followingPattern.exec(remainingText);
         if (
             !match ||
@@ -334,5 +334,41 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         }
 
         return result;
+    }
+
+    private cachedPrimaryPrefix = null;
+    private cachedPrimarySuffix = null;
+    private cachedPrimaryTimePattern = null;
+
+    getPrimaryTimePatternThroughCache() {
+        const primaryPrefix = this.primaryPrefix();
+        const primarySuffix = this.primarySuffix();
+
+        if (this.cachedPrimaryPrefix === primaryPrefix && this.cachedPrimarySuffix === primarySuffix) {
+            return this.cachedPrimaryTimePattern;
+        }
+
+        this.cachedPrimaryTimePattern = primaryTimePattern(primaryPrefix, primarySuffix);
+        this.cachedPrimaryPrefix = primaryPrefix;
+        this.cachedPrimarySuffix = primarySuffix;
+        return this.cachedPrimaryTimePattern;
+    }
+
+    private cachedFollowingPhase = null;
+    private cachedFollowingSuffix = null;
+    private cachedFollowingTimePatten = null;
+
+    getFollowingTimePatternThroughCache() {
+        const followingPhase = this.followingPhase();
+        const followingSuffix = this.followingSuffix();
+
+        if (this.cachedFollowingPhase === followingPhase && this.cachedFollowingSuffix === followingSuffix) {
+            return this.cachedFollowingTimePatten;
+        }
+
+        this.cachedFollowingTimePatten = followingTimePatten(followingPhase, followingSuffix);
+        this.cachedFollowingPhase = followingPhase;
+        this.cachedFollowingSuffix = followingSuffix;
+        return this.cachedFollowingTimePatten;
     }
 }

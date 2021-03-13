@@ -12,9 +12,18 @@ export abstract class AbstractParserWithWordBoundaryChecking implements Parser {
         match: RegExpMatchArray
     ): ParsingComponents | ParsingResult | { [c in Component]?: number } | null;
 
+    private cachedInnerPattern?: RegExp = null;
+    private cachedPattern?: RegExp = null;
+
     pattern(context: ParsingContext): RegExp {
         const innerPattern = this.innerPattern(context);
-        return new RegExp(`(\\W|^)${innerPattern.source}`, innerPattern.flags);
+        if (innerPattern == this.cachedInnerPattern) {
+            return this.cachedPattern;
+        }
+
+        this.cachedPattern = new RegExp(`(\\W|^)${innerPattern.source}`, innerPattern.flags);
+        this.cachedInnerPattern = innerPattern;
+        return this.cachedPattern;
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
