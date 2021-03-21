@@ -1,7 +1,6 @@
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingComponents, ParsingResult } from "../../results";
 import { Meridiem } from "../../index";
-import dayjs from "dayjs";
 
 // prettier-ignore
 function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
@@ -71,18 +70,17 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
-        const refDate = dayjs(context.refDate);
-        const result = context.createParsingResult(match.index + match[1].length, match[0].substring(match[1].length));
-
-        result.start.imply("day", refDate.date());
-        result.start.imply("month", refDate.month() + 1);
-        result.start.imply("year", refDate.year());
-
-        result.start = this.extractPrimaryTimeComponents(context, match);
-        if (!result.start) {
+        const startComponents = this.extractPrimaryTimeComponents(context, match);
+        if (!startComponents) {
             match.index += match[0].length;
             return null;
         }
+
+        const result = context.createParsingResult(
+            match.index + match[1].length,
+            match[0].substring(match[1].length),
+            startComponents
+        );
 
         const remainingText = context.text.substring(match.index + match[0].length);
         const followingPattern = this.getFollowingTimePatternThroughCache();

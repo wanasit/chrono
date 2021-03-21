@@ -138,15 +138,19 @@ export class Chrono {
 export class ParsingContext implements DebugHandler {
     constructor(readonly text: string, readonly refDate: Date, readonly option: ParsingOption) {}
 
-    createParsingComponents(components?: { [c in Component]?: number }): ParsingComponents {
+    createParsingComponents(components?: { [c in Component]?: number } | ParsingComponents): ParsingComponents {
+        if (components instanceof ParsingComponents) {
+            return components;
+        }
+
         return new ParsingComponents(this.refDate, components);
     }
 
     createParsingResult(
         index: number,
         textOrEndIndex: number | string,
-        startComponents?: { [c in Component]?: number },
-        endComponents?: { [c in Component]?: number }
+        startComponents?: { [c in Component]?: number } | ParsingComponents,
+        endComponents?: { [c in Component]?: number } | ParsingComponents
     ): ParsingResult {
         const text = typeof textOrEndIndex === "string" ? textOrEndIndex : this.text.substring(index, textOrEndIndex);
 
