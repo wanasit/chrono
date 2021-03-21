@@ -2,7 +2,7 @@ const chrono = require("..");
 const b = require("benny");
 
 b.suite(
-    "Example",
+    "Basic parsing benchmark",
 
     b.add("Parsing empty string", () => {
         chrono.parse("");

@@ -43,7 +43,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "benchmark": "node ./benchmark/benchmark.js",
+    "benchmark": "npm run build && node ./benchmark/benchmark.js",
     "document": "typedoc",
     "prepare": "npm run build",
     "eslint": "eslint src test",

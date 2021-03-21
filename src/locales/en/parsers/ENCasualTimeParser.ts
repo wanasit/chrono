@@ -4,9 +4,11 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import dayjs from "dayjs";
 import { assignTheNextDay } from "../../../utils/dayjs";
 
+const PATTERN = /(?:this)?\s*(morning|afternoon|evening|night|midnight|noon)(?=\W|$)/i;
+
 export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:this)?\s*(morning|afternoon|evening|night|midnight|noon)(?=\W|$)/i;
+        return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
