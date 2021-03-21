@@ -22,6 +22,5 @@ test("Test - Benchmarking against whitespace backtracking", () => {
         expect(results.length).toBe(0);
     });
 
-    console.log(time);
     expect(time).toBeLessThan(1000);
 });

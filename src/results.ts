@@ -40,10 +40,6 @@ export class ParsingComponents implements ParsedComponents {
         return null;
     }
 
-    date(): Date {
-        return this.dayjs().toDate();
-    }
-
     isCertain(component: Component): boolean {
         return component in this.knownValues;
     }
@@ -104,47 +100,52 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isValidDate(): boolean {
-        let dateMoment = this.dayjs();
-        if (this.isCertain("timezoneOffset")) {
-            const adjustTimezoneOffset = this.get("timezoneOffset") - dateMoment.utcOffset();
-            dateMoment = dateMoment.add(adjustTimezoneOffset, "minute");
-        }
+        const date = this.isCertain("timezoneOffset") ? this.dateWithoutTimezoneAdjustment() : this.date();
 
-        if (dateMoment.get("year") != this.get("year")) return false;
-        if (dateMoment.get("month") != this.get("month") - 1) return false;
-        if (dateMoment.get("date") != this.get("day")) return false;
-        if (this.get("hour") != null && dateMoment.get("hour") != this.get("hour")) return false;
-        if (this.get("minute") != null && dateMoment.get("minute") != this.get("minute")) return false;
+        if (date.getFullYear() !== this.get("year")) return false;
+        if (date.getMonth() !== this.get("month") - 1) return false;
+        if (date.getDate() !== this.get("day")) return false;
+        if (this.get("hour") != null && date.getHours() != this.get("hour")) return false;
+        if (this.get("minute") != null && date.getMinutes() != this.get("minute")) return false;
 
         return true;
-    }
-
-    dayjs() {
-        let result = dayjs();
-
-        result = result.year(this.get("year"));
-        result = result.month(this.get("month") - 1);
-        result = result.date(this.get("day"));
-        result = result.hour(this.get("hour"));
-        result = result.minute(this.get("minute"));
-        result = result.second(this.get("second"));
-        result = result.millisecond(this.get("millisecond"));
-
-        // Javascript Date Object return minus timezone offset
-        const currentTimezoneOffset = result.utcOffset();
-        const targetTimezoneOffset =
-            this.get("timezoneOffset") !== null ? this.get("timezoneOffset") : currentTimezoneOffset;
-
-        const adjustTimezoneOffset = targetTimezoneOffset - currentTimezoneOffset;
-        result = result.add(-adjustTimezoneOffset, "minute");
-
-        return result;
     }
 
     toString() {
         return `[ParsingComponents {knownValues: ${JSON.stringify(this.knownValues)}, impliedValues: ${JSON.stringify(
             this.impliedValues
         )}}]`;
+    }
+
+    dayjs() {
+        return dayjs(this.date());
+    }
+
+    date(): Date {
+        const date = this.dateWithoutTimezoneAdjustment();
+        return new Date(date.getTime() + this.getTimezoneAdjustmentMinute(date) * 60000);
+    }
+
+    private dateWithoutTimezoneAdjustment() {
+        const date = new Date(
+            this.get("year"),
+            this.get("month") - 1,
+            this.get("day"),
+            this.get("hour"),
+            this.get("minute"),
+            this.get("second"),
+            this.get("millisecond")
+        );
+
+        date.setFullYear(this.get("year"));
+        return date;
+    }
+
+    private getTimezoneAdjustmentMinute(date?: Date) {
+        date = date ?? new Date();
+        const currentTimezoneOffset = -date.getTimezoneOffset();
+        const targetTimezoneOffset = this.get("timezoneOffset") ?? currentTimezoneOffset;
+        return currentTimezoneOffset - targetTimezoneOffset;
     }
 
     static createRelativeFromRefDate(
