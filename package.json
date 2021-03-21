@@ -15,7 +15,7 @@
     "preset": "ts-jest"
   },
   "license": "MIT",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "directories": {
     "source": "./src",
     "test": "./test"
@@ -64,7 +64,9 @@
       "node": true,
       "browser": true
     },
-    "ignorePatterns": ["benchmark/*.js"],
+    "ignorePatterns": [
+      "benchmark/*.js"
+    ],
     "parserOptions": {
       "sourceType": "module",
       "ecmaFeatures": {
