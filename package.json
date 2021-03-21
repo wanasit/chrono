@@ -26,6 +26,7 @@
     "@types/jest": "^26.0.4",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
+    "benny": "^3.6.15",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "husky": "^4.2.5",
@@ -42,6 +43,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "benchmark": "node ./benchmark/benchmark.js",
     "document": "typedoc",
     "prepare": "npm run build",
     "eslint": "eslint src test",
@@ -62,6 +64,7 @@
       "node": true,
       "browser": true
     },
+    "ignorePatterns": ["benchmark/*.js"],
     "parserOptions": {
       "sourceType": "module",
       "ecmaFeatures": {

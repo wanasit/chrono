@@ -6,6 +6,10 @@ package-lock.json
 # Coverages
 coverage/
 
+# Benchmarking
+benchmark/results
+*.log
+
 # Misc
 .Rhistory
 .idea/
