@@ -5,7 +5,7 @@ import { Meridiem } from "../../index";
 // prettier-ignore
 function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
     return new RegExp(
-        "(^|\\s|T)" +
+        "(^|\\s|T|\\b)" +
             `${primaryPrefix}` +
             "(\\d{1,4})" +
             "(?:" +

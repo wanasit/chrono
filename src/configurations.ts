@@ -15,6 +15,8 @@ export function includeCommonConfiguration(configuration: Configuration, strictM
     configuration.refiners.unshift(new ExtractTimezoneAbbrRefiner());
     configuration.refiners.unshift(new ExtractTimezoneOffsetRefiner());
     configuration.refiners.unshift(new OverlapRemovalRefiner());
+
+    configuration.refiners.push(new OverlapRemovalRefiner());
     configuration.refiners.push(new ForwardDateRefiner());
     configuration.refiners.push(new UnlikelyFormatFilter(strictMode));
     return configuration;

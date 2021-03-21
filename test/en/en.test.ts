@@ -28,6 +28,24 @@ test("Test - Time Expression", function () {
     });
 });
 
+test("Test - Quoted Expressions", function () {
+    testSingleCase(chrono, "Want to meet for dinner (5pm EST)?", new Date(2020, 7 - 1, 6), (result) => {
+        expect(result.text).toContain("5pm EST");
+    });
+
+    testSingleCase(chrono, "between '3:30-4:30pm'", new Date(2020, 7 - 1, 6), (result) => {
+        expect(result.text).toContain("3:30-4:30pm");
+
+        expect(result.start).toBeDate(new Date(2020, 7 - 1, 6, 15, 30));
+        expect(result.end).toBeDate(new Date(2020, 7 - 1, 6, 16, 30));
+    });
+
+    testSingleCase(chrono, "The date is '2014-04-18'", (result) => {
+        expect(result.text).toContain("2014-04-18");
+        expect(result.start).toBeDate(new Date(2014, 4 - 1, 18, 12));
+    });
+});
+
 test("Test - Strict Mode", function () {
     testUnexpectedResult(chrono.strict, "Tuesday");
 });
