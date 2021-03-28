@@ -18,8 +18,10 @@ jobs:
           fetch-depth: 0
           ref: documentation
       
-      - name: Checkout to the master version
-        run: git reset --hard origin/master
+      - name: Checkout and install the master
+        run: |
+          git reset --hard origin/master
+          npm install
 
       - name: Generate the document
         run: npm run document
