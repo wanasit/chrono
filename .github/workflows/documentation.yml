@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           ref: documentation
       
       - name: Checkout to the master version
