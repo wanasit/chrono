@@ -1,0 +1,35 @@
+name: Documentation
+
+# Controls when the action will run. 
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: documentation
+      
+      - name: Checkout to the master version
+        run: git reset --hard master
+
+      - name: Generate the document
+        run: npm run document
+
+      - name: Commit the document
+        run: |
+          git add -f docs
+          git commit -m 'Add documentation'
+          
+      - name: Update the documentation branch
+        run: git push -f origin/documentation
+          
+          
+          
