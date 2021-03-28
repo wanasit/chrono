@@ -34,7 +34,7 @@ jobs:
           git commit -m 'Add documentation'
           
       - name: Update the documentation branch
-        run: git push -f origin/documentation
+        run: git push -f origin documentation
           
           
           
