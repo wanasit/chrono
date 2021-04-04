@@ -106,12 +106,23 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         strict = false
     ): null | ParsingComponents {
         const components = context.createParsingComponents();
-        let hour = 0;
         let minute = 0;
         let meridiem = null;
 
         // ----- Hours
-        hour = parseInt(match[HOUR_GROUP]);
+        let hour = parseInt(match[HOUR_GROUP]);
+        if (hour > 100) {
+            if (this.strictMode || match[MINUTE_GROUP] != null) {
+                return null;
+            }
+
+            minute = hour % 100;
+            hour = Math.floor(hour / 100);
+        }
+
+        if (hour > 24) {
+            return null;
+        }
 
         // ----- Minutes
         if (match[MINUTE_GROUP] != null) {
@@ -121,16 +132,9 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             }
 
             minute = parseInt(match[MINUTE_GROUP]);
-        } else if (hour > 100) {
-            if (this.strictMode) {
-                return null;
-            }
-
-            minute = hour % 100;
-            hour = Math.floor(hour / 100);
         }
 
-        if (minute >= 60 || hour > 24) {
+        if (minute >= 60) {
             return null;
         }
 
