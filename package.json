@@ -15,7 +15,7 @@
     "preset": "ts-jest"
   },
   "license": "MIT",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "directories": {
     "source": "./src",
     "test": "./test"
