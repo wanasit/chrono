@@ -169,17 +169,3 @@ test("Test - Compare with native js", () => {
 
     testByCompareWithNative("2014-12-14T18:22:14.759Z");
 });
-
-test("Test - Skip version-number-like pattern", () => {
-    testSingleCase(chrono, "1.5.3 - 2015-09-24", (result) => {
-        expect(result.text).toBe("2015-09-24");
-    });
-
-    testSingleCase(chrono, "1.5.30 - 2015-09-24", (result) => {
-        expect(result.text).toBe("2015-09-24");
-    });
-
-    testSingleCase(chrono, "1.50.30 - 2015-09-24", (result) => {
-        expect(result.text).toBe("2015-09-24");
-    });
-});

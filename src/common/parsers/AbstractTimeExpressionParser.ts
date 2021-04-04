@@ -72,35 +72,32 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         const startComponents = this.extractPrimaryTimeComponents(context, match);
         if (!startComponents) {
-            match.index += match[0].length;
+            match.index += match[0].length; // Skip over potential overlapping pattern
             return null;
         }
 
-        const result = context.createParsingResult(
-            match.index + match[1].length,
-            match[0].substring(match[1].length),
-            startComponents
-        );
+        const index = match.index + match[1].length;
+        const text = match[0].substring(match[1].length);
+        const result = context.createParsingResult(index, text, startComponents);
+        match.index += match[0].length; // Skip over potential overlapping pattern
 
-        const remainingText = context.text.substring(match.index + match[0].length);
+        const remainingText = context.text.substring(match.index);
         const followingPattern = this.getFollowingTimePatternThroughCache();
-        match = followingPattern.exec(remainingText);
+        const followingMatch = followingPattern.exec(remainingText);
         if (
-            !match ||
+            !followingMatch ||
             // Pattern "YY.YY -XXXX" is more like timezone offset
-            match[0].match(/^\s*([+-])\s*\d{3,4}$/)
+            followingMatch[0].match(/^\s*([+-])\s*\d{3,4}$/)
         ) {
             return this.checkAndReturnWithoutFollowingPattern(result);
         }
 
-        result.end = this.extractFollowingTimeComponents(context, match, result);
+        result.end = this.extractFollowingTimeComponents(context, followingMatch, result);
         if (result.end) {
-            if (result.end) {
-                result.text += match[0];
-            }
+            result.text += followingMatch[0];
         }
 
-        return result;
+        return this.checkAndReturnWithFollowingPattern(result);
     }
 
     extractPrimaryTimeComponents(
@@ -327,6 +324,37 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             // If it ends only with numbers above 24, e.g. "at 25"
             const endingNumberVal = parseInt(endingNumbers);
             if (endingNumberVal > 24) {
+                return null;
+            }
+        }
+
+        return result;
+    }
+
+    private checkAndReturnWithFollowingPattern(result) {
+        if (result.text.match(/^\d+-\d+$/)) {
+            return null;
+        }
+
+        // If it ends only with numbers or dots
+        const endingWithNumbers = result.text.match(/[^\d:.](\d[\d.]+)\s*-\s*(\d[\d.]+)$/);
+        if (endingWithNumbers) {
+            // In strict mode (e.g. "at 1-3" or "at 1.2 - 2.3"), this should not be accepted
+            if (this.strictMode) {
+                return null;
+            }
+
+            const startingNumbers: string = endingWithNumbers[1];
+            const endingNumbers: string = endingWithNumbers[2];
+            // If it ends only with dot single digit, e.g. "at 1.2"
+            if (endingNumbers.includes(".") && !endingNumbers.match(/\d(\.\d{2})+$/)) {
+                return null;
+            }
+
+            // If it ends only with numbers above 24, e.g. "at 25"
+            const endingNumberVal = parseInt(endingNumbers);
+            const startingNumberVal = parseInt(startingNumbers);
+            if (endingNumberVal > 24 || startingNumberVal > 24) {
                 return null;
             }
         }

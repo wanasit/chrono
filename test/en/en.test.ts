@@ -97,34 +97,6 @@ test("Test - Random text", function () {
     });
 });
 
-test("Test - Random non-date patterns", function () {
-    testUnexpectedResult(chrono, " 3");
-
-    testUnexpectedResult(chrono, "       1");
-
-    testUnexpectedResult(chrono, "  11 ");
-
-    testUnexpectedResult(chrono, " 0.5 ");
-
-    testUnexpectedResult(chrono, " 35.49 ");
-
-    testUnexpectedResult(chrono, "12.53%");
-
-    testUnexpectedResult(chrono, "6358fe2310> *5.0* / 5 Outstanding");
-
-    testUnexpectedResult(chrono, "6358fe2310> *1.5* / 5 Outstanding");
-
-    testUnexpectedResult(chrono, "Total: $1,194.09 [image: View Reservation");
-
-    testUnexpectedResult(chrono, "Version: 1.1.3");
-
-    testUnexpectedResult(chrono, "Version: 1.1.30");
-
-    testUnexpectedResult(chrono, "Version: 1.10.30");
-
-    testUnexpectedResult(chrono, "at 6.5 kilograms");
-});
-
 test("Test - Wikipedia Texts", function () {
     const text =
         "October 7, 2011, of which details were not revealed out of respect to Jobs's family.[239] " +
