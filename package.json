@@ -34,7 +34,7 @@
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "typedoc": "^0.20.36",
-    "typescript": "^4.2.4"
+    "typescript": "~4.2.4"
   },
   "husky": {
     "hooks": {
