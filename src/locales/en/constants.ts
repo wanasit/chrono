@@ -198,7 +198,7 @@ export function parseOrdinalNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC)|[1-2][0-9]{3}|[5-9][0-9])`;
+export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC|BCE|CE)|[1-2][0-9]{3}|[5-9][0-9])`;
 export function parseYear(match: string): number {
     if (/BE/i.test(match)) {
         // Buddhist Era
@@ -206,14 +206,15 @@ export function parseYear(match: string): number {
         return parseInt(match) - 543;
     }
 
-    if (/BC/i.test(match)) {
-        // Before Christ
-        match = match.replace(/BC/i, "");
+    if (/BCE?/i.test(match)) {
+        // Before Christ, Before Common Era
+        match = match.replace(/BCE?/i, "");
         return -parseInt(match);
     }
 
-    if (/AD/i.test(match)) {
-        match = match.replace(/AD/i, "");
+    if (/(AD|CE)/i.test(match)) {
+        // Anno Domini, Common Era
+        match = match.replace(/(AD|CE)/i, "");
         return parseInt(match);
     }
 

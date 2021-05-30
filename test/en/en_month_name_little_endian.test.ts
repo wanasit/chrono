@@ -26,45 +26,6 @@ test("Test - Single expression", () => {
         expect(result.start).toBeDate(new Date(1982, 2 - 1, 3, 12));
     });
 
-    testSingleCase(chrono, "10 August 2555 BE", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("10 August 2555 BE");
-
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
-    });
-
-    testSingleCase(chrono, "10 August 234 BC", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("10 August 234 BC");
-
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(-234);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        expect(result.start).toBeDate(new Date(-234, 8 - 1, 10, 12));
-    });
-
-    testSingleCase(chrono, "10 August 88 AD", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("10 August 88 AD");
-
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(88);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        const resultDate = result.start.date();
-        const expectDate = new Date(88, 8 - 1, 10, 12);
-        expectDate.setFullYear(88);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
-    });
-
     testSingleCase(chrono, "Sun 15Sep", new Date(2013, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("Sun 15Sep");
