@@ -2,7 +2,7 @@
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 
-const TIMEZONE_NAME_PATTERN = new RegExp("^\\s*\\(?([A-Z]{2,4})\\)?(?=\\W|$)", "i");
+const TIMEZONE_NAME_PATTERN = new RegExp("^\\s*,?\\s*\\(?([A-Z]{2,4})\\)?(?=\\W|$)", "i");
 const DEFAULT_TIMEZONE_ABBR_MAP = {
     ACDT: 630,
     ACST: 570,
@@ -224,12 +224,20 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
                 console.log(`Extracting timezone: '${timezoneAbbr}' into : ${extractedTimezoneOffset}`);
             });
 
-            // We may already have extracted the offset e.g. "11 am GMT+0900 (JST)"
-            // - if they are equal, we also want to take the abbreviation text into result
-            // - if they are not equal, we trust the offset more
             const currentTimezoneOffset = result.start.get("timezoneOffset");
             if (currentTimezoneOffset !== null && extractedTimezoneOffset != currentTimezoneOffset) {
-                return;
+                // We may already have extracted the timezone offset e.g. "11 am GMT+0900 (JST)"
+                // - if they are equal, we also want to take the abbreviation text into result
+                // - if they are not equal, we trust the offset more
+                if (result.start.isCertain("timezoneOffset")) {
+                    return;
+                }
+
+                // This is often because it's relative time with inferred timezone (e.g. in 1 hour, tomorrow)
+                // Then, we want to double check the abbr case (e.g. "GET" not "get")
+                if (timezoneAbbr != match[1]) {
+                    return;
+                }
             }
 
             result.text += match[0];
