@@ -23,6 +23,17 @@ test("Test - Skip random non-date patterns", function () {
     testUnexpectedResult(chrono, "at 6.5 kilograms");
 });
 
+test("Test - URLs % encoded", function () {
+    testUnexpectedResult(chrono, "%e7%b7%8a");
+
+    testUnexpectedResult(
+        chrono,
+        "https://tenor.com/view/%e3%83%89%e3%82%ad%e3%83%89%e3%82%ad-" +
+            "%e7%b7%8a%e5%bc%b5-%e5%a5%bd%e3%81%8d-%e3%83%8f%e3%83%bc%e3%83%88" +
+            "-%e5%8f%af%e6%84%9b%e3%81%84-gif-15876325"
+    );
+});
+
 test("Test - Skip hyphenated numbers pattern", () => {
     testUnexpectedResult(chrono, "1-2");
 
