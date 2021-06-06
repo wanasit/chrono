@@ -14,17 +14,17 @@ export default class NLCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "nu":
-                return references.now(context.refDate);
+                return references.now(context.reference);
 
             case "vandaag":
-                return references.today(context.refDate);
+                return references.today(context.reference);
 
             case "morgen":
             case "morgend":
-                return references.tomorrow(context.refDate);
+                return references.tomorrow(context.reference);
 
             case "gisteren":
-                return references.yesterday(context.refDate);
+                return references.yesterday(context.reference);
         }
 
         return component;

@@ -18,7 +18,6 @@ export function assignSimilarTime(component: ParsingComponents, targetDayJs: day
     component.assign("minute", targetDayJs.minute());
     component.assign("second", targetDayJs.second());
     component.assign("millisecond", targetDayJs.millisecond());
-    component.assign("timezoneOffset", targetDayJs.utcOffset());
 }
 
 export function implySimilarTime(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
@@ -26,5 +25,4 @@ export function implySimilarTime(component: ParsingComponents, targetDayJs: dayj
     component.imply("minute", targetDayJs.minute());
     component.imply("second", targetDayJs.second());
     component.imply("millisecond", targetDayJs.millisecond());
-    component.imply("timezoneOffset", targetDayJs.utcOffset());
 }

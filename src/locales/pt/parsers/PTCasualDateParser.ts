@@ -14,17 +14,17 @@ export default class PTCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "agora":
-                return references.now(context.refDate);
+                return references.now(context.reference);
 
             case "hoje":
-                return references.today(context.refDate);
+                return references.today(context.reference);
 
             case "amanha":
             case "amanhã":
-                return references.tomorrow(context.refDate);
+                return references.tomorrow(context.reference);
 
             case "ontem":
-                return references.yesterday(context.refDate);
+                return references.yesterday(context.reference);
         }
 
         return component;

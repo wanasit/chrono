@@ -23,6 +23,22 @@ export interface ParsingOption {
     debug?: DebugHandler | DebugConsume;
 }
 
+export interface ParsingReference {
+    /**
+     * Reference date. The instant (JavaScript Date object) when the input is written or mention.
+     * This effect date/time implication (e.g. weekday or time mentioning).
+     * (default = now)
+     */
+    instant?: Date;
+
+    /**
+     * Reference timezone. The timezone where the input is written or mention.
+     * Date/time implication will account the difference between input timezone and the current system timezone.
+     * (default = current timezone)
+     */
+    timezone?: string | number;
+}
+
 /**
  * Parsed result or final output.
  * Each result object represents a date/time (or date/time-range) mentioning in the input.
@@ -104,13 +120,13 @@ export const casual = en.casual;
 /**
  * A shortcut for {@link en | chrono.en.casual.parse()}
  */
-export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
+export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
 /**
  * A shortcut for {@link en | chrono.en.casual.parseDate()}
  */
-export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
+export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }

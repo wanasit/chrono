@@ -29,11 +29,11 @@ export default class DECasualDateParser extends AbstractParserWithWordBoundaryCh
         let component = context.createParsingComponents();
         switch (dateKeyword) {
             case "jetzt":
-                component = references.now(context.refDate);
+                component = references.now(context.reference);
                 break;
 
             case "heute":
-                component = references.today(context.refDate);
+                component = references.today(context.reference);
                 break;
 
             case "morgen":

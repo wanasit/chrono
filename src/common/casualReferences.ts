@@ -1,19 +1,20 @@
-import { ParsingComponents } from "../results";
+import { ParsingComponents, ReferenceWithTimezone } from "../results";
 import dayjs from "dayjs";
 import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../utils/dayjs";
 import { Meridiem } from "../index";
 
-export function now(refDate: Date): ParsingComponents {
-    const targetDate = dayjs(refDate);
-    const component = new ParsingComponents(refDate, {});
+export function now(reference: ReferenceWithTimezone): ParsingComponents {
+    const targetDate = dayjs(reference.instant);
+    const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     assignSimilarTime(component, targetDate);
+    component.assign("timezoneOffset", targetDate.utcOffset());
     return component;
 }
 
-export function today(refDate: Date): ParsingComponents {
-    const targetDate = dayjs(refDate);
-    const component = new ParsingComponents(refDate, {});
+export function today(reference: ReferenceWithTimezone): ParsingComponents {
+    const targetDate = dayjs(reference.instant);
+    const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
     return component;
@@ -21,11 +22,10 @@ export function today(refDate: Date): ParsingComponents {
 
 /**
  * The previous day. Imply the same time.
- * @param refDate
  */
-export function yesterday(refDate: Date): ParsingComponents {
-    let targetDate = dayjs(refDate);
-    const component = new ParsingComponents(refDate, {});
+export function yesterday(reference: ReferenceWithTimezone): ParsingComponents {
+    let targetDate = dayjs(reference.instant);
+    const component = new ParsingComponents(reference, {});
     targetDate = targetDate.add(-1, "day");
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
@@ -34,18 +34,17 @@ export function yesterday(refDate: Date): ParsingComponents {
 
 /**
  * The following day with dayjs.assignTheNextDay()
- * @param refDate
  */
-export function tomorrow(refDate: Date): ParsingComponents {
-    const targetDate = dayjs(refDate);
-    const component = new ParsingComponents(refDate, {});
+export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
+    const targetDate = dayjs(reference.instant);
+    const component = new ParsingComponents(reference, {});
     assignTheNextDay(component, targetDate);
     return component;
 }
 
-export function tonight(refDate: Date, implyHour = 22): ParsingComponents {
-    const targetDate = dayjs(refDate);
-    const component = new ParsingComponents(refDate, {});
+export function tonight(reference: ReferenceWithTimezone, implyHour = 22): ParsingComponents {
+    const targetDate = dayjs(reference.instant);
+    const component = new ParsingComponents(reference, {});
     component.imply("hour", implyHour);
     component.imply("meridiem", Meridiem.PM);
     assignSimilarDate(component, targetDate);

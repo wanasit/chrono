@@ -18,14 +18,14 @@ export default class JPCasualDateParser implements Parser {
 
         switch (text) {
             case "昨日":
-                return references.yesterday(context.refDate);
+                return references.yesterday(context.reference);
 
             case "明日":
-                return references.tomorrow(context.refDate);
+                return references.tomorrow(context.reference);
 
             case "今日":
             case "当日":
-                return references.today(context.refDate);
+                return references.today(context.reference);
         }
 
         if (text == "今夜" || text == "今夕" || text == "今晩") {
