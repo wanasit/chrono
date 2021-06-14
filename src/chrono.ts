@@ -1,5 +1,5 @@
-import { ParsingComponents, ParsingResult } from "./results";
-import { Component, ParsedResult, ParsingOption } from "./index";
+import { ReferenceWithTimezone, ParsingComponents, ParsingResult } from "./results";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "./index";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
 import { createCasualConfiguration } from "./locales/en";
 
@@ -68,13 +68,13 @@ export class Chrono {
      * A shortcut for calling {@Link parse | parse() } then transform the result into Javascript's Date object
      * @return Date object created from the first parse result
      */
-    parseDate(text: string, referenceDate?: Date, option?: ParsingOption): Date | null {
+    parseDate(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): Date | null {
         const results = this.parse(text, referenceDate, option);
         return results.length > 0 ? results[0].start.date() : null;
     }
 
-    parse(text: string, referenceDate?: Date, option?: ParsingOption): ParsedResult[] {
-        const context = new ParsingContext(text, referenceDate || new Date(), option || {});
+    parse(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
+        const context = new ParsingContext(text, referenceDate, option);
 
         let results = [];
         this.parsers.forEach((parser) => {
@@ -136,14 +136,27 @@ export class Chrono {
 }
 
 export class ParsingContext implements DebugHandler {
-    constructor(readonly text: string, readonly refDate: Date, readonly option: ParsingOption) {}
+    readonly text: string;
+    readonly option: ParsingOption;
+    readonly reference: ReferenceWithTimezone;
+
+    // Deprecated. Use reference.instant instead.
+    readonly refDate: Date;
+
+    constructor(text: string, refDate?: ParsingReference | Date, option?: ParsingOption) {
+        this.text = text;
+        this.reference = new ReferenceWithTimezone(refDate);
+        this.option = option ?? {};
+
+        this.refDate = this.reference.instant;
+    }
 
     createParsingComponents(components?: { [c in Component]?: number } | ParsingComponents): ParsingComponents {
         if (components instanceof ParsingComponents) {
             return components;
         }
 
-        return new ParsingComponents(this.refDate, components);
+        return new ParsingComponents(this.reference, components);
     }
 
     createParsingResult(
@@ -157,7 +170,7 @@ export class ParsingContext implements DebugHandler {
         const start = startComponents ? this.createParsingComponents(startComponents) : null;
         const end = endComponents ? this.createParsingComponents(endComponents) : null;
 
-        return new ParsingResult(this.refDate, index, text, start, end);
+        return new ParsingResult(this.reference, index, text, start, end);
     }
 
     debug(block: AsyncDebugBlock): void {

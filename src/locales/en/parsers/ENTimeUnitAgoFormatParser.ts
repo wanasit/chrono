@@ -21,6 +21,6 @@ export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBou
         const timeUnits = parseTimeUnits(match[1]);
         const outputTimeUnits = reverseTimeUnits(timeUnits);
 
-        return ParsingComponents.createRelativeFromRefDate(context.refDate, outputTimeUnits);
+        return ParsingComponents.createRelativeFromRefInstant(context.refDate, outputTimeUnits);
     }
 }

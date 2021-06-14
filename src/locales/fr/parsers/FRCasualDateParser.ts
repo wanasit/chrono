@@ -18,16 +18,16 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "maintenant":
-                return references.now(context.refDate);
+                return references.now(context.reference);
 
             case "aujourd'hui":
-                return references.today(context.refDate);
+                return references.today(context.reference);
 
             case "hier":
-                return references.yesterday(context.refDate);
+                return references.yesterday(context.reference);
 
             case "demain":
-                return references.tomorrow(context.refDate);
+                return references.tomorrow(context.reference);
 
             default:
                 if (lowerText.match(/cette\s*nuit/)) {

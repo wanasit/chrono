@@ -1,15 +1,34 @@
-import { Component, ParsedComponents, ParsedResult } from "./index";
+import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./index";
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { OpUnitType, QUnitType } from "dayjs";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
+import { toTimezoneOffset } from "./timezone";
 dayjs.extend(quarterOfYear);
+
+export class ReferenceWithTimezone {
+    readonly instant: Date;
+    readonly timezoneOffset: number;
+
+    constructor(input?: ParsingReference | Date) {
+        input = input ?? new Date();
+        if (input instanceof Date) {
+            this.instant = input;
+            this.timezoneOffset = -input.getTimezoneOffset();
+        } else {
+            this.instant = input.instant ?? new Date();
+            this.timezoneOffset = toTimezoneOffset(input.timezone ?? -this.instant.getTimezoneOffset());
+        }
+    }
+}
 
 export class ParsingComponents implements ParsedComponents {
     private knownValues: { [c in Component]?: number };
     private impliedValues: { [c in Component]?: number };
+    private reference: ReferenceWithTimezone;
 
-    constructor(refDate: Date, knownComponents?: { [c in Component]?: number }) {
+    constructor(reference: ReferenceWithTimezone, knownComponents?: { [c in Component]?: number }) {
+        this.reference = reference;
         this.knownValues = {};
         this.impliedValues = {};
         if (knownComponents) {
@@ -18,7 +37,7 @@ export class ParsingComponents implements ParsedComponents {
             }
         }
 
-        const refDayJs = dayjs(refDate);
+        const refDayJs = dayjs(reference.instant);
         this.imply("day", refDayJs.date());
         this.imply("month", refDayJs.month() + 1);
         this.imply("year", refDayJs.year());
@@ -68,7 +87,7 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     clone(): ParsingComponents {
-        const component = new ParsingComponents(new Date());
+        const component = new ParsingComponents(this.reference);
         component.knownValues = {};
         component.impliedValues = {};
 
@@ -100,7 +119,7 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isValidDate(): boolean {
-        const date = this.isCertain("timezoneOffset") ? this.dateWithoutTimezoneAdjustment() : this.date();
+        const date = this.dateWithoutTimezoneAdjustment();
 
         if (date.getFullYear() !== this.get("year")) return false;
         if (date.getMonth() !== this.get("month") - 1) return false;
@@ -123,7 +142,7 @@ export class ParsingComponents implements ParsedComponents {
 
     date(): Date {
         const date = this.dateWithoutTimezoneAdjustment();
-        return new Date(date.getTime() + this.getTimezoneAdjustmentMinute(date) * 60000);
+        return new Date(date.getTime() + this.getSystemTimezoneAdjustmentMinute() * 60000);
     }
 
     private dateWithoutTimezoneAdjustment() {
@@ -141,28 +160,31 @@ export class ParsingComponents implements ParsedComponents {
         return date;
     }
 
-    private getTimezoneAdjustmentMinute(date?: Date) {
-        date = date ?? new Date();
-        const currentTimezoneOffset = -date.getTimezoneOffset();
-        const targetTimezoneOffset = this.get("timezoneOffset") ?? currentTimezoneOffset;
+    private getSystemTimezoneAdjustmentMinute() {
+        const currentTimezoneOffset = -new Date().getTimezoneOffset();
+        const targetTimezoneOffset = this.get("timezoneOffset") ?? this.reference.timezoneOffset;
+
         return currentTimezoneOffset - targetTimezoneOffset;
     }
 
-    static createRelativeFromRefDate(
-        refDate: Date,
+    static createRelativeFromRefInstant(
+        refInstant: Date,
         fragments: { [c in OpUnitType | QUnitType]?: number }
     ): ParsingComponents {
-        let date = dayjs(refDate);
+        let date = dayjs(refInstant);
         for (const key in fragments) {
             date = date.add(fragments[key as OpUnitType], key as OpUnitType);
         }
 
-        const components = new ParsingComponents(refDate);
+        const reference = new ReferenceWithTimezone(refInstant);
+        const components = new ParsingComponents(reference);
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
+            components.assign("timezoneOffset", -refInstant.getTimezoneOffset());
         } else {
             implySimilarTime(components, date);
+            components.imply("timezoneOffset", -refInstant.getTimezoneOffset());
 
             if (fragments["d"]) {
                 components.assign("day", date.date());
@@ -197,19 +219,28 @@ export class ParsingResult implements ParsedResult {
     index: number;
     text: string;
 
+    reference: ReferenceWithTimezone;
+
     start: ParsingComponents;
     end?: ParsingComponents;
 
-    constructor(refDate: Date, index: number, text: string, start?: ParsingComponents, end?: ParsingComponents) {
-        this.refDate = refDate;
+    constructor(
+        reference: ReferenceWithTimezone,
+        index: number,
+        text: string,
+        start?: ParsingComponents,
+        end?: ParsingComponents
+    ) {
+        this.reference = reference;
+        this.refDate = reference.instant;
         this.index = index;
         this.text = text;
-        this.start = start || new ParsingComponents(this.refDate);
+        this.start = start || new ParsingComponents(reference);
         this.end = end;
     }
 
     clone() {
-        const result = new ParsingResult(this.refDate, this.index, this.text);
+        const result = new ParsingResult(this.reference, this.index, this.text);
         result.start = this.start ? this.start.clone() : null;
         result.end = this.end ? this.end.clone() : null;
         return result;

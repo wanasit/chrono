@@ -19,21 +19,21 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
         switch (lowerText) {
             case "now":
-                return references.now(context.refDate);
+                return references.now(context.reference);
 
             case "today":
-                return references.today(context.refDate);
+                return references.today(context.reference);
 
             case "yesterday":
-                return references.yesterday(context.refDate);
+                return references.yesterday(context.reference);
 
             case "tomorrow":
             case "tmr":
             case "tmrw":
-                return references.tomorrow(context.refDate);
+                return references.tomorrow(context.reference);
 
             case "tonight":
-                return references.tonight(context.refDate);
+                return references.tonight(context.reference);
 
             default:
                 if (lowerText.match(/last\s*night/)) {

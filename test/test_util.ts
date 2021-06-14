@@ -1,8 +1,8 @@
 import { BufferedDebugHandler } from "../src/debugging";
-import { en, ParsedResult, ParsingOption } from "../src";
+import { en, ParsedResult, ParsingOption, ParsingReference } from "../src";
 
 interface ChronoLike {
-    parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[];
+    parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[];
 }
 
 type CheckResult = (p: ParsedResult, text: string) => void;
@@ -11,20 +11,20 @@ export function testSingleCase(chrono: ChronoLike, text: string, checkResult?: C
 export function testSingleCase(
     chrono: ChronoLike,
     text: string,
-    refDateOrCheckResult?: Date | CheckResult,
+    refDateOrCheckResult?: ParsingReference | Date | CheckResult,
     checkResult?: CheckResult
 );
 export function testSingleCase(
     chrono: ChronoLike,
     text: string,
-    refDateOrCheckResult?: Date | CheckResult,
+    refDateOrCheckResult?: ParsingReference | Date | CheckResult,
     optionOrCheckResult?: ParsingOption | CheckResult,
     checkResult?: CheckResult
 );
 export function testSingleCase(
     chrono: ChronoLike,
     text: string,
-    refDateOrCheckResult?: Date | CheckResult,
+    refDateOrCheckResult?: ParsingReference | Date | CheckResult,
     optionOrCheckResult?: ParsingOption | CheckResult,
     checkResult?: CheckResult
 ) {

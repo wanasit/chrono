@@ -1,8 +1,8 @@
-import { ParsingComponents } from "../src/results";
+import { ParsingComponents, ReferenceWithTimezone } from "../src/results";
 
 test("Test - Create & manipulate date results", () => {
-    const refDate = new Date();
-    const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24 });
+    const reference = new ReferenceWithTimezone(new Date());
+    const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24 });
 
     expect(components.get("year")).toBe(2014);
     expect(components.get("month")).toBe(11);
@@ -32,26 +32,45 @@ test("Test - Create & manipulate date results", () => {
     expect(components.get("year")).toBe(2013);
 });
 
+test("Test - Calendar checking with implied components", () => {
+    const reference = new ReferenceWithTimezone(new Date());
+
+    {
+        const components = new ParsingComponents(reference, {
+            "day": 13,
+            "month": 3,
+            "year": 2021,
+            "hour": 14,
+            "minute": 22,
+            "second": 14,
+            "millisecond": 0,
+        });
+        components.imply("timezoneOffset", -300);
+
+        expect(components.isValidDate()).toBe(true);
+    }
+});
+
 test("Test - Calendar Checking", () => {
-    const refDate = new Date();
+    const reference = new ReferenceWithTimezone(new Date());
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24 });
         expect(components.isValidDate()).toBe(true);
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24, hour: 12 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24, hour: 12 });
         expect(components.isValidDate()).toBe(true);
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24, hour: 12, minute: 30 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24, hour: 12, minute: 30 });
         expect(components.isValidDate()).toBe(true);
     }
 
     {
-        const components = new ParsingComponents(refDate, {
+        const components = new ParsingComponents(reference, {
             year: 2014,
             month: 11,
             day: 24,
@@ -63,27 +82,27 @@ test("Test - Calendar Checking", () => {
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 13, day: 24 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 13, day: 24 });
         expect(components.isValidDate()).toBe(false);
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 32 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 32 });
         expect(components.isValidDate()).toBe(false);
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24, hour: 24 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24, hour: 24 });
         expect(components.isValidDate()).toBe(false);
     }
 
     {
-        const components = new ParsingComponents(refDate, { year: 2014, month: 11, day: 24, hour: 12, minute: 60 });
+        const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24, hour: 12, minute: 60 });
         expect(components.isValidDate()).toBe(false);
     }
 
     {
-        const components = new ParsingComponents(refDate, {
+        const components = new ParsingComponents(reference, {
             year: 2014,
             month: 11,
             day: 24,
