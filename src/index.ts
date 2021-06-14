@@ -14,7 +14,7 @@ export interface ParsingOption {
     /**
      * Additional timezone keywords for the parsers to recognize
      */
-    timezones?: { string: number };
+    timezones?: { [tzKeyword: string]: number };
 
     /**
      * Internal debug event handler.
