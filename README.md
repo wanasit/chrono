@@ -66,22 +66,38 @@ chrono.parse('An appointment on Sep 12-13');
 
 For more advanced usage, here is the typescript definition of the `parse` function:
 ```typescript
-parse(text: string, refDate?: Date, option?: ParsingOption): ParsedResult[] {...}
+parse(text: string, ref?: ParsingReference, option?: ParsingOption): ParsedResult[] {...}
 ```
 
-#### Reference Date
+#### Parsing Reference (Date / Timezone)
 
 Today's "Friday" is different from last month's "Friday". 
-The meaning of the referenced dates depends on when they are mentioned. 
-Chrono lets you define a reference date using `chrono.parse(text, ref)` and `chrono.parseDate(text, ref)`.    
+The meaning of the referenced dates depends on when and where they are mentioned. 
+Chrono lets you define the reference as `Date` or `ParsingReference` object:
 
 ```javascript
-chrono.parseDate('Friday', new Date(2012, 7, 23)); 
-// Fri Aug 24 2012 12:00:00 GMT+0700 (ICT)
+// (Note: the exmaples run on JST timezone)
 
-chrono.parseDate('Friday', new Date(2012, 7, 1)); 
-// Fri Aug 03 2012 12:00:00 GMT+0700 (ICT)
+chrono.parseDate('Friday', new Date(2012, 8 - 1, 23)); 
+// Fri Aug 24 2012 12:00:00 GMT+0900 (JST)
+
+chrono.parseDate('Friday', new Date(2012, 8 - 1, 1)); 
+// Fri Aug 03 2012 12:00:00 GMT+0900 (JST)
+
+chrono.parseDate("Friday at 4pm", {
+    // Wed Jun 09 2021 21:00:00 GMT+0900 (JST)
+    // = Wed Jun 09 2021 07:00:00 GMT-0500 (CDT)
+    instant: new Date(1623240000000), 
+    timezone: "CDT",
+})
+// Sat Jun 12 2021 06:00:00 GMT+0900 (JST)
+// = Fri Jun 11 2021 16:00:00 GMT-0500 (CDT)
 ```
+
+#### ParsingReference
+* `instance?: Date` The instant when the input is written or mentioned
+* `timezone?: string | number` The timezone where the input is written or mentioned. 
+  Support minute-offset (number) and timezone name (e.g. "GMT", "CDT")
 
 ### Parsing Options
 

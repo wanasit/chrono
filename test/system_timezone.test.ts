@@ -1,7 +1,20 @@
 import * as chrono from "../src/";
 import { testSingleCase } from "./test_util";
 
-//-------------------------------------
+test("Test - Timezone difference on reference example", function () {
+    testSingleCase(
+        chrono,
+        "Friday at 4pm",
+        {
+            instant: new Date("Wed Jun 09 2021 07:00:00 GMT-0500 (CDT)"),
+            timezone: "CDT",
+        },
+        (result) => {
+            expect(result).toBeDate(new Date("Fri Jun 11 2021 16:00:00 GMT-0500 (CDT)"));
+            expect(result).toBeDate(new Date("Fri Jun 12 2021 06:00:00 GMT+0900 (JST)"));
+        }
+    );
+});
 
 test("Test - Timezone difference on reference date", function () {
     // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
