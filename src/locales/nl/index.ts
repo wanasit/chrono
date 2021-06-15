@@ -20,6 +20,16 @@ import NLSlashMonthFormatParser from "./parsers/NLSlashMonthFormatParser";
 import NLTimeExpressionParser from "./parsers/NLTimeExpressionParser";
 import NLCasualYearMonthDayParser from "./parsers/NLCasualYearMonthDayParser";
 import NLCasualDateTimeParser from "./parsers/NLCasualDateTimeParser";
+import NLTimeUnitCasualRelativeFormatParser from "./parsers/NLTimeUnitCasualRelativeFormatParser";
+import NLRelativeDateFormatParser from "./parsers/NLRelativeDateFormatParser";
+import NLTimeUnitAgoFormatParser from "./parsers/NLTimeUnitAgoFormatParser";
+import ENWeekdayParser from "../en/parsers/ENWeekdayParser";
+import ENCasualYearMonthDayParser from "../en/parsers/ENCasualYearMonthDayParser";
+import ENSlashMonthFormatParser from "../en/parsers/ENSlashMonthFormatParser";
+import ENTimeExpressionParser from "../en/parsers/ENTimeExpressionParser";
+import ENTimeUnitAgoFormatParser from "../en/parsers/ENTimeUnitAgoFormatParser";
+import ENTimeUnitLaterFormatParser from "../en/parsers/ENTimeUnitLaterFormatParser";
+import NLTimeUnitLaterFormatParser from "./parsers/NLTimeUnitLaterFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -38,6 +48,9 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     option.parsers.unshift(new NLCasualDateParser());
     option.parsers.unshift(new NLCasualTimeParser());
     option.parsers.unshift(new NLCasualDateTimeParser());
+    option.parsers.unshift(new NLMonthNameParser());
+    option.parsers.unshift(new NLRelativeDateFormatParser());
+    option.parsers.unshift(new NLTimeUnitCasualRelativeFormatParser());
     return option;
 }
 
@@ -49,13 +62,15 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
+                new NLTimeUnitWithinFormatParser(),
                 new NLMonthNameMiddleEndianParser(),
                 new NLMonthNameParser(),
-                new NLTimeExpressionParser(),
-                new NLTimeUnitWithinFormatParser(),
-                new NLSlashMonthFormatParser(),
                 new NLWeekdayParser(),
                 new NLCasualYearMonthDayParser(),
+                new NLSlashMonthFormatParser(),
+                new NLTimeExpressionParser(strictMode),
+                new NLTimeUnitAgoFormatParser(strictMode),
+                new NLTimeUnitLaterFormatParser(strictMode),
             ],
             refiners: [new NLMergeDateTimeRefiner(), new NLMergeDateRangeRefiner()],
         },
