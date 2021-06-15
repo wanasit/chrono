@@ -13,7 +13,6 @@ export default class NLTimeExpressionParser extends AbstractTimeExpressionParser
 
     primarySuffix(): string {
         return "(?:\\s*(?:uur))?(?!/)(?=\\W|$)";
-        // return "(?:\\s*(?:o\\W*clock|at\\s*night|in\\s*the\\s*(?:morning|afternoon)))?(?!/)(?=\\W|$)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {

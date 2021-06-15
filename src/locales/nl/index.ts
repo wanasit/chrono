@@ -23,12 +23,6 @@ import NLCasualDateTimeParser from "./parsers/NLCasualDateTimeParser";
 import NLTimeUnitCasualRelativeFormatParser from "./parsers/NLTimeUnitCasualRelativeFormatParser";
 import NLRelativeDateFormatParser from "./parsers/NLRelativeDateFormatParser";
 import NLTimeUnitAgoFormatParser from "./parsers/NLTimeUnitAgoFormatParser";
-import ENWeekdayParser from "../en/parsers/ENWeekdayParser";
-import ENCasualYearMonthDayParser from "../en/parsers/ENCasualYearMonthDayParser";
-import ENSlashMonthFormatParser from "../en/parsers/ENSlashMonthFormatParser";
-import ENTimeExpressionParser from "../en/parsers/ENTimeExpressionParser";
-import ENTimeUnitAgoFormatParser from "../en/parsers/ENTimeUnitAgoFormatParser";
-import ENTimeUnitLaterFormatParser from "../en/parsers/ENTimeUnitLaterFormatParser";
 import NLTimeUnitLaterFormatParser from "./parsers/NLTimeUnitLaterFormatParser";
 
 // Shortcuts
