@@ -141,11 +141,14 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     min: "minute",
     mins: "minute",
     minute: "minute",
+    minuut: "minute",
     minuten: "minute",
+    minuutje: "minute",
     h: "hour",
     hr: "hour",
     hrs: "hour",
     uur: "hour",
+    u: "hour",
     uren: "hour",
     dag: "d",
     dagen: "d",
@@ -160,18 +163,21 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
 
 //-----------------------------
 
-export const NUMBER_PATTERN = `(?:${matchAnyPattern(INTEGER_WORD_DICTIONARY)}|[0-9]+|[0-9]+\\.[0-9]+|een?|halve?)`;
+export const NUMBER_PATTERN = `(?:${matchAnyPattern(
+    INTEGER_WORD_DICTIONARY
+)}|[0-9]+|[0-9]+[\\.,][0-9]+|halve?|half|paar)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
-    } else if (num === "een") {
-        return 1;
-    } else if (num.match(/halve?/)) {
+    } else if (num === "paar") {
+        return 2;
+    } else if (num === "half" || num.match(/halve?/)) {
         return 0.5;
     }
-    return parseFloat(num);
+    // Replace "," with "." to support some European languages
+    return parseFloat(num.replace(",", "."));
 }
 
 //-----------------------------
