@@ -11,6 +11,10 @@ export default class NLTimeExpressionParser extends AbstractTimeExpressionParser
         return "\\s*(?:\\-|\\–|\\~|\\〜|om|\\?)\\s*";
     }
 
+    primarySuffix(): string {
+        return "(?:\\s*(?:uur))?(?!/)(?=\\W|$)";
+    }
+
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
         // This looks more like a year e.g. 2020
         if (match[0].match(/^\s*\d{4}\s*$/)) {
