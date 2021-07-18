@@ -12,6 +12,10 @@ b.suite(
         chrono.en.parseDate("11/12/2021");
     }),
 
+    b.add("Parsing a long repeated space", () => {
+        chrono.parse(`second ${" ".repeat(1000)} fourth ${" ".repeat(1000)} jum`);
+    }),
+
     b.cycle(),
     b.complete(),
     b.save({ file: "chrono", format: "chart.html" })

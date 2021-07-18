@@ -7,17 +7,16 @@ import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants"
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
+// prettier-ignore
 const PATTERN = new RegExp(
-    "(?:on\\s*?)?" +
+    `(?:on\\s{0,3})?` +
         `(${ORDINAL_NUMBER_PATTERN})` +
-        "(?:\\s*" +
-        "(?:to|\\-|\\–|until|through|till|\\s)\\s*" +
-        `(${ORDINAL_NUMBER_PATTERN})` +
+        `(?:` +
+            `\\s{0,3}(?:to|\\-|\\–|until|through|till)?\\s{0,3}` +
+            `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
-        "(?:-|/|\\s*(?:of)?\\s*)" +
-        "(" +
-        matchAnyPattern(MONTH_DICTIONARY) +
-        ")" +
+        `(?:-|/|\\s{0,3}(?:of)?\\s{0,3})` +
+        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:" +
         "(?:-|/|,?\\s*)" +
         `(${YEAR_PATTERN}(?![^\\s]\\d))` +

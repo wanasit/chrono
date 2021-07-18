@@ -2,7 +2,7 @@ type DictionaryLike = string[] | { [word: string]: unknown } | Map<string, unkno
 
 export function repeatedTimeunitPattern(prefix: string, singleTimeunitPattern: string): string {
     const singleTimeunitPatternNoCapture = singleTimeunitPattern.replace(/\((?!\?)/g, "(?:");
-    return `${prefix}${singleTimeunitPatternNoCapture}\\s*(?:,?\\s{0,5}${singleTimeunitPatternNoCapture}){0,10}`;
+    return `${prefix}${singleTimeunitPatternNoCapture}(?:,?\\s{0,5}${singleTimeunitPatternNoCapture}){0,10}`;
 }
 
 export function extractTerms(dictionary: DictionaryLike): string[] {
