@@ -162,7 +162,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?(?:\\s*few)?|few|several|a?\\s*couple\\s*(?:of)?)`;
+)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?(?:\\s{0,2}few)?|few|several|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
@@ -198,7 +198,7 @@ export function parseOrdinalNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s*(?:BE|AD|BC|BCE|CE)|[1-2][0-9]{3}|[5-9][0-9])`;
+export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s{0,2}(?:BE|AD|BC|BCE|CE)|[1-2][0-9]{3}|[5-9][0-9])`;
 export function parseYear(match: string): number {
     if (/BE/i.test(match)) {
         // Buddhist Era
@@ -224,7 +224,7 @@ export function parseYear(match: string): number {
 
 //-----------------------------
 
-const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:about|around)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
@@ -235,7 +235,7 @@ export function parseTimeUnits(timeunitText): TimeUnits {
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     while (match) {
         collectDateTimeFragment(fragments, match);
-        remainingText = remainingText.substring(match[0].length);
+        remainingText = remainingText.substring(match[0].length).trim();
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
     return fragments;
