@@ -203,4 +203,15 @@ test("Test - forward dates only option", function () {
 
         expect(result.start).toBeDate(new Date(2000, 5 - 1, 31, 12));
     });
+
+    testSingleCase(chrono, "1/8 at 12pm", new Date("Sep 25 2021 12:00:00"), { forwardDate: true }, (result) => {
+        expect(result.text).toBe("1/8 at 12pm");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(8);
+
+        expect(result.start).toBeDate(new Date(2022, 1 - 1, 8, 12));
+    });
 });
