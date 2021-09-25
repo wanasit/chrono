@@ -34,7 +34,7 @@ export default class ForwardDateRefiner implements Refiner {
             }
 
             if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
-                if (refMoment.day() > result.start.get("weekday")) {
+                if (refMoment.day() >= result.start.get("weekday")) {
                     refMoment = refMoment.day(result.start.get("weekday") + 7);
                 } else {
                     refMoment = refMoment.day(<number>result.start.get("weekday"));

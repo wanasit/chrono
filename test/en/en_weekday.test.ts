@@ -20,30 +20,6 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 6, 12));
     });
 
-    testSingleCase(
-        chrono.casual,
-        "Monday (forward dates only)",
-        new Date(2012, 7, 9),
-        { forwardDate: true },
-        (result) => {
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("Monday");
-
-            expect(result.start).not.toBeNull();
-            expect(result.start.get("year")).toBe(2012);
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(13);
-            expect(result.start.get("weekday")).toBe(1);
-
-            expect(result.start.isCertain("day")).toBe(false);
-            expect(result.start.isCertain("month")).toBe(false);
-            expect(result.start.isCertain("year")).toBe(false);
-            expect(result.start.isCertain("weekday")).toBe(true);
-
-            expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
-        }
-    );
-
     testSingleCase(chrono.casual, "Thursday", new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("Thursday");
@@ -182,7 +158,31 @@ test("Test - Weekday Overlap", function () {
     });
 });
 
-test("Test - forward dates only option", function () {
+test("Test - forward dates only option", () => {
+    testSingleCase(
+        chrono.casual,
+        "Monday (forward dates only)",
+        new Date(2012, 7, 9),
+        { forwardDate: true },
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("Monday");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2012);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(13);
+            expect(result.start.get("weekday")).toBe(1);
+
+            expect(result.start.isCertain("day")).toBe(false);
+            expect(result.start.isCertain("month")).toBe(false);
+            expect(result.start.isCertain("year")).toBe(false);
+            expect(result.start.isCertain("weekday")).toBe(true);
+
+            expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
+        }
+    );
+
     testSingleCase(
         chrono.casual,
         "this Friday to this Monday",
@@ -217,6 +217,30 @@ test("Test - forward dates only option", function () {
             expect(result.end.isCertain("weekday")).toBe(true);
 
             expect(result.end).toBeDate(new Date(2016, 8 - 1, 8, 12));
+        }
+    );
+
+    testSingleCase(
+        chrono.casual,
+        "sunday morning",
+        new Date("August 15, 2021, 20:00"),
+        { forwardDate: true },
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("sunday morning");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2021);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(22);
+            expect(result.start.get("weekday")).toBe(0);
+
+            expect(result.start.isCertain("day")).toBe(false);
+            expect(result.start.isCertain("month")).toBe(false);
+            expect(result.start.isCertain("year")).toBe(false);
+            expect(result.start.isCertain("weekday")).toBe(true);
+
+            expect(result.start).toBeDate(new Date(2021, 8 - 1, 22, 6));
         }
     );
 });
