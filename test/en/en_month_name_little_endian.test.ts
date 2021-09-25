@@ -364,6 +364,16 @@ test("Test - Forward Option", () => {
         expect(result.end.get("day")).toBe(23);
         expect(result.end.get("hour")).toBe(19);
     });
+
+    testSingleCase(chrono, "17 August 2013 - 19 August 2013", (result) => {
+        expect(result.start.get("year")).toBe(2013);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(17);
+
+        expect(result.end.get("year")).toBe(2013);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(19);
+    });
 });
 
 test("Test - Impossible Dates (Strict Mode)", function () {
