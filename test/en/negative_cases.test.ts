@@ -21,6 +21,8 @@ test("Test - Skip random non-date patterns", function () {
     testUnexpectedResult(chrono, "Total: $1,194.09 [image: View Reservation");
 
     testUnexpectedResult(chrono, "at 6.5 kilograms");
+
+    testUnexpectedResult(chrono, "ah that is unusual", new Date(), { forwardDate: true });
 });
 
 test("Test - URLs % encoded", function () {
