@@ -162,7 +162,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?(?:\\s{0,2}few)?|few|several|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
+)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
