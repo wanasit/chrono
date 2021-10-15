@@ -167,7 +167,7 @@ export class ParsingComponents implements ParsedComponents {
         return currentTimezoneOffset - targetTimezoneOffset;
     }
 
-    static createRelativeFromRefInstant(
+    static createRelativeFromReference(
         reference: ReferenceWithTimezone,
         fragments: { [c in OpUnitType | QUnitType]?: number }
     ): ParsingComponents {

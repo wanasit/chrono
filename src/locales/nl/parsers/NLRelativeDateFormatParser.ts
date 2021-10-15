@@ -27,13 +27,13 @@ export default class NLRelativeDateFormatParser extends AbstractParserWithWordBo
         if (modifier == "volgend" || modifier == "volgende" || modifier == "komende") {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
-            return ParsingComponents.createRelativeFromRefInstant(context.reference, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         if (modifier == "afgelopen" || modifier == "vorige") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
-            return ParsingComponents.createRelativeFromRefInstant(context.reference, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         const components = context.createParsingComponents();

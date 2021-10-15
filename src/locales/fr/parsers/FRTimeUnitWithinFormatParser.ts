@@ -10,6 +10,6 @@ export default class FRTimeUnitWithinFormatParser extends AbstractParserWithWord
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const timeUnits = parseTimeUnits(match[1]);
-        return ParsingComponents.createRelativeFromRefInstant(context.reference, timeUnits);
+        return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

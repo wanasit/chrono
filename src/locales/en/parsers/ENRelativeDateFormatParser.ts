@@ -26,13 +26,13 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         if (modifier == "next") {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
-            return ParsingComponents.createRelativeFromRefInstant(context.reference, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         if (modifier == "last" || modifier == "past") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
-            return ParsingComponents.createRelativeFromRefInstant(context.reference, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         const components = context.createParsingComponents();
