@@ -193,6 +193,10 @@ export const TIMEZONE_ABBR_MAP = {
 };
 
 export function toTimezoneOffset(timezoneInput: string | number): number {
+    if (timezoneInput === null) {
+        return null;
+    }
+
     if (typeof timezoneInput === "number") {
         return timezoneInput;
     }
