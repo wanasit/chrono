@@ -230,4 +230,14 @@ test("Test - Relative date components' certainty and imply timezone", () => {
         expect(result).toBeDate(new Date("Sun Nov 29 2020 13:34:13 GMT+0900 (Japan Standard Time)"));
         expect(result).toBeDate(new Date("Sun Nov 29 2020 5:34:13 GMT+0100"));
     }
+
+    {
+        const text = "in 20 minutes";
+        const result = chrono.parse(text, { instant: refDate, timezone: null })[0] as ParsingResult;
+
+        expect(result.text).toBe(text);
+
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 04:44:13 GMT+0000"));
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    }
 });
