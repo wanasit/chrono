@@ -62,24 +62,14 @@ export function testWithExpectedDate(chrono: ChronoLike, text: string, expectedD
 }
 
 export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date);
-export function testUnexpectedResult(
-    chrono: ChronoLike,
-    text: string,
-    refDate?: Date,
-    optionOrCheckResult?: ParsingOption | CheckResult
-);
-export function testUnexpectedResult(
-    chrono: ChronoLike,
-    text: string,
-    refDate?: Date,
-    optionOrCheckResult?: ParsingOption | CheckResult
-) {
+export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date, options?: ParsingOption);
+export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date, options?: ParsingOption) {
     const debugHandler = new BufferedDebugHandler();
-    optionOrCheckResult = (optionOrCheckResult as ParsingOption) || {};
-    optionOrCheckResult.debug = debugHandler;
+    options = options || {};
+    options.debug = debugHandler;
 
     try {
-        const results = chrono.parse(text, refDate, optionOrCheckResult);
+        const results = chrono.parse(text, refDate, options);
         expect(results).toHaveLength(0);
     } catch (e) {
         debugHandler.executeBufferedBlocks();
