@@ -192,7 +192,7 @@ export const TIMEZONE_ABBR_MAP = {
     YEKT: 360,
 };
 
-export function toTimezoneOffset(timezoneInput: string | number): number {
+export function toTimezoneOffset(timezoneInput: string | number): number | null {
     if (timezoneInput === null) {
         return null;
     }
