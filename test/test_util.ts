@@ -61,8 +61,6 @@ export function testWithExpectedDate(chrono: ChronoLike, text: string, expectedD
     });
 }
 
-export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date);
-export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date, options?: ParsingOption);
 export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date, options?: ParsingOption) {
     const debugHandler = new BufferedDebugHandler();
     options = options || {};
