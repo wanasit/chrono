@@ -26,17 +26,17 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         if (modifier == "next") {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
-            return ParsingComponents.createRelativeFromRefInstant(context.refDate, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         if (modifier == "last" || modifier == "past") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
-            return ParsingComponents.createRelativeFromRefInstant(context.refDate, timeUnits);
+            return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
         const components = context.createParsingComponents();
-        let date = dayjs(context.refDate);
+        let date = dayjs(context.reference.instant);
 
         // This week
         if (unitWord.match(/week/i)) {

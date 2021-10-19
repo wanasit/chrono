@@ -38,6 +38,6 @@ export default class FRTimeUnitAgoFormatParser extends AbstractParserWithWordBou
             timeUnits = reverseTimeUnits(timeUnits);
         }
 
-        return ParsingComponents.createRelativeFromRefInstant(context.refDate, timeUnits);
+        return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

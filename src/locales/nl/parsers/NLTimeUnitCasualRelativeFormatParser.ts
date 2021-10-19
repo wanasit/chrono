@@ -22,6 +22,6 @@ export default class NLTimeUnitCasualRelativeFormatParser extends AbstractParser
                 break;
         }
 
-        return ParsingComponents.createRelativeFromRefInstant(context.refDate, timeUnits);
+        return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

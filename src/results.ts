@@ -167,24 +167,23 @@ export class ParsingComponents implements ParsedComponents {
         return currentTimezoneOffset - targetTimezoneOffset;
     }
 
-    static createRelativeFromRefInstant(
-        refInstant: Date,
+    static createRelativeFromReference(
+        reference: ReferenceWithTimezone,
         fragments: { [c in OpUnitType | QUnitType]?: number }
     ): ParsingComponents {
-        let date = dayjs(refInstant);
+        let date = dayjs(reference.instant);
         for (const key in fragments) {
             date = date.add(fragments[key as OpUnitType], key as OpUnitType);
         }
 
-        const reference = new ReferenceWithTimezone(refInstant);
         const components = new ParsingComponents(reference);
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
-            components.assign("timezoneOffset", -refInstant.getTimezoneOffset());
+            components.assign("timezoneOffset", -reference.instant.getTimezoneOffset());
         } else {
             implySimilarTime(components, date);
-            components.imply("timezoneOffset", -refInstant.getTimezoneOffset());
+            components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
 
             if (fragments["d"]) {
                 components.assign("day", date.date());
