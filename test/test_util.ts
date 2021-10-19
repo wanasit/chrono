@@ -61,10 +61,13 @@ export function testWithExpectedDate(chrono: ChronoLike, text: string, expectedD
     });
 }
 
-export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date) {
+export function testUnexpectedResult(chrono: ChronoLike, text: string, refDate?: Date, options?: ParsingOption) {
     const debugHandler = new BufferedDebugHandler();
+    options = options || {};
+    options.debug = debugHandler;
+
     try {
-        const results = chrono.parse(text, refDate, { debug: debugHandler });
+        const results = chrono.parse(text, refDate, options);
         expect(results).toHaveLength(0);
     } catch (e) {
         debugHandler.executeBufferedBlocks();
