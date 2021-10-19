@@ -8,7 +8,7 @@ dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
-    readonly timezoneOffset: number;
+    readonly timezoneOffset?: number;
 
     constructor(input?: ParsingReference | Date) {
         input = input ?? new Date();
@@ -17,7 +17,7 @@ export class ReferenceWithTimezone {
             this.timezoneOffset = -input.getTimezoneOffset();
         } else {
             this.instant = input.instant ?? new Date();
-            this.timezoneOffset = toTimezoneOffset(input.timezone ?? -this.instant.getTimezoneOffset());
+            this.timezoneOffset = toTimezoneOffset(input.timezone);
         }
     }
 }
@@ -180,10 +180,14 @@ export class ParsingComponents implements ParsedComponents {
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
-            components.assign("timezoneOffset", -reference.instant.getTimezoneOffset());
+            if (reference.timezoneOffset !== null) {
+                components.assign("timezoneOffset", -reference.instant.getTimezoneOffset());
+            }
         } else {
             implySimilarTime(components, date);
-            components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
+            if (reference.timezoneOffset !== null) {
+                components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
+            }
 
             if (fragments["d"]) {
                 components.assign("day", date.date());
