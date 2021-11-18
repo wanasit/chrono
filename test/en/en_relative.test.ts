@@ -236,8 +236,6 @@ test("Test - Relative date components' certainty and imply timezone", () => {
         const result = chrono.parse(text, { instant: refDate, timezone: null })[0] as ParsingResult;
 
         expect(result.text).toBe(text);
-
-        expect(result).toBeDate(new Date("Sun Nov 29 2020 04:44:13 GMT+0000"));
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
     }
 });
