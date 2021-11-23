@@ -8,7 +8,9 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     assignSimilarTime(component, targetDate);
-    component.assign("timezoneOffset", targetDate.utcOffset());
+    if (reference.timezoneOffset !== null) {
+        component.assign("timezoneOffset", targetDate.utcOffset());
+    }
     return component;
 }
 
