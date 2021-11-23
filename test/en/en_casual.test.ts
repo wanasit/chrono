@@ -21,6 +21,17 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 8, 9, 10, 11));
     });
 
+    testSingleCase(
+        chrono.casual,
+        "The Deadline is now, without implicit local timezone",
+        { instant: new Date(1637674343000), timezone: null },
+        (result) => {
+            expect(result.text).toBe("now");
+            expect(result.start).toBeDate(new Date(1637674343000));
+            expect(result.start.isCertain("timezoneOffset")).toBe(false);
+        }
+    );
+
     testSingleCase(chrono.casual, "The Deadline is today", new Date(2012, 7, 10, 14, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("today");
