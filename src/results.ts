@@ -142,7 +142,7 @@ export class ParsingComponents implements ParsedComponents {
 
     date(): Date {
         const date = this.dateWithoutTimezoneAdjustment();
-        return new Date(date.getTime() + this.getSystemTimezoneAdjustmentMinute() * 60000);
+        return new Date(date.getTime() + this.getSystemTimezoneAdjustmentMinute(date) * 60000);
     }
 
     private dateWithoutTimezoneAdjustment() {
@@ -160,8 +160,14 @@ export class ParsingComponents implements ParsedComponents {
         return date;
     }
 
-    private getSystemTimezoneAdjustmentMinute() {
-        const currentTimezoneOffset = -new Date().getTimezoneOffset();
+    private getSystemTimezoneAdjustmentMinute(date?: Date) {
+        if (!date || date.getTime() < 0) {
+            // Javascript date timezone calculation got effect when the time epoch < 0
+            // e.g. new Date('Tue Feb 02 1300 00:00:00 GMT+0900 (JST)') => Tue Feb 02 1300 00:18:59 GMT+0918 (JST)
+            date = new Date();
+        }
+
+        const currentTimezoneOffset = -date.getTimezoneOffset();
         const targetTimezoneOffset =
             this.get("timezoneOffset") ?? this.reference.timezoneOffset ?? currentTimezoneOffset;
 
