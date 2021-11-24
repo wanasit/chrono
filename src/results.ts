@@ -162,7 +162,8 @@ export class ParsingComponents implements ParsedComponents {
 
     private getSystemTimezoneAdjustmentMinute() {
         const currentTimezoneOffset = -new Date().getTimezoneOffset();
-        const targetTimezoneOffset = this.get("timezoneOffset") ?? this.reference.timezoneOffset;
+        const targetTimezoneOffset =
+            this.get("timezoneOffset") ?? this.reference.timezoneOffset ?? currentTimezoneOffset;
 
         return currentTimezoneOffset - targetTimezoneOffset;
     }
