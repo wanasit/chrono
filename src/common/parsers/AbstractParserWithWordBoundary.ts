@@ -27,7 +27,7 @@ export abstract class AbstractParserWithWordBoundaryChecking implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
-        const header = match[1];
+        const header = match[1] ?? "";
         match.index = match.index + header.length;
         match[0] = match[0].substring(header.length);
         for (let i = 2; i < match.length; i++) {
