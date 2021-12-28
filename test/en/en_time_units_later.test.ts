@@ -1,5 +1,6 @@
 import * as chrono from "../../src/";
 import { testSingleCase } from "../test_util";
+import { Meridiem } from "../../src/";
 
 test("Test - Later Expression", function () {
     testSingleCase(chrono, "2 days later", new Date(2012, 7, 10, 12), (result) => {
@@ -77,6 +78,7 @@ test("Test - From now Expression", () => {
         expect(result.text).toBe("15 minute from now");
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(29);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 29));
     });
@@ -86,6 +88,7 @@ test("Test - From now Expression", () => {
         expect(result.text).toBe("15 minutes earlier");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
@@ -95,6 +98,7 @@ test("Test - From now Expression", () => {
         expect(result.text).toBe("15 minute out");
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(29);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 29));
     });
@@ -115,6 +119,7 @@ test("Test - From now Expression", () => {
         expect(result.start.get("day")).toBe(11);
         expect(result.start.get("hour")).toBe(0);
         expect(result.start.get("minute")).toBe(14);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
 
     testSingleCase(chrono, "   half an hour from now", new Date(2012, 7, 10, 12, 14), (result) => {
@@ -122,6 +127,7 @@ test("Test - From now Expression", () => {
         expect(result.text).toBe("half an hour from now");
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(44);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 44));
     });

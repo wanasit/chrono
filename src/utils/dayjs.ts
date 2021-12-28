@@ -1,5 +1,6 @@
 import { ParsingComponents } from "../results";
 import dayjs from "dayjs";
+import { Meridiem } from "../index";
 
 export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     targetDayJs = targetDayJs.add(1, "day");
@@ -18,6 +19,11 @@ export function assignSimilarTime(component: ParsingComponents, targetDayJs: day
     component.assign("minute", targetDayJs.minute());
     component.assign("second", targetDayJs.second());
     component.assign("millisecond", targetDayJs.millisecond());
+    if (component.get("hour") < 12) {
+        component.assign("meridiem", Meridiem.AM);
+    } else {
+        component.assign("meridiem", Meridiem.PM);
+    }
 }
 
 export function implySimilarTime(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
