@@ -105,8 +105,8 @@ import * as fr from "./locales/fr";
 import * as ja from "./locales/ja";
 import * as pt from "./locales/pt";
 import * as nl from "./locales/nl";
-import * as zhHant from "./locales/zh-hant";
-export { de, fr, ja, pt, nl, zhHant };
+import * as zh from "./locales/zh";
+export { de, fr, ja, pt, nl, zh };
 
 /**
  * A shortcut for {@link en | chrono.en.strict}

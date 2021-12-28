@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { ParsingResult } from "../../../results";
+import { ParsingContext } from "../../../../chrono";
+import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingResult } from "../../../../results";
 import { WEEKDAY_OFFSET } from "../constants";
 
 const PATTERN = new RegExp("(?:星期|禮拜|週)(?<weekday>" + Object.keys(WEEKDAY_OFFSET).join("|") + ")");
@@ -18,9 +18,9 @@ export default class ZHHantWeekdayParser extends AbstractParserWithWordBoundaryC
         const offset = WEEKDAY_OFFSET[dayOfWeek];
         if (offset === undefined) return null;
 
-        var startMoment = dayjs(context.refDate);
-        var startMomentFixed = false;
-        var refOffset = startMoment.day();
+        let startMoment = dayjs(context.refDate);
+        const startMomentFixed = false;
+        const refOffset = startMoment.day();
 
         if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
             startMoment = startMoment.day(offset - 7);

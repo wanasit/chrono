@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { ParsingResult } from "../../../results";
+import { ParsingContext } from "../../../../chrono";
+import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingResult } from "../../../../results";
 import { WEEKDAY_OFFSET } from "../constants";
 
 const PATTERN = new RegExp(
@@ -31,9 +31,9 @@ export default class ZHHantRelationWeekdayParser extends AbstractParserWithWordB
             modifier = "this";
         }
 
-        var startMoment = dayjs(context.refDate);
-        var startMomentFixed = false;
-        var refOffset = startMoment.day();
+        let startMoment = dayjs(context.refDate);
+        let startMomentFixed = false;
+        const refOffset = startMoment.day();
 
         if (modifier == "last" || modifier == "past") {
             startMoment = startMoment.day(offset - 7);

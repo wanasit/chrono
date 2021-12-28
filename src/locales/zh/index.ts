@@ -1,23 +1,24 @@
 /**
- * Chrono components for zh-tw support (*parsers*, *refiners*, and *configuration*)
- *
- * @module
+ * Chrono components for zh support
+ * TODO: Complete general zh support (current support only zh-Hant)
  */
 
 import { Chrono, Configuration } from "../../chrono";
 import ExtractTimezoneOffsetRefiner from "../../common/refiners/ExtractTimezoneOffsetRefiner";
 import { includeCommonConfiguration } from "../../configurations";
 import { ParsedResult, ParsingOption } from "../../index";
-import ZHHantCasualDateParser from "./parsers/ZHHantCasualDateParser";
-import ZHHantDateParser from "./parsers/ZHHantDateParser";
-import ZHHantDeadlineFormatParser from "./parsers/ZHHantDeadlineFormatParser";
-import ZHHantRelationWeekdayParser from "./parsers/ZHHantRelationWeekdayParser";
-import ZHHantTimeExpressionParser from "./parsers/ZHHantTimeExpressionParser";
-import ZHHantWeekdayParser from "./parsers/ZHHantWeekdayParser";
-import ZHHantMergeDateRangeRefiner from "./refiners/ZHHantMergeDateRangeRefiner";
-import ZHHantMergeDateTimeRefiner from "./refiners/ZHHantMergeDateTimeRefiner";
+import ZHHantCasualDateParser from "./hant/parsers/ZHHantCasualDateParser";
+import ZHHantDateParser from "./hant/parsers/ZHHantDateParser";
+import ZHHantDeadlineFormatParser from "./hant/parsers/ZHHantDeadlineFormatParser";
+import ZHHantRelationWeekdayParser from "./hant/parsers/ZHHantRelationWeekdayParser";
+import ZHHantTimeExpressionParser from "./hant/parsers/ZHHantTimeExpressionParser";
+import ZHHantWeekdayParser from "./hant/parsers/ZHHantWeekdayParser";
+import ZHHantMergeDateRangeRefiner from "./hant/refiners/ZHHantMergeDateRangeRefiner";
+import ZHHantMergeDateTimeRefiner from "./hant/refiners/ZHHantMergeDateTimeRefiner";
 
 // Shortcuts
+export const hant = new Chrono(createCasualConfiguration());
+
 export const casual = new Chrono(createCasualConfiguration());
 export const strict = new Chrono(createConfiguration());
 

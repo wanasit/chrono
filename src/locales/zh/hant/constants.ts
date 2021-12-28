@@ -30,7 +30,7 @@ export function zhStringToNumber(text: string) {
     let number = 0;
 
     for (let i = 0; i < text.length; i++) {
-        let char = text[i];
+        const char = text[i];
         if (char === "十") {
             number = number === 0 ? NUMBER[char] : number * NUMBER[char];
         } else {
@@ -45,7 +45,7 @@ export function zhStringToYear(text: string) {
     let string = "";
 
     for (let i = 0; i < text.length; i++) {
-        let char = text[i];
+        const char = text[i];
         string = string + NUMBER[char];
     }
 

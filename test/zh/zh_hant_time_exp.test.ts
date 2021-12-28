@@ -2,7 +2,7 @@ import * as chrono from "../../src";
 import { testSingleCase } from "../test_util";
 
 test("Test - Single Expression", function () {
-    testSingleCase(chrono.zhHant, "雞上午6點13分全部都係雞", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "雞上午6點13分全部都係雞", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("上午6點13分");
 
@@ -10,32 +10,32 @@ test("Test - Single Expression", function () {
         expect(result.start.get("hour")).toBe(6);
         expect(result.start.get("minute")).toBe(13);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 10, 6, 13);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 10, 6, 13);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
-    testSingleCase(chrono.zhHant, "雞後天凌晨全部都係雞", new Date(2012, 7, 10, 0, 0), (result) => {
+    testSingleCase(chrono.zh.hant, "雞後天凌晨全部都係雞", new Date(2012, 7, 10, 0, 0), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("後天凌晨");
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 12, 0, 0);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 12, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
-    testSingleCase(chrono.zhHant, "雞大前天凌晨全部都係雞", new Date(2012, 7, 10, 0, 0), (result) => {
+    testSingleCase(chrono.zh.hant, "雞大前天凌晨全部都係雞", new Date(2012, 7, 10, 0, 0), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("大前天凌晨");
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2012, 7, 7, 0, 0);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 7, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 });
 
 test("Test - Range Expression", function () {
-    testSingleCase(chrono.zhHant, "雞由今朝八點十分至下午11點32分全部都係雞", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "雞由今朝八點十分至下午11點32分全部都係雞", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("由今朝八點十分至下午11點32分");
 
@@ -72,7 +72,7 @@ test("Test - Range Expression", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
-    testSingleCase(chrono.zhHant, "6點30pm-11點pm", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "6點30pm-11點pm", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("6點30pm-11點pm");
 
@@ -98,7 +98,7 @@ test("Test - Range Expression", function () {
 
 test("Test - Date + Time Expression", function () {
     testSingleCase(
-        chrono.zhHant,
+        chrono.zh.hant,
         "雞二零一八年十一月廿六日下午三時半五十九秒全部都係雞",
         new Date(2012, 7, 10),
         (result) => {
@@ -114,15 +114,15 @@ test("Test - Date + Time Expression", function () {
             expect(result.start.get("millisecond")).toBe(0);
             expect(result.start.isCertain("millisecond")).toBe(false);
 
-            var resultDate = result.start.date();
-            var expectDate = new Date(2018, 11 - 1, 26, 15, 30, 59);
+            const resultDate = result.start.date();
+            const expectDate = new Date(2018, 11 - 1, 26, 15, 30, 59);
             expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
         }
     );
 });
 
 test("Test - Time Expression's Meridiem imply", function () {
-    testSingleCase(chrono.zhHant, "1點pm到3點", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "1點pm到3點", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("1點pm到3點");
 
@@ -148,35 +148,35 @@ test("Test - Time Expression's Meridiem imply", function () {
 });
 
 test("Test - Random date + time expression", function () {
-    testSingleCase(chrono.zhHant, "2014年, 3月5日晏晝 6 點至 7 點", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "2014年, 3月5日晏晝 6 點至 7 點", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("2014年, 3月5日晏晝 6 點至 7 點");
     });
 
-    testSingleCase(chrono.zhHant, "下星期六凌晨1點30分廿九秒", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "下星期六凌晨1點30分廿九秒", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("下星期六凌晨1點30分廿九秒");
     });
 
-    testSingleCase(chrono.zhHant, "尋日朝早六點正", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "尋日朝早六點正", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("尋日朝早六點正");
     });
 
-    testSingleCase(chrono.zhHant, "六月四日3:00am", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "六月四日3:00am", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("六月四日3:00am");
     });
 
-    testSingleCase(chrono.zhHant, "上個禮拜五16時", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "上個禮拜五16時", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("上個禮拜五16時");
     });
 
-    testSingleCase(chrono.zhHant, "3月17日 20點15", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "3月17日 20點15", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("3月17日 20點15");
     });
 
-    testSingleCase(chrono.zhHant, "10點", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "10點", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("10點");
     });
 
-    testSingleCase(chrono.zhHant, "中午12點", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.zh.hant, "中午12點", new Date(2012, 7, 10), (result) => {
         expect(result.start.get("hour")).toBe(12);
     });
 });

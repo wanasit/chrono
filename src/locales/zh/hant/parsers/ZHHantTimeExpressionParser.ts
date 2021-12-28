@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingContext } from "../../../../chrono";
+import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { NUMBER, zhStringToNumber } from "../constants";
 
 const FIRST_REG_PATTERN = new RegExp(
@@ -53,15 +53,15 @@ const SECOND_REG_PATTERN = new RegExp(
     "i"
 );
 
-var DAY_GROUP_1 = 1;
-var ZH_AM_PM_HOUR_GROUP_1 = 2;
-var ZH_AM_PM_HOUR_GROUP_2 = 3;
-var DAY_GROUP_3 = 4;
-var ZH_AM_PM_HOUR_GROUP_3 = 5;
-var HOUR_GROUP = 6;
-var MINUTE_GROUP = 7;
-var SECOND_GROUP = 8;
-var AM_PM_HOUR_GROUP = 9;
+const DAY_GROUP_1 = 1;
+const ZH_AM_PM_HOUR_GROUP_1 = 2;
+const ZH_AM_PM_HOUR_GROUP_2 = 3;
+const DAY_GROUP_3 = 4;
+const ZH_AM_PM_HOUR_GROUP_3 = 5;
+const HOUR_GROUP = 6;
+const MINUTE_GROUP = 7;
+const SECOND_GROUP = 8;
+const AM_PM_HOUR_GROUP = 9;
 
 export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -124,9 +124,9 @@ export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBo
             result.start.imply("year", startMoment.year());
         }
 
-        var hour = 0;
-        var minute = 0;
-        var meridiem = -1;
+        let hour = 0;
+        let minute = 0;
+        let meridiem = -1;
 
         // ----- Second
         if (match[SECOND_GROUP]) {
@@ -242,7 +242,7 @@ export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBo
             return result;
         }
 
-        var endMoment = startMoment.clone();
+        const endMoment = startMoment.clone();
         result.end = context.createParsingComponents();
 
         // ----- Day
@@ -406,7 +406,7 @@ export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBo
         if (meridiem >= 0) {
             result.end.assign("meridiem", meridiem);
         } else {
-            var startAtPM = result.start.isCertain("meridiem") && result.start.get("meridiem") == 1;
+            const startAtPM = result.start.isCertain("meridiem") && result.start.get("meridiem") == 1;
             if (startAtPM && result.start.get("hour") > hour) {
                 // 10pm - 1 (am)
                 result.end.imply("meridiem", 0);

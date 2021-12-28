@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingContext } from "../../../../chrono";
+import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { NUMBER, zhStringToNumber } from "../constants";
 
 const PATTERN = new RegExp(

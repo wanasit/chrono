@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { ParsingComponents, ParsingResult } from "../../../results";
+import { ParsingContext } from "../../../../chrono";
+import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingComponents, ParsingResult } from "../../../../results";
 
 const NOW_GROUP = 1;
 const DAY_GROUP_1 = 2;

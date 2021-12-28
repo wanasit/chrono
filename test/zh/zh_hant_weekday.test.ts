@@ -2,7 +2,7 @@ import * as chrono from "../../src";
 import { testSingleCase } from "../test_util";
 
 test("Test - Single Expression", function () {
-    testSingleCase(chrono.zhHant, "星期四", new Date(2016, 9 - 1, 2), (result) => {
+    testSingleCase(chrono.zh.hant, "星期四", new Date(2016, 9 - 1, 2), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("星期四");
 
@@ -17,13 +17,13 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain("year")).toBe(false);
         expect(result.start.isCertain("weekday")).toBe(true);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9 - 1, 1, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 9 - 1, 1, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
     testSingleCase(
-        chrono.zhHant,
+        chrono.zh.hant,
         "禮拜四 (forward dates only)",
         new Date(2016, 9 - 1, 2),
         { forwardDate: true },
@@ -42,13 +42,13 @@ test("Test - Single Expression", function () {
             expect(result.start.isCertain("year")).toBe(false);
             expect(result.start.isCertain("weekday")).toBe(true);
 
-            var resultDate = result.start.date();
-            var expectDate = new Date(2016, 9 - 1, 8, 12);
+            const resultDate = result.start.date();
+            const expectDate = new Date(2016, 9 - 1, 8, 12);
             expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
         }
     );
 
-    testSingleCase(chrono.zhHant, "禮拜日", new Date(2016, 9 - 1, 2), (result) => {
+    testSingleCase(chrono.zh.hant, "禮拜日", new Date(2016, 9 - 1, 2), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("禮拜日");
 
@@ -58,12 +58,12 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(4);
         expect(result.start.get("weekday")).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9 - 1, 4, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 9 - 1, 4, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
-    testSingleCase(chrono.zhHant, "雞上個禮拜三全部都係雞", new Date(2016, 9 - 1, 2), (result) => {
+    testSingleCase(chrono.zh.hant, "雞上個禮拜三全部都係雞", new Date(2016, 9 - 1, 2), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("上個禮拜三");
 
@@ -73,12 +73,12 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(24);
         expect(result.start.get("weekday")).toBe(3);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 8 - 1, 24, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 8 - 1, 24, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
-    testSingleCase(chrono.zhHant, "雞下星期天全部都係雞", new Date(2016, 9 - 1, 2), (result) => {
+    testSingleCase(chrono.zh.hant, "雞下星期天全部都係雞", new Date(2016, 9 - 1, 2), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("下星期天");
 
@@ -88,14 +88,14 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(4);
         expect(result.start.get("weekday")).toBe(0);
 
-        var resultDate = result.start.date();
-        var expectDate = new Date(2016, 9 - 1, 4, 12);
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 9 - 1, 4, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 });
 
 test("Test - forward dates only option", function () {
-    testSingleCase(chrono.zhHant, "星期六-星期一", new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+    testSingleCase(chrono.zh.hant, "星期六-星期一", new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("星期六-星期一");
 
