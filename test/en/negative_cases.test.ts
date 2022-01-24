@@ -67,3 +67,10 @@ test("Test - Date with version number pattern", () => {
         expect(result.text).toBe("2015-09-24");
     });
 });
+
+test("Test - Month with ambiguous trailing token", () => {
+    testUnexpectedResult(
+        chrono,
+        "People visiting Buñol towards the end of August get a good chance to participate in La Tomatina (under normal circumstances)"
+    );
+});
