@@ -118,7 +118,8 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 
 #### ParsedResult
 * `refDate: Date` The [reference date](#reference-date) of this result
-* `index: number` The location within the input text of this result  
+* `length: number` The number of results (if 0 then ignore results)
+* `index: number` The location within the input text of this result
 * `text: string`  The text this result that appears in the input 
 * `start: ParsedComponents` The parsed date components as a [ParsedComponents](#parsedcomponents) object
 * `end?: ParsedComponents`  Similar to `start`
