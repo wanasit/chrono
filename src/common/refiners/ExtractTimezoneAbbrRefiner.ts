@@ -241,6 +241,8 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
             }
 
             if (result.start.isOnlyDate()) {
+                // If the time is not explicitly mentioned,
+                // Then, we also want to double check the abbr case (e.g. "GET" not "get")
                 if (timezoneAbbr != match[1]) {
                     return;
                 }

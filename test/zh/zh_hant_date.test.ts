@@ -48,7 +48,6 @@ test("Test - Single Expression", function () {
 test("Test - Range Expression", function () {
     testSingleCase(chrono.zh.hant, "2016年9月3號-2017年10月24號", new Date(2012, 8 - 1, 10), (result) => {
         expect(result.index).toBe(0);
-        console.log(result);
         expect(result.text).toBe("2016年9月3號-2017年10月24號");
 
         expect(result.start).not.toBeNull();

@@ -36,8 +36,6 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
-        //console.log(match)
-
         const result = context.createParsingResult(match.index, match[0]);
 
         const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
