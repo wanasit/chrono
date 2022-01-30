@@ -178,3 +178,16 @@ test("Test - year 90's parsing", () => {
         expect(result.start.get("month")).toBe(8);
     });
 });
+
+test("Test - Month should not have timezone", () => {
+    testSingleCase(
+        chrono,
+        "People visiting Buñol towards the end of August get a good chance to participate in La Tomatina (under normal circumstances)",
+        new Date(2012, 7, 10),
+        (result) => {
+            expect(result.text).toBe("August");
+            expect(result.start.get("year")).toBe(2012);
+            expect(result.start.get("month")).toBe(8);
+        }
+    );
+});

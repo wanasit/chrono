@@ -240,6 +240,12 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
                 }
             }
 
+            if (result.start.isOnlyDate()) {
+                if (timezoneAbbr != match[1]) {
+                    return;
+                }
+            }
+
             result.text += match[0];
 
             if (!result.start.isCertain("timezoneOffset")) {
