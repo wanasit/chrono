@@ -114,7 +114,7 @@ export const TIMEZONE_ABBR_MAP = {
     MHT: 720,
     MMT: 390,
     MSD: 240,
-    MSK: 240,
+    MSK: 180,
     MST: -420,
     MUT: 240,
     MVT: 300,
