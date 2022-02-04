@@ -50,9 +50,9 @@
     "prettier": "npm run prettier:src && npm run prettier:test",
     "prettier:src": "prettier --write src --loglevel=warn",
     "prettier:test": "prettier --write test --loglevel=warn",
-    "watch": "jest --watch",
-    "test": "jest --coverage",
-    "test:silent": "jest --silent",
+    "watch": "TZ=UTC jest --watch",
+    "test": "TZ=UTC jest --coverage",
+    "test:silent": "TZ=UTC jest --silent",
     "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
   },
   "dependencies": {
