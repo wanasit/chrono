@@ -43,7 +43,7 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
             modifier = "this";
         }
 
-        const date = toDayJSWeekday(context.refDate, offset, modifier);
+        const date = toDayJSWeekday(context.refDate, offset, modifier, context.option.locale);
         return context
             .createParsingComponents()
             .assign("weekday", offset)

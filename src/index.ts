@@ -21,6 +21,11 @@ export interface ParsingOption {
      * @internal
      */
     debug?: DebugHandler | DebugConsume;
+
+    /**
+     * Override the locale used when parsing the `weekDay`
+     */
+    locale?: Partial<ILocale>;
 }
 
 export interface ParsingReference {

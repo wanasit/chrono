@@ -1,10 +1,13 @@
 import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./index";
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import weekday from "dayjs/plugin/weekday";
+
 import dayjs, { OpUnitType, QUnitType } from "dayjs";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
 import { toTimezoneOffset } from "./timezone";
 dayjs.extend(quarterOfYear);
+dayjs.extend(weekday);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
