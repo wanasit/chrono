@@ -30,16 +30,17 @@ export function toDayJSWeekday(
 }
 
 export function toDayJSClosestWeekday(refDate: Date, offset: number, locale?: Partial<ILocale>): Dayjs {
-    let date = dayjs(refDate).locale("en", locale);
-    const refOffset = date.day();
+    const date = dayjs(refDate).locale("en", locale);
 
-    if (Math.abs(offset - 7 - refOffset) < Math.abs(offset - refOffset)) {
-        date = date.weekday(offset - 7);
-    } else if (Math.abs(offset + 7 - refOffset) < Math.abs(offset - refOffset)) {
-        date = date.weekday(offset + 7);
+    const refOffset = date.weekday();
+    const weekStart = locale?.weekStart ?? 0;
+    const weekdayOffset = (7 + offset - weekStart) % 7;
+
+    if (Math.abs(weekdayOffset - 7 - refOffset) < Math.abs(weekdayOffset - refOffset)) {
+        return date.weekday(weekdayOffset - 7);
+    } else if (Math.abs(weekdayOffset + 7 - refOffset) < Math.abs(weekdayOffset - refOffset)) {
+        return date.weekday(weekdayOffset + 7);
     } else {
-        date = date.weekday(offset);
+        return date.weekday(weekdayOffset);
     }
-
-    return date;
 }

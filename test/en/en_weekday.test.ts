@@ -269,26 +269,25 @@ test("Test - custom weekStart", () => {
     testSingleCase(
         chrono.casual,
         "Sunday",
-        new Date(2012, 7, 9),
+        new Date(2012, 8 - 1, 9),
         { locale: { weekStart: 1 } },
         (result) => {
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("Sunday");
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("Sunday");
 
-            expect(result.start).not.toBeNull();
-            expect(result.start.get("year")).toBe(2012);
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(13);
-            expect(result.start.get("weekday")).toBe(0);
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+        expect(result.start.get("weekday")).toBe(0);
 
-            expect(result.start.isCertain("day")).toBe(false);
-            expect(result.start.isCertain("month")).toBe(false);
-            expect(result.start.isCertain("year")).toBe(false);
-            expect(result.start.isCertain("weekday")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("weekday")).toBe(true);
 
-            expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 12, 12));
+    });
 
     testSingleCase(
         chrono.casual,
@@ -339,7 +338,7 @@ test("Test - custom weekStart", () => {
             expect(result.start).not.toBeNull();
             expect(result.start.get("year")).toBe(2021);
             expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(16);
+            expect(result.start.get("day")).toBe(15);
             expect(result.start.get("weekday")).toBe(0);
 
             expect(result.start.isCertain("day")).toBe(false);
@@ -347,7 +346,7 @@ test("Test - custom weekStart", () => {
             expect(result.start.isCertain("year")).toBe(false);
             expect(result.start.isCertain("weekday")).toBe(true);
 
-            expect(result.start).toBeDate(new Date(2021, 8 - 1, 16, 6));
+            expect(result.start).toBeDate(new Date(2021, 8 - 1, 15, 6));
         }
     );
 
@@ -362,12 +361,12 @@ test("Test - custom weekStart", () => {
             expect(result.start).not.toBeNull();
             expect(result.start.get("year")).toBe(2019);
             expect(result.start.get("month")).toBe(6);
-            expect(result.start.get("day")).toBe(11);
+            expect(result.start.get("day")).toBe(10);
 
             expect(result.end).not.toBeNull();
             expect(result.end.get("year")).toBe(2019);
             expect(result.end.get("month")).toBe(6);
-            expect(result.end.get("day")).toBe(17);
+            expect(result.end.get("day")).toBe(16);
         }
     );
 });
