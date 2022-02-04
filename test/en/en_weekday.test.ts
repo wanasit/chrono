@@ -264,3 +264,110 @@ test("Test - forward dates only option", () => {
         }
     );
 });
+
+test("Test - custom weekStart", () => {
+    testSingleCase(
+        chrono.casual,
+        "Sunday",
+        new Date(2012, 7, 9),
+        { locale: { weekStart: 1 } },
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("Sunday");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2012);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(13);
+            expect(result.start.get("weekday")).toBe(0);
+
+            expect(result.start.isCertain("day")).toBe(false);
+            expect(result.start.isCertain("month")).toBe(false);
+            expect(result.start.isCertain("year")).toBe(false);
+            expect(result.start.isCertain("weekday")).toBe(true);
+
+            expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
+        }
+    );
+
+    testSingleCase(
+        chrono.casual,
+        "this Monday to this Sunday",
+        new Date(2016, 8 - 1, 4),
+        { locale: { weekStart: 1 } },
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("this Monday to this Sunday");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2016);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(1);
+            expect(result.start.get("weekday")).toBe(1);
+
+            expect(result.start.isCertain("day")).toBe(false);
+            expect(result.start.isCertain("month")).toBe(false);
+            expect(result.start.isCertain("year")).toBe(false);
+            expect(result.start.isCertain("weekday")).toBe(true);
+
+            expect(result.start).toBeDate(new Date(2016, 8 - 1, 1, 12));
+
+            expect(result.end).not.toBeNull();
+            expect(result.end.get("year")).toBe(2016);
+            expect(result.end.get("month")).toBe(8);
+            expect(result.end.get("day")).toBe(7);
+            expect(result.end.get("weekday")).toBe(0);
+
+            expect(result.end.isCertain("day")).toBe(false);
+            expect(result.end.isCertain("month")).toBe(false);
+            expect(result.end.isCertain("year")).toBe(false);
+            expect(result.end.isCertain("weekday")).toBe(true);
+
+            expect(result.end).toBeDate(new Date(2016, 8 - 1, 7, 12));
+        }
+    );
+
+    testSingleCase(
+        chrono.casual,
+        "sunday morning",
+        new Date("August 14, 2021, 20:00"),
+        { locale: { weekStart: 1 } },
+        (result) => {
+            expect(result.index).toBe(0);
+            expect(result.text).toBe("sunday morning");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2021);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(16);
+            expect(result.start.get("weekday")).toBe(0);
+
+            expect(result.start.isCertain("day")).toBe(false);
+            expect(result.start.isCertain("month")).toBe(false);
+            expect(result.start.isCertain("year")).toBe(false);
+            expect(result.start.isCertain("weekday")).toBe(true);
+
+            expect(result.start).toBeDate(new Date(2021, 8 - 1, 16, 6));
+        }
+    );
+
+    testSingleCase(
+        chrono.casual,
+        "vacation monday - sunday",
+        new Date("thursday 13 June 2019"),
+        { locale: { weekStart: 1 } },
+        (result) => {
+            expect(result.text).toBe("monday - sunday");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2019);
+            expect(result.start.get("month")).toBe(6);
+            expect(result.start.get("day")).toBe(11);
+
+            expect(result.end).not.toBeNull();
+            expect(result.end.get("year")).toBe(2019);
+            expect(result.end.get("month")).toBe(6);
+            expect(result.end.get("day")).toBe(17);
+        }
+    );
+});
