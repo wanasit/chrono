@@ -266,12 +266,7 @@ test("Test - forward dates only option", () => {
 });
 
 test("Test - custom weekStart", () => {
-    testSingleCase(
-        chrono.casual,
-        "Sunday",
-        new Date(2012, 8 - 1, 9),
-        { locale: { weekStart: 1 } },
-        (result) => {
+    testSingleCase(chrono.casual, "Sunday", new Date(2012, 8 - 1, 9), { locale: { weekStart: 1 } }, (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("Sunday");
 
