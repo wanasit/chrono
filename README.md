@@ -133,7 +133,7 @@ For example:
 ```js
 const results = chrono.parse('I have an appointment tomorrow from 10 to 11 AM');
 
-results[0].index;     // 15
+results[0].index;     // 22
 results[0].text;      // 'tomorrow from 10 to 11 AM'
 results[0].refDate;   // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
 
