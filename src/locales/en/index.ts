@@ -26,7 +26,7 @@ import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ENTimeUnitCasualRelativeFormatParser from "./parsers/ENTimeUnitCasualRelativeFormatParser";
-import ENMergeDateRelativeRefiner from "./refiners/ENMergeDateRelativeRefiner";
+import ENMergeRelativeDateRefiner from "./refiners/ENMergeRelativeDateRefiner";
 
 /**
  * Chrono object configured for parsing *casual* English
@@ -92,7 +92,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
                 new ENTimeUnitAgoFormatParser(strictMode),
                 new ENTimeUnitLaterFormatParser(strictMode),
             ],
-            refiners: [new ENMergeDateRelativeRefiner(), new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
+            refiners: [new ENMergeRelativeDateRefiner(), new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
         },
         strictMode
     );

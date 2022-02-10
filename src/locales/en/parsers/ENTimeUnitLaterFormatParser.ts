@@ -3,7 +3,7 @@ import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-export const PATTERN = new RegExp(
+const PATTERN = new RegExp(
     `(${TIME_UNITS_PATTERN})\\s{0,5}(?:later|after|from now|henceforth|forward|out)` + "(?=(?:\\W|$))",
     "i"
 );
