@@ -135,6 +135,26 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("millisecond")).toBe(false);
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
     });
+
+    testSingleCase(chrono, "after this year", new Date(2020, 11 - 1, 22, 12, 11, 32, 6), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(22);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(11);
+        expect(result.start.get("second")).toBe(32);
+        expect(result.start.get("millisecond")).toBe(6);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+        expect(result.start.isCertain("minute")).toBe(false);
+        expect(result.start.isCertain("second")).toBe(false);
+        expect(result.start.isCertain("millisecond")).toBe(false);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
 });
 
 test("Test - Relative date components' certainty", () => {

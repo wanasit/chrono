@@ -32,6 +32,22 @@ test("Test - Positive time units", () => {
         expect(result.start.get("day")).toBe(18);
         expect(result.start.get("hour")).toBe(12);
     });
+
+    testSingleCase(chrono, "after a year", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2017);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(12);
+    });
+
+    testSingleCase(chrono, "after an hour", new Date(2016, 10 - 1, 1, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(16);
+    });
 });
 
 test("Test - Negative time units", () => {
