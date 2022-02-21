@@ -204,6 +204,18 @@ test("Test - Range expression", function () {
 
         expect(result.end).toBeDate(new Date(2013, 10 - 1, 12, 12));
     });
+
+    testSingleCase(chrono.de, "10. jänner 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10. jänner 2012");
+
+        expect(result.start).toBeDate(new Date(2012, 1 - 1, 10, 12));
+    });
 });
 
 test("Test - Combined expression", function () {

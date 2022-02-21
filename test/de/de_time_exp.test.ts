@@ -27,6 +27,11 @@ test("Test - Simple Expression", function () {
         expect(result.start.get("minute")).toBe(0);
     });
 
+    testSingleCase(chrono.de, "um 16h", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("hour")).toBe(16);
+        expect(result.start.get("minute")).toBe(0);
+    });
+
     testSingleCase(chrono.de, "um 7 morgens", new Date(2012, 7, 10), (result) => {
         expect(result.start.get("hour")).toBe(7);
         expect(result.start.get("minute")).toBe(0);
