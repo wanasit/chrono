@@ -192,8 +192,8 @@ export const TIMEZONE_ABBR_MAP = {
     YEKT: 360,
 };
 
-export function toTimezoneOffset(timezoneInput: string | number): number | null {
-    if (timezoneInput === null) {
+export function toTimezoneOffset(timezoneInput?: string | number): number | null {
+    if (timezoneInput === null || timezoneInput === undefined) {
         return null;
     }
 
@@ -201,5 +201,5 @@ export function toTimezoneOffset(timezoneInput: string | number): number | null 
         return timezoneInput;
     }
 
-    return TIMEZONE_ABBR_MAP[timezoneInput] ?? 0;
+    return TIMEZONE_ABBR_MAP[timezoneInput] ?? null;
 }

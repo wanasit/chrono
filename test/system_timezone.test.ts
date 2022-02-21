@@ -16,6 +16,28 @@ test("Test - Timezone difference on reference example", function () {
     );
 });
 
+test("Test - Timezone difference on default timezone", function () {
+    const INPUT = "Friday at 4pm";
+    const REF_INSTANT = new Date("Wed Jun 09 2021 07:00:00 GMT+0900 (JST)");
+    const EXPECTED_INSTANT = new Date("Fri Jun 11 2021 16:00:00 GMT+0900 (JST)");
+
+    testSingleCase(chrono, INPUT, REF_INSTANT, (result) => {
+        expect(result).toBeDate(EXPECTED_INSTANT);
+    });
+
+    testSingleCase(chrono, INPUT, { instant: REF_INSTANT }, (result) => {
+        expect(result).toBeDate(EXPECTED_INSTANT);
+    });
+
+    testSingleCase(chrono, INPUT, { instant: REF_INSTANT, timezone: null }, (result) => {
+        expect(result).toBeDate(EXPECTED_INSTANT);
+    });
+
+    testSingleCase(chrono, INPUT, { instant: REF_INSTANT, timezone: "" }, (result) => {
+        expect(result).toBeDate(EXPECTED_INSTANT);
+    });
+});
+
 test("Test - Timezone difference on reference date", function () {
     // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
     // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
