@@ -13,7 +13,7 @@ export default class DETimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     primarySuffix(): string {
-        return "(?:\\s*uhr)?(?:\\s*(?:morgens|vormittags|nachmittags|abends|nachts))?(?=\\W|$)";
+        return "(?:\\s*(?:h|uhr))?(?:\\s*(?:morgens|vormittags|nachmittags|abends|nachts))?(?=\\W|$)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
