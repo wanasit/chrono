@@ -8,13 +8,12 @@ dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
-    readonly timezoneOffset?: number;
+    readonly timezoneOffset?: number | null;
 
     constructor(input?: ParsingReference | Date) {
         input = input ?? new Date();
         if (input instanceof Date) {
             this.instant = input;
-            this.timezoneOffset = -input.getTimezoneOffset();
         } else {
             this.instant = input.instant ?? new Date();
             this.timezoneOffset = toTimezoneOffset(input.timezone);
