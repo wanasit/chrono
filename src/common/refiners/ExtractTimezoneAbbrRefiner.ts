@@ -221,7 +221,9 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
             }
 
             context.debug(() => {
-                console.log(`Extracting timezone: '${timezoneAbbr}' into : ${extractedTimezoneOffset}`);
+                console.log(
+                    `Extracting timezone: '${timezoneAbbr}' into: ${extractedTimezoneOffset} for: ${result.start}`
+                );
             });
 
             const currentTimezoneOffset = result.start.get("timezoneOffset");

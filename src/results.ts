@@ -132,7 +132,7 @@ export class ParsingComponents implements ParsedComponents {
     toString() {
         return `[ParsingComponents {knownValues: ${JSON.stringify(this.knownValues)}, impliedValues: ${JSON.stringify(
             this.impliedValues
-        )}}]`;
+        )}}, reference: ${JSON.stringify(this.reference)}]`;
     }
 
     dayjs() {
