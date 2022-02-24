@@ -136,6 +136,45 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
     });
 
+    testSingleCase(chrono, "next quarter", new Date(2021, 1 - 1, 22, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(22);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+    });
+
+    testSingleCase(chrono, "next qtr", new Date(2021, 10 - 1, 22, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(22);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+    });
+
+    testSingleCase(chrono, "next two quarter", new Date(2021, 1 - 1, 22, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(22);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start.isCertain("month")).toBe(false);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+    });
+
     testSingleCase(chrono, "after this year", new Date(2020, 11 - 1, 22, 12, 11, 32, 6), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2021);
