@@ -97,7 +97,7 @@ test("Test - Not parsing timezone from relative time", function () {
         const expectedInstant = new Date("Sun Nov 29 2020 14:24:13 GMT+0900 (Japan Standard Time)");
 
         testSingleCase(chrono, "in 1 hour GMT", refInstant, (result, text) => {
-            // expect(result.text).toBe("in 1 hour");
+            // expect(result.text).toBe("in 1 hour"); known issue when running test in the GMT time
             expect(result.start).toBeDate(expectedInstant);
         });
     }
