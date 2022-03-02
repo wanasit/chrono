@@ -5,6 +5,7 @@ import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ISOFormatParser from "../../common/parsers/ISOFormatParser";
 import DETimeExpressionParser from "./parsers/DETimeExpressionParser";
 import DEWeekdayParser from "./parsers/DEWeekdayParser";
+import DESpecificTimeExpressionParser from "./parsers/DESpecificTimeExpressionParser";
 import DEMergeDateRangeRefiner from "./refiners/DEMergeDateRangeRefiner";
 import DEMergeDateTimeRefiner from "./refiners/DEMergeDateTimeRefiner";
 import DECasualDateParser from "./parsers/DECasualDateParser";
@@ -37,6 +38,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new ISOFormatParser(),
                 new SlashDateFormatParser(littleEndian),
                 new DETimeExpressionParser(),
+                new DESpecificTimeExpressionParser(),
                 new DEMonthNameLittleEndianParser(),
                 new DEWeekdayParser(),
             ],

@@ -69,6 +69,22 @@ test("Test - Simple Expression", function () {
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
         expect(result.start.isCertain("meridiem")).toBeTruthy();
     });
+
+    testSingleCase(chrono.de, "um 8 Uhr in der Nacht", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.start.isCertain("meridiem")).toBeTruthy();
+    });
+
+    testSingleCase(chrono.de, "um 5 Uhr in der Nacht", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(5);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+        expect(result.start.isCertain("meridiem")).toBeTruthy();
+    });
 });
 
 test("Test - Range Expression", function () {
@@ -108,6 +124,44 @@ test("Test - Range Expression", function () {
     testSingleCase(chrono.de, " von 6:30 bis 23:00 ", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("von 6:30 bis 23:00");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("hour")).toBe(6);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("meridiem")).toBe(0);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6, 30));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("hour")).toBe(23);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(1);
+
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 23, 0));
+    });
+
+    testSingleCase(chrono.de, " von 6h30 bis 23h00 ", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("von 6h30 bis 23h00");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("hour")).toBe(6);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("meridiem")).toBe(0);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6, 30));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("hour")).toBe(23);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(1);
+
+        expect(result.end).toBeDate(new Date(2012, 7, 10, 23, 0));
+    });
+
+    testSingleCase(chrono.de, " von 6h30 morgens bis 11 am Abend", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("von 6h30 morgens bis 11 am Abend");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(6);

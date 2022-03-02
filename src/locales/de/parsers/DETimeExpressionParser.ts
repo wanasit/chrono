@@ -1,7 +1,6 @@
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 import { ParsingComponents } from "../../../results";
 import { ParsingContext } from "../../../chrono";
-import { Meridiem } from "../../../index";
 
 export default class DETimeExpressionParser extends AbstractTimeExpressionParser {
     primaryPrefix(): string {
@@ -12,30 +11,12 @@ export default class DETimeExpressionParser extends AbstractTimeExpressionParser
         return "\\s*(?:\\-|\\–|\\~|\\〜|bis)\\s*";
     }
 
-    primarySuffix(): string {
-        return "(?:\\s*(?:h|uhr))?(?:\\s*(?:morgens|vormittags|nachmittags|abends|nachts))?(?=\\W|$)";
-    }
-
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
-        const components = super.extractPrimaryTimeComponents(context, match);
-        if (components) {
-            if (match[0].endsWith("morgens") || match[0].endsWith("vormittags")) {
-                components.assign("meridiem", Meridiem.AM);
-                const hour = components.get("hour");
-                if (hour < 12) {
-                    components.assign("hour", components.get("hour"));
-                }
-            }
-
-            if (match[0].endsWith("nachmittags") || match[0].endsWith("abends") || match[0].endsWith("nachts")) {
-                components.assign("meridiem", Meridiem.PM);
-                const hour = components.get("hour");
-                if (hour < 12) {
-                    components.assign("hour", components.get("hour") + 12);
-                }
-            }
+        // This looks more like a year e.g. 2020
+        if (match[0].match(/^\s*\d{4}\s*$/)) {
+            return null;
         }
 
-        return components;
+        return super.extractPrimaryTimeComponents(context, match);
     }
 }
