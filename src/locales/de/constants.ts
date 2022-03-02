@@ -132,7 +132,7 @@ export function parseNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const YEAR_PATTERN = `(?:[0-9]{1,4}(?:\\s*[vn]\\.?\\s*C(?:hr)?\\.?)?)`;
+export const YEAR_PATTERN = `(?:[0-9]{1,4}(?:\\s*[vn]\\.?\\s*(?:C(?:hr)?|(?:u\\.?|d\\.?(?:\\s*g\\.?)?)?\\s*Z)\\.?|\\s*(?:u\\.?|d\\.?(?:\\s*g\\.)?)\\s*Z\\.?)?)`;
 export function parseYear(match: string): number {
     if (/v/i.test(match)) {
         // v.Chr.
@@ -141,6 +141,11 @@ export function parseYear(match: string): number {
 
     if (/n/i.test(match)) {
         // n.Chr.
+        return parseInt(match.replace(/[^0-9]+/gi, ""));
+    }
+
+    if (/z/i.test(match)) {
+        // n.Chr. as "uZ" or "dgZ"
         return parseInt(match.replace(/[^0-9]+/gi, ""));
     }
 
