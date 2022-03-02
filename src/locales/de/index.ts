@@ -11,6 +11,7 @@ import DEMergeDateTimeRefiner from "./refiners/DEMergeDateTimeRefiner";
 import DECasualDateParser from "./parsers/DECasualDateParser";
 import DECasualTimeParser from "./parsers/DECasualTimeParser";
 import DEMonthNameLittleEndianParser from "./parsers/DEMonthNameLittleEndianParser";
+import DETimeUnitRelativeFormatParser from "./parsers/DETimeUnitRelativeFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -28,6 +29,7 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new DECasualTimeParser());
     option.parsers.unshift(new DECasualDateParser());
+    option.parsers.unshift(new DETimeUnitRelativeFormatParser());
     return option;
 }
 

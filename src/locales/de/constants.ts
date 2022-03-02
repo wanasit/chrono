@@ -1,4 +1,4 @@
-import { OpUnitType } from "dayjs";
+import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
@@ -67,6 +67,10 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
 
 export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "eins": 1,
+    "eine": 1,
+    "einem": 1,
+    "einen": 1,
+    "einer": 1,
     "zwei": 2,
     "drei": 3,
     "vier": 4,
@@ -82,7 +86,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "zwoelf": 12,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
     sek: "second",
     sekunde: "second",
     sekunden: "second",
@@ -95,14 +99,24 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     stunden: "hour",
     tag: "d",
     tage: "d",
+    tagen: "d",
     woche: "week",
     wochen: "week",
     monat: "month",
     monate: "month",
+    monaten: "month",
+    monats: "month",
+    quartal: "quarter",
+    quartals: "quarter",
+    quartale: "quarter",
+    quartalen: "quarter",
+    a: "year",
     j: "year",
     jr: "year",
     jahr: "year",
     jahre: "year",
+    jahren: "year",
+    jahres: "year",
 };
 
 //-----------------------------
