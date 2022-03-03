@@ -1,4 +1,4 @@
-import { OpUnitType } from "dayjs";
+import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
@@ -133,7 +133,7 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "thirty-first": 31,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
     sec: "second",
     second: "second",
     seconds: "second",
@@ -152,6 +152,9 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     weeks: "week",
     month: "month",
     months: "month",
+    qtr: "quarter",
+    quarter: "quarter",
+    quarters: "quarter",
     y: "year",
     yr: "year",
     year: "year",
