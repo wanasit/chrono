@@ -101,11 +101,11 @@ test("Test - The normal within expression", () => {
         expect(result.start).toBeDate(new Date(2012, 8, 10, 12, 14));
     });
 
-    testSingleCase(chrono, "within a few months", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono, "within a few months", new Date(2012, 6, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("within a few months");
 
-        expect(result.start).toBeDate(new Date(2012, 10, 10, 12, 14));
+        expect(result.start).toBeDate(new Date(2012, 9, 10, 12, 14));
     });
 
     testSingleCase(chrono, "within one year", new Date(2012, 7, 10, 12, 14), (result) => {

@@ -80,11 +80,11 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 8, 10, 7, 14));
     });
 
-    testSingleCase(chrono.fr, "dans quelques mois", new Date(2012, 7, 10, 22, 14), (result) => {
+    testSingleCase(chrono.fr, "dans quelques mois", new Date(2012, 6, 10, 22, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("dans quelques mois");
 
-        expect(result.start).toBeDate(new Date(2012, 10, 10, 22, 14));
+        expect(result.start).toBeDate(new Date(2012, 9, 10, 22, 14));
     });
 
     testSingleCase(chrono.fr, "en une année", new Date(2012, 7, 10, 12, 14), (result) => {

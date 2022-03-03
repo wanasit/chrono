@@ -171,16 +171,16 @@ test("Test - Single Expression", function () {
 });
 
 test("Test - Single Expression (Casual)", function () {
-    testSingleCase(chrono, "5 months ago, we did something", new Date(2012, 8 - 1, 10), (result) => {
+    testSingleCase(chrono, "5 months ago, we did something", new Date(2012, 10 - 1, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("month")).toBe(5);
         expect(result.start.get("day")).toBe(10);
 
         expect(result.index).toBe(0);
         expect(result.text).toBe("5 months ago");
 
-        expect(result.start).toBeDate(new Date(2012, 3 - 1, 10));
+        expect(result.start).toBeDate(new Date(2012, 5 - 1, 10));
     });
 
     testSingleCase(chrono, "5 years ago, we did something", new Date(2012, 8 - 1, 10), (result) => {
