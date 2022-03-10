@@ -250,6 +250,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     std: "hour",
     stunde: "hour",
     stunden: "hour",
+    d: "d",
     tag: "d",
     tage: "d",
     tagen: "d",
