@@ -5,7 +5,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { reverseTimeUnits } from "../../../utils/timeunits";
 import { matchAnyPattern } from "../../../utils/pattern";
 
-export default class DETimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class DETimeUnitRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor() {
         super();
     }
