@@ -277,25 +277,31 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s*an?)?|an?\\b(?:\\s*few)?|few|several|a?\\s*couple\\s*(?:of)?)`;
+)}|[0-9]+|[0-9]+,[0-9]+|(?:ein(?:e(?:m|n|r|s)?)?\\s*)?(?:halb(?:e(?:n|r)?)?|(?:drei\\s?)?viertel|vtl\\.?)|ein\\s+paar|einige(?:r|n)?|mehrere(?:r|n)?|wenige(?:r|n)?|ein(?:e(?:m|n|r|s)?)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
-    } else if (num === "a" || num === "an") {
+    } else if (num === "ein" || num === "einem" || num === "einen" || num === "einer" || num === "eines") {
         return 1;
-    } else if (num.match(/few/)) {
+    } else if (num.match(/wenige/)) {
         return 3;
-    } else if (num.match(/half/)) {
+    } else if (num.match(/halb/)) {
         return 0.5;
-    } else if (num.match(/couple/)) {
+    } else if (num.match(/drei\s?viertel/)) {
+        return 0.75;
+    } else if (num.match(/viertel|vtl/)) {
+        return 0.25;
+    } else if (num.match(/paar/)) {
         return 2;
-    } else if (num.match(/several/)) {
+    } else if (num.match(/einige/)) {
+        return 5;
+    } else if (num.match(/mehrere/)) {
         return 7;
     }
 
-    return parseFloat(num);
+    return parseFloat(num.replace(",", "."));
 }
 
 //-----------------------------
@@ -339,7 +345,10 @@ export function parseYear(match: string): number {
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
+    `(?:(?:etwa|ungefähr|ca\\.?)\\s{0,3})?`,
+    SINGLE_TIME_UNIT_PATTERN
+);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};
