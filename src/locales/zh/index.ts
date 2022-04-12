@@ -1,2 +1,2 @@
 export * from "./hant";
-export { hans } from "./hans";
+export * as hans from "./hans";
