@@ -1,7 +1,7 @@
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 
-const TIMEZONE_OFFSET_PATTERN = new RegExp("^\\s*(?:(?:GMT|UTC)\\s?)?([+-])(\\d{1,2})(?::?(\\d{2}))?", "i");
+const TIMEZONE_OFFSET_PATTERN = new RegExp("^\\s*(?:\\(?(?:GMT|UTC)\\s?)?([+-])(\\d{1,2})(?::?(\\d{2}))?\\)?", "i");
 const TIMEZONE_OFFSET_SIGN_GROUP = 1;
 const TIMEZONE_OFFSET_HOUR_OFFSET_GROUP = 2;
 const TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP = 3;

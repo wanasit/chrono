@@ -43,6 +43,14 @@ test("Test - Parsing date/time with GMT offset", function () {
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("timezoneOffset")).toBe(2 * 60);
     });
+
+    testSingleCase(chrono, "published: 10:30 (gmt-2:30).", (result, text) => {
+        expect(result.text).toBe("10:30 (gmt-2:30)");
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("timezoneOffset")).toBe(-(2 * 60 + 30));
+    });
 });
 
 test("Test - Parsing date/time with timezone abbreviation", function () {
