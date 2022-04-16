@@ -194,6 +194,12 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("millisecond")).toBe(false);
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
     });
+
+    testSingleCase(chrono, "Connect back after this year", new Date(2022, 4 - 1, 16, 12), (result, text) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(16);
+    });
 });
 
 test("Test - Relative date components' certainty", () => {
