@@ -21,7 +21,18 @@
     "test": "./test"
   },
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "sideEffects": false,
+  "types": "dist/esm/index.d.ts",
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
@@ -32,9 +43,12 @@
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
+    "run-script-os": "^1.1.6",
     "ts-jest": "^26.1.1",
+    "tsc-esm-fix": "^2.12.4",
     "typedoc": "^0.20.36",
-    "typescript": "~4.2.4"
+    "typescript": "~4.2.4",
+    "rimraf": "^3.0.2"
   },
   "husky": {
     "hooks": {
@@ -42,7 +56,11 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build-esm",
+    "build-esm": "tsc -p tsconfig.build.esm.json && tsc-esm-fix --target=dist/esm && npm run add-package.json",
+    "add-package.json": "run-script-os",
+    "add-package.json:nix": "echo '{\"type\":\"commonjs\",\"sideEffects\":\"false\"}' > dist/package.json && echo '{\"type\":\"module\",\"sideEffects\":\"false\"}' > dist/esm/package.json",
+    "add-package.json:windows": "echo {\"type\":\"commonjs\",\"sideEffects\":\"false\"} > dist/package.json && echo {\"type\":\"module\",\"sideEffects\":\"false\"} > dist/esm/package.json",
     "benchmark": "npm run build && node ./benchmark/benchmark.js",
     "document": "typedoc",
     "prepare": "npm run build",
