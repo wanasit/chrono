@@ -44,6 +44,14 @@ test("Test - Skip hyphenated numbers pattern", () => {
     testUnexpectedResult(chrono, "4-5-6");
 
     testUnexpectedResult(chrono, "20-30-12");
+
+    testUnexpectedResult(chrono, "2012");
+
+    testUnexpectedResult(chrono, "2012-14");
+
+    testUnexpectedResult(chrono, "2012-1400");
+
+    testUnexpectedResult(chrono, "2200-25");
 });
 
 test("Test - Skip version number pattern", () => {

@@ -84,6 +84,12 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         const remainingText = context.text.substring(match.index);
         const followingPattern = this.getFollowingTimePatternThroughCache();
         const followingMatch = followingPattern.exec(remainingText);
+
+        // Pattern "456-12", "2022-12" should not be time without proper context
+        if (text.match(/^\d{3,4}/) && followingMatch && followingMatch[0].match(/^\s*([+-])\s*\d{2,4}$/)) {
+            return null;
+        }
+
         if (
             !followingMatch ||
             // Pattern "YY.YY -XXXX" is more like timezone offset
@@ -305,8 +311,13 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     private checkAndReturnWithoutFollowingPattern(result) {
-        // Single digit (e.g "1") should not be counted as time expression
+        // Single digit (e.g "1") should not be counted as time expression (without proper context)
         if (result.text.match(/^\d$/)) {
+            return null;
+        }
+
+        // Three or more digit (e.g. "203", "2014") should not be counted as time expression (without proper context)
+        if (result.text.match(/^\d\d\d+$/)) {
             return null;
         }
 
