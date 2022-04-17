@@ -26,6 +26,10 @@ export default class ExtractTimezoneOffsetRefiner implements Refiner {
             const hourOffset = parseInt(match[TIMEZONE_OFFSET_HOUR_OFFSET_GROUP]);
             const minuteOffset = parseInt(match[TIMEZONE_OFFSET_MINUTE_OFFSET_GROUP] || "0");
             let timezoneOffset = hourOffset * 60 + minuteOffset;
+            // No timezones have offsets greater than 14 hours, so disregard this match
+            if (timezoneOffset > 14 * 60) {
+                return;
+            }
             if (match[TIMEZONE_OFFSET_SIGN_GROUP] === "-") {
                 timezoneOffset = -timezoneOffset;
             }

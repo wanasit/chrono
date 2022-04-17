@@ -27,6 +27,25 @@ test("Test - Parsing date/time with UTC offset", function () {
     });
 });
 
+test("Test - Parsing date/time with numeric offset", () => {
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 23.00+14", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+        expect(result.start.get("timezoneOffset")).toBe(14 * 60);
+    });
+
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 23.00+1400", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+        expect(result.start.get("timezoneOffset")).toBe(14 * 60);
+    });
+
+    testSingleCase(chrono, "wednesday, september 16, 2020 at 23.00+15", (result, text) => {
+        expect(result.text).toBe("wednesday, september 16, 2020 at 23.00");
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
+});
+
 test("Test - Parsing date/time with GMT offset", function () {
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am GMT -08:45 ", (result, text) => {
         expect(result.text).toBe("wednesday, september 16, 2020 at 11 am GMT -08:45");
