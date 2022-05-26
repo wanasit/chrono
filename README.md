@@ -1,6 +1,6 @@
 # Chrono (v2)
 
-A natural language date parser in Javascript. 
+A natural language date parser in Javascript.
 
 [![Build Status](https://travis-ci.org/wanasit/chrono.svg?branch=master)](https://travis-ci.org/wanasit/chrono)
 [![Coverage Status](https://img.shields.io/coveralls/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
@@ -21,11 +21,11 @@ With npm:
 ```bash
 $ npm install --save chrono-node
 ```
-    
+
 ```javascript
 import * as chrono from 'chrono-node';
 
-chrono.parseDate('An appointment on Sep 12-13'); 
+chrono.parseDate('An appointment on Sep 12-13');
 ```
 For Node.js:
 ```javascript
@@ -37,27 +37,27 @@ const chrono = require('chrono-node');
 ### What's changed in the v2
 For Users
 * Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
-* The current fully supported languages are `en`, `ja`, `fr`, and `nl` (`de`, `pt`, and `zh.hant` are partially supported). 
+* The current fully supported languages are `en`, `ja`, `fr`, and `nl` (`de`, `pt`, and `zh.hant` are partially supported).
 
 For contributors and advanced users
 * The project is rewritten in TypeScript
-* New [Parser](#parser) and [Refiner](#refiner) interface 
+* New [Parser](#parser) and [Refiner](#refiner) interface
 * New source code structure. All parsers, refiners, and configuration should be under a locale directory (See. `locales/en`)
 
 **Note: [v1.x.x](https://github.com/wanasit/chrono/tree/v1.x.x) will still be supported for the time being.**
 
 ## Usage
 
-Simply pass a `string` to functions `chrono.parseDate` or `chrono.parse`. 
+Simply pass a `string` to functions `chrono.parseDate` or `chrono.parse`.
 
 ```javascript
 import * as chrono from 'chrono-node';
 
 chrono.parseDate('An appointment on Sep 12-13');
 // Fri Sep 12 2014 12:00:00 GMT-0500 (CDT)
-    
+
 chrono.parse('An appointment on Sep 12-13');
-/* [{ 
+/* [{
     index: 18,
     text: 'Sep 12-13',
     start: ...
@@ -71,23 +71,23 @@ parse(text: string, ref?: ParsingReference, option?: ParsingOption): ParsedResul
 
 #### Parsing Reference (Date / Timezone)
 
-Today's "Friday" is different from last month's "Friday". 
-The meaning of the referenced dates depends on when and where they are mentioned. 
+Today's "Friday" is different from last month's "Friday".
+The meaning of the referenced dates depends on when and where they are mentioned.
 Chrono lets you define the reference as `Date` or `ParsingReference` object:
 
 ```javascript
 // (Note: the exmaples run on JST timezone)
 
-chrono.parseDate('Friday', new Date(2012, 8 - 1, 23)); 
+chrono.parseDate('Friday', new Date(2012, 8 - 1, 23));
 // Fri Aug 24 2012 12:00:00 GMT+0900 (JST)
 
-chrono.parseDate('Friday', new Date(2012, 8 - 1, 1)); 
+chrono.parseDate('Friday', new Date(2012, 8 - 1, 1));
 // Fri Aug 03 2012 12:00:00 GMT+0900 (JST)
 
 chrono.parseDate("Friday at 4pm", {
     // Wed Jun 09 2021 21:00:00 GMT+0900 (JST)
     // = Wed Jun 09 2021 07:00:00 GMT-0500 (CDT)
-    instant: new Date(1623240000000), 
+    instant: new Date(1623240000000),
     timezone: "CDT",
 })
 // Sat Jun 12 2021 06:00:00 GMT+0900 (JST)
@@ -96,7 +96,7 @@ chrono.parseDate("Friday at 4pm", {
 
 #### ParsingReference
 * `instance?: Date` The instant when the input is written or mentioned
-* `timezone?: string | number` The timezone where the input is written or mentioned. 
+* `timezone?: string | number` The timezone where the input is written or mentioned.
   Support minute-offset (number) and timezone name (e.g. "GMT", "CDT")
 
 ### Parsing Options
@@ -118,8 +118,8 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 
 #### ParsedResult
 * `refDate: Date` The [reference date](#reference-date) of this result
-* `index: number` The location within the input text of this result  
-* `text: string`  The text this result that appears in the input 
+* `index: number` The location within the input text of this result
+* `text: string`  The text this result that appears in the input
 * `start: ParsedComponents` The parsed date components as a [ParsedComponents](#parsedcomponents) object
 * `end?: ParsedComponents`  Similar to `start`
 * `date: () => Date` Create a javascript Date
@@ -140,7 +140,7 @@ results[0].refDate;   // Sat Dec 13 2014 21:50:14 GMT-0600 (CST)
 // `start` is Sat Dec 14 2014 10:00:00
 results[0].start.get('day');    // 14 (the 14th, the day after refDate)
 results[0].start.get('month');  // 12 (or December)
-results[0].start.get('hour');   // 10 
+results[0].start.get('hour');   // 10
 results[0].start.date();        // Sun Dec 14 2014 10:00:00 GMT-0600 (CST)
 
 ...
@@ -149,7 +149,7 @@ results[0].end.date();  // Sun Dec 14 2014 11:00:00 GMT-0600 (CST)
 
 ### Strict vs Casual configuration
 
-Chrono comes with `strict` mode that parse only formal date patterns. 
+Chrono comes with `strict` mode that parse only formal date patterns.
 
 ```js
 // 'strict' mode
@@ -158,7 +158,7 @@ chrono.strict.parseDate('Friday');      // null
 chrono.strict.parseDate('2016-07-01');  // Fri Jul 01 2016 12:00:00 ...
 chrono.strict.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 
-// 'casual' mode (default) 
+// 'casual' mode (default)
 chrono.parseDate('Today');              // Thu Jun 30 2016 12:00:00 ...
 chrono.casual.parseDate('Friday');      // Fri Jul 01 2016 12:00:00 ...
 chrono.casual.parseDate('2016-07-01');  // Fri Jul 01 2016 12:00:00 ...
@@ -167,17 +167,17 @@ chrono.casual.parseDate('Jul 01 2016'); // Fri Jul 01 2016 12:00:00 ...
 
 ### Locales
 
-By default, Chrono is configured to handle **only international English**. 
+By default, Chrono is configured to handle **only international English**.
 This differs from the previous version of Chrono that would try all locales by default.
 
 There are several locales supported contributed by multiple developers under `./locales` directory.
 
 ```js
 // default English (US)
-chrono.parseDate('6/10/2018');    
+chrono.parseDate('6/10/2018');
 
-chrono.en.parseDate('6/10/2018'); 
-chrono.ja.parseDate('昭和６４年１月７日'); 
+chrono.en.parseDate('6/10/2018');
+chrono.ja.parseDate('昭和６４年１月７日');
 ```
 
 Current supported locale options are: `en`, `ja`
@@ -199,8 +199,8 @@ interface Parser {
 }
 ```
 
-Parser is a module for low-level pattern-based parsing. 
-Ideally, each parser should be designed to handle a single specific date format. 
+Parser is a module for low-level pattern-based parsing.
+Ideally, each parser should be designed to handle a single specific date format.
 
 User can create a new parser for supporting new date formats or languages
  by providing RegExp pattern `pattern()` and extracting result or components from the RegExp match `extract()`.
@@ -250,7 +250,7 @@ custom.refiners.push({
 });
 
 // This will be parsed as PM.
-// > Tue Dec 16 2014 14:30:00 GMT-0600 (CST) 
+// > Tue Dec 16 2014 14:30:00 GMT-0600 (CST)
 custom.parseDate("This is at 2.30");
 
 // Unless the 'AM' part is specified
@@ -258,8 +258,8 @@ custom.parseDate("This is at 2.30");
 custom.parseDate("This is at 2.30 AM");
 ```
 
-In the example, the custom refiner assigns PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock). 
-The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners). 
+In the example, the custom refiner assigns PM to parsing results with ambiguous [meridiem](http://en.wikipedia.org/wiki/12-hour_clock).
+The `refine` method of the refiner class will be called with parsing [results](#parsedresult) (from [parsers](#parser) or other previous refiners).
 The method must return an array of the new results (which, in this case, we modified those results in place).
 
 ### More documentation
@@ -278,11 +278,11 @@ $ npm install
 
 ```
 
-Parsing date from text is complicated. A small change can have effects on unexpected places. 
-So, Chrono is a heavily tested library. 
+Parsing date from text is complicated. A small change can have effects on unexpected places.
+So, Chrono is a heavily tested library.
 Commits that break a test shouldn't be allowed in any condition.
 
-Chrono's unit testing is based-on [Jest](https://facebook.github.io/jest/). 
+Chrono's unit testing is based-on [Jest](https://facebook.github.io/jest/).
 
 ```bash
 # Run the test
@@ -292,10 +292,9 @@ $ npm run test
 $ npm run watch
 ```
 
-Chrono's source files is in `src` directory. 
-The built bundle (`dist/*`) is created by running [Webpack](https://webpack.js.org/) via the following command 
+Chrono's source files is in `src` directory.
+The built bundle (`dist/*`) is created by running [Webpack](https://webpack.js.org/) via the following command
 
 ```bash
 $ npm run build
 ```
-

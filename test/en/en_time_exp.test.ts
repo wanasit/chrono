@@ -287,3 +287,84 @@ test("Test - Parsing negative cases : 'at [some numbers] - [some numbers]' (Stri
 
     testUnexpectedResult(chrono.strict, "7-730");
 });
+
+test("Test - forward dates only option", function () {
+    testSingleCase(
+        chrono,
+        "  1am  ",
+        {
+            instant: new Date("Wed May 26 2022 01:57:00 GMT-0500 (CDT)"),
+            timezone: "CDT",
+        },
+        {
+            forwardDate: true
+        },
+        (result) => {
+            expect(result.index).toBe(2);
+            expect(result.text).toBe("1am");
+
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("year")).toBe(2022);
+            expect(result.start.get("month")).toBe(5);
+            expect(result.start.get("day")).toBe(27);
+            expect(result.start.get("hour")).toBe(1);
+
+            expect(result.start).toBeDate(new Date(2022, 5 - 1, 27, 1));
+        }
+    );
+
+    testSingleCase(chrono, "  11am  ", new Date(2016, 10 - 1, 1, 12), { forwardDate: true }, (result) => {
+        expect(result.index).toBe(2);
+        expect(result.text).toBe("11am");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(2);
+        expect(result.start.get("hour")).toBe(11);
+
+        expect(result.start).toBeDate(new Date(2016, 10 - 1, 2, 11));
+    });
+
+    testSingleCase(chrono, "  11am to 1am  ", new Date(2016, 10 - 1, 1, 12), { forwardDate: true }, (result) => {
+        expect(result.index).toBe(2);
+        expect(result.text).toBe("11am to 1am");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(2);
+        expect(result.start.get("hour")).toBe(11);
+
+        expect(result.start).toBeDate(new Date(2016, 10 - 1, 2, 11));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2016);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(3);
+        expect(result.end.get("hour")).toBe(1);
+
+        expect(result.end).toBeDate(new Date(2016, 10 - 1, 3, 1));
+    });
+
+    testSingleCase(chrono, "  10am to 12pm  ", new Date(2016, 10 - 1, 1, 11), { forwardDate: true }, (result) => {
+        expect(result.index).toBe(2);
+        expect(result.text).toBe("10am to 12pm");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(2);
+        expect(result.start.get("hour")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2016, 10 - 1, 2, 10));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2016);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(2);
+        expect(result.end.get("hour")).toBe(12);
+
+        expect(result.end).toBeDate(new Date(2016, 10 - 1, 2, 12));
+    });
+});

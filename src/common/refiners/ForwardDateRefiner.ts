@@ -17,6 +17,27 @@ export default class ForwardDateRefiner implements Refiner {
         results.forEach(function (result) {
             let refMoment = dayjs(context.refDate);
 
+            if (result.start.isOnlyTime() && refMoment.isAfter(result.start.dayjs())) {
+                refMoment = refMoment.add(1, "day");
+
+                result.start.imply("day", refMoment.date());
+                result.start.imply("month", refMoment.month() + 1);
+                result.start.imply("year", refMoment.year());
+
+                if (result.end && result.end.isOnlyTime()) {
+                    result.end.imply("day", refMoment.date());
+                    result.end.imply("month", refMoment.month() + 1);
+                    result.end.imply("year", refMoment.year());
+
+                    if (refMoment.isAfter(result.end.dayjs())) {
+                        refMoment = refMoment.add(1, "day");
+                        result.end.imply("day", refMoment.date());
+                        result.end.imply("month", refMoment.month() + 1);
+                        result.end.imply("year", refMoment.year());
+                    }
+                }
+            }
+
             if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
                 for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
                     result.start.imply("year", result.start.get("year") + 1);
