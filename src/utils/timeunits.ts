@@ -18,8 +18,8 @@ export function addImpliedTimeUnits(components: ParsingComponents, timeUnits: Ti
 
     let date = components.dayjs();
     for (const key in timeUnits) {
-        // noinspection JSUnfilteredForInLoop
-        date = date.add(timeUnits[key], key as OpUnitType);
+        // noinspection JSUnfilteredForInLoop,TypeScriptValidateTypes
+        date = date.add(timeUnits[key], key as QUnitType);
     }
 
     if ("day" in timeUnits || "d" in timeUnits || "week" in timeUnits || "month" in timeUnits || "year" in timeUnits) {

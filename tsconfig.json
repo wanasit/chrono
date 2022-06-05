@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "sourceMap": false,
+    "sourceMap": true,
     "inlineSources": false,
     "inlineSourceMap": false,
     "noEmit": false,
