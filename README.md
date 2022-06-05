@@ -95,7 +95,7 @@ chrono.parseDate("Friday at 4pm", {
 ```
 
 #### ParsingReference
-* `instance?: Date` The instant when the input is written or mentioned
+* `instant?: Date` The instant when the input is written or mentioned
 * `timezone?: string | number` The timezone where the input is written or mentioned. 
   Support minute-offset (number) and timezone name (e.g. "GMT", "CDT")
 
