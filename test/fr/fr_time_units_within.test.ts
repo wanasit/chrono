@@ -52,6 +52,13 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 14));
     });
 
+    testSingleCase(chrono.fr, "régler une minuterie de 5 minutes", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(21);
+        expect(result.text).toBe("de 5 minutes");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
+    });
+
     testSingleCase(chrono.fr, "Dans 5 minutes je vais rentrer chez moi", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("Dans 5 minutes");
