@@ -15,13 +15,17 @@ export abstract class AbstractParserWithWordBoundaryChecking implements Parser {
     private cachedInnerPattern?: RegExp = null;
     private cachedPattern?: RegExp = null;
 
+    patternLeftBoundary(): string {
+        return "(\\W|^)";
+    }
+
     pattern(context: ParsingContext): RegExp {
         const innerPattern = this.innerPattern(context);
         if (innerPattern == this.cachedInnerPattern) {
             return this.cachedPattern;
         }
 
-        this.cachedPattern = new RegExp(`(\\W|^)${innerPattern.source}`, innerPattern.flags);
+        this.cachedPattern = new RegExp(`${this.patternLeftBoundary()}${innerPattern.source}`, innerPattern.flags);
         this.cachedInnerPattern = innerPattern;
         return this.cachedPattern;
     }
