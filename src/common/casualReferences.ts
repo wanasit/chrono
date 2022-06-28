@@ -1,6 +1,6 @@
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
 import dayjs from "dayjs";
-import { assignSimilarDate, assignSimilarTime, assignTheNextDay, implySimilarTime } from "../utils/dayjs";
+import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../utils/dayjs";
 import { Meridiem } from "../index";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
@@ -26,37 +26,24 @@ export function today(reference: ReferenceWithTimezone): ParsingComponents {
  * The previous day. Imply the same time.
  */
 export function yesterday(reference: ReferenceWithTimezone): ParsingComponents {
-    let targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
-    targetDate = targetDate.add(-1, "day");
-    assignSimilarDate(component, targetDate);
-    implySimilarTime(component, targetDate);
-    return component;
+    return theDayBefore(reference, 1);
 }
 
-export function theDayBeforeYesterday(reference: ReferenceWithTimezone): ParsingComponents {
-    let targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
-    targetDate = targetDate.add(-2, "day");
-    assignSimilarDate(component, targetDate);
-    implySimilarTime(component, targetDate);
-    return component;
+export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): ParsingComponents {
+    return theDayAfter(reference, -numDay);
 }
 
 /**
  * The following day with dayjs.assignTheNextDay()
  */
 export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
-    const targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
-    assignTheNextDay(component, targetDate);
-    return component;
+    return theDayAfter(reference, 1);
 }
 
-export function theDayAfterTomorrow(reference: ReferenceWithTimezone): ParsingComponents {
+export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): ParsingComponents {
     let targetDate = dayjs(reference.instant);
     const component = new ParsingComponents(reference, {});
-    targetDate = targetDate.add(2, "day");
+    targetDate = targetDate.add(nDays, "day");
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
     return component;

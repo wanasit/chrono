@@ -33,10 +33,10 @@ export default class RUCasualDateParser extends AbstractParserWithWordBoundaryCh
                 return references.tomorrow(context.reference);
 
             case "послезавтра":
-                return references.theDayAfterTomorrow(context.reference);
+                return references.theDayAfter(context.reference, 2);
 
             case "позавчера":
-                return references.theDayBeforeYesterday(context.reference);
+                return references.theDayBefore(context.reference, 2);
         }
 
         return component;
