@@ -14,15 +14,15 @@ export default class RUTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     primaryPatternLeftBoundary(): string {
-        return "(^|\\s|T|(?:[^\\p{L}\\p{N}_]))";
+        return `(^|\\s|T|(?:[^\\p{L}\\p{N}_]))`;
     }
 
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|до|и|по|\\?)\\s*";
+        return `\\s*(?:\\-|\\–|\\~|\\〜|до|и|по|\\?)\\s*`;
     }
 
     primaryPrefix(): string {
-        return "(?:(?:в|с)\\s*)??";
+        return `(?:(?:в|с)\\s*)??`;
     }
 
     primarySuffix(): string {

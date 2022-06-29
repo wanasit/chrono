@@ -5,19 +5,19 @@ import { Meridiem } from "../../index";
 // prettier-ignore
 function primaryTimePattern(leftBoundary: string, primaryPrefix: string, primarySuffix: string, flags: string) {
     return new RegExp(
-        leftBoundary +
+            `${leftBoundary}` +
             `${primaryPrefix}` +
-            "(\\d{1,4})" +
-            "(?:" +
-                "(?:\\.|:|：)" +
-                "(\\d{1,2})" +
-                "(?:" +
-                    "(?::|：)" +
-                    "(\\d{2})" +
-                    "(?:\\.(\\d{1,6}))?" +
-                ")?" +
-            ")?" +
-            "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
+            `(\\d{1,4})` +
+            `(?:` +
+                `(?:\\.|:|：)` +
+                `(\\d{1,2})` +
+                `(?:` +
+                    `(?::|：)` +
+                    `(\\d{2})` +
+                    `(?:\\.(\\d{1,6}))?` +
+                `)?` +
+            `)?` +
+            `(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?` +
             `${primarySuffix}`,
         flags
     );
@@ -27,16 +27,16 @@ function primaryTimePattern(leftBoundary: string, primaryPrefix: string, primary
 function followingTimePatten(followingPhase: string, followingSuffix: string) {
     return new RegExp(
         `^(${followingPhase})` +
-            "(\\d{1,4})" +
-            "(?:" +
-                "(?:\\.|\\:|\\：)" +
-                "(\\d{1,2})" +
-                "(?:" +
-                    "(?:\\.|\\:|\\：)" +
-                    "(\\d{1,2})(?:\\.(\\d{1,6}))?" +
-                ")?" +
-            ")?" +
-            "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
+            `(\\d{1,4})` +
+            `(?:` +
+                `(?:\\.|\\:|\\：)` +
+                `(\\d{1,2})` +
+                `(?:` +
+                    `(?:\\.|\\:|\\：)` +
+                    `(\\d{1,2})(?:\\.(\\d{1,6}))?` +
+                `)?` +
+            `)?` +
+            `(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?` +
             `${followingSuffix}`,
         "i"
     );
@@ -62,15 +62,15 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     primaryPatternLeftBoundary(): string {
-        return "(^|\\s|T|\\b)";
+        return `(^|\\s|T|\\b)`;
     }
 
     primarySuffix(): string {
-        return "(?=\\W|$)";
+        return `(?=\\W|$)`;
     }
 
     followingSuffix(): string {
-        return "(?=\\W|$)";
+        return `(?=\\W|$)`;
     }
 
     pattern(context: ParsingContext): RegExp {

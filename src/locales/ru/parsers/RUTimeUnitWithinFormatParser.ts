@@ -4,7 +4,7 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = `(?:(?:около|примерно)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`;
-const PATTERN_WITH_PREFIX = new RegExp(`(?:в течение|в течении)\\s*` + PATTERN, REGEX_PARTS.flags);
+const PATTERN_WITH_PREFIX = new RegExp(`(?:в течение|в течении)\\s*${PATTERN}`, REGEX_PARTS.flags);
 
 const PATTERN_WITHOUT_PREFIX = new RegExp(PATTERN, "i");
 

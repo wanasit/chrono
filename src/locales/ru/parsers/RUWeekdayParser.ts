@@ -6,13 +6,13 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
-    "(?:(?:,|\\(|（)\\s*)?" +
-        "(?:в\\s*?)?" +
-        "(?:(эту|этот|прошлый|прошлую|следующий|следующую|следующего)\\s*)?" +
+        `(?:(?:,|\\(|（)\\s*)?` +
+        `(?:в\\s*?)?` +
+        `(?:(эту|этот|прошлый|прошлую|следующий|следующую|следующего)\\s*)?` +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s*(?:,|\\)|）))?" +
-        "(?:\\s*на\\s*(этой|прошлой|следующей)\\s*неделе)?" +
-        REGEX_PARTS.rightBoundary,
+        `(?:\\s*(?:,|\\)|）))?` +
+        `(?:\\s*на\\s*(этой|прошлой|следующей)\\s*неделе)?` +
+        `${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 

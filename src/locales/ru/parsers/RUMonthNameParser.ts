@@ -11,8 +11,8 @@ const PATTERN = new RegExp(
         `\\s*` +
         `(?:` +
         `[,-]?\\s*(${YEAR_PATTERN})?` +
-        ")?" +
-        "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
+        `)?` +
+        `(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)`,
     REGEX_PARTS.flags
 );
 

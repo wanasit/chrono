@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 import { REGEX_PARTS } from "../constants";
 
 const PATTERN = new RegExp(
-    "(сейчас|прошлым\\s*вечером|прошлой\\s*ночью|следующей\\s*ночью|сегодня\\s*ночью|этой\\s*ночью|ночью|этим утром|утром|утра|в\\s*полдень|вечером|вечера|в\\s*полночь)" +
-        REGEX_PARTS.rightBoundary,
+    `(сейчас|прошлым\\s*вечером|прошлой\\s*ночью|следующей\\s*ночью|сегодня\\s*ночью|этой\\s*ночью|ночью|этим утром|утром|утра|в\\s*полдень|вечером|вечера|в\\s*полночь)` +
+        `${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 export default class RUCasualTimeParser extends AbstractParserWithWordBoundaryChecking {

@@ -16,7 +16,7 @@ export abstract class AbstractParserWithWordBoundaryChecking implements Parser {
     private cachedPattern?: RegExp = null;
 
     patternLeftBoundary(): string {
-        return "(\\W|^)";
+        return `(\\W|^)`;
     }
 
     pattern(context: ParsingContext): RegExp {

@@ -8,6 +8,6 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  */
 export default class RUMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(T|в|,|-)?\\s*$");
+        return new RegExp(`^\\s*(T|в|,|-)?\\s*$`);
     }
 }

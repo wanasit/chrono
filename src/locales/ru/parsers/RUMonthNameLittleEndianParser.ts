@@ -13,14 +13,14 @@ const PATTERN = new RegExp(
         `(?:` +
             `\\s{0,3}(?:по|-|–|до)?\\s{0,3}` +
             `(${ORDINAL_NUMBER_PATTERN})` +
-        ")?" +
+        `)?` +
         `(?:-|\\/|\\s{0,3}(?:of)?\\s{0,3})` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        "(?:" +
+        `(?:` +
             `(?:-|\\/|,?\\s{0,3})` +
             `(${YEAR_PATTERN}(?![^\\s]\\d))` +
-        ")?" +
-    REGEX_PARTS.rightBoundary,
+        `)?` +
+    `${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 
