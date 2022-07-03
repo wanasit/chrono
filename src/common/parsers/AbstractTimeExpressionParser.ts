@@ -3,23 +3,23 @@ import { ParsingComponents, ParsingResult } from "../../results";
 import { Meridiem } from "../../index";
 
 // prettier-ignore
-function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
+function primaryTimePattern(leftBoundary: string, primaryPrefix: string, primarySuffix: string, flags: string) {
     return new RegExp(
-        "(^|\\s|T|\\b)" +
+            `${leftBoundary}` +
             `${primaryPrefix}` +
-            "(\\d{1,4})" +
-            "(?:" +
-                "(?:\\.|\\:|\\：)" +
-                "(\\d{1,2})" +
-                "(?:" +
-                    "(?:\\:|\\：)" +
-                    "(\\d{2})" +
-                    "(?:\\.(\\d{1,6}))?" +
-                ")?" +
-            ")?" +
-            "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
+            `(\\d{1,4})` +
+            `(?:` +
+                `(?:\\.|:|：)` +
+                `(\\d{1,2})` +
+                `(?:` +
+                    `(?::|：)` +
+                    `(\\d{2})` +
+                    `(?:\\.(\\d{1,6}))?` +
+                `)?` +
+            `)?` +
+            `(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?` +
             `${primarySuffix}`,
-        "i"
+        flags
     );
 }
 
@@ -27,16 +27,16 @@ function primaryTimePattern(primaryPrefix: string, primarySuffix: string) {
 function followingTimePatten(followingPhase: string, followingSuffix: string) {
     return new RegExp(
         `^(${followingPhase})` +
-            "(\\d{1,4})" +
-            "(?:" +
-                "(?:\\.|\\:|\\：)" +
-                "(\\d{1,2})" +
-                "(?:" +
-                    "(?:\\.|\\:|\\：)" +
-                    "(\\d{1,2})(?:\\.(\\d{1,6}))?" +
-                ")?" +
-            ")?" +
-            "(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?" +
+            `(\\d{1,4})` +
+            `(?:` +
+                `(?:\\.|\\:|\\：)` +
+                `(\\d{1,2})` +
+                `(?:` +
+                    `(?:\\.|\\:|\\：)` +
+                    `(\\d{1,2})(?:\\.(\\d{1,6}))?` +
+                `)?` +
+            `)?` +
+            `(?:\\s*(a\\.m\\.|p\\.m\\.|am?|pm?))?` +
             `${followingSuffix}`,
         "i"
     );
@@ -57,12 +57,20 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         this.strictMode = strictMode;
     }
 
+    patternFlags(): string {
+        return "i";
+    }
+
+    primaryPatternLeftBoundary(): string {
+        return `(^|\\s|T|\\b)`;
+    }
+
     primarySuffix(): string {
-        return "(?=\\W|$)";
+        return `(?=\\W|$)`;
     }
 
     followingSuffix(): string {
-        return "(?=\\W|$)";
+        return `(?=\\W|$)`;
     }
 
     pattern(context: ParsingContext): RegExp {
@@ -394,7 +402,12 @@ export abstract class AbstractTimeExpressionParser implements Parser {
             return this.cachedPrimaryTimePattern;
         }
 
-        this.cachedPrimaryTimePattern = primaryTimePattern(primaryPrefix, primarySuffix);
+        this.cachedPrimaryTimePattern = primaryTimePattern(
+            this.primaryPatternLeftBoundary(),
+            primaryPrefix,
+            primarySuffix,
+            this.patternFlags()
+        );
         this.cachedPrimaryPrefix = primaryPrefix;
         this.cachedPrimarySuffix = primarySuffix;
         return this.cachedPrimaryTimePattern;
