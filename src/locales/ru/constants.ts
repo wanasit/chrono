@@ -288,8 +288,6 @@ export function parseOrdinalNumberPattern(match: string): number {
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
         return ORDINAL_WORD_DICTIONARY[num];
     }
-
-    num = num.replace(/(?:st|nd|rd|th)$/i, "");
     return parseInt(num);
 }
 
