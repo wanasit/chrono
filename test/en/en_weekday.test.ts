@@ -72,7 +72,7 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 3, 12));
     });
 
-    testSingleCase(chrono.casual, "Let's have a meeting on Friday next week", new Date(2015, 3, 18), (result) => {
+    testSingleCase(chrono.casual, "Let's have a meeting on Friday next week", new Date("Sat Apr 18 2015"), (result) => {
         expect(result.index).toBe(21);
         expect(result.text).toBe("on Friday next week");
 
@@ -102,6 +102,121 @@ test("Test - Single Expression", function () {
             expect(result.start).toBeDate(new Date(2015, 3, 21, 12));
         }
     );
+});
+
+test("Test - Weekday casual `This` guessing", function () {
+    testSingleCase(chrono.casual, "This Saturday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(6);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "This Sunday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "This Wednesday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(3);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "This Saturday", new Date("Sun Aug 7 2022"), (result) => {
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "This Sunday", new Date("Sun Aug 7 2022"), (result) => {
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "This Wednesday", new Date("Sun Aug 7 2022"), (result) => {
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
+});
+
+test("Test - Weekday casual `Last` guessing", function () {
+    testSingleCase(chrono.casual, "Last Saturday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(30);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "Last Sunday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("year")).toBe(2022);
+    });
+
+    testSingleCase(chrono.casual, "Last Wednesday", new Date("Tue Aug 2 2022"), (result) => {
+        expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("year")).toBe(2022);
+    });
+});
+
+test("Test - Weekday casual `Next` guessing", function () {
+    {
+        const refDate = new Date("Tue Aug 2 2022");
+        testSingleCase(chrono.casual, "Next Saturday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(13);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Sunday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(14);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Wednesday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(10);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+    }
+    {
+        const refDate = new Date("Saturday Aug 6 2022");
+        testSingleCase(chrono.casual, "Next Saturday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(13);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Sunday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(14);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Wednesday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(10);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+    }
+    {
+        const refDate = new Date("Sun Aug 7 2022");
+        testSingleCase(chrono.casual, "Next Saturday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(13);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Sunday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(14);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+        testSingleCase(chrono.casual, "Next Wednesday", refDate, (result) => {
+            expect(result.start.get("day")).toBe(10);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        });
+    }
 });
 
 test("Test - Weekday With Casual Time", function () {
