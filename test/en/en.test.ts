@@ -1,6 +1,7 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 import ENTimeExpressionParser from "../../src/locales/en/parsers/ENTimeExpressionParser";
+import { Meridiem } from "../../src";
 
 test("Test - Date + Time Expression", function () {
     testSingleCase(chrono, "Something happen on 2014-04-18 13:00 - 16:00 as", (result) => {
@@ -94,6 +95,15 @@ test("Test - Random text", function () {
         expect(result.text).toBe("Monday afternoon to last night");
         expect(result.start.get("day")).toBe(3);
         expect(result.start.get("month")).toBe(7);
+    });
+
+    testSingleCase(chrono, "03-27-2022, 02:00 AM", new Date(2017, 7 - 1, 7), (result) => {
+        expect(result.text).toBe("03-27-2022, 02:00 AM");
+        expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("hour")).toBe(2);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
 });
 
