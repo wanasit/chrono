@@ -140,7 +140,9 @@ export class ParsingContext implements DebugHandler {
     readonly option: ParsingOption;
     readonly reference: ReferenceWithTimezone;
 
-    // Deprecated. Use reference.instant instead.
+    /**
+     * @deprecated. Use reference.instant instead.
+     */
     readonly refDate: Date;
 
     constructor(text: string, refDate?: ParsingReference | Date, option?: ParsingOption) {

@@ -3,7 +3,7 @@ import { ParsingComponents } from "../../../results";
 import { WEEKDAY_DICTIONARY } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { toDayJSWeekday } from "../../../calculation/weeks";
+import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
@@ -27,7 +27,7 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
-        const offset = WEEKDAY_DICTIONARY[dayOfWeek];
+        const weekday = WEEKDAY_DICTIONARY[dayOfWeek];
         const prefix = match[PREFIX_GROUP];
         const postfix = match[POSTFIX_GROUP];
         let modifierWord = prefix || postfix;
@@ -43,12 +43,6 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
             modifier = "this";
         }
 
-        const date = toDayJSWeekday(context.refDate, offset, modifier);
-        return context
-            .createParsingComponents()
-            .assign("weekday", offset)
-            .imply("day", date.date())
-            .imply("month", date.month() + 1)
-            .imply("year", date.year());
+        return createParsingComponentsAtWeekday(context.reference, weekday, modifier);
     }
 }

@@ -2,8 +2,9 @@ import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { TimeUnits } from "../../utils/timeunits";
+import { Weekday } from "../../index";
 
-export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
+export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
     sunday: 0,
     sun: 0,
     "sun.": 0,

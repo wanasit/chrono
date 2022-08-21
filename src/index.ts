@@ -99,6 +99,16 @@ export enum Meridiem {
     PM = 1,
 }
 
+export enum Weekday {
+    SUNDAY = 0,
+    MONDAY = 1,
+    TUESDAY = 2,
+    WEDNESDAY = 3,
+    THURSDAY = 4,
+    FRIDAY = 5,
+    SATURDAY = 6,
+}
+
 // Export all locales
 import * as de from "./locales/de";
 import * as fr from "./locales/fr";

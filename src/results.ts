@@ -19,6 +19,31 @@ export class ReferenceWithTimezone {
             this.timezoneOffset = toTimezoneOffset(input.timezone);
         }
     }
+
+    /**
+     * Returns a JS date (system timezone) with the { year, month, day, hour, minute, second } equal to the reference.
+     * The output's instant is NOT the reference's instant when the reference's and system's timezone are different.
+     */
+    getDateWithAdjustedTimezone() {
+        return new Date(this.instant.getTime() + this.getSystemTimezoneAdjustmentMinute(this.instant) * 60000);
+    }
+
+    /**
+     * Returns the number minutes difference between the JS date's timezone and the reference timezone.
+     * @param date
+     * @param overrideTimezoneOffset
+     */
+    getSystemTimezoneAdjustmentMinute(date?: Date, overrideTimezoneOffset?: number): number {
+        if (!date || date.getTime() < 0) {
+            // Javascript date timezone calculation got effect when the time epoch < 0
+            // e.g. new Date('Tue Feb 02 1300 00:00:00 GMT+0900 (JST)') => Tue Feb 02 1300 00:18:59 GMT+0918 (JST)
+            date = new Date();
+        }
+
+        const currentTimezoneOffset = -date.getTimezoneOffset();
+        const targetTimezoneOffset = overrideTimezoneOffset ?? this.timezoneOffset ?? currentTimezoneOffset;
+        return currentTimezoneOffset - targetTimezoneOffset;
+    }
 }
 
 export class ParsingComponents implements ParsedComponents {
@@ -141,7 +166,8 @@ export class ParsingComponents implements ParsedComponents {
 
     date(): Date {
         const date = this.dateWithoutTimezoneAdjustment();
-        return new Date(date.getTime() + this.getSystemTimezoneAdjustmentMinute(date) * 60000);
+        const timezoneAdjustment = this.reference.getSystemTimezoneAdjustmentMinute(date, this.get("timezoneOffset"));
+        return new Date(date.getTime() + timezoneAdjustment * 60000);
     }
 
     private dateWithoutTimezoneAdjustment() {
@@ -157,20 +183,6 @@ export class ParsingComponents implements ParsedComponents {
 
         date.setFullYear(this.get("year"));
         return date;
-    }
-
-    private getSystemTimezoneAdjustmentMinute(date?: Date) {
-        if (!date || date.getTime() < 0) {
-            // Javascript date timezone calculation got effect when the time epoch < 0
-            // e.g. new Date('Tue Feb 02 1300 00:00:00 GMT+0900 (JST)') => Tue Feb 02 1300 00:18:59 GMT+0918 (JST)
-            date = new Date();
-        }
-
-        const currentTimezoneOffset = -date.getTimezoneOffset();
-        const targetTimezoneOffset =
-            this.get("timezoneOffset") ?? this.reference.timezoneOffset ?? currentTimezoneOffset;
-
-        return currentTimezoneOffset - targetTimezoneOffset;
     }
 
     static createRelativeFromReference(
