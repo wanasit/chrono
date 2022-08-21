@@ -32,6 +32,20 @@ test("Test - Single Expression", function () {
         const expectDate = new Date(2012, 7, 7, 0, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
+
+    testSingleCase(chrono.zh.hant, "我明天上午8點要打遊戲", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("明天上午8點");
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(8);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 11, 8);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
 });
 
 test("Test - Range Expression", function () {
