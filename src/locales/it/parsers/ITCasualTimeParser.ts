@@ -4,7 +4,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import dayjs from "dayjs";
 import { assignTheNextDay } from "../../../utils/dayjs";
 
-const PATTERN = /(?:questo|questa)?\s{0,3}(mattina|pomeriggio|sera|notte|mezzanotte|mezzogiorno)(?=\W|$)/i;
+const PATTERN = /(?:quest\\w*?)?\s{0,3}(mattina|pomeriggio|sera|notte|mezzanotte|mezzogiorno)(?=\W|$)/i;
 
 export default class ITCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
