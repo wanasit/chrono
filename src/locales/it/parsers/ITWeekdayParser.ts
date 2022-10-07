@@ -7,11 +7,11 @@ import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
-        "(?:il\\s*?)?" +
-        "(?:(questa|l'ultima|scorsa|prossima)\\s*)?" +
+        "(?:il|lo|l'|la\\s*?)?" +
+        "(?:(questo|ultimo|scorso|prossimo)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
         "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(questa|l'ultima|scorsa|prossima)\\s*settimana)?" +
+        "(?:\\s*(di questa|dell'ultima|della scorsa|della prossima)\\s*settimana)?" +
         "(?=\\W|$)",
     "i"
 );
@@ -20,7 +20,7 @@ const PREFIX_GROUP = 1;
 const WEEKDAY_GROUP = 2;
 const POSTFIX_GROUP = 3;
 
-export default class ENWeekdayParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -36,11 +36,11 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
 
         let modifier = null;
         if (modifierWord == "ultima" || modifierWord == "scorsa") {
-            modifier = "ultima";
+            modifier = "last";
         } else if (modifierWord == "prossima") {
-            modifier = "prossima";
+            modifier = "next";
         } else if (modifierWord == "questa") {
-            modifier = "questa";
+            modifier = "this";
         }
 
         const date = toDayJSWeekday(context.refDate, offset, modifier);

@@ -23,7 +23,7 @@ const MONTH_NAME_GROUP = 2;
 const MONTH_NUMBER_GROUP = 3;
 const DATE_NUMBER_GROUP = 4;
 
-export default class ENCasualYearMonthDayParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITCasualYearMonthDayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }

@@ -22,22 +22,28 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const MONTH_NAME_GROUP = 1;
-const DATE_GROUP = 2;
-const DATE_TO_GROUP = 3;
+const MONTH_NAME_GROUP = 3;
+const DATE_GROUP = 1;
+const DATE_TO_GROUP = 2;
 const YEAR_GROUP = 4;
 
 /**
- * The parser for parsing US's date format that begin with month's name.
- *  - January 13
- *  - January 13, 2012
- *  - January 13 - 15, 2012
- * Note: Watch out for:
- *  - January 12:00
- *  - January 12.44
- *  - January 1222344
+ * The parser for parsing IT date format with month's name in full writing
+ *  - 1° gennaio 2019
+ *  - 01 gennaio 2019
+ *  - 10 gennaio 2019
+ *  - 13 gennaio
+ *  - 10-25 marzo
+ *  - 10-25 marzo 2019
+ *  - 1° ago 2019
+ *  - 1° settembre 200 a.C.
+ *  - 1° settembre 2002 d.C.
+ *  - 19 gennaio 87
+ *  - 12 giugno 2013
+ *  - 1° novembre 2013
  */
-export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
+
+export default class ITMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }

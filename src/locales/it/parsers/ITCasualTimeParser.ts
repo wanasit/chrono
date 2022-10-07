@@ -6,7 +6,7 @@ import { assignTheNextDay } from "../../../utils/dayjs";
 
 const PATTERN = /(?:questo|questa)?\s{0,3}(mattina|pomeriggio|sera|notte|mezzanotte|mezzogiorno)(?=\W|$)/i;
 
-export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
         return PATTERN;
     }

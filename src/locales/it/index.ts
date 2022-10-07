@@ -4,29 +4,27 @@
  * @module
  */
 
-import ENTimeUnitWithinFormatParser from "./parsers/ITTimeUnitWithinFormatParser";
-import ENMonthNameLittleEndianParser from "./parsers/ITMonthNameLittleEndianParser";
-import ENMonthNameMiddleEndianParser from "./parsers/ITMonthNameMiddleEndianParser";
-import ENMonthNameParser from "./parsers/ITMonthNameParser";
-import ENCasualYearMonthDayParser from "./parsers/ITCasualYearMonthDayParser";
-import ENSlashMonthFormatParser from "./parsers/ITSlashMonthFormatParser";
-import ENTimeExpressionParser from "./parsers/ITTimeExpressionParser";
-import ENTimeUnitAgoFormatParser from "./parsers/ITTimeUnitAgoFormatParser";
-import ENTimeUnitLaterFormatParser from "./parsers/ITTimeUnitLaterFormatParser";
-import ENMergeDateRangeRefiner from "./refiners/ITMergeDateRangeRefiner";
-import ENMergeDateTimeRefiner from "./refiners/ITMergeDateTimeRefiner";
-
 import { includeCommonConfiguration } from "../../configurations";
-import ENCasualDateParser from "./parsers/ITCasualDateParser";
-import ENCasualTimeParser from "./parsers/ITCasualTimeParser";
-import ENWeekdayParser from "./parsers/ITWeekdayParser";
-import ENRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
-
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
-import ENTimeUnitCasualRelativeFormatParser from "./parsers/ITTimeUnitCasualRelativeFormatParser";
-import ENMergeRelativeDateRefiner from "./refiners/ITMergeRelativeDateRefiner";
+import ITMergeDateRangeRefiner from "./refiners/ITMergeDateRangeRefiner";
+import ITMergeRelativeDateRefiner from "./refiners/ITMergeRelativeDateRefiner";
+import ITMergeDateTimeRefiner from "./refiners/ITMergeDateTimeRefiner";
+import ITCasualDateParser from "./parsers/ITCasualDateParser";
+import ITCasualTimeParser from "./parsers/ITCasualTimeParser";
+import ITTimeUnitWithinFormatParser from "./parsers/ITTimeUnitWithinFormatParser";
+import ITMonthNameLittleEndianParser from "./parsers/ITMonthNameLittleEndianParser";
+import ITMonthNameMiddleEndianParser from "./parsers/ITMonthNameMiddleEndianParser";
+import ITMonthNameParser from "./parsers/ITMonthNameParser";
+import ITCasualYearMonthDayParser from "./parsers/ITCasualYearMonthDayParser";
+import ITSlashMonthFormatParser from "./parsers/ITSlashMonthFormatParser";
+import ITTimeExpressionParser from "./parsers/ITTimeExpressionParser";
+import ITTimeUnitAgoFormatParser from "./parsers/ITTimeUnitAgoFormatParser";
+import ITTimeUnitLaterFormatParser from "./parsers/ITTimeUnitLaterFormatParser";
+import ITRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
+import ITTimeUnitCasualRelativeFormatParser from "./parsers/ITTimeUnitCasualRelativeFormatParser";
+import ITWeekdayParser from "./parsers/ITWeekdayParser";
 
 /**
  * Chrono object configured for parsing *casual* Italian
@@ -44,14 +42,14 @@ export const strict = new Chrono(createConfiguration(true, false));
 export const GB = new Chrono(createConfiguration(false, true));
 
 /**
- * A shortcut for en.casual.parse()
+ * A shortcut for it.casual.parse()
  */
 export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
 /**
- * A shortcut for en.casual.parseDate()
+ * A shortcut for it.casual.parseDate()
  */
 export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
@@ -63,11 +61,11 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
  */
 export function createCasualConfiguration(littleEndian = false): Configuration {
     const option = createConfiguration(false, littleEndian);
-    option.parsers.unshift(new ENCasualDateParser());
-    option.parsers.unshift(new ENCasualTimeParser());
-    option.parsers.unshift(new ENMonthNameParser());
-    option.parsers.unshift(new ENRelativeDateFormatParser());
-    option.parsers.unshift(new ENTimeUnitCasualRelativeFormatParser());
+    option.parsers.unshift(new ITCasualDateParser());
+    option.parsers.unshift(new ITCasualTimeParser());
+    option.parsers.unshift(new ITMonthNameParser());
+    option.parsers.unshift(new ITRelativeDateFormatParser());
+    option.parsers.unshift(new ITTimeUnitCasualRelativeFormatParser());
     return option;
 }
 
@@ -82,17 +80,17 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
-                new ENTimeUnitWithinFormatParser(),
-                new ENMonthNameLittleEndianParser(),
-                new ENMonthNameMiddleEndianParser(),
-                new ENWeekdayParser(),
-                new ENCasualYearMonthDayParser(),
-                new ENSlashMonthFormatParser(),
-                new ENTimeExpressionParser(strictMode),
-                new ENTimeUnitAgoFormatParser(strictMode),
-                new ENTimeUnitLaterFormatParser(strictMode),
+                new ITTimeUnitWithinFormatParser(),
+                new ITMonthNameLittleEndianParser(),
+                new ITMonthNameMiddleEndianParser(),
+                new ITWeekdayParser(),
+                new ITCasualYearMonthDayParser(),
+                new ITSlashMonthFormatParser(),
+                new ITTimeExpressionParser(strictMode),
+                new ITTimeUnitAgoFormatParser(strictMode),
+                new ITTimeUnitLaterFormatParser(strictMode),
             ],
-            refiners: [new ENMergeRelativeDateRefiner(), new ENMergeDateTimeRefiner(), new ENMergeDateRangeRefiner()],
+            refiners: [new ITMergeRelativeDateRefiner(), new ITMergeDateTimeRefiner(), new ITMergeDateRangeRefiner()],
         },
         strictMode
     );

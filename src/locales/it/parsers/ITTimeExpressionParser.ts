@@ -3,7 +3,7 @@ import { ParsingComponents } from "../../../results";
 import { Meridiem } from "../../../index";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 
-export default class ENTimeExpressionParser extends AbstractTimeExpressionParser {
+export default class ITTimeExpressionParser extends AbstractTimeExpressionParser {
     constructor(strictMode) {
         super(strictMode);
     }

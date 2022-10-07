@@ -7,7 +7,7 @@ import * as references from "../../../common/casualReferences";
 
 const PATTERN = /(ora|oggi|stasera|questa sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
 
-export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
         return PATTERN;
     }

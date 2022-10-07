@@ -13,7 +13,7 @@ const PATTERN = new RegExp(
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 2;
 
-export default class ENRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -23,13 +23,13 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (modifier == "prossimo" || modifier.startsWith("dopo")) {
+        if (modifier == "prossimo" || modifier == "prossima" || modifier.startsWith("dopo")) {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
-        if (modifier == "prima" || modifier == "precedente") {
+        if (modifier == "prima" || modifier == "precedente" || modifier == "scorso" || modifier == "scorsa") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);

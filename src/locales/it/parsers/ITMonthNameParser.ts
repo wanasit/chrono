@@ -16,47 +16,38 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const PREFIX_GROUP = 1;
 const MONTH_NAME_GROUP = 2;
 const YEAR_GROUP = 3;
 
 /**
  * The parser for parsing month name and year.
- * - January, 2012
- * - January 2012
- * - January
- * (in) Jan
+ * - gennaio, 2012
+ * - gennaio 2012
+ * - gennaio
+ * (a) gen
  */
-export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChecking {
+
+export default class ITMonthNameParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const monthName = match[MONTH_NAME_GROUP].toLowerCase();
+        const components = context.createParsingComponents();
+        components.imply("day", 1);
 
-        // skip some unlikely words "jan", "mar", ..
-        if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
-            return null;
-        }
-
-        const result = context.createParsingResult(
-            match.index + (match[PREFIX_GROUP] || "").length,
-            match.index + match[0].length
-        );
-        result.start.imply("day", 1);
-
+        const monthName = match[MONTH_NAME_GROUP];
         const month = MONTH_DICTIONARY[monthName];
-        result.start.assign("month", month);
+        components.assign("month", month);
 
         if (match[YEAR_GROUP]) {
             const year = parseYear(match[YEAR_GROUP]);
-            result.start.assign("year", year);
+            components.assign("year", year);
         } else {
             const year = findYearClosestToRef(context.refDate, 1, month);
-            result.start.imply("year", year);
+            components.imply("year", year);
         }
 
-        return result;
+        return components;
     }
 }

@@ -7,7 +7,7 @@ import { reverseTimeUnits } from "../../../utils/timeunits";
 const PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}(?:fa|prima|precedente)(?=(?:\\W|$))`, "i");
 const STRICT_PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}fa(?=(?:\\W|$))`, "i");
 
-export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITTimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor(private strictMode: boolean) {
         super();
     }

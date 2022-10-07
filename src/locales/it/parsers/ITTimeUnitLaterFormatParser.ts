@@ -11,7 +11,7 @@ const PATTERN = new RegExp(
 const STRICT_PATTERN = new RegExp("" + "(" + TIME_UNITS_PATTERN + ")" + "(dopo|più tardi)" + "(?=(?:\\W|$))", "i");
 const GROUP_NUM_TIMEUNITS = 1;
 
-export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor(private strictMode: boolean) {
         super();
     }
