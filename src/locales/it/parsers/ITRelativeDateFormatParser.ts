@@ -6,7 +6,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(questo|ultimo|scorso|prossimo|dopo\\s*questo|questa|ultima|scorsa|prossima\\s*questa)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)",
+    `(quest\\w*?|ultim\\w*?|scors\\w*?|prossim\\w*?|dopo\\s*quest\\w*?)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)",
     "i"
 );
 

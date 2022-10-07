@@ -7,18 +7,21 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*` +
-        "(?:" +
-        "(?:al|\\-|\\alle|\\del|\\s)\\s*" +
-        `(${ORDINAL_NUMBER_PATTERN})\\s*` +
+    "(?:il\\s*?)?" +
+        `(${ORDINAL_NUMBER_PATTERN})` +
+        "(?:\\s*" +
+        "(?:tot|\\-|\\–|\\w*?al|\\w*?ino\\sa\\w*?|\\s)\\s*" +
+        `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
+        "(?:-|/|\\s*(?:di)?\\s*)" +
+        "(" +
+        matchAnyPattern(MONTH_DICTIONARY) +
+        ")" +
         "(?:" +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${YEAR_PATTERN})` +
+        "(?:-|/|,?\\s*)" +
+        `(${YEAR_PATTERN}(?![^\\s]\\d))` +
         ")?" +
-        "(?=\\W|$)(?!\\:\\d)",
+        "(?=\\W|$)",
     "i"
 );
 

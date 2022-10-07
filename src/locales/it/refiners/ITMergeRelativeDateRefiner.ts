@@ -8,7 +8,7 @@ function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
 }
 
 function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
-    return result.text.match(/\s+(dopo|dal|fino)$/i) != null;
+    return result.text.match(/\s+(dopo|dal|\\w*?ino)$/i) != null;
 }
 
 /**
@@ -16,7 +16,7 @@ function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
  * - 2 weeks before 2020-02-13
  * - 2 days after next Friday
  */
-export default class ENMergeRelativeDateRefiner extends MergingRefiner {
+export default class ITMergeRelativeDateRefiner extends MergingRefiner {
     patternBetween(): RegExp {
         return /^\s*$/i;
     }

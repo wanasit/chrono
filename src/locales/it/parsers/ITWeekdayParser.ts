@@ -7,11 +7,13 @@ import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
-        "(?:il|lo|l'|la\\s*?)?" +
+        "(?:(il|l\\.*?)\\s*?)?" +
         "(?:(questo|ultimo|scorso|prossimo)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(di questa|dell'ultima|della scorsa|della prossima)\\s*settimana)?" +
+        "(?:\\s*(?:di|dell\\.*?|\\,|\\)|\\） ))?" +
+        "(?:\\s*(questa|ultima|scorsa|prossima))?" + 
+        "(?:\\s*(settimana)?" +
+        "(?:\\s*(scorsa|prossima|successiva))?" +
         "(?=\\W|$)",
     "i"
 );
@@ -35,11 +37,11 @@ export default class ITWeekdayParser extends AbstractParserWithWordBoundaryCheck
         modifierWord = modifierWord.toLowerCase();
 
         let modifier = null;
-        if (modifierWord == "ultima" || modifierWord == "scorsa") {
+        if (modifierWord == "ultimo" || modifierWord == "ultima" ||modifierWord == "scorso" || modifierWord == "scorsa") {
             modifier = "last";
-        } else if (modifierWord == "prossima") {
+        } else if (modifierWord == "prossimo" || modifierWord == "prossima"||  modifierWord == "successivo" ||  modifierWord == "successiva") {
             modifier = "next";
-        } else if (modifierWord == "questa") {
+        } else if (modifierWord == "questo" || modifierWord == "questa") {
             modifier = "this";
         }
 

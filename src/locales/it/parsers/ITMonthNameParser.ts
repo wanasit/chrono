@@ -6,8 +6,7 @@ import { YEAR_PATTERN, parseYear } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `((?:in)\\s*)?` +
-        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `\\s*` +
         `(?:` +
         `[,-]?\\s*(${YEAR_PATTERN})?` +
@@ -16,8 +15,8 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const MONTH_NAME_GROUP = 2;
-const YEAR_GROUP = 3;
+const MONTH_NAME_GROUP = 1;
+const YEAR_GROUP = 2;
 
 /**
  * The parser for parsing month name and year.

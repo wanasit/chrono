@@ -4,11 +4,18 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:dopo|più tardi|da adesso|avanti|oltre|a seguire)` + "(?=(?:\\W|$))",
+    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:dopo|più\\s*tardi|da\\s*adesso|avanti|oltre|a\\s*seguire)` +
+    "(?=(?:\\W|$))",
     "i"
 );
 
-const STRICT_PATTERN = new RegExp("" + "(" + TIME_UNITS_PATTERN + ")" + "(dopo|più tardi)" + "(?=(?:\\W|$))", "i");
+const STRICT_PATTERN = new RegExp(
+    "" +
+    "(" + TIME_UNITS_PATTERN + ")" +
+    "(dopo|più\\s*tardi|da\\s*adesso)" + 
+    "(?=(?:\\W|$))",
+    "i"
+);
 const GROUP_NUM_TIMEUNITS = 1;
 
 export default class ITTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {

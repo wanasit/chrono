@@ -8,31 +8,30 @@ export default class ITTimeExpressionParser extends AbstractTimeExpressionParser
         super(strictMode);
     }
 
-    followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|to|\\?)\\s*";
+    primaryPrefix(): string {
+        return "(?:(?:\\w*?alle)\\s*)??";
     }
 
-    primaryPrefix(): string {
-        return "(?:(?:alle|dalle)\\s*)??";
+    followingPhase(): string {
+        return "\\s*(?:\\-|\\–|a\\w*|\\w*?ino\\s*a\\w*|\\?)\\s*";
     }
+
 
     primarySuffix(): string {
-        return "(?:\\s*(?:o\\W*in punto|alle\\s*sera|in\\s*del\\s*(?:mattina|pomeriggio)))?(?!/)(?=\\W|$)";
+        return "(?:\\s*(?:in\\s*punto|di\\s*sera|del\\w*\\s*(?:mattin\\w*?|pomeriggio|sera|notte))?(?!/)(?=\\W|$)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
         const components = super.extractPrimaryTimeComponents(context, match);
         if (components) {
-            if (match[0].endsWith("sera")) {
+            if (match[0].endsWith("mattina")) {
+                components.assign("meridiem", Meridiem.AM);
                 const hour = components.get("hour");
-                if (hour >= 6 && hour < 12) {
-                    components.assign("hour", components.get("hour") + 12);
-                    components.assign("meridiem", Meridiem.PM);
-                } else if (hour < 6) {
-                    components.assign("meridiem", Meridiem.AM);
+                if (hour >= 4 && hour < 12) {
+                    components.assign("hour", components.get("hour"));
                 }
             }
-
+            
             if (match[0].endsWith("pomeriggio")) {
                 components.assign("meridiem", Meridiem.PM);
                 const hour = components.get("hour");
@@ -41,13 +40,24 @@ export default class ITTimeExpressionParser extends AbstractTimeExpressionParser
                 }
             }
 
-            if (match[0].endsWith("mattina")) {
-                components.assign("meridiem", Meridiem.AM);
+            if (match[0].endsWith("sera")) {
+                components.assign("meridiem", Meridiem.PM);
                 const hour = components.get("hour");
-                if (hour < 12) {
-                    components.assign("hour", components.get("hour"));
+                if (hour >= 6 && hour < 12) {
+                    components.assign("hour", components.get("hour") + 12);
                 }
             }
+
+            if (match[0].endsWith("notte")) {
+                const hour = components.get("hour");
+                if (hour >= 12) {
+                    components.assign("hour", components.get("hour") + 12);
+                    components.assign("meridiem", Meridiem.PM);
+                } else if (hour < 4) {
+                    components.assign("meridiem", Meridiem.AM);
+                }
+            }
+
         }
 
         return components;

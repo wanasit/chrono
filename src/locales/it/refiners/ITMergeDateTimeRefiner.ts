@@ -6,8 +6,8 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  * - 2020-02-13 [at] 6pm
  * - Tomorrow [after] 7am
  */
-export default class ENMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
+export default class ITMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(T|alle|dopo|prima|il|di|del|delle|,|-)?\\s*$");
+        return new RegExp("^\\s*(alle|dopo\\s*l\\.*?|prima\\sdel\\.*|dal\\.*|di|il|,|-)?\\s*$");
     }
 }
