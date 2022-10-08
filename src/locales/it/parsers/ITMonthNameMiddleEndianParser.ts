@@ -7,10 +7,10 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    "(?:il\\s*?)?" +
+    "(?:il\\s*?|dal\\.*)?" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         "(?:\\s*" +
-        "(?:tot|\\-|\\–|\\w*?al|\\w*?ino\\sa\\w*?|\\s)\\s*" +
+        "(?:tot|\\-|\\–|\\w*?al|\\w*?ino\\s*a\\w*?|\\s)\\s*" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
         "(?:-|/|\\s*(?:di)?\\s*)" +
