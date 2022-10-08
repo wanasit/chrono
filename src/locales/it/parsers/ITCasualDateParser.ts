@@ -5,11 +5,9 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /(ora|oggi|stasera|questa\s*sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
-
 export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return PATTERN;
+        return /(ora|oggi|stasera|questa\s*sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
@@ -38,7 +36,7 @@ export default class ITCasualDateParser extends AbstractParserWithWordBoundaryCh
             default:
                 if (lowerText.match(/ieri\s*sera/)) {
                     if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "giorno");
+                        targetDate = targetDate.add(-1, "day");
                     }
 
                     assignSimilarDate(component, targetDate);

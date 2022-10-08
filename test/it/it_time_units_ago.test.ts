@@ -34,8 +34,7 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("15 minuti fa");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
-
+       
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
 
@@ -45,8 +44,7 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("15 minuti prima");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
-
+       
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
     // 15 minute before
@@ -55,7 +53,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("15 minuti prima delle");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
@@ -66,8 +63,7 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("12 ore fa");
         expect(result.start.get("hour")).toBe(0);
         expect(result.start.get("minute")).toBe(14);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
-
+    
         expect(result.start).toBeDate(new Date(2012, 7, 10, 0, 14));
     });
 
@@ -77,7 +73,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("1 ora fa");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(14);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
 
     // 1h ago
@@ -86,7 +81,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("1 h fa");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(14);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
 
     // half an hour ago
@@ -95,8 +89,7 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("mezz'ora fa");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(44);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
-
+ 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 44));
     });
 
@@ -106,8 +99,7 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("12 ore fa");
         expect(result.start.get("hour")).toBe(0);
         expect(result.start.get("minute")).toBe(14);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
-
+ 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 0, 14));
     });
 
@@ -118,7 +110,6 @@ test("Test - Single Expression", function () {
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(13);
         expect(result.start.get("second")).toBe(48);
-        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 13, 48));
     });
@@ -130,7 +121,6 @@ test("Test - Single Expression", function () {
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(13);
         expect(result.start.get("second")).toBe(57);
-        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 13, 57));
     });
@@ -154,7 +144,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("mezz'Ora fa");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(44);
-        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 44));
     });
@@ -178,14 +167,13 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("un min prima delle");
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(13);
-        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 13));
     });
 });
 
-test("Test - Single Expression (Casual)", function ()
-    // 5 months ago, we did something {
+test("Test - Single Expression (Casual)", function () {
+    // 5 months ago, we did something 
     testSingleCase(chrono, "5 mesi fa, abbiamo fatto qualcosa", new Date(2012, 10 - 1, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);

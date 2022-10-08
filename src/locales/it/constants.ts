@@ -150,7 +150,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|un|un'|una|metà|mezz'|mezza|paio)`;
+)}|[0-9]+|[0-9]+[\\.,][0-9]+|un|un'|una|metà|mezz'|mezza|paio)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
@@ -163,8 +163,8 @@ export function parseNumberPattern(match: string): number {
     } else if (num.match(/paio/)) {
         return 2;
     }
-
-    return parseFloat(num);
+    // Replace "," with "." to support some European languages
+    return parseFloat(num.replace(",", "."));
 }
 
 //-----------------------------
@@ -209,10 +209,10 @@ export function parseYear(match: string): number {
 
 //-----------------------------
 
-const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:circa|intorno)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:circa|intorno)\\s*)?`, SINGLE_TIME_UNIT_PATTERN);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};
