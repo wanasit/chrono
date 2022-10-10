@@ -1,26 +1,24 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { WEEKDAY_DICTIONARY } from "../constants";
+import { WEEKDAY_DICTIONARY } from "../../it/constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { toDayJSWeekday } from "../../../calculation/weeks";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
-        "(?:(il|l\\.*?)\\s*?)?" +
-        "(?:(questo|ultimo|scorso|prossimo)\\s*)?" +
+        "(?:(questo|l\\.*?ultim\\w*?|l\\w*?\\s*?scors\\w*?|\\w{0,2}\\s*?prossim\\w*?)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s*(?:di|dell\\.*?|\\,|\\)|\\） ))?" +
-        "(?:\\s*(questa|ultima|scorsa|prossima))?" + 
-        "(?:\\s*(settimana)?" +
-        "(?:\\s*(scorsa|prossima|successiva))?" +
+        "(?:\\s*(di\\s*quest\\w*?|dell\\.*?\\s*ultim\\w*?|dell\\w*?\\s*scors\\w*?|dell\\w*?\\s*prossim\\w*?)\\s*(settiman\\w*?))?" +
+        //"(?:\\s*(dell\\w*?\\s*settiman\\w*?\\s*(scors\\w*?|prossim\\w*?|successiv\\w*?))?" +
         "(?=\\W|$)",
     "i"
 );
 
 const PREFIX_GROUP = 1;
 const WEEKDAY_GROUP = 2;
-const POSTFIX_GROUP = 3;
+const DENOTATIVE_GROUP = 3;
+const CONNOTATIVE_GROUP = 4;
 
 export default class ITWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -31,17 +29,18 @@ export default class ITWeekdayParser extends AbstractParserWithWordBoundaryCheck
         const dayOfWeek = match[WEEKDAY_GROUP].toLowerCase();
         const offset = WEEKDAY_DICTIONARY[dayOfWeek];
         const prefix = match[PREFIX_GROUP];
-        const postfix = match[POSTFIX_GROUP];
-        let modifierWord = prefix || postfix;
+        const denotative = match[DENOTATIVE_GROUP];
+        const connotative = match[CONNOTATIVE_GROUP];
+        let modifierWord = prefix || denotative || connotative;
         modifierWord = modifierWord || "";
         modifierWord = modifierWord.toLowerCase();
 
         let modifier = null;
-        if (modifierWord == "ultimo" || modifierWord == "ultima" ||modifierWord == "scorso" || modifierWord == "scorsa") {
+        if (modifierWord == "ultimo" ||modifierWord == "ultima" || modifierWord == "ultime" || modifierWord == "scorso" || modifierWord == "scorsa" || modifierWord == "scorse") {
             modifier = "last";
-        } else if (modifierWord == "prossimo" || modifierWord == "prossima"||  modifierWord == "successivo" ||  modifierWord == "successiva") {
+        } else if (modifierWord == "prossimo" ||modifierWord == "prossima" || modifierWord == "prossime" ||  modifierWord == "successiva" ||  modifierWord == "successive") {
             modifier = "next";
-        } else if (modifierWord == "questo" || modifierWord == "questa") {
+        } else if (modifierWord == "questo" || modifierWord == "questa" || modifierWord == "queste") {
             modifier = "this";
         }
 

@@ -3,7 +3,7 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Single Expression", function () {
     // 5 days ago, we did something
-    testSingleCase(chrono, "5 giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.it, "5 giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
@@ -16,7 +16,7 @@ test("Test - Single Expression", function () {
     });
 
     // 10 days ago, we did something
-    testSingleCase(chrono, "10 giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.it, "10 giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(7);
@@ -29,7 +29,7 @@ test("Test - Single Expression", function () {
     });
 
     // 15 minute ago
-    testSingleCase(chrono, "15 minuti fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "15 minuti fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("15 minuti fa");
         expect(result.start.get("hour")).toBe(11);
@@ -39,7 +39,7 @@ test("Test - Single Expression", function () {
     });
 
     // 15 minute earlier
-    testSingleCase(chrono, "15 minuti prima", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "15 minuti prima", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("15 minuti prima");
         expect(result.start.get("hour")).toBe(11);
@@ -48,9 +48,9 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 11, 59));
     });
     // 15 minute before
-    testSingleCase(chrono, "15 minuti prima delle", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "15 minuti prima", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("15 minuti prima delle");
+        expect(result.text).toBe("15 minuti prima");
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
 
@@ -58,7 +58,7 @@ test("Test - Single Expression", function () {
     });
 
     // 12 hours ago
-    testSingleCase(chrono, "   12 ore fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "   12 ore fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe("12 ore fa");
         expect(result.start.get("hour")).toBe(0);
@@ -68,7 +68,7 @@ test("Test - Single Expression", function () {
     });
 
     // 1 hour ago
-    testSingleCase(chrono, "1 ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "1 ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("1 ora fa");
         expect(result.start.get("hour")).toBe(11);
@@ -76,7 +76,7 @@ test("Test - Single Expression", function () {
     });
 
     // 1h ago
-    testSingleCase(chrono, "1 h fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "1 h fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("1 h fa");
         expect(result.start.get("hour")).toBe(11);
@@ -84,7 +84,7 @@ test("Test - Single Expression", function () {
     });
 
     // half an hour ago
-    testSingleCase(chrono, "   mezz'ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "   mezz'ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe("mezz'ora fa");
         expect(result.start.get("hour")).toBe(11);
@@ -94,7 +94,7 @@ test("Test - Single Expression", function () {
     });
 
     // 12 hours ago I did something
-    testSingleCase(chrono, "12 ore fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "12 ore fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("12 ore fa");
         expect(result.start.get("hour")).toBe(0);
@@ -104,7 +104,7 @@ test("Test - Single Expression", function () {
     });
 
     // 12 seconds ago I did something
-    testSingleCase(chrono, "12 secondi fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "12 secondi fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("12 secondi fa");
         expect(result.start.get("hour")).toBe(12);
@@ -115,7 +115,7 @@ test("Test - Single Expression", function () {
     });
 
     // three seconds ago I did something
-    testSingleCase(chrono, "tre secondi fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "tre secondi fa ho fatto qualcosa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("tre secondi fa");
         expect(result.start.get("hour")).toBe(12);
@@ -126,7 +126,7 @@ test("Test - Single Expression", function () {
     });
 
     // 5 Days ago, we did something
-    testSingleCase(chrono, "5 Giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.it, "5 Giorni fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
@@ -139,7 +139,7 @@ test("Test - Single Expression", function () {
     });
 
     // half An hour ago
-    testSingleCase(chrono, "   mezz'Ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "   mezz'Ora fa", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(3);
         expect(result.text).toBe("mezz'Ora fa");
         expect(result.start.get("hour")).toBe(11);
@@ -149,22 +149,22 @@ test("Test - Single Expression", function () {
     });
 
     // A days ago, we did something
-    testSingleCase(chrono, "Un giorno fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.it, "Un giorno fa, abbiamo fatto qualcosa", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(9);
 
         expect(result.index).toBe(0);
-        expect(result.text).toBe("A days ago");
+        expect(result.text).toBe("Un giorno fa");
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 9));
     });
 
     // a min before
-    testSingleCase(chrono, "un min prima delle", new Date(2012, 7, 10, 12, 14), (result) => {
+    testSingleCase(chrono.it, "un min prima delle", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("un min prima delle");
+        expect(result.text).toBe("un min prima");
         expect(result.start.get("hour")).toBe(12);
         expect(result.start.get("minute")).toBe(13);
 
@@ -174,7 +174,7 @@ test("Test - Single Expression", function () {
 
 test("Test - Single Expression (Casual)", function () {
     // 5 months ago, we did something 
-    testSingleCase(chrono, "5 mesi fa, abbiamo fatto qualcosa", new Date(2012, 10 - 1, 10), (result) => {
+    testSingleCase(chrono.it, "5 mesi fa, abbiamo fatto qualcosa", new Date(2012, 10 - 1, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(5);
@@ -187,7 +187,7 @@ test("Test - Single Expression (Casual)", function () {
     });
 
     // 5 years ago, we did something
-    testSingleCase(chrono, "5 anni fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 10), (result) => {
+    testSingleCase(chrono.it, "5 anni fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2007);
         expect(result.start.get("month")).toBe(8);
@@ -200,7 +200,7 @@ test("Test - Single Expression (Casual)", function () {
     });
 
     // a week ago, we did something
-    testSingleCase(chrono, "una settimana fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 3), (result) => {
+    testSingleCase(chrono.it, "una settimana fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 3), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(7);
@@ -213,30 +213,23 @@ test("Test - Single Expression (Casual)", function () {
     });
 
     // a couple of days ago, we did something
-    testSingleCase(chrono, "qualche giorno fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 3), (result) => {
+    testSingleCase(chrono.it, "un paio di giorni fa, abbiamo fatto qualcosa", new Date(2012, 8 - 1, 3), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(7);
         expect(result.start.get("day")).toBe(31);
 
         expect(result.index).toBe(0);
-        expect(result.text).toBe("qualche giorno");
+        expect(result.text).toBe("un paio di giorni fa");
 
         expect(result.start).toBeDate(new Date(2012, 7 - 1, 31));
     });
 });
 
 test("Test - Nested time ago", function () {
-    // 15 hours 29 min ago
-    testSingleCase(chrono, "15 ore 29 min fa", new Date(2012, 7, 10, 22, 30), (result) => {
-        expect(result.text).toBe("15 ore 29 min fa");
-        expect(result.start.get("day")).toBe(10);
-        expect(result.start.get("hour")).toBe(7);
-        expect(result.start.get("minute")).toBe(1);
-    });
-    
+
     // 1 day 21 hours ago
-    testSingleCase(chrono, "1 giorno 21 ore fa ", new Date(2012, 7, 10, 22, 30), (result) => {
+    testSingleCase(chrono.it, "1 giorno 21 ore fa ", new Date(2012, 7, 10, 22, 30), (result) => {
         expect(result.text).toBe("1 giorno 21 ore fa");
         expect(result.start.get("day")).toBe(9);
         expect(result.start.get("hour")).toBe(1);
@@ -244,15 +237,22 @@ test("Test - Nested time ago", function () {
     });
 
     // 3 min 49 sec ago
-    testSingleCase(chrono, "3 min 49 sec fa ", new Date(2012, 7, 10, 22, 30), (result) => {
+    testSingleCase(chrono.it, "3 min 49 sec fa ", new Date(2012, 7, 10, 22, 30), (result) => {
         expect(result.text).toBe("3 min 49 sec fa");
         expect(result.start.get("day")).toBe(10);
         expect(result.start.get("hour")).toBe(22);
         expect(result.start.get("minute")).toBe(26);
         expect(result.start.get("second")).toBe(11);
     });
-});
 
+    // 15 hours 29 min ago
+    testSingleCase(chrono.it, "15 ore 29 min fa", new Date(2012, 7, 10, 22, 30), (result) => {
+        expect(result.text).toBe("15 ore 29 min fa");
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(7);
+        expect(result.start.get("minute")).toBe(1);
+    });
+});
 test("Test - Negative cases", function () {
     testUnexpectedResult(chrono, "15 ore 29 min");
     testUnexpectedResult(chrono, "qualche ora fa");

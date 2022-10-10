@@ -44,7 +44,7 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
     "feb.": 2,
     febb: 2,
     "febb.": 2,
-    mar: 3,
+    marz: 3,
     "mar.": 3,
     apr: 4,
     "apr.": 4,
@@ -68,7 +68,6 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
     nov: 11,
     "nov.": 11,
     dic: 12,
-    dice: 12,
     "dic.": 12,
 };
 
@@ -85,6 +84,25 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     dieci: 10,
     undici: 11,
     dodici: 12,
+    tredici: 13,
+    quattordici: 14,
+    quindici: 15,
+    sedici: 16,
+    diciassette: 17,
+    diciotto: 18,
+    diciannove: 19,
+    venti: 20,
+    ventuno: 21,
+    ventidue: 22,
+    ventitre: 23,
+    ventiquattro: 24,
+    venticinque: 25,
+    ventisei: 26,
+    ventisette: 27,
+    ventotto: 28,
+    ventinove: 29,
+    trenta: 30,
+    trentuno: 31,
 };
 
 export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
@@ -150,7 +168,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+[\\.,][0-9]+|un|un'|una|metà|mezz'|mezza|paio)`;
+)}|[0-9]+|[0-9]+[\\.,][0-9]+|un\\.*?|metà|mezza|mezz'|un\\s*paio\\s*d\\.*)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
@@ -160,16 +178,17 @@ export function parseNumberPattern(match: string): number {
         return 1;
     } else if (num === "metà" || num === "mezz'" || num === "mezza") {
         return 0.5;
-    } else if (num.match(/paio/)) {
+    } else if (num === "un paio di" || num === "un paio d'" ) {
         return 2;
     }
     // Replace "," with "." to support some European languages
-    return parseFloat(num.replace(",", "."));
+    //return parseFloat(num.replace(",", "."));
 }
 
 //-----------------------------
 
-export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:°)?)`;
+export const ORDINAL_NUMBER_PATTERN = `(?:primo|[0-9]{1,2}(?:°)?)`;
+
 export function parseOrdinalNumberPattern(match: string): number {
     let num = match.toLowerCase();
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
@@ -212,7 +231,7 @@ export function parseYear(match: string): number {
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:circa|intorno)\\s*)?`, SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:tra\\s*le|circa\\s*?alle|per\\s*?le)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};

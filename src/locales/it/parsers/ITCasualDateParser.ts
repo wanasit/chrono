@@ -7,7 +7,7 @@ import * as references from "../../../common/casualReferences";
 
 export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(ora|oggi|stasera|questa\s*sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
+        return /(ora|oggi|stasera|questa sera|domani|dmn|ieri sera)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {

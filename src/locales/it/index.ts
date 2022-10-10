@@ -14,8 +14,6 @@ import ITMergeDateTimeRefiner from "./refiners/ITMergeDateTimeRefiner";
 import ITCasualDateParser from "./parsers/ITCasualDateParser";
 import ITCasualTimeParser from "./parsers/ITCasualTimeParser";
 import ITTimeUnitWithinFormatParser from "./parsers/ITTimeUnitWithinFormatParser";
-import ITMonthNameLittleEndianParser from "./parsers/ITMonthNameLittleEndianParser";
-import ITMonthNameMiddleEndianParser from "./parsers/ITMonthNameMiddleEndianParser";
 import ITMonthNameParser from "./parsers/ITMonthNameParser";
 import ITCasualYearMonthDayParser from "./parsers/ITCasualYearMonthDayParser";
 import ITSlashMonthFormatParser from "./parsers/ITSlashMonthFormatParser";
@@ -25,21 +23,18 @@ import ITTimeUnitLaterFormatParser from "./parsers/ITTimeUnitLaterFormatParser";
 import ITRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
 import ITTimeUnitCasualRelativeFormatParser from "./parsers/ITTimeUnitCasualRelativeFormatParser";
 import ITWeekdayParser from "./parsers/ITWeekdayParser";
+import ITMonthNameLittleEndianParser from "./parsers/ITMonthNameLittleEndianParser";
 
 /**
- * Chrono object configured for parsing *casual* Italian
+ * Chrono object configured for parsing *casual* and *strict* Italian
  */
-export const casual = new Chrono(createCasualConfiguration(false));
-
-/**
- * Chrono object configured for parsing *strict* Italian
- */
-export const strict = new Chrono(createConfiguration(true, false));
+export const casual = new Chrono(createCasualConfiguration());
+export const strict = new Chrono(createConfiguration(true));
 
 /**
  * Chrono object configured for parsing Italian
  */
-export const GB = new Chrono(createConfiguration(false, true));
+export const IT = new Chrono(createConfiguration(false, true));
 
 /**
  * A shortcut for it.casual.parse()
@@ -59,7 +54,7 @@ export function parseDate(text: string, ref?: Date, option?: ParsingOption): Dat
  * Create a default *casual* {@Link Configuration} for Italian chrono.
  * It calls {@Link createConfiguration} and includes additional parsers.
  */
-export function createCasualConfiguration(littleEndian = false): Configuration {
+export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.unshift(new ITCasualDateParser());
     option.parsers.unshift(new ITCasualTimeParser());
@@ -75,14 +70,13 @@ export function createCasualConfiguration(littleEndian = false): Configuration {
  * @param strictMode If the timeunit mentioning should be strict, not casual
  * @param littleEndian If format should be date-first/littleEndian (e.g. en_UK), not month-first/middleEndian (e.g. en_US)
  */
-export function createConfiguration(strictMode = true, littleEndian = false): Configuration {
+export function createConfiguration(strictMode = true, littleEndian = true): Configuration {
     return includeCommonConfiguration(
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
                 new ITTimeUnitWithinFormatParser(),
                 new ITMonthNameLittleEndianParser(),
-                new ITMonthNameMiddleEndianParser(),
                 new ITWeekdayParser(),
                 new ITCasualYearMonthDayParser(),
                 new ITSlashMonthFormatParser(),

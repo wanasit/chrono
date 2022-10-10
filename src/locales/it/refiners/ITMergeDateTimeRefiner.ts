@@ -8,6 +8,6 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  */
 export default class ITMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(alle|dopo\\s*l\\.*?|prima\\sdel\\.*|dal\\.*|di|il|,|-)?\\s*$");
+        return new RegExp("^\\s*(alle|dopo\\s*l\\.*?|prima\\s*del\\.*|dal\\.*|di|il|,|-)?\\s*$");
     }
 }

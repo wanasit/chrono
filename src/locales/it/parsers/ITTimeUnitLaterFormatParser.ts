@@ -4,7 +4,7 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:dopo|più\\s*tardi|da\\s*adesso|avanti|oltre|a\\s*seguire)` +
+    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:dopo|più\\s*tardi|da\\s*adesso|avanti|oltre|a\\s*seguire)`+
     "(?=(?:\\W|$))",
     "i"
 );

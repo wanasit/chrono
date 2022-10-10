@@ -12,6 +12,6 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  */
 export default class ITMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
     patternBetween(): RegExp {
-        return /^\s*(a\\.*|-)\s*$/i;
+        return /^\s*(all'|-)\s*$/i;
     }
 }

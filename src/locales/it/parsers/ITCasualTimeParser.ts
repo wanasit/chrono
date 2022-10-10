@@ -9,14 +9,14 @@ const MOMENT_GROUP = 2;
 
 export default class ITCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:quest\\w*?)?\s*(mattina|pomeriggio|sera|notte|mezzanotte|mezzogiorno)(?=\W|$)/i;;
+        return /(quest\w*?)?\s*(mattina|pomeriggio|sera|notte|mezzanotte|mezzogiorno)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const targetDate = dayjs(context.refDate);
         const component = context.createParsingComponents();
         
-        if (match[DAY_GROUP] === "deze") {
+        if (match[DAY_GROUP] === "questo" || match[DAY_GROUP] === "questa") {
             component.assign("day", context.refDate.getDate());
             component.assign("month", context.refDate.getMonth() + 1);
             component.assign("year", context.refDate.getFullYear());

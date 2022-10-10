@@ -1,6 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
-import ENTimeExpressionParser from "../../src/locales/it/parsers/ITTimeExpressionParser";
+import ITTimeExpressionParser from "../../src/locales/it/parsers/ITTimeExpressionParser";
 import { Meridiem } from "../../src";
 
 test("Test - Date + Time Expression", function () {
@@ -9,23 +9,6 @@ test("Test - Date + Time Expression", function () {
 
         expect(result.start).toBeDate(new Date(2014, 4 - 1, 18, 13));
         expect(result.end).toBeDate(new Date(2014, 4 - 1, 18, 16));
-    });
-});
-
-test("Test - Time Expression", function () {
-    testSingleCase(chrono, "tra le 15:30-16:30", new Date(2020, 7 - 1, 6), (result) => {
-        expect(result.text).toBe("15:30-16:30");
-
-        expect(result.start).toBeDate(new Date(2020, 7 - 1, 6, 15, 30));
-        expect(result.end).toBeDate(new Date(2020, 7 - 1, 6, 16, 30));
-    });
-
-    testSingleCase(chrono, "4:00 GMT", new Date(2020, 7 - 1, 6), (result) => {
-        expect(result.text).toBe("4:00 GMT");
-
-        expect(result.start.get("hour")).toBe(9);
-        expect(result.start.get("minute")).toBe(0);
-        expect(result.start.get("timezoneOffset")).toBe(-480);
     });
 });
 
@@ -56,8 +39,8 @@ test("Test - Random text", function () {
         expect(result.text).toBe("02.07.2013");
     });
 
-    testSingleCase(chrono, "174 1 Novembre 2001-31 Marzo 2002", (result) => {
-        expect(result.text).toBe("1 Novembre 2001-31 Marzo 2002");
+    testSingleCase(chrono, "174 1° novembre 2001 - 31 marzo 2002", (result) => {
+        expect(result.text).toBe("1° novembre 2001 - 31 marzo 2002");
     });
 
     testSingleCase(chrono, "...Giovedì, 15 dicembre 2011 la migliore rata disponibile ", (result) => {
@@ -167,13 +150,13 @@ test("Test - Parse multiple date results", function () {
 });
 
 test("Test - Customize by removing time extraction", () => {
-    const custom = chrono.en.casual.clone();
-    custom.parsers = custom.parsers.filter((p) => !(p instanceof ENTimeExpressionParser));
+    const custom = chrono.it.casual.clone();
+    custom.parsers = custom.parsers.filter((p) => !(p instanceof ITTimeExpressionParser));
 
     custom.parse("giovedì ore 9:00");
 
     testSingleCase(custom, "giovedì ore 9:00", new Date(2020, 11 - 1, 29), (result, text) => {
-        expect(result.text).toBe("Thursday");
+        expect(result.text).toBe("giovedì");
         expect(result.start.get("year")).toBe(2020);
         expect(result.start.get("month")).toBe(11);
         expect(result.start.get("day")).toBe(26);

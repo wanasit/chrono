@@ -8,17 +8,16 @@ export default class ITTimeExpressionParser extends AbstractTimeExpressionParser
         super(strictMode);
     }
 
-    primaryPrefix(): string {
-        return "(?:(?:\\w*?alle)\\s*)??";
-    }
-
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|a\\w*|\\w*?ino\\s*a\\w*|\\?)\\s*";
+        return "\\s{0,3}(?:\\-|\\–|e\\s*le|alle|\\w*?ino\\s*alle|\\s*)?\\s{0,3}";
     }
 
+    primaryPrefix(): string {
+        return "(?:(?:dalle|alle)\\s{0,3})??";
+    }
 
     primarySuffix(): string {
-        return "(?:\\s*(?:in\\s*punto|di\\s*sera|del\\w*\\s*(?:mattin\\w*?|pomeriggio|sera|notte))?(?!/)(?=\\W|$)";
+        return "(?:\\s*(?:in\\s*punto|di\\s*sera|del\\w*\\s*mattin\\w*?|del\\s*pomeriggio|della\\s*sera|della\\s*notte))?(?!/)(?=\\W|$)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
@@ -31,7 +30,7 @@ export default class ITTimeExpressionParser extends AbstractTimeExpressionParser
                     components.assign("hour", components.get("hour"));
                 }
             }
-            
+
             if (match[0].endsWith("pomeriggio")) {
                 components.assign("meridiem", Meridiem.PM);
                 const hour = components.get("hour");
