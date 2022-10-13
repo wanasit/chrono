@@ -38,7 +38,7 @@ test("Test erroneous month values", () => {
     expect(chrono.casual.parseDate("02/29/2022 11AM")).toBeNull();
 
     // Failing tests
-    // expect(chrono.casual.parseDate("18/13/2022 11AM")).toStrictEqual(new Date(2022, 18 - 1, 13, 11));
+    expect(chrono.casual.parseDate("18/13/2022 11AM")).toBeNull();
 });
 
 test("Test - Add custom parser", () => {
