@@ -29,6 +29,18 @@ test("Test - Basic parse date functions", function () {
     expect(chrono.casual.parseDate("7:00PM July 5th, 2020")).toStrictEqual(new Date(2020, 7 - 1, 5, 19));
 });
 
+test("Test erroneous month values", () => {
+    // Passes but should be failing
+    expect(chrono.strict.parseDate("15/13/2022 11AM")).toStrictEqual(new Date(2022, 5 - 1, 13, 11));
+    expect(chrono.strict.parseDate("23/13/2022 11AM")).toStrictEqual(new Date(2022, 3 - 1, 13, 11));
+
+    // Day behaviour
+    expect(chrono.casual.parseDate("02/29/2022 11AM")).toBeNull();
+
+    // Failing tests
+    // expect(chrono.casual.parseDate("18/13/2022 11AM")).toStrictEqual(new Date(2022, 18 - 1, 13, 11));
+});
+
 test("Test - Add custom parser", () => {
     const customParser = {
         pattern: () => {
