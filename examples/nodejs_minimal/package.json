@@ -1,0 +1,12 @@
+{
+  "name": "chrono_example",
+  "version": "1.0.0",
+  "description": "Example project for importing chrono",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chrono-node": "2.x"
+  }
+}
