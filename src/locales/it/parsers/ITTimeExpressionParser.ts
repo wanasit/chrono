@@ -9,7 +9,7 @@ export default class ITTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     followingPhase(): string {
-        return "\\s{0,3}(?:\\-|\\–|e\\s*le|alle|\\w*?ino\\s*alle|\\s*)?\\s{0,3}";
+        return "\\s{0,3}(?:\\-|\\–|e\\s*le|\\w*?ino\\s*alle|\\s*)?\\s{0,3}";
     }
 
     primaryPrefix(): string {

@@ -1,14 +1,14 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingResult } from "../../../results";
 import { findYearClosestToRef } from "../../../calculation/years";
-import { MONTH_DICTIONARY } from "../constants";
+import { MONTH_DICTIONARY, NUMBER_PATTERN } from "../constants";
 import { YEAR_PATTERN, parseYear } from "../constants";
 import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    "(?:il\\s{0,3}|dal\\s{0,3}|dall'\\s{0,3})?" +
+    "(?:il\\s{0,3}|l'\\s{0,3}|dal\\s{0,3}|dall'\\s{0,3})?" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         "(?:" +
             "\\s{0,3}?(?:al\\s{0,3}|\\-\\s{0,3}|/|\\w*ino\\s*al\\s{0,3}|\\w*ino\\s*all'\\s{0,3}|all'\\s{0,3})" +

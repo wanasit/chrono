@@ -23,7 +23,7 @@ export default class ITRelativeDateFormatParser extends AbstractParserWithWordBo
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (modifier == "prossimo" || modifier == "prossima" || modifier.startsWith("dopo")) {
+        if (modifier == "prossimo" || modifier == "prossima" ) {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);

@@ -6,8 +6,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 export default class ITTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return new RegExp(
-        "(?:per|più\\s*o\\s*meno|intorno|orientativamente|approssimativamente|verso|circa|tra)\\s*" +
-            "(?:(\\w*le|circa)\\s*?)?" +
+        "(?:per\\s*le|più\\s*o\\s*meno\\s*alle|intorno\\s*alle|circa\\s*alle|fra)\\s*" +
             "(" + TIME_UNITS_PATTERN + ")" +
             "(?:(circa)\\s*?)?" +
             "(?=\\W|$)",
