@@ -180,7 +180,7 @@ chrono.en.parseDate('6/10/2018');
 chrono.ja.parseDate('昭和６４年１月７日'); 
 ```
 
-Current supported locale options are: `en`, `ja`
+Current supported locale options are: `en`, `ja`, `fr`, `nl` and `ru` (`de`, `pt`, and `zh.hant` are partially supported).
 
 ## Customize Chrono
 
