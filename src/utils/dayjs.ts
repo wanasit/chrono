@@ -8,6 +8,12 @@ export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayj
     implySimilarTime(component, targetDayJs);
 }
 
+export function implyTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
+    targetDayJs = targetDayJs.add(1, "day");
+    implySimilarDate(component, targetDayJs);
+    implySimilarTime(component, targetDayJs);
+}
+
 export function assignSimilarDate(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     component.assign("day", targetDayJs.date());
     component.assign("month", targetDayJs.month() + 1);
@@ -24,6 +30,12 @@ export function assignSimilarTime(component: ParsingComponents, targetDayJs: day
     } else {
         component.assign("meridiem", Meridiem.PM);
     }
+}
+
+export function implySimilarDate(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
+    component.imply("day", targetDayJs.date());
+    component.imply("month", targetDayJs.month() + 1);
+    component.imply("year", targetDayJs.year());
 }
 
 export function implySimilarTime(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {

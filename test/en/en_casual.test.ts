@@ -337,6 +337,13 @@ test("Test - Random text", () => {
         expect(result.start.get("day")).toBe(1);
         expect(result.start.get("hour")).toBe(15);
     });
+
+    testSingleCase(chrono.casual, "at midnight on 12th August", new Date(2012, 8 - 1, 10, 15), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+        expect(result.start.get("hour")).toBe(0);
+    });
 });
 
 test("Test - Casual time with timezone", () => {
