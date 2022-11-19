@@ -39,12 +39,13 @@ export default class SlashDateFormatParser implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
-        if (match[OPENING_GROUP] == "/" || match[ENDING_GROUP] == "/") {
-            // Long skip, if there is some overlapping like:
-            // XX[/YY/ZZ]
-            // [XX/YY/]ZZ
-            match.index += match[0].length;
-            return;
+        // Because of how pattern is executed on remaining text in `chrono.ts`, the character before the match could
+        // still be a number (e.g. X[X/YY/ZZ] or XX[/YY/ZZ] or [XX/YY/]ZZ). We want to check and skip them.
+        if (match[OPENING_GROUP].length == 0 && match.index > 0 && match.index < context.text.length) {
+            const previousChar = context.text[match.index - 1];
+            if (previousChar >= "0" && previousChar <= "9") {
+                return;
+            }
         }
 
         const index = match.index + match[OPENING_GROUP].length;

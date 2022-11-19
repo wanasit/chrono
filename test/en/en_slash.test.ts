@@ -168,23 +168,24 @@ test("Test - Splitter variances patterns", function () {
     testWithExpectedDate(chrono, "05-25-2015", expectDate);
     testWithExpectedDate(chrono, "05/25/2015", expectDate);
     testWithExpectedDate(chrono, "05.25.2015", expectDate);
+    testWithExpectedDate(chrono, "/05/25/2015", expectDate);
 
     // Also, guessing ambiguous date
     testWithExpectedDate(chrono, "25/05/2015", expectDate);
 });
 
 test("Test - Impossible Dates and Unexpected Results", function () {
-    testUnexpectedResult(chrono, "8/32/2014", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono, "8/32", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono, "2/29/2014", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono, "2014/22/29", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono, "2014/13/22", new Date(2012, 7, 10));
-
-    testUnexpectedResult(chrono, "80-32-89-89", new Date(2012, 7, 10));
+    testUnexpectedResult(chrono, "8/32/2014");
+    testUnexpectedResult(chrono, "8/32");
+    testUnexpectedResult(chrono, "2/29/2014");
+    testUnexpectedResult(chrono, "2014/22/29");
+    testUnexpectedResult(chrono, "2014/13/22");
+    testUnexpectedResult(chrono, "80-32-89-89");
+    testUnexpectedResult(chrono, "02/29/2022");
+    testUnexpectedResult(chrono, "06/31/2022");
+    testUnexpectedResult(chrono, "06/-31/2022");
+    testUnexpectedResult(chrono, "18/13/2022");
+    testUnexpectedResult(chrono, "15/28/2022");
 });
 
 test("Test - forward dates only option", function () {

@@ -54,6 +54,17 @@ test("Test - Skip hyphenated numbers pattern", () => {
     testUnexpectedResult(chrono, "2200-25");
 });
 
+test("Test - Skip impossible dates/times", () => {
+    testUnexpectedResult(chrono, "February 29, 2022");
+    testUnexpectedResult(chrono, "02/29/2022");
+
+    testUnexpectedResult(chrono, "June 31, 2022");
+    testUnexpectedResult(chrono, "06/31/2022");
+
+    testUnexpectedResult(chrono, "14PM");
+    testUnexpectedResult(chrono, "25:12");
+});
+
 test("Test - Skip version number pattern", () => {
     testUnexpectedResult(chrono, "Version: 1.1.3");
 
