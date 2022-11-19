@@ -7,6 +7,7 @@
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
+import { implySimilarDate } from "../../utils/dayjs";
 
 export default class ForwardDateRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
@@ -16,6 +17,18 @@ export default class ForwardDateRefiner implements Refiner {
 
         results.forEach(function (result) {
             let refMoment = dayjs(context.refDate);
+
+            if (result.start.isOnlyTime() && refMoment.isAfter(result.start.dayjs())) {
+                refMoment = refMoment.add(1, "day");
+                implySimilarDate(result.start, refMoment);
+                if (result.end && result.end.isOnlyTime()) {
+                    implySimilarDate(result.end, refMoment);
+                    if (result.start.dayjs().isAfter(result.end.dayjs())) {
+                        refMoment = refMoment.add(1, "day");
+                        implySimilarDate(result.end, refMoment);
+                    }
+                }
+            }
 
             if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
                 for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
