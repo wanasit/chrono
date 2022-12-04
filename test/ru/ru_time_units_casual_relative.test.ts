@@ -44,6 +44,12 @@ test("Test - Positive time units", () => {
         expect(result.start).toBeDate(new Date(2016, 10 - 1, 1, 14));
     });
 
+    testSingleCase(chrono.ru, "спустя 2 часа", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2016, 10 - 1, 1, 14));
+    });
+
     testSingleCase(chrono.ru, "через три месяца", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe(text);
@@ -63,6 +69,12 @@ test("Test - Positive time units", () => {
     });
 
     testSingleCase(chrono.ru, "через год", new Date(2020, 11 - 1, 22, 12, 11, 32, 6), (result, text) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2021, 11 - 1, 22, 12, 11, 32, 6));
+    });
+
+    testSingleCase(chrono.ru, "спустя год", new Date(2020, 11 - 1, 22, 12, 11, 32, 6), (result, text) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe(text);
         expect(result.start).toBeDate(new Date(2021, 11 - 1, 22, 12, 11, 32, 6));
