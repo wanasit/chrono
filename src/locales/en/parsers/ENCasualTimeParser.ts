@@ -1,9 +1,6 @@
 import { ParsingContext } from "../../../chrono";
-import { Meridiem } from "../../../index";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import dayjs from "dayjs";
-import { implyTheNextDay } from "../../../utils/dayjs";
-import { midnight } from "../../../common/casualReferences";
+import * as casualReferences from "../../../common/casualReferences";
 
 const PATTERN = /(?:this)?\s{0,3}(morning|afternoon|evening|night|midnight|noon)(?=\W|$)/i;
 
@@ -11,41 +8,20 @@ export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryCh
     innerPattern() {
         return PATTERN;
     }
-
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const targetDate = dayjs(context.refDate);
-        const component = context.createParsingComponents();
-
         switch (match[1].toLowerCase()) {
             case "afternoon":
-                component.imply("meridiem", Meridiem.PM);
-                component.imply("hour", 15);
-                break;
-
+                return casualReferences.afternoon(context.reference);
             case "evening":
             case "night":
-                component.imply("meridiem", Meridiem.PM);
-                component.imply("hour", 20);
-                break;
-
+                return casualReferences.evening(context.reference);
             case "midnight":
-                implyTheNextDay(component, targetDate);
-                component.assign("hour", 0);
-                component.assign("minute", 0);
-                component.assign("second", 0);
-                break;
-
+                return casualReferences.midnight(context.reference);
             case "morning":
-                component.imply("meridiem", Meridiem.AM);
-                component.imply("hour", 6);
-                break;
-
+                return casualReferences.morning(context.reference);
             case "noon":
-                component.imply("meridiem", Meridiem.AM);
-                component.imply("hour", 12);
-                break;
+                return casualReferences.noon(context.reference);
         }
-
-        return component;
+        return null;
     }
 }

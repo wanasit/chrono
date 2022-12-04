@@ -1,6 +1,12 @@
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
 import dayjs from "dayjs";
-import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../utils/dayjs";
+import {
+    assignSimilarDate,
+    assignSimilarTime,
+    implySimilarDate,
+    implySimilarTime,
+    implyTheNextDay,
+} from "../utils/dayjs";
 import { Meridiem } from "../index";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
@@ -88,9 +94,16 @@ export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 2
 
 export function midnight(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
-    component.imply("hour", 0);
+    const targetDate = dayjs(reference.instant);
+    if (targetDate.hour() > 2) {
+        // Unless it's very early morning (0~2AM), we assume the midnight is the coming midnight.
+        // Thus, increasing the day by 1.
+        implyTheNextDay(component, targetDate);
+    }
+    component.assign("hour", 0);
     component.imply("minute", 0);
     component.imply("second", 0);
+    component.imply("millisecond", 0);
     return component;
 }
 
@@ -98,6 +111,19 @@ export function morning(reference: ReferenceWithTimezone, implyHour = 6): Parsin
     const component = new ParsingComponents(reference, {});
     component.imply("meridiem", Meridiem.AM);
     component.imply("hour", implyHour);
+    component.imply("minute", 0);
+    component.imply("second", 0);
+    component.imply("millisecond", 0);
+    return component;
+}
+
+export function afternoon(reference: ReferenceWithTimezone, implyHour = 15): ParsingComponents {
+    const component = new ParsingComponents(reference, {});
+    component.imply("meridiem", Meridiem.PM);
+    component.imply("hour", implyHour);
+    component.imply("minute", 0);
+    component.imply("second", 0);
+    component.imply("millisecond", 0);
     return component;
 }
 
@@ -105,5 +131,8 @@ export function noon(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
     component.imply("meridiem", Meridiem.AM);
     component.imply("hour", 12);
+    component.imply("minute", 0);
+    component.imply("second", 0);
+    component.imply("millisecond", 0);
     return component;
 }
