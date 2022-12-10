@@ -2,9 +2,9 @@ import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTi
 
 export default class ESTimeExpressionParser extends AbstractTimeExpressionParser {
     primaryPrefix(): string {
-        return "(?:(?:a\slas|de\slas|las?|al?|de|del)\\s*)?";
+        return "(?:(?:aslas|deslas|las?|al?|de|del)\\s*)?";
     }
-    
+
     followingPhase(): string {
         return "\\s*(?:\\-|\\–|\\~|\\〜|a(?:l)?|\\?)\\s*";
     }

@@ -34,7 +34,7 @@ export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 break;
-            
+
             case "mediodia":
             case "mediodía":
                 component.imply("meridiem", Meridiem.AM);
