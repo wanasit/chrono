@@ -117,7 +117,8 @@ import * as pt from "./locales/pt";
 import * as nl from "./locales/nl";
 import * as zh from "./locales/zh";
 import * as ru from "./locales/ru";
-export { de, fr, ja, pt, nl, zh, ru };
+import * as es from "./locales/es";
+export { de, fr, ja, pt, nl, zh, ru, es };
 
 /**
  * A shortcut for {@link en | chrono.en.strict}
