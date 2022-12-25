@@ -2,7 +2,7 @@ import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import * as casualReferences from "../../../common/casualReferences";
 
-const PATTERN = /(?:this)?\s{0,3}(morning|afternoon|evening|night|midnight|noon)(?=\W|$)/i;
+const PATTERN = /(?:this)?\s{0,3}(morning|afternoon|evening|night|midnight|midday|noon)(?=\W|$)/i;
 
 export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
@@ -20,6 +20,7 @@ export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryCh
             case "morning":
                 return casualReferences.morning(context.reference);
             case "noon":
+            case "midday":
                 return casualReferences.noon(context.reference);
         }
         return null;
