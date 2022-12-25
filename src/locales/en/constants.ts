@@ -135,9 +135,11 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
 };
 
 export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+    s: "second",
     sec: "second",
     second: "second",
     seconds: "second",
+    m: "minute",
     min: "minute",
     mins: "minute",
     minute: "minute",
@@ -147,10 +149,14 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     hrs: "hour",
     hour: "hour",
     hours: "hour",
+    d: "d",
     day: "d",
     days: "d",
+    w: "w",
     week: "week",
     weeks: "week",
+    mo: "month",
+    mos: "month",
     month: "month",
     months: "month",
     qtr: "quarter",

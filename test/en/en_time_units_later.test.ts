@@ -46,6 +46,26 @@ test("Test - Later Expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7 - 1, 31, 10, 0));
     });
+
+    testSingleCase(chrono, "3w later", new Date(2012, 7 - 1, 10, 10, 0), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(31);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("3w later");
+    });
+
+    testSingleCase(chrono, "3mo later", new Date(2012, 7 - 1, 10, 10, 0), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("3mo later");
+    });
 });
 
 test("Test - From now Expression", () => {
@@ -220,6 +240,16 @@ test("Test - From now Expression", () => {
         expect(result.start.get("minute")).toBe(10);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 14, 10));
+    });
+
+    testSingleCase(chrono, "in 1d 2hr 5min", new Date(2012, 7, 10, 12, 40), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("in 1d 2hr 5min");
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(45);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 14, 45));
     });
 });
 

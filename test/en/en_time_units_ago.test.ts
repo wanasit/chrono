@@ -237,8 +237,25 @@ test("Test - Nested time ago", function () {
         expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
 
+    testSingleCase(chrono, "1d 21 h 25m ago ", new Date(2012, 7, 10, 22, 30), (result) => {
+        expect(result.text).toBe("1d 21 h 25m ago");
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(1);
+        expect(result.start.get("minute")).toBe(5);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+    });
+
     testSingleCase(chrono, "3 min 49 sec ago ", new Date(2012, 7, 10, 22, 30), (result) => {
         expect(result.text).toBe("3 min 49 sec ago");
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(22);
+        expect(result.start.get("minute")).toBe(26);
+        expect(result.start.get("second")).toBe(11);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "3m 49s ago ", new Date(2012, 7, 10, 22, 30), (result) => {
+        expect(result.text).toBe("3m 49s ago");
         expect(result.start.get("day")).toBe(10);
         expect(result.start.get("hour")).toBe(22);
         expect(result.start.get("minute")).toBe(26);
