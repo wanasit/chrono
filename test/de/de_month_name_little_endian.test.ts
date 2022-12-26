@@ -77,6 +77,18 @@ test("Test - Single expression", function () {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
     });
 
+    testSingleCase(chrono.de, "Die Deadline ist am zehnten August", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(17);
+        expect(result.text).toBe("am zehnten August");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+    });
+
     testSingleCase(chrono.de, "Die Deadline ist am Dienstag, den 10. Januar", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(17);
         expect(result.text).toBe("am Dienstag, den 10. Januar");
@@ -167,6 +179,25 @@ test("Test - Range expression", function () {
         expect(result.end).toBeDate(new Date(2012, 10 - 1, 22, 12));
     });
 
+    testSingleCase(chrono.de, "zehnter bis zweiundzwanzigster Oktober 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("zehnter bis zweiundzwanzigster Oktober 2012");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 10 - 1, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(22);
+
+        expect(result.end).toBeDate(new Date(2012, 10 - 1, 22, 12));
+    });
+
     testSingleCase(chrono.de, "10. Oktober - 12. Dezember", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("10. Oktober - 12. Dezember");
@@ -213,6 +244,18 @@ test("Test - Range expression", function () {
 
         expect(result.index).toBe(0);
         expect(result.text).toBe("10. jänner 2012");
+
+        expect(result.start).toBeDate(new Date(2012, 1 - 1, 10, 12));
+    });
+
+    testSingleCase(chrono.de, "zehnter jänner 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("zehnter jänner 2012");
 
         expect(result.start).toBeDate(new Date(2012, 1 - 1, 10, 12));
     });
