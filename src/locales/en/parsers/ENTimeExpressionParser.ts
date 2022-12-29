@@ -9,7 +9,7 @@ export default class ENTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|to|\\?)\\s*";
+        return "\\s*(?:\\-|\\–|\\~|\\〜|to|until|through|till|\\?)\\s*";
     }
 
     primaryPrefix(): string {
