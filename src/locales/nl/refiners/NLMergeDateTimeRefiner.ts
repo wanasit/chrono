@@ -2,7 +2,7 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
 
 /**
  * Merging date-only result and time-only result (see. AbstractMergeDateTimeRefiner).
- * This implementation should provide English connecting phases
+ * This implementation should provide Dutch connecting phases
  * - 2020-02-13 [at] 6pm
  * - Tomorrow [after] 7am
  */

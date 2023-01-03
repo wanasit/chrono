@@ -1,5 +1,5 @@
 /**
- * Chrono components for Portuguese support (*parsers*, *refiners*, and *configuration*)
+ * Chrono components for Spanish support (*parsers*, *refiners*, and *configuration*)
  *
  * @module
  */
