@@ -1,12 +1,12 @@
 /*
-  
+
 */
 
 import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMergeDateRangeRefiner";
 
 /**
  * Merging before and after results (see. AbstractMergeDateRangeRefiner)
- * This implementation should provide English connecting phases
+ * This implementation should provide Dutch connecting phases
  * - 2020-02-13 [tot] 2020-02-13
  * - Wednesday [-] Friday
  */
