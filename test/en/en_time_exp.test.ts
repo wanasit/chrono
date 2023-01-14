@@ -270,6 +270,24 @@ test("Test - Time range's meridiem handling", function () {
     });
 });
 
+test("Test - Time range to the next day", () => {
+    testSingleCase(chrono, "December 31, 2022 10:00 pm - 1:00 am", new Date(2017, 7 - 1, 7), (result) => {
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("hour")).toBe(22);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "December 31, 2022 10:00 pm - 12:00 am", new Date(2017, 7 - 1, 7), (result) => {
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("hour")).toBe(22);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+});
+
 test("Test - Parsing causal positive cases", function () {
     testSingleCase(chrono.casual, "at 1", (result) => {
         expect(result.text).toBe("at 1");

@@ -1,5 +1,6 @@
 import { ParsingComponents, ParsingResult } from "../results";
 import { Meridiem } from "../index";
+import { assignSimilarDate, implySimilarDate } from "../utils/dayjs";
 
 export function mergeDateTimeResult(dateResult: ParsingResult, timeResult: ParsingResult): ParsingResult {
     const result = dateResult.clone();
@@ -13,11 +14,13 @@ export function mergeDateTimeResult(dateResult: ParsingResult, timeResult: Parsi
         const endDateTime = mergeDateTimeComponent(endDate, endTime);
 
         if (dateResult.end == null && endDateTime.date().getTime() < result.start.date().getTime()) {
-            // Ex. 9pm - 1am
+            // For example,  "Tuesday 9pm - 1am" the ending should actually be 1am on the next day.
+            // We need to add to ending by another day.
+            const nextDayJs = endDateTime.dayjs().add(1, "day");
             if (endDateTime.isCertain("day")) {
-                endDateTime.assign("day", endDateTime.get("day") + 1);
+                assignSimilarDate(endDateTime, nextDayJs);
             } else {
-                endDateTime.imply("day", endDateTime.get("day") + 1);
+                implySimilarDate(endDateTime, nextDayJs);
             }
         }
 
