@@ -38,6 +38,48 @@ test("Test - Time range expression", function () {
         expect(result.end.get("second")).toBe(0);
         expect(result.end.get("meridiem")).toBe(Meridiem.PM);
     });
+
+    testSingleCase(chrono, "10:00:00 until 21:45:00", new Date(2016, 10 - 1, 1, 11), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("hour")).toBe(21);
+        expect(result.end.get("minute")).toBe(45);
+        expect(result.end.get("second")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "10:00:00 till 21:45:00", new Date(2016, 10 - 1, 1, 11), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("hour")).toBe(21);
+        expect(result.end.get("minute")).toBe(45);
+        expect(result.end.get("second")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "10:00:00 through 21:45:00", new Date(2016, 10 - 1, 1, 11), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("hour")).toBe(21);
+        expect(result.end.get("minute")).toBe(45);
+        expect(result.end.get("second")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+    });
 });
 
 test("Test - Casual time number expression", function () {

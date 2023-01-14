@@ -12,6 +12,6 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  */
 export default class ENMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
     patternBetween(): RegExp {
-        return /^\s*(to|-)\s*$/i;
+        return /^\s*(to|-|–|until|through|till)\s*$/i;
     }
 }
