@@ -12,6 +12,7 @@ import DECasualDateParser from "./parsers/DECasualDateParser";
 import DECasualTimeParser from "./parsers/DECasualTimeParser";
 import DEMonthNameLittleEndianParser from "./parsers/DEMonthNameLittleEndianParser";
 import DETimeUnitRelativeFormatParser from "./parsers/DETimeUnitRelativeFormatParser";
+import DETimeUnitWithinFormatParser from "./parsers/DETimeUnitWithinFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -43,6 +44,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new DESpecificTimeExpressionParser(),
                 new DEMonthNameLittleEndianParser(),
                 new DEWeekdayParser(),
+                new DETimeUnitWithinFormatParser(),
             ],
             refiners: [new DEMergeDateRangeRefiner(), new DEMergeDateTimeRefiner()],
         },
