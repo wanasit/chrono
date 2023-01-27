@@ -4,8 +4,7 @@ import { findYearClosestToRef } from "../../../calculation/years";
 
 import dayjs from "dayjs";
 
-const PATTERN =
-    /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
+const PATTERN = /(?:(?:([同今本])|((昭和|平成|令和)?([0-9０-９]{1,4}|元)))年\s*)?([0-9０-９]{1,2})月\s*([0-9０-９]{1,2})日/i;
 const SPECIAL_YEAR_GROUP = 1;
 const TYPICAL_YEAR_GROUP = 2;
 const ERA_GROUP = 3;
