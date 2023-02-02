@@ -82,6 +82,13 @@ export function evening(reference: ReferenceWithTimezone, implyHour = 20): Parsi
     return component;
 }
 
+export function night(reference: ReferenceWithTimezone, implyHour = 22): ParsingComponents {
+    const component = new ParsingComponents(reference, {});
+    component.imply("meridiem", Meridiem.PM);
+    component.imply("hour", implyHour);
+    return component;
+}
+
 export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 20): ParsingComponents {
     let targetDate = dayjs(reference.instant);
     const component = new ParsingComponents(reference, {});
