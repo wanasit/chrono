@@ -1,3 +1,6 @@
+import { OpUnitType, QUnitType } from "dayjs";
+import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
+
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "domingo": 0,
     "dom": 0,
@@ -59,6 +62,69 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
     "dic.": 12,
 };
 
+export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
+    "uno": 1,
+    "dos": 2,
+    "tres": 3,
+    "cuatro": 4,
+    "cinco": 5,
+    "seis": 6,
+    "siete": 7,
+    "ocho": 8,
+    "nueve": 9,
+    "diez": 10,
+    "once": 11,
+    "doce": 12,
+    "trece": 13,
+};
+
+export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+    "sec": "second",
+    "segundo": "second",
+    "segundos": "second",
+    "min": "minute",
+    "mins": "minute",
+    "minuto": "minute",
+    "minutos": "minute",
+    "h": "hour",
+    "hr": "hour",
+    "hrs": "hour",
+    "hora": "hour",
+    "horas": "hour",
+    "día": "d",
+    "días": "d",
+    "semana": "week",
+    "semanas": "week",
+    "mes": "month",
+    "meses": "month",
+    "cuarto": "quarter",
+    "cuartos": "quarter",
+    "año": "year",
+    "años": "year",
+};
+
+//-----------------------------
+
+export const NUMBER_PATTERN = `(?:${matchAnyPattern(
+    INTEGER_WORD_DICTIONARY
+)}|[0-9]+|[0-9]+\\.[0-9]+|un?|uno?|una?|algunos?|unos?|demi-?)`;
+
+export function parseNumberPattern(match: string): number {
+    const num = match.toLowerCase();
+    if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
+        return INTEGER_WORD_DICTIONARY[num];
+    } else if (num === "un" || num === "una" || num === "uno") {
+        return 1;
+    } else if (num.match(/algunos?/)) {
+        return 3;
+    } else if (num.match(/unos?/)) {
+        return 3;
+    } else if (num.match(/media?/)) {
+        return 0.5;
+    }
+
+    return parseFloat(num);
+}
 //-----------------------------
 // 88 p. Chr. n.
 // 234 AC
@@ -82,4 +148,27 @@ export function parseYear(match: string): number {
     }
 
     return parseInt(match);
+}
+
+const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
+const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
+
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);
+
+export function parseTimeUnits(timeunitText): { [c in OpUnitType | QUnitType]?: number } {
+    const fragments = {};
+    let remainingText = timeunitText;
+    let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
+    while (match) {
+        collectDateTimeFragment(fragments, match);
+        remainingText = remainingText.substring(match[0].length);
+        match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
+    }
+    return fragments as { [c in OpUnitType | QUnitType]?: number };
+}
+
+function collectDateTimeFragment(fragments, match) {
+    const num = parseNumberPattern(match[1]);
+    const unit = TIME_UNIT_DICTIONARY[match[2].toLowerCase()];
+    fragments[unit] = num;
 }

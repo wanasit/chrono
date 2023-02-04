@@ -15,6 +15,7 @@ import ESMergeDateRangeRefiner from "./refiners/ESMergeDateRangeRefiner";
 import ESMonthNameLittleEndianParser from "./parsers/ESMonthNameLittleEndianParser";
 import ESCasualDateParser from "./parsers/ESCasualDateParser";
 import ESCasualTimeParser from "./parsers/ESCasualTimeParser";
+import ESTimeUnitWithinFormatParser from "./parsers/ESTimeUnitWithinFormatParser";
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
@@ -49,6 +50,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new ESWeekdayParser(),
                 new ESTimeExpressionParser(),
                 new ESMonthNameLittleEndianParser(),
+                new ESTimeUnitWithinFormatParser(),
             ],
             refiners: [new ESMergeDateTimeRefiner(), new ESMergeDateRangeRefiner()],
         },
