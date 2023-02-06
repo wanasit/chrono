@@ -20,6 +20,12 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 12, 17, 10));
     });
 
+    testSingleCase(chrono.ru.casual, "Дедлайн послепослезавтра", new Date(2012, 7, 10, 17, 10), (result) => {
+        expect(result.index).toBe(8);
+        expect(result.text).toBe("послепослезавтра");
+        expect(result.start).toBeDate(new Date(2012, 7, 13, 17, 10));
+    });
+
     testSingleCase(chrono.ru.casual, "Дедлайн вчера", new Date(2012, 7, 10, 17, 10), (result) => {
         expect(result.index).toBe(8);
         expect(result.text).toBe("вчера");
