@@ -56,6 +56,8 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
     maart: 3,
     mar: 3,
     "mar.": 3,
+    mrt: 3,
+    "mrt.": 3,
     april: 4,
     apr: 4,
     "apr.": 4,
