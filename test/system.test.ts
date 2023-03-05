@@ -2,6 +2,7 @@ import * as chrono from "../src/";
 import { testSingleCase } from "./test_util";
 import { Meridiem } from "../src";
 import UnlikelyFormatFilter from "../src/common/refiners/UnlikelyFormatFilter";
+import SlashDateFormatParser from "../src/common/parsers/SlashDateFormatParser";
 
 //-------------------------------------
 
@@ -121,7 +122,20 @@ test("Test - Add custom refiner example", () => {
     });
 });
 
-test("Test - Remove custom refiner example", () => {
+test("Test - Remove a parser example", () => {
+    const custom = chrono.en.strict.clone();
+    custom.parsers = custom.parsers.filter((r) => !(r instanceof SlashDateFormatParser));
+    custom.parsers.push(new SlashDateFormatParser(true));
+
+    testSingleCase(custom, "6/10/2018", (result) => {
+        expect(result.text).toBe("6/10/2018");
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(6);
+    });
+});
+
+test("Test - Remove a refiner example", () => {
     const custom = chrono.casual.clone();
     custom.refiners = custom.refiners.filter((r) => !(r instanceof UnlikelyFormatFilter));
 
