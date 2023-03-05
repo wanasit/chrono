@@ -168,6 +168,16 @@ test("Test - Single Expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 13));
     });
+
+    testSingleCase(chrono, "the min before", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("the min before");
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(13);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 13));
+    });
 });
 
 test("Test - Single Expression (Casual)", function () {
@@ -261,6 +271,32 @@ test("Test - Nested time ago", function () {
         expect(result.start.get("minute")).toBe(26);
         expect(result.start.get("second")).toBe(11);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+});
+
+test("Test - Before with reference", () => {
+    testSingleCase(chrono, "2 day before today", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono, "the day before yesterday", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono, "2 day before yesterday", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(7);
+    });
+
+    testSingleCase(chrono, "a week before yesterday", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(2);
     });
 });
 

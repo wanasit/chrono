@@ -278,4 +278,42 @@ test("Test - Strict mode", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 5));
     });
+
+    testSingleCase(chrono, "the min after", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("the min after");
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 15));
+    });
+});
+
+test("Test - After with reference", () => {
+    testSingleCase(chrono, "2 day after today", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+    });
+
+    testSingleCase(chrono, "the day after tomorrow", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+    });
+
+    testSingleCase(chrono, "2 day after tomorrow", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("2 day after tomorrow");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+    });
+
+    testSingleCase(chrono, "a week after tomorrow", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("a week after tomorrow");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(18);
+    });
 });

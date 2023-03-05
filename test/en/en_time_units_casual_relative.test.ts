@@ -144,4 +144,6 @@ test("Test - Minus '-' sign", () => {
 test("Test - Negative cases", () => {
     testUnexpectedResult(chrono.casual, "3y", new Date(2015, 7 - 1, 10, 12, 14));
     testUnexpectedResult(chrono.casual, "1 m", new Date(2015, 7 - 1, 10, 12, 14));
+    testUnexpectedResult(chrono.casual, "the day", new Date(2015, 7 - 1, 10, 12, 14));
+    testUnexpectedResult(chrono.casual, "a day", new Date(2015, 7 - 1, 10, 12, 14));
 });

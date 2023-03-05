@@ -173,13 +173,13 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
 
 export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
+)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|the|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
-    } else if (num === "a" || num === "an") {
+    } else if (num === "a" || num === "an" || num == "the") {
         return 1;
     } else if (num.match(/few/)) {
         return 3;

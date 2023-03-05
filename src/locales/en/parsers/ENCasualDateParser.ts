@@ -5,7 +5,8 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /(now|today|tonight|tomorrow|tmr|tmrw|yesterday|last\s*night)(?=\W|$)/i;
+const PATTERN =
+    /(now|today|tonight|tomorrow|tmr|tmrw|yesterday|last\s*night|(?<!\d\s*)day\s*after\s*tomorrow|(?<!\d\s*)day\s*before\s*yesterday)(?=\W|$)/i;
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -43,6 +44,14 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
                     assignSimilarDate(component, targetDate);
                     component.imply("hour", 0);
+                }
+
+                if (lowerText.match(/after\s*tomorrow/)) {
+                    return references.theDayAfter(context.reference, 2);
+                }
+
+                if (lowerText.match(/before\s*yesterday/)) {
+                    return references.theDayBefore(context.reference, 2);
                 }
 
                 break;
