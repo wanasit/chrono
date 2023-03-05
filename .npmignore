@@ -1,1 +1,4 @@
 examples/
+node_modules/
+coverage/
+docs/
