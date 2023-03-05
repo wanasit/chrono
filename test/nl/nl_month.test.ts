@@ -68,6 +68,20 @@ test("Test - Month-Year expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
+
+    testSingleCase(chrono.nl, "mrt 2012", (result) => {
+        expect(result.text).toBe("mrt 2012");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2012, 3 - 1, 1, 12));
+    });
 });
 
 test("Test - Month-Only expression", function () {
@@ -137,6 +151,17 @@ test("Test - Month expression in context", function () {
         expect(result.start.get("month")).toBe(11);
 
         expect(result.start).toBeDate(new Date(2019, 11 - 1, 1, 12));
+    });
+
+    testSingleCase(chrono.nl, "Op 23 MRT. 2022", (result) => {
+        expect(result.text).toBe("23 MRT. 2022");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("day")).toBe(23);
+
+        expect(result.start).toBeDate(new Date(2022, 3 - 1, 23, 12));
     });
 });
 
