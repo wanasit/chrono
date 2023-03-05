@@ -156,6 +156,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     week: "week",
     weeks: "week",
     mo: "month",
+    mon: "month",
     mos: "month",
     month: "month",
     months: "month",

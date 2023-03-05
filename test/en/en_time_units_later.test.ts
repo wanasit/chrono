@@ -233,6 +233,14 @@ test("Test - From now Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 14));
     });
 
+    testSingleCase(chrono, "in 1 mon", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("in 1 mon");
+        expect(result.start.get("month")).toBe(8 + 1);
+
+        expect(result.start).toBeDate(new Date(2012, 8, 10, 12, 14));
+    });
+
     testSingleCase(chrono, "in 1.5 hours", new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("in 1.5 hours");

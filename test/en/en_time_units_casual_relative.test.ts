@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Positive time units", () => {
     testSingleCase(chrono, "next 2 weeks", new Date(2016, 10 - 1, 1, 12), (result, text) => {
@@ -109,6 +109,14 @@ test("Test - Plus '+' sign", () => {
 
         expect(result.start).toBeDate(new Date(2012, 7 - 1, 11, 14, 14));
     });
+
+    testSingleCase(chrono.casual, "+1m", new Date(2012, 7 - 1, 10, 12, 14), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(15);
+
+        expect(result.start).toBeDate(new Date(2012, 7 - 1, 10, 12, 15));
+    });
 });
 
 test("Test - Minus '-' sign", () => {
@@ -131,4 +139,9 @@ test("Test - Minus '-' sign", () => {
         expect(result.start.get("hour")).toBe(9);
         expect(result.start.get("minute")).toBe(55);
     });
+});
+
+test("Test - Negative cases", () => {
+    testUnexpectedResult(chrono.casual, "3y", new Date(2015, 7 - 1, 10, 12, 14));
+    testUnexpectedResult(chrono.casual, "1 m", new Date(2015, 7 - 1, 10, 12, 14));
 });
