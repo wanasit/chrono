@@ -50,6 +50,14 @@ test("Test - Quoted Expressions", function () {
 test("Test - Strict Mode", function () {
     testUnexpectedResult(chrono.strict, "Tuesday");
 });
+test("Test - Built-in English variants", () => {
+    testSingleCase(chrono.en, "6/10/2018", (result) => {
+        expect(result.start).toBeDate(new Date(2018, 6 - 1, 10, 12));
+    });
+    testSingleCase(chrono.en.GB, "6/10/2018", (result) => {
+        expect(result.start).toBeDate(new Date(2018, 10 - 1, 6, 12));
+    });
+});
 
 test("Test - Random text", function () {
     testSingleCase(chrono, "Adam <Adam@supercalendar.com> написал(а):\nThe date is 02.07.2013", (result) => {

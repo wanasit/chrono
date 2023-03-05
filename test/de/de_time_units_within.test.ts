@@ -14,22 +14,17 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
     });
 
-    testSingleCase(
-        chrono.de,
-        "Wir müssen etwas in fünf Tagen erledigen.",
-        new Date(2012, 7, 10, 11, 12),
-        (result) => {
-            expect(result.index).toBe(17);
-            expect(result.text).toBe("in fünf Tagen");
+    testSingleCase(chrono.de, "Wir müssen etwas in fünf Tagen erledigen.", new Date(2012, 7, 10, 11, 12), (result) => {
+        expect(result.index).toBe(17);
+        expect(result.text).toBe("in fünf Tagen");
 
-            expect(result.start).not.toBeNull();
-            expect(result.start.get("year")).toBe(2012);
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(15);
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(15);
 
-            expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 11, 12));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 11, 12));
+    });
 
     testSingleCase(chrono.de, "in 5 Minuten", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
@@ -108,17 +103,12 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2032, 7, 10, 12, 14));
     });
 
-    testSingleCase(
-        chrono.de,
-        "In 5 Minuten wird ein Auto fahren",
-        new Date(2012, 7, 10, 12, 14),
-        (result) => {
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("In 5 Minuten");
+    testSingleCase(chrono.de, "In 5 Minuten wird ein Auto fahren", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("In 5 Minuten");
 
-            expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
+    });
 
     testSingleCase(chrono.de, "In 5 Min wird ein Auto fahren", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);

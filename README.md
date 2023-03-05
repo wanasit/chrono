@@ -176,7 +176,9 @@ There are several locales supported contributed by multiple developers under `./
 // default English (US)
 chrono.parseDate('6/10/2018');    
 
-chrono.en.parseDate('6/10/2018'); 
+chrono.en.parseDate('6/10/2018');       // June 10th, 2018
+chrono.en.GB.parseDate('6/10/2018');    // October 6th, 2018
+
 chrono.ja.parseDate('昭和６４年１月７日'); 
 ```
 

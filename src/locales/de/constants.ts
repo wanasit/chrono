@@ -125,7 +125,6 @@ export const NUMBER_PATTERN = `(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
 )}|[0-9]+|[0-9]+\\.[0-9]+|halb?|halbe?|einigen?|wenigen?|mehreren?)`;
 
-
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
