@@ -20,11 +20,11 @@
     "source": "./src",
     "test": "./test"
   },
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
+      "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
     }
   },
@@ -56,11 +56,12 @@
     }
   },
   "scripts": {
-    "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build-esm",
-    "build-esm": "tsc -p tsconfig.build.esm.json && tsc-esm-fix --target=dist/esm && npm run add-package.json",
+    "build": "rimraf dist && npm run build-cjs && npm run build-esm && npm run add-package.json",
+    "build-cjs": "tsc -p tsconfig.build.json",
+    "build-esm": "tsc -p tsconfig.build.esm.json && tsc-esm-fix --target=dist/esm",
     "add-package.json": "run-script-os",
-    "add-package.json:nix": "echo '{\"type\":\"commonjs\",\"sideEffects\":\"false\"}' > dist/package.json && echo '{\"type\":\"module\",\"sideEffects\":\"false\"}' > dist/esm/package.json",
-    "add-package.json:windows": "echo {\"type\":\"commonjs\",\"sideEffects\":\"false\"} > dist/package.json && echo {\"type\":\"module\",\"sideEffects\":\"false\"} > dist/esm/package.json",
+    "add-package.json:nix": "echo '{\"type\":\"commonjs\",\"sideEffects\":\"false\"}' > dist/cjs/package.json && echo '{\"type\":\"module\",\"sideEffects\":\"false\"}' > dist/esm/package.json",
+    "add-package.json:windows": "echo {\"type\":\"commonjs\",\"sideEffects\":\"false\"} > dist/cjs/package.json && echo {\"type\":\"module\",\"sideEffects\":\"false\"} > dist/esm/package.json",
     "benchmark": "npm run build && node ./benchmark/benchmark.js",
     "document": "typedoc",
     "prepare": "npm run build",

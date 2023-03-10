@@ -1,4 +1,6 @@
-examples/
-node_modules/
+.*
+benchmark/
 coverage/
 docs/
+examples/
+node_modules/
