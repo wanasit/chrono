@@ -1,6 +1,13 @@
 import dayjs from "dayjs";
 
-export type TimezoneAbbrMap = { [key: string]: number };
+export type AmbiguousTimezoneMap = {
+    timezoneOffsetDuringDst: number;
+    timezoneOffsetNonDst: number;
+    dstStart: (year: number) => Date; // Return the start date of DST for the given year
+    dstEnd: (year: number) => Date; // Return the end date of DST for the given year
+};
+
+export type TimezoneAbbrMap = { [key: string]: number | AmbiguousTimezoneMap };
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,
@@ -36,6 +43,14 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CCT: 390,
     CDT: -300,
     CEST: 120,
+    // Note: Many sources define CET as a constant UTC+1. In common usage, however,
+    // CET usually refers to the time observed in most of Europe, be it standard time or daylight saving time.
+    CET: {
+        timezoneOffsetDuringDst: 2 * 60,
+        timezoneOffsetNonDst: 60,
+        dstStart: (year: number) => getLastDayOfMonthTransition(year, 2, 0, 2),
+        dstEnd: (year: number) => getLastDayOfMonthTransition(year, 9, 0, 3),
+    },
     CHADT: 825,
     CHAST: 765,
     CKT: -600,
@@ -43,6 +58,12 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CLT: -240,
     COT: -300,
     CST: -360,
+    CT: {
+        timezoneOffsetDuringDst: -5 * 60,
+        timezoneOffsetNonDst: -6 * 60,
+        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
+        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+    },
     CVT: -60,
     CXT: 420,
     ChST: 600,
@@ -57,6 +78,12 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     EGST: 0,
     EGT: -60,
     EST: -300,
+    ET: {
+        timezoneOffsetDuringDst: -4 * 60,
+        timezoneOffsetNonDst: -5 * 60,
+        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
+        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+    },
     FJST: 780,
     FJT: 720,
     FKST: -180,
@@ -118,6 +145,12 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     MSD: 240,
     MSK: 180,
     MST: -420,
+    MT: {
+        timezoneOffsetDuringDst: -6 * 60,
+        timezoneOffsetNonDst: -7 * 60,
+        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
+        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+    },
     MUT: 240,
     MVT: 300,
     MYT: 480,
@@ -145,6 +178,12 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     PMST: -180,
     PONT: 660,
     PST: -480,
+    PT: {
+        timezoneOffsetDuringDst: -7 * 60,
+        timezoneOffsetNonDst: -8 * 60,
+        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
+        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+    },
     PWT: 540,
     PYST: -180,
     PYT: -240,
@@ -243,57 +282,13 @@ export function getLastDayOfMonthTransition(year: number, month: number, day: nu
     return new Date(year, month, date.getDate(), hour);
 }
 
-export type AmbiguousTimezoneMap = {
-    [key: string]: {
-        dst: number; // timezone offset during DST
-        nonDst: number; // timzone offset during non-DST
-        dstStart: (d: Date) => Date; // Return the start date of DST for the given year
-        dstEnd: (d: Date) => Date; // Return the end date of DST for the given year
-    };
-};
-
-export const AMBIGUOUS_TIMEZONE_ABBR: AmbiguousTimezoneMap = {
-    CT: {
-        dst: -5 * 60,
-        nonDst: -6 * 60,
-        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
-        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
-    },
-    ET: {
-        dst: -4 * 60,
-        nonDst: -5 * 60,
-        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
-        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
-    },
-    PT: {
-        dst: -7 * 60,
-        nonDst: -8 * 60,
-        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
-        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
-    },
-    MT: {
-        dst: -6 * 60,
-        nonDst: -7 * 60,
-        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
-        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
-    },
-    // Note: Many sources define CET as a constant UTC+1. In common usage, however,
-    // CET usually refers to the time observed in most of Europe, be it standard time or daylight saving time.
-    CET: {
-        dst: 2 * 60,
-        nonDst: 60,
-        dstStart: (d: Date) => getLastDayOfMonthTransition(d.getFullYear(), 2, 0, 2),
-        dstEnd: (d: Date) => getLastDayOfMonthTransition(d.getFullYear(), 9, 0, 3),
-    },
-};
-
 /**
  * Finds and returns timezone offset. If timezoneInput is numeric, it is returned. Otherwise, look for timezone offsets
- * in the following order: timezoneOverrides -> {@link TIMEZONE_ABBR_MAP} -> {@link AMBIGUOUS_TIMEZONE_ABBR}.
+ * in the following order: timezoneOverrides -> {@link TIMEZONE_ABBR_MAP}.
  *
  * @param timezoneInput Uppercase timezone abbreviation or numeric offset in minutes
  * @param date The date to use to determine whether to return DST offsets for ambiguous timezones
- * @param timezoneOverrides Overrides for unambiguous timezones
+ * @param timezoneOverrides Overrides for timezones
  * @return timezone offset in minutes
  */
 export function toTimezoneOffset(
@@ -309,22 +304,31 @@ export function toTimezoneOffset(
         return timezoneInput;
     }
 
-    // First try matching an unambiguous timezone
-    const extractedTimezoneOffset = timezoneOverrides[timezoneInput] ?? TIMEZONE_ABBR_MAP[timezoneInput];
-    if (extractedTimezoneOffset != null) {
-        return extractedTimezoneOffset;
+    const matchedTimezone = timezoneOverrides[timezoneInput] ?? TIMEZONE_ABBR_MAP[timezoneInput];
+    if (matchedTimezone == null) {
+        return null;
+    }
+    // This means that we have matched an unambiguous timezone
+    if (typeof matchedTimezone == "number") {
+        return matchedTimezone;
     }
 
-    // If no match and we have a ref date, try matching an ambiguous timezone, and determine dst/non-dst based on ref date
+    // The matched timezone is an ambiguous timezone, where the offset depends on whether the context (refDate)
+    // is during daylight savings or not.
+
+    // Without refDate as context, there's no way to know if DST or non-DST offset should be used. Return null instead.
     if (date == null) {
         return null;
     }
-    const vartz = AMBIGUOUS_TIMEZONE_ABBR[timezoneInput];
-    if (vartz == null) {
-        return null;
+
+    // Return DST offset if the refDate is during daylight savings
+    if (
+        dayjs(date).isAfter(matchedTimezone.dstStart(date.getFullYear())) &&
+        !dayjs(date).isAfter(matchedTimezone.dstEnd(date.getFullYear()))
+    ) {
+        return matchedTimezone.timezoneOffsetDuringDst;
     }
-    if (dayjs(date).isAfter(vartz.dstStart(date)) && !dayjs(date).isAfter(vartz.dstEnd(date))) {
-        return vartz.dst;
-    }
-    return vartz.nonDst;
+
+    // refDate is not during DST => return non-DST offset
+    return matchedTimezone.timezoneOffsetNonDst;
 }
