@@ -1,8 +1,9 @@
 import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
+import type { ParsingResult } from "./results";
 
-export { en, Chrono, Parser, Refiner };
+export { en, Chrono, Parser, Refiner, ParsingResult };
 
 export interface ParsingOption {
     /**
