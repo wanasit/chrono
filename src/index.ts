@@ -1,8 +1,9 @@
 import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
+import { TimezoneAbbrMap } from "./timezone";
 
-export { en, Chrono, Parser, Refiner };
+export { en, Chrono, Parser, Refiner, TimezoneAbbrMap };
 
 export interface ParsingOption {
     /**
@@ -14,7 +15,7 @@ export interface ParsingOption {
     /**
      * Additional timezone keywords for the parsers to recognize
      */
-    timezones?: { [tzKeyword: string]: number };
+    timezones?: TimezoneAbbrMap;
 
     /**
      * Internal debug event handler.

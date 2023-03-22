@@ -488,13 +488,13 @@ test("Test - Timezone extraction", function () {
         expect(result.start.get("timezoneOffset")).toBe(-300);
     });
 
-    testSingleCase(chrono.fr, "vendredi 15h CET", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.fr, "vendredi 15h CET", new Date(2016, 1, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(true);
         expect(result.start.get("timezoneOffset")).toBe(60);
     });
 
-    testSingleCase(chrono.fr, "vendredi 15h cest", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.fr, "vendredi 15h cest", new Date(2016, 1, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(true);
         expect(result.start.get("timezoneOffset")).toBe(120);

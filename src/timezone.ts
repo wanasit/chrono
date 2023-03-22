@@ -1,4 +1,8 @@
-export const TIMEZONE_ABBR_MAP = {
+import dayjs from "dayjs";
+
+export type TimezoneAbbrMap = { [key: string]: number };
+
+export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,
     ACST: 570,
     ADT: -180,
@@ -32,7 +36,6 @@ export const TIMEZONE_ABBR_MAP = {
     CCT: 390,
     CDT: -300,
     CEST: 120,
-    CET: 60,
     CHADT: 825,
     CHAST: 765,
     CKT: -600,
@@ -54,7 +57,6 @@ export const TIMEZONE_ABBR_MAP = {
     EGST: 0,
     EGT: -60,
     EST: -300,
-    ET: -300,
     FJST: 780,
     FJT: 720,
     FKST: -180,
@@ -143,7 +145,6 @@ export const TIMEZONE_ABBR_MAP = {
     PMST: -180,
     PONT: 660,
     PST: -480,
-    PT: -480,
     PWT: 540,
     PYST: -180,
     PYT: -240,
@@ -192,8 +193,115 @@ export const TIMEZONE_ABBR_MAP = {
     YEKT: 360,
 };
 
-export function toTimezoneOffset(timezoneInput?: string | number): number | null {
-    if (timezoneInput === null || timezoneInput === undefined) {
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+/**
+ * Get transition date and time for timezones that transitions on the nth [weekday] of the month.
+ *
+ * @param year The year for which to find the transition date
+ * @param month The month in which the transition date occurs; 0 for January
+ * @param day The weekday on which the transition date occurs; 0 for Sunday
+ * @param n The nth occurence of the given weekday on the month to return
+ * @param hour The hour on which the transition occurs
+ * @return The date and time on which the transition from/to DST occurs
+ */
+export function getNthDayOfMonthTransition(
+    year: number,
+    month: number,
+    day: Weekday,
+    n: 1 | 2 | 3 | 4,
+    hour: number
+): Date {
+    let dateOfMonth = 0;
+    let i = 0;
+    while (i < n) {
+        dateOfMonth++;
+        const date = new Date(year, month, dateOfMonth);
+        if (date.getDay() === day) i++;
+    }
+    return new Date(year, month, dateOfMonth, hour);
+}
+
+/**
+ * Get transition date and time for timezones that transitions on the last [weekday] of the month.
+ *
+ * @param year The year for which to find the transition date
+ * @param month The month in which the transition date occurs; 0 for January
+ * @param day The weekday on which the transition date occurs; 0 for Sunday
+ * @param hour The hour on which the transition occurs
+ * @return The date and time on which the transition from/to DST occurs
+ */
+export function getLastDayOfMonthTransition(year: number, month: number, day: number, hour: number): Date {
+    const oneIndexedDay = day === 0 ? 7 : day;
+    const date = new Date(year, month + 1, 1, 12);
+    const firstDayNextMonth = date.getDay() === 0 ? 7 : date.getDay();
+    let dayDiff;
+    if (firstDayNextMonth === oneIndexedDay) dayDiff = 7;
+    else if (firstDayNextMonth < oneIndexedDay) dayDiff = 7 + firstDayNextMonth - oneIndexedDay;
+    else dayDiff = firstDayNextMonth - oneIndexedDay;
+    date.setDate(date.getDate() - dayDiff);
+    return new Date(year, month, date.getDate(), hour);
+}
+
+export type AmbiguousTimezoneMap = {
+    [key: string]: {
+        dst: number; // timezone offset during DST
+        nonDst: number; // timzone offset during non-DST
+        dstStart: (d: Date) => Date; // Return the start date of DST for the given year
+        dstEnd: (d: Date) => Date; // Return the end date of DST for the given year
+    };
+};
+
+export const AMBIGUOUS_TIMEZONE_ABBR: AmbiguousTimezoneMap = {
+    CT: {
+        dst: -5 * 60,
+        nonDst: -6 * 60,
+        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
+        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
+    },
+    ET: {
+        dst: -4 * 60,
+        nonDst: -5 * 60,
+        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
+        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
+    },
+    PT: {
+        dst: -7 * 60,
+        nonDst: -8 * 60,
+        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
+        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
+    },
+    MT: {
+        dst: -6 * 60,
+        nonDst: -7 * 60,
+        dstStart: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 2, 0, 2, 2),
+        dstEnd: (d: Date) => getNthDayOfMonthTransition(d.getFullYear(), 10, 0, 1, 2),
+    },
+    // Note: Many sources define CET as a constant UTC+1. In common usage, however,
+    // CET usually refers to the time observed in most of Europe, be it standard time or daylight saving time.
+    CET: {
+        dst: 2 * 60,
+        nonDst: 60,
+        dstStart: (d: Date) => getLastDayOfMonthTransition(d.getFullYear(), 2, 0, 2),
+        dstEnd: (d: Date) => getLastDayOfMonthTransition(d.getFullYear(), 9, 0, 3),
+    },
+};
+
+/**
+ * Finds and returns timezone offset. If timezoneInput is numeric, it is returned. Otherwise, look for timezone offsets
+ * in the following order: timezoneOverrides -> {@link TIMEZONE_ABBR_MAP} -> {@link AMBIGUOUS_TIMEZONE_ABBR}.
+ *
+ * @param timezoneInput Uppercase timezone abbreviation or numeric offset in minutes
+ * @param date The date to use to determine whether to return DST offsets for ambiguous timezones
+ * @param timezoneOverrides Overrides for unambiguous timezones
+ * @return timezone offset in minutes
+ */
+export function toTimezoneOffset(
+    timezoneInput?: string | number,
+    date?: Date,
+    timezoneOverrides: TimezoneAbbrMap = {}
+): number | null {
+    if (timezoneInput == null) {
         return null;
     }
 
@@ -201,5 +309,22 @@ export function toTimezoneOffset(timezoneInput?: string | number): number | null
         return timezoneInput;
     }
 
-    return TIMEZONE_ABBR_MAP[timezoneInput] ?? null;
+    // First try matching an unambiguous timezone
+    const extractedTimezoneOffset = timezoneOverrides[timezoneInput] ?? TIMEZONE_ABBR_MAP[timezoneInput];
+    if (extractedTimezoneOffset != null) {
+        return extractedTimezoneOffset;
+    }
+
+    // If no match and we have a ref date, try matching an ambiguous timezone, and determine dst/non-dst based on ref date
+    if (date == null) {
+        return null;
+    }
+    const vartz = AMBIGUOUS_TIMEZONE_ABBR[timezoneInput];
+    if (vartz == null) {
+        return null;
+    }
+    if (dayjs(date).isAfter(vartz.dstStart(date)) && !dayjs(date).isAfter(vartz.dstEnd(date))) {
+        return vartz.dst;
+    }
+    return vartz.nonDst;
 }
