@@ -1,4 +1,5 @@
 import * as chrono from "../../src";
+import { getLastDayOfMonthTransition } from "../../src/timezone";
 import { testSingleCase } from "../test_util";
 
 test("Test - Parsing date/time with UTC offset", function () {
@@ -189,6 +190,55 @@ test("Test - Parsing date/time with ambiguous timezone abbreviations", function 
         expect(result.start.get("hour")).toBe(23);
         expect(result.start.get("timezoneOffset")).toBe(60); // CET during standard time (CET) in 2021
     });
+});
+
+test("Test - Timezone parsing overrides", function () {
+    // chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), {timezones: {XYZ: -180}})
+    // XYZ shouldn't be recognized or parsed as a timezone
+    testSingleCase(chrono, "Jan 1st 2023 at 10:00 XYZ", (result) => {
+        expect(result.text).toBe("Jan 1st 2023 at 10:00");
+        expect(result.start).toBeDate(new Date(2023, 1 - 1, 1, 10));
+    });
+    // Parse the correct tzoffset when XYZ is provided as a custom tz in parsingOptions
+    testSingleCase(
+        chrono,
+        "Jan 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: -180 } },
+        (result) => {
+            expect(result.text).toBe("Jan 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-180);
+        }
+    );
+    // Parse the correct tzoffset when XYZ is provided as a custom ambiguous tz in parsingOptions
+    const parseXYZAsAmbiguousTz = {
+        timezoneOffsetDuringDst: -120,
+        timezoneOffsetNonDst: -180,
+        dstStart: (year: number) => getLastDayOfMonthTransition(year, 2, 0, 2),
+        dstEnd: (year: number) => getLastDayOfMonthTransition(year, 9, 0, 3),
+    };
+    // Parsing a non-DST date
+    testSingleCase(
+        chrono,
+        "Jan 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: parseXYZAsAmbiguousTz } },
+        (result) => {
+            expect(result.text).toBe("Jan 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-180);
+        }
+    );
+    // Parsing a DST date
+    testSingleCase(
+        chrono,
+        "Jun 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: parseXYZAsAmbiguousTz } },
+        (result) => {
+            expect(result.text).toBe("Jun 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-120);
+        }
+    );
 });
 
 test("Test - Parsing date with timezone abbreviation", function () {

@@ -1,13 +1,5 @@
 import dayjs from "dayjs";
-
-export type AmbiguousTimezoneMap = {
-    timezoneOffsetDuringDst: number;
-    timezoneOffsetNonDst: number;
-    dstStart: (year: number) => Date; // Return the start date of DST for the given year
-    dstEnd: (year: number) => Date; // Return the end date of DST for the given year
-};
-
-export type TimezoneAbbrMap = { [key: string]: number | AmbiguousTimezoneMap };
+import { TimezoneAbbrMap } from "./index";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,

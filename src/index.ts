@@ -1,9 +1,8 @@
 import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
-import { TimezoneAbbrMap } from "./timezone";
 
-export { en, Chrono, Parser, Refiner, TimezoneAbbrMap };
+export { en, Chrono, Parser, Refiner };
 
 export interface ParsingOption {
     /**
@@ -13,7 +12,8 @@ export interface ParsingOption {
     forwardDate?: boolean;
 
     /**
-     * Additional timezone keywords for the parsers to recognize
+     * Additional timezone keywords for the parsers to recognize.
+     * Any value provided will override the default handling of that value.
      */
     timezones?: TimezoneAbbrMap;
 
@@ -23,6 +23,34 @@ export interface ParsingOption {
      */
     debug?: DebugHandler | DebugConsume;
 }
+
+/**
+ * Some timezone abbreviations are ambiguous in that they refer to different offsets
+ * depending on the time of year — daylight savings time (DST), or non-DST. This interface
+ * allows defining such timezones
+ */
+export interface AmbiguousTimezoneMap {
+    timezoneOffsetDuringDst: number;
+    timezoneOffsetNonDst: number;
+    /**
+     * Return the start date of DST for the given year.
+     * timezone.ts contains helper methods for common such rules.
+     */
+    dstStart: (year: number) => Date; // Return the start date of DST for the given year
+    /**
+     * Return the end date of DST for the given year.
+     * timezone.ts contains helper methods for common such rules.
+     */
+    dstEnd: (year: number) => Date; // Return the end date of DST for the given year
+}
+
+/**
+ * A map describing how timezone abbreviations should map to time offsets.
+ * Supports both unambigous mappings abbreviation => offset,
+ * and ambiguous mappings, where the offset will depend on whether the
+ * time in question is during daylight savings time or not.
+ */
+export type TimezoneAbbrMap = { [key: string]: number | AmbiguousTimezoneMap };
 
 export interface ParsingReference {
     /**

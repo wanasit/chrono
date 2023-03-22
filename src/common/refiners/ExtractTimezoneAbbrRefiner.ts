@@ -1,8 +1,8 @@
 // Map ABBR -> Offset in minute
 import { ParsingContext, Refiner } from "../../chrono";
+import { TimezoneAbbrMap } from "../../index";
 import { ParsingResult } from "../../results";
 import { toTimezoneOffset } from "../../timezone";
-import type { TimezoneAbbrMap } from "../../timezone";
 
 const TIMEZONE_NAME_PATTERN = new RegExp("^\\s*,?\\s*\\(?([A-Z]{2,4})\\)?(?=\\W|$)", "i");
 
