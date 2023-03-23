@@ -1,4 +1,4 @@
-import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./index";
+import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./parsing";
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { QUnitType } from "dayjs";
