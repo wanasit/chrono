@@ -7,7 +7,7 @@ import {
     implySimilarTime,
     implyTheNextDay,
 } from "../utils/dayjs";
-import { Meridiem } from "../index";
+import { Meridiem } from "../parsing";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
     const targetDate = dayjs(reference.instant);

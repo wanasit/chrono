@@ -1,6 +1,6 @@
 import { ParsingComponents } from "../results";
 import dayjs from "dayjs";
-import { Meridiem } from "../index";
+import { Meridiem } from "../parsing";
 
 export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     targetDayJs = targetDayJs.add(1, "day");

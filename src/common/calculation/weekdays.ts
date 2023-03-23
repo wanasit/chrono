@@ -1,4 +1,4 @@
-import { Weekday } from "../../index";
+import { Weekday } from "../../parsing";
 import { ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { addImpliedTimeUnits } from "../../utils/timeunits";
 

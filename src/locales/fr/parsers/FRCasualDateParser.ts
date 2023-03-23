@@ -1,7 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import dayjs from "dayjs";
-import { Meridiem } from "../../../index";
+import { Meridiem } from "../../../parsing";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate } from "../../../utils/dayjs";
 import * as references from "../../../common/casualReferences";

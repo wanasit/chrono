@@ -1,6 +1,6 @@
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingComponents, ParsingResult } from "../../results";
-import { Meridiem } from "../../index";
+import { Meridiem } from "../../parsing";
 
 // prettier-ignore
 function primaryTimePattern(leftBoundary: string, primaryPrefix: string, primarySuffix: string, flags: string) {

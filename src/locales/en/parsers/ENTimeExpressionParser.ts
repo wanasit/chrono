@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { Meridiem } from "../../../index";
+import { Meridiem } from "../../../parsing";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 
 export default class ENTimeExpressionParser extends AbstractTimeExpressionParser {

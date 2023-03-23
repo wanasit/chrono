@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import { Meridiem } from "../../../index";
+import { Meridiem } from "../../../parsing";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 export default class FRCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
