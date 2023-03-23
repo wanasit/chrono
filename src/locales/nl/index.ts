@@ -5,7 +5,7 @@
  */
 
 import { includeCommonConfiguration } from "../../configurations";
-import { ParsedResult, ParsingOption } from "../../index";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
 import { Chrono, Configuration } from "../../chrono";
 import NLMergeDateRangeRefiner from "./refiners/NLMergeDateRangeRefiner";
 import NLMergeDateTimeRefiner from "./refiners/NLMergeDateTimeRefiner";
@@ -24,6 +24,8 @@ import NLTimeUnitCasualRelativeFormatParser from "./parsers/NLTimeUnitCasualRela
 import NLRelativeDateFormatParser from "./parsers/NLRelativeDateFormatParser";
 import NLTimeUnitAgoFormatParser from "./parsers/NLTimeUnitAgoFormatParser";
 import NLTimeUnitLaterFormatParser from "./parsers/NLTimeUnitLaterFormatParser";
+
+export { Component, ParsedResult, ParsingOption, ParsingReference };
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());

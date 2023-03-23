@@ -18,10 +18,12 @@ import RUCasualTimeParser from "./parsers/RUCasualTimeParser";
 import RUWeekdayParser from "./parsers/RUWeekdayParser";
 import RURelativeDateFormatParser from "./parsers/RURelativeDateFormatParser";
 
-import { ParsedResult, ParsingOption } from "../../index";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
 import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import RUTimeUnitCasualRelativeFormatParser from "./parsers/RUTimeUnitCasualRelativeFormatParser";
+
+export { Component, ParsedResult, ParsingOption, ParsingReference };
 
 /**
  * Chrono object configured for parsing *casual* Russian

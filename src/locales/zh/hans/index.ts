@@ -5,7 +5,7 @@
 import { Chrono, Configuration } from "../../../chrono";
 import ExtractTimezoneOffsetRefiner from "../../../common/refiners/ExtractTimezoneOffsetRefiner";
 import { includeCommonConfiguration } from "../../../configurations";
-import { ParsedResult, ParsingOption } from "../../../index";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../../parsing";
 import ZHHansCasualDateParser from "./parsers/ZHHansCasualDateParser";
 import ZHHansDateParser from "./parsers/ZHHansDateParser";
 import ZHHansDeadlineFormatParser from "./parsers/ZHHansDeadlineFormatParser";
@@ -14,6 +14,8 @@ import ZHHansTimeExpressionParser from "./parsers/ZHHansTimeExpressionParser";
 import ZHHansWeekdayParser from "./parsers/ZHHansWeekdayParser";
 import ZHHansMergeDateRangeRefiner from "./refiners/ZHHansMergeDateRangeRefiner";
 import ZHHansMergeDateTimeRefiner from "./refiners/ZHHansMergeDateTimeRefiner";
+
+export { Component, ParsedResult, ParsingOption, ParsingReference };
 
 // Shortcuts
 export const hans = new Chrono(createCasualConfiguration());

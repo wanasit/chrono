@@ -1,5 +1,5 @@
 import { includeCommonConfiguration } from "../../configurations";
-import { ParsedResult, ParsingOption } from "../../index";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
 import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ISOFormatParser from "../../common/parsers/ISOFormatParser";
@@ -13,6 +13,8 @@ import DECasualTimeParser from "./parsers/DECasualTimeParser";
 import DEMonthNameLittleEndianParser from "./parsers/DEMonthNameLittleEndianParser";
 import DETimeUnitRelativeFormatParser from "./parsers/DETimeUnitRelativeFormatParser";
 import DETimeUnitWithinFormatParser from "./parsers/DETimeUnitWithinFormatParser";
+
+export { Component, ParsedResult, ParsingOption, ParsingReference };
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
