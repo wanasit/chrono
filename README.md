@@ -214,6 +214,28 @@ chrono.ja.parseDate('昭和６４年１月７日');
 
 Current supported locale options are: `en`, `ja`, `fr`, `nl` and `ru` (`de`, `pt`, and `zh.hant` are partially supported).
 
+#### Importing specific locales
+
+Chrono exports all locale options by default for simplicity. However, this can cause issues when using Chrono if you're using a Node.js runtime that was built with the Intl module disabled (with the `--without-intl` flag), such as: 
+```
+Invalid regular expression: /* omitted */: Invalid property name in character class
+```
+
+This is because the Intl module is required to handle special characters, such as Cyrillic (`ru`).
+
+To avoid this, you can specify only the locale(s) you want to import:
+```typescript
+// CommonJS (Node.js)
+const chrono = require('chrono-node/en')
+
+// ECMAScript
+import chrono from 'chrono-node/en'
+
+// TypeScript
+// Warning: `moduleResolution` must be set to `node16` or `nodeNext` in tsconfig.json`
+import * as chrono from 'chrono-node/en'
+```
+
 ## Customize Chrono
 
 Chrono’s extraction pipeline configuration consists of `parsers: Parser[]` and `refiners: Refiner[]`.
