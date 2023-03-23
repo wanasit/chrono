@@ -1,7 +1,7 @@
 import { ReferenceWithTimezone, ParsingComponents, ParsingResult } from "./results";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "./index";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "./parsing";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
-import { createCasualConfiguration } from "./locales/en";
+import ENDefaultConfiguration from "./locales/en/configuration";
 
 /**
  * Chrono configuration.
@@ -48,8 +48,10 @@ export class Chrono {
     parsers: Array<Parser>;
     refiners: Array<Refiner>;
 
+    defaultConfig = new ENDefaultConfiguration();
+
     constructor(configuration?: Configuration) {
-        configuration = configuration || createCasualConfiguration();
+        configuration = configuration || this.defaultConfig.createCasualConfiguration();
         this.parsers = [...configuration.parsers];
         this.refiners = [...configuration.refiners];
     }
