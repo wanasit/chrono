@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { TimezoneAbbrMap } from "./index";
+import { TimezoneAbbrMap, Weekday, Month } from "./index";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,
@@ -40,8 +40,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CET: {
         timezoneOffsetDuringDst: 2 * 60,
         timezoneOffsetNonDst: 60,
-        dstStart: (year: number) => getLastDayOfMonthTransition(year, 2, 0, 2),
-        dstEnd: (year: number) => getLastDayOfMonthTransition(year, 9, 0, 3),
+        dstStart: (year: number) => getLastWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2),
+        dstEnd: (year: number) => getLastWeekdayOfMonthTransition(year, Month.OCTOBER, Weekday.SUNDAY, 3),
     },
     CHADT: 825,
     CHAST: 765,
@@ -53,8 +53,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CT: {
         timezoneOffsetDuringDst: -5 * 60,
         timezoneOffsetNonDst: -6 * 60,
-        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
-        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     CVT: -60,
     CXT: 420,
@@ -73,8 +73,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ET: {
         timezoneOffsetDuringDst: -4 * 60,
         timezoneOffsetNonDst: -5 * 60,
-        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
-        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     FJST: 780,
     FJT: 720,
@@ -140,8 +140,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     MT: {
         timezoneOffsetDuringDst: -6 * 60,
         timezoneOffsetNonDst: -7 * 60,
-        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
-        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     MUT: 240,
     MVT: 300,
@@ -173,8 +173,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     PT: {
         timezoneOffsetDuringDst: -7 * 60,
         timezoneOffsetNonDst: -8 * 60,
-        dstStart: (year: number) => getNthDayOfMonthTransition(year, 2, 0, 2, 2),
-        dstEnd: (year: number) => getNthDayOfMonthTransition(year, 10, 0, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     PWT: 540,
     PYST: -180,
@@ -224,54 +224,52 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     YEKT: 360,
 };
 
-export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
 /**
  * Get transition date and time for timezones that transitions on the nth [weekday] of the month.
  *
  * @param year The year for which to find the transition date
- * @param month The month in which the transition date occurs; 0 for January
- * @param day The weekday on which the transition date occurs; 0 for Sunday
+ * @param month The month in which the transition date occurs
+ * @param weekday The weekday on which the transition date occurs
  * @param n The nth occurence of the given weekday on the month to return
  * @param hour The hour on which the transition occurs
  * @return The date and time on which the transition from/to DST occurs
  */
-export function getNthDayOfMonthTransition(
+export function getNthWeekdayOfMonthTransition(
     year: number,
-    month: number,
-    day: Weekday,
+    month: Month,
+    weekday: Weekday,
     n: 1 | 2 | 3 | 4,
     hour: number
 ): Date {
-    let dateOfMonth = 0;
+    let dayOfMonth = 0;
     let i = 0;
     while (i < n) {
-        dateOfMonth++;
-        const date = new Date(year, month, dateOfMonth);
-        if (date.getDay() === day) i++;
+        dayOfMonth++;
+        const date = new Date(year, month - 1, dayOfMonth);
+        if (date.getDay() === weekday) i++;
     }
-    return new Date(year, month, dateOfMonth, hour);
+    return new Date(year, month - 1, dayOfMonth, hour);
 }
 
 /**
  * Get transition date and time for timezones that transitions on the last [weekday] of the month.
  *
  * @param year The year for which to find the transition date
- * @param month The month in which the transition date occurs; 0 for January
- * @param day The weekday on which the transition date occurs; 0 for Sunday
+ * @param month The month in which the transition date occurs
+ * @param weekday The weekday on which the transition date occurs
  * @param hour The hour on which the transition occurs
  * @return The date and time on which the transition from/to DST occurs
  */
-export function getLastDayOfMonthTransition(year: number, month: number, day: number, hour: number): Date {
-    const oneIndexedDay = day === 0 ? 7 : day;
-    const date = new Date(year, month + 1, 1, 12);
+export function getLastWeekdayOfMonthTransition(year: number, month: Month, weekday: Weekday, hour: number): Date {
+    const oneIndexedWeekday = weekday === 0 ? 7 : weekday;
+    const date = new Date(year, month - 1 + 1, 1, 12);
     const firstDayNextMonth = date.getDay() === 0 ? 7 : date.getDay();
     let dayDiff;
-    if (firstDayNextMonth === oneIndexedDay) dayDiff = 7;
-    else if (firstDayNextMonth < oneIndexedDay) dayDiff = 7 + firstDayNextMonth - oneIndexedDay;
-    else dayDiff = firstDayNextMonth - oneIndexedDay;
+    if (firstDayNextMonth === oneIndexedWeekday) dayDiff = 7;
+    else if (firstDayNextMonth < oneIndexedWeekday) dayDiff = 7 + firstDayNextMonth - oneIndexedWeekday;
+    else dayDiff = firstDayNextMonth - oneIndexedWeekday;
     date.setDate(date.getDate() - dayDiff);
-    return new Date(year, month, date.getDate(), hour);
+    return new Date(year, month - 1, date.getDate(), hour);
 }
 
 /**

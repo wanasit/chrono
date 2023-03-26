@@ -122,23 +122,25 @@ chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20))
 // "knownValues": {"hour": 10, "minute": 0}
 
 // Make Chrono parse XYZ as offset GMT-0300 (180 minutes)
-chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), {timezones: {XYZ: -180}})
+chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: -180 } })
 // "knownValues": {"hour": 10, "minute": 0, "timezoneOffset": -180}
 
 // Make Chrono parse XYZ as offset GMT-0300 outside of DST, and GMT-0200 during DST. Assume DST is between 
 import { getLastDayOfMonthTransition } from "timezone";
+import { Weekday, Month } from "index";
+
 const parseXYZAsAmbiguousTz = {
   timezoneOffsetDuringDst: -120,
   timezoneOffsetNonDst: -180,
-  dstStart: (year: number) => getLastDayOfMonthTransition(year, 2, 0, 2),
-  dstEnd: (year: number) => getLastDayOfMonthTransition(year, 9, 0, 3),
+  dstStart: (year: number) => getLastWeekdayOfMonthTransition(year, Month.FEBRUARY, Weekday.SUNDAY, 2),
+  dstEnd: (year: number) => getLastWeekdayOfMonthTransition(year, Month.SEPTEMBER, Weekday.SUNDAY, 3)
 };
 // Parsing a date which falls within DST
-chrono.parse('Jan 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), {timezones: {XYZ: parseXYZAsAmbiguousTz}})
+chrono.parse('Jan 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: parseXYZAsAmbiguousTz } })
 // "knownValues": {"month": 1, ..., "timezoneOffset": -180}
 
 // Parsing a non-DST date
-chrono.parse('Jun 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), {timezones: {XYZ: parseXYZAsAmbiguousTz}})
+chrono.parse('Jun 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: parseXYZAsAmbiguousTz } })
 // "knownValues": {"month": 6, ..., "timezoneOffset": -120}
 ```
 
