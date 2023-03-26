@@ -40,8 +40,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CET: {
         timezoneOffsetDuringDst: 2 * 60,
         timezoneOffsetNonDst: 60,
-        dstStart: (year: number) => getLastWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2),
-        dstEnd: (year: number) => getLastWeekdayOfMonthTransition(year, Month.OCTOBER, Weekday.SUNDAY, 3),
+        dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2),
+        dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.OCTOBER, Weekday.SUNDAY, 3),
     },
     CHADT: 825,
     CHAST: 765,
@@ -53,8 +53,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     CT: {
         timezoneOffsetDuringDst: -5 * 60,
         timezoneOffsetNonDst: -6 * 60,
-        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
-        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     CVT: -60,
     CXT: 420,
@@ -73,8 +73,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ET: {
         timezoneOffsetDuringDst: -4 * 60,
         timezoneOffsetNonDst: -5 * 60,
-        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
-        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     FJST: 780,
     FJT: 720,
@@ -140,8 +140,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     MT: {
         timezoneOffsetDuringDst: -6 * 60,
         timezoneOffsetNonDst: -7 * 60,
-        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
-        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     MUT: 240,
     MVT: 300,
@@ -173,8 +173,8 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     PT: {
         timezoneOffsetDuringDst: -7 * 60,
         timezoneOffsetNonDst: -8 * 60,
-        dstStart: (year: number) => getNthWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
-        dstEnd: (year: number) => getNthWeekdayOfMonthTransition(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
     },
     PWT: 540,
     PYST: -180,
@@ -225,22 +225,17 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
 };
 
 /**
- * Get transition date and time for timezones that transitions on the nth [weekday] of the month.
+ * Get the date which is the nth occurence of a given weekday in a given month and year.
  *
- * @param year The year for which to find the transition date
- * @param month The month in which the transition date occurs
- * @param weekday The weekday on which the transition date occurs
+ * @param year The year for which to find the date
+ * @param month The month in which the date occurs
+ * @param weekday The weekday on which the date occurs
  * @param n The nth occurence of the given weekday on the month to return
- * @param hour The hour on which the transition occurs
- * @return The date and time on which the transition from/to DST occurs
+ * @param hour The hour of day which should be set on the returned date
+ * @return The date which is the nth occurence of a given weekday in a given
+ *         month and year, at the given hour of day
  */
-export function getNthWeekdayOfMonthTransition(
-    year: number,
-    month: Month,
-    weekday: Weekday,
-    n: 1 | 2 | 3 | 4,
-    hour: number
-): Date {
+export function getNthWeekdayOfMonth(year: number, month: Month, weekday: Weekday, n: 1 | 2 | 3 | 4, hour = 0): Date {
     let dayOfMonth = 0;
     let i = 0;
     while (i < n) {
@@ -252,15 +247,16 @@ export function getNthWeekdayOfMonthTransition(
 }
 
 /**
- * Get transition date and time for timezones that transitions on the last [weekday] of the month.
+ * Get the date which is the last occurence of a given weekday in a given month and year.
  *
- * @param year The year for which to find the transition date
- * @param month The month in which the transition date occurs
- * @param weekday The weekday on which the transition date occurs
- * @param hour The hour on which the transition occurs
- * @return The date and time on which the transition from/to DST occurs
+ * @param year The year for which to find the date
+ * @param month The month in which the date occurs
+ * @param weekday The weekday on which the date occurs
+ * @param hour The hour of day which should be set on the returned date
+ * @return The date which is the last occurence of a given weekday in a given
+ *         month and year, at the given hour of day
  */
-export function getLastWeekdayOfMonthTransition(year: number, month: Month, weekday: Weekday, hour: number): Date {
+export function getLastWeekdayOfMonth(year: number, month: Month, weekday: Weekday, hour = 0): Date {
     const oneIndexedWeekday = weekday === 0 ? 7 : weekday;
     const date = new Date(year, month - 1 + 1, 1, 12);
     const firstDayNextMonth = date.getDay() === 0 ? 7 : date.getDay();

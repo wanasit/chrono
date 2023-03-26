@@ -1,6 +1,6 @@
 import * as chrono from "../../src";
 import { Month, Weekday } from "../../src";
-import { getLastWeekdayOfMonthTransition } from "../../src/timezone";
+import { getLastWeekdayOfMonth } from "../../src/timezone";
 import { testSingleCase } from "../test_util";
 
 test("Test - Parsing date/time with UTC offset", function () {
@@ -215,8 +215,8 @@ test("Test - Timezone parsing overrides", function () {
     const parseXYZAsAmbiguousTz = {
         timezoneOffsetDuringDst: -120,
         timezoneOffsetNonDst: -180,
-        dstStart: (year: number) => getLastWeekdayOfMonthTransition(year, Month.MARCH, Weekday.SUNDAY, 2),
-        dstEnd: (year: number) => getLastWeekdayOfMonthTransition(year, Month.OCTOBER, Weekday.SUNDAY, 3),
+        dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2),
+        dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.OCTOBER, Weekday.SUNDAY, 3),
     };
     // Parsing a non-DST date
     testSingleCase(

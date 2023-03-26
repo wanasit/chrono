@@ -132,8 +132,8 @@ import { Weekday, Month } from "index";
 const parseXYZAsAmbiguousTz = {
   timezoneOffsetDuringDst: -120,
   timezoneOffsetNonDst: -180,
-  dstStart: (year: number) => getLastWeekdayOfMonthTransition(year, Month.FEBRUARY, Weekday.SUNDAY, 2),
-  dstEnd: (year: number) => getLastWeekdayOfMonthTransition(year, Month.SEPTEMBER, Weekday.SUNDAY, 3)
+  dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.FEBRUARY, Weekday.SUNDAY, 2),
+  dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.SEPTEMBER, Weekday.SUNDAY, 3)
 };
 // Parsing a date which falls within DST
 chrono.parse('Jan 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: parseXYZAsAmbiguousTz } })
