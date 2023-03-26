@@ -36,12 +36,12 @@ export interface AmbiguousTimezoneMap {
      * Return the start date of DST for the given year.
      * timezone.ts contains helper methods for common such rules.
      */
-    dstStart: (year: number) => Date; // Return the start date of DST for the given year
+    dstStart: (year: number) => Date;
     /**
      * Return the end date of DST for the given year.
      * timezone.ts contains helper methods for common such rules.
      */
-    dstEnd: (year: number) => Date; // Return the end date of DST for the given year
+    dstEnd: (year: number) => Date;
 }
 
 /**
