@@ -1,4 +1,6 @@
 import * as chrono from "../../src";
+import { Month, Weekday } from "../../src";
+import { getLastWeekdayOfMonth } from "../../src/timezone";
 import { testSingleCase } from "../test_util";
 
 test("Test - Parsing date/time with UTC offset", function () {
@@ -98,6 +100,146 @@ test("Test - Parsing date/time with timezone abbreviation", function () {
         // JST GMT+9:00
         expect(result.start.get("timezoneOffset")).toBe(9 * 60);
     });
+});
+
+test("Test - Parsing date/time with ambiguous timezone abbreviations", function () {
+    // Test dates around transition to DST for ET
+    testSingleCase(chrono, "2022-03-12 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-5 * 60); // ET during standard time (EST) in 2022
+    });
+    testSingleCase(chrono, "2022-03-13 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-4 * 60); // ET during DST (EDT) in 2022
+    });
+    testSingleCase(chrono, "2021-03-13 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-5 * 60); // ET during standard time (EST) in 2021
+    });
+    testSingleCase(chrono, "2021-03-14 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-4 * 60); // ET during DST (EDT) in 2021
+    });
+
+    // Also test around transition *from* DST
+    testSingleCase(chrono, "2021-11-06 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-4 * 60); // ET during DST (EDT) in 2021
+    });
+    testSingleCase(chrono, "2021-11-07 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-5 * 60); // ET during standard time (EST) in 2021
+    });
+    testSingleCase(chrono, "2020-10-31 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-4 * 60); // ET during DST (EDT) in 2020
+    });
+    testSingleCase(chrono, "2020-11-01 23:00 ET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-5 * 60); // ET during standard time (EST) in 2020
+    });
+
+    // Same checks, but for CET (which transitions at different dates with different rules)
+    // Test dates around transition to DST for CET
+    testSingleCase(chrono, "2022-03-26 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(60); // CET during standard time (CET) in 2022
+    });
+    testSingleCase(chrono, "2022-03-27 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(2 * 60); // CET during DST (CEST) in 2022
+    });
+    testSingleCase(chrono, "2021-03-27 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(60); // CET during standard time (CET) in 2021
+    });
+    testSingleCase(chrono, "2021-03-28 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(2 * 60); // CET during DST (CEST) in 2021
+    });
+
+    // Also test around transition *from* DST for CET
+    testSingleCase(chrono, "2022-10-29 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(2 * 60); // CET during DST (CEST) in 2022
+    });
+    testSingleCase(chrono, "2022-10-30 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(60); // CET during standard time (CET) in 2022
+    });
+    testSingleCase(chrono, "2021-10-30 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(2 * 60); // CET during DST (CEST) in 2021
+    });
+    testSingleCase(chrono, "2021-10-31 23:00 CET", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(60); // CET during standard time (CET) in 2021
+    });
+});
+
+test("Test - Timezone parsing overrides", function () {
+    // chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), {timezones: {XYZ: -180}})
+    // XYZ shouldn't be recognized or parsed as a timezone
+    testSingleCase(chrono, "Jan 1st 2023 at 10:00 XYZ", (result) => {
+        expect(result.text).toBe("Jan 1st 2023 at 10:00");
+        expect(result.start).toBeDate(new Date(2023, 1 - 1, 1, 10));
+    });
+    // Parse the correct tzoffset when XYZ is provided as a custom tz in parsingOptions
+    testSingleCase(
+        chrono,
+        "Jan 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: -180 } },
+        (result) => {
+            expect(result.text).toBe("Jan 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-180);
+        }
+    );
+    // Parse the correct tzoffset when XYZ is provided as a custom ambiguous tz in parsingOptions
+    const parseXYZAsAmbiguousTz = {
+        timezoneOffsetDuringDst: -120,
+        timezoneOffsetNonDst: -180,
+        dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2),
+        dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.OCTOBER, Weekday.SUNDAY, 3),
+    };
+    // Parsing a non-DST date
+    testSingleCase(
+        chrono,
+        "Jan 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: parseXYZAsAmbiguousTz } },
+        (result) => {
+            expect(result.text).toBe("Jan 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-180);
+        }
+    );
+    // Parsing a DST date
+    testSingleCase(
+        chrono,
+        "Jun 1st 2023 at 10:00 XYZ",
+        new Date(2023, 1, 1),
+        { timezones: { XYZ: parseXYZAsAmbiguousTz } },
+        (result) => {
+            expect(result.text).toBe("Jun 1st 2023 at 10:00 XYZ");
+            expect(result.start.get("timezoneOffset")).toBe(-120);
+        }
+    );
 });
 
 test("Test - Parsing date with timezone abbreviation", function () {

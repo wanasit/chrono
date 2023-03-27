@@ -114,6 +114,36 @@ chrono.parseDate('Friday', referenceDate, { forwardDate: true });
 // Fri Aug 31 2012 12:00:00 GMT+0900 (JST) -- The following Friday
 ```
 
+`timezones` Override or add custom mappings between timezone abbreviations and offsets. Use this when you want Chrono to parse certain text into a given timezone offset. Chrono supports both unambiguous (normal) timezone mappings and ambigous mappings where the offset is different during and outside of daylight savings.
+
+```javascript
+// Chrono doesn't understand XYZ, so no timezone is parsed
+chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20))
+// "knownValues": {"hour": 10, "minute": 0}
+
+// Make Chrono parse XYZ as offset GMT-0300 (180 minutes)
+chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: -180 } })
+// "knownValues": {"hour": 10, "minute": 0, "timezoneOffset": -180}
+
+// Make Chrono parse XYZ as offset GMT-0300 outside of DST, and GMT-0200 during DST. Assume DST is between 
+import { getLastDayOfMonthTransition } from "timezone";
+import { Weekday, Month } from "index";
+
+const parseXYZAsAmbiguousTz = {
+  timezoneOffsetDuringDst: -120,
+  timezoneOffsetNonDst: -180,
+  dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.FEBRUARY, Weekday.SUNDAY, 2),
+  dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.SEPTEMBER, Weekday.SUNDAY, 3)
+};
+// Parsing a date which falls within DST
+chrono.parse('Jan 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: parseXYZAsAmbiguousTz } })
+// "knownValues": {"month": 1, ..., "timezoneOffset": -180}
+
+// Parsing a non-DST date
+chrono.parse('Jun 1st 2023 at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: parseXYZAsAmbiguousTz } })
+// "knownValues": {"month": 6, ..., "timezoneOffset": -120}
+```
+
 ### Parsed Results and Components
 
 #### ParsedResult

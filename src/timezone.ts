@@ -1,4 +1,7 @@
-export const TIMEZONE_ABBR_MAP = {
+import dayjs from "dayjs";
+import { TimezoneAbbrMap, Weekday, Month } from "./index";
+
+export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,
     ACST: 570,
     ADT: -180,
@@ -32,7 +35,14 @@ export const TIMEZONE_ABBR_MAP = {
     CCT: 390,
     CDT: -300,
     CEST: 120,
-    CET: 60,
+    // Note: Many sources define CET as a constant UTC+1. In common usage, however,
+    // CET usually refers to the time observed in most of Europe, be it standard time or daylight saving time.
+    CET: {
+        timezoneOffsetDuringDst: 2 * 60,
+        timezoneOffsetNonDst: 60,
+        dstStart: (year: number) => getLastWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2),
+        dstEnd: (year: number) => getLastWeekdayOfMonth(year, Month.OCTOBER, Weekday.SUNDAY, 3),
+    },
     CHADT: 825,
     CHAST: 765,
     CKT: -600,
@@ -40,6 +50,12 @@ export const TIMEZONE_ABBR_MAP = {
     CLT: -240,
     COT: -300,
     CST: -360,
+    CT: {
+        timezoneOffsetDuringDst: -5 * 60,
+        timezoneOffsetNonDst: -6 * 60,
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+    },
     CVT: -60,
     CXT: 420,
     ChST: 600,
@@ -54,7 +70,12 @@ export const TIMEZONE_ABBR_MAP = {
     EGST: 0,
     EGT: -60,
     EST: -300,
-    ET: -300,
+    ET: {
+        timezoneOffsetDuringDst: -4 * 60,
+        timezoneOffsetNonDst: -5 * 60,
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+    },
     FJST: 780,
     FJT: 720,
     FKST: -180,
@@ -116,6 +137,12 @@ export const TIMEZONE_ABBR_MAP = {
     MSD: 240,
     MSK: 180,
     MST: -420,
+    MT: {
+        timezoneOffsetDuringDst: -6 * 60,
+        timezoneOffsetNonDst: -7 * 60,
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+    },
     MUT: 240,
     MVT: 300,
     MYT: 480,
@@ -143,7 +170,12 @@ export const TIMEZONE_ABBR_MAP = {
     PMST: -180,
     PONT: 660,
     PST: -480,
-    PT: -480,
+    PT: {
+        timezoneOffsetDuringDst: -7 * 60,
+        timezoneOffsetNonDst: -8 * 60,
+        dstStart: (year: number) => getNthWeekdayOfMonth(year, Month.MARCH, Weekday.SUNDAY, 2, 2),
+        dstEnd: (year: number) => getNthWeekdayOfMonth(year, Month.NOVEMBER, Weekday.SUNDAY, 1, 2),
+    },
     PWT: 540,
     PYST: -180,
     PYT: -240,
@@ -192,8 +224,67 @@ export const TIMEZONE_ABBR_MAP = {
     YEKT: 360,
 };
 
-export function toTimezoneOffset(timezoneInput?: string | number): number | null {
-    if (timezoneInput === null || timezoneInput === undefined) {
+/**
+ * Get the date which is the nth occurence of a given weekday in a given month and year.
+ *
+ * @param year The year for which to find the date
+ * @param month The month in which the date occurs
+ * @param weekday The weekday on which the date occurs
+ * @param n The nth occurence of the given weekday on the month to return
+ * @param hour The hour of day which should be set on the returned date
+ * @return The date which is the nth occurence of a given weekday in a given
+ *         month and year, at the given hour of day
+ */
+export function getNthWeekdayOfMonth(year: number, month: Month, weekday: Weekday, n: 1 | 2 | 3 | 4, hour = 0): Date {
+    let dayOfMonth = 0;
+    let i = 0;
+    while (i < n) {
+        dayOfMonth++;
+        const date = new Date(year, month - 1, dayOfMonth);
+        if (date.getDay() === weekday) i++;
+    }
+    return new Date(year, month - 1, dayOfMonth, hour);
+}
+
+/**
+ * Get the date which is the last occurence of a given weekday in a given month and year.
+ *
+ * @param year The year for which to find the date
+ * @param month The month in which the date occurs
+ * @param weekday The weekday on which the date occurs
+ * @param hour The hour of day which should be set on the returned date
+ * @return The date which is the last occurence of a given weekday in a given
+ *         month and year, at the given hour of day
+ */
+export function getLastWeekdayOfMonth(year: number, month: Month, weekday: Weekday, hour = 0): Date {
+    // Procedure: Find the first weekday of the next month, compare with the given weekday,
+    // and use the difference to determine how many days to subtract from the first of the next month.
+    const oneIndexedWeekday = weekday === 0 ? 7 : weekday;
+    const date = new Date(year, month - 1 + 1, 1, 12);
+    const firstWeekdayNextMonth = date.getDay() === 0 ? 7 : date.getDay();
+    let dayDiff;
+    if (firstWeekdayNextMonth === oneIndexedWeekday) dayDiff = 7;
+    else if (firstWeekdayNextMonth < oneIndexedWeekday) dayDiff = 7 + firstWeekdayNextMonth - oneIndexedWeekday;
+    else dayDiff = firstWeekdayNextMonth - oneIndexedWeekday;
+    date.setDate(date.getDate() - dayDiff);
+    return new Date(year, month - 1, date.getDate(), hour);
+}
+
+/**
+ * Finds and returns timezone offset. If timezoneInput is numeric, it is returned. Otherwise, look for timezone offsets
+ * in the following order: timezoneOverrides -> {@link TIMEZONE_ABBR_MAP}.
+ *
+ * @param timezoneInput Uppercase timezone abbreviation or numeric offset in minutes
+ * @param date The date to use to determine whether to return DST offsets for ambiguous timezones
+ * @param timezoneOverrides Overrides for timezones
+ * @return timezone offset in minutes
+ */
+export function toTimezoneOffset(
+    timezoneInput?: string | number,
+    date?: Date,
+    timezoneOverrides: TimezoneAbbrMap = {}
+): number | null {
+    if (timezoneInput == null) {
         return null;
     }
 
@@ -201,5 +292,31 @@ export function toTimezoneOffset(timezoneInput?: string | number): number | null
         return timezoneInput;
     }
 
-    return TIMEZONE_ABBR_MAP[timezoneInput] ?? null;
+    const matchedTimezone = timezoneOverrides[timezoneInput] ?? TIMEZONE_ABBR_MAP[timezoneInput];
+    if (matchedTimezone == null) {
+        return null;
+    }
+    // This means that we have matched an unambiguous timezone
+    if (typeof matchedTimezone == "number") {
+        return matchedTimezone;
+    }
+
+    // The matched timezone is an ambiguous timezone, where the offset depends on whether the context (refDate)
+    // is during daylight savings or not.
+
+    // Without refDate as context, there's no way to know if DST or non-DST offset should be used. Return null instead.
+    if (date == null) {
+        return null;
+    }
+
+    // Return DST offset if the refDate is during daylight savings
+    if (
+        dayjs(date).isAfter(matchedTimezone.dstStart(date.getFullYear())) &&
+        !dayjs(date).isAfter(matchedTimezone.dstEnd(date.getFullYear()))
+    ) {
+        return matchedTimezone.timezoneOffsetDuringDst;
+    }
+
+    // refDate is not during DST => return non-DST offset
+    return matchedTimezone.timezoneOffsetNonDst;
 }

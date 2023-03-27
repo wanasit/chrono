@@ -16,7 +16,7 @@ export class ReferenceWithTimezone {
             this.instant = input;
         } else {
             this.instant = input.instant ?? new Date();
-            this.timezoneOffset = toTimezoneOffset(input.timezone);
+            this.timezoneOffset = toTimezoneOffset(input.timezone, this.instant);
         }
     }
 

@@ -13,9 +13,10 @@ export interface ParsingOption {
     forwardDate?: boolean;
 
     /**
-     * Additional timezone keywords for the parsers to recognize
+     * Additional timezone keywords for the parsers to recognize.
+     * Any value provided will override the default handling of that value.
      */
-    timezones?: { [tzKeyword: string]: number };
+    timezones?: TimezoneAbbrMap;
 
     /**
      * Internal debug event handler.
@@ -23,6 +24,34 @@ export interface ParsingOption {
      */
     debug?: DebugHandler | DebugConsume;
 }
+
+/**
+ * Some timezone abbreviations are ambiguous in that they refer to different offsets
+ * depending on the time of year — daylight savings time (DST), or non-DST. This interface
+ * allows defining such timezones
+ */
+export interface AmbiguousTimezoneMap {
+    timezoneOffsetDuringDst: number;
+    timezoneOffsetNonDst: number;
+    /**
+     * Return the start date of DST for the given year.
+     * timezone.ts contains helper methods for common such rules.
+     */
+    dstStart: (year: number) => Date;
+    /**
+     * Return the end date of DST for the given year.
+     * timezone.ts contains helper methods for common such rules.
+     */
+    dstEnd: (year: number) => Date;
+}
+
+/**
+ * A map describing how timezone abbreviations should map to time offsets.
+ * Supports both unambigous mappings abbreviation => offset,
+ * and ambiguous mappings, where the offset will depend on whether the
+ * time in question is during daylight savings time or not.
+ */
+export type TimezoneAbbrMap = { [key: string]: number | AmbiguousTimezoneMap };
 
 export interface ParsingReference {
     /**
@@ -108,6 +137,21 @@ export enum Weekday {
     THURSDAY = 4,
     FRIDAY = 5,
     SATURDAY = 6,
+}
+
+export enum Month {
+    JANUARY = 1,
+    FEBRUARY = 2,
+    MARCH = 3,
+    APRIL = 4,
+    MAY = 5,
+    JUNE = 6,
+    JULY = 7,
+    AUGUST = 8,
+    SEPTEMBER = 9,
+    OCTOBER = 10,
+    NOVEMBER = 11,
+    DECEMBER = 12,
 }
 
 // Export all locales

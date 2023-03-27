@@ -180,22 +180,22 @@ test("Test - Range Expression", function () {
 });
 
 test("Test - Timezone extraction", function () {
-    testSingleCase(chrono.de, "um 14 Uhr", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.de, "um 14 Uhr", new Date(2016, 1, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
         expect(!result.start.get("timezoneOffset")).not.toBeNull();
     });
 
-    testSingleCase(chrono.de, "um 14 Uhr CET", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.de, "um 14 Uhr CET", new Date(2016, 1, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(true);
         expect(result.start.get("timezoneOffset")).toBe(60);
     });
 
-    testSingleCase(chrono.de, "14 Uhr cet", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.de, "14 Uhr cet", new Date(2016, 4, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(true);
-        expect(result.start.get("timezoneOffset")).toBe(60);
+        expect(result.start.get("timezoneOffset")).toBe(120);
     });
 });
 
@@ -209,15 +209,15 @@ test("Test - Random date + time expression", function () {
         expect(result.start.get("hour")).toBe(12);
     });
 
-    testSingleCase(chrono.de, "am Freitag um 14 Uhr cetteln wir etwas an", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.de, "am Freitag um 14 Uhr cetteln wir etwas an", new Date(2016, 1, 28), (result, text) => {
         expect(result.text).toBe("am Freitag um 14 Uhr");
         expect(result.start.isCertain("timezoneOffset")).toBe(false);
         expect(!result.start.get("timezoneOffset")).not.toBeNull();
     });
 
-    testSingleCase(chrono.de, "Freitag um 14 Uhr CET", new Date(2016, 3, 28), (result, text) => {
+    testSingleCase(chrono.de, "Freitag um 14 Uhr CET", new Date(2016, 4, 28), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.isCertain("timezoneOffset")).toBe(true);
-        expect(result.start.get("timezoneOffset")).toBe(60);
+        expect(result.start.get("timezoneOffset")).toBe(120);
     });
 });
