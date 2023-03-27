@@ -257,13 +257,15 @@ export function getNthWeekdayOfMonth(year: number, month: Month, weekday: Weekda
  *         month and year, at the given hour of day
  */
 export function getLastWeekdayOfMonth(year: number, month: Month, weekday: Weekday, hour = 0): Date {
+    // Procedure: Find the first weekday of the next month, compare with the given weekday,
+    // and use the difference to determine how many days to subtract from the first of the next month.
     const oneIndexedWeekday = weekday === 0 ? 7 : weekday;
     const date = new Date(year, month - 1 + 1, 1, 12);
-    const firstDayNextMonth = date.getDay() === 0 ? 7 : date.getDay();
+    const firstWeekdayNextMonth = date.getDay() === 0 ? 7 : date.getDay();
     let dayDiff;
-    if (firstDayNextMonth === oneIndexedWeekday) dayDiff = 7;
-    else if (firstDayNextMonth < oneIndexedWeekday) dayDiff = 7 + firstDayNextMonth - oneIndexedWeekday;
-    else dayDiff = firstDayNextMonth - oneIndexedWeekday;
+    if (firstWeekdayNextMonth === oneIndexedWeekday) dayDiff = 7;
+    else if (firstWeekdayNextMonth < oneIndexedWeekday) dayDiff = 7 + firstWeekdayNextMonth - oneIndexedWeekday;
+    else dayDiff = firstWeekdayNextMonth - oneIndexedWeekday;
     date.setDate(date.getDate() - dayDiff);
     return new Date(year, month - 1, date.getDate(), hour);
 }
