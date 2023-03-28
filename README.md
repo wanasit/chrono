@@ -127,7 +127,7 @@ chrono.parse('at 10:00 XYZ', new Date(2023, 3, 20), { timezones: { XYZ: -180 } }
 
 // Make Chrono parse XYZ as offset GMT-0300 outside of DST, and GMT-0200 during DST. Assume DST is between 
 import { getLastDayOfMonthTransition } from "timezone";
-import { Weekday, Month } from "index";
+import { Weekday, Month } from "parsing";
 
 const parseXYZAsAmbiguousTz = {
   timezoneOffsetDuringDst: -120,
