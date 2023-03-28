@@ -1,27 +1,11 @@
 import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
+import { ParsingResult } from "./results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "./parsing";
 
 export { en, Chrono, Parser, Refiner, ParsingResult };
-
-
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
-
-export enum Month {
-    JANUARY = 1,
-    FEBRUARY = 2,
-    MARCH = 3,
-    APRIL = 4,
-    MAY = 5,
-    JUNE = 6,
-    JULY = 7,
-    AUGUST = 8,
-    SEPTEMBER = 9,
-    OCTOBER = 10,
-    NOVEMBER = 11,
-    DECEMBER = 12,
-}
 
 // Export all locales
 import * as de from "./locales/de";
