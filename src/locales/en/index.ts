@@ -4,12 +4,14 @@
  * @module
  */
 
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
-import { Chrono } from "../../chrono";
+import { Chrono, Parser, Refiner } from "../../chrono";
+import { ParsingResult } from "../../results";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
 
 import ENDefaultConfiguration from "./configuration";
 
-export { Component, ParsedResult, ParsingOption, ParsingReference };
+export { Chrono, Parser, Refiner, ParsingResult };
+export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 const enConfig = new ENDefaultConfiguration();
 

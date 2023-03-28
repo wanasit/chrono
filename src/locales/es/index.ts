@@ -5,8 +5,9 @@
  */
 
 import { includeCommonConfiguration } from "../../configurations";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
-import { Chrono, Configuration } from "../../chrono";
+import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
+import { ParsingResult } from "../../results";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ESWeekdayParser from "./parsers/ESWeekdayParser";
 import ESTimeExpressionParser from "./parsers/ESTimeExpressionParser";
@@ -17,7 +18,8 @@ import ESCasualDateParser from "./parsers/ESCasualDateParser";
 import ESCasualTimeParser from "./parsers/ESCasualTimeParser";
 import ESTimeUnitWithinFormatParser from "./parsers/ESTimeUnitWithinFormatParser";
 
-export { Component, ParsedResult, ParsingOption, ParsingReference };
+export { Chrono, Parser, Refiner, ParsingResult };
+export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());

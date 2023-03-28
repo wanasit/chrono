@@ -3,10 +3,11 @@
  * TODO: Complete general zh support (current support only zh-Hant)
  */
 
-import { Chrono, Configuration } from "../../../chrono";
 import ExtractTimezoneOffsetRefiner from "../../../common/refiners/ExtractTimezoneOffsetRefiner";
 import { includeCommonConfiguration } from "../../../configurations";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../../parsing";
+import { Chrono, Configuration, Parser, Refiner } from "../../../chrono";
+import { ParsingResult } from "../../../results";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../../parsing";
 import ZHHantCasualDateParser from "./parsers/ZHHantCasualDateParser";
 import ZHHantDateParser from "./parsers/ZHHantDateParser";
 import ZHHantDeadlineFormatParser from "./parsers/ZHHantDeadlineFormatParser";
@@ -16,7 +17,8 @@ import ZHHantWeekdayParser from "./parsers/ZHHantWeekdayParser";
 import ZHHantMergeDateRangeRefiner from "./refiners/ZHHantMergeDateRangeRefiner";
 import ZHHantMergeDateTimeRefiner from "./refiners/ZHHantMergeDateTimeRefiner";
 
-export { Component, ParsedResult, ParsingOption, ParsingReference };
+export { Chrono, Parser, Refiner, ParsingResult };
+export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts
 export const hant = new Chrono(createCasualConfiguration());

@@ -5,8 +5,9 @@
  */
 
 import { includeCommonConfiguration } from "../../configurations";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "../../parsing";
-import { Chrono, Configuration } from "../../chrono";
+import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
+import { ParsingResult } from "../../results";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import PTWeekdayParser from "./parsers/PTWeekdayParser";
 import PTTimeExpressionParser from "./parsers/PTTimeExpressionParser";
@@ -16,7 +17,8 @@ import PTMonthNameLittleEndianParser from "./parsers/PTMonthNameLittleEndianPars
 import PTCasualDateParser from "./parsers/PTCasualDateParser";
 import PTCasualTimeParser from "./parsers/PTCasualTimeParser";
 
-export { Component, ParsedResult, ParsingOption, ParsingReference };
+export { Chrono, Parser, Refiner, ParsingResult };
+export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts
 export const casual = new Chrono(createCasualConfiguration());
