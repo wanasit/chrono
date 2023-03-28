@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { Month, Weekday } from "../../src";
+import { Month, Weekday } from "../../src/parsing";
 import { getLastWeekdayOfMonth } from "../../src/timezone";
 import { testSingleCase } from "../test_util";
 
