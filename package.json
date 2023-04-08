@@ -38,7 +38,6 @@
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "benny": "^3.6.15",
-    "coveralls": "^3.1.1",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "husky": "^4.2.5",
@@ -72,8 +71,7 @@
     "prettier:test": "prettier --write test --loglevel=warn",
     "watch": "jest --watch",
     "test": "jest --coverage",
-    "test:silent": "jest --silent",
-    "coveralls": "npm run test && cat coverage/lcov.info | coveralls --verbose"
+    "test:silent": "jest --silent"
   },
   "dependencies": {
     "dayjs": "^1.10.0"
