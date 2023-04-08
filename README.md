@@ -2,8 +2,8 @@
 
 A natural language date parser in Javascript. 
 
-[![Build Status](https://travis-ci.org/wanasit/chrono.svg?branch=master)](https://travis-ci.org/wanasit/chrono)
-[![Coverage Status](https://img.shields.io/coveralls/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
+![Build Status](https://github.com/github/docs/actions/workflows/test.yml/badge.svg)
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/wanasit/chrono.svg)](https://coveralls.io/r/wanasit/chrono?branch=master)
 
 It is designed to handle most date/time format and extract information from any given text:
 
