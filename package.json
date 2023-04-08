@@ -38,17 +38,18 @@
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "benny": "^3.6.15",
+    "coveralls": "^3.1.1",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "run-script-os": "^1.1.6",
     "ts-jest": "^26.1.1",
     "tsc-esm-fix": "^2.12.4",
     "typedoc": "^0.20.36",
-    "typescript": "~4.2.4",
-    "rimraf": "^3.0.2"
+    "typescript": "~4.2.4"
   },
   "husky": {
     "hooks": {
@@ -72,7 +73,7 @@
     "watch": "jest --watch",
     "test": "jest --coverage",
     "test:silent": "jest --silent",
-    "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
+    "coveralls": "npm run test && cat coverage/lcov.info | coveralls --verbose"
   },
   "dependencies": {
     "dayjs": "^1.10.0"
