@@ -1,0 +1,21 @@
+name: Run test and coverage
+
+on: ["push", "pull_request"]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: npm install
+
+      - name: Run test and coverage
+        run: npm run test
+
+      - name: Send to coveralls
+        uses: coverallsapp/github-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

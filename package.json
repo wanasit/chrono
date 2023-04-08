@@ -43,12 +43,12 @@
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "run-script-os": "^1.1.6",
     "ts-jest": "^26.1.1",
     "tsc-esm-fix": "^2.12.4",
     "typedoc": "^0.20.36",
-    "typescript": "~4.2.4",
-    "rimraf": "^3.0.2"
+    "typescript": "~4.2.4"
   },
   "husky": {
     "hooks": {
@@ -71,8 +71,7 @@
     "prettier:test": "prettier --write test --loglevel=warn",
     "watch": "jest --watch",
     "test": "jest --coverage",
-    "test:silent": "jest --silent",
-    "coveralls": "npm run test && cat coverage/lcov.info | coveralls"
+    "test:silent": "jest --silent"
   },
   "dependencies": {
     "dayjs": "^1.10.0"
