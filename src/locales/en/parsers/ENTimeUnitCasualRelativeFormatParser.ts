@@ -1,14 +1,22 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits } from "../constants";
+import { TIME_UNITS_PATTERN, parseTimeUnits, TIME_UNITS_NO_ABBR_PATTERN } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
 
 const PATTERN = new RegExp(`(this|last|past|next|after|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`, "i");
+const PATTERN_NO_ABBR = new RegExp(
+    `(this|last|past|next|after|\\+|-)\\s*(${TIME_UNITS_NO_ABBR_PATTERN})(?=\\W|$)`,
+    "i"
+);
 
 export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
+    constructor(private allowAbbreviations: boolean = true) {
+        super();
+    }
+
     innerPattern(): RegExp {
-        return PATTERN;
+        return this.allowAbbreviations ? PATTERN : PATTERN_NO_ABBR;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

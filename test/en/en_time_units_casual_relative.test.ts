@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
+import ENTimeUnitCasualRelativeFormatParser from "../../src/locales/en/parsers/ENTimeUnitCasualRelativeFormatParser";
 
 test("Test - Positive time units", () => {
     testSingleCase(chrono, "next 2 weeks", new Date(2016, 10 - 1, 1, 12), (result, text) => {
@@ -132,6 +133,23 @@ test("Test - Minus '-' sign", () => {
     });
 
     testSingleCase(chrono, "-2hr5min", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(55);
+    });
+});
+
+test("Test - Without custom parser without abbreviations", function () {
+    const custom = chrono.en.strict.clone();
+    custom.parsers.push(new ENTimeUnitCasualRelativeFormatParser(false));
+
+    testUnexpectedResult(custom, "-3y");
+    testUnexpectedResult(custom, "last 2m");
+
+    testSingleCase(custom, "-2 hours 5 minutes", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);

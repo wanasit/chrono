@@ -1,8 +1,10 @@
 import * as chrono from "../src/";
-import { testSingleCase } from "./test_util";
+import { testSingleCase, testUnexpectedResult } from "./test_util";
 import { Meridiem } from "../src";
 import UnlikelyFormatFilter from "../src/common/refiners/UnlikelyFormatFilter";
 import SlashDateFormatParser from "../src/common/parsers/SlashDateFormatParser";
+import ENWeekdayParser from "../src/locales/en/parsers/ENWeekdayParser";
+import ENTimeUnitCasualRelativeFormatParser from "../src/locales/en/parsers/ENTimeUnitCasualRelativeFormatParser";
 
 //-------------------------------------
 
@@ -143,6 +145,26 @@ test("Test - Remove a refiner example", () => {
         expect(result.text).toBe("at 2.30");
         expect(result.start.get("hour")).toBe(2);
         expect(result.start.get("minute")).toBe(30);
+    });
+});
+
+test("Test - Replace a parser example", () => {
+    const custom = chrono.en.casual.clone();
+    testSingleCase(custom, "next 5m", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(57);
+    });
+    testSingleCase(custom, "next 5 minutes", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(57);
+    });
+
+    const index = custom.parsers.findIndex((r) => r instanceof ENTimeUnitCasualRelativeFormatParser);
+    custom.parsers[index] = new ENTimeUnitCasualRelativeFormatParser(false);
+    testUnexpectedResult(custom, "next 5m");
+    testSingleCase(custom, "next 5 minutes", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(57);
     });
 });
 

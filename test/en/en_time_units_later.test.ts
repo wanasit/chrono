@@ -1,5 +1,5 @@
 import * as chrono from "../../src/";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 import { Meridiem } from "../../src/";
 
 test("Test - Later Expression", function () {
@@ -262,6 +262,16 @@ test("Test - From now Expression", () => {
 });
 
 test("Test - Strict mode", function () {
+    testSingleCase(chrono, "the min after", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("the min after");
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 15));
+    });
+
     testSingleCase(chrono.strict, "15 minutes from now", new Date(2012, 7, 10, 12, 14), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(12);
@@ -279,15 +289,8 @@ test("Test - Strict mode", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 5));
     });
 
-    testSingleCase(chrono, "the min after", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("the min after");
-        expect(result.start.get("hour")).toBe(12);
-        expect(result.start.get("minute")).toBe(15);
-        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
-
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 15));
-    });
+    testUnexpectedResult(chrono.strict, "15m from now");
+    testUnexpectedResult(chrono.strict, "15s later");
 });
 
 test("Test - After with reference", () => {

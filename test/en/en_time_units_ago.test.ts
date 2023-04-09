@@ -300,6 +300,18 @@ test("Test - Before with reference", () => {
     });
 });
 
+test("Test - Strict mode", function () {
+    testSingleCase(chrono.strict, "5 minutes ago", new Date(2012, 7, 10, 12, 14), (result, text) => {
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(9);
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 9));
+    });
+
+    testUnexpectedResult(chrono.strict, "5m ago", new Date(2012, 7, 10, 12, 14));
+    testUnexpectedResult(chrono.strict, "5hr before", new Date(2012, 7, 10, 12, 14));
+    testUnexpectedResult(chrono.strict, "5 h ago", new Date(2012, 7, 10, 12, 14));
+});
+
 test("Test - Negative cases", function () {
     testUnexpectedResult(chrono, "15 hours 29 min");
     testUnexpectedResult(chrono, "a few hour");

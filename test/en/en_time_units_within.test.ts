@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
+import { Meridiem } from "../../src";
 
 test("Test - The normal within expression", () => {
     testSingleCase(chrono, "we have to make something in 5 days.", new Date(2012, 7, 10), (result) => {
@@ -326,4 +327,14 @@ test("Test - Time units' certainty", () => {
         expect(result.start.isCertain("hour")).toBeFalsy();
         expect(result.start.isCertain("minute")).toBeFalsy();
     });
+});
+
+test("Test - Strict mode", function () {
+    testSingleCase(chrono, "in 2hour", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.start.get("hour")).toBe(16);
+        expect(result.start.get("minute")).toBe(52);
+    });
+
+    testUnexpectedResult(chrono.strict, "in 15m");
+    testUnexpectedResult(chrono.strict, "within 5hr");
 });

@@ -82,7 +82,7 @@ export function createConfiguration(strictMode = true, littleEndian = false): Co
         {
             parsers: [
                 new SlashDateFormatParser(littleEndian),
-                new ENTimeUnitWithinFormatParser(),
+                new ENTimeUnitWithinFormatParser(strictMode),
                 new ENMonthNameLittleEndianParser(),
                 new ENMonthNameMiddleEndianParser(),
                 new ENWeekdayParser(),

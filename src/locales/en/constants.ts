@@ -134,6 +134,25 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "thirty-first": 31,
 };
 
+export const TIME_UNIT_DICTIONARY_NO_ABBR: { [word: string]: OpUnitType | QUnitType } = {
+    second: "second",
+    seconds: "second",
+    minute: "minute",
+    minutes: "minute",
+    hour: "hour",
+    hours: "hour",
+    day: "d",
+    days: "d",
+    week: "week",
+    weeks: "week",
+    month: "month",
+    months: "month",
+    quarter: "quarter",
+    quarters: "quarter",
+    year: "year",
+    years: "year",
+};
+
 export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
     s: "second",
     sec: "second",
@@ -167,6 +186,9 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     yr: "year",
     year: "year",
     years: "year",
+    // Also, merge the entries from the full-name dictionary.
+    // We leave the duplicated entries for readability.
+    ...TIME_UNIT_DICTIONARY_NO_ABBR,
 };
 
 //-----------------------------
@@ -238,7 +260,15 @@ export function parseYear(match: string): number {
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
+const SINGLE_TIME_UNIT_NO_ABBR_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAnyPattern(
+    TIME_UNIT_DICTIONARY_NO_ABBR
+)})`;
+
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:about|around)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_NO_ABBR_PATTERN = repeatedTimeunitPattern(
+    `(?:(?:about|around)\\s{0,3})?`,
+    SINGLE_TIME_UNIT_NO_ABBR_PATTERN
+);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};

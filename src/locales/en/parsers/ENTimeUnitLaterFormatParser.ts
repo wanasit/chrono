@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
+import { parseTimeUnits, TIME_UNITS_NO_ABBR_PATTERN, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
@@ -8,7 +8,10 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const STRICT_PATTERN = new RegExp("" + "(" + TIME_UNITS_PATTERN + ")" + "(later|from now)" + "(?=(?:\\W|$))", "i");
+const STRICT_PATTERN = new RegExp(
+    "" + "(" + TIME_UNITS_NO_ABBR_PATTERN + ")" + "(later|from now)" + "(?=(?:\\W|$))",
+    "i"
+);
 const GROUP_NUM_TIMEUNITS = 1;
 
 export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
