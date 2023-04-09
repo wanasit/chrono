@@ -5,8 +5,8 @@ import * as references from "../../../common/casualReferences";
 
 const PATTERN = /今日|きょう|当日|とうじつ|昨日|きのう|明日|あした|今夜|こんや|今夕|こんゆう|今晩|こんばん|今朝|けさ/i;
 
-function normalizeTextToKanji(str: string) {
-    switch (str) {
+function normalizeTextToKanji(text: string) {
+    switch (text) {
         case "きょう":
             return "今日";
         case "とうじつ":
@@ -24,7 +24,7 @@ function normalizeTextToKanji(str: string) {
         case "けさ":
             return "今朝";
         default:
-            return str;
+            return text;
     }
 }
 
