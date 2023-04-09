@@ -219,6 +219,9 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     минуток: "minute",
     минутки: "minute",
     минутку: "minute",
+    минуточек: "minute",
+    минуточки: "minute",
+    минуточку: "minute",
     час: "hour",
     часов: "hour",
     часа: "hour",
@@ -284,7 +287,7 @@ export function parseNumberPattern(match: string): number {
 
 export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:го|ого|е|ое)?)`;
 export function parseOrdinalNumberPattern(match: string): number {
-    let num = match.toLowerCase();
+    const num = match.toLowerCase();
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
         return ORDINAL_WORD_DICTIONARY[num];
     }
