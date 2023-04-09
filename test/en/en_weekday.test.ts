@@ -273,6 +273,32 @@ test("Test - Weekday Overlap", function () {
     });
 });
 
+test("Test - Weekday range", () => {
+    testSingleCase(chrono.casual, "Friday to Monday", new Date(2023, 4 - 1, 9) /*Sunday*/, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("weekday")).toBe(5);
+
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(4);
+        expect(result.end.get("day")).toBe(10);
+        expect(result.end.get("weekday")).toBe(1);
+    });
+
+    testSingleCase(chrono.casual, "Monday to Friday", new Date(2023, 4 - 1, 9) /*Sunday*/, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("weekday")).toBe(1);
+
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(4);
+        expect(result.end.get("day")).toBe(14);
+        expect(result.end.get("weekday")).toBe(5);
+    });
+});
+
 test("Test - forward dates only option", () => {
     testSingleCase(
         chrono.casual,

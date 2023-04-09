@@ -138,8 +138,8 @@ export class ParsingComponents implements ParsedComponents {
         return this.isCertain("weekday") && !this.isCertain("day") && !this.isCertain("month");
     }
 
-    isOnlyDayMonthComponent(): boolean {
-        return this.isCertain("day") && this.isCertain("month") && !this.isCertain("year");
+    isDateWithUnknownYear(): boolean {
+        return this.isCertain("month") && !this.isCertain("year");
     }
 
     isValidDate(): boolean {

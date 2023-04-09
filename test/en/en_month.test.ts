@@ -117,6 +117,76 @@ test("Test - Month-Only expression", function () {
     });
 });
 
+test("Test - Month-Only Range expression", () => {
+    testSingleCase(chrono, "From May to December", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(5);
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono, "From December to May", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(5);
+    });
+
+    testSingleCase(chrono, "From May to December, 2022", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(5);
+        expect(result.end.get("year")).toBe(2022);
+        expect(result.end.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono, "From December to May 2022", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.end.get("year")).toBe(2022);
+        expect(result.end.get("month")).toBe(5);
+    });
+
+    testSingleCase(chrono, "From December to May 2020", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2019);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.end.get("year")).toBe(2020);
+        expect(result.end.get("month")).toBe(5);
+    });
+
+    testSingleCase(chrono, "From December to May 2025", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.end.get("year")).toBe(2025);
+        expect(result.end.get("month")).toBe(5);
+    });
+});
+
+test("Test - Month with farward date option", () => {
+    testSingleCase(chrono, "in December", new Date(2023, 4 - 1, 9), { forwardDate: true }, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono, "in May", new Date(2023, 4 - 1, 9), { forwardDate: true }, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(5);
+    });
+
+    testSingleCase(chrono, "From May to December", new Date(2023, 4 - 1, 9), { forwardDate: true }, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(5);
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono, "From December to May", new Date(2023, 4 - 1, 9), { forwardDate: true }, (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.end.get("year")).toBe(2024);
+        expect(result.end.get("month")).toBe(5);
+    });
+});
+
 test("Test - Month expression in context", function () {
     testSingleCase(chrono, "The date is Sep 2012 is the date", (result) => {
         expect(result.index).toBe(12);

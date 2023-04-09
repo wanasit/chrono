@@ -30,22 +30,6 @@ export default class ForwardDateRefiner implements Refiner {
                 }
             }
 
-            if (result.start.isOnlyDayMonthComponent() && refMoment.isAfter(result.start.dayjs())) {
-                for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
-                    result.start.imply("year", result.start.get("year") + 1);
-                    context.debug(() => {
-                        console.log(`Forward yearly adjusted for ${result} (${result.start})`);
-                    });
-
-                    if (result.end && !result.end.isCertain("year")) {
-                        result.end.imply("year", result.end.get("year") + 1);
-                        context.debug(() => {
-                            console.log(`Forward yearly adjusted for ${result} (${result.end})`);
-                        });
-                    }
-                }
-            }
-
             if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
                 if (refMoment.day() >= result.start.get("weekday")) {
                     refMoment = refMoment.day(result.start.get("weekday") + 7);
@@ -74,6 +58,24 @@ export default class ForwardDateRefiner implements Refiner {
                     context.debug(() => {
                         console.log(`Forward weekly adjusted for ${result} (${result.end})`);
                     });
+                }
+            }
+
+            // In case where we know the month, but not which year (e.g. "in December", "25th December"),
+            // try move to another year
+            if (result.start.isDateWithUnknownYear() && refMoment.isAfter(result.start.dayjs())) {
+                for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
+                    result.start.imply("year", result.start.get("year") + 1);
+                    context.debug(() => {
+                        console.log(`Forward yearly adjusted for ${result} (${result.start})`);
+                    });
+
+                    if (result.end && !result.end.isCertain("year")) {
+                        result.end.imply("year", result.end.get("year") + 1);
+                        context.debug(() => {
+                            console.log(`Forward yearly adjusted for ${result} (${result.end})`);
+                        });
+                    }
                 }
             }
         });
