@@ -63,6 +63,8 @@ test("Test - Skip impossible dates/times", () => {
 
     testUnexpectedResult(chrono, "14PM");
     testUnexpectedResult(chrono, "25:12");
+
+    testUnexpectedResult(chrono, "An appointment on 13/31/2018");
 });
 
 test("Test - Skip version number pattern", () => {
