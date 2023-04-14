@@ -211,6 +211,18 @@ test("Test - Range expression", () => {
 
         expect(result.end).toBeDate(new Date(2013, 9 - 1, 12, 12));
     });
+
+    testSingleCase(chrono, " 17 August 2013 to 19 August 2013", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("17 August 2013 to 19 August 2013");
+
+        expect(result.start.get("year")).toBe(2013);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(17);
+
+        expect(result.end.get("year")).toBe(2013);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(19);
+    });
 });
 
 test("Test - Combined expression", () => {

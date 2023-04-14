@@ -13,7 +13,7 @@ export interface Configuration {
 }
 
 /**
- * A abstraction for Chrono *Parser*.
+ * An abstraction for Chrono *Parser*.
  *
  * Each parser should recognize and handle a certain date format.
  * Chrono uses multiple parses (and refiners) together for parsing the input.
@@ -108,7 +108,7 @@ export class Chrono {
 
             const result = parser.extract(context, match);
             if (!result) {
-                // If fail, move on by 1
+                // If fails, move on by 1
                 remainingText = originalText.substring(match.index + 1);
                 match = pattern.exec(remainingText);
                 continue;
@@ -124,10 +124,14 @@ export class Chrono {
                 parsedResult = context.createParsingResult(match.index, match[0], result);
             }
 
-            context.debug(() => console.log(`${parser.constructor.name} extracted result ${parsedResult}`));
+            const parsedIndex = parsedResult.index;
+            const parsedText = parsedResult.text;
+            context.debug(() =>
+                console.log(`${parser.constructor.name} extracted (at index=${parsedIndex}) '${parsedText}'`)
+            );
 
             results.push(parsedResult);
-            remainingText = originalText.substring(index + parsedResult.text.length);
+            remainingText = originalText.substring(parsedIndex + parsedText.length);
             match = pattern.exec(remainingText);
         }
 
@@ -141,7 +145,7 @@ export class ParsingContext implements DebugHandler {
     readonly reference: ReferenceWithTimezone;
 
     /**
-     * @deprecated. Use reference.instant instead.
+     * @deprecated. Use `reference.instant` instead.
      */
     readonly refDate: Date;
 
