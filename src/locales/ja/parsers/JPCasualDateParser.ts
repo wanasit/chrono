@@ -3,7 +3,30 @@ import dayjs from "dayjs";
 import { Meridiem } from "../../../index";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /今日|当日|昨日|明日|今夜|今夕|今晩|今朝/i;
+const PATTERN = /今日|きょう|当日|とうじつ|昨日|きのう|明日|あした|今夜|こんや|今夕|こんゆう|今晩|こんばん|今朝|けさ/i;
+
+function normalizeTextToKanji(text: string) {
+    switch (text) {
+        case "きょう":
+            return "今日";
+        case "とうじつ":
+            return "当日";
+        case "きのう":
+            return "昨日";
+        case "あした":
+            return "明日";
+        case "こんや":
+            return "今夜";
+        case "こんゆう":
+            return "今夕";
+        case "こんばん":
+            return "今晩";
+        case "けさ":
+            return "今朝";
+        default:
+            return text;
+    }
+}
 
 export default class JPCasualDateParser implements Parser {
     pattern() {
@@ -11,7 +34,7 @@ export default class JPCasualDateParser implements Parser {
     }
 
     extract(context: ParsingContext, match: RegExpMatchArray) {
-        const text = match[0];
+        const text = normalizeTextToKanji(match[0]);
 
         const date = dayjs(context.refDate);
         const components = context.createParsingComponents();
