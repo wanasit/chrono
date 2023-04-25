@@ -1,6 +1,6 @@
 import { Parser, ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import { Meridiem } from "../../../parsing";
+import { Meridiem } from "../../../types";
 
 /**
  * 8h10m00s

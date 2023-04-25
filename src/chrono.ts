@@ -1,5 +1,5 @@
 import { ReferenceWithTimezone, ParsingComponents, ParsingResult } from "./results";
-import { Component, ParsedResult, ParsingOption, ParsingReference } from "./parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference } from "./types";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
 import ENDefaultConfiguration from "./locales/en/configuration";
 

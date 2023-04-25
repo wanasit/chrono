@@ -7,7 +7,7 @@ import ExtractTimezoneOffsetRefiner from "../../../common/refiners/ExtractTimezo
 import { includeCommonConfiguration } from "../../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../../chrono";
 import { ParsingResult } from "../../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../../parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../../types";
 import ZHHantCasualDateParser from "./parsers/ZHHantCasualDateParser";
 import ZHHantDateParser from "./parsers/ZHHantDateParser";
 import ZHHantDeadlineFormatParser from "./parsers/ZHHantDeadlineFormatParser";

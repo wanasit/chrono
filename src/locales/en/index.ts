@@ -6,7 +6,7 @@
 
 import { Chrono, Parser, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 
 import ENDefaultConfiguration from "./configuration";
 

@@ -7,7 +7,7 @@
 import { includeCommonConfiguration } from "../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import FRCasualDateParser from "./parsers/FRCasualDateParser";
 import FRCasualTimeParser from "./parsers/FRCasualTimeParser";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";

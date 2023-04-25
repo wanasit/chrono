@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { Meridiem } from "../../../parsing";
+import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignTheNextDay } from "../../../utils/dayjs";
 import dayjs from "dayjs";

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { TimezoneAbbrMap, Weekday, Month } from "./parsing";
+import { TimezoneAbbrMap, Weekday, Month } from "./types";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     ACDT: 630,

@@ -1,6 +1,6 @@
 // Map ABBR -> Offset in minute
 import { ParsingContext, Refiner } from "../../chrono";
-import { TimezoneAbbrMap } from "../../parsing";
+import { TimezoneAbbrMap } from "../../types";
 import { ParsingResult } from "../../results";
 import { toTimezoneOffset } from "../../timezone";
 

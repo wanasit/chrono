@@ -7,7 +7,7 @@
 import { includeCommonConfiguration } from "../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import NLMergeDateRangeRefiner from "./refiners/NLMergeDateRangeRefiner";
 import NLMergeDateTimeRefiner from "./refiners/NLMergeDateTimeRefiner";
 import NLCasualDateParser from "./parsers/NLCasualDateParser";

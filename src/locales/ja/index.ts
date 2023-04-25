@@ -10,7 +10,7 @@ import JPCasualDateParser from "./parsers/JPCasualDateParser";
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
-import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../parsing";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 
 export { Chrono, Parser, Refiner, ParsingResult };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
