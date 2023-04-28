@@ -2,10 +2,11 @@
  * Chrono components for zh support
  */
 
-import { Chrono, Configuration } from "../../../chrono";
 import ExtractTimezoneOffsetRefiner from "../../../common/refiners/ExtractTimezoneOffsetRefiner";
 import { includeCommonConfiguration } from "../../../configurations";
-import { ParsedResult, ParsingOption } from "../../../index";
+import { Chrono, Configuration, Parser, Refiner } from "../../../chrono";
+import { ParsingResult } from "../../../results";
+import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../../types";
 import ZHHansCasualDateParser from "./parsers/ZHHansCasualDateParser";
 import ZHHansDateParser from "./parsers/ZHHansDateParser";
 import ZHHansDeadlineFormatParser from "./parsers/ZHHansDeadlineFormatParser";
@@ -14,6 +15,9 @@ import ZHHansTimeExpressionParser from "./parsers/ZHHansTimeExpressionParser";
 import ZHHansWeekdayParser from "./parsers/ZHHansWeekdayParser";
 import ZHHansMergeDateRangeRefiner from "./refiners/ZHHansMergeDateRangeRefiner";
 import ZHHansMergeDateTimeRefiner from "./refiners/ZHHansMergeDateTimeRefiner";
+
+export { Chrono, Parser, Refiner, ParsingResult };
+export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts
 export const hans = new Chrono(createCasualConfiguration());

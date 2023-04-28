@@ -1,5 +1,5 @@
 import { ParsingComponents, ParsingResult } from "../results";
-import { Meridiem } from "../index";
+import { Meridiem } from "../types";
 import { assignSimilarDate, implySimilarDate } from "../utils/dayjs";
 
 export function mergeDateTimeResult(dateResult: ParsingResult, timeResult: ParsingResult): ParsingResult {

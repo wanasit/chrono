@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { Meridiem } from "../../../index";
+import { Meridiem } from "../../../types";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 import { REGEX_PARTS } from "../constants";
 

@@ -1,6 +1,6 @@
 import { Parser, ParsingContext } from "../../chrono";
 import { ParsingComponents, ParsingResult } from "../../results";
-import { Component } from "../../index";
+import { Component } from "../../types";
 
 /**
  *

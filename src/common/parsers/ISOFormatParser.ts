@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../chrono";
-import { Component } from "../../index";
+import { Component } from "../../types";
 import { AbstractParserWithWordBoundaryChecking } from "./AbstractParserWithWordBoundary";
 
 // ISO 8601

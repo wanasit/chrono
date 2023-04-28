@@ -26,6 +26,14 @@
     ".": {
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
+    },
+    "./*": {
+      "require": "./dist/cjs/locales/*/index.js",
+      "import": "./dist/esm/locales/*/index.js"
+    },
+    "./*/*": {
+      "require": "./dist/cjs/locales/*/*/index.js",
+      "import": "./dist/esm/locales/*/*/index.js"
     }
   },
   "engines": {
