@@ -22,7 +22,7 @@ export default class UKTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     primaryPrefix(): string {
-        return `(?:(?:в|з|із)\\s*)??`;
+        return `(?:(?:в|у|о|об|з|із|від)\\s*)??`;
     }
 
     primarySuffix(): string {

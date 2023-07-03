@@ -8,13 +8,13 @@ import { createParsingComponentsAtWeekday } from "../../../common/calculation/we
 
 const PATTERN = new RegExp(
     `(?:(?:,|\\(|（)\\s*)?` +
-    `(?:в\\s*?)?` +
-    `(?:у\\s*?)?` +
-    `(?:(цей|цього|минулого|минулий|попередній|попереднього|наступного|наступний)\\s*)?` +
-    `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-    `(?:\\s*(?:,|\\)|）))?` +
-    `(?:\\s*на\\s*(цьому|минулому|наступному)\\s*тижні)?` +
-    `${REGEX_PARTS.rightBoundary}`,
+        `(?:в\\s*?)?` +
+        `(?:у\\s*?)?` +
+        `(?:(цей|минулого|минулий|попередній|попереднього|наступного|наступний|наступному)\\s*)?` +
+        `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
+        `(?:\\s*(?:,|\\)|）))?` +
+        `(?:\\s*(на|у|в)\\s*(цьому|минулому|наступному)\\s*тижні)?` +
+        `${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 
@@ -24,7 +24,7 @@ const POSTFIX_GROUP = 3;
 
 export default class UKWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
-        return PATTERN
+        return PATTERN;
     }
 
     patternLeftBoundary(): string {
@@ -41,20 +41,16 @@ export default class UKWeekdayParser extends AbstractParserWithWordBoundaryCheck
         modifierWord = modifierWord.toLocaleLowerCase();
 
         let modifier = null;
-        if (modifierWord == "минулого" ||
+        if (
+            modifierWord == "минулого" ||
             modifierWord == "минулий" ||
             modifierWord == "попередній" ||
             modifierWord == "попереднього"
         ) {
             modifier = "last";
-        } else if (
-            modifierWord == "наступного" ||
-            modifierWord == "наступний"
-        ) {
+        } else if (modifierWord == "наступного" || modifierWord == "наступний") {
             modifier = "next";
-        } else if (modifierWord == "цей" ||
-            modifierWord == "цього"
-        ) {
+        } else if (modifierWord == "цей" || modifierWord == "цього" || modifierWord == "цьому") {
             modifier = "this";
         }
 

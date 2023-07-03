@@ -1,5 +1,5 @@
-import * as chrono from '../../src';
-import { testSingleCase } from '../test_util';
+import * as chrono from "../../src";
+import { testSingleCase } from "../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.uk.casual, "понеділок", new Date(2012, 7, 9), (result) => {
@@ -7,7 +7,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("понеділок");
         expect(result.start).toBeDate(new Date(2012, 7, 6, 12));
     });
-
 
     testSingleCase(chrono.uk.casual, "Дедлайн у п'ятницю...", new Date(2012, 7, 9), (result) => {
         expect(result.index).toBe(8);
@@ -30,7 +29,7 @@ test("Test - Single Expression", function () {
 
 test("Test - Weekday With Casual Time", function () {
     testSingleCase(chrono.uk.casual, "Подзвони в середу вранці", new Date(2015, 3, 18), (result) => {
-        expect(result.index).toBe(11);
+        expect(result.index).toBe(9);
         expect(result.text).toBe("в середу вранці");
         expect(result.start).toBeDate(new Date(2015, 3, 15, 6));
     });

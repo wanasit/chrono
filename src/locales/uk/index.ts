@@ -4,7 +4,7 @@
  * @module
  */
 
-import UKTimeUnitWithinFormatParser from "./parsers/UKTimeUnitWithinFIrmatParser";
+import UKTimeUnitWithinFormatParser from "./parsers/UKTimeUnitWithinFormatParser";
 import UKMonthNameLittleEndianParser from "./parsers/UKMonthNameLittleEndianParser";
 import UkMonthNameParser from "./parsers/UKMonthNameParser";
 import UKTimeExpressionParser from "./parsers/UKTimeExpressionParser";
@@ -17,7 +17,6 @@ import UKCasualDateParser from "./parsers/UKCasualDateParser";
 import UKCasualTimeParser from "./parsers/UKCasualTimeParser";
 import UKWeekdayParser from "./parsers/UKWeekdayParser";
 import UKRelativeDateFormatParser from "./parsers/UKRelativeDateFormatParser";
-
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
@@ -50,7 +49,6 @@ export function createCasualConfiguration(): Configuration {
     option.parsers.unshift(new UKRelativeDateFormatParser());
     option.parsers.unshift(new UKTimeUnitCasualRelativeFormatParser());
     return option;
-
 }
 
 /**
@@ -69,10 +67,7 @@ export function createConfiguration(strictMode: boolean): Configuration {
                 new UKTimeExpressionParser(strictMode),
                 new UKTimeUnitAgoFormatParser(),
             ],
-            refiners: [
-                new UKMergeDateTimeRefiner(),
-                new UKMergeDateRangeRefiner()
-            ],
+            refiners: [new UKMergeDateTimeRefiner(), new UKMergeDateRangeRefiner()],
         },
         strictMode
     );

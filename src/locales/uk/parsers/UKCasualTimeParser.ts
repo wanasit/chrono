@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 import { REGEX_PARTS } from "../constants";
 
 const PATTERN = new RegExp(
-    `(зараз|минулого\\s*вечора|минулої\\s*ночі|наступної\\s*ночі|сьогодні\\s*вночі|цієї\\s*ночі|цього ранку|вранці|ранку|зранку|опівдні|ввечері|вечора|опівночі)` +
-    `${REGEX_PARTS.rightBoundary}`,
+    `(зараз|минулого\\s*вечора|минулої\\s*ночі|наступної\\s*ночі|сьогодні\\s*вночі|цієї\\s*ночі|цього ранку|вранці|ранку|зранку|опівдні|ввечері|вечора|опівночі|вночі)` +
+        `${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 export default class UKCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
@@ -20,7 +20,7 @@ export default class UKCasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = dayjs(context.reference.instant);
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 
@@ -47,6 +47,9 @@ export default class UKCasualTimeParser extends AbstractParserWithWordBoundaryCh
             targetDate = targetDate.add(daysToAdd, "day");
             assignSimilarDate(component, targetDate);
             component.imply("hour", 1);
+        }
+        if (lowerText.match(/цієї\s*ночі/)) {
+            return references.midnight(context.reference);
         }
         if (lowerText.endsWith("опівночі") || lowerText.endsWith("вночі")) {
             return references.midnight(context.reference);

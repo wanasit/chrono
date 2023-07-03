@@ -5,7 +5,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { reverseTimeUnits } from "../../../utils/timeunits";
 
 const PATTERN = new RegExp(
-    `(ці|останні|минулі|майбутні|після|через|\\+|-)\\s*(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`,
+    `(ці|останні|минулі|майбутні|наступні|після|через|\\+|-)\\s*(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 

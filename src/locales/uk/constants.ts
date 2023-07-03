@@ -84,7 +84,7 @@ export const FULL_MONTH_NAME_DICTIONARY: { [word: string]: number } = {
     "грудні": 12,
 };
 
-export const MONTH_DICTIONARY: { [word: string]: number; } = {
+export const MONTH_DICTIONARY: { [word: string]: number } = {
     ...FULL_MONTH_NAME_DICTIONARY,
     "січ": 1,
     "січ.": 1,
@@ -102,15 +102,19 @@ export const MONTH_DICTIONARY: { [word: string]: number; } = {
     "лип.": 7,
     "серп": 8,
     "серп.": 8,
+    "сер": 8,
+    "cер.": 8,
     "вер": 9,
     "вер.": 9,
+    "верес": 9,
+    "верес.": 9,
     "жовт": 10,
     "жовт.": 10,
     "листоп": 11,
     "листоп.": 11,
     "груд": 12,
     "груд.": 12,
-}
+};
 
 export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "один": 1,
@@ -239,6 +243,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     день: "d",
     дня: "d",
     днів: "d",
+    дні: "d",
     доба: "d",
     добу: "d",
     тиждень: "week",
@@ -246,20 +251,21 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     тижня: "week",
     тижні: "week",
     тижнів: "week",
-    місяц: "month",
-    місяцб: "month",
+    місяць: "month",
     місяців: "month",
+    місяці: "month",
     місяця: "month",
     квартал: "quarter",
     кварталу: "quarter",
     квартала: "quarter",
     кварталів: "quarter",
+    кварталі: "quarter",
     рік: "year",
     року: "year",
     році: "year",
     років: "year",
+    роки: "year",
 };
-
 
 //--------------------------------
 
@@ -273,7 +279,7 @@ export function parseNumberPattern(match: string): number {
         return INTEGER_WORD_DICTIONARY[num];
     }
     if (num.match(/декілька/)) {
-        return 3;
+        return 2;
     } else if (num.match(/пів/)) {
         return 0.5;
     } else if (num.match(/пар/)) {
@@ -290,7 +296,7 @@ export function parseOrdinalNumberPattern(match: string): number {
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
         return ORDINAL_NUMBER_PATTERN[num];
     }
-    return parseInt(num)
+    return parseInt(num);
 }
 
 const year = "(?:\\s+(?:року|рік|р|р.))?";
@@ -319,7 +325,10 @@ export function parseYearPattern(match: string): number {
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
-export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:близько|приблизно)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
+    `(?:(?:близько|приблизно)\\s{0,3})?`,
+    SINGLE_TIME_UNIT_PATTERN
+);
 
 export function parseTimeUnits(timeunitText): TimeUnits {
     const fragments = {};

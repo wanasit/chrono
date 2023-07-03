@@ -6,13 +6,13 @@ import { YEAR_PATTERN, parseYearPattern } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `((?:в)\\s*)?` +
-    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-    `\\s*` +
-    `(?:` +
-    `[,-]?\\s*(${YEAR_PATTERN})?` +
-    `)?` +
-    `(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)`,
+    `((?:в|у)\\s*)?` +
+        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+        `\\s*` +
+        `(?:` +
+        `[,-]?\\s*(${YEAR_PATTERN})?` +
+        `)?` +
+        `(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)`,
     REGEX_PARTS.flags
 );
 
@@ -52,7 +52,7 @@ export default class UkMonthNameParser extends AbstractParserWithWordBoundaryChe
             const year = parseYearPattern(match[YEAR_GROUP]);
             result.start.assign("year", year);
         } else {
-            const year = findYearClosestToRef(context.refDate, 1, month);
+            const year = findYearClosestToRef(context.reference.instant, 1, month);
             result.start.imply("year", year);
         }
 

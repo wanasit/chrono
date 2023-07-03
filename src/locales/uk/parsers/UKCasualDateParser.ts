@@ -5,7 +5,7 @@ import * as references from "../../../common/casualReferences";
 import { REGEX_PARTS } from "../constants";
 
 const PATTERN = new RegExp(
-    `(?:с|со)?\\s*(сьогодні|вчора|завтра|післязавтра|післяпіслязавтра|позапозавчора|позавчора)${REGEX_PARTS.rightBoundary}`,
+    `(?:з|із|від)?\\s*(сьогодні|вчора|завтра|післязавтра|післяпіслязавтра|позапозавчора|позавчора)${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
 );
 

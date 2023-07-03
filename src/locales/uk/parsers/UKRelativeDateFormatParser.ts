@@ -6,7 +6,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(в минулому|у минулому|на минулому|минулого|на наступному|в наступному|у наступному|наступного|на цьому|в цьому|цього)\\s*(${matchAnyPattern(
+    `(в минулому|у минулому|на минулому|минулого|на наступному|в наступному|у наступному|наступного|на цьому|в цьому|у цьому|цього)\\s*(${matchAnyPattern(
         TIME_UNIT_DICTIONARY
     )})(?=\\s*)${REGEX_PARTS.rightBoundary}`,
     REGEX_PARTS.flags
@@ -29,14 +29,23 @@ export default class UKRelativeDateFormatParser extends AbstractParserWithWordBo
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (modifier == "на наступному" || modifier == "в наступному" || modifier == "у наступному" || modifier == "наступного") {
+        if (
+            modifier == "на наступному" ||
+            modifier == "в наступному" ||
+            modifier == "у наступному" ||
+            modifier == "наступного"
+        ) {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
-
-        if (modifier == "на минулому" || modifier == "в минулому" || modifier == "у минулому" || modifier == "минулого") {
+        if (
+            modifier == "на минулому" ||
+            modifier == "в минулому" ||
+            modifier == "у минулому" ||
+            modifier == "минулого"
+        ) {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);

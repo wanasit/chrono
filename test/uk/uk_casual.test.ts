@@ -128,14 +128,14 @@ test("Test - Combined Expression", () => {
 
 test("Test - Casual date range", () => {
     testSingleCase(chrono.uk.casual, "Подія від сьогодні і до післязавтра", new Date(2012, 7, 4, 12), (result) => {
-        expect(result.index).toBe(8);
+        expect(result.index).toBe(6);
         expect(result.text).toBe("від сьогодні і до післязавтра");
         expect(result.start).toBeDate(new Date(2012, 7, 4, 12));
         expect(result.end).toBeDate(new Date(2012, 7, 6, 12));
     });
 
     testSingleCase(chrono.uk.casual, "Подія сьогодні-завтра", new Date(2012, 7, 10, 12), (result) => {
-        expect(result.index).toBe(8);
+        expect(result.index).toBe(6);
         expect(result.text).toBe("сьогодні-завтра");
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
         expect(result.end).toBeDate(new Date(2012, 7, 11, 12));
