@@ -97,17 +97,17 @@ test("Test - Combined expression", () => {
 });
 
 test("Test - Ordinal Words", () => {
-    testSingleCase(chrono.uk, "перше січня", new Date(2012, 1, 1), (result) => {
+    testSingleCase(chrono.uk, "п'яте травня", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("перше січня");
-        expect(result.start).toBeDate(new Date(2012, 1, 1, 12, 0));
+        expect(result.text).toBe("п'яте травня");
+        expect(result.start).toBeDate(new Date(2012, 5 - 1, 5, 12, 0));
     });
 });
 
 test("Test - Ordinal Words", () => {
-    testSingleCase(chrono.uk, "двадцать п'яте травня", new Date(2012, 1, 10), (result) => {
+    testSingleCase(chrono.uk, "двадцять п'яте травня", new Date(2012, 1, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("двадцать п'яте травня");
+        expect(result.text).toBe("двадцять п'яте травня");
         expect(result.start).toBeDate(new Date(2012, 5 - 1, 25, 12, 0));
     });
 });

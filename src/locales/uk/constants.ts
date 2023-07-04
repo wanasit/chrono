@@ -294,7 +294,7 @@ export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTION
 export function parseOrdinalNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {
-        return ORDINAL_NUMBER_PATTERN[num];
+        return ORDINAL_WORD_DICTIONARY[num];
     }
     return parseInt(num);
 }
