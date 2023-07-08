@@ -23,6 +23,7 @@ import { ParsingResult } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import UKTimeUnitCasualRelativeFormatParser from "./parsers/UKTimeUnitCasualRelativeFormatParser";
+import ISOFormatParser from "../../common/parsers/ISOFormatParser";
 
 export { Chrono, Parser, Refiner, ParsingResult };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
@@ -60,6 +61,7 @@ export function createConfiguration(strictMode: boolean): Configuration {
     return includeCommonConfiguration(
         {
             parsers: [
+                new ISOFormatParser(),
                 new SlashDateFormatParser(true),
                 new UKTimeUnitWithinFormatParser(),
                 new UKMonthNameLittleEndianParser(),
