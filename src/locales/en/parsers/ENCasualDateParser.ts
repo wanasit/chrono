@@ -15,25 +15,24 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
         let targetDate = dayjs(context.refDate);
         const lowerText = match[0].toLowerCase();
-        const component = context.createParsingComponents();
 
         switch (lowerText) {
             case "now":
-                return references.now(context.reference);
+                return references.now(context.reference, "Now");
 
             case "today":
-                return references.today(context.reference);
+                return references.today(context.reference, "Today");
 
             case "yesterday":
-                return references.yesterday(context.reference);
+                return references.yesterday(context.reference, "Yesterday");
 
             case "tomorrow":
             case "tmr":
             case "tmrw":
-                return references.tomorrow(context.reference);
+                return references.tomorrow(context.reference, "Tomorrow");
 
             case "tonight":
-                return references.tonight(context.reference);
+                return references.tonight(context.reference, undefined, "Tonight");
 
             default:
                 if (lowerText.match(/last\s*night/)) {
@@ -41,12 +40,15 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
                         targetDate = targetDate.add(-1, "day");
                     }
 
+                    const component = context.createParsingComponents(undefined, "Last Night");
                     assignSimilarDate(component, targetDate);
                     component.imply("hour", 0);
+
+                    return component;
                 }
                 break;
         }
 
-        return component;
+        return context.createParsingComponents();
     }
 }

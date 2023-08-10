@@ -50,11 +50,17 @@ export class ParsingComponents implements ParsedComponents {
     private knownValues: { [c in Component]?: number };
     private impliedValues: { [c in Component]?: number };
     private reference: ReferenceWithTimezone;
+    public readonly casualText?: string;
 
-    constructor(reference: ReferenceWithTimezone, knownComponents?: { [c in Component]?: number }) {
+    constructor(
+        reference: ReferenceWithTimezone,
+        knownComponents?: { [c in Component]?: number },
+        casualText?: string
+    ) {
         this.reference = reference;
         this.knownValues = {};
         this.impliedValues = {};
+        this.casualText = casualText;
         if (knownComponents) {
             for (const key in knownComponents) {
                 this.knownValues[key as Component] = knownComponents[key as Component];

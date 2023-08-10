@@ -105,6 +105,11 @@ export interface ParsedComponents {
      * @return a javascript date object.
      */
     date(): Date;
+
+    /**
+     * Get the full casual text that matches.
+     */
+    casualText?: string;
 }
 
 export type Component =

@@ -159,12 +159,15 @@ export class ParsingContext implements DebugHandler {
         this.refDate = this.reference.instant;
     }
 
-    createParsingComponents(components?: { [c in Component]?: number } | ParsingComponents): ParsingComponents {
+    createParsingComponents(
+        components?: { [c in Component]?: number } | ParsingComponents,
+        casualText?: string
+    ): ParsingComponents {
         if (components instanceof ParsingComponents) {
             return components;
         }
 
-        return new ParsingComponents(this.reference, components);
+        return new ParsingComponents(this.reference, components, casualText);
     }
 
     createParsingResult(

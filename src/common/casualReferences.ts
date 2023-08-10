@@ -9,9 +9,9 @@ import {
 } from "../utils/dayjs";
 import { Meridiem } from "../types";
 
-export function now(reference: ReferenceWithTimezone): ParsingComponents {
+export function now(reference: ReferenceWithTimezone, casualText?: string): ParsingComponents {
     const targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
+    const component = new ParsingComponents(reference, {}, casualText);
     assignSimilarDate(component, targetDate);
     assignSimilarTime(component, targetDate);
     if (reference.timezoneOffset !== null) {
@@ -20,9 +20,9 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
     return component;
 }
 
-export function today(reference: ReferenceWithTimezone): ParsingComponents {
+export function today(reference: ReferenceWithTimezone, casualText?: string): ParsingComponents {
     const targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
+    const component = new ParsingComponents(reference, {}, casualText);
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
     return component;
@@ -31,33 +31,33 @@ export function today(reference: ReferenceWithTimezone): ParsingComponents {
 /**
  * The previous day. Imply the same time.
  */
-export function yesterday(reference: ReferenceWithTimezone): ParsingComponents {
-    return theDayBefore(reference, 1);
+export function yesterday(reference: ReferenceWithTimezone, casualText?: string): ParsingComponents {
+    return theDayBefore(reference, 1, casualText);
 }
 
-export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): ParsingComponents {
-    return theDayAfter(reference, -numDay);
+export function theDayBefore(reference: ReferenceWithTimezone, numDay: number, casualText?: string): ParsingComponents {
+    return theDayAfter(reference, -numDay, casualText);
 }
 
 /**
  * The following day with dayjs.assignTheNextDay()
  */
-export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
-    return theDayAfter(reference, 1);
+export function tomorrow(reference: ReferenceWithTimezone, casualText?: string): ParsingComponents {
+    return theDayAfter(reference, 1, casualText);
 }
 
-export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): ParsingComponents {
+export function theDayAfter(reference: ReferenceWithTimezone, nDays: number, casualText?: string): ParsingComponents {
     let targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
+    const component = new ParsingComponents(reference, {}, casualText);
     targetDate = targetDate.add(nDays, "day");
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
     return component;
 }
 
-export function tonight(reference: ReferenceWithTimezone, implyHour = 22): ParsingComponents {
+export function tonight(reference: ReferenceWithTimezone, implyHour = 22, casualText?: string): ParsingComponents {
     const targetDate = dayjs(reference.instant);
-    const component = new ParsingComponents(reference, {});
+    const component = new ParsingComponents(reference, {}, casualText);
     component.imply("hour", implyHour);
     component.imply("meridiem", Meridiem.PM);
     assignSimilarDate(component, targetDate);

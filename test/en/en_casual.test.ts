@@ -8,6 +8,7 @@ test("Test - Single Expression", () => {
         expect(result.text).toBe("now");
 
         expect(result.start).not.toBeNull();
+        expect(result.start.casualText).toBe("Now");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
@@ -37,6 +38,7 @@ test("Test - Single Expression", () => {
         expect(result.text).toBe("today");
 
         expect(result.start).not.toBeNull();
+        expect(result.start.casualText).toBe("Today");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
@@ -49,6 +51,7 @@ test("Test - Single Expression", () => {
         expect(result.text).toBe("Tomorrow");
 
         expect(result.start).not.toBeNull();
+        expect(result.start.casualText).toBe("Tomorrow");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(11);
@@ -65,6 +68,7 @@ test("Test - Single Expression", () => {
         expect(result.text).toBe("yesterday");
 
         expect(result.start).not.toBeNull();
+        expect(result.start.casualText).toBe("Yesterday");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(9);
@@ -77,6 +81,7 @@ test("Test - Single Expression", () => {
         expect(result.text).toBe("last night");
 
         expect(result.start).not.toBeNull();
+        expect(result.start.casualText).toBe("Last Night");
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(9);
