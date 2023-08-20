@@ -6,7 +6,7 @@
 
 import { includeCommonConfiguration } from "../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
-import { ParsingResult } from "../../results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import FRCasualDateParser from "./parsers/FRCasualDateParser";
 import FRCasualTimeParser from "./parsers/FRCasualTimeParser";
@@ -21,7 +21,7 @@ import FRTimeUnitAgoFormatParser from "./parsers/FRTimeUnitAgoFormatParser";
 import FRTimeUnitWithinFormatParser from "./parsers/FRTimeUnitWithinFormatParser";
 import FRTimeUnitRelativeFormatParser from "./parsers/FRTimeUnitRelativeFormatParser";
 
-export { Chrono, Parser, Refiner, ParsingResult };
+export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts

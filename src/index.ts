@@ -1,10 +1,9 @@
-import { DebugHandler, DebugConsume } from "./debugging";
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
-import { ParsingResult } from "./results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "./results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "./types";
 
-export { en, Chrono, Parser, Refiner, ParsingResult };
+export { en, Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Export all locales

@@ -19,13 +19,13 @@ import UKWeekdayParser from "./parsers/UKWeekdayParser";
 import UKRelativeDateFormatParser from "./parsers/UKRelativeDateFormatParser";
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
-import { ParsingResult } from "../../results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import UKTimeUnitCasualRelativeFormatParser from "./parsers/UKTimeUnitCasualRelativeFormatParser";
 import ISOFormatParser from "../../common/parsers/ISOFormatParser";
 
-export { Chrono, Parser, Refiner, ParsingResult };
+export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 /**

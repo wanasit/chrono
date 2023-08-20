@@ -6,7 +6,7 @@
 
 import { includeCommonConfiguration } from "../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
-import { ParsingResult } from "../../results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ESWeekdayParser from "./parsers/ESWeekdayParser";
@@ -18,7 +18,7 @@ import ESCasualDateParser from "./parsers/ESCasualDateParser";
 import ESCasualTimeParser from "./parsers/ESCasualTimeParser";
 import ESTimeUnitWithinFormatParser from "./parsers/ESTimeUnitWithinFormatParser";
 
-export { Chrono, Parser, Refiner, ParsingResult };
+export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts
