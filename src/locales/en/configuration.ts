@@ -44,7 +44,7 @@ export default class ENDefaultConfiguration {
      * @param littleEndian If format should be date-first/littleEndian (e.g. en_UK), not month-first/middleEndian (e.g. en_US)
      */
     createConfiguration(strictMode = true, littleEndian = false): Configuration {
-        return includeCommonConfiguration(
+        const options = includeCommonConfiguration(
             {
                 parsers: [
                     new SlashDateFormatParser(littleEndian),
@@ -58,13 +58,14 @@ export default class ENDefaultConfiguration {
                     new ENTimeUnitAgoFormatParser(strictMode),
                     new ENTimeUnitLaterFormatParser(strictMode),
                 ],
-                refiners: [
-                    new ENMergeRelativeDateRefiner(),
-                    new ENMergeDateTimeRefiner(),
-                    new ENMergeDateRangeRefiner(),
-                ],
+                refiners: [new ENMergeRelativeDateRefiner(), new ENMergeDateTimeRefiner()],
             },
             strictMode
         );
+        // Re-apply the date time refiner again after the timezone refinement and exclusion in common refiners.
+        options.refiners.push(new ENMergeDateTimeRefiner());
+        // Keep the date range refiner at the end (after all other refinements).
+        options.refiners.push(new ENMergeDateRangeRefiner());
+        return options;
     }
 }

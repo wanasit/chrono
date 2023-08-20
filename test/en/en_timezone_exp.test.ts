@@ -2,6 +2,7 @@ import * as chrono from "../../src";
 import { Month, Weekday } from "../../src/types";
 import { getLastWeekdayOfMonth } from "../../src/timezone";
 import { testSingleCase } from "../test_util";
+import { Meridiem } from "../../src";
 
 test("Test - Parsing date/time with UTC offset", function () {
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am utc+02:45 ", (result, text) => {
@@ -77,7 +78,9 @@ test("Test - Parsing date/time with GMT offset", function () {
 test("Test - Parsing date/time with timezone abbreviation", function () {
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am", (result, text) => {
         expect(result.text).toBe(text);
-
+        expect(result.start.get("year")).toBe(2020);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(16);
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("timezoneOffset")).toBe(null);
@@ -85,21 +88,62 @@ test("Test - Parsing date/time with timezone abbreviation", function () {
 
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am JST", (result, text) => {
         expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2020);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(16);
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(0);
 
-        // JST GMT+9:00
+        // JST: GMT+9:00
         expect(result.start.get("timezoneOffset")).toBe(9 * 60);
     });
 
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am GMT+0900 (JST)", (result, text) => {
         expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2020);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(16);
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(0);
 
-        // JST GMT+9:00
+        // JST: GMT+9:00
         expect(result.start.get("timezoneOffset")).toBe(9 * 60);
     });
+
+    testSingleCase(chrono, "10:30 pst today", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe("10:30 pst today");
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(30);
+
+        // PST: UTC−08:00
+        expect(result.start.get("timezoneOffset")).toBe(-8 * 60);
+    });
+});
+
+test("Test - Parsing date range with timezone abbreviation", function () {
+    testSingleCase(chrono, "10:30 JST today to 10:30 pst tomorrow ", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe("10:30 JST today to 10:30 pst tomorrow");
+
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("timezoneOffset")).toBe(9 * 60); // JST: GMT+9:00
+
+        expect(result.end.get("year")).toBe(2016);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(2);
+        expect(result.end.get("hour")).toBe(10);
+        expect(result.end.get("minute")).toBe(30);
+        expect(result.end.get("timezoneOffset")).toBe(-8 * 60); // PST: UTC−08:00
+    });
+
+    // TODO: Support "10:30 JST today - 10:30 pst tomorrow" case.
+    // Currently, this is not possible because "today - 10:30" is recognized as "today 10:30" (not range)
 });
 
 test("Test - Parsing date/time with ambiguous timezone abbreviations", function () {
