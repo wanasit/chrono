@@ -5,6 +5,6 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
  */
 export default class FRMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(T|à|a|vers|de|,|-)?\\s*$");
+        return new RegExp("^\\s*(T|à|a|au|vers|de|,|-)?\\s*$");
     }
 }

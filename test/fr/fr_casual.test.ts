@@ -132,6 +132,16 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe(text);
         expect(result.start.get("hour")).toBe(0);
     });
+
+    testSingleCase(chrono.fr, "Du 24 août 2023 au 26 août 2023", (result) => {
+        expect(result.text).toBe("24 août 2023 au 26 août 2023");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(24);
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(26);
+    });
 });
 
 test("Test - Combined Expression", function () {
