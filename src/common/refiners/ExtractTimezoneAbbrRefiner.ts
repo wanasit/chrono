@@ -42,7 +42,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
                 }
 
                 // This is often because it's relative time with inferred timezone (e.g. in 1 hour, tomorrow)
-                // Then, we want to double check the abbr case (e.g. "GET" not "get")
+                // Then, we want to double-check the abbr case (e.g. "GET" not "get")
                 if (timezoneAbbr != match[1]) {
                     return;
                 }
@@ -50,7 +50,7 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
 
             if (result.start.isOnlyDate()) {
                 // If the time is not explicitly mentioned,
-                // Then, we also want to double check the abbr case (e.g. "GET" not "get")
+                // Then, we also want to double-check the abbr case (e.g. "GET" not "get")
                 if (timezoneAbbr != match[1]) {
                     return;
                 }

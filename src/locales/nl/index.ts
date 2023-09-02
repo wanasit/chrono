@@ -6,7 +6,7 @@
 
 import { includeCommonConfiguration } from "../../configurations";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
-import { ParsingResult } from "../../results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import NLMergeDateRangeRefiner from "./refiners/NLMergeDateRangeRefiner";
 import NLMergeDateTimeRefiner from "./refiners/NLMergeDateTimeRefiner";
@@ -26,7 +26,7 @@ import NLRelativeDateFormatParser from "./parsers/NLRelativeDateFormatParser";
 import NLTimeUnitAgoFormatParser from "./parsers/NLTimeUnitAgoFormatParser";
 import NLTimeUnitLaterFormatParser from "./parsers/NLTimeUnitLaterFormatParser";
 
-export { Chrono, Parser, Refiner, ParsingResult };
+export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Shortcuts

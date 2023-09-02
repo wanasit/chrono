@@ -165,6 +165,13 @@ test("Test - The normal within expression", () => {
         expect(result.start.get("day")).toBe(1);
         expect(result.start.get("hour")).toBe(18);
     });
+
+    testSingleCase(chrono, "in 1 month", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
+        expect(result.text).toBe("in 1 month");
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(1);
+    });
 });
 
 test("Test - The within expression with certain keywords", () => {

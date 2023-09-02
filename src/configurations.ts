@@ -1,4 +1,4 @@
-import { Configuration } from "./chrono";
+import { Configuration, Parser, Refiner } from "./chrono";
 
 import ExtractTimezoneAbbrRefiner from "./common/refiners/ExtractTimezoneAbbrRefiner";
 import ExtractTimezoneOffsetRefiner from "./common/refiners/ExtractTimezoneOffsetRefiner";

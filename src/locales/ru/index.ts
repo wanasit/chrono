@@ -19,12 +19,12 @@ import RUWeekdayParser from "./parsers/RUWeekdayParser";
 import RURelativeDateFormatParser from "./parsers/RURelativeDateFormatParser";
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
-import { ParsingResult } from "../../results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import RUTimeUnitCasualRelativeFormatParser from "./parsers/RUTimeUnitCasualRelativeFormatParser";
 
-export { Chrono, Parser, Refiner, ParsingResult };
+export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 /**
