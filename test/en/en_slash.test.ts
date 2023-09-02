@@ -175,6 +175,22 @@ test("Test - Range Expressions with Time", function () {
         expect(result.end.get("hour")).toBe(7);
         expect(result.end.get("minute")).toBe(0);
     });
+
+    testSingleCase(chrono.en, "08/08/2023, 09:15 AM to 08/29/2023, 09:15 AM", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(15);
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(29);
+        expect(result.end.get("hour")).toBe(9);
+        expect(result.end.get("minute")).toBe(15);
+    });
 });
 
 test("Test - Splitter variances patterns", function () {
