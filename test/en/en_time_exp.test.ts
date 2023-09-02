@@ -82,6 +82,17 @@ test("Test - Time range expression", function () {
     });
 });
 
+test("Test - Time non-range expression", function () {
+    testSingleCase(chrono, "10:00:00 - 15/15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe("10:00:00");
+
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+    });
+});
+
 test("Test - Casual time number expression", function () {
     testSingleCase(chrono, "11 at night", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);

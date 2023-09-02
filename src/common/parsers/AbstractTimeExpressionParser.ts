@@ -66,11 +66,11 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     }
 
     primarySuffix(): string {
-        return `(?=\\W|$)`;
+        return `(?!/)(?=\\W|$)`;
     }
 
     followingSuffix(): string {
-        return `(?=\\W|$)`;
+        return `(?!/)(?=\\W|$)`;
     }
 
     pattern(context: ParsingContext): RegExp {

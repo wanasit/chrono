@@ -159,6 +159,24 @@ test("Test - Range Expression", function () {
     });
 });
 
+test("Test - Range Expressions with Time", function () {
+    testSingleCase(chrono.en, "from 01/21/2021 10:00 to 01/01/2023 07:00", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(21);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(1);
+        expect(result.end.get("day")).toBe(1);
+        expect(result.end.get("hour")).toBe(7);
+        expect(result.end.get("minute")).toBe(0);
+    });
+});
+
 test("Test - Splitter variances patterns", function () {
     const expectDate = new Date(2015, 5 - 1, 25, 12, 0);
 
