@@ -1,9 +1,9 @@
 import * as en from "./locales/en";
 import { Chrono, Parser, Refiner } from "./chrono";
-import { ParsingResult } from "./results";
+import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "./results";
 import { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "./types";
 
-export { en, Chrono, Parser, Refiner, ParsingComponents, ReferenceWithTimezone };
+export { en, Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedComponents, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
 // Export all locales
