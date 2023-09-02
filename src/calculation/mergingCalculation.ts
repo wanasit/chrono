@@ -77,5 +77,7 @@ export function mergeDateTimeComponent(
         }
     }
 
+    dateTimeComponent.addTags(dateComponent.tags());
+    dateTimeComponent.addTags(timeComponent.tags());
     return dateTimeComponent;
 }

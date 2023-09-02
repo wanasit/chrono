@@ -77,9 +77,14 @@ export interface ParsedResult {
     readonly end?: ParsedComponents;
 
     /**
-     * Create a javascript date object (from the result.start).
+     * @return a javascript date object created from the `result.start`.
      */
     date(): Date;
+
+    /**
+     * @return debugging tags combined of the `result.start` and `result.end`.
+     */
+    tags(): Set<string>;
 }
 
 /**
@@ -105,6 +110,11 @@ export interface ParsedComponents {
      * @return a javascript date object.
      */
     date(): Date;
+
+    /**
+     * @return debugging tags of the parsed component.
+     */
+    tags(): Set<string>;
 }
 
 export type Component =

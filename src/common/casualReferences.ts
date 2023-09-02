@@ -17,6 +17,7 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
     if (reference.timezoneOffset !== null) {
         component.assign("timezoneOffset", targetDate.utcOffset());
     }
+    component.addTag("casualReference/now");
     return component;
 }
 
@@ -25,6 +26,7 @@ export function today(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
+    component.addTag("casualReference/today");
     return component;
 }
 

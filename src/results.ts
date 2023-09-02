@@ -50,6 +50,7 @@ export class ParsingComponents implements ParsedComponents {
     private knownValues: { [c in Component]?: number };
     private impliedValues: { [c in Component]?: number };
     private reference: ReferenceWithTimezone;
+    private _tags = new Set<string>();
 
     constructor(reference: ReferenceWithTimezone, knownComponents?: { [c in Component]?: number }) {
         this.reference = reference;
@@ -155,9 +156,11 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     toString() {
-        return `[ParsingComponents {knownValues: ${JSON.stringify(this.knownValues)}, impliedValues: ${JSON.stringify(
-            this.impliedValues
-        )}}, reference: ${JSON.stringify(this.reference)}]`;
+        return `[ParsingComponents {
+            tags: ${JSON.stringify(Array.from(this._tags).sort())}, 
+            knownValues: ${JSON.stringify(this.knownValues)}, 
+            impliedValues: ${JSON.stringify(this.impliedValues)}}, 
+            reference: ${JSON.stringify(this.reference)}]`;
     }
 
     dayjs() {
@@ -168,6 +171,22 @@ export class ParsingComponents implements ParsedComponents {
         const date = this.dateWithoutTimezoneAdjustment();
         const timezoneAdjustment = this.reference.getSystemTimezoneAdjustmentMinute(date, this.get("timezoneOffset"));
         return new Date(date.getTime() + timezoneAdjustment * 60000);
+    }
+
+    addTag(tag: string): ParsingComponents {
+        this._tags.add(tag);
+        return this;
+    }
+
+    addTags(tags: string[] | Set<string>): ParsingComponents {
+        for (const tag of tags) {
+            this._tags.add(tag);
+        }
+        return this;
+    }
+
+    tags(): Set<string> {
+        return new Set(this._tags);
     }
 
     private dateWithoutTimezoneAdjustment() {
@@ -269,6 +288,16 @@ export class ParsingResult implements ParsedResult {
 
     date(): Date {
         return this.start.date();
+    }
+
+    tags(): Set<string> {
+        const combinedTags: Set<string> = new Set(this.start.tags());
+        if (this.end) {
+            for (const tag of this.end.tags()) {
+                combinedTags.add(tag);
+            }
+        }
+        return combinedTags;
     }
 
     toString() {

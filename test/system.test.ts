@@ -5,6 +5,7 @@ import UnlikelyFormatFilter from "../src/common/refiners/UnlikelyFormatFilter";
 import SlashDateFormatParser from "../src/common/parsers/SlashDateFormatParser";
 import ENWeekdayParser from "../src/locales/en/parsers/ENWeekdayParser";
 import ENTimeUnitCasualRelativeFormatParser from "../src/locales/en/parsers/ENTimeUnitCasualRelativeFormatParser";
+import { ParsingComponents } from "../src/";
 
 //-------------------------------------
 
@@ -122,6 +123,42 @@ test("Test - Add custom refiner example", () => {
         expect(result.start.get("hour")).toBe(2);
         expect(result.start.get("minute")).toBe(30);
     });
+});
+
+test("Test - Add custom parser with tags example", () => {
+    const custom = chrono.casual.clone();
+    custom.parsers.push({
+        pattern: () => {
+            return /\bChristmas\b/i;
+        },
+        extract: (context) => {
+            return context
+                .createParsingComponents({
+                    day: 25,
+                    month: 12,
+                })
+                .addTag("CustomParser/chirstmas");
+        },
+    });
+
+    testSingleCase(custom, "Doing something tomorrow", (result) => {
+        expect(result.text).toBe("tomorrow");
+        expect(result.tags()).toContain("ENCasualDateParser/extract/tomorrow");
+    });
+
+    testSingleCase(custom, "I'll arrive at 2.30AM on Christmas", (result) => {
+        expect(result.text).toBe("at 2.30AM on Christmas");
+        expect(result.tags()).toContain("CustomParser/chirstmas");
+        // TODO: Check for time (expression) parsing tags
+    });
+
+    testSingleCase(custom, "I'll arrive at Christmas night", (result) => {
+        expect(result.text).toBe("Christmas night");
+        expect(result.tags()).toContain("CustomParser/chirstmas");
+        // TODO: Check for time (casual) parsing tags
+    });
+
+    // TODO: Check if the merge date range combine tags correctly
 });
 
 test("Test - Remove a parser example", () => {
