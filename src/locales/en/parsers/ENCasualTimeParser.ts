@@ -9,20 +9,29 @@ export default class ENCasualTimeParser extends AbstractParserWithWordBoundaryCh
         return PATTERN;
     }
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
+        let component = null;
         switch (match[1].toLowerCase()) {
             case "afternoon":
-                return casualReferences.afternoon(context.reference);
+                component = casualReferences.afternoon(context.reference);
+                break;
             case "evening":
             case "night":
-                return casualReferences.evening(context.reference);
+                component = casualReferences.evening(context.reference);
+                break;
             case "midnight":
-                return casualReferences.midnight(context.reference);
+                component = casualReferences.midnight(context.reference);
+                break;
             case "morning":
-                return casualReferences.morning(context.reference);
+                component = casualReferences.morning(context.reference);
+                break;
             case "noon":
             case "midday":
-                return casualReferences.noon(context.reference);
+                component = casualReferences.noon(context.reference);
+                break;
         }
-        return null;
+        if (component) {
+            component.addTag("parser/ENCasualTimeParser");
+        }
+        return component;
     }
 }

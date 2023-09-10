@@ -301,6 +301,7 @@ export class ParsingResult implements ParsedResult {
     }
 
     toString() {
-        return `[ParsingResult {index: ${this.index}, text: '${this.text}', ...}]`;
+        const tags = Array.from(this.tags()).sort();
+        return `[ParsingResult {index: ${this.index}, text: '${this.text}', tags: ${JSON.stringify(tags)} ...}]`;
     }
 }

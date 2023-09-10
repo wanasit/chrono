@@ -137,25 +137,25 @@ test("Test - Add custom parser with tags example", () => {
                     day: 25,
                     month: 12,
                 })
-                .addTag("CustomParser/chirstmas");
+                .addTag("parser/ChristmasDayParser");
         },
     });
 
     testSingleCase(custom, "Doing something tomorrow", (result) => {
         expect(result.text).toBe("tomorrow");
-        expect(result.tags()).toContain("ENCasualDateParser/extract/tomorrow");
+        expect(result.tags()).toContain("parser/ENCasualDateParser");
     });
 
     testSingleCase(custom, "I'll arrive at 2.30AM on Christmas", (result) => {
         expect(result.text).toBe("at 2.30AM on Christmas");
-        expect(result.tags()).toContain("CustomParser/chirstmas");
-        // TODO: Check for time (expression) parsing tags
+        expect(result.tags()).toContain("parser/ChristmasDayParser");
+        expect(result.tags()).toContain("parser/ENTimeExpressionParser");
     });
 
     testSingleCase(custom, "I'll arrive at Christmas night", (result) => {
         expect(result.text).toBe("Christmas night");
-        expect(result.tags()).toContain("CustomParser/chirstmas");
-        // TODO: Check for time (casual) parsing tags
+        expect(result.tags()).toContain("parser/ChristmasDayParser");
+        expect(result.tags()).toContain("parser/ENCasualTimeParser");
     });
 
     // TODO: Check if the merge date range combine tags correctly

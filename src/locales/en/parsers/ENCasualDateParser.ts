@@ -20,29 +20,24 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
         switch (lowerText) {
             case "now":
                 component = references.now(context.reference);
-                component.addTag("ENCasualDateParser/extract/now");
                 break;
 
             case "today":
                 component = references.today(context.reference);
-                component.addTag("ENCasualDateParser/extract/today");
                 break;
 
             case "yesterday":
                 component = references.yesterday(context.reference);
-                component.addTag("ENCasualDateParser/extract/yesterday");
                 break;
 
             case "tomorrow":
             case "tmr":
             case "tmrw":
                 component = references.tomorrow(context.reference);
-                component.addTag("ENCasualDateParser/extract/tomorrow");
                 break;
 
             case "tonight":
                 component = references.tonight(context.reference);
-                component.addTag("ENCasualDateParser/extract/tonight");
                 break;
 
             default:
@@ -53,11 +48,10 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
                     assignSimilarDate(component, targetDate);
                     component.imply("hour", 0);
-                    component.addTag("ENCasualDateParser/extract/last_night");
                 }
                 break;
         }
-
+        component.addTag("parser/ENCasualDateParser");
         return component;
     }
 }

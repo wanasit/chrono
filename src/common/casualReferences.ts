@@ -34,7 +34,7 @@ export function today(reference: ReferenceWithTimezone): ParsingComponents {
  * The previous day. Imply the same time.
  */
 export function yesterday(reference: ReferenceWithTimezone): ParsingComponents {
-    return theDayBefore(reference, 1);
+    return theDayBefore(reference, 1).addTag("casualReference/yesterday");
 }
 
 export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): ParsingComponents {
@@ -45,7 +45,7 @@ export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): 
  * The following day with dayjs.assignTheNextDay()
  */
 export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
-    return theDayAfter(reference, 1);
+    return theDayAfter(reference, 1).addTag("casualReference/tomorrow");
 }
 
 export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): ParsingComponents {
@@ -60,9 +60,10 @@ export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): Pa
 export function tonight(reference: ReferenceWithTimezone, implyHour = 22): ParsingComponents {
     const targetDate = dayjs(reference.instant);
     const component = new ParsingComponents(reference, {});
+    assignSimilarDate(component, targetDate);
     component.imply("hour", implyHour);
     component.imply("meridiem", Meridiem.PM);
-    assignSimilarDate(component, targetDate);
+    component.addTag("casualReference/tonight");
     return component;
 }
 
@@ -81,6 +82,7 @@ export function evening(reference: ReferenceWithTimezone, implyHour = 20): Parsi
     const component = new ParsingComponents(reference, {});
     component.imply("meridiem", Meridiem.PM);
     component.imply("hour", implyHour);
+    component.addTag("casualReference/evening");
     return component;
 }
 
@@ -91,6 +93,8 @@ export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 2
     assignSimilarDate(component, targetDate);
     component.imply("hour", implyHour);
     component.imply("meridiem", Meridiem.PM);
+    component.addTag("casualReference/yesterday");
+    component.addTag("casualReference/evening");
     return component;
 }
 
@@ -106,6 +110,7 @@ export function midnight(reference: ReferenceWithTimezone): ParsingComponents {
     component.imply("minute", 0);
     component.imply("second", 0);
     component.imply("millisecond", 0);
+    component.addTag("casualReference/midnight");
     return component;
 }
 
@@ -116,6 +121,7 @@ export function morning(reference: ReferenceWithTimezone, implyHour = 6): Parsin
     component.imply("minute", 0);
     component.imply("second", 0);
     component.imply("millisecond", 0);
+    component.addTag("casualReference/morning");
     return component;
 }
 
@@ -126,6 +132,7 @@ export function afternoon(reference: ReferenceWithTimezone, implyHour = 15): Par
     component.imply("minute", 0);
     component.imply("second", 0);
     component.imply("millisecond", 0);
+    component.addTag("casualReference/afternoon");
     return component;
 }
 
@@ -136,5 +143,6 @@ export function noon(reference: ReferenceWithTimezone): ParsingComponents {
     component.imply("minute", 0);
     component.imply("second", 0);
     component.imply("millisecond", 0);
+    component.addTag("casualReference/noon");
     return component;
 }

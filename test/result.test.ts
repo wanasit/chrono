@@ -1,6 +1,6 @@
-import { ParsingComponents, ReferenceWithTimezone } from "../src/results";
+import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../src/results";
 
-test("Test - Create & manipulate date results", () => {
+test("Test - Create & manipulate parsing components", () => {
     const reference = new ReferenceWithTimezone(new Date());
     const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24 });
 
@@ -8,6 +8,7 @@ test("Test - Create & manipulate date results", () => {
     expect(components.get("month")).toBe(11);
     expect(components.get("day")).toBe(24);
     expect(components.date()).toBeDefined();
+    expect(components.tags().size).toBe(0);
 
     // null
     expect(components.get("weekday")).toBeNull();
@@ -23,13 +24,45 @@ test("Test - Create & manipulate date results", () => {
     expect(components.get("weekday")).toBe(2);
     expect(components.isCertain("weekday")).toBe(true);
 
-    // "imply" doesn't overrides "assign"
+    // "imply" doesn't override "assign"
     components.imply("year", 2013);
     expect(components.get("year")).toBe(2014);
 
     // "assign" overrides "assign"
     components.assign("year", 2013);
     expect(components.get("year")).toBe(2013);
+
+    components.addTag("custom/testing_component_tag");
+    expect(components.tags().size).toBe(1);
+    expect(components.tags()).toContain("custom/testing_component_tag");
+    expect(components.toString()).toContain("custom/testing_component_tag");
+});
+
+test("Test - Create & manipulate parsing results", () => {
+    const reference = new ReferenceWithTimezone(new Date());
+    const text = "1 - 2 hour later";
+
+    const startComponents = ParsingComponents.createRelativeFromReference(reference, { "hour": 1 }).addTag(
+        "custom/testing_start_component_tag"
+    );
+
+    const endComponents = ParsingComponents.createRelativeFromReference(reference, { "hour": 2 }).addTag(
+        "custom/testing_end_component_tag"
+    );
+
+    const result = new ParsingResult(reference, 0, text, startComponents, endComponents);
+
+    // The result's date() should be the same as the start components' date()
+    expect(result.date()).toStrictEqual(startComponents.date());
+
+    // The result's tags should include both the start and end components' tags
+    expect(result.tags()).toContain("custom/testing_start_component_tag");
+    expect(result.tags()).toContain("custom/testing_end_component_tag");
+
+    // The result's toString() should include the text and tags
+    expect(result.toString()).toContain(text);
+    expect(result.toString()).toContain("custom/testing_start_component_tag");
+    expect(result.toString()).toContain("custom/testing_end_component_tag");
 });
 
 test("Test - Calendar checking with implied components", () => {
