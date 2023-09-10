@@ -336,7 +336,7 @@ test("Test - Time units' certainty", () => {
     });
 });
 
-test("Test - Strict mode", function () {
+test("Test - Strict mode", () => {
     testSingleCase(chrono, "in 2hour", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
         expect(result.start.get("hour")).toBe(16);
         expect(result.start.get("minute")).toBe(52);
@@ -344,4 +344,25 @@ test("Test - Strict mode", function () {
 
     testUnexpectedResult(chrono.strict, "in 15m");
     testUnexpectedResult(chrono.strict, "within 5hr");
+});
+
+test("Test - Forward date option", () => {
+    testSingleCase(chrono, "1 hour", new Date(2012, 7, 10, 12, 14), { forwardDate: true }, (result) => {
+        expect(result.text).toBe("1 hour");
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 14));
+    });
+
+    testSingleCase(chrono, "1 month", new Date(2016, 10 - 1, 1, 14, 52), { forwardDate: true }, (result, text) => {
+        expect(result.text).toBe("1 month");
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(1);
+    });
+
+    testSingleCase(chrono, "in 1 month", new Date(2016, 10 - 1, 1, 14, 52), { forwardDate: true }, (result, text) => {
+        expect(result.text).toBe("in 1 month");
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(1);
+    });
 });
