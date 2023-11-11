@@ -107,10 +107,10 @@ test("Test - Random text", function () {
         expect(result.end.get("month")).toBe(7);
     });
 
-    testSingleCase(chrono, "03-27-2022, 02:00 AM", new Date(2017, 7 - 1, 7), (result) => {
-        expect(result.text).toBe("03-27-2022, 02:00 AM");
+    testSingleCase(chrono, "07-27-2022, 02:00 AM", new Date(2017, 7 - 1, 7), (result) => {
+        expect(result.text).toBe("07-27-2022, 02:00 AM");
         expect(result.start.get("day")).toBe(27);
-        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("month")).toBe(7);
         expect(result.start.get("year")).toBe(2022);
         expect(result.start.get("hour")).toBe(2);
         expect(result.start.get("meridiem")).toBe(Meridiem.AM);

@@ -146,3 +146,32 @@ test("Test - Calendar Checking", () => {
         expect(components.isValidDate()).toBe(false);
     }
 });
+
+test("Test - Checking non-existing date during DST skip", () => {
+    // Only CET (or CEST) timezones where the DST starts on "Sunday, March 27, 2022" at "02:00 (2 am) local time"
+    const dateDstPre = new Date(2022, 3 - 1, 27, 2);
+    const dateDstPost = new Date(2022, 3 - 1, 27, 3);
+    if (dateDstPre.getTime() == dateDstPost.getTime()) {
+        const reference = new ReferenceWithTimezone(new Date());
+
+        // On "Sunday, March 27, 2022" at "02:00 local time", the clock is moved forward to "03:00 local time".
+        // Thus, the time between "02:00 and 02:59:59" does not exist.
+        expect(
+            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 0 }).isValidDate()
+        ).toBe(false);
+        expect(
+            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 1 }).isValidDate()
+        ).toBe(false);
+        expect(
+            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 59 }).isValidDate()
+        ).toBe(false);
+
+        // Otherwise, it
+        expect(
+            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 1, minute: 59 }).isValidDate()
+        ).toBe(true);
+        expect(
+            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 3, minute: 0 }).isValidDate()
+        ).toBe(true);
+    }
+});
