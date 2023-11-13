@@ -6,8 +6,9 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(dit|deze|komend|komende|volgend|volgende|afgelopen|vorige)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
-    "(?=\\W|$)",
+    `(dit|deze|komend|komende|volgend|volgende|afgelopen|vorige)\\s*(${matchAnyPattern(
+        TIME_UNIT_DICTIONARY
+    )})(?=\\s*)` + "(?=\\W|$)",
     "i"
 );
 
