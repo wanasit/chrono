@@ -98,7 +98,7 @@ test("Test - Future relative expressions", () => {
     });
 
     // next month
-    testSingleCase(chrono.nl, "volgende maand", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "aankomende maand", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(11);

@@ -6,14 +6,14 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(dit|deze|komend|komende|volgend|volgende|afgelopen|vorige)\\s*(${matchAnyPattern(
+    `(dit|deze|(aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(
         TIME_UNIT_DICTIONARY
     )})(?=\\s*)` + "(?=\\W|$)",
     "i"
 );
 
 const MODIFIER_WORD_GROUP = 1;
-const RELATIVE_WORD_GROUP = 2;
+const RELATIVE_WORD_GROUP = 3;
 
 export default class NLRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -25,13 +25,13 @@ export default class NLRelativeDateFormatParser extends AbstractParserWithWordBo
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (modifier == "volgend" || modifier == "volgende" || modifier == "komend" || modifier == "komende") {
+        if (modifier == "volgend" || modifier == "komend" || modifier == "aankomend") {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
-        if (modifier == "afgelopen" || modifier == "vorige") {
+        if (modifier == "afgelopen" || modifier == "vorig") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
