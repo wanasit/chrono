@@ -5,12 +5,7 @@ import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
 
-const PATTERN = new RegExp(
-    `(dit|deze|(aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(
-        TIME_UNIT_DICTIONARY
-    )})(?=\\s*)` + "(?=\\W|$)",
-    "i"
-);
+const PATTERN = new RegExp(`(dit|deze|(aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)", "i");
 
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 3;
