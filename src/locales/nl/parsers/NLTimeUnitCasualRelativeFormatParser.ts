@@ -4,7 +4,7 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
 
-const PATTERN = new RegExp(`(deze|vorige|afgelopen|komende|over|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`, "i");
+const PATTERN = new RegExp(`(deze|vorig|vorige|afgelopen|komend|komende|over|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`, "i");
 
 export default class NLTimeUnitCasualRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -15,6 +15,7 @@ export default class NLTimeUnitCasualRelativeFormatParser extends AbstractParser
         const prefix = match[1].toLowerCase();
         let timeUnits = parseTimeUnits(match[2]);
         switch (prefix) {
+            case "vorig":
             case "vorige":
             case "afgelopen":
             case "-":
