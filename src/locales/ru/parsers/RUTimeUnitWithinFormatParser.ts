@@ -6,21 +6,14 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 const PATTERN = `(?:(?:около|примерно)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`;
 
 export default class RUTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
-    private readonly patternWithPrefix: RegExp;
-    private readonly patternWithoutPrefix: RegExp;
-
-    constructor() {
-        super();
-        this.patternWithPrefix = new RegExp(`(?:в течение|в течении)\\s*${PATTERN}`, REGEX_PARTS.flags);
-        this.patternWithoutPrefix = new RegExp(PATTERN, REGEX_PARTS.flags);
-    }
-
     patternLeftBoundary(): string {
         return REGEX_PARTS.leftBoundary;
     }
 
     innerPattern(context: ParsingContext): RegExp {
-        return context.option.forwardDate ? this.patternWithoutPrefix : this.patternWithPrefix;
+        return context.option.forwardDate
+            ? new RegExp(PATTERN, REGEX_PARTS.flags)
+            : new RegExp(`(?:в течение|в течении)\\s*${PATTERN}`, REGEX_PARTS.flags);
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
