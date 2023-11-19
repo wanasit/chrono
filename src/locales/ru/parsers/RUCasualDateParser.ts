@@ -1,21 +1,11 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import * as references from "../../../common/casualReferences";
-import { REGEX_PARTS } from "../constants";
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
-const PATTERN = new RegExp(
-    `(?:с|со)?\\s*(сегодня|вчера|завтра|послезавтра|послепослезавтра|позапозавчера|позавчера)${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
-
-export default class RUCasualDateParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(context: ParsingContext): RegExp {
-        return PATTERN;
+export default class RUCasualDateParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return `(?:с|со)?\\s*(сегодня|вчера|завтра|послезавтра|послепослезавтра|позапозавчера|позавчера)`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {

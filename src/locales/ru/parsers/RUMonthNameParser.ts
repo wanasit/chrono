@@ -1,20 +1,9 @@
-import { FULL_MONTH_NAME_DICTIONARY, MONTH_DICTIONARY, REGEX_PARTS } from "../constants";
+import { FULL_MONTH_NAME_DICTIONARY, MONTH_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { findYearClosestToRef } from "../../../calculation/years";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { YEAR_PATTERN, parseYear } from "../constants";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-
-const PATTERN = new RegExp(
-    `((?:в)\\s*)?` +
-        `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-        `\\s*` +
-        `(?:` +
-        `[,-]?\\s*(${YEAR_PATTERN})?` +
-        `)?` +
-        `(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)`,
-    REGEX_PARTS.flags
-);
+import { AbstractParserWithLeftBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const MONTH_NAME_GROUP = 2;
 const YEAR_GROUP = 3;
@@ -25,13 +14,17 @@ const YEAR_GROUP = 3;
  * - Январь 2012
  * - Январь
  */
-export default class RUMonthNameParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class RUMonthNameParser extends AbstractParserWithLeftBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return (
+            `((?:в)\\s*)?` +
+            `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+            `\\s*` +
+            `(?:` +
+            `[,-]?\\s*(${YEAR_PATTERN})?` +
+            `)?` +
+            `(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)`
+        );
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {

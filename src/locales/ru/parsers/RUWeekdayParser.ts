@@ -1,32 +1,24 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { REGEX_PARTS, WEEKDAY_DICTIONARY } from "../constants";
+import { WEEKDAY_DICTIONARY } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
-
-const PATTERN = new RegExp(
-    `(?:(?:,|\\(|（)\\s*)?` +
-        `(?:в\\s*?)?` +
-        `(?:(эту|этот|прошлый|прошлую|следующий|следующую|следующего)\\s*)?` +
-        `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        `(?:\\s*(?:,|\\)|）))?` +
-        `(?:\\s*на\\s*(этой|прошлой|следующей)\\s*неделе)?` +
-        `${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const PREFIX_GROUP = 1;
 const WEEKDAY_GROUP = 2;
 const POSTFIX_GROUP = 3;
 
-export default class RUWeekdayParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp {
-        return PATTERN;
-    }
-
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
+export default class RUWeekdayParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return (
+            `(?:(?:,|\\(|（)\\s*)?` +
+            `(?:в\\s*?)?` +
+            `(?:(эту|этот|прошлый|прошлую|следующий|следующую|следующего)\\s*)?` +
+            `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
+            `(?:\\s*(?:,|\\)|）))?` +
+            `(?:\\s*на\\s*(этой|прошлой|следующей)\\s*неделе)?`
+        );
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

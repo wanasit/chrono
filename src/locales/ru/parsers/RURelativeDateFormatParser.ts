@@ -4,24 +4,16 @@ import { ParsingComponents } from "../../../results";
 import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
-
-const PATTERN = new RegExp(
-    `(в прошлом|на прошлой|на следующей|в следующем|на этой|в этом)\\s*(${matchAnyPattern(
-        TIME_UNIT_DICTIONARY
-    )})(?=\\s*)${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 2;
 
-export default class RURelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class RURelativeDateFormatParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return `(в прошлом|на прошлой|на следующей|в следующем|на этой|в этом)\\s*(${matchAnyPattern(
+            TIME_UNIT_DICTIONARY
+        )})`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
