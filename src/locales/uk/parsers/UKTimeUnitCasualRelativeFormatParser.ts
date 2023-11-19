@@ -1,21 +1,12 @@
 import { TIME_UNITS_PATTERN, parseTimeUnits, REGEX_PARTS } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
-const PATTERN = new RegExp(
-    `(ці|останні|минулі|майбутні|наступні|після|через|\\+|-)\\s*(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
-
-export default class UKTimeUnitCasualRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class UKTimeUnitCasualRelativeFormatParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return `(ці|останні|минулі|майбутні|наступні|після|через|\\+|-)\\s*(${TIME_UNITS_PATTERN})`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

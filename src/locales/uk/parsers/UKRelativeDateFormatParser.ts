@@ -1,27 +1,19 @@
-import { REGEX_PARTS, TIME_UNIT_DICTIONARY } from "../constants";
+import { TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import dayjs from "dayjs";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
-
-const PATTERN = new RegExp(
-    `(в минулому|у минулому|на минулому|минулого|на наступному|в наступному|у наступному|наступного|на цьому|в цьому|у цьому|цього)\\s*(${matchAnyPattern(
-        TIME_UNIT_DICTIONARY
-    )})(?=\\s*)${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 2;
 
-export default class UKRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class UKRelativeDateFormatParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return (
+            `(в минулому|у минулому|на минулому|минулого|на наступному|в наступному|у наступному|наступного|на цьому|в цьому|у цьому|цього)\\s*` +
+            `(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)`
+        );
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

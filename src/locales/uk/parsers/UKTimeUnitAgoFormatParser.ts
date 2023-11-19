@@ -1,18 +1,12 @@
 import { ParsingContext } from "../../../chrono";
-import { parseTimeUnits, REGEX_PARTS, TIME_UNITS_PATTERN } from "../constants";
+import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
+import { AbstractParserWithLeftBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
-const PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}тому(?=(?:\\W|$))`, REGEX_PARTS.flags);
-
-export default class UKTimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class UKTimeUnitAgoFormatParser extends AbstractParserWithLeftBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return `(${TIME_UNITS_PATTERN})\\s{0,5}тому(?=(?:\\W|$))`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {

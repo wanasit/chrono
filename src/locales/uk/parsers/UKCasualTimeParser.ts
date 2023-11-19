@@ -1,22 +1,12 @@
 import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import * as references from "../../../common/casualReferences";
 import { assignSimilarDate } from "../../../utils/dayjs";
 import dayjs from "dayjs";
-import { REGEX_PARTS } from "../constants";
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
-const PATTERN = new RegExp(
-    `(зараз|минулого\\s*вечора|минулої\\s*ночі|наступної\\s*ночі|сьогодні\\s*вночі|цієї\\s*ночі|цього ранку|вранці|ранку|зранку|опівдні|ввечері|вечора|опівночі|вночі)` +
-        `${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
-export default class UKCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern() {
-        return PATTERN;
+export default class UKCasualTimeParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return `(зараз|минулого\\s*вечора|минулої\\s*ночі|наступної\\s*ночі|сьогодні\\s*вночі|цієї\\s*ночі|цього ранку|вранці|ранку|зранку|опівдні|ввечері|вечора|опівночі|вночі)`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {

@@ -4,12 +4,6 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = `(?:(?:приблизно|орієнтовно)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})${REGEX_PARTS.rightBoundary}`;
-const PATTERN_WITH_PREFIX = new RegExp(
-    `(?:протягом|на протязі|протягом|упродовж|впродовж)\\s*${PATTERN}`,
-    REGEX_PARTS.flags
-);
-
-const PATTERN_WITHOUT_PREFIX = new RegExp(PATTERN, "i");
 
 export default class UKTimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     patternLeftBoundary(): string {
@@ -17,7 +11,9 @@ export default class UKTimeUnitWithinFormatParser extends AbstractParserWithWord
     }
 
     innerPattern(context: ParsingContext): RegExp {
-        return context.option.forwardDate ? PATTERN_WITHOUT_PREFIX : PATTERN_WITH_PREFIX;
+        return context.option.forwardDate
+            ? new RegExp(PATTERN, "i")
+            : new RegExp(`(?:протягом|на протязі|протягом|упродовж|впродовж)\\s*${PATTERN}`, REGEX_PARTS.flags);
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {

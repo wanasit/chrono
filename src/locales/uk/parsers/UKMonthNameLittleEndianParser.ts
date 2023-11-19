@@ -1,41 +1,32 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingResult } from "../../../results";
 import { findYearClosestToRef } from "../../../calculation/years";
-import { MONTH_DICTIONARY, REGEX_PARTS } from "../constants";
+import { MONTH_DICTIONARY } from "../constants";
 import { YEAR_PATTERN, parseYearPattern } from "../constants";
 import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-
-// prettier-ignore
-const PATTERN = new RegExp(
-    `(?:з|із)?\\s*(${ORDINAL_NUMBER_PATTERN})` +
-    `(?:` +
-    `\\s{0,3}(?:по|-|–|до)?\\s{0,3}` +
-    `(${ORDINAL_NUMBER_PATTERN})` +
-    `)?` +
-    `(?:-|\\/|\\s{0,3}(?:of)?\\s{0,3})` +
-    `(${matchAnyPattern(MONTH_DICTIONARY)})` +
-    `(?:` +
-    `(?:-|\\/|,?\\s{0,3})` +
-    `(${YEAR_PATTERN}(?![^\\s]\\d))` +
-    `)?` +
-    `${REGEX_PARTS.rightBoundary}`,
-    REGEX_PARTS.flags
-);
+import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const DATE_GROUP = 1;
 const DATE_TO_GROUP = 2;
 const MONTH_NAME_GROUP = 3;
 const YEAR_GROUP = 4;
 
-export default class UKMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
-    patternLeftBoundary(): string {
-        return REGEX_PARTS.leftBoundary;
-    }
-
-    innerPattern(): RegExp {
-        return PATTERN;
+export default class UKMonthNameLittleEndianParser extends AbstractParserWithLeftRightBoundaryChecking {
+    innerPatternString(context: ParsingContext): string {
+        return (
+            `(?:з|із)?\\s*(${ORDINAL_NUMBER_PATTERN})` +
+            `(?:` +
+            `\\s{0,3}(?:по|-|–|до)?\\s{0,3}` +
+            `(${ORDINAL_NUMBER_PATTERN})` +
+            `)?` +
+            `(?:-|\\/|\\s{0,3}(?:of)?\\s{0,3})` +
+            `(${matchAnyPattern(MONTH_DICTIONARY)})` +
+            `(?:` +
+            `(?:-|\\/|,?\\s{0,3})` +
+            `(${YEAR_PATTERN}(?![^\\s]\\d))` +
+            `)?`
+        );
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
