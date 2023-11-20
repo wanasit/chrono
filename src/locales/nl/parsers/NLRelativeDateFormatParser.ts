@@ -6,13 +6,13 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(dit|deze|(aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
+    `(dit|deze|(?:aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
     "(?=\\W|$)",
     "i"
 );
 
 const MODIFIER_WORD_GROUP = 1;
-const RELATIVE_WORD_GROUP = 3;
+const RELATIVE_WORD_GROUP = 2;
 
 export default class NLRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
