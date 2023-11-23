@@ -71,7 +71,7 @@ test("Test - Past relative expressions", () => {
 
 test("Test - Future relative expressions", () => {
     // next hour
-    testSingleCase(chrono.nl, "komende uur", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+    testSingleCase(chrono.nl, "komend uur", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
@@ -111,6 +111,20 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("hour")).toBe(false);
     });
 
+    // next month
+    testSingleCase(chrono.nl, "aankomende maand", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(12);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start.isCertain("hour")).toBe(false);
+    });
+
     // next year
     testSingleCase(chrono.nl, "volgend jaar", new Date(2020, 11 - 1, 22, 12, 11, 32, 6), (result, text) => {
         expect(result.text).toBe(text);
@@ -137,7 +151,7 @@ test("Test - Relative date components' certainty", () => {
     const refDate = new Date(2016, 10 - 1, 7, 12);
 
     // next hour
-    testSingleCase(chrono.nl, "komende uur", refDate, (result, text) => {
+    testSingleCase(chrono.nl, "komend uur", refDate, (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
