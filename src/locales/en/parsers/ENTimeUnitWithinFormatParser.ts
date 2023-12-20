@@ -3,15 +3,19 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
+const TIME_UNIT_PATTERN = `(${TIME_UNITS_PATTERN})`;
+const TIME_UNIT_CONNECTOR_PATTERN = `\\s+and\\s+`;
+const MULTIPLE_TIME_UNITS_PATTERN = `${TIME_UNIT_PATTERN}(?:${TIME_UNIT_CONNECTOR_PATTERN}${TIME_UNIT_PATTERN})*`;
+
 const PATTERN_WITH_OPTIONAL_PREFIX = new RegExp(
     `(?:(?:within|in|for)\\s*)?` +
-        `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?${MULTIPLE_TIME_UNITS_PATTERN}(?=\\W|$)`,
     "i"
 );
 
 const PATTERN_WITH_PREFIX = new RegExp(
     `(?:within|in|for)\\s*` +
-        `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+        `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${MULTIPLE_TIME_UNITS_PATTERN})(?=\\W|$)`,
     "i"
 );
 
