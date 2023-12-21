@@ -9,7 +9,7 @@ const MULTIPLE_TIME_UNITS_PATTERN = `${TIME_UNIT_PATTERN}(?:${TIME_UNIT_CONNECTO
 
 const PATTERN_WITH_OPTIONAL_PREFIX = new RegExp(
     `(?:(?:within|in|for)\\s*)?` +
-    `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?${MULTIPLE_TIME_UNITS_PATTERN}(?=\\W|$)`,
+    `(?:(?:about|around|roughly|approximately|just)\\s*(?:~\\s*)?)?(${MULTIPLE_TIME_UNITS_PATTERN})(?=\\W|$)`,
     "i"
 );
 

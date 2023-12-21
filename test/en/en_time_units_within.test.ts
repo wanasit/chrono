@@ -60,6 +60,13 @@ test("Test - The normal within expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19, 30));
     });
 
+    testSingleCase(chrono, "set a timer for 10 minutes and 10 seconds", new Date(2012, 7, 10, 12, 14), { forwardDate: true },  (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("for 10 minutes and 10 seconds");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 24, 10));
+    });
+
     testSingleCase(chrono, "within 1 hour", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("within 1 hour");
