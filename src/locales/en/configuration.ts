@@ -20,7 +20,9 @@ import ENRelativeDateFormatParser from "./parsers/ENRelativeDateFormatParser";
 
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ENTimeUnitCasualRelativeFormatParser from "./parsers/ENTimeUnitCasualRelativeFormatParser";
-import ENMergeRelativeDateRefiner from "./refiners/ENMergeRelativeDateRefiner";
+import ENMergeRelativeAfterDateRefiner from "./refiners/ENMergeRelativeAfterDateRefiner";
+import ENMergeRelativeFollowByDateRefiner from "./refiners/ENMergeRelativeFollowByDateRefiner";
+import OverlapRemovalRefiner from "../../common/refiners/OverlapRemovalRefiner";
 
 export default class ENDefaultConfiguration {
     /**
@@ -58,10 +60,15 @@ export default class ENDefaultConfiguration {
                     new ENTimeUnitAgoFormatParser(strictMode),
                     new ENTimeUnitLaterFormatParser(strictMode),
                 ],
-                refiners: [new ENMergeRelativeDateRefiner(), new ENMergeDateTimeRefiner()],
+                refiners: [new ENMergeDateTimeRefiner()],
             },
             strictMode
         );
+        // These relative-dates consideration should be done before other common refiners.
+        options.refiners.unshift(new ENMergeRelativeFollowByDateRefiner());
+        options.refiners.unshift(new ENMergeRelativeAfterDateRefiner());
+        options.refiners.unshift(new OverlapRemovalRefiner());
+
         // Re-apply the date time refiner again after the timezone refinement and exclusion in common refiners.
         options.refiners.push(new ENMergeDateTimeRefiner());
         // Keep the date range refiner at the end (after all other refinements).

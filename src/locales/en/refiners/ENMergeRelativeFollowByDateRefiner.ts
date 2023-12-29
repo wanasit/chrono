@@ -12,11 +12,11 @@ function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
 }
 
 /**
- * Merges an absolute date with a relative date.
- * - 2 weeks before 2020-02-13
- * - 2 days after next Friday
+ * Merges a relative data/time that follow by an absolute date.
+ * - [2 weeks before] [2020-02-13]
+ * - [2 days after] [next Friday]
  */
-export default class ENMergeRelativeDateRefiner extends MergingRefiner {
+export default class ENMergeRelativeFollowByDateRefiner extends MergingRefiner {
     patternBetween(): RegExp {
         return /^\s*$/i;
     }

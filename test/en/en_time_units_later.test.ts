@@ -320,3 +320,25 @@ test("Test - After with reference", () => {
         expect(result.start.get("day")).toBe(18);
     });
 });
+
+test("Test - Plus after reference", () => {
+    testSingleCase(chrono, "next tuesday +10 days", new Date(2023, 12 - 1, 29), (result) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(12);
+    });
+
+    testSingleCase(chrono, "2023-12-29 -10days", new Date(2023, 12 - 1, 29), (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(19);
+    });
+
+    testSingleCase(chrono, "now + 40minutes", new Date(2023, 12 - 1, 29, 8, 30), (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(29);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(10);
+    });
+});
