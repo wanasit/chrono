@@ -68,6 +68,12 @@ test("Test - Month-Year expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 9 - 1, 1, 12));
     });
+
+    testSingleCase(chrono, "Statement of comprehensive income for the year ended Dec. 2021", (result) => {
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.text).toBe("Dec. 2021");
+    });
 });
 
 test("Test - Month-Only expression", function () {

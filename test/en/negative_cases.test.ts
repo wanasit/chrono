@@ -75,6 +75,10 @@ test("Test - Skip version number pattern", () => {
     testUnexpectedResult(chrono, "Version: 1.10.30");
 });
 
+test("Test - Skip incorrect reference", () => {
+    testUnexpectedResult(chrono, "for the year");
+});
+
 test("Test - Date with version number pattern", () => {
     testSingleCase(chrono.en, "1.5.3 - 2015-09-24", (result) => {
         expect(result.text).toBe("2015-09-24");

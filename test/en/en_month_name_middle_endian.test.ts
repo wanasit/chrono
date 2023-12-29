@@ -153,6 +153,13 @@ test("Test - Single Expression", () => {
         expect(result.start.get("month")).toBe(1);
         expect(result.start.get("day")).toBe(20);
     });
+
+    testSingleCase(chrono, "Dec. 21", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("Dec. 21");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(21);
+    });
 });
 
 test("Test - Single expression with separators", () => {
