@@ -36,8 +36,16 @@ const YEAR_GROUP = 4;
  *  - January 12:00
  *  - January 12.44
  *  - January 1222344
+ *  - January 21 (when shouldSkipYearLikeDate=true)
  */
 export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
+    shouldSkipYearLikeDate: boolean;
+
+    constructor(shouldSkipYearLikeDate: boolean) {
+        super();
+        this.shouldSkipYearLikeDate = shouldSkipYearLikeDate;
+    }
+
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -49,10 +57,18 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
             return null;
         }
 
-        const components = context.createParsingComponents({
-            day: day,
-            month: month,
-        });
+        // Skip the case where the day looks like a year (ex: January 21)
+        if (this.shouldSkipYearLikeDate) {
+            if (!match[DATE_TO_GROUP] && !match[YEAR_GROUP] && match[DATE_GROUP].match(/^2[0-5]$/)) {
+                return null;
+            }
+        }
+        const components = context
+            .createParsingComponents({
+                day: day,
+                month: month,
+            })
+            .addTag("parser/ENMonthNameMiddleEndianParser");
 
         if (match[YEAR_GROUP]) {
             const year = parseYear(match[YEAR_GROUP]);
@@ -61,7 +77,6 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
             const year = findYearClosestToRef(context.refDate, day, month);
             components.imply("year", year);
         }
-
         if (!match[DATE_TO_GROUP]) {
             return components;
         }

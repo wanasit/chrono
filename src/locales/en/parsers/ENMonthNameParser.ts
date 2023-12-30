@@ -45,6 +45,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
             match.index + match[0].length
         );
         result.start.imply("day", 1);
+        result.start.addTag("parser/ENMonthNameParser");
 
         const month = MONTH_DICTIONARY[monthName];
         result.start.assign("month", month);

@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase, testWithExpectedDate, testUnexpectedResult } from "../test_util";
+import { configuration } from "../../src/locales/en";
 
 test("Test - Single Expression", () => {
     testSingleCase(chrono, "She is getting married soon (July 2017).", (result) => {
@@ -354,6 +355,21 @@ test("Test - year 90's parsing", () => {
         expect(result.start.get("year")).toBe(1996);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(9);
+    });
+});
+
+test("Test - Skip year-like on little-endian configuration", () => {
+    const chronoMiddleEndian = new chrono.Chrono(chrono.en.configuration.createCasualConfiguration(false));
+    testSingleCase(chronoMiddleEndian, "Dec. 21", new Date(2023, 12, 10), (result) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(21);
+    });
+
+    const chronoLittleEndian = new chrono.Chrono(chrono.en.configuration.createCasualConfiguration(true));
+    testSingleCase(chronoLittleEndian, "Dec. 21", new Date(2023, 12, 10), (result) => {
+        expect(result.start.get("year")).toBe(2021);
+        expect(result.start.get("month")).toBe(12);
     });
 });
 

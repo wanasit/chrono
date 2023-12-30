@@ -31,11 +31,11 @@ export default class ENDefaultConfiguration {
      */
     createCasualConfiguration(littleEndian = false): Configuration {
         const option = this.createConfiguration(false, littleEndian);
-        option.parsers.unshift(new ENCasualDateParser());
-        option.parsers.unshift(new ENCasualTimeParser());
-        option.parsers.unshift(new ENMonthNameParser());
-        option.parsers.unshift(new ENRelativeDateFormatParser());
-        option.parsers.unshift(new ENTimeUnitCasualRelativeFormatParser());
+        option.parsers.push(new ENCasualDateParser());
+        option.parsers.push(new ENCasualTimeParser());
+        option.parsers.push(new ENMonthNameParser());
+        option.parsers.push(new ENRelativeDateFormatParser());
+        option.parsers.push(new ENTimeUnitCasualRelativeFormatParser());
         return option;
     }
 
@@ -52,7 +52,7 @@ export default class ENDefaultConfiguration {
                     new SlashDateFormatParser(littleEndian),
                     new ENTimeUnitWithinFormatParser(strictMode),
                     new ENMonthNameLittleEndianParser(),
-                    new ENMonthNameMiddleEndianParser(),
+                    new ENMonthNameMiddleEndianParser(/*shouldSkipYearLikeDate=*/ littleEndian),
                     new ENWeekdayParser(),
                     new ENCasualYearMonthDayParser(),
                     new ENSlashMonthFormatParser(),
