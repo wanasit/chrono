@@ -12,20 +12,29 @@ export default class OverlapRemovalRefiner implements Refiner {
         }
 
         const filteredResults = [];
-
         let prevResult = results[0];
         for (let i = 1; i < results.length; i++) {
             const result = results[i];
-
-            // If overlap, compare the length and discard the shorter one
-            if (result.index < prevResult.index + prevResult.text.length) {
-                if (result.text.length > prevResult.text.length) {
-                    prevResult = result;
-                }
-            } else {
+            if (result.index >= prevResult.index + prevResult.text.length) {
                 filteredResults.push(prevResult);
                 prevResult = result;
+                continue;
             }
+
+            // If overlap, compare the length and discard the shorter one
+            let kept = null;
+            let removed = null;
+            if (result.text.length > prevResult.text.length) {
+                kept = result;
+                removed = prevResult;
+            } else {
+                kept = prevResult;
+                removed = result;
+            }
+            context.debug(() => {
+                console.log(`${this.constructor.name} remove ${removed} by ${kept}`);
+            });
+            prevResult = kept;
         }
 
         // The last one
