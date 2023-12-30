@@ -13,22 +13,22 @@ import ENDefaultConfiguration from "./configuration";
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
 
-const enConfig = new ENDefaultConfiguration();
+export const configuration = new ENDefaultConfiguration();
 
 /**
  * Chrono object configured for parsing *casual* English
  */
-export const casual = new Chrono(enConfig.createCasualConfiguration(false));
+export const casual = new Chrono(configuration.createCasualConfiguration(false));
 
 /**
  * Chrono object configured for parsing *strict* English
  */
-export const strict = new Chrono(enConfig.createConfiguration(true, false));
+export const strict = new Chrono(configuration.createConfiguration(true, false));
 
 /**
  * Chrono object configured for parsing *UK-style* English
  */
-export const GB = new Chrono(enConfig.createConfiguration(false, true));
+export const GB = new Chrono(configuration.createCasualConfiguration(true));
 
 /**
  * A shortcut for en.casual.parse()
