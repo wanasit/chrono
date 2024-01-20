@@ -8,10 +8,7 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const STRICT_PATTERN = new RegExp(
-    "" + "(" + TIME_UNITS_NO_ABBR_PATTERN + ")" + "(later|from now)" + "(?=(?:\\W|$))",
-    "i"
-);
+const STRICT_PATTERN = new RegExp(`(${TIME_UNITS_NO_ABBR_PATTERN})\\s{0,5}(later|after|from now)(?=\\W|$)`, "i");
 const GROUP_NUM_TIMEUNITS = 1;
 
 export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {

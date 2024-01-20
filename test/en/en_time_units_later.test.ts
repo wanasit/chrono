@@ -249,10 +249,22 @@ test("Test - From now Expression", () => {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 14, 10));
     });
+});
 
+test("Test - The later expression with multiple time units", function () {
     testSingleCase(chrono, "in 1d 2hr 5min", new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("in 1d 2hr 5min");
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(45);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 14, 45));
+    });
+
+    testSingleCase(chrono, "in 1d, 2hr, and 5min", new Date(2012, 7, 10, 12, 40), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("in 1d, 2hr, and 5min");
         expect(result.start.get("day")).toBe(11);
         expect(result.start.get("hour")).toBe(14);
         expect(result.start.get("minute")).toBe(45);

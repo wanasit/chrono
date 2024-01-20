@@ -174,6 +174,48 @@ test("Test - The normal within expression", () => {
     });
 });
 
+test("Test - The within expression with multiple time units", function () {
+    testSingleCase(chrono, "set a timer for 5 minutes 30 seconds", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("for 5 minutes 30 seconds");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19, 30));
+    });
+
+    testSingleCase(chrono, "set a timer for 5 minutes, 30 seconds", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("for 5 minutes, 30 seconds");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19, 30));
+    });
+
+    testSingleCase(chrono, "set a timer for 1 hour, 5 minutes, 30 seconds", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("for 1 hour, 5 minutes, 30 seconds");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 19, 30));
+    });
+
+    testSingleCase(chrono, "set a timer for 5 minutes and 30 seconds", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("for 5 minutes and 30 seconds");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19, 30));
+    });
+
+    testSingleCase(
+        chrono,
+        "set a timer for 1 hour, 5 minutes, and 30 seconds",
+        new Date(2012, 7, 10, 12, 14),
+        (result) => {
+            expect(result.index).toBe(12);
+            expect(result.text).toBe("for 1 hour, 5 minutes, and 30 seconds");
+
+            expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 19, 30));
+        }
+    );
+});
+
 test("Test - The within expression with certain keywords", () => {
     testSingleCase(chrono, "In  about 5 hours", new Date(2012, 8 - 1, 10, 12, 49), (result, text) => {
         expect(result.text).toBe(text);

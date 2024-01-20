@@ -264,10 +264,17 @@ const SINGLE_TIME_UNIT_NO_ABBR_PATTERN = `(${NUMBER_PATTERN})\\s{0,3}(${matchAny
     TIME_UNIT_DICTIONARY_NO_ABBR
 )})`;
 
-export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(`(?:(?:about|around)\\s{0,3})?`, SINGLE_TIME_UNIT_PATTERN);
+const TIME_UNIT_CONNECTOR_PATTERN = `\\s{0,5},?(?:\\s*and)?\\s{0,5}`;
+
+export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
+    `(?:(?:about|around)\\s{0,3})?`,
+    SINGLE_TIME_UNIT_PATTERN,
+    TIME_UNIT_CONNECTOR_PATTERN
+);
 export const TIME_UNITS_NO_ABBR_PATTERN = repeatedTimeunitPattern(
     `(?:(?:about|around)\\s{0,3})?`,
-    SINGLE_TIME_UNIT_NO_ABBR_PATTERN
+    SINGLE_TIME_UNIT_NO_ABBR_PATTERN,
+    TIME_UNIT_CONNECTOR_PATTERN
 );
 
 export function parseTimeUnits(timeunitText): TimeUnits {
