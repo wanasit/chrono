@@ -70,9 +70,14 @@ test("Test - Month-Year expression", function () {
     });
 
     testSingleCase(chrono, "Statement of comprehensive income for the year ended Dec. 2021", (result) => {
+        expect(result.text).toBe("Dec. 2021");
+
         expect(result.start.get("year")).toBe(2021);
         expect(result.start.get("month")).toBe(12);
-        expect(result.text).toBe("Dec. 2021");
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
     });
 });
 

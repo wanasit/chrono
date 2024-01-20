@@ -6,17 +6,18 @@ import { YEAR_PATTERN, parseYear } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
+// prettier-ignore
 const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:-|/|\\s*,?\\s*)" +
         `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*` +
         "(?:" +
-        "(?:to|\\-)\\s*" +
-        `(${ORDINAL_NUMBER_PATTERN})\\s*` +
+            "(?:to|\\-)\\s*" +
+            `(${ORDINAL_NUMBER_PATTERN})\\s*` +
         ")?" +
         "(?:" +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${YEAR_PATTERN})` +
+            `(?:-|/|\\s*,\\s*|\\s+)` +
+            `(${YEAR_PATTERN})` +
         ")?" +
         "(?=\\W|$)(?!\\:\\d)",
     "i"

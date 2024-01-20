@@ -381,4 +381,6 @@ test("Test - Impossible Dates (Strict Mode)", () => {
     testUnexpectedResult(chrono.strict, "August 32", new Date(2012, 7, 10));
 
     testUnexpectedResult(chrono.strict, "February 29", new Date(2014, 7, 10));
+
+    testUnexpectedResult(chrono.strict, "February 151998", new Date(2014, 7, 10));
 });
