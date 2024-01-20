@@ -78,13 +78,13 @@ export function createConfiguration(strictMode: boolean): Configuration {
 /**
  * A shortcut for uk.casual.parse()
  */
-export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
+export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
 /**
  * A shortcut for uk.casual.parseDate()
  */
-export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
+export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }

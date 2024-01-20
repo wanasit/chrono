@@ -33,13 +33,13 @@ export const GB = new Chrono(configuration.createCasualConfiguration(true));
 /**
  * A shortcut for en.casual.parse()
  */
-export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
+export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
 /**
  * A shortcut for en.casual.parseDate()
  */
-export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
+export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }

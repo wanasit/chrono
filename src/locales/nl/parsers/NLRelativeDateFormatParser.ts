@@ -7,7 +7,7 @@ import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
     `(dit|deze|(?:aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
-    "(?=\\W|$)",
+        "(?=\\W|$)",
     "i"
 );
 

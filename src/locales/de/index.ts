@@ -22,11 +22,11 @@ export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Wee
 export const casual = new Chrono(createCasualConfiguration());
 export const strict = new Chrono(createConfiguration(true));
 
-export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
+export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
-export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
+export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }
 
