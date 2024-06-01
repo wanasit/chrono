@@ -1,5 +1,5 @@
-import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import * as chrono from "../../../src";
+import { testSingleCase } from "../../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.zh.hans, "我2016年9月3号要打游戏", new Date(2012, 8 - 1, 10), (result) => {

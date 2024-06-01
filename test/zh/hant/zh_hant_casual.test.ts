@@ -1,5 +1,5 @@
-import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import * as chrono from "../../../src";
+import { testSingleCase } from "../../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.zh.hant, "雞而家全部都係雞", new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
