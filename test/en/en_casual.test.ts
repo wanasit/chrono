@@ -409,4 +409,10 @@ test("Test - Random negative text", () => {
     testUnexpectedResult(chrono, "mar");
 
     testUnexpectedResult(chrono, "jan");
+
+    testUnexpectedResult(chrono, "do I have the money");
+
+    testUnexpectedResult(chrono.casual, "do I have the money");
+
+    testUnexpectedResult(chrono.en.GB, "do I have the money");
 });
