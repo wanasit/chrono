@@ -54,6 +54,14 @@ test("Test - Timezone difference on reference date", function () {
     });
 });
 
+test("Test - Timezone difference on reference date #2", function () {
+    const refInstant = new Date("2024-02-21T10:00:00+1300");
+
+    testSingleCase(chrono, "yesterday 18:00", { instant: refInstant, timezone: 780 }, (result) => {
+        expect(result).toBeDate(new Date("2024-02-20T18:00:00+1300"));
+    });
+});
+
 test("Test - Timezone difference on written date", function () {
     // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
     // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
