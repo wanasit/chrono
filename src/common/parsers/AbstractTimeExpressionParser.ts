@@ -80,6 +80,13 @@ export abstract class AbstractTimeExpressionParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         const startComponents = this.extractPrimaryTimeComponents(context, match);
         if (!startComponents) {
+            // If the match seem like a year e.g. "2013.12:...",
+            // then skips the year part and try matching again.
+            if (match[0].match(/^\d{4}/)) {
+                match.index += 4; // Skip over potential overlapping pattern
+                return null;
+            }
+
             match.index += match[0].length; // Skip over potential overlapping pattern
             return null;
         }
@@ -94,8 +101,15 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         const followingMatch = followingPattern.exec(remainingText);
 
         // Pattern "456-12", "2022-12" should not be time without proper context
-        if (text.match(/^\d{3,4}/) && followingMatch && followingMatch[0].match(/^\s*([+-])\s*\d{2,4}$/)) {
-            return null;
+        if (text.match(/^\d{3,4}/) && followingMatch) {
+            // e.g. "2022-12"
+            if (followingMatch[0].match(/^\s*([+-])\s*\d{2,4}$/)) {
+                return null;
+            }
+            // e.g. "2022-12:01..."
+            if (followingMatch[0].match(/^\s*([+-])\s*\d{2}\W\d{2}/)) {
+                return null;
+            }
         }
 
         if (

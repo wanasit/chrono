@@ -19,7 +19,7 @@ const PATTERN = new RegExp(
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:" +
             `(?:-|/|,?\\s{0,3})` +
-            `(${YEAR_PATTERN}(?![^\\s]\\d))` +
+            `(${YEAR_PATTERN}(?!\\w))` +
         ")?" +
         "(?=\\W|$)",
     "i"

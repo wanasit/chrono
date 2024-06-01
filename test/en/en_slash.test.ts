@@ -136,6 +136,21 @@ test("Test - Single Expression Little-Endian with Month name", function () {
 
         expect(result.start).toBeDate(new Date(2012, 10 - 1, 8, 12));
     });
+
+    testSingleCase(chrono.strict, "06/Nov/2023", (result) => {
+        expect(result.text).toBe("06/Nov/2023");
+        expect(result).toBeDate(new Date(2023, 11 - 1, 6, 12));
+    });
+
+    testSingleCase(chrono.strict, "06/Nov/2023:06:36:02", (result) => {
+        expect(result.text).toBe("06/Nov/2023:06:36:02");
+        expect(result).toBeDate(new Date(2023, 11 - 1, 6, 6, 36, 2));
+    });
+
+    testSingleCase(chrono.strict, "06/Nov/2023:06:36:02 +0200", (result) => {
+        expect(result.text).toBe("06/Nov/2023:06:36:02 +0200");
+        expect(result).toBeDate(new Date("Mon Nov 06 2023 06:36:02 GMT+0200"));
+    });
 });
 
 test("Test - Range Expression", function () {

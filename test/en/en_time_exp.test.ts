@@ -24,6 +24,36 @@ test("Test - Time expression", function () {
     });
 });
 
+test("Test - Time expression after date", function () {
+    testSingleCase(chrono, "05/31/2024 14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "05/31/2024.14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "05/31/2024:14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "05/31/2024-14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+});
+
 test("Test - Time range expression", function () {
     testSingleCase(chrono, "10:00:00 - 21:45:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
