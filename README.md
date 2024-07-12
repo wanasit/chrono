@@ -76,7 +76,7 @@ The meaning of the referenced dates depends on when and where they are mentioned
 Chrono lets you define the reference as `Date` or `ParsingReference` object:
 
 ```javascript
-// (Note: the exmaples run on JST timezone)
+// (Note: the examples run on JST timezone)
 
 chrono.parseDate('Friday', new Date(2012, 8 - 1, 23)); 
 // Fri Aug 24 2012 12:00:00 GMT+0900 (JST)
