@@ -1,6 +1,6 @@
 import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
-import ENTimeExpressionParser from "../../src/locales/en/parsers/ENTimeExpressionParser";
+import { Meridiem } from "../../src";
 
 test("Test - Year numbers with BCE/CE Era label", () => {
     testSingleCase(chrono, "10 August 234 BCE", new Date(2012, 7, 10), (result) => {
@@ -71,5 +71,30 @@ test("Test - Year numbers with Buddhist Era label", () => {
         expect(result.start.get("day")).toBe(10);
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+    });
+});
+
+test("Test - Year number after date/time expression", () => {
+    testSingleCase(chrono, "Thu Oct 26 11:00:09 2023", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(26);
+
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(9);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+    });
+
+    testSingleCase(chrono, "Thu Oct 26 11:00:09 EDT 2023", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(26);
+
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(9);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+        expect(result.start.get("timezoneOffset")).toBe(-240);
     });
 });

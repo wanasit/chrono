@@ -23,6 +23,7 @@ import ENTimeUnitCasualRelativeFormatParser from "./parsers/ENTimeUnitCasualRela
 import ENMergeRelativeAfterDateRefiner from "./refiners/ENMergeRelativeAfterDateRefiner";
 import ENMergeRelativeFollowByDateRefiner from "./refiners/ENMergeRelativeFollowByDateRefiner";
 import OverlapRemovalRefiner from "../../common/refiners/OverlapRemovalRefiner";
+import ENExtractYearSuffixRefiner from "./refiners/ENExtractYearSuffixRefiner";
 
 export default class ENDefaultConfiguration {
     /**
@@ -71,6 +72,10 @@ export default class ENDefaultConfiguration {
 
         // Re-apply the date time refiner again after the timezone refinement and exclusion in common refiners.
         options.refiners.push(new ENMergeDateTimeRefiner());
+
+        // Extract year after merging date and time
+        options.refiners.push(new ENExtractYearSuffixRefiner());
+
         // Keep the date range refiner at the end (after all other refinements).
         options.refiners.push(new ENMergeDateRangeRefiner());
         return options;
