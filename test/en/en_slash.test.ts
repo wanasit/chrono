@@ -9,30 +9,6 @@ test("Test - Parsing Offset Expression", function () {
 });
 
 test("Test - Single Expression", function () {
-    testSingleCase(chrono, "The event is going ahead (04/2016)", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2016);
-        expect(result.start.get("month")).toBe(4);
-        expect(result.start.get("day")).toBe(1);
-
-        expect(result.index).toBe(26);
-        expect(result.text).toBe("04/2016");
-
-        expect(result.start).toBeDate(new Date(2016, 4 - 1, 1, 12));
-    });
-
-    testSingleCase(chrono, "Published: 06/2004", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2004);
-        expect(result.start.get("month")).toBe(6);
-        expect(result.start.get("day")).toBe(1);
-
-        expect(result.index).toBe(11);
-        expect(result.text).toBe("06/2004");
-
-        expect(result.start).toBeDate(new Date(2004, 6 - 1, 1, 12));
-    });
-
     testSingleCase(chrono, "8/10/2012", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -59,22 +35,6 @@ test("Test - Single Expression", function () {
         expect(result.text).toBe("8/1/2012");
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 1, 12));
-    });
-
-    testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
-
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("8/10");
-
-        expect(result.start.isCertain("day")).toBe(true);
-        expect(result.start.isCertain("month")).toBe(true);
-        expect(result.start.isCertain("year")).toBe(false);
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
     });
 
     testSingleCase(chrono, "The Deadline is 8/10/2012", new Date(2012, 7, 10), (result) => {
@@ -150,6 +110,50 @@ test("Test - Single Expression Little-Endian with Month name", function () {
     testSingleCase(chrono.strict, "06/Nov/2023:06:36:02 +0200", (result) => {
         expect(result.text).toBe("06/Nov/2023:06:36:02 +0200");
         expect(result).toBeDate(new Date("Mon Nov 06 2023 06:36:02 GMT+0200"));
+    });
+});
+
+test("Test - Single Expression Shorten (month/year)", () => {
+    testSingleCase(chrono, "The event is going ahead (04/2016)", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.index).toBe(26);
+        expect(result.text).toBe("04/2016");
+
+        expect(result.start).toBeDate(new Date(2016, 4 - 1, 1, 12));
+    });
+
+    testSingleCase(chrono, "Published: 06/2004", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2004);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.index).toBe(11);
+        expect(result.text).toBe("06/2004");
+
+        expect(result.start).toBeDate(new Date(2004, 6 - 1, 1, 12));
+    });
+});
+
+test("Test - Single Expression Shorten (date/month)", () => {
+    testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("8/10");
+
+        expect(result.start.isCertain("day")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("year")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
     });
 });
 
