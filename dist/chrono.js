@@ -1761,9 +1761,9 @@ exports.Parser = function ENDeadlineFormatParser() {
         date = date.add(num, 'year');
       }
 
-      result.start.imply('year', date.year());
-      result.start.imply('month', date.month() + 1);
-      result.start.imply('day', date.date());
+      result.start.assign('year', date.year());
+      result.start.assign('month', date.month() + 1);
+      result.start.assign('day', date.date());
       return result;
     }
 
@@ -1775,12 +1775,12 @@ exports.Parser = function ENDeadlineFormatParser() {
       date = date.add(num, 'second');
     }
 
-    result.start.imply('year', date.year());
-    result.start.imply('month', date.month() + 1);
-    result.start.imply('day', date.date());
-    result.start.imply('hour', date.hour());
-    result.start.imply('minute', date.minute());
-    result.start.imply('second', date.second());
+    result.start.assign('year', date.year());
+    result.start.assign('month', date.month() + 1);
+    result.start.assign('day', date.date());
+    result.start.assign('hour', date.hour());
+    result.start.assign('minute', date.minute());
+    result.start.assign('second', date.second());
     result.tags['ENDeadlineFormatParser'] = true;
     return result;
   };
