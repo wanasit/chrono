@@ -215,67 +215,52 @@ test("Test - Single Expression (Strict)", function() {
 });
 
 
-test("Test - Single Expression (Implied)", function() {
+test("Test - Single Expression (Certainty)", function() {
 
-    var text = "within 30 days";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
-
-    var text = "within 30 months";
-    var results = chrono.parse(text, new Date(2012,7,10,12,14));
-    expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
 
     var text = "within 30 years";
     var results = chrono.parse(text, new Date(2012,7,10,12,14));
     expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    expect(results[0].start.isCertain('year')).toBe(true);
+
+    var text = "within 30 months";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    expect(results.length).toBe(1);
+    expect(results[0].start.isCertain('year')).toBe(true);
+    expect(results[0].start.isCertain('month')).toBe(true);
+
+    var text = "within 30 days";
+    var results = chrono.parse(text, new Date(2012,7,10,12,14));
+    expect(results.length).toBe(1);
+    expect(results[0].start.isCertain('year')).toBe(true);
+    expect(results[0].start.isCertain('month')).toBe(true);
+    expect(results[0].start.isCertain('day')).toBe(true);
 
     var text = "within 5 hours";
     var results = chrono.parse(text, new Date(2012,7,10,12,14));
     expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    expect(results[0].start.isCertain('year')).toBe(true);
+    expect(results[0].start.isCertain('month')).toBe(true);
+    expect(results[0].start.isCertain('day')).toBe(true);
+    expect(results[0].start.isCertain('hour')).toBe(true);
 
     var text = "within 5 minutes";
     var results = chrono.parse(text, new Date(2012,7,10,12,14));
     expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
+    expect(results[0].start.isCertain('year')).toBe(true);
+    expect(results[0].start.isCertain('month')).toBe(true);
+    expect(results[0].start.isCertain('day')).toBe(true);
+    expect(results[0].start.isCertain('hour')).toBe(true);
+    expect(results[0].start.isCertain('minute')).toBe(true);
 
     var text = "within 5 seconds";
     var results = chrono.parse(text, new Date(2012,7,10,12,14));
     expect(results.length).toBe(1);
-    expect(!results[0].start.isCertain('year')).not.toBeNull();
-    expect(!results[0].start.isCertain('month')).not.toBeNull();
-    expect(!results[0].start.isCertain('day')).not.toBeNull();
-    expect(!results[0].start.isCertain('hour')).not.toBeNull();
-    expect(!results[0].start.isCertain('minute')).not.toBeNull();
-    expect(!results[0].start.isCertain('second')).not.toBeNull();
-
+    expect(results[0].start.isCertain('year')).toBe(true);
+    expect(results[0].start.isCertain('month')).toBe(true);
+    expect(results[0].start.isCertain('day')).toBe(true);
+    expect(results[0].start.isCertain('hour')).toBe(true);
+    expect(results[0].start.isCertain('minute')).toBe(true);
+    expect(results[0].start.isCertain('second')).toBe(true);
 });
 
