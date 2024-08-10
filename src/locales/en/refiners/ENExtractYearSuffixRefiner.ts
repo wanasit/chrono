@@ -7,9 +7,6 @@ const YEAR_GROUP = 1;
 export default class ENExtractYearSuffixRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
         results.forEach(function (result) {
-            context.debug(() => {
-                console.log("ENExtractYearSuffixRefiner", result.text, result.start);
-            });
             if (!result.start.isDateWithUnknownYear()) {
                 return;
             }

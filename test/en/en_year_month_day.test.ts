@@ -1,7 +1,7 @@
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 import * as chrono from "../../src";
 
-test("Test - Single Expression Start with Year", function () {
+test("Test - Single Expression (yyyy/MM/dd)", function () {
     testSingleCase(chrono, "2012/8/10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -41,7 +41,7 @@ test("Test - Single Expression Start with Year", function () {
     });
 });
 
-test("Test - Single Expression Start with Year and Month Name", function () {
+test("Test - Single Expression with month name (yyyy/MMM/dd)", function () {
     testSingleCase(chrono, "2012/Aug/10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -73,8 +73,29 @@ test("Test - Single Expression Start with Year and Month Name", function () {
     });
 });
 
-test("Test - Negative year-month-day like pattern", function () {
-    testUnexpectedResult(chrono, "2012-80-10", new Date(2012, 7, 10));
+test("Test - Allow swap date/month order in casual mode", () => {
+    testUnexpectedResult(chrono.strict, "2024/13/1");
+    testUnexpectedResult(chrono.strict, "2024-13-01");
 
+    testSingleCase(chrono.casual, "2024/13/1", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(13);
+    });
+
+    testSingleCase(chrono.casual, "2024-13-01", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(13);
+    });
+});
+
+test("Test - Not parse unlikely xxxx-xx-xx pattern", function () {
+    testUnexpectedResult(chrono, "2012/80/10", new Date(2012, 7, 10));
     testUnexpectedResult(chrono, "2012 80 10", new Date(2012, 7, 10));
+});
+
+test("Test - Not parse impossible dates", function () {
+    testUnexpectedResult(chrono, "2014-08-32");
+    testUnexpectedResult(chrono, "2014-02-30");
 });

@@ -8,7 +8,7 @@ test("Test - Parsing Offset Expression", function () {
     });
 });
 
-test("Test - Single Expression", function () {
+test("Test - Single Expression (MM/dd/yyyy)", function () {
     testSingleCase(chrono, "8/10/2012", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -63,7 +63,7 @@ test("Test - Single Expression", function () {
     });
 });
 
-test("Test - Single Expression Little-Endian", function () {
+test("Test - Single Expression Little-Endian (dd/MM/yyyy)", function () {
     testSingleCase(chrono.en.GB, "8/10/2012", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -113,7 +113,7 @@ test("Test - Single Expression Little-Endian with Month name", function () {
     });
 });
 
-test("Test - Single Expression Shorten (month/year)", () => {
+test("Test - Single Expression Shorten (mm/yyyy)", () => {
     testSingleCase(chrono, "The event is going ahead (04/2016)", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2016);
@@ -139,7 +139,7 @@ test("Test - Single Expression Shorten (month/year)", () => {
     });
 });
 
-test("Test - Single Expression Shorten (date/month)", () => {
+test("Test - Single Expression Shorten (dd/mm)", () => {
     testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -239,6 +239,7 @@ test("Test - Impossible Dates and Unexpected Results", function () {
     testUnexpectedResult(chrono, "06/-31/2022");
     testUnexpectedResult(chrono, "18/13/2022");
     testUnexpectedResult(chrono, "15/28/2022");
+    testUnexpectedResult(chrono, "4/13/1");
 });
 
 test("Test - forward dates only option", function () {

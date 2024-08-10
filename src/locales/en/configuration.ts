@@ -4,7 +4,7 @@ import ENTimeUnitWithinFormatParser from "./parsers/ENTimeUnitWithinFormatParser
 import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianParser";
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
-import ENCasualYearMonthDayParser from "./parsers/ENCasualYearMonthDayParser";
+import ENYearMonthDayParser from "./parsers/ENYearMonthDayParser";
 import ENSlashMonthFormatParser from "./parsers/ENSlashMonthFormatParser";
 import ENTimeExpressionParser from "./parsers/ENTimeExpressionParser";
 import ENTimeUnitAgoFormatParser from "./parsers/ENTimeUnitAgoFormatParser";
@@ -55,7 +55,6 @@ export default class ENDefaultConfiguration {
                     new ENMonthNameLittleEndianParser(),
                     new ENMonthNameMiddleEndianParser(/*shouldSkipYearLikeDate=*/ littleEndian),
                     new ENWeekdayParser(),
-                    new ENCasualYearMonthDayParser(),
                     new ENSlashMonthFormatParser(),
                     new ENTimeExpressionParser(strictMode),
                     new ENTimeUnitAgoFormatParser(strictMode),
@@ -65,6 +64,8 @@ export default class ENDefaultConfiguration {
             },
             strictMode
         );
+        options.parsers.unshift(new ENYearMonthDayParser(/*strictMonthDateOrder=*/ strictMode));
+
         // These relative-dates consideration should be done before other common refiners.
         options.refiners.unshift(new ENMergeRelativeFollowByDateRefiner());
         options.refiners.unshift(new ENMergeRelativeAfterDateRefiner());

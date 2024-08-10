@@ -41,18 +41,22 @@ export default class SlashDateFormatParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         // Because of how pattern is executed on remaining text in `chrono.ts`, the character before the match could
         // still be a number (e.g. X[X/YY/ZZ] or XX[/YY/ZZ] or [XX/YY/]ZZ). We want to check and skip them.
-        if (match[OPENING_GROUP].length == 0 && match.index > 0 && match.index < context.text.length) {
-            const previousChar = context.text[match.index - 1];
-            if (previousChar >= "0" && previousChar <= "9") {
+        const index = match.index + match[OPENING_GROUP].length;
+        const indexEnd = match.index + match[0].length - match[ENDING_GROUP].length;
+        if (index > 0) {
+            const textBefore = context.text.substring(0, index);
+            if (textBefore.match("\\d/?$")) {
+                return;
+            }
+        }
+        if (indexEnd < context.text.length) {
+            const textAfter = context.text.substring(indexEnd);
+            if (textAfter.match("^/?\\d")) {
                 return;
             }
         }
 
-        const index = match.index + match[OPENING_GROUP].length;
-        const text = match[0].substr(
-            match[OPENING_GROUP].length,
-            match[0].length - match[OPENING_GROUP].length - match[ENDING_GROUP].length
-        );
+        const text = context.text.substring(index, indexEnd);
 
         // '1.12', '1.12.12' is more like a version numbers
         if (text.match(/^\d\.\d$/) || text.match(/^\d\.\d{1,2}\.\d{1,2}\s*$/)) {
@@ -61,14 +65,13 @@ export default class SlashDateFormatParser implements Parser {
 
         // MM/dd -> OK
         // MM.dd -> NG
-        if (!match[YEAR_GROUP] && match[0].indexOf("/") < 0) {
+        if (!match[YEAR_GROUP] && text.indexOf("/") < 0) {
             return;
         }
 
         const result = context.createParsingResult(index, text);
         let month = parseInt(match[this.groupNumberMonth]);
         let day = parseInt(match[this.groupNumberDay]);
-
         if (month < 1 || month > 12) {
             if (month > 12) {
                 if (day >= 1 && day <= 12 && month <= 31) {
