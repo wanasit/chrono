@@ -312,6 +312,37 @@ test("Test - Strict mode", function () {
     testUnexpectedResult(chrono.strict, "5 h ago", new Date(2012, 7, 10, 12, 14));
 });
 
+test("Test - Forward date", () => {
+    // Note that it is actually impossible for X ago to be "forward dates".
+    // In such situation, we still return the correct actual extracted dates and make sure the option doesn't affect the results.
+    const reference = new Date("2024-09-10T12:00:00");
+    const options = { forwardDate: true };
+
+    testSingleCase(chrono, "2 days ago", reference, options, (result, text) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono, "2 weeks ago", reference, options, (result, text) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(27);
+    });
+
+    testSingleCase(chrono, "2 months ago", reference, options, (result, text) => {
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(10);
+    });
+
+    testSingleCase(chrono, "2 years ago", reference, options, (result, text) => {
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(10);
+    });
+});
+
 test("Test - Negative cases", function () {
     testUnexpectedResult(chrono, "15 hours 29 min");
     testUnexpectedResult(chrono, "a few hour");

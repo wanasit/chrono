@@ -15,7 +15,7 @@ export default class ForwardDateRefiner implements Refiner {
             return results;
         }
 
-        results.forEach(function (result) {
+        results.forEach((result) => {
             let refMoment = dayjs(context.refDate);
 
             if (result.start.isOnlyTime() && refMoment.isAfter(result.start.dayjs())) {
@@ -28,6 +28,9 @@ export default class ForwardDateRefiner implements Refiner {
                         implySimilarDate(result.end, refMoment);
                     }
                 }
+                context.debug(() => {
+                    console.log(`${this.constructor.name} adjusted ${result} time result (${result.start})`);
+                });
             }
 
             if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
@@ -41,7 +44,7 @@ export default class ForwardDateRefiner implements Refiner {
                 result.start.imply("month", refMoment.month() + 1);
                 result.start.imply("year", refMoment.year());
                 context.debug(() => {
-                    console.log(`Forward weekly adjusted for ${result} (${result.start})`);
+                    console.log(`${this.constructor.name} adjusted ${result} weekday (${result.start})`);
                 });
 
                 if (result.end && result.end.isOnlyWeekdayComponent()) {
@@ -56,7 +59,7 @@ export default class ForwardDateRefiner implements Refiner {
                     result.end.imply("month", refMoment.month() + 1);
                     result.end.imply("year", refMoment.year());
                     context.debug(() => {
-                        console.log(`Forward weekly adjusted for ${result} (${result.end})`);
+                        console.log(`${this.constructor.name} adjusted ${result} weekday (${result.end})`);
                     });
                 }
             }
@@ -67,13 +70,13 @@ export default class ForwardDateRefiner implements Refiner {
                 for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
                     result.start.imply("year", result.start.get("year") + 1);
                     context.debug(() => {
-                        console.log(`Forward yearly adjusted for ${result} (${result.start})`);
+                        console.log(`${this.constructor.name} adjusted ${result} year (${result.start})`);
                     });
 
                     if (result.end && !result.end.isCertain("year")) {
                         result.end.imply("year", result.end.get("year") + 1);
                         context.debug(() => {
-                            console.log(`Forward yearly adjusted for ${result} (${result.end})`);
+                            console.log(`${this.constructor.name} adjusted ${result} month (${result.start})`);
                         });
                     }
                 }

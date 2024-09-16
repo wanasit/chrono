@@ -11,10 +11,9 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(15);
         expect(result.start.get("weekday")).toBe(2);
 
-        expect(result.start.isCertain("day")).toBe(false);
-        expect(result.start.isCertain("month")).toBe(false);
-        expect(result.start.isCertain("year")).toBe(false);
-        expect(result.start.isCertain("weekday")).toBe(false);
+        expect(result.start.isCertain("day")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("year")).toBe(true);
 
         expect(result.start).toBeDate(new Date(2022, 2 - 1, 15, 0));
     });

@@ -132,7 +132,9 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isOnlyTime(): boolean {
-        return !this.isCertain("weekday") && !this.isCertain("day") && !this.isCertain("month");
+        return (
+            !this.isCertain("weekday") && !this.isCertain("day") && !this.isCertain("month") && !this.isCertain("year")
+        );
     }
 
     isOnlyWeekdayComponent(): boolean {
@@ -230,11 +232,12 @@ export class ParsingComponents implements ParsedComponents {
                 components.assign("day", date.date());
                 components.assign("month", date.month() + 1);
                 components.assign("year", date.year());
+            } else if (fragments["week"]) {
+                components.assign("day", date.date());
+                components.assign("month", date.month() + 1);
+                components.assign("year", date.year());
+                components.imply("weekday", date.day());
             } else {
-                if (fragments["week"]) {
-                    components.imply("weekday", date.day());
-                }
-
                 components.imply("day", date.date());
                 if (fragments["month"]) {
                     components.assign("month", date.month() + 1);
