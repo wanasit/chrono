@@ -241,4 +241,6 @@ test("Test - Compare with native js", () => {
     testByCompareWithNative("Fri, 31 Mar 2000 07:00:00 UTC");
 
     testByCompareWithNative("2014-12-14T18:22:14.759Z");
+
+    testByCompareWithNative("2024-01-01T00:00");
 });
