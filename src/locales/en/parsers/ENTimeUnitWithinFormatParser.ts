@@ -33,13 +33,15 @@ export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWord
         return context.option.forwardDate ? PATTERN_WITH_OPTIONAL_PREFIX : PATTERN_WITH_PREFIX;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         // Exclude "for the unit" phases, e.g. "for the year"
         if (match[0].match(/^for\s*the\s*\w+/)) {
             return null;
         }
-
         const timeUnits = parseTimeUnits(match[1]);
+        if (!timeUnits) {
+            return null;
+        }
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

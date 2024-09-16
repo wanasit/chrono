@@ -18,8 +18,10 @@ export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBou
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const timeUnits = parseTimeUnits(match[1]);
+        if (!timeUnits) {
+            return null;
+        }
         const outputTimeUnits = reverseTimeUnits(timeUnits);
-
         return ParsingComponents.createRelativeFromReference(context.reference, outputTimeUnits);
     }
 }

@@ -408,3 +408,8 @@ test("Test - Forward date option", () => {
         expect(result.start.get("day")).toBe(1);
     });
 });
+
+test("Test - Negative cases", () => {
+    testUnexpectedResult(chrono, "in am");
+    testUnexpectedResult(chrono, "in them");
+});

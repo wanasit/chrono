@@ -347,4 +347,7 @@ test("Test - Negative cases", function () {
     testUnexpectedResult(chrono, "15 hours 29 min");
     testUnexpectedResult(chrono, "a few hour");
     testUnexpectedResult(chrono, "5 days");
+
+    testUnexpectedResult(chrono, "am ago");
+    testUnexpectedResult(chrono, "them ago");
 });

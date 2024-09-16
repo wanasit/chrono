@@ -354,3 +354,7 @@ test("Test - Plus after reference", () => {
         expect(result.start.get("minute")).toBe(10);
     });
 });
+
+test("Test - Negative cases", () => {
+    testUnexpectedResult(chrono, "tell them later");
+});

@@ -19,9 +19,12 @@ export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParser
         return this.allowAbbreviations ? PATTERN : PATTERN_NO_ABBR;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const prefix = match[1].toLowerCase();
         let timeUnits = parseTimeUnits(match[2]);
+        if (!timeUnits) {
+            return null;
+        }
         switch (prefix) {
             case "last":
             case "past":
@@ -29,7 +32,6 @@ export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParser
                 timeUnits = reverseTimeUnits(timeUnits);
                 break;
         }
-
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

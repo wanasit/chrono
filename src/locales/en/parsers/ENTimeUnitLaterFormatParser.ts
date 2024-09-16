@@ -21,7 +21,10 @@ export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordB
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const fragments = parseTimeUnits(match[GROUP_NUM_TIMEUNITS]);
-        return ParsingComponents.createRelativeFromReference(context.reference, fragments);
+        const timeUnits = parseTimeUnits(match[GROUP_NUM_TIMEUNITS]);
+        if (!timeUnits) {
+            return null;
+        }
+        return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }
