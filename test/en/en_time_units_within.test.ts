@@ -6,6 +6,7 @@ test("Test - The normal within expression", () => {
     testSingleCase(chrono, "we have to make something in 5 days.", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(26);
         expect(result.text).toBe("in 5 days");
+        expect(result.tags()).toContain("result/relativeDate");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);

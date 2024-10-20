@@ -5,6 +5,8 @@ import ENTimeUnitCasualRelativeFormatParser from "../../src/locales/en/parsers/E
 test("Test - Positive time units", () => {
     testSingleCase(chrono, "next 2 weeks", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
+        expect(result.tags()).toContain("result/relativeDate");
+
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(15);
@@ -44,6 +46,9 @@ test("Test - Positive time units", () => {
 
     testSingleCase(chrono, "after an hour", new Date(2016, 10 - 1, 1, 15), (result, text) => {
         expect(result.text).toBe(text);
+        expect(result.tags()).toContain("result/relativeDate");
+        expect(result.tags()).toContain("result/relativeDateAndTime");
+
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(1);

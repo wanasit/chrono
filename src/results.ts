@@ -216,7 +216,9 @@ export class ParsingComponents implements ParsedComponents {
         }
 
         const components = new ParsingComponents(reference);
+        components.addTag("result/relativeDate");
         if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
+            components.addTag("result/relativeDateAndTime");
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
             if (reference.timezoneOffset !== null) {

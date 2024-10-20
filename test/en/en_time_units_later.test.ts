@@ -11,6 +11,7 @@ test("Test - Later Expression", function () {
 
         expect(result.index).toBe(0);
         expect(result.text).toBe("2 days later");
+        expect(result.tags()).toContain("result/relativeDate");
 
         expect(result.start.isCertain("day")).toBe(true);
         expect(result.start.isCertain("month")).toBe(true);

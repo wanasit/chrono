@@ -11,6 +11,7 @@ test("Test - Single Expression", function () {
 
         expect(result.index).toBe(0);
         expect(result.text).toBe("5 days ago");
+        expect(result.tags()).toContain("result/relativeDate");
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 5));
     });
@@ -30,6 +31,9 @@ test("Test - Single Expression", function () {
     testSingleCase(chrono, "15 minute ago", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("15 minute ago");
+        expect(result.tags()).toContain("result/relativeDate");
+        expect(result.tags()).toContain("result/relativeDateAndTime");
+
         expect(result.start.get("hour")).toBe(11);
         expect(result.start.get("minute")).toBe(59);
         expect(result.start.get("meridiem")).toBe(Meridiem.AM);
