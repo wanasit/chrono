@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { ParsingComponents } from "../../../results";
+import { ParsingComponents, ParsingResult } from "../../../results";
 import { Meridiem } from "../../../types";
 import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTimeExpressionParser";
 
@@ -53,5 +53,17 @@ export default class ENTimeExpressionParser extends AbstractTimeExpressionParser
         }
 
         return components.addTag("parser/ENTimeExpressionParser");
+    }
+
+    extractFollowingTimeComponents(
+        context: ParsingContext,
+        match: RegExpMatchArray,
+        result: ParsingResult
+    ): ParsingComponents | null {
+        const followingComponents = super.extractFollowingTimeComponents(context, match, result);
+        if (followingComponents) {
+            followingComponents.addTag("parser/ENTimeExpressionParser");
+        }
+        return followingComponents;
     }
 }

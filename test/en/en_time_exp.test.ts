@@ -21,6 +21,9 @@ test("Test - Time expression", function () {
         expect(result.start.get("minute")).toBe(32);
         expect(result.start.get("second")).toBe(13);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+
+        expect(result.tags()).toContain("parser/ENTimeExpressionParser");
+        expect(result.start.tags()).toContain("parser/ENTimeExpressionParser");
     });
 });
 
@@ -35,6 +38,9 @@ test("Test - Time expression after date", function () {
         expect(result.start.get("hour")).toBe(14);
         expect(result.start.get("minute")).toBe(15);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+
+        expect(result.tags()).toContain("parser/ENTimeExpressionParser");
+        expect(result.start.tags()).toContain("parser/ENTimeExpressionParser");
     });
 
     testSingleCase(chrono, "05/31/2024.14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
@@ -115,16 +121,19 @@ test("Test - Time expression before date", () => {
 test("Test - Time range expression", function () {
     testSingleCase(chrono, "10:00:00 - 21:45:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
+        expect(result.tags()).toContain("parser/ENTimeExpressionParser");
 
         expect(result.start.get("hour")).toBe(10);
         expect(result.start.get("minute")).toBe(0);
         expect(result.start.get("second")).toBe(0);
         expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+        expect(result.start.tags()).toContain("parser/ENTimeExpressionParser");
 
         expect(result.end.get("hour")).toBe(21);
         expect(result.end.get("minute")).toBe(45);
         expect(result.end.get("second")).toBe(0);
         expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.end.tags()).toContain("parser/ENTimeExpressionParser");
     });
 
     testSingleCase(chrono, "10:00:00 until 21:45:00", new Date(2016, 10 - 1, 1, 11), (result, text) => {

@@ -17,6 +17,7 @@ test("Test - Single Expression (MM/dd/yyyy)", function () {
 
         expect(result.index).toBe(0);
         expect(result.text).toBe("8/10/2012");
+        expect(result.tags()).toContain("parser/SlashDateFormatParser");
 
         expect(result.start.isCertain("day")).toBe(true);
         expect(result.start.isCertain("month")).toBe(true);
@@ -161,11 +162,13 @@ test("Test - Range Expression", function () {
     testSingleCase(chrono.en, "8/10/2012 - 8/15/2012", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("8/10/2012 - 8/15/2012");
+        expect(result.tags()).toContain("parser/SlashDateFormatParser");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
+        expect(result.start.tags()).toContain("parser/SlashDateFormatParser");
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
 
@@ -173,6 +176,7 @@ test("Test - Range Expression", function () {
         expect(result.end.get("year")).toBe(2012);
         expect(result.end.get("month")).toBe(8);
         expect(result.end.get("day")).toBe(15);
+        expect(result.end.tags()).toContain("parser/SlashDateFormatParser");
 
         expect(result.end).toBeDate(new Date(2012, 8 - 1, 15, 12));
     });

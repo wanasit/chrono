@@ -98,6 +98,6 @@ export default class SlashDateFormatParser implements Parser {
             result.start.imply("year", year);
         }
 
-        return result;
+        return result.addTag("parser/SlashDateFormatParser");
     }
 }

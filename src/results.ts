@@ -293,6 +293,22 @@ export class ParsingResult implements ParsedResult {
         return this.start.date();
     }
 
+    addTag(tag: string): ParsingResult {
+        this.start.addTag(tag);
+        if (this.end) {
+            this.end.addTag(tag);
+        }
+        return this;
+    }
+
+    addTags(tags: string[] | Set<string>): ParsingResult {
+        this.start.addTags(tags);
+        if (this.end) {
+            this.end.addTags(tags);
+        }
+        return this;
+    }
+
     tags(): Set<string> {
         const combinedTags: Set<string> = new Set(this.start.tags());
         if (this.end) {
