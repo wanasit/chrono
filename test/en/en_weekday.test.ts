@@ -219,6 +219,49 @@ test("Test - Weekday casual `Next` guessing", function () {
     }
 });
 
+test("Test - Casual 'weekend' and 'weekday'", () => {
+    {
+        const refDateOnFriday = new Date(2024, 10 - 1, 18, 12, 0);
+        testSingleCase(chrono.casual, "last weekend", refDateOnFriday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 13, 12)); // Sunday
+        });
+        testSingleCase(chrono.casual, "this weekend", refDateOnFriday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 19, 12)); // Saturday
+        });
+        testSingleCase(chrono.casual, "next weekend", refDateOnFriday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 26, 12)); // Saturday
+        });
+    }
+});
+
+test("Test - Casual 'weekday' mentioning", () => {
+    {
+        const refDateOnFriday = new Date(2024, 10 - 1, 18, 12, 0);
+        testSingleCase(chrono.casual, "last weekday", refDateOnFriday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 17, 12)); // Thursday
+        });
+        testSingleCase(chrono.casual, "next weekday", refDateOnFriday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 21, 12)); // Monday
+        });
+    }
+    {
+        const refDateOnSaturday = new Date(2024, 10 - 1, 19, 12, 0);
+        testSingleCase(chrono.casual, "last weekday", refDateOnSaturday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 18, 12)); // Friday
+        });
+        testSingleCase(chrono.casual, "next weekday", refDateOnSaturday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 21, 12)); // Monday
+        });
+    }
+});
+
 test("Test - Weekday With Casual Time", function () {
     testSingleCase(chrono.casual, "Lets meet on Tuesday morning", new Date(2015, 3, 18), (result) => {
         expect(result.index).toBe(10);
