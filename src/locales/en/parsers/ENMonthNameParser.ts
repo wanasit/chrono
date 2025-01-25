@@ -10,7 +10,7 @@ const PATTERN = new RegExp(
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `\\s*` +
         `(?:` +
-        `[,-]?\\s*(${YEAR_PATTERN})?` +
+        `(?:,|-|of)?\\s*(${YEAR_PATTERN})?` +
         ")?" +
         "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
     "i"
