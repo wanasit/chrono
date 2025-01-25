@@ -28,6 +28,17 @@ export default class ENUnlikelyFormatFilter extends Filter {
             }
         }
 
+        // In English, "the second" could refer to the ordinal number or timeunit.
+        if (text.toLowerCase().endsWith("the second")) {
+            const textAfter = context.text.substring(result.index + result.text.length).trim();
+            if (textAfter.length > 0) {
+                context.debug(() => {
+                    console.log(`Removing unlikely result: ${result}`);
+                });
+            }
+            return false;
+        }
+
         return true;
     }
 }

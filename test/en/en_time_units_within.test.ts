@@ -413,4 +413,5 @@ test("Test - Forward date option", () => {
 test("Test - Negative cases", () => {
     testUnexpectedResult(chrono, "in am");
     testUnexpectedResult(chrono, "in them");
+    testUnexpectedResult(chrono, "the second half");
 });

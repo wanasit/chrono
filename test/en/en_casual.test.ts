@@ -414,6 +414,8 @@ test("Test - Random negative text", () => {
 
     testUnexpectedResult(chrono, "I may by here. May the force be with you. Theresa may become PM soon.");
 
+    testUnexpectedResult(chrono, "XXX is set to be released in the second half of 2025");
+
     testUnexpectedResult(chrono.casual, "do I have the money");
 
     testUnexpectedResult(chrono.en.GB, "do I have the money");
