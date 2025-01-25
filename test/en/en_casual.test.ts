@@ -412,6 +412,8 @@ test("Test - Random negative text", () => {
 
     testUnexpectedResult(chrono, "do I have the money");
 
+    testUnexpectedResult(chrono, "I may by here. May the force be with you. Theresa may become PM soon.");
+
     testUnexpectedResult(chrono.casual, "do I have the money");
 
     testUnexpectedResult(chrono.en.GB, "do I have the money");

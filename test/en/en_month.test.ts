@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Month-Year expression", function () {
     testSingleCase(chrono, "September 2012", (result) => {
@@ -271,4 +271,17 @@ test("Test - Month should not have timezone", () => {
             expect(result.start.get("month")).toBe(8);
         }
     );
+});
+
+test("Test - Month only in different context", () => {
+    testSingleCase(chrono.casual, "May", (result) => {
+        expect(result.text).toContain("May");
+    });
+
+    testSingleCase(chrono.casual, "in May", (result) => {
+        expect(result.text).toContain("May");
+    });
+
+    testUnexpectedResult(chrono.casual, "The mountain may not move");
+    testUnexpectedResult(chrono.casual, "May not be correct");
 });
