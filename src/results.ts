@@ -227,7 +227,7 @@ export class ParsingComponents implements ParsedComponents {
         } else {
             implySimilarTime(components, date);
             if (reference.timezoneOffset !== null) {
-                components.imply("timezoneOffset", -reference.instant.getTimezoneOffset());
+                components.imply("timezoneOffset", reference.timezoneOffset ?? -reference.instant.getTimezoneOffset());
             }
 
             if (fragments["d"]) {
