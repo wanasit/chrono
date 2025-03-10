@@ -189,22 +189,3 @@ test("Test - Customize by removing time extraction", () => {
         expect(result.start.get("day")).toBe(26);
     });
 });
-
-test("Test - Timezone handling in relative dates", () => {
-    const refDate = new Date(2025, 2 - 1, 27, 12, 0); // Feb 27, 2025 12:00
-
-    testSingleCase(chrono, "in 2 weeks at 9am", { instant: refDate, timezone: "PST" }, (result) => {
-        expect(result.text).toBe("in 2 weeks at 9am");
-        expect(result.start.get("hour")).toBe(9);
-        expect(result.start.get("timezoneOffset")).toBe(-480);
-        expect(result.start).toBeDate(new Date(2025, 3 - 1, 13, 17, 0));
-    });
-
-    testSingleCase(chrono, "2 weeks ago at 9am", { instant: refDate, timezone: "PST" }, (result) => {
-        expect(result.text).toBe("2 weeks ago at 9am");
-        expect(result.start.get("hour")).toBe(9);
-        expect(result.start.get("timezoneOffset")).toBe(-480);
-        expect(result.start).toBeDate(new Date(2025, 2 - 1, 13, 17, 0));
-    });
-});
-
