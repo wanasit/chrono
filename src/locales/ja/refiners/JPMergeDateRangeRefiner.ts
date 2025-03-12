@@ -8,6 +8,6 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
  */
 export default class JPMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
     patternBetween(): RegExp {
-        return /^\s*(から|ー|-)\s*$/i;
+        return /^\s*(から|ー|-|～|~)\s*$/i;
     }
 }
