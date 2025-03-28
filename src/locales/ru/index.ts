@@ -52,8 +52,8 @@ export function parseDate(text: string, ref?: ParsingReference | Date, option?: 
 }
 
 /**
- * Create a default *casual* {@Link Configuration} for Russian chrono.
- * It calls {@Link createConfiguration} and includes additional parsers.
+ * Create a default *casual* {@link Configuration} for Russian chrono.
+ * It calls {@link createConfiguration} and includes additional parsers.
  */
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration(false);
@@ -66,7 +66,7 @@ export function createCasualConfiguration(): Configuration {
 }
 
 /**
- * Create a default {@Link Configuration} for Russian chrono
+ * Create a default {@link Configuration} for Russian chrono
  *
  * @param strictMode If the timeunit mentioning should be strict, not casual
  */

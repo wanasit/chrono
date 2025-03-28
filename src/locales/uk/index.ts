@@ -39,8 +39,8 @@ export const casual = new Chrono(createCasualConfiguration());
 export const strict = new Chrono(createConfiguration(true));
 
 /**
- * Create a default *casual* {@Link Configuration} for Ukrainian chrono.
- * It calls {@Link createConfiguration} and includes additional parsers.
+ * Create a default *casual* {@link Configuration} for Ukrainian chrono.
+ * It calls {@link createConfiguration} and includes additional parsers.
  */
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration(false);
@@ -53,7 +53,7 @@ export function createCasualConfiguration(): Configuration {
 }
 
 /**
- * Create a default {@Link Configuration} for Ukrainian chrono
+ * Create a default {@link Configuration} for Ukrainian chrono
  *
  * @param strictMode If the timeunit mentioning should be strict, not casual
  */

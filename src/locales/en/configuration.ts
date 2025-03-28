@@ -28,8 +28,8 @@ import ENUnlikelyFormatFilter from "./refiners/ENUnlikelyFormatFilter";
 
 export default class ENDefaultConfiguration {
     /**
-     * Create a default *casual* {@Link Configuration} for English chrono.
-     * It calls {@Link createConfiguration} and includes additional parsers.
+     * Create a default *casual* {@link Configuration} for English chrono.
+     * It calls {@link createConfiguration} and includes additional parsers.
      */
     createCasualConfiguration(littleEndian = false): Configuration {
         const option = this.createConfiguration(false, littleEndian);
@@ -43,7 +43,7 @@ export default class ENDefaultConfiguration {
     }
 
     /**
-     * Create a default {@Link Configuration} for English chrono
+     * Create a default {@link Configuration} for English chrono
      *
      * @param strictMode If the timeunit mentioning should be strict, not casual
      * @param littleEndian If format should be date-first/littleEndian (e.g. en_UK), not month-first/middleEndian (e.g. en_US)

@@ -18,9 +18,9 @@ export interface Configuration {
  * Each parser should recognize and handle a certain date format.
  * Chrono uses multiple parses (and refiners) together for parsing the input.
  *
- * The parser implementation must provide {@Link pattern | pattern()} for the date format.
+ * The parser implementation must provide {@link pattern | pattern()} for the date format.
  *
- * The {@Link extract | extract()} method is called with the pattern's *match*.
+ * The {@link extract | extract()} method is called with the pattern's *match*.
  * The matching and extracting is controlled and adjusted to avoid for overlapping results.
  */
 export interface Parser {
@@ -67,7 +67,7 @@ export class Chrono {
     }
 
     /**
-     * A shortcut for calling {@Link parse | parse() } then transform the result into Javascript's Date object
+     * A shortcut for calling {@link parse | parse() } then transform the result into Javascript's Date object
      * @return Date object created from the first parse result
      */
     parseDate(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): Date | null {
