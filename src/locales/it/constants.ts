@@ -20,9 +20,7 @@ export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "sab": 6,
 };
 
-export const FULL_MONTH_NAME_DICTIONARY: { [word: string]: number } = {
-
-};
+export const FULL_MONTH_NAME_DICTIONARY: { [word: string]: number } = {};
 
 export const MONTH_DICTIONARY: { [word: string]: number } = {
     ...FULL_MONTH_NAME_DICTIONARY,
@@ -69,41 +67,41 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
 };
 
 export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
-    'uno': 1,
-    'due': 2,
-    'tre': 3,
-    'quattro': 4,
-    'cinque': 5,
-    'sei': 6,
-    'sette': 7,
-    'otto': 8,
-    'nove': 9,
-    'dieci': 10,
-    'undici': 11,
-    'dodici': 12,
+    "uno": 1,
+    "due": 2,
+    "tre": 3,
+    "quattro": 4,
+    "cinque": 5,
+    "sei": 6,
+    "sette": 7,
+    "otto": 8,
+    "nove": 9,
+    "dieci": 10,
+    "undici": 11,
+    "dodici": 12,
 };
 
 export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "primo": 1,
     "secondo": 2,
     "terzo": 3,
-    'quarto': 4,
-    'quinto': 5,
-    'sesto': 6,
-    'settimo': 7,
-    'ottavo': 8,
-    'nono': 9,
-    'decimo': 10,
-    'undicesimo': 11,
-    'dodicesimo': 12,
-    'tredicesimo': 13,
-    'quattordicesimo': 14,
-    'quindicesimo': 15,
-    'sedicesimo': 16,
-    'diciassettesimo': 17,
-    'diciottesimo': 18,
-    'diciannovesimo': 19,
-    'ventesimo': 20,
+    "quarto": 4,
+    "quinto": 5,
+    "sesto": 6,
+    "settimo": 7,
+    "ottavo": 8,
+    "nono": 9,
+    "decimo": 10,
+    "undicesimo": 11,
+    "dodicesimo": 12,
+    "tredicesimo": 13,
+    "quattordicesimo": 14,
+    "quindicesimo": 15,
+    "sedicesimo": 16,
+    "diciassettesimo": 17,
+    "diciottesimo": 18,
+    "diciannovesimo": 19,
+    "ventesimo": 20,
     "ventunesimo": 21,
     "ventiduesimo": 22,
     "ventitreesimo": 23,
@@ -167,7 +165,9 @@ export function parseNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(ORDINAL_WORD_DICTIONARY)}|[0-9]{1,2}(?:mo|ndo|rzo|simo|esimo)?)`;
+export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(
+    ORDINAL_WORD_DICTIONARY
+)}|[0-9]{1,2}(?:mo|ndo|rzo|simo|esimo)?)`;
 export function parseOrdinalNumberPattern(match: string): number {
     let num = match.toLowerCase();
     if (ORDINAL_WORD_DICTIONARY[num] !== undefined) {

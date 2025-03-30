@@ -4,7 +4,10 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseTimeUnits } from "../../../utils/timeunits";
 
-const PATTERN = new RegExp(`(questo|ultimo|passato|prossimo|dopo|questa|ultima|passata|prossima|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`, "i");
+const PATTERN = new RegExp(
+    `(questo|ultimo|passato|prossimo|dopo|questa|ultima|passata|prossima|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    "i"
+);
 
 export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
