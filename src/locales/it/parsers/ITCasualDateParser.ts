@@ -38,7 +38,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
             default:
                 if (lowerText.match(/ieri\s*sera/)) {
                     if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "giorno");
+                        targetDate = targetDate.add(-1, "day");
                     }
 
                     assignSimilarDate(component, targetDate);
