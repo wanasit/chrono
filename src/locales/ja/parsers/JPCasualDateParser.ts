@@ -3,14 +3,14 @@ import dayjs from "dayjs";
 import { Meridiem } from "../../../types";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /今日|きょう|当日|とうじつ|昨日|きのう|明日|あした|今夜|こんや|今夕|こんゆう|今晩|こんばん|今朝|けさ/i;
+const PATTERN = /今日|きょう|本日|ほんじつ|昨日|きのう|明日|あした|今夜|こんや|今夕|こんゆう|今晩|こんばん|今朝|けさ/i;
 
 function normalizeTextToKanji(text: string) {
     switch (text) {
         case "きょう":
             return "今日";
-        case "とうじつ":
-            return "当日";
+        case "ほんじつ":
+            return "本日";
         case "きのう":
             return "昨日";
         case "あした":
@@ -46,8 +46,8 @@ export default class JPCasualDateParser implements Parser {
             case "明日":
                 return references.tomorrow(context.reference);
 
+            case "本日":
             case "今日":
-            case "当日":
                 return references.today(context.reference);
         }
 
