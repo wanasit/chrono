@@ -8,6 +8,7 @@ import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
 import { implySimilarDate } from "../../utils/dayjs";
+import * as dates from "../../utils/dates";
 
 export default class ForwardDateRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
@@ -16,21 +17,26 @@ export default class ForwardDateRefiner implements Refiner {
         }
 
         results.forEach((result) => {
-            let refMoment = dayjs(context.refDate);
+            let refMoment = dayjs(context.reference.getDateWithAdjustedTimezone());
 
-            if (result.start.isOnlyTime() && refMoment.isAfter(result.start.dayjs())) {
-                refMoment = refMoment.add(1, "day");
-                implySimilarDate(result.start, refMoment);
+            if (result.start.isOnlyTime() && context.reference.instant > result.start.date()) {
+                const refDate = context.reference.getDateWithAdjustedTimezone();
+                const refFollowingDay = new Date(refDate);
+                refFollowingDay.setDate(refFollowingDay.getDate() + 1);
+
+                dates.implySimilarDate(result.start, refFollowingDay);
+                context.debug(() => {
+                    console.log(
+                        `${this.constructor.name} adjusted ${result} time from the ref date (${refDate}) to the following day (${refFollowingDay})`
+                    );
+                });
                 if (result.end && result.end.isOnlyTime()) {
-                    implySimilarDate(result.end, refMoment);
-                    if (result.start.dayjs().isAfter(result.end.dayjs())) {
-                        refMoment = refMoment.add(1, "day");
-                        implySimilarDate(result.end, refMoment);
+                    dates.implySimilarDate(result.end, refFollowingDay);
+                    if (result.start.date() > result.end.date()) {
+                        refFollowingDay.setDate(refFollowingDay.getDate() + 1);
+                        dates.implySimilarDate(result.end, refFollowingDay);
                     }
                 }
-                context.debug(() => {
-                    console.log(`${this.constructor.name} adjusted ${result} time result (${result.start})`);
-                });
             }
 
             if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {

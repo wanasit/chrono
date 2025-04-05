@@ -175,3 +175,27 @@ test("Test - Checking non-existing date during DST skip", () => {
         ).toBe(true);
     }
 });
+
+test("Test - Getting timezone adjust date from references", () => {
+    {
+        const reference = new ReferenceWithTimezone({
+            instant: new Date("Wed Jun 09 2021 07:21:32 GMT+0900 (JST)"),
+            timezone: 9 * 60,
+        });
+        expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
+    }
+    {
+        const reference = new ReferenceWithTimezone({
+            instant: new Date("Wed Jun 09 2021 07:21:32 GMT+0900 (JST)"),
+            timezone: "JST",
+        });
+        expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
+    }
+    {
+        const reference = new ReferenceWithTimezone({
+            instant: new Date("Wed Jun 09 2021 07:21:32 GMT-0500 (CDT)"),
+            timezone: "CDT",
+        });
+        expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
+    }
+});

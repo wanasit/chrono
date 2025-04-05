@@ -1,7 +1,7 @@
 import * as chrono from "../src/";
 import { testSingleCase } from "./test_util";
 
-test("Test - Timezone difference on reference example", function () {
+test("Test - Using reference with timezone", function () {
     testSingleCase(
         chrono,
         "Friday at 4pm",
@@ -11,12 +11,26 @@ test("Test - Timezone difference on reference example", function () {
         },
         (result) => {
             expect(result).toBeDate(new Date("Fri Jun 11 2021 16:00:00 GMT-0500 (CDT)"));
-            expect(result).toBeDate(new Date("Fri Jun 12 2021 06:00:00 GMT+0900 (JST)"));
+            expect(result).toBeDate(new Date("Sat Jun 12 2021 06:00:00 GMT+0900 (JST)"));
+        }
+    );
+    testSingleCase(
+        chrono,
+        "1am",
+        {
+            instant: new Date("Wed May 26 2022 01:57:00 GMT-0500 (CDT)"),
+            timezone: "CDT",
+        },
+        (result) => {
+            expect(result.start.get("year")).toBe(2022);
+            expect(result.start.get("month")).toBe(5);
+            expect(result.start.get("day")).toBe(26);
+            expect(result.start.get("hour")).toBe(1);
         }
     );
 });
 
-test("Test - Timezone difference on default timezone", function () {
+test("Test - Using reference with missing/default timezone", function () {
     const INPUT = "Friday at 4pm";
     const REF_INSTANT = new Date(2021, 6 - 1, 9, 7, 0, 0);
     const EXPECTED_INSTANT = new Date(2021, 6 - 1, 11, 16, 0, 0);
@@ -38,16 +52,18 @@ test("Test - Timezone difference on default timezone", function () {
     });
 });
 
-test("Test - Timezone difference on reference date", function () {
+test("Test - Using reference instance with different timezone", function () {
     // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
     // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
     const refInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
 
+    // "At 4pm tomorrow" at "Sun Jun 06 2021 11:00:00 (BST)"
     testSingleCase(chrono, "At 4pm tomorrow", { instant: refInstant, timezone: "BST" }, (result) => {
         const expectedInstant = new Date("Mon Jun 07 2021 16:00:00 GMT+0100 (BST)");
         expect(result).toBeDate(expectedInstant);
     });
 
+    // "At 4pm tomorrow" at "Sun Jun 06 2021 19:00:00 (JST)"
     testSingleCase(chrono, "At 4pm tomorrow", { instant: refInstant, timezone: "JST" }, (result) => {
         const expectedInstant = new Date("Mon Jun 07 2021 16:00:00 GMT+0900 (JST)");
         expect(result).toBeDate(expectedInstant);

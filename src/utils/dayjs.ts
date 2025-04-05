@@ -32,12 +32,18 @@ export function assignSimilarTime(component: ParsingComponents, targetDayJs: day
     }
 }
 
+/**
+ * @deprecated Use `dates.implySimilarDate` with normal Javascript Date instead.
+ */
 export function implySimilarDate(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     component.imply("day", targetDayJs.date());
     component.imply("month", targetDayJs.month() + 1);
     component.imply("year", targetDayJs.year());
 }
 
+/**
+ * @deprecated Use `dates.implySimilarTime` with normal Javascript Date instead.
+ */
 export function implySimilarTime(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     component.imply("hour", targetDayJs.hour());
     component.imply("minute", targetDayJs.minute());

@@ -456,24 +456,13 @@ test("Test - Parsing negative cases : 'at [some numbers] - [some numbers]' (Stri
     testUnexpectedResult(chrono.strict, "7-730");
 });
 
-test("Test - forward dates only option", function () {
-    testSingleCase(
-        chrono,
-        "1am",
-        {
-            instant: new Date("Wed May 26 2022 01:57:00 GMT-0500 (CDT)"),
-            timezone: "CDT",
-        },
-        {
-            forwardDate: true,
-        },
-        (result) => {
-            expect(result.start.get("year")).toBe(2022);
-            expect(result.start.get("month")).toBe(5);
-            expect(result.start.get("day")).toBe(27);
-            expect(result.start.get("hour")).toBe(1);
-        }
-    );
+test("Test - Forward time calculation 'forwardDate' flag", () => {
+    testSingleCase(chrono, "1am", new Date(2022, 5 - 1, 26, 1, 57), { forwardDate: true }, (result) => {
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(5);
+        expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("hour")).toBe(1);
+    });
 
     testSingleCase(chrono, "11am", new Date(2016, 10 - 1, 1, 12), { forwardDate: true }, (result) => {
         expect(result.start.get("year")).toBe(2016);
@@ -507,4 +496,24 @@ test("Test - forward dates only option", function () {
         expect(result.end.get("day")).toBe(2);
         expect(result.end.get("hour")).toBe(12);
     });
+});
+
+test("Test - Test - Forward time calculation 'forwardDate' flag in different timezones", () => {
+    testSingleCase(
+        chrono,
+        "1am",
+        {
+            instant: new Date("Wed May 26 2022 01:57:00 GMT-0500 (CDT)"),
+            timezone: "CDT",
+        },
+        {
+            forwardDate: true,
+        },
+        (result) => {
+            expect(result.start.get("year")).toBe(2022);
+            expect(result.start.get("month")).toBe(5);
+            expect(result.start.get("day")).toBe(27);
+            expect(result.start.get("hour")).toBe(1);
+        }
+    );
 });

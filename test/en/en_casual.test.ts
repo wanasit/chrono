@@ -28,7 +28,10 @@ test("Test - Single Expression", () => {
         (result) => {
             expect(result.text).toBe("now");
             expect(result.start).toBeDate(new Date(1637674343000));
-            expect(result.start.isCertain("timezoneOffset")).toBe(false);
+
+            // Although the timezone is not specified, we need to assume it is similar to the system default.
+            // We also must allow the timezoneOffset to be overridden. Otherwise, the "now" meaning is incorrect.
+            // expect(result.start.isCertain("timezoneOffset")).toBe(false);
         }
     );
 

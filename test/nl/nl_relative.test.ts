@@ -185,42 +185,58 @@ test("Test - Relative date components' certainty", () => {
     });
 });
 
-test("Test - Relative date components' certainty and imply timezone", () => {
+test("Test - Relative date when the timezone is irrelevant", () => {
     const refDate = new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)");
-
     {
         // now
         const text = "nu";
         const result = chrono.nl.parse(text, refDate)[0] as ParsingResult;
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"));
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 5:24:13 GMT+0100"));
 
-        expect(result.text).toBe(text);
         result.start.imply("timezoneOffset", 60);
-
         expect(result).toBeDate(new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)"));
         expect(result).toBeDate(new Date("Sun Nov 29 2020 5:24:13 GMT+0100"));
     }
-
-    {
-        // tomorrow at 5pm
-        const text = "morgen om 17 uur";
-        const result = chrono.nl.parse(text, refDate)[0] as ParsingResult;
-
-        expect(result.text).toBe(text);
-        result.start.imply("timezoneOffset", 60);
-
-        expect(result).toBeDate(new Date("Sun Dec 1 2020 1:00:00 GMT+0900 (Japan Standard Time)"));
-        expect(result).toBeDate(new Date("Sun Nov 30 2020 17:00:00 GMT+0100"));
-    }
-
     {
         // in 10 minutes
         const text = "binnen 10 minuten";
         const result = chrono.nl.parse(text, refDate)[0] as ParsingResult;
-
-        expect(result.text).toBe(text);
-        result.start.imply("timezoneOffset", 60);
-
         expect(result).toBeDate(new Date("Sun Nov 29 2020 13:34:13 GMT+0900 (Japan Standard Time)"));
         expect(result).toBeDate(new Date("Sun Nov 29 2020 5:34:13 GMT+0100"));
+
+        result.start.imply("timezoneOffset", 60);
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 13:34:13 GMT+0900 (Japan Standard Time)"));
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 5:34:13 GMT+0100"));
+    }
+});
+
+test("Test - Relative date when the timezone is relevant and known", () => {
+    // Sun Nov 29 2020 13:24:13 GMT+0900 (JST)
+    // Sat Nov 28 2020 21:24:13 GMT-0700 (PDT)
+    const refInstant = new Date("Sun Nov 29 2020 13:24:13 GMT+0900 (Japan Standard Time)");
+    {
+        // In JST (Nov 29 2020 13:24:13 GMT+0900), "tomorrow at 5pm"
+        const text = "morgen om 17 uur";
+        const result = chrono.nl.parse(text, { instant: refInstant, timezone: "JST" })[0] as ParsingResult;
+        expect(result).toBeDate(new Date("Mon Nov 30 2020 17:00:00 GMT+0900 (JST)"));
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(30);
+        expect(result.start.get("hour")).toBe(17);
+
+        result.start.imply("timezoneOffset", 60);
+        expect(result).toBeDate(new Date("Mon Nov 30 2020 17:00:00 GMT+0100 (BST)"));
+    }
+    {
+        // In PDT (Sat Nov 28 2020 21:24:13 GMT-0700), "tomorrow at 5pm"
+        const text = "morgen om 17 uur";
+        const result = chrono.nl.parse(text, { instant: refInstant, timezone: -7 * 60 })[0] as ParsingResult;
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 17:00:00 GMT-0700 (PST)"));
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(29);
+        expect(result.start.get("hour")).toBe(17);
+
+        result.start.imply("timezoneOffset", 60);
+        expect(result).toBeDate(new Date("Sun Nov 29 2020 17:00:00 GMT+0100 (BST)"));
     }
 });
