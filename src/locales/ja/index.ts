@@ -9,6 +9,8 @@ import JPMergeDateRangeRefiner from "./refiners/JPMergeDateRangeRefiner";
 import JPCasualDateParser from "./parsers/JPCasualDateParser";
 import JPWeekdayParser from "./parsers/JPWeekdayParser";
 import JPSlashDateFormatParser from "./parsers/JPSlashDateFormatParser";
+import JPTimeExpressionParser from "./parsers/JPTimeExpressionParser";
+import JPMergeDateTimeRefiner from "./refiners/JPMergeDateTimeRefiner";
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
@@ -47,6 +49,8 @@ export function createConfiguration(): Configuration {
             new JPStandardParser(),
             new JPWeekdayParser(),
             new JPSlashDateFormatParser(),
+            new JPTimeExpressionParser(),
         ],
+        refiners: [new JPMergeDateRangeRefiner(), new JPMergeDateTimeRefiner()],
     };
 }
