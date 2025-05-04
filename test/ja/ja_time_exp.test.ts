@@ -59,42 +59,47 @@ test("Test - Single Expression", function () {
 });
 
 test("Test - Range Expression", function () {
-    testSingleCase(chrono.ja, "私は本日午前八時十分から午後11時32分までゲームをした", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(2);
-        expect(result.text).toBe("本日午前八時十分から午後11時32分");
+    testSingleCase(
+        chrono.ja,
+        "私は本日午前八時十分から午後11時32分までゲームをした",
+        new Date(2012, 7, 10),
+        (result) => {
+            expect(result.index).toBe(2);
+            expect(result.text).toBe("本日午前八時十分から午後11時32分");
 
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("hour")).toBe(8);
-        expect(result.start.get("minute")).toBe(10);
+            expect(result.start).not.toBeNull();
+            expect(result.start.get("hour")).toBe(8);
+            expect(result.start.get("minute")).toBe(10);
 
-        expect(result.start.isCertain("day")).toBe(true);
-        expect(result.start.isCertain("month")).toBe(true);
-        expect(result.start.isCertain("year")).toBe(true);
-        expect(result.start.isCertain("hour")).toBe(true);
-        expect(result.start.isCertain("minute")).toBe(true);
-        expect(result.start.isCertain("second")).toBe(false);
-        expect(result.start.isCertain("millisecond")).toBe(false);
+            expect(result.start.isCertain("day")).toBe(true);
+            expect(result.start.isCertain("month")).toBe(true);
+            expect(result.start.isCertain("year")).toBe(true);
+            expect(result.start.isCertain("hour")).toBe(true);
+            expect(result.start.isCertain("minute")).toBe(true);
+            expect(result.start.isCertain("second")).toBe(false);
+            expect(result.start.isCertain("millisecond")).toBe(false);
 
-        let resultDate = result.start.date();
-        let expectDate = new Date(2012, 7, 10, 8, 10);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+            let resultDate = result.start.date();
+            let expectDate = new Date(2012, 7, 10, 8, 10);
+            expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
 
-        expect(result.end).not.toBeNull();
-        expect(result.end.get("hour")).toBe(23);
-        expect(result.end.get("minute")).toBe(32);
+            expect(result.end).not.toBeNull();
+            expect(result.end.get("hour")).toBe(23);
+            expect(result.end.get("minute")).toBe(32);
 
-        expect(result.end.isCertain("day")).toBe(true);
-        expect(result.end.isCertain("month")).toBe(true);
-        expect(result.end.isCertain("year")).toBe(true);
-        expect(result.end.isCertain("hour")).toBe(true);
-        expect(result.end.isCertain("minute")).toBe(true);
-        expect(result.end.isCertain("second")).toBe(false);
-        expect(result.end.isCertain("millisecond")).toBe(false);
+            expect(result.end.isCertain("day")).toBe(true);
+            expect(result.end.isCertain("month")).toBe(true);
+            expect(result.end.isCertain("year")).toBe(true);
+            expect(result.end.isCertain("hour")).toBe(true);
+            expect(result.end.isCertain("minute")).toBe(true);
+            expect(result.end.isCertain("second")).toBe(false);
+            expect(result.end.isCertain("millisecond")).toBe(false);
 
-        resultDate = result.end.date();
-        expectDate = new Date(2012, 7, 10, 23, 32);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
-    });
+            resultDate = result.end.date();
+            expectDate = new Date(2012, 7, 10, 23, 32);
+            expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        }
+    );
 
     testSingleCase(chrono.ja, "6時30分PM-11時PM", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
@@ -118,27 +123,31 @@ test("Test - Range Expression", function () {
         expectDate = new Date(2012, 7, 10, 23, 0);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
-
 });
 
 test("Test - Date + Time Expression", function () {
-    testSingleCase(chrono.ja, "僕は2018年11月26日午後三時半五十九秒にゲームを始めた", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(2);
-        expect(result.text).toBe("2018年11月26日午後三時半五十九秒");
+    testSingleCase(
+        chrono.ja,
+        "僕は2018年11月26日午後三時半五十九秒にゲームを始めた",
+        new Date(2012, 7, 10),
+        (result) => {
+            expect(result.index).toBe(2);
+            expect(result.text).toBe("2018年11月26日午後三時半五十九秒");
 
-        expect(result.start.get("year")).toBe(2018);
-        expect(result.start.get("month")).toBe(11);
-        expect(result.start.get("day")).toBe(26);
-        expect(result.start.get("hour")).toBe(15);
-        expect(result.start.get("minute")).toBe(30);
-        expect(result.start.get("second")).toBe(59);
-        expect(result.start.get("millisecond")).toBe(0);
-        expect(result.start.isCertain("millisecond")).toBe(false);
+            expect(result.start.get("year")).toBe(2018);
+            expect(result.start.get("month")).toBe(11);
+            expect(result.start.get("day")).toBe(26);
+            expect(result.start.get("hour")).toBe(15);
+            expect(result.start.get("minute")).toBe(30);
+            expect(result.start.get("second")).toBe(59);
+            expect(result.start.get("millisecond")).toBe(0);
+            expect(result.start.isCertain("millisecond")).toBe(false);
 
-        const resultDate = result.start.date();
-        const expectDate = new Date(2018, 11 - 1, 26, 15, 30, 59);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
-    });
+            const resultDate = result.start.date();
+            const expectDate = new Date(2018, 11 - 1, 26, 15, 30, 59);
+            expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        }
+    );
 });
 
 test("Test - Time Expression's Meridiem imply", function () {
