@@ -1,22 +1,22 @@
 import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { Meridiem } from "../../../types";
-import { NUMBER, jaStringToNumber } from "../constants";
+import { NUMBER, jaStringToNumber, toHankaku } from "../constants";
 
 const FIRST_REG_PATTERN = new RegExp(
     "(?:" +
         "(午前|午後|A.M.|P.M.|AM|PM)" +
         ")?" +
-        "(?:[\\s,，]*)" +
-        "(?:(\\d+|[" +
+        "(?:[\\s,，、]*)" +
+        "(?:([0-9０-９]+|[" +
         Object.keys(NUMBER).join("") +
         "]+)(?:\\s*)(?:時|:|：)" +
         "(?:\\s*)" +
-        "(\\d+|半|[" +
+        "([0-9０-９]+|半|[" +
         Object.keys(NUMBER).join("") +
         "]+)?(?:\\s*)(?:分|:|：)?" +
         "(?:\\s*)" +
-        "(\\d+|[" +
+        "([0-9０-９]+|[" +
         Object.keys(NUMBER).join("") +
         "]+)?(?:\\s*)(?:秒)?)" +
         "(?:\\s*(A.M.|P.M.|AM?|PM?))?",
@@ -24,20 +24,20 @@ const FIRST_REG_PATTERN = new RegExp(
 );
 
 const SECOND_REG_PATTERN = new RegExp(
-    "(?:^\\s*(?:から|\\-|\\–|\\~|\\〜)\\s*)" +
+    "(?:^\\s*(?:から|\\-|\\–|\\－|\\~|\\〜)\\s*)" +
         "(?:" +
         "(午前|午後|A.M.|P.M.|AM|PM)" +
         ")?" +
-        "(?:[\\s,，]*)" +
-        "(?:(\\d+|[" +
+        "(?:[\\s,，、]*)" +
+        "(?:([0-9０-９]+|[" +
         Object.keys(NUMBER).join("") +
         "]+)(?:\\s*)(?:時|:|：)" +
         "(?:\\s*)" +
-        "(\\d+|半|[" +
+        "([0-9０-９]+|半|[" +
         Object.keys(NUMBER).join("") +
         "]+)?(?:\\s*)(?:分|:|：)?" +
         "(?:\\s*)" +
-        "(\\d+|[" +
+        "([0-9０-９]+|[" +
         Object.keys(NUMBER).join("") +
         "]+)?(?:\\s*)(?:秒)?)" +
         "(?:\\s*(A.M.|P.M.|AM?|PM?))?",
@@ -69,7 +69,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
 
         // ----- Second
         if (match[SECOND_GROUP]) {
-            let second = parseInt(match[SECOND_GROUP]);
+            let second = parseInt(toHankaku(match[SECOND_GROUP]));
             if (isNaN(second)) {
                 second = jaStringToNumber(match[SECOND_GROUP]);
             }
@@ -77,7 +77,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
             result.start.assign("second", second);
         }
 
-        hour = parseInt(match[HOUR_GROUP]);
+        hour = parseInt(toHankaku(match[HOUR_GROUP]));
         if (isNaN(hour)) {
             hour = jaStringToNumber(match[HOUR_GROUP]);
         }
@@ -87,7 +87,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
             if (match[MINUTE_GROUP] === "半") {
                 minute = 30;
             } else {
-                minute = parseInt(match[MINUTE_GROUP]);
+                minute = parseInt(toHankaku(match[MINUTE_GROUP]));
                 if (isNaN(minute)) {
                     minute = jaStringToNumber(match[MINUTE_GROUP]);
                 }
@@ -168,7 +168,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
 
         // ----- Second
         if (match[SECOND_GROUP]) {
-            let second = parseInt(match[SECOND_GROUP]);
+            let second = parseInt(toHankaku(match[SECOND_GROUP]));
             if (isNaN(second)) {
                 second = jaStringToNumber(match[SECOND_GROUP]);
             }
@@ -177,7 +177,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
             result.end.assign("second", second);
         }
 
-        hour = parseInt(match[HOUR_GROUP]);
+        hour = parseInt(toHankaku(match[HOUR_GROUP]));
         if (isNaN(hour)) {
             hour = jaStringToNumber(match[HOUR_GROUP]);
         }
@@ -187,7 +187,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
             if (match[MINUTE_GROUP] === "半") {
                 minute = 30;
             } else {
-                minute = parseInt(match[MINUTE_GROUP]);
+                minute = parseInt(toHankaku(match[MINUTE_GROUP]));
                 if (isNaN(minute)) {
                     minute = jaStringToNumber(match[MINUTE_GROUP]);
                 }

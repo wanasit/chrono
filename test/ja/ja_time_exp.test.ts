@@ -56,6 +56,20 @@ test("Test - Single Expression", function () {
         const expectDate = new Date(2025, 12 - 1, 9, 16);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
+    testSingleCase(chrono.ja, "１２月９日の１６：３０", new Date(2025, 12 - 1, 10, 12), (result) => {
+        expect(result.text).toBe("１２月９日の１６：３０");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2025);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(16);
+        expect(result.start.get("minute")).toBe(30);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2025, 12 - 1, 9, 16, 30);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
 });
 
 test("Test - Range Expression", function () {
@@ -175,9 +189,9 @@ test("Test - Time Expression's Meridiem imply", function () {
         expect(result.start.get("meridiem")).toBe(1);
     });
 
-    testSingleCase(chrono.ja, "午後6時半-11時", new Date(2012, 7, 10), (result) => {
+    testSingleCase(chrono.ja, "午後６時半－１１時", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("午後6時半-11時");
+        expect(result.text).toBe("午後６時半－１１時");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(18);
