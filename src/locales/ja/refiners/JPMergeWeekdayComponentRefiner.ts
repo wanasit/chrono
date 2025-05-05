@@ -21,10 +21,10 @@ export default class JPMergeWeekdayComponentRefiner extends MergingRefiner {
     }
 
     shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
-        const weekdayThenNormalDate =
+        const normalDateThenWeekday =
             currentResult.start.isCertain("day") &&
             nextResult.start.isOnlyWeekdayComponent() &&
             !nextResult.start.isCertain("hour");
-        return weekdayThenNormalDate && textBetween.match(/^,?\s*$/) != null;
+        return normalDateThenWeekday && textBetween.match(/^,?\s*$/) !== null;
     }
 }
