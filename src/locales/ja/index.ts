@@ -15,6 +15,7 @@ import JPMergeDateTimeRefiner from "./refiners/JPMergeDateTimeRefiner";
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
 import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday } from "../../types";
+import JPMergeWeekdayComponentRefiner from "./refiners/JPMergeWeekdayComponentRefiner";
 import JPWeekdayWithParenthesesParser from "./parsers/JPWeekdayWithParenthesesParser";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
@@ -53,6 +54,6 @@ export function createConfiguration(): Configuration {
             new JPSlashDateFormatParser(),
             new JPTimeExpressionParser(),
         ],
-        refiners: [new JPMergeDateRangeRefiner(), new JPMergeDateTimeRefiner()],
+        refiners: [new JPMergeDateRangeRefiner(), new JPMergeDateTimeRefiner(), new JPMergeWeekdayComponentRefiner()],
     };
 }

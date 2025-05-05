@@ -115,3 +115,28 @@ test("Test - forward dates only option", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 });
+
+test("Test - merge date and weekday", function () {
+    testSingleCase(chrono.ja, "8月27日水曜日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("8月27日水曜日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(27);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 27, 12));
+    });
+    testSingleCase(chrono.ja, "8/27 (水)", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("8/27 (水)");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(27);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 27, 12));
+    });
+});
