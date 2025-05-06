@@ -25,6 +25,6 @@ export default class JPMergeWeekdayComponentRefiner extends MergingRefiner {
             currentResult.start.isCertain("day") &&
             nextResult.start.isOnlyWeekdayComponent() &&
             !nextResult.start.isCertain("hour");
-        return normalDateThenWeekday && textBetween.match(/^,?\s*$/) !== null;
+        return normalDateThenWeekday && textBetween.match(/^[,、の]?\s*$/) !== null;
     }
 }
