@@ -125,18 +125,59 @@ test("Test - merge date and weekday", function () {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("weekday")).toBe(3);
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 27, 12));
     });
-    testSingleCase(chrono.ja, "8/27 (水)", new Date(2012, 8 - 1, 10), (result) => {
+    testSingleCase(chrono.ja, "8月27日（水）", new Date(2012, 8 - 1, 10), (result) => {
         expect(result.index).toBe(0);
-        expect(result.text).toBe("8/27 (水)");
+        expect(result.text).toBe("8月27日（水）");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("weekday")).toBe(3);
 
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 27, 12));
     });
+    testSingleCase(chrono.ja, "2012/8/27（水）", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2012/8/27（水）");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("weekday")).toBe(3);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 27, 12));
+    });
+    testSingleCase(chrono.ja, "１／３０（木）", new Date(2025, 1, 10), (result) => {
+        expect(result.text).toBe("１／３０（木）");
+    });
+    testSingleCase(chrono.ja, "1/30の木曜日", new Date(2025, 1, 10), (result) => {
+        expect(result.text).toBe("1/30の木曜日");
+    });
+    testSingleCase(chrono.ja, "1/30(木)", new Date(2025, 1, 10), (result) => {
+        expect(result.text).toBe("1/30(木)");
+    });
+    testSingleCase(chrono.ja, "１月３０日（木）１４：００", new Date(2025, 1, 10), (result) => {
+        expect(result.text).toBe("１月３０日（木）１４：００");
+    });
+    testSingleCase(chrono.ja, "１月３１日（金）１２：００－１６：００", new Date(2025, 1, 10), (result) => {
+        expect(result.text).toBe("１月３１日（金）１２：００－１６：００");
+    });
+    testSingleCase(
+        chrono.ja,
+        "１月３０日（木）１２：００－１月３１日（金）１６：００",
+        new Date(2025, 1, 10),
+        (result) => {
+            expect(result.text).toBe("１月３０日（木）１２：００－１月３１日（金）１６：００");
+            expect(result.start).toBeDate(new Date(2025, 1 - 1, 30, 12));
+            expect(result.start.get("weekday")).toBe(4);
+            expect(result.end).toBeDate(new Date(2025, 1 - 1, 31, 16));
+            expect(result.end.get("weekday")).toBe(5);
+        }
+    );
 });
