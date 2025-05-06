@@ -1,3 +1,28 @@
+export const NUMBER = {
+    "零": 0,
+    "〇": 0,
+    "一": 1,
+    "二": 2,
+    "三": 3,
+    "四": 4,
+    "五": 5,
+    "六": 6,
+    "七": 7,
+    "八": 8,
+    "九": 9,
+    "十": 10,
+};
+
+export const WEEKDAY_OFFSET = {
+    "日": 0,
+    "月": 1,
+    "火": 2,
+    "水": 3,
+    "木": 4,
+    "金": 5,
+    "土": 6,
+};
+
 /**
  * to-hankaku.js
  * convert to ascii code strings.
@@ -21,4 +46,19 @@ export function toHankaku(text) {
 
 function alphaNum(token) {
     return String.fromCharCode(token.charCodeAt(0) - 65248);
+}
+
+export function jaStringToNumber(text: string) {
+    let number = 0;
+
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === "十") {
+            number = number === 0 ? NUMBER[char] : number * NUMBER[char];
+        } else {
+            number += NUMBER[char];
+        }
+    }
+
+    return number;
 }
