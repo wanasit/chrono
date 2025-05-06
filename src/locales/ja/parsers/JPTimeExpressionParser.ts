@@ -220,7 +220,6 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
                 meridiem = Meridiem.PM;
                 if (hour != 12) hour += 12;
             }
-            
 
             if (!result.start.isCertain("meridiem")) {
                 if (meridiem === Meridiem.AM) {
