@@ -48,25 +48,28 @@ export function createCasualConfiguration(): Configuration {
  * @ignore (to be documented later)
  */
 export function createConfiguration(strictMode = true): Configuration {
-    const configuration = includeCommonConfiguration({
-        parsers: [
-            new JPStandardParser(),
-            new JPWeekdayParser(),
-            new JPWeekdayWithParenthesesParser(),
-            new JPSlashDateFormatParser(),
-            new JPTimeExpressionParser(),
-        ],
-        refiners: [
-            new JPMergeWeekdayComponentRefiner(), // Note: should be before JPMergeDateTimeRefiner and JPMergeDateRangeRefiner
-            new JPMergeDateTimeRefiner(),
-            new JPMergeDateRangeRefiner(), 
-        ],
-    }, strictMode);
+    const configuration = includeCommonConfiguration(
+        {
+            parsers: [
+                new JPStandardParser(),
+                new JPWeekdayParser(),
+                new JPWeekdayWithParenthesesParser(),
+                new JPSlashDateFormatParser(),
+                new JPTimeExpressionParser(),
+            ],
+            refiners: [
+                new JPMergeWeekdayComponentRefiner(), // Note: should be before JPMergeDateTimeRefiner and JPMergeDateRangeRefiner
+                new JPMergeDateTimeRefiner(),
+                new JPMergeDateRangeRefiner(),
+            ],
+        },
+        strictMode
+    );
 
     // Note: Remove because it is not used in Japanese grammar
     configuration.refiners = configuration.refiners.filter(
-            (refiner) => !(refiner instanceof MergeWeekdayComponentRefiner)
+        (refiner) => !(refiner instanceof MergeWeekdayComponentRefiner)
     );
-    
+
     return configuration;
 }
