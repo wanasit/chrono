@@ -54,6 +54,10 @@ export function createConfiguration(): Configuration {
             new JPSlashDateFormatParser(),
             new JPTimeExpressionParser(),
         ],
-        refiners: [new JPMergeDateRangeRefiner(), new JPMergeDateTimeRefiner(), new JPMergeWeekdayComponentRefiner()],
+        refiners: [
+            new JPMergeWeekdayComponentRefiner(), // should be before JPMergeDateTimeRefiner and JPMergeDateRangeRefiner
+            new JPMergeDateTimeRefiner(),
+            new JPMergeDateRangeRefiner(),
+        ],
     };
 }
