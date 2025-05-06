@@ -1,5 +1,4 @@
-import { ParsingContext } from "../../../chrono";
-import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
+import { ParsingContext, Parser } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { WEEKDAY_OFFSET } from "../constants";
 import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
@@ -9,12 +8,12 @@ const PATTERN = new RegExp(
     "i"
 );
 
-export default class JPWeekdayParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp {
+export default class JPWeekdayParser implements Parser {
+    pattern(): RegExp {
         return PATTERN;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    extract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const dayOfWeek = match.groups.weekday;
         const offset = WEEKDAY_OFFSET[dayOfWeek];
         if (offset === undefined) return null;
