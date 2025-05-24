@@ -9,7 +9,7 @@ import { ParsingComponents } from "../src/";
 
 //-------------------------------------
 
-test("Test - Load modules", function () {
+test("Test - Load modules", () => {
     expect(chrono).toBeDefined();
 
     expect(chrono.Chrono).toBeDefined();
