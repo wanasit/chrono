@@ -137,7 +137,7 @@ export function afternoon(reference: ReferenceWithTimezone, implyHour = 15): Par
 export function noon(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
     component.imply("meridiem", Meridiem.AM);
-    component.imply("hour", 12);
+    component.assign("hour", 12);
     component.imply("minute", 0);
     component.imply("second", 0);
     component.imply("millisecond", 0);
