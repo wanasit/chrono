@@ -1,4 +1,4 @@
-import { MergingRefiner } from "../../../../src/common/abstractRefiners";
+import { MergingRefiner } from "../../../common/abstractRefiners";
 import { ParsingResult } from "../../../results";
 
 /**
