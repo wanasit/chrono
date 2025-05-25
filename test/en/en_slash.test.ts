@@ -274,3 +274,11 @@ test("Test - forward dates only option", function () {
         expect(result.start).toBeDate(new Date(2022, 1 - 1, 8, 12));
     });
 });
+
+test("Test - Slash date with an extra chunk", () => {
+    testSingleCase(chrono, "14/4 90", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(4);
+        expect(result.start.get("day")).toBe(14);
+    });
+});

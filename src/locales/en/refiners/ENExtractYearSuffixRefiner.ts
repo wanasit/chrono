@@ -10,17 +10,18 @@ export default class ENExtractYearSuffixRefiner implements Refiner {
             if (!result.start.isDateWithUnknownYear()) {
                 return;
             }
-
             const suffix = context.text.substring(result.index + result.text.length);
             const match = YEAR_SUFFIX_PATTERN.exec(suffix);
             if (!match) {
                 return;
             }
-
+            // If the suffix match is just a short number, e.g. "14/4 90", don't assume it year.
+            if (match[0].trim().length <= 3) {
+                return;
+            }
             context.debug(() => {
                 console.log(`Extracting year: '${match[0]}' into : ${result}`);
             });
-
             const year = parseYear(match[YEAR_GROUP]);
             if (result.end != null) {
                 result.end.assign("year", year);
@@ -28,7 +29,6 @@ export default class ENExtractYearSuffixRefiner implements Refiner {
             result.start.assign("year", year);
             result.text += match[0];
         });
-
         return results;
     }
 }
