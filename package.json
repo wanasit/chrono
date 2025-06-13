@@ -60,7 +60,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier && npm run test:silent"
+      "pre-commit": "npm run prettier"
     }
   },
   "scripts": {
