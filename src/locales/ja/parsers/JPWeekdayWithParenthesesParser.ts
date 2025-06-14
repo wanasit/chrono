@@ -1,7 +1,7 @@
 import { ParsingContext, Parser } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { WEEKDAY_OFFSET } from "../constants";
-import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
+import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
 const PATTERN = new RegExp("(?:\\(|\\（)(?<weekday>" + Object.keys(WEEKDAY_OFFSET).join("|") + ")(?:\\)|\\）)", "i");
 

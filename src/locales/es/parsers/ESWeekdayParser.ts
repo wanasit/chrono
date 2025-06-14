@@ -3,7 +3,7 @@ import { ParsingComponents } from "../../../results";
 import { WEEKDAY_DICTIONARY } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
+import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +

@@ -1,7 +1,7 @@
 import { ParsingContext, Parser } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { WEEKDAY_OFFSET } from "../constants";
-import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
+import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
 const PATTERN = new RegExp(
     "((?<prefix>前の|次の|今週))?(?<weekday>" + Object.keys(WEEKDAY_OFFSET).join("|") + ")(?:曜日|曜)",

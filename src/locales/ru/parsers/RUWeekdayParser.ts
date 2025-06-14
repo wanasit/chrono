@@ -2,7 +2,7 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { WEEKDAY_DICTIONARY } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
-import { createParsingComponentsAtWeekday } from "../../../common/calculation/weekdays";
+import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 const PREFIX_GROUP = 1;

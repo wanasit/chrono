@@ -1,4 +1,4 @@
-import { createParsingComponentsAtWeekday, getDaysToWeekday } from "../src/common/calculation/weekdays";
+import { createParsingComponentsAtWeekday, getDaysToWeekday } from "../src/calculation/weekdays";
 import { Weekday } from "../src";
 import { ReferenceWithTimezone } from "../src/results";
 
