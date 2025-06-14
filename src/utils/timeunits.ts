@@ -1,8 +1,14 @@
 import { OpUnitType, QUnitType } from "dayjs";
 import { ParsingComponents } from "../results";
 
+/**
+ * @deprecated Use `calculation.duration.Duration`.
+ */
 export type TimeUnits = { [c in OpUnitType | QUnitType]?: number };
 
+/**
+ * @deprecated Use `calculation.duration.*`.
+ */
 export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
     const reversed = {};
     for (const key in timeUnits) {
@@ -13,6 +19,9 @@ export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
     return reversed as TimeUnits;
 }
 
+/**
+ * @deprecated Use `calculation.duration.*`.
+ */
 export function addImpliedTimeUnits(components: ParsingComponents, timeUnits: TimeUnits): ParsingComponents {
     const output = components.clone();
 

@@ -20,7 +20,7 @@ import { includeCommonConfiguration } from "../../configurations";
 import ENCasualDateParser from "./parsers/ITCasualDateParser";
 import ENCasualTimeParser from "./parsers/ITCasualTimeParser";
 import ENWeekdayParser from "./parsers/ITWeekdayParser";
-import ENRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
+import ITRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
 
 import { ParsedResult, ParsingOption } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
@@ -66,7 +66,7 @@ export function createCasualConfiguration(littleEndian = false): Configuration {
     option.parsers.unshift(new ENCasualDateParser());
     option.parsers.unshift(new ENCasualTimeParser());
     option.parsers.unshift(new ENMonthNameParser());
-    option.parsers.unshift(new ENRelativeDateFormatParser());
+    option.parsers.unshift(new ITRelativeDateFormatParser());
     option.parsers.unshift(new ENTimeUnitCasualRelativeFormatParser());
     return option;
 }
