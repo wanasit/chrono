@@ -2,8 +2,9 @@ import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./t
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { QUnitType } from "dayjs";
-import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dayjs";
+import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dates";
 import { toTimezoneOffset } from "./timezone";
+import { addDuration, Duration } from "./calculation/duration";
 dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
@@ -215,14 +216,8 @@ export class ParsingComponents implements ParsedComponents {
         return date;
     }
 
-    static createRelativeFromReference(
-        reference: ReferenceWithTimezone,
-        fragments: { [c in QUnitType]?: number }
-    ): ParsingComponents {
-        let date = dayjs(reference.getDateWithAdjustedTimezone());
-        for (const key in fragments) {
-            date = date.add(fragments[key as QUnitType], key as QUnitType);
-        }
+    static createRelativeFromReference(reference: ReferenceWithTimezone, fragments: Duration): ParsingComponents {
+        let date = addDuration(reference.getDateWithAdjustedTimezone(), fragments);
 
         const components = new ParsingComponents(reference);
         components.addTag("result/relativeDate");
@@ -235,26 +230,27 @@ export class ParsingComponents implements ParsedComponents {
             implySimilarTime(components, date);
             components.imply("timezoneOffset", reference.getTimezoneOffset());
 
-            if (fragments["d"]) {
-                components.assign("day", date.date());
-                components.assign("month", date.month() + 1);
-                components.assign("year", date.year());
+            if (fragments["day"]) {
+                components.assign("day", date.getDate());
+                components.assign("month", date.getMonth() + 1);
+                components.assign("year", date.getFullYear());
+                components.assign("weekday", date.getDay());
             } else if (fragments["week"]) {
-                components.assign("day", date.date());
-                components.assign("month", date.month() + 1);
-                components.assign("year", date.year());
-                components.imply("weekday", date.day());
+                components.assign("day", date.getDate());
+                components.assign("month", date.getMonth() + 1);
+                components.assign("year", date.getFullYear());
+                components.imply("weekday", date.getDay());
             } else {
-                components.imply("day", date.date());
+                components.imply("day", date.getDate());
                 if (fragments["month"]) {
-                    components.assign("month", date.month() + 1);
-                    components.assign("year", date.year());
+                    components.assign("month", date.getMonth() + 1);
+                    components.assign("year", date.getFullYear());
                 } else {
-                    components.imply("month", date.month() + 1);
+                    components.imply("month", date.getMonth() + 1);
                     if (fragments["year"]) {
-                        components.assign("year", date.year());
+                        components.assign("year", date.getFullYear());
                     } else {
-                        components.imply("year", date.year());
+                        components.imply("year", date.getFullYear());
                     }
                 }
             }

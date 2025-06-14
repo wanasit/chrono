@@ -15,7 +15,7 @@ const PATTERN = new RegExp(
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 2;
 
-export default class ENRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITRelativeDateFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }

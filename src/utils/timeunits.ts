@@ -3,6 +3,9 @@ import { ParsingComponents } from "../results";
 
 export type TimeUnits = { [c in OpUnitType | QUnitType]?: number };
 
+/**
+ * @deprecated Use `calculation.timeunits.*`.
+ */
 export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
     const reversed = {};
     for (const key in timeUnits) {
@@ -13,6 +16,9 @@ export function reverseTimeUnits(timeUnits: TimeUnits): TimeUnits {
     return reversed as TimeUnits;
 }
 
+/**
+ * @deprecated Use `calculation.timeunits.*`.
+ */
 export function addImpliedTimeUnits(components: ParsingComponents, timeUnits: TimeUnits): ParsingComponents {
     const output = components.clone();
 

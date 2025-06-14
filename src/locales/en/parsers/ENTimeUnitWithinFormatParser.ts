@@ -42,6 +42,11 @@ export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWord
         if (!timeUnits) {
             return null;
         }
+        context.debug(() => {
+            console.log(timeUnits);
+            console.log(ParsingComponents.createRelativeFromReference(context.reference, timeUnits));
+        });
+
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }
