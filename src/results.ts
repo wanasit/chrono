@@ -216,12 +216,12 @@ export class ParsingComponents implements ParsedComponents {
         return date;
     }
 
-    static createRelativeFromReference(reference: ReferenceWithTimezone, fragments: Duration): ParsingComponents {
-        let date = addDuration(reference.getDateWithAdjustedTimezone(), fragments);
+    static createRelativeFromReference(reference: ReferenceWithTimezone, duration: Duration): ParsingComponents {
+        let date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
 
         const components = new ParsingComponents(reference);
         components.addTag("result/relativeDate");
-        if (fragments["hour"] || fragments["minute"] || fragments["second"]) {
+        if (duration["hour"] || duration["minute"] || duration["second"]) {
             components.addTag("result/relativeDateAndTime");
             assignSimilarTime(components, date);
             assignSimilarDate(components, date);
@@ -230,24 +230,24 @@ export class ParsingComponents implements ParsedComponents {
             implySimilarTime(components, date);
             components.imply("timezoneOffset", reference.getTimezoneOffset());
 
-            if (fragments["day"]) {
+            if (duration["day"]) {
                 components.assign("day", date.getDate());
                 components.assign("month", date.getMonth() + 1);
                 components.assign("year", date.getFullYear());
                 components.assign("weekday", date.getDay());
-            } else if (fragments["week"]) {
+            } else if (duration["week"]) {
                 components.assign("day", date.getDate());
                 components.assign("month", date.getMonth() + 1);
                 components.assign("year", date.getFullYear());
                 components.imply("weekday", date.getDay());
             } else {
                 components.imply("day", date.getDate());
-                if (fragments["month"]) {
+                if (duration["month"]) {
                     components.assign("month", date.getMonth() + 1);
                     components.assign("year", date.getFullYear());
                 } else {
                     components.imply("month", date.getMonth() + 1);
-                    if (fragments["year"]) {
+                    if (duration["year"]) {
                         components.assign("year", date.getFullYear());
                     } else {
                         components.imply("year", date.getFullYear());
