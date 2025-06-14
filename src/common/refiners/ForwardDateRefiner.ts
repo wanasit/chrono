@@ -7,7 +7,6 @@
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
 import dayjs from "dayjs";
-import { implySimilarDate } from "../../utils/dayjs";
 import * as dates from "../../utils/dates";
 
 export default class ForwardDateRefiner implements Refiner {

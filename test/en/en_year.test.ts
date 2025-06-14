@@ -98,3 +98,41 @@ test("Test - Year number after date/time expression", () => {
         expect(result.start.get("timezoneOffset")).toBe(-240);
     });
 });
+
+test("Test - Year number after date/time range expression", () => {
+    testSingleCase(chrono, "Thu Oct 26 - 28, 11:00:09 2023", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(26);
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(9);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(28);
+        expect(result.end.get("hour")).toBe(11);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("second")).toBe(9);
+        expect(result.end.get("meridiem")).toBe(Meridiem.AM);
+    });
+
+    testSingleCase(chrono, "Thu Oct 26, 10:00 - 11:00:09 2023", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(26);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(10);
+        expect(result.end.get("day")).toBe(26);
+        expect(result.end.get("hour")).toBe(11);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("second")).toBe(9);
+        expect(result.end.get("meridiem")).toBe(Meridiem.AM);
+    });
+});

@@ -1,6 +1,6 @@
 import { addDuration, reverseDuration } from "../src/calculation/duration";
 
-test("Test - Adding Duration w/ single Timeunit", () => {
+test("Test - Adding Duration w/ single timeunit", () => {
     {
         const reference = new Date("Sat, Aug 27 2022 12:52:11");
         const output = addDuration(reference, { "year": 1 });
@@ -39,6 +39,49 @@ test("Test - Adding Duration w/ single Timeunit", () => {
     {
         const reference = new Date("Sat, Aug 27 2022 12:52:11:00");
         const output = addDuration(reference, { "millisecond": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Aug 27 2022 12:52:11:01"));
+    }
+});
+
+test("Test - Adding Duration w/ single timeunit shorten", () => {
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "y": 1 });
+        expect(output).toStrictEqual(new Date("Sun, Aug 27 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "M": 1 });
+        expect(output).toStrictEqual(new Date("Wed, Sep 27 2022 12:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "w": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Sep 3 2022 12:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "d": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Aug 28 2022 12:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "h": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Aug 27 2022 13:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "m": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Aug 27 2022 12:53:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "s": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Aug 27 2022 12:52:12"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11:00");
+        const output = addDuration(reference, { "ms": 1 });
         expect(output).toStrictEqual(new Date("Sat, Aug 27 2022 12:52:11:01"));
     }
 });

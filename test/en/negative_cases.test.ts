@@ -67,6 +67,11 @@ test("Test - Skip impossible dates/times", () => {
     testUnexpectedResult(chrono, "An appointment on 13/31/2018");
 });
 
+test("Test - Skip impossible dates/times ranges", () => {
+    testUnexpectedResult(chrono, "February 20 - 29, 2022");
+    testUnexpectedResult(chrono, "June 10 - 31, 2022");
+});
+
 test("Test - Skip version number pattern", () => {
     testUnexpectedResult(chrono, "Version: 1.1.3");
 
