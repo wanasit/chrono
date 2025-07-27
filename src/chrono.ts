@@ -153,7 +153,7 @@ export class ParsingContext implements DebugHandler {
 
     constructor(text: string, refDate?: ParsingReference | Date, option?: ParsingOption) {
         this.text = text;
-        this.reference = new ReferenceWithTimezone(refDate);
+        this.reference = new ReferenceWithTimezone(refDate, option?.timezones);
         this.option = option ?? {};
 
         this.refDate = this.reference.instant;
