@@ -2,6 +2,7 @@ import { ReferenceWithTimezone, ParsingComponents, ParsingResult } from "./resul
 import { Component, ParsedResult, ParsingOption, ParsingReference } from "./types";
 import { AsyncDebugBlock, DebugHandler } from "./debugging";
 import ENDefaultConfiguration from "./locales/en/configuration";
+import { toTimezoneOffset } from "./timezone";
 
 /**
  * Chrono configuration.
@@ -153,9 +154,8 @@ export class ParsingContext implements DebugHandler {
 
     constructor(text: string, refDate?: ParsingReference | Date, option?: ParsingOption) {
         this.text = text;
-        this.reference = new ReferenceWithTimezone(refDate);
         this.option = option ?? {};
-
+        this.reference = ReferenceWithTimezone.fromInput(refDate, this.option.timezones);
         this.refDate = this.reference.instant;
     }
 

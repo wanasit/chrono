@@ -70,6 +70,42 @@ test("Test - Using reference instance with different timezone", function () {
     });
 });
 
+test("Test - Using reference instance with custom timezones", function () {
+    // Sun Jun 06 2021 19:00:00 GMT+0900 (JST)
+    // Sun Jun 06 2021 11:00:00 GMT+0100 (BST)
+    const refInstant = new Date("Sun Jun 06 2021 19:00:00 GMT+0900 (JST)");
+
+    // Fictional timezones
+    const timezones = {
+        "JJJ": 540, // JJJ => GMT+0900 JST
+        "BBB": 60, // BBB => GMT+0100 BST
+    };
+
+    // "At 4pm tomorrow" at "Sun Jun 06 2021 11:00:00 (BBB = BST)"
+    testSingleCase(
+        chrono,
+        "At 4pm tomorrow",
+        { instant: refInstant, timezone: "BBB" },
+        { timezones: timezones },
+        (result) => {
+            const expectedInstant = new Date("Mon Jun 07 2021 16:00:00 GMT+0100 (BST)");
+            expect(result).toBeDate(expectedInstant);
+        }
+    );
+
+    // "At 4pm tomorrow" at "Sun Jun 06 2021 19:00:00 (JJJ = JST)"
+    testSingleCase(
+        chrono,
+        "At 4pm tomorrow",
+        { instant: refInstant, timezone: "JJJ" },
+        { timezones: timezones },
+        (result) => {
+            const expectedInstant = new Date("Mon Jun 07 2021 16:00:00 GMT+0900 (JST)");
+            expect(result).toBeDate(expectedInstant);
+        }
+    );
+});
+
 test("Test - Timezone difference on reference date #2", function () {
     const refInstant = new Date("2024-02-21T10:00:00+1300");
 

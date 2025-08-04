@@ -1,7 +1,7 @@
 import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../src/results";
 
 test("Test - Create & manipulate parsing components", () => {
-    const reference = new ReferenceWithTimezone(new Date());
+    const reference = ReferenceWithTimezone.fromDate(new Date());
     const components = new ParsingComponents(reference, { year: 2014, month: 11, day: 24 });
 
     expect(components.get("year")).toBe(2014);
@@ -178,21 +178,21 @@ test("Test - Checking non-existing date during DST skip", () => {
 
 test("Test - Getting timezone adjust date from references", () => {
     {
-        const reference = new ReferenceWithTimezone({
+        const reference = ReferenceWithTimezone.fromInput({
             instant: new Date("Wed Jun 09 2021 07:21:32 GMT+0900 (JST)"),
             timezone: 9 * 60,
         });
         expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
     }
     {
-        const reference = new ReferenceWithTimezone({
+        const reference = ReferenceWithTimezone.fromInput({
             instant: new Date("Wed Jun 09 2021 07:21:32 GMT+0900 (JST)"),
             timezone: "JST",
         });
         expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
     }
     {
-        const reference = new ReferenceWithTimezone({
+        const reference = ReferenceWithTimezone.fromInput({
             instant: new Date("Wed Jun 09 2021 07:21:32 GMT-0500 (CDT)"),
             timezone: "CDT",
         });

@@ -1,4 +1,4 @@
-import { Component, ParsedComponents, ParsedResult, ParsingReference } from "./types";
+import { Component, ParsedComponents, ParsedResult, ParsingReference, TimezoneAbbrMap } from "./types";
 
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { QUnitType } from "dayjs";
@@ -11,15 +11,22 @@ export class ReferenceWithTimezone {
     readonly instant: Date;
     readonly timezoneOffset?: number | null;
 
-    constructor(input?: ParsingReference | Date) {
-        input = input ?? new Date();
+    constructor(instant?: Date, timezoneOffset?: number) {
+        this.instant = instant ?? new Date();
+        this.timezoneOffset = timezoneOffset ?? null;
+    }
+
+    static fromDate(date: Date): ReferenceWithTimezone {
+        return new ReferenceWithTimezone(date);
+    }
+
+    static fromInput(input?: ParsingReference | Date, timezoneOverrides?: TimezoneAbbrMap) {
         if (input instanceof Date) {
-            this.instant = input;
-            this.timezoneOffset = null;
-        } else {
-            this.instant = input.instant ?? new Date();
-            this.timezoneOffset = toTimezoneOffset(input.timezone, this.instant);
+            return ReferenceWithTimezone.fromDate(input);
         }
+        const instant: Date = input?.instant ?? new Date();
+        const timezoneOffset = toTimezoneOffset(input?.timezone, instant, timezoneOverrides);
+        return new ReferenceWithTimezone(instant, timezoneOffset);
     }
 
     /**
