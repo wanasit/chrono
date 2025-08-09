@@ -1,6 +1,5 @@
 import { Weekday } from "../types";
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
-import { addImpliedTimeUnits } from "../utils/timeunits";
 
 /**
  * Returns the parsing components at the weekday (considering the modifier). The time and timezone is assume to be
@@ -18,7 +17,7 @@ export function createParsingComponentsAtWeekday(
     const daysToWeekday = getDaysToWeekday(refDate, weekday, modifier);
 
     let components = new ParsingComponents(reference);
-    components = addImpliedTimeUnits(components, { "day": daysToWeekday });
+    components = components.addDurationAsImplied({ day: daysToWeekday });
     components.assign("weekday", weekday);
 
     return components;

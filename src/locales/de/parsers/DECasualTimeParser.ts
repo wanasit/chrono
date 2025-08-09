@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { implySimilarTime } from "../../../utils/dayjs";
-import { addImpliedTimeUnits } from "../../../utils/timeunits";
 
 export default class DECasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -66,7 +65,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
 
             case "mitternacht":
                 if (component.get("hour") > 1) {
-                    component = addImpliedTimeUnits(component, { "day": 1 });
+                    component.addDurationAsImplied({ "day": 1 });
                 }
 
                 component.imply("hour", 0);

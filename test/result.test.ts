@@ -38,6 +38,53 @@ test("Test - Create & manipulate parsing components", () => {
     expect(components.toString()).toContain("custom/testing_component_tag");
 });
 
+test("Test - Creating component from reference date (and duration)", () => {
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 27 2022 12:52:11"));
+        expect(components.isCertain("day")).toBe(true);
+        expect(components.isCertain("hour")).toBe(true);
+    }
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference, { day: 3 });
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 30 2022 12:52:11"));
+        expect(components.isCertain("day")).toBe(true);
+        expect(components.isCertain("hour")).toBe(false);
+    }
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference, { day: 1, hour: 3 });
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 28 2022 15:52:11"));
+        expect(components.isCertain("day")).toBe(true);
+        expect(components.isCertain("hour")).toBe(true);
+    }
+});
+
+test("Test - Adding duration into components", () => {
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ hour: 3 });
+
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 27 2022 15:52:11"));
+        expect(components.isCertain("second")).toBe(false);
+        expect(components.isCertain("minute")).toBe(false);
+        expect(components.isCertain("hour")).toBe(false);
+    }
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ day: 3 });
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 30 2022 12:52:11"));
+        expect(components.isCertain("day")).toBe(false);
+        expect(components.isCertain("weekday")).toBe(false);
+        expect(components.isCertain("month")).toBe(false);
+        expect(components.isCertain("year")).toBe(false);
+    }
+});
+
 test("Test - Create & manipulate parsing results", () => {
     const reference = new ReferenceWithTimezone(new Date());
     const text = "1 - 2 hour later";

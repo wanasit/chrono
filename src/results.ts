@@ -4,7 +4,7 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import dayjs, { QUnitType } from "dayjs";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dates";
 import { toTimezoneOffset } from "./timezone";
-import { addDuration, Duration } from "./calculation/duration";
+import { addDuration, Duration, EmptyDuration } from "./calculation/duration";
 dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
@@ -79,14 +79,60 @@ export class ParsingComponents implements ParsedComponents {
             }
         }
 
-        const refDayJs = reference.getDateWithAdjustedTimezone();
-        this.imply("day", refDayJs.getDate());
-        this.imply("month", refDayJs.getMonth() + 1);
-        this.imply("year", refDayJs.getFullYear());
+        const date = reference.getDateWithAdjustedTimezone();
+        this.imply("day", date.getDate());
+        this.imply("month", date.getMonth() + 1);
+        this.imply("year", date.getFullYear());
         this.imply("hour", 12);
         this.imply("minute", 0);
         this.imply("second", 0);
         this.imply("millisecond", 0);
+    }
+
+    static createRelativeFromReference(
+        reference: ReferenceWithTimezone,
+        duration: Duration = EmptyDuration
+    ): ParsingComponents {
+        let date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
+
+        const components = new ParsingComponents(reference);
+        components.addTag("result/relativeDate");
+        if ("hour" in duration || "minute" in duration || "second" in duration || "millisecond" in duration) {
+            components.addTag("result/relativeDateAndTime");
+            assignSimilarTime(components, date);
+            assignSimilarDate(components, date);
+            components.assign("timezoneOffset", reference.getTimezoneOffset());
+        } else {
+            implySimilarTime(components, date);
+            components.imply("timezoneOffset", reference.getTimezoneOffset());
+
+            if ("day" in duration) {
+                components.assign("day", date.getDate());
+                components.assign("month", date.getMonth() + 1);
+                components.assign("year", date.getFullYear());
+                components.assign("weekday", date.getDay());
+            } else if ("week" in duration) {
+                components.assign("day", date.getDate());
+                components.assign("month", date.getMonth() + 1);
+                components.assign("year", date.getFullYear());
+                components.imply("weekday", date.getDay());
+            } else {
+                components.imply("day", date.getDate());
+                if ("month" in duration) {
+                    components.assign("month", date.getMonth() + 1);
+                    components.assign("year", date.getFullYear());
+                } else {
+                    components.imply("month", date.getMonth() + 1);
+                    if ("year" in duration) {
+                        components.assign("year", date.getFullYear());
+                    } else {
+                        components.imply("year", date.getFullYear());
+                    }
+                }
+            }
+        }
+
+        return components;
     }
 
     get(component: Component): number | null {
@@ -123,9 +169,37 @@ export class ParsingComponents implements ParsedComponents {
         return this;
     }
 
-    delete(component: Component) {
-        delete this.knownValues[component];
-        delete this.impliedValues[component];
+    /**
+     * Add the `duration` into this component, mark the modified date and/or time as implied.
+     * @param duration
+     */
+    addDurationAsImplied(duration: Duration): ParsingComponents {
+        const currentDate = this.date();
+        const date = addDuration(currentDate, duration);
+        if ("day" in duration || "week" in duration || "month" in duration || "year" in duration) {
+            this.delete(["day", "weekday", "month", "year"]);
+            this.imply("day", date.getDate());
+            this.imply("weekday", date.getDay());
+            this.imply("month", date.getMonth() + 1);
+            this.imply("year", date.getFullYear());
+        }
+        if ("second" in duration || "minute" in duration || "hour" in duration) {
+            this.delete(["second", "minute", "hour"]);
+            this.imply("second", date.getSeconds());
+            this.imply("minute", date.getMinutes());
+            this.imply("hour", date.getHours());
+        }
+        return this;
+    }
+
+    delete(components: Component | Component[]) {
+        if (typeof components === "string") {
+            components = [components];
+        }
+        for (const component of components) {
+            delete this.knownValues[component];
+            delete this.impliedValues[component];
+        }
     }
 
     clone(): ParsingComponents {
@@ -221,49 +295,6 @@ export class ParsingComponents implements ParsedComponents {
 
         date.setFullYear(this.get("year"));
         return date;
-    }
-
-    static createRelativeFromReference(reference: ReferenceWithTimezone, duration: Duration): ParsingComponents {
-        let date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
-
-        const components = new ParsingComponents(reference);
-        components.addTag("result/relativeDate");
-        if (duration["hour"] || duration["minute"] || duration["second"]) {
-            components.addTag("result/relativeDateAndTime");
-            assignSimilarTime(components, date);
-            assignSimilarDate(components, date);
-            components.assign("timezoneOffset", reference.getTimezoneOffset());
-        } else {
-            implySimilarTime(components, date);
-            components.imply("timezoneOffset", reference.getTimezoneOffset());
-
-            if (duration["day"]) {
-                components.assign("day", date.getDate());
-                components.assign("month", date.getMonth() + 1);
-                components.assign("year", date.getFullYear());
-                components.assign("weekday", date.getDay());
-            } else if (duration["week"]) {
-                components.assign("day", date.getDate());
-                components.assign("month", date.getMonth() + 1);
-                components.assign("year", date.getFullYear());
-                components.imply("weekday", date.getDay());
-            } else {
-                components.imply("day", date.getDate());
-                if (duration["month"]) {
-                    components.assign("month", date.getMonth() + 1);
-                    components.assign("year", date.getFullYear());
-                } else {
-                    components.imply("month", date.getMonth() + 1);
-                    if (duration["year"]) {
-                        components.assign("year", date.getFullYear());
-                    } else {
-                        components.imply("year", date.getFullYear());
-                    }
-                }
-            }
-        }
-
-        return components;
     }
 }
 

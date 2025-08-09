@@ -10,6 +10,16 @@ export type TimeunitSpecial = "quarter";
 export type Duration = { [c in Timeunit | TimeunitSpecial | TimeunitShorten]?: number };
 
 /**
+ * An explicit empty duration (not just empty duration object).
+ * This is defined as zero day and second.
+ */
+export const EmptyDuration = {
+    day: 0,
+    second: 0,
+    millisecond: 0,
+};
+
+/**
  * Returns the date after adding the given `duration` to `ref`.
  * @param ref
  * @param duration
