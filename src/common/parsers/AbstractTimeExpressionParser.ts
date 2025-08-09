@@ -140,6 +140,12 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         // ----- Hours
         let hour = parseInt(match[HOUR_GROUP]);
         if (hour > 100) {
+            // When time is like '2019', it is more likely a year.
+            // Especially if there is no minute part and no am/pm.
+            if (match[HOUR_GROUP].length == 4 && match[MINUTE_GROUP] == null && !match[AM_PM_HOUR_GROUP]) {
+                return null;
+            }
+
             if (this.strictMode || match[MINUTE_GROUP] != null) {
                 return null;
             }

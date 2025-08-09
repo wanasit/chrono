@@ -432,6 +432,8 @@ test("Test - Parsing negative cases : [year-like] pattern", function () {
     testUnexpectedResult(chrono, "2020");
 
     testUnexpectedResult(chrono, "2020  ");
+
+    testUnexpectedResult(chrono, "2019 to 2020");
 });
 
 test("Test - Parsing negative cases : 'at [some numbers]'", function () {
