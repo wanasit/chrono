@@ -1,10 +1,9 @@
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
-import dayjs from "dayjs";
-import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../utils/dayjs";
+import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../utils/dates";
 import { Meridiem } from "../types";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
-    const targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    const targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     assignSimilarTime(component, targetDate);
@@ -14,10 +13,11 @@ export function now(reference: ReferenceWithTimezone): ParsingComponents {
 }
 
 export function today(reference: ReferenceWithTimezone): ParsingComponents {
-    const targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    const targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     implySimilarTime(component, targetDate);
+    component.delete("meridiem");
     component.addTag("casualReference/today");
     return component;
 }
@@ -41,16 +41,19 @@ export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
 }
 
 export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): ParsingComponents {
-    let targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    const targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
-    targetDate = targetDate.add(nDays, "day");
-    assignSimilarDate(component, targetDate);
-    implySimilarTime(component, targetDate);
+    const newDate = new Date(targetDate.getTime());
+    newDate.setDate(newDate.getDate() + nDays);
+
+    assignSimilarDate(component, newDate);
+    implySimilarTime(component, newDate);
+    component.delete("meridiem");
     return component;
 }
 
 export function tonight(reference: ReferenceWithTimezone, implyHour = 22): ParsingComponents {
-    const targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    const targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
     assignSimilarDate(component, targetDate);
     component.imply("hour", implyHour);
@@ -60,10 +63,10 @@ export function tonight(reference: ReferenceWithTimezone, implyHour = 22): Parsi
 }
 
 export function lastNight(reference: ReferenceWithTimezone, implyHour = 0): ParsingComponents {
-    let targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    let targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
-    if (targetDate.hour() < 6) {
-        targetDate = targetDate.add(-1, "day");
+    if (targetDate.getHours() < 6) {
+        targetDate = new Date(targetDate.getTime() - 24 * 60 * 60 * 1000);
     }
     assignSimilarDate(component, targetDate);
     component.imply("hour", implyHour);
@@ -79,9 +82,9 @@ export function evening(reference: ReferenceWithTimezone, implyHour = 20): Parsi
 }
 
 export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 20): ParsingComponents {
-    let targetDate = dayjs(reference.getDateWithAdjustedTimezone());
+    let targetDate = reference.getDateWithAdjustedTimezone();
     const component = new ParsingComponents(reference, {});
-    targetDate = targetDate.add(-1, "day");
+    targetDate = new Date(targetDate.getTime() - 24 * 60 * 60 * 1000);
     assignSimilarDate(component, targetDate);
     component.imply("hour", implyHour);
     component.imply("meridiem", Meridiem.PM);

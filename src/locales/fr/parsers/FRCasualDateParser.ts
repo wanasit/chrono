@@ -1,9 +1,8 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate } from "../../../utils/dayjs";
+import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
 export default class FRCasualDateParser extends AbstractParserWithWordBoundaryChecking {
@@ -12,7 +11,7 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        const targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 
@@ -35,8 +34,9 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
                     component.imply("hour", 22);
                     component.imply("meridiem", Meridiem.PM);
                 } else if (lowerText.match(/la\s*veille/)) {
-                    targetDate = targetDate.add(-1, "day");
-                    assignSimilarDate(component, targetDate);
+                    const previousDay = new Date(targetDate.getTime());
+                    previousDay.setDate(previousDay.getDate() - 1);
+                    assignSimilarDate(component, previousDay);
                     component.imply("hour", 0);
                 }
         }

@@ -1,8 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate } from "../../../utils/dayjs";
+import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
 const PATTERN = /(now|today|tonight|tomorrow|overmorrow|tmr|tmrw|yesterday|last\s*night)(?=\W|$)/i;
@@ -13,7 +12,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
         let component = context.createParsingComponents();
 
@@ -46,8 +45,10 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             default:
                 if (lowerText.match(/last\s*night/)) {
-                    if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "day");
+                    if (targetDate.getHours() > 6) {
+                        const previousDay = new Date(targetDate.getTime());
+                        previousDay.setDate(previousDay.getDate() - 1);
+                        targetDate = previousDay;
                     }
 
                     assignSimilarDate(component, targetDate);

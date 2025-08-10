@@ -1,8 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import dayjs from "dayjs";
-import { assignTheNextDay } from "../../../utils/dayjs";
+import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 
 const DAY_GROUP = 1;
 const MOMENT_GROUP = 2;
@@ -13,7 +12,7 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const targetDate = dayjs(context.refDate);
+        const targetDate = context.refDate;
         const component = context.createParsingComponents();
 
         if (match[DAY_GROUP] === "deze") {
@@ -36,7 +35,10 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 break;
 
             case "middernacht":
-                assignTheNextDay(component, targetDate);
+                const nextDay = new Date(targetDate.getTime());
+                nextDay.setDate(nextDay.getDate() + 1);
+                assignSimilarDate(component, nextDay);
+                implySimilarTime(component, nextDay);
                 component.imply("hour", 0);
                 component.imply("minute", 0);
                 component.imply("second", 0);
