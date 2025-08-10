@@ -2,7 +2,7 @@ import { ParsingContext } from "../../../chrono";
 import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { reverseTimeUnits } from "../../../utils/timeunits";
+import { reverseDuration } from "../../../calculation/duration";
 
 const PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}(?:fa|prima|precedente)(?=(?:\\W|$))`, "i");
 const STRICT_PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}fa(?=(?:\\W|$))`, "i");
@@ -18,7 +18,7 @@ export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBou
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const timeUnits = parseTimeUnits(match[1]);
-        const outputTimeUnits = reverseTimeUnits(timeUnits);
+        const outputTimeUnits = reverseDuration(timeUnits);
 
         return ParsingComponents.createRelativeFromReference(context.reference, outputTimeUnits);
     }

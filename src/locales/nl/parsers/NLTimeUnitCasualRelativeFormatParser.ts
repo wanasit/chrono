@@ -2,7 +2,7 @@ import { TIME_UNITS_PATTERN, parseTimeUnits } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { reverseTimeUnits } from "../../../utils/timeunits";
+import { reverseDuration } from "../../../calculation/duration";
 
 const PATTERN = new RegExp(
     `(dit|deze|vorig|afgelopen|(?:aan)?komend|over|\\+|-)e?\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`,
@@ -24,7 +24,7 @@ export default class NLTimeUnitCasualRelativeFormatParser extends AbstractParser
             case "vorig":
             case "afgelopen":
             case "-":
-                timeUnits = reverseTimeUnits(timeUnits);
+                timeUnits = reverseDuration(timeUnits);
                 break;
         }
 

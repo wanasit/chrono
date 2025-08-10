@@ -2,7 +2,7 @@ import { ParsingContext } from "../../../chrono";
 import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { reverseTimeUnits } from "../../../utils/timeunits";
+import { reverseDuration } from "../../../calculation/duration";
 
 const PATTERN = new RegExp("" + "(" + TIME_UNITS_PATTERN + ")" + "(?:geleden|voor|eerder)(?=(?:\\W|$))", "i");
 
@@ -19,7 +19,7 @@ export default class NLTimeUnitAgoFormatParser extends AbstractParserWithWordBou
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const timeUnits = parseTimeUnits(match[1]);
-        const outputTimeUnits = reverseTimeUnits(timeUnits);
+        const outputTimeUnits = reverseDuration(timeUnits);
 
         return ParsingComponents.createRelativeFromReference(context.reference, outputTimeUnits);
     }

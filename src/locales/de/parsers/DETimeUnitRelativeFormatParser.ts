@@ -2,8 +2,8 @@ import { ParsingContext } from "../../../chrono";
 import { NUMBER_PATTERN, parseNumberPattern, TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { reverseTimeUnits } from "../../../utils/timeunits";
 import { matchAnyPattern } from "../../../utils/pattern";
+import { reverseDuration } from "../../../calculation/duration";
 
 export default class DETimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor() {
@@ -34,7 +34,7 @@ export default class DETimeUnitAgoFormatParser extends AbstractParserWithWordBou
         }
 
         if (/vor/.test(modifier) || /letzte/.test(modifier) || /vergangen/.test(modifier)) {
-            timeUnits = reverseTimeUnits(timeUnits);
+            timeUnits = reverseDuration(timeUnits);
         }
 
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);

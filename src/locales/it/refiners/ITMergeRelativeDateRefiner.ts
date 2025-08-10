@@ -1,7 +1,7 @@
 import { MergingRefiner } from "../../../common/abstractRefiners";
 import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../../results";
 import { parseTimeUnits } from "../constants";
-import { reverseTimeUnits } from "../../../utils/timeunits";
+import { reverseDuration } from "../../../calculation/duration";
 
 function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
     return result.text.match(/\s+(prima|dal)$/i) != null;
@@ -40,7 +40,7 @@ export default class ENMergeRelativeDateRefiner extends MergingRefiner {
     mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): ParsingResult {
         let timeUnits = parseTimeUnits(currentResult.text);
         if (hasImpliedEarlierReferenceDate(currentResult)) {
-            timeUnits = reverseTimeUnits(timeUnits);
+            timeUnits = reverseDuration(timeUnits);
         }
 
         const components = ParsingComponents.createRelativeFromReference(
