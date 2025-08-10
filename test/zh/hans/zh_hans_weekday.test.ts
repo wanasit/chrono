@@ -22,6 +22,21 @@ test("Test - Single Expression", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
+    testSingleCase(chrono.zh.hans, "我周一要打游戏", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("周一");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("weekday")).toBe(1);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 13, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
     testSingleCase(
         chrono.zh.hans,
         "礼拜四 (forward dates only)",

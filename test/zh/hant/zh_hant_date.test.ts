@@ -43,6 +43,20 @@ test("Test - Single Expression", function () {
         const expectDate = new Date(2014, 9 - 1, 3, 12);
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
+
+    testSingleCase(chrono.zh.hant, "2016年09月03日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2016年09月03日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(3);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 9 - 1, 3, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
 });
 
 test("Test - Range Expression", function () {
