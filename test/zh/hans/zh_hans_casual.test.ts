@@ -49,6 +49,20 @@ test("Test - Single Expression", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 
+    testSingleCase(chrono.zh.hans, "我前天要打游戏", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("前天");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 8, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
     testSingleCase(chrono.zh.hans, "我昨日要打游戏", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(1);
         expect(result.text).toBe("昨日");
