@@ -54,15 +54,31 @@ test("Test - Weekday variations", function () {
         expect(result.start.get("weekday")).toBe(0);
     });
 
-    testSingleCase(chrono, "tisdag", new Date(2012, 7, 9), (result) => {
+    testSingleCase(chrono, "sön", new Date(2012, 7, 9), (result) => {
+        expect(result.start.get("weekday")).toBe(0);
+    });
+
+    testSingleCase(chrono, "tis", new Date(2012, 7, 9), (result) => {
         expect(result.start.get("weekday")).toBe(2);
     });
 
-    testSingleCase(chrono, "fredag", new Date(2012, 7, 9), (result) => {
+    testSingleCase(chrono, "ons", new Date(2012, 7, 9), (result) => {
+        expect(result.start.get("weekday")).toBe(3);
+    });
+
+    testSingleCase(chrono, "fre", new Date(2012, 7, 9), (result) => {
         expect(result.start.get("weekday")).toBe(5);
     });
 
-    testSingleCase(chrono, "lördag", new Date(2012, 7, 9), (result) => {
+    testSingleCase(chrono, "lör", new Date(2012, 7, 9), (result) => {
         expect(result.start.get("weekday")).toBe(6);
+    });
+});
+
+test("Test - Weekday with parentheses", function () {
+    testSingleCase(chrono, "(måndag)", new Date(2012, 7, 9), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
     });
 });
