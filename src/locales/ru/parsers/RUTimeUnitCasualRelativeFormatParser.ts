@@ -1,8 +1,8 @@
 import { TIME_UNITS_PATTERN, parseTimeUnits, REGEX_PARTS } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import { reverseTimeUnits } from "../../../utils/timeunits";
 import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
+import { reverseDuration } from "../../../calculation/duration";
 
 export default class RUTimeUnitCasualRelativeFormatParser extends AbstractParserWithLeftRightBoundaryChecking {
     innerPatternString(context: ParsingContext): string {
@@ -16,7 +16,7 @@ export default class RUTimeUnitCasualRelativeFormatParser extends AbstractParser
             case "последние":
             case "прошлые":
             case "-":
-                timeUnits = reverseTimeUnits(timeUnits);
+                timeUnits = reverseDuration(timeUnits);
                 break;
         }
 
