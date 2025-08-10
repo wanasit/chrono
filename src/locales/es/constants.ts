@@ -155,7 +155,8 @@ const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);
 
-export function parseTimeUnits(timeunitText): { [c in OpUnitType | QUnitType]?: number } {
+import { Duration } from "../../calculation/duration";
+export function parseDuration(timeunitText): Duration {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -164,7 +165,7 @@ export function parseTimeUnits(timeunitText): { [c in OpUnitType | QUnitType]?: 
         remainingText = remainingText.substring(match[0].length);
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
-    return fragments as { [c in OpUnitType | QUnitType]?: number };
+    return fragments as Duration;
 }
 
 function collectDateTimeFragment(fragments, match) {

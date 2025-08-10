@@ -1,4 +1,4 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits, TIME_UNITS_NO_ABBR_PATTERN } from "../constants";
+import { TIME_UNITS_PATTERN, parseDuration, TIME_UNITS_NO_ABBR_PATTERN } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
@@ -21,7 +21,7 @@ export default class ENTimeUnitCasualRelativeFormatParser extends AbstractParser
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const prefix = match[1].toLowerCase();
-        let duration = parseTimeUnits(match[2]);
+        let duration = parseDuration(match[2]);
         if (!duration) {
             return null;
         }

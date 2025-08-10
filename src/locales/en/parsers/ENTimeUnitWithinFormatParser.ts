@@ -1,4 +1,4 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits, TIME_UNITS_NO_ABBR_PATTERN } from "../constants";
+import { TIME_UNITS_PATTERN, parseDuration, TIME_UNITS_NO_ABBR_PATTERN } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
@@ -38,15 +38,10 @@ export default class ENTimeUnitWithinFormatParser extends AbstractParserWithWord
         if (match[0].match(/^for\s*the\s*\w+/)) {
             return null;
         }
-        const timeUnits = parseTimeUnits(match[1]);
+        const timeUnits = parseDuration(match[1]);
         if (!timeUnits) {
             return null;
         }
-        context.debug(() => {
-            console.log(timeUnits);
-            console.log(ParsingComponents.createRelativeFromReference(context.reference, timeUnits));
-        });
-
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }

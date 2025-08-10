@@ -1,4 +1,4 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits } from "../constants";
+import { TIME_UNITS_PATTERN, parseDuration } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
@@ -19,7 +19,7 @@ export default class NLTimeUnitCasualRelativeFormatParser extends AbstractParser
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const prefix = match[PREFIX_WORD_GROUP].toLowerCase();
-        let timeUnits = parseTimeUnits(match[TIME_UNIT_WORD_GROUP]);
+        let timeUnits = parseDuration(match[TIME_UNIT_WORD_GROUP]);
         switch (prefix) {
             case "vorig":
             case "afgelopen":

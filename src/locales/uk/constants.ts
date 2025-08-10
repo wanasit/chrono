@@ -1,7 +1,7 @@
 import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
-import { TimeUnits } from "../../utils/timeunits";
+import { Duration } from "../../calculation/duration";
 
 export const REGEX_PARTS = {
     leftBoundary: "([^\\p{L}\\p{N}_]|^)",
@@ -330,7 +330,7 @@ export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
     SINGLE_TIME_UNIT_PATTERN
 );
 
-export function parseTimeUnits(timeunitText): TimeUnits {
+export function parseDuration(timeunitText): Duration {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -339,7 +339,7 @@ export function parseTimeUnits(timeunitText): TimeUnits {
         remainingText = remainingText.substring(match[0].length).trim();
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
-    return fragments;
+    return fragments as Duration;
 }
 
 function collectDateTimeFragment(fragments, match) {

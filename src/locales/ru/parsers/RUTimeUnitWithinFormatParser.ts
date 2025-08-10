@@ -1,4 +1,4 @@
-import { TIME_UNITS_PATTERN, parseTimeUnits, REGEX_PARTS } from "../constants";
+import { TIME_UNITS_PATTERN, parseDuration, REGEX_PARTS } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
@@ -17,7 +17,7 @@ export default class RUTimeUnitWithinFormatParser extends AbstractParserWithWord
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
-        const timeUnits = parseTimeUnits(match[1]);
+        const timeUnits = parseDuration(match[1]);
         return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
     }
 }
