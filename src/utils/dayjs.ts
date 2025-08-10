@@ -2,24 +2,27 @@ import { ParsingComponents } from "../results";
 import dayjs from "dayjs";
 import { Meridiem } from "../types";
 
+/**
+ * @deprecated Use `dates.assignSimilarDate` and `dates.implySimilarTime` with normal Javascript Date instead
+ */
 export function assignTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     targetDayJs = targetDayJs.add(1, "day");
     assignSimilarDate(component, targetDayJs);
     implySimilarTime(component, targetDayJs);
 }
 
-export function implyTheNextDay(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
-    targetDayJs = targetDayJs.add(1, "day");
-    implySimilarDate(component, targetDayJs);
-    implySimilarTime(component, targetDayJs);
-}
-
+/**
+ * @deprecated Use `dates.assignSimilarDate` with normal Javascript Date instead
+ */
 export function assignSimilarDate(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     component.assign("day", targetDayJs.date());
     component.assign("month", targetDayJs.month() + 1);
     component.assign("year", targetDayJs.year());
 }
 
+/**
+ * @deprecated Use `dates.assignSimilarTime` with normal Javascript Date instead
+ */
 export function assignSimilarTime(component: ParsingComponents, targetDayJs: dayjs.Dayjs) {
     component.assign("hour", targetDayJs.hour());
     component.assign("minute", targetDayJs.minute());

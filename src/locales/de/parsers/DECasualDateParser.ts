@@ -1,10 +1,10 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 import DECasualTimeParser from "./DECasualTimeParser";
 import * as references from "../../../common/casualReferences";
+import { addDuration } from "../../../calculation/duration";
 
 const PATTERN = new RegExp(
     `(jetzt|heute|morgen|übermorgen|uebermorgen|gestern|vorgestern|letzte\\s*nacht)` +
@@ -22,7 +22,7 @@ export default class DECasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = context.reference.getDateWithAdjustedTimezone();
         const dateKeyword = (match[DATE_GROUP] || "").toLowerCase();
         const timeKeyword = (match[TIME_GROUP] || "").toLowerCase();
 
@@ -37,31 +37,34 @@ export default class DECasualDateParser extends AbstractParserWithWordBoundaryCh
                 break;
 
             case "morgen":
-                assignTheNextDay(component, targetDate);
+                targetDate = addDuration(targetDate, { day: 1 });
+                assignSimilarDate(component, targetDate);
+                implySimilarTime(component, targetDate);
                 break;
 
             case "übermorgen":
             case "uebermorgen":
-                targetDate = targetDate.add(1, "day");
-                assignTheNextDay(component, targetDate);
+                targetDate = addDuration(targetDate, { day: 2 });
+                assignSimilarDate(component, targetDate);
+                implySimilarTime(component, targetDate);
                 break;
 
             case "gestern":
-                targetDate = targetDate.add(-1, "day");
+                targetDate = addDuration(targetDate, { day: -1 });
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
                 break;
 
             case "vorgestern":
-                targetDate = targetDate.add(-2, "day");
+                targetDate = addDuration(targetDate, { day: -2 });
                 assignSimilarDate(component, targetDate);
                 implySimilarTime(component, targetDate);
                 break;
 
             default:
                 if (dateKeyword.match(/letzte\s*nacht/)) {
-                    if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "day");
+                    if (targetDate.getHours() > 6) {
+                        targetDate = addDuration(targetDate, { day: -1 });
                     }
 
                     assignSimilarDate(component, targetDate);

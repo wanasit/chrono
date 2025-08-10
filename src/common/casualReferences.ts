@@ -1,12 +1,6 @@
 import { ParsingComponents, ReferenceWithTimezone } from "../results";
 import dayjs from "dayjs";
-import {
-    assignSimilarDate,
-    assignSimilarTime,
-    implySimilarDate,
-    implySimilarTime,
-    implyTheNextDay,
-} from "../utils/dayjs";
+import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "../utils/dayjs";
 import { Meridiem } from "../types";
 
 export function now(reference: ReferenceWithTimezone): ParsingComponents {
@@ -98,11 +92,10 @@ export function yesterdayEvening(reference: ReferenceWithTimezone, implyHour = 2
 
 export function midnight(reference: ReferenceWithTimezone): ParsingComponents {
     const component = new ParsingComponents(reference, {});
-    const targetDate = dayjs(reference.getDateWithAdjustedTimezone());
-    if (targetDate.hour() > 2) {
+    if (reference.getDateWithAdjustedTimezone().getHours() > 2) {
         // Unless it's very early morning (0~2AM), we assume the midnight is the coming midnight.
         // Thus, increasing the day by 1.
-        implyTheNextDay(component, targetDate);
+        component.addDurationAsImplied({ day: 1 });
     }
     component.assign("hour", 0);
     component.imply("minute", 0);
