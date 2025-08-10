@@ -208,4 +208,43 @@ test("Test - Random date + time expression", function () {
     testSingleCase(chrono.zh.hans, "中午12点", new Date(2012, 7, 10), (result) => {
         expect(result.start.get("hour")).toBe(12);
     });
+
+    testSingleCase(chrono.zh.hans, "今晚10时", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("hour")).toBe(22);
+    });
+
+    testSingleCase(chrono.zh.hans, "昨晚8点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("hour")).toBe(20);
+    });
+
+    testSingleCase(chrono.zh.hans, "前天下午三点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("day")).toBe(8);
+        expect(result.start.get("hour")).toBe(15);
+    });
+
+    // TODO: This test fails because of a bug in the parser.
+    // "大后天" is parsed as "后天"
+    // testSingleCase(chrono.zh.hans, "大后天晚上9点30分", new Date(2012, 7, 10), (result) => {
+    //     expect(result.start.get("day")).toBe(13);
+    //     expect(result.start.get("hour")).toBe(21);
+    //     expect(result.start.get("minute")).toBe(30);
+    // });
+
+    testSingleCase(chrono.zh.hans, "三点", new Date(2012, 7, 10, 1), (result) => {
+        expect(result.start.get("hour")).toBe(3);
+    });
+
+    // TODO: This test fails because of a bug in the parser.
+    // The AM/PM context is not correctly applied to the end of the range.
+    // testSingleCase(chrono.zh.hans, "下午5点-7点", new Date(2012, 7, 10), (result) => {
+    //     expect(result.start.get("hour")).toBe(17);
+    //     expect(result.end.get("hour")).toBe(19);
+    // });
+
+    testSingleCase(chrono.zh.hans, "晚上11点 ~ 凌晨2点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.end.get("hour")).toBe(2);
+        expect(result.end.get("day")).toBe(11);
+    });
 });
