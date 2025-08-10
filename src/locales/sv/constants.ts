@@ -1,7 +1,7 @@
 import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
-import { TimeUnits } from "../../utils/timeunits";
+import { Duration } from "../../calculation/duration";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "söndag": 0,
@@ -154,7 +154,7 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     "kvartal": "quarter",
 };
 
-export function parseTimeUnits(timeunitText): TimeUnits {
+export function parseDuration(timeunitText): Duration {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -163,7 +163,7 @@ export function parseTimeUnits(timeunitText): TimeUnits {
         remainingText = remainingText.substring(match[0].length);
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
     }
-    return fragments;
+    return fragments as Duration;
 }
 
 function collectDateTimeFragment(fragments, match) {

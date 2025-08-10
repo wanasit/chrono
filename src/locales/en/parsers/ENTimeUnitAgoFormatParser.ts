@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { parseTimeUnits, TIME_UNITS_NO_ABBR_PATTERN, TIME_UNITS_PATTERN } from "../constants";
+import { parseDuration, TIME_UNITS_NO_ABBR_PATTERN, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseDuration } from "../../../calculation/duration";
@@ -17,7 +17,7 @@ export default class ENTimeUnitAgoFormatParser extends AbstractParserWithWordBou
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const duration = parseTimeUnits(match[1]);
+        const duration = parseDuration(match[1]);
         if (!duration) {
             return null;
         }

@@ -1,6 +1,6 @@
 import { MergingRefiner } from "../../../common/abstractRefiners";
 import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../../results";
-import { parseTimeUnits } from "../constants";
+import { parseDuration } from "../constants";
 import { reverseDuration } from "../../../calculation/duration";
 
 function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
@@ -38,7 +38,7 @@ export default class ENMergeRelativeFollowByDateRefiner extends MergingRefiner {
     }
 
     mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): ParsingResult {
-        let duration = parseTimeUnits(currentResult.text);
+        let duration = parseDuration(currentResult.text);
         if (hasImpliedEarlierReferenceDate(currentResult)) {
             duration = reverseDuration(duration);
         }

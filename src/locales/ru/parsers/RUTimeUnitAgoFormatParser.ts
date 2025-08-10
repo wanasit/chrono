@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
+import { parseDuration, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithLeftBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 import { reverseDuration } from "../../../calculation/duration";
@@ -10,7 +10,7 @@ export default class RUTimeUnitAgoFormatParser extends AbstractParserWithLeftBou
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const timeUnits = parseTimeUnits(match[1]);
+        const timeUnits = parseDuration(match[1]);
         const outputTimeUnits = reverseDuration(timeUnits);
 
         return ParsingComponents.createRelativeFromReference(context.reference, outputTimeUnits);

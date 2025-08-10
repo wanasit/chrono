@@ -1,6 +1,6 @@
 import { MergingRefiner } from "../../../common/abstractRefiners";
 import { ParsingComponents, ParsingResult, ReferenceWithTimezone } from "../../../results";
-import { parseTimeUnits } from "../constants";
+import { parseDuration } from "../constants";
 import { reverseDuration } from "../../../calculation/duration";
 
 function IsPositiveFollowingReference(result: ParsingResult): boolean {
@@ -26,7 +26,7 @@ export default class ENMergeRelativeAfterDateRefiner extends MergingRefiner {
     }
 
     mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult, context): ParsingResult {
-        let timeUnits = parseTimeUnits(nextResult.text);
+        let timeUnits = parseDuration(nextResult.text);
         if (IsNegativeFollowingReference(nextResult)) {
             timeUnits = reverseDuration(timeUnits);
         }

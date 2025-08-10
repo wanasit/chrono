@@ -1,7 +1,7 @@
 import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
-import { TimeUnits } from "../../utils/timeunits";
+import { Duration } from "../../calculation/duration";
 import { Weekday } from "../../types";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
@@ -277,7 +277,7 @@ export const TIME_UNITS_NO_ABBR_PATTERN = repeatedTimeunitPattern(
     TIME_UNIT_CONNECTOR_PATTERN
 );
 
-export function parseTimeUnits(timeunitText): null | TimeUnits {
+export function parseDuration(timeunitText): null | Duration {
     const fragments = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -289,7 +289,7 @@ export function parseTimeUnits(timeunitText): null | TimeUnits {
     if (Object.keys(fragments).length == 0) {
         return null;
     }
-    return fragments;
+    return fragments as Duration;
 }
 
 function collectDateTimeFragment(fragments, match) {

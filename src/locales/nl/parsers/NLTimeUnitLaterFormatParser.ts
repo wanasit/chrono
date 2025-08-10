@@ -1,5 +1,5 @@
 import { ParsingContext } from "../../../chrono";
-import { parseTimeUnits, TIME_UNITS_PATTERN } from "../constants";
+import { parseDuration, TIME_UNITS_PATTERN } from "../constants";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
@@ -21,7 +21,7 @@ export default class NLTimeUnitLaterFormatParser extends AbstractParserWithWordB
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const fragments = parseTimeUnits(match[GROUP_NUM_TIMEUNITS]);
+        const fragments = parseDuration(match[GROUP_NUM_TIMEUNITS]);
         return ParsingComponents.createRelativeFromReference(context.reference, fragments);
     }
 }
