@@ -1,8 +1,7 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, assignTheNextDay, implySimilarTime } from "../../../utils/dayjs";
+import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
 const PATTERN = new RegExp(
@@ -21,7 +20,7 @@ export default class SVCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        const targetDate = context.refDate;
         const dateKeyword = (match[DATE_GROUP] || "").toLowerCase();
         const timeKeyword = (match[TIME_GROUP] || "").toLowerCase();
 
@@ -37,20 +36,25 @@ export default class SVCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             case "imorgon":
             case "imorn":
-                assignTheNextDay(component, targetDate);
+                const nextDay = new Date(targetDate.getTime());
+                nextDay.setDate(nextDay.getDate() + 1);
+                assignSimilarDate(component, nextDay);
+                implySimilarTime(component, nextDay);
                 break;
 
             case "igår":
-                targetDate = targetDate.add(-1, "day");
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
+                const previousDay = new Date(targetDate.getTime());
+                previousDay.setDate(previousDay.getDate() - 1);
+                assignSimilarDate(component, previousDay);
+                implySimilarTime(component, previousDay);
                 break;
 
             case "förrgår":
             case "i förrgår":
-                targetDate = targetDate.add(-2, "day");
-                assignSimilarDate(component, targetDate);
-                implySimilarTime(component, targetDate);
+                const twoDaysAgo = new Date(targetDate.getTime());
+                twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+                assignSimilarDate(component, twoDaysAgo);
+                implySimilarTime(component, twoDaysAgo);
                 break;
         }
 

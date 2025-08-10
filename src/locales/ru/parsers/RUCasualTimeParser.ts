@@ -1,7 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import * as references from "../../../common/casualReferences";
-import { assignSimilarDate } from "../../../utils/dayjs";
-import dayjs from "dayjs";
+import { assignSimilarDate } from "../../../utils/dates";
 import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
 
 export default class RUCasualTimeParser extends AbstractParserWithLeftRightBoundaryChecking {
@@ -10,7 +9,7 @@ export default class RUCasualTimeParser extends AbstractParserWithLeftRightBound
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 
@@ -33,9 +32,10 @@ export default class RUCasualTimeParser extends AbstractParserWithLeftRightBound
             return references.yesterdayEvening(context.reference);
         }
         if (lowerText.match(/следующей\s*ночью/)) {
-            const daysToAdd = targetDate.hour() < 22 ? 1 : 2;
-            targetDate = targetDate.add(daysToAdd, "day");
-            assignSimilarDate(component, targetDate);
+            const daysToAdd = targetDate.getHours() < 22 ? 1 : 2;
+            const nextDay = new Date(targetDate.getTime());
+            nextDay.setDate(nextDay.getDate() + daysToAdd);
+            assignSimilarDate(component, nextDay);
             component.imply("hour", 0);
         }
         if (lowerText.match(/в\s*полночь/) || lowerText.endsWith("ночью")) {

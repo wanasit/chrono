@@ -2,8 +2,7 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { Meridiem } from "../../../types";
-import { assignSimilarDate, assignTheNextDay } from "../../../utils/dayjs";
-import dayjs from "dayjs";
+import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 
 /*
  * Find combined words
@@ -36,17 +35,22 @@ export default class NLCasualDateTimeParser extends AbstractParserWithWordBounda
         const dateText = match[DATE_GROUP].toLowerCase();
         const timeText = match[TIME_OF_DAY_GROUP].toLowerCase();
         const component = context.createParsingComponents();
-        const targetDate = dayjs(context.refDate);
+        const targetDate = context.refDate;
 
         switch (dateText) {
             case "gisteren":
-                assignSimilarDate(component, targetDate.add(-1, "day"));
+                const previousDay = new Date(targetDate.getTime());
+                previousDay.setDate(previousDay.getDate() - 1);
+                assignSimilarDate(component, previousDay);
                 break;
             case "van":
                 assignSimilarDate(component, targetDate);
                 break;
             case "morgen":
-                assignTheNextDay(component, targetDate);
+                const nextDay = new Date(targetDate.getTime());
+                nextDay.setDate(nextDay.getDate() + 1);
+                assignSimilarDate(component, nextDay);
+                implySimilarTime(component, nextDay);
                 break;
         }
 

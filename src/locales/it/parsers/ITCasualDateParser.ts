@@ -1,19 +1,18 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate } from "../../../utils/dayjs";
+import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
 const PATTERN = /(ora|oggi|stasera|questa sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
 
-export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
         return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = dayjs(context.refDate);
+        let targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
         const component = context.createParsingComponents();
 
@@ -37,8 +36,10 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
 
             default:
                 if (lowerText.match(/ieri\s*sera/)) {
-                    if (targetDate.hour() > 6) {
-                        targetDate = targetDate.add(-1, "day");
+                    if (targetDate.getHours() > 6) {
+                        const previousDay = new Date(targetDate.getTime());
+                        previousDay.setDate(previousDay.getDate() - 1);
+                        targetDate = previousDay;
                     }
 
                     assignSimilarDate(component, targetDate);

@@ -1,9 +1,8 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents, ParsingResult } from "../../../results";
-import dayjs from "dayjs";
 import { Meridiem } from "../../../types";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { implySimilarTime } from "../../../utils/dayjs";
+import { implySimilarTime } from "../../../utils/dates";
 
 export default class DECasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -11,7 +10,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        const targetDate = dayjs(context.refDate);
+        const targetDate = context.refDate;
         const timeKeywordPattern = match[2].toLowerCase();
         const component = context.createParsingComponents();
         implySimilarTime(component, targetDate);
