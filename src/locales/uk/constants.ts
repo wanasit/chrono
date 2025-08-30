@@ -1,7 +1,7 @@
-import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { Duration } from "../../calculation/duration";
+import { Timeunit } from "../../types";
 
 export const REGEX_PARTS = {
     leftBoundary: "([^\\p{L}\\p{N}_]|^)",
@@ -211,7 +211,7 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "тридцять першого": 31,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     сек: "second",
     секунда: "second",
     секунд: "second",
@@ -240,12 +240,12 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     годинок: "hour",
     годинки: "hour",
     годинку: "hour",
-    день: "d",
-    дня: "d",
-    днів: "d",
-    дні: "d",
-    доба: "d",
-    добу: "d",
+    день: "day",
+    дня: "day",
+    днів: "day",
+    дні: "day",
+    доба: "day",
+    добу: "day",
     тиждень: "week",
     тижню: "week",
     тижня: "week",

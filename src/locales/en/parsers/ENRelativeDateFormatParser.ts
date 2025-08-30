@@ -1,9 +1,9 @@
 import { TIME_UNIT_DICTIONARY } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
-import dayjs from "dayjs";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
+import { addImpliedTimeUnits } from "../../../utils/timeunits";
 
 const PATTERN = new RegExp(
     `(this|last|past|next|after\\s*this)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)",
@@ -36,34 +36,35 @@ export default class ENRelativeDateFormatParser extends AbstractParserWithWordBo
         }
 
         const components = context.createParsingComponents();
-        let date = dayjs(context.reference.instant);
+        let date = new Date(context.reference.instant.getTime());
 
         // This week
         if (unitWord.match(/week/i)) {
-            date = date.add(-date.get("d"), "d");
-            components.imply("day", date.date());
-            components.imply("month", date.month() + 1);
-            components.imply("year", date.year());
+            date.setDate(date.getDate() - date.getDay());
+            components.imply("day", date.getDate());
+            components.imply("month", date.getMonth() + 1);
+            components.imply("year", date.getFullYear());
         }
 
         // This month
         else if (unitWord.match(/month/i)) {
-            date = date.add(-date.date() + 1, "d");
-            components.imply("day", date.date());
-            components.assign("year", date.year());
-            components.assign("month", date.month() + 1);
+            date.setDate(1);
+            components.imply("day", date.getDate());
+            components.assign("year", date.getFullYear());
+            components.assign("month", date.getMonth() + 1);
         }
 
         // This year
         else if (unitWord.match(/year/i)) {
-            date = date.add(-date.date() + 1, "d");
-            date = date.add(-date.month(), "month");
-
-            components.imply("day", date.date());
-            components.imply("month", date.month() + 1);
-            components.assign("year", date.year());
+            date.setDate(1);
+            date.setMonth(0);
+            components.imply("day", date.getDate());
+            components.imply("month", date.getMonth() + 1);
+            components.assign("year", date.getFullYear());
         }
 
-        return components;
+        return addImpliedTimeUnits(components, {
+            hour: 12,
+        });
     }
 }

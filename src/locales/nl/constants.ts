@@ -1,7 +1,7 @@
-import { OpUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { Duration } from "../../calculation/duration";
+import { Timeunit } from "../../types";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     // Zondag
@@ -136,7 +136,7 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
     "eenendertigste": 31,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     sec: "second",
     second: "second",
     seconden: "second",
@@ -152,8 +152,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType } = {
     uur: "hour",
     u: "hour",
     uren: "hour",
-    dag: "d",
-    dagen: "d",
+    dag: "day",
+    dagen: "day",
     week: "week",
     weken: "week",
     maand: "month",

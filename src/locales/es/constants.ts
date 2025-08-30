@@ -1,5 +1,5 @@
-import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
+import { Timeunit } from "../../types";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "domingo": 0,
@@ -78,7 +78,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "trece": 13,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     "sec": "second",
     "segundo": "second",
     "segundos": "second",
@@ -91,8 +91,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     "hrs": "hour",
     "hora": "hour",
     "horas": "hour",
-    "día": "d",
-    "días": "d",
+    "día": "day",
+    "días": "day",
     "semana": "week",
     "semanas": "week",
     "mes": "month",

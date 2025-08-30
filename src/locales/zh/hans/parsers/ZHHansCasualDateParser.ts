@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { ParsingContext } from "../../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { ParsingComponents, ParsingResult } from "../../../../results";
@@ -27,33 +26,33 @@ export default class ZHHansCasualDateParser extends AbstractParserWithWordBounda
         const index = match.index;
         const result = context.createParsingResult(index, match[0]);
 
-        const refMoment = dayjs(context.refDate);
-        let startMoment = refMoment;
+        const refDate = context.refDate;
+        let date = new Date(refDate.getTime());
 
         if (match[NOW_GROUP]) {
-            result.start.imply("hour", refMoment.hour());
-            result.start.imply("minute", refMoment.minute());
-            result.start.imply("second", refMoment.second());
-            result.start.imply("millisecond", refMoment.millisecond());
+            result.start.imply("hour", refDate.getHours());
+            result.start.imply("minute", refDate.getMinutes());
+            result.start.imply("second", refDate.getSeconds());
+            result.start.imply("millisecond", refDate.getMilliseconds());
         } else if (match[DAY_GROUP_1]) {
             const day1 = match[DAY_GROUP_1];
             const time1 = match[TIME_GROUP_1];
 
             if (day1 == "明") {
                 // Check not "Tomorrow" on late night
-                if (refMoment.hour() > 1) {
-                    startMoment = startMoment.add(1, "day");
+                if (refDate.getHours() > 1) {
+                    date.setDate(date.getDate() + 1);
                 }
             } else if (day1 == "昨") {
-                startMoment = startMoment.add(-1, "day");
+                date.setDate(date.getDate() - 1);
             } else if (day1 == "前") {
-                startMoment = startMoment.add(-2, "day");
+                date.setDate(date.getDate() - 2);
             } else if (day1 == "大前") {
-                startMoment = startMoment.add(-3, "day");
+                date.setDate(date.getDate() - 3);
             } else if (day1 == "后") {
-                startMoment = startMoment.add(2, "day");
+                date.setDate(date.getDate() + 2);
             } else if (day1 == "大后") {
-                startMoment = startMoment.add(3, "day");
+                date.setDate(date.getDate() + 3);
             }
 
             if (time1 == "早") {
@@ -84,19 +83,19 @@ export default class ZHHansCasualDateParser extends AbstractParserWithWordBounda
 
             if (day3 == "明") {
                 // Check not "Tomorrow" on late night
-                if (refMoment.hour() > 1) {
-                    startMoment = startMoment.add(1, "day");
+                if (refDate.getHours() > 1) {
+                    date.setDate(date.getDate() + 1);
                 }
             } else if (day3 == "昨") {
-                startMoment = startMoment.add(-1, "day");
+                date.setDate(date.getDate() - 1);
             } else if (day3 == "前") {
-                startMoment = startMoment.add(-2, "day");
+                date.setDate(date.getDate() - 2);
             } else if (day3 == "大前") {
-                startMoment = startMoment.add(-3, "day");
+                date.setDate(date.getDate() - 3);
             } else if (day3 == "后") {
-                startMoment = startMoment.add(2, "day");
+                date.setDate(date.getDate() + 2);
             } else if (day3 == "大后") {
-                startMoment = startMoment.add(3, "day");
+                date.setDate(date.getDate() + 3);
             }
 
             const timeString3 = match[TIME_GROUP_3];
@@ -119,9 +118,9 @@ export default class ZHHansCasualDateParser extends AbstractParserWithWordBounda
             }
         }
 
-        result.start.assign("day", startMoment.date());
-        result.start.assign("month", startMoment.month() + 1);
-        result.start.assign("year", startMoment.year());
+        result.start.assign("day", date.getDate());
+        result.start.assign("month", date.getMonth() + 1);
+        result.start.assign("year", date.getFullYear());
 
         return result;
     }
