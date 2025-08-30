@@ -114,3 +114,21 @@ test("Test - Closest Weekday Calculation", () => {
         expect(getDaysToWeekday(refDate, Weekday.WEDNESDAY)).toBe(-3);
     }
 });
+
+test("Test - Weekdays calculation with timezone", () => {
+
+    // Thu Feb 27 2025 17:00:00 GMT+0000
+    // Thu Feb 27 2025 09:00:00 GMT-0800 (PST)
+    // Fri Feb 28 2025 02:00:00 GMT+0900 (JST)
+    const refInstant = new Date("2025-02-27T17:00:00.000Z");
+    {
+        const reference = ReferenceWithTimezone.fromInput({ instant: refInstant, timezone: "JST"})
+        const output = createParsingComponentsAtWeekday(reference, Weekday.FRIDAY, "this");
+        expect(output.date()).toStrictEqual(new Date("Fri Feb 28 2025 12:00:00 GMT+0900 (JST)"));
+    }
+    {
+        const reference = ReferenceWithTimezone.fromInput({ instant: refInstant, timezone: "PST"})
+        const output = createParsingComponentsAtWeekday(reference, Weekday.FRIDAY, "this");
+        expect(output.date()).toStrictEqual(new Date("Fri Feb 28 2025 12:00:00 GMT-0800 (PST)"));
+    }
+});

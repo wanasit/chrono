@@ -62,29 +62,6 @@ test("Test - Creating component from reference date (and duration)", () => {
     }
 });
 
-test("Test - Adding duration into components", () => {
-    {
-        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
-        const components = ParsingComponents.createRelativeFromReference(reference);
-        components.addDurationAsImplied({ hour: 3 });
-
-        expect(components.date()).toStrictEqual(new Date("Sat, Aug 27 2022 15:52:11"));
-        expect(components.isCertain("second")).toBe(false);
-        expect(components.isCertain("minute")).toBe(false);
-        expect(components.isCertain("hour")).toBe(false);
-    }
-    {
-        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
-        const components = ParsingComponents.createRelativeFromReference(reference);
-        components.addDurationAsImplied({ day: 3 });
-        expect(components.date()).toStrictEqual(new Date("Sat, Aug 30 2022 12:52:11"));
-        expect(components.isCertain("day")).toBe(false);
-        expect(components.isCertain("weekday")).toBe(false);
-        expect(components.isCertain("month")).toBe(false);
-        expect(components.isCertain("year")).toBe(false);
-    }
-});
-
 test("Test - Create & manipulate parsing results", () => {
     const reference = new ReferenceWithTimezone(new Date());
     const text = "1 - 2 hour later";
@@ -244,5 +221,55 @@ test("Test - Getting timezone adjust date from references", () => {
             timezone: "CDT",
         });
         expect(reference.getDateWithAdjustedTimezone()).toStrictEqual(new Date(2021, 6 - 1, 9, 7, 21, 32));
+    }
+});
+
+test("Test - ParsingComponents.addDurationAsImplied", () => {
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ hour: 3 });
+
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 27 2022 15:52:11"));
+        expect(components.isCertain("second")).toBe(false);
+        expect(components.isCertain("minute")).toBe(false);
+        expect(components.isCertain("hour")).toBe(false);
+    }
+    {
+        const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ day: 3 });
+        expect(components.date()).toStrictEqual(new Date("Sat, Aug 30 2022 12:52:11"));
+        expect(components.isCertain("day")).toBe(false);
+        expect(components.isCertain("weekday")).toBe(false);
+        expect(components.isCertain("month")).toBe(false);
+        expect(components.isCertain("year")).toBe(false);
+    }
+});
+
+test("Test - ParsingComponents.addDurationAsImplied on different timezones", () => {
+    {
+        // Thu Feb 27 2025 17:00:00 GMT+0000
+        // Fri Feb 28 2025 02:00:00 GMT+0900 (JST)
+        const refInstant = new Date("Thu Feb 27 2025 17:00:00 GMT+0000");
+        const reference = ReferenceWithTimezone.fromInput({ instant: refInstant, timezone: "JST" });
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ hour: 3 });
+        expect(components.date()).toStrictEqual(new Date("Fri Feb 28 2025 05:00:00 GMT+0900 (JST)"));
+
+        components.addDurationAsImplied({ day: 3 });
+        expect(components.date()).toStrictEqual(new Date("Mon Mar 3 2025 05:00:00 GMT+0900 (JST)"));
+    }
+    {
+        // Thu Feb 27 2025 17:00:00 GMT+0000
+        // Thu Feb 27 2025 09:00:00 GMT-0800 (PST)
+        const refInstant = new Date("Thu Feb 27 2025 17:00:00 GMT+0000");
+        const reference = ReferenceWithTimezone.fromInput({ instant: refInstant, timezone: "PST" });
+        const components = ParsingComponents.createRelativeFromReference(reference);
+        components.addDurationAsImplied({ hour: 3 });
+        expect(components.date()).toStrictEqual(new Date("Thu Feb 27 2025 12:00:00 GMT-0800 (PST)"));
+
+        components.addDurationAsImplied({ day: 3 });
+        expect(components.date()).toStrictEqual(new Date("Mon Mar 2 2025 12:00:00 GMT-0800 (PST)"));
     }
 });

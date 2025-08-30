@@ -174,7 +174,7 @@ export class ParsingComponents implements ParsedComponents {
      * @param duration
      */
     addDurationAsImplied(duration: Duration): ParsingComponents {
-        const currentDate = this.date();
+        const currentDate = this.dateWithoutTimezoneAdjustment();
         const date = addDuration(currentDate, duration);
         if ("day" in duration || "week" in duration || "month" in duration || "year" in duration) {
             this.delete(["day", "weekday", "month", "year"]);
