@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { TimezoneAbbrMap, Weekday, Month } from "./types";
 
 export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
@@ -310,10 +309,7 @@ export function toTimezoneOffset(
     }
 
     // Return DST offset if the refDate is during daylight savings
-    if (
-        dayjs(date).isAfter(matchedTimezone.dstStart(date.getFullYear())) &&
-        !dayjs(date).isAfter(matchedTimezone.dstEnd(date.getFullYear()))
-    ) {
+    if (date > matchedTimezone.dstStart(date.getFullYear()) && !(date > matchedTimezone.dstEnd(date.getFullYear()))) {
         return matchedTimezone.timezoneOffsetDuringDst;
     }
 

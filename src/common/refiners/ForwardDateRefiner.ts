@@ -6,8 +6,9 @@
 
 import { ParsingContext, Refiner } from "../../chrono";
 import { ParsingResult } from "../../results";
-import dayjs from "dayjs";
 import * as dates from "../../utils/dates";
+import { implySimilarDate } from "../../utils/dates";
+import { addDuration } from "../../calculation/duration";
 
 export default class ForwardDateRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
@@ -16,7 +17,7 @@ export default class ForwardDateRefiner implements Refiner {
         }
 
         results.forEach((result) => {
-            let refMoment = dayjs(context.reference.getDateWithAdjustedTimezone());
+            let refDate = context.reference.getDateWithAdjustedTimezone();
 
             if (result.start.isOnlyTime() && context.reference.instant > result.start.date()) {
                 const refDate = context.reference.getDateWithAdjustedTimezone();
@@ -38,31 +39,25 @@ export default class ForwardDateRefiner implements Refiner {
                 }
             }
 
-            if (result.start.isOnlyWeekdayComponent() && refMoment.isAfter(result.start.dayjs())) {
-                if (refMoment.day() >= result.start.get("weekday")) {
-                    refMoment = refMoment.day(result.start.get("weekday") + 7);
-                } else {
-                    refMoment = refMoment.day(<number>result.start.get("weekday"));
+            if (result.start.isOnlyWeekdayComponent() && refDate > result.start.date()) {
+                let daysToAdd = result.start.get("weekday") - refDate.getDay();
+                if (daysToAdd <= 0) {
+                    daysToAdd += 7;
                 }
-
-                result.start.imply("day", refMoment.date());
-                result.start.imply("month", refMoment.month() + 1);
-                result.start.imply("year", refMoment.year());
+                refDate = addDuration(refDate, { day: daysToAdd });
+                implySimilarDate(result.start, refDate);
                 context.debug(() => {
                     console.log(`${this.constructor.name} adjusted ${result} weekday (${result.start})`);
                 });
 
                 if (result.end && result.end.isOnlyWeekdayComponent()) {
                     // Adjust date to the coming week
-                    if (refMoment.day() > result.end.get("weekday")) {
-                        refMoment = refMoment.day(result.end.get("weekday") + 7);
-                    } else {
-                        refMoment = refMoment.day(<number>result.end.get("weekday"));
+                    let daysToAdd = result.end.get("weekday") - refDate.getDay();
+                    if (daysToAdd <= 0) {
+                        daysToAdd += 7;
                     }
-
-                    result.end.imply("day", refMoment.date());
-                    result.end.imply("month", refMoment.month() + 1);
-                    result.end.imply("year", refMoment.year());
+                    refDate = addDuration(refDate, { day: daysToAdd });
+                    implySimilarDate(result.end, refDate);
                     context.debug(() => {
                         console.log(`${this.constructor.name} adjusted ${result} weekday (${result.end})`);
                     });
@@ -70,9 +65,9 @@ export default class ForwardDateRefiner implements Refiner {
             }
 
             // In case where we know the month, but not which year (e.g. "in December", "25th December"),
-            // try move to another year
-            if (result.start.isDateWithUnknownYear() && refMoment.isAfter(result.start.dayjs())) {
-                for (let i = 0; i < 3 && refMoment.isAfter(result.start.dayjs()); i++) {
+            // try move to another year (up-to 3 times)
+            if (result.start.isDateWithUnknownYear() && refDate > result.start.date()) {
+                for (let i = 0; i < 3 && refDate > result.start.date(); i++) {
                     result.start.imply("year", result.start.get("year") + 1);
                     context.debug(() => {
                         console.log(`${this.constructor.name} adjusted ${result} year (${result.start})`);

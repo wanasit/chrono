@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import { addDuration } from "./duration";
 
 /**
  * Find the most likely year, from a raw number. For example:
@@ -19,20 +19,15 @@ export function findMostLikelyADYear(yearNumber: number): number {
 }
 
 export function findYearClosestToRef(refDate: Date, day: number, month: number): number {
-    //Find the most appropriated year
-    const refMoment = dayjs(refDate);
-    let dateMoment = refMoment;
-    dateMoment = dateMoment.month(month - 1);
-    dateMoment = dateMoment.date(day);
-    dateMoment = dateMoment.year(refMoment.year());
-
-    const nextYear = dateMoment.add(1, "y");
-    const lastYear = dateMoment.add(-1, "y");
-    if (Math.abs(nextYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
-        dateMoment = nextYear;
-    } else if (Math.abs(lastYear.diff(refMoment)) < Math.abs(dateMoment.diff(refMoment))) {
-        dateMoment = lastYear;
+    let date = new Date(refDate);
+    date.setMonth(month - 1);
+    date.setDate(day);
+    const nextYear = addDuration(date, { "year": 1 });
+    const lastYear = addDuration(date, { "year": -1 });
+    if (Math.abs(nextYear.getTime() - refDate.getTime()) < Math.abs(date.getTime() - refDate.getTime())) {
+        date = nextYear;
+    } else if (Math.abs(lastYear.getTime() - refDate.getTime()) < Math.abs(date.getTime() - refDate.getTime())) {
+        date = lastYear;
     }
-
-    return dateMoment.year();
+    return date.getFullYear();
 }
