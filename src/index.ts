@@ -16,8 +16,10 @@ import * as zh from "./locales/zh";
 import * as ru from "./locales/ru";
 import * as es from "./locales/es";
 import * as uk from "./locales/uk";
+import * as it from "./locales/it";
+import * as sv from "./locales/sv";
 
-export { de, fr, ja, pt, nl, zh, ru, es, uk };
+export { de, fr, ja, pt, nl, zh, ru, es, uk, it, sv };
 
 /**
  * A shortcut for {@link en | chrono.en.strict}
