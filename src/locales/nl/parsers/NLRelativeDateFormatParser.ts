@@ -3,7 +3,6 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { matchAnyPattern } from "../../../utils/pattern";
-import { addImpliedTimeUnits } from "../../../utils/timeunits";
 
 const PATTERN = new RegExp(
     `(dit|deze|(?:aan)?komend|volgend|afgelopen|vorig)e?\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` +
@@ -64,8 +63,6 @@ export default class NLRelativeDateFormatParser extends AbstractParserWithWordBo
             components.assign("year", date.getFullYear());
         }
 
-        return addImpliedTimeUnits(components, {
-            hour: 12,
-        });
+        return components;
     }
 }

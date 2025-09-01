@@ -3,7 +3,6 @@ import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWithWordBoundaryChecking";
-import { addImpliedTimeUnits } from "../../../utils/timeunits";
 
 const MODIFIER_WORD_GROUP = 1;
 const RELATIVE_WORD_GROUP = 2;
@@ -60,8 +59,6 @@ export default class RURelativeDateFormatParser extends AbstractParserWithLeftRi
             components.assign("year", date.getFullYear());
         }
 
-        return addImpliedTimeUnits(components, {
-            hour: 12,
-        });
+        return components;
     }
 }
