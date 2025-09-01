@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { ParsingContext } from "../../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { NUMBER, zhStringToNumber } from "../constants";
@@ -74,54 +73,53 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
             return null;
         }
 
-        const refMoment = dayjs(context.refDate);
         const result = context.createParsingResult(match.index, match[0]);
-        let startMoment = refMoment.clone();
+        const startMoment = new Date(context.refDate.getTime());
 
         // ----- Day
         if (match[DAY_GROUP_1]) {
             const day1 = match[DAY_GROUP_1];
             if (day1 == "明") {
                 // Check not "Tomorrow" on late night
-                if (refMoment.hour() > 1) {
-                    startMoment = startMoment.add(1, "day");
+                if (context.refDate.getHours() > 1) {
+                    startMoment.setDate(startMoment.getDate() + 1);
                 }
             } else if (day1 == "昨") {
-                startMoment = startMoment.add(-1, "day");
+                startMoment.setDate(startMoment.getDate() - 1);
             } else if (day1 == "前") {
-                startMoment = startMoment.add(-2, "day");
+                startMoment.setDate(startMoment.getDate() - 2);
             } else if (day1 == "大前") {
-                startMoment = startMoment.add(-3, "day");
+                startMoment.setDate(startMoment.getDate() - 3);
             } else if (day1 == "后") {
-                startMoment = startMoment.add(2, "day");
+                startMoment.setDate(startMoment.getDate() + 2);
             } else if (day1 == "大后") {
-                startMoment = startMoment.add(3, "day");
+                startMoment.setDate(startMoment.getDate() + 3);
             }
-            result.start.assign("day", startMoment.date());
-            result.start.assign("month", startMoment.month() + 1);
-            result.start.assign("year", startMoment.year());
+            result.start.assign("day", startMoment.getDate());
+            result.start.assign("month", startMoment.getMonth() + 1);
+            result.start.assign("year", startMoment.getFullYear());
         } else if (match[DAY_GROUP_3]) {
             const day3 = match[DAY_GROUP_3];
             if (day3 == "明") {
-                startMoment = startMoment.add(1, "day");
+                startMoment.setDate(startMoment.getDate() + 1);
             } else if (day3 == "昨") {
-                startMoment = startMoment.add(-1, "day");
+                startMoment.setDate(startMoment.getDate() - 1);
             } else if (day3 == "前") {
-                startMoment = startMoment.add(-2, "day");
+                startMoment.setDate(startMoment.getDate() - 2);
             } else if (day3 == "大前") {
-                startMoment = startMoment.add(-3, "day");
+                startMoment.setDate(startMoment.getDate() - 3);
             } else if (day3 == "后") {
-                startMoment = startMoment.add(2, "day");
+                startMoment.setDate(startMoment.getDate() + 2);
             } else if (day3 == "大后") {
-                startMoment = startMoment.add(3, "day");
+                startMoment.setDate(startMoment.getDate() + 3);
             }
-            result.start.assign("day", startMoment.date());
-            result.start.assign("month", startMoment.month() + 1);
-            result.start.assign("year", startMoment.year());
+            result.start.assign("day", startMoment.getDate());
+            result.start.assign("month", startMoment.getMonth() + 1);
+            result.start.assign("year", startMoment.getFullYear());
         } else {
-            result.start.imply("day", startMoment.date());
-            result.start.imply("month", startMoment.month() + 1);
-            result.start.imply("year", startMoment.year());
+            result.start.imply("day", startMoment.getDate());
+            result.start.imply("month", startMoment.getMonth() + 1);
+            result.start.imply("year", startMoment.getFullYear());
         }
 
         let hour = 0;
@@ -233,8 +231,8 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
         //                  Extracting the 'to' chunk
         // ==============================================================
 
-        match = SECOND_REG_PATTERN.exec(context.text.substring(result.index + result.text.length));
-        if (!match) {
+        const secondMatch = SECOND_REG_PATTERN.exec(context.text.substring(result.index + result.text.length));
+        if (!secondMatch) {
             // Not accept number only result
             if (result.text.match(/^\d+$/)) {
                 return null;
@@ -242,53 +240,53 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
             return result;
         }
 
-        let endMoment = startMoment.clone();
+        const endMoment = new Date(startMoment.getTime());
         result.end = context.createParsingComponents();
 
         // ----- Day
-        if (match[DAY_GROUP_1]) {
-            const day1 = match[DAY_GROUP_1];
+        if (secondMatch[DAY_GROUP_1]) {
+            const day1 = secondMatch[DAY_GROUP_1];
             if (day1 == "明") {
                 // Check not "Tomorrow" on late night
-                if (refMoment.hour() > 1) {
-                    endMoment = endMoment.add(1, "day");
+                if (context.refDate.getHours() > 1) {
+                    endMoment.setDate(endMoment.getDate() + 1);
                 }
             } else if (day1 == "昨") {
-                endMoment = endMoment.add(-1, "day");
+                endMoment.setDate(endMoment.getDate() - 1);
             } else if (day1 == "前") {
-                endMoment = endMoment.add(-2, "day");
+                endMoment.setDate(endMoment.getDate() - 2);
             } else if (day1 == "大前") {
-                endMoment = endMoment.add(-3, "day");
+                endMoment.setDate(endMoment.getDate() - 3);
             } else if (day1 == "后") {
-                endMoment = endMoment.add(2, "day");
+                endMoment.setDate(endMoment.getDate() + 2);
             } else if (day1 == "大后") {
-                endMoment = endMoment.add(3, "day");
+                endMoment.setDate(endMoment.getDate() + 3);
             }
-            result.end.assign("day", endMoment.date());
-            result.end.assign("month", endMoment.month() + 1);
-            result.end.assign("year", endMoment.year());
-        } else if (match[DAY_GROUP_3]) {
-            const day3 = match[DAY_GROUP_3];
+            result.end.assign("day", endMoment.getDate());
+            result.end.assign("month", endMoment.getMonth() + 1);
+            result.end.assign("year", endMoment.getFullYear());
+        } else if (secondMatch[DAY_GROUP_3]) {
+            const day3 = secondMatch[DAY_GROUP_3];
             if (day3 == "明") {
-                endMoment = endMoment.add(1, "day");
+                endMoment.setDate(endMoment.getDate() + 1);
             } else if (day3 == "昨") {
-                endMoment = endMoment.add(-1, "day");
+                endMoment.setDate(endMoment.getDate() - 1);
             } else if (day3 == "前") {
-                endMoment = endMoment.add(-2, "day");
+                endMoment.setDate(endMoment.getDate() - 2);
             } else if (day3 == "大前") {
-                endMoment = endMoment.add(-3, "day");
+                endMoment.setDate(endMoment.getDate() - 3);
             } else if (day3 == "后") {
-                endMoment = endMoment.add(2, "day");
+                endMoment.setDate(endMoment.getDate() + 2);
             } else if (day3 == "大后") {
-                endMoment = endMoment.add(3, "day");
+                endMoment.setDate(endMoment.getDate() + 3);
             }
-            result.end.assign("day", endMoment.date());
-            result.end.assign("month", endMoment.month() + 1);
-            result.end.assign("year", endMoment.year());
+            result.end.assign("day", endMoment.getDate());
+            result.end.assign("month", endMoment.getMonth() + 1);
+            result.end.assign("year", endMoment.getFullYear());
         } else {
-            result.end.imply("day", endMoment.date());
-            result.end.imply("month", endMoment.month() + 1);
-            result.end.imply("year", endMoment.year());
+            result.end.imply("day", endMoment.getDate());
+            result.end.imply("month", endMoment.getMonth() + 1);
+            result.end.imply("year", endMoment.getFullYear());
         }
 
         hour = 0;
@@ -296,31 +294,31 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
         meridiem = -1;
 
         // ----- Second
-        if (match[SECOND_GROUP]) {
-            let second = parseInt(match[SECOND_GROUP]);
+        if (secondMatch[SECOND_GROUP]) {
+            let second = parseInt(secondMatch[SECOND_GROUP]);
             if (isNaN(second)) {
-                second = zhStringToNumber(match[SECOND_GROUP]);
+                second = zhStringToNumber(secondMatch[SECOND_GROUP]);
             }
 
             if (second >= 60) return null;
             result.end.assign("second", second);
         }
 
-        hour = parseInt(match[HOUR_GROUP]);
+        hour = parseInt(secondMatch[HOUR_GROUP]);
         if (isNaN(hour)) {
-            hour = zhStringToNumber(match[HOUR_GROUP]);
+            hour = zhStringToNumber(secondMatch[HOUR_GROUP]);
         }
 
         // ----- Minutes
-        if (match[MINUTE_GROUP]) {
-            if (match[MINUTE_GROUP] == "半") {
+        if (secondMatch[MINUTE_GROUP]) {
+            if (secondMatch[MINUTE_GROUP] == "半") {
                 minute = 30;
-            } else if (match[MINUTE_GROUP] == "正" || match[MINUTE_GROUP] == "整") {
+            } else if (secondMatch[MINUTE_GROUP] == "正" || secondMatch[MINUTE_GROUP] == "整") {
                 minute = 0;
             } else {
-                minute = parseInt(match[MINUTE_GROUP]);
+                minute = parseInt(secondMatch[MINUTE_GROUP]);
                 if (isNaN(minute)) {
-                    minute = zhStringToNumber(match[MINUTE_GROUP]);
+                    minute = zhStringToNumber(secondMatch[MINUTE_GROUP]);
                 }
             }
         } else if (hour > 100) {
@@ -340,9 +338,9 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
         }
 
         // ----- AM & PM
-        if (match[AM_PM_HOUR_GROUP]) {
+        if (secondMatch[AM_PM_HOUR_GROUP]) {
             if (hour > 12) return null;
-            const ampm = match[AM_PM_HOUR_GROUP][0].toLowerCase();
+            const ampm = secondMatch[AM_PM_HOUR_GROUP][0].toLowerCase();
             if (ampm == "a") {
                 meridiem = 0;
                 if (hour == 12) hour = 0;
@@ -368,8 +366,8 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
                     }
                 }
             }
-        } else if (match[ZH_AM_PM_HOUR_GROUP_1]) {
-            const zhAMPMString1 = match[ZH_AM_PM_HOUR_GROUP_1];
+        } else if (secondMatch[ZH_AM_PM_HOUR_GROUP_1]) {
+            const zhAMPMString1 = secondMatch[ZH_AM_PM_HOUR_GROUP_1];
             const zhAMPM1 = zhAMPMString1[0];
             if (zhAMPM1 == "早") {
                 meridiem = 0;
@@ -378,8 +376,8 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
                 meridiem = 1;
                 if (hour != 12) hour += 12;
             }
-        } else if (match[ZH_AM_PM_HOUR_GROUP_2]) {
-            const zhAMPMString2 = match[ZH_AM_PM_HOUR_GROUP_2];
+        } else if (secondMatch[ZH_AM_PM_HOUR_GROUP_2]) {
+            const zhAMPMString2 = secondMatch[ZH_AM_PM_HOUR_GROUP_2];
             const zhAMPM2 = zhAMPMString2[0];
             if (zhAMPM2 == "上" || zhAMPM2 == "早" || zhAMPM2 == "凌") {
                 meridiem = 0;
@@ -388,8 +386,8 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
                 meridiem = 1;
                 if (hour != 12) hour += 12;
             }
-        } else if (match[ZH_AM_PM_HOUR_GROUP_3]) {
-            const zhAMPMString3 = match[ZH_AM_PM_HOUR_GROUP_3];
+        } else if (secondMatch[ZH_AM_PM_HOUR_GROUP_3]) {
+            const zhAMPMString3 = secondMatch[ZH_AM_PM_HOUR_GROUP_3];
             const zhAMPM3 = zhAMPMString3[0];
             if (zhAMPM3 == "上" || zhAMPM3 == "早" || zhAMPM3 == "凌") {
                 meridiem = 0;
@@ -400,7 +398,7 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
             }
         }
 
-        result.text = result.text + match[0];
+        result.text = result.text + secondMatch[0];
         result.end.assign("hour", hour);
         result.end.assign("minute", minute);
         if (meridiem >= 0) {

@@ -129,7 +129,7 @@ export type Component =
     | "meridiem"
     | "timezoneOffset";
 
-export type Timeunit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond";
+export type Timeunit = "year" | "month" | "week" | "day" | "hour" | "minute" | "second" | "millisecond" | "quarter";
 
 export enum Meridiem {
     AM = 0,

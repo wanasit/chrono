@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
 import { ParsingContext } from "../../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
+import { addDuration, Duration } from "../../../../calculation/duration";
 import { NUMBER, zhStringToNumber } from "../constants";
 
 const PATTERN = new RegExp(
@@ -41,41 +41,43 @@ export default class ZHHantDeadlineFormatParser extends AbstractParserWithWordBo
             }
         }
 
-        let date = dayjs(context.refDate);
+        const duration: Duration = {};
         const unit = match[UNIT_GROUP];
         const unitAbbr = unit[0];
 
         if (unitAbbr.match(/[日天星禮月年]/)) {
             if (unitAbbr == "日" || unitAbbr == "天") {
-                date = date.add(number, "d");
+                duration.day = number;
             } else if (unitAbbr == "星" || unitAbbr == "禮") {
-                date = date.add(number * 7, "d");
+                duration.week = number;
             } else if (unitAbbr == "月") {
-                date = date.add(number, "month");
+                duration.month = number;
             } else if (unitAbbr == "年") {
-                date = date.add(number, "year");
+                duration.year = number;
             }
 
-            result.start.assign("year", date.year());
-            result.start.assign("month", date.month() + 1);
-            result.start.assign("day", date.date());
+            const date = addDuration(context.refDate, duration);
+            result.start.assign("year", date.getFullYear());
+            result.start.assign("month", date.getMonth() + 1);
+            result.start.assign("day", date.getDate());
             return result;
         }
 
         if (unitAbbr == "秒") {
-            date = date.add(number, "second");
+            duration.second = number;
         } else if (unitAbbr == "分") {
-            date = date.add(number, "minute");
+            duration.minute = number;
         } else if (unitAbbr == "小" || unitAbbr == "鐘") {
-            date = date.add(number, "hour");
+            duration.hour = number;
         }
 
-        result.start.imply("year", date.year());
-        result.start.imply("month", date.month() + 1);
-        result.start.imply("day", date.date());
-        result.start.assign("hour", date.hour());
-        result.start.assign("minute", date.minute());
-        result.start.assign("second", date.second());
+        const date = addDuration(context.refDate, duration);
+        result.start.imply("year", date.getFullYear());
+        result.start.imply("month", date.getMonth() + 1);
+        result.start.imply("day", date.getDate());
+        result.start.assign("hour", date.getHours());
+        result.start.assign("minute", date.getMinutes());
+        result.start.assign("second", date.getSeconds());
         return result;
     }
 }

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { ParsingContext } from "../../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../../common/parsers/AbstractParserWithWordBoundary";
 import { NUMBER, zhStringToNumber, zhStringToYear } from "../constants";
@@ -37,7 +36,6 @@ export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChec
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
-        const startMoment = dayjs(context.refDate);
         const result = context.createParsingResult(match.index, match[0]);
 
         //Month
@@ -51,7 +49,7 @@ export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChec
             if (isNaN(day)) day = zhStringToNumber(match[DAY_GROUP]);
             result.start.assign("day", day);
         } else {
-            result.start.imply("day", startMoment.date());
+            result.start.imply("day", context.refDate.getDate());
         }
 
         //Year
@@ -60,7 +58,7 @@ export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChec
             if (isNaN(year)) year = zhStringToYear(match[YEAR_GROUP]);
             result.start.assign("year", year);
         } else {
-            result.start.imply("year", startMoment.year());
+            result.start.imply("year", context.refDate.getFullYear());
         }
 
         return result;

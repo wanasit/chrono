@@ -1,5 +1,4 @@
 import { Parser, ParsingContext } from "../../../chrono";
-import dayjs from "dayjs";
 import { Meridiem } from "../../../types";
 import * as references from "../../../common/casualReferences";
 
@@ -36,7 +35,6 @@ export default class JPCasualDateParser implements Parser {
     extract(context: ParsingContext, match: RegExpMatchArray) {
         const text = normalizeTextToKanji(match[0]);
 
-        const date = dayjs(context.refDate);
         const components = context.createParsingComponents();
 
         switch (text) {
@@ -59,9 +57,10 @@ export default class JPCasualDateParser implements Parser {
             components.assign("meridiem", Meridiem.AM);
         }
 
-        components.assign("day", date.date());
-        components.assign("month", date.month() + 1);
-        components.assign("year", date.year());
+        const date = context.refDate;
+        components.assign("day", date.getDate());
+        components.assign("month", date.getMonth() + 1);
+        components.assign("year", date.getFullYear());
         return components;
     }
 }

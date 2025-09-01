@@ -1,7 +1,7 @@
-import { OpUnitType, QUnitType } from "dayjs";
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { findMostLikelyADYear } from "../../calculation/years";
 import { Duration } from "../../calculation/duration";
+import { Timeunit } from "../../types";
 
 export const WEEKDAY_DICTIONARY: { [word: string]: number } = {
     "sonntag": 0,
@@ -86,7 +86,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "zwoelf": 12,
 };
 
-export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = {
+export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     sek: "second",
     sekunde: "second",
     sekunden: "second",
@@ -97,9 +97,9 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: OpUnitType | QUnitType } = 
     std: "hour",
     stunde: "hour",
     stunden: "hour",
-    tag: "d",
-    tage: "d",
-    tagen: "d",
+    tag: "day",
+    tage: "day",
+    tagen: "day",
     woche: "week",
     wochen: "week",
     monat: "month",
