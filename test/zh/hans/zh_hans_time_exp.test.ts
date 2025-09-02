@@ -248,3 +248,15 @@ test("Test - Random date + time expression", function () {
         expect(result.end.get("day")).toBe(11);
     });
 });
+
+test("Test - YYYY-MM-DD HH:mm:ss format", function () {
+    testSingleCase(chrono.zh.hans, "2023-10-26 10:30:00", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("2023-10-26 10:30:00");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(26);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("second")).toBe(0);
+    });
+});

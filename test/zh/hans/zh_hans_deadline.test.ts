@@ -134,3 +134,42 @@ test("Test - Single Expression", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 });
+
+test("Test - Untested units", function () {
+    testSingleCase(chrono.zh.hans, "5秒钟后", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.text).toBe("5秒钟后");
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 10, 12, 14, 5);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hans, "2小时后", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.text).toBe("2小时后");
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 10, 14, 14);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hans, "3天后", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.text).toBe("3天后");
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 13, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hans, "2星期后", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.text).toBe("2星期后");
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 24, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
+
+test("Test - Untested suffix", function () {
+    testSingleCase(chrono.zh.hans, "5分钟过后", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.text).toBe("5分钟过后");
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 10, 12, 19);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
