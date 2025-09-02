@@ -109,6 +109,67 @@ test("Test - Single Expression", function () {
     });
 });
 
+test("Test - 'this' week", function () {
+    testSingleCase(chrono.zh.hans, "我这个星期一要打游戏", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("这个星期一");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
+        expect(result.start.get("weekday")).toBe(1);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 6, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
+
+test("Test - Range with different separators", function () {
+    const text = "星期六至星期一";
+    testSingleCase(chrono.zh.hans, text, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+
+    const text2 = "星期六到星期一";
+    testSingleCase(chrono.zh.hans, text2, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text2);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+
+    const text3 = "星期六~星期一";
+    testSingleCase(chrono.zh.hans, text3, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text3);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+
+    const text4 = "星期六～星期一";
+    testSingleCase(chrono.zh.hans, text4, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text4);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+
+    const text5 = "星期六－星期一";
+    testSingleCase(chrono.zh.hans, text5, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text5);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+
+    const text6 = "星期六ー星期一";
+    testSingleCase(chrono.zh.hans, text6, new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
+        expect(result.text).toBe(text6);
+        expect(result.start.get("day")).toBe(3);
+        expect(result.end.get("day")).toBe(5);
+    });
+});
+
 test("Test - forward dates only option", function () {
     testSingleCase(chrono.zh.hans, "星期六-星期一", new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
         expect(result.index).toBe(0);
