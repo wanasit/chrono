@@ -133,24 +133,41 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
 };
 
 export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
+    "sek": "second",
     "sekund": "second",
     "sekunder": "second",
-    "sek": "second",
+    "min": "minute",
     "minut": "minute",
     "minuter": "minute",
-    "min": "minute",
+    "tim": "hour",
     "timme": "hour",
     "timmar": "hour",
-    "tim": "hour",
+    "dag": "day",
+    "dagar": "day",
+    "vecka": "week",
+    "veckor": "week",
+    "mån": "month",
+    "månad": "month",
+    "månader": "month",
+    "år": "year",
+    "kvartаl": "quarter",
+    "kvartal": "quarter",
+};
+
+export const TIME_UNIT_NO_ABBR_DICTIONARY: { [word: string]: Timeunit } = {
+    "sekund": "second",
+    "sekunder": "second",
+    "minut": "minute",
+    "minuter": "minute",
+    "timme": "hour",
+    "timmar": "hour",
     "dag": "day",
     "dagar": "day",
     "vecka": "week",
     "veckor": "week",
     "månad": "month",
     "månader": "month",
-    "mån": "month",
     "år": "year",
-    "kvartаl": "quarter",
     "kvartal": "quarter",
 };
 
@@ -179,7 +196,12 @@ export const TIME_UNIT_PATTERN = `(?:${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
 const SINGLE_TIME_UNIT_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s{0,5}`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
+const SINGLE_TIME_UNIT_NO_ABBR_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(
+    TIME_UNIT_NO_ABBR_DICTIONARY
+)})\\s{0,5}`;
+
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);
+export const TIME_UNITS_NO_ABBR_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_NO_ABBR_PATTERN);
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();

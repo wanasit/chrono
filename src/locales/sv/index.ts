@@ -6,6 +6,7 @@ import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ISOFormatParser from "../../common/parsers/ISOFormatParser";
 import SVWeekdayParser from "./parsers/SVWeekdayParser";
 import SVMonthNameLittleEndianParser from "./parsers/SVMonthNameLittleEndianParser";
+import SVTimeUnitCasualRelativeFormatParser from "./parsers/SVTimeUnitCasualRelativeFormatParser";
 import SVCasualDateParser from "./parsers/SVCasualDateParser";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
@@ -37,6 +38,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new SlashDateFormatParser(littleEndian),
                 new SVMonthNameLittleEndianParser(),
                 new SVWeekdayParser(),
+                new SVTimeUnitCasualRelativeFormatParser(),
             ],
             refiners: [],
         },
