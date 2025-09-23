@@ -22,22 +22,16 @@ export function today(reference: ReferenceWithTimezone): ParsingComponents {
     return component;
 }
 
-/**
- * The previous day. Imply the same time.
- */
 export function yesterday(reference: ReferenceWithTimezone): ParsingComponents {
     return theDayBefore(reference, 1).addTag("casualReference/yesterday");
 }
 
-export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): ParsingComponents {
-    return theDayAfter(reference, -numDay);
-}
-
-/**
- * The following day with dayjs.assignTheNextDay()
- */
 export function tomorrow(reference: ReferenceWithTimezone): ParsingComponents {
     return theDayAfter(reference, 1).addTag("casualReference/tomorrow");
+}
+
+export function theDayBefore(reference: ReferenceWithTimezone, numDay: number): ParsingComponents {
+    return theDayAfter(reference, -numDay);
 }
 
 export function theDayAfter(reference: ReferenceWithTimezone, nDays: number): ParsingComponents {

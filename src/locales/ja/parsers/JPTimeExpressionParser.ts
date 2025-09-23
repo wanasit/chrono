@@ -51,7 +51,6 @@ const MINUTE_GROUP = 3;
 const SECOND_GROUP = 4;
 const AM_PM_HOUR_GROUP_2 = 5;
 
-
 export default class JPTimeExpressionParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return FIRST_REG_PATTERN;
@@ -64,8 +63,13 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
         }
 
         const result = context.createParsingResult(match.index, match[0]);
-        result.start = createTimeComponents(context,
-            match[HOUR_GROUP], match[MINUTE_GROUP], match[SECOND_GROUP], match[AM_PM_HOUR_GROUP_1] ?? match[AM_PM_HOUR_GROUP_2]);
+        result.start = createTimeComponents(
+            context,
+            match[HOUR_GROUP],
+            match[MINUTE_GROUP],
+            match[SECOND_GROUP],
+            match[AM_PM_HOUR_GROUP_1] ?? match[AM_PM_HOUR_GROUP_2]
+        );
         if (!result.start) {
             match.index += match[0].length; // Skip over potential overlapping pattern
             return null;
@@ -82,7 +86,12 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
 
         result.text = result.text + match[0];
         result.end = createTimeComponents(
-            context, match[HOUR_GROUP], match[MINUTE_GROUP], match[SECOND_GROUP], match[AM_PM_HOUR_GROUP_1] ?? match[AM_PM_HOUR_GROUP_2]);
+            context,
+            match[HOUR_GROUP],
+            match[MINUTE_GROUP],
+            match[SECOND_GROUP],
+            match[AM_PM_HOUR_GROUP_1] ?? match[AM_PM_HOUR_GROUP_2]
+        );
         if (!result.end) {
             return null;
         }
@@ -104,15 +113,13 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
     }
 }
 
-
 function createTimeComponents(
     context: ParsingContext,
     matchHour: string | null,
     matchMinute: string | null,
     matchSecond: string | null,
-    matchAmPm: string | null,
+    matchAmPm: string | null
 ): ParsingComponents | null {
-
     let hour = 0;
     let meridiem = -1;
     let targetComponents = context.createParsingComponents();
@@ -147,7 +154,7 @@ function createTimeComponents(
     }
 
     if (matchAmPm) {
-        if (hour > 12)  {
+        if (hour > 12) {
             return null;
         }
         const AMPMString = matchAmPm;
@@ -161,8 +168,6 @@ function createTimeComponents(
     }
 
     targetComponents.assign("hour", hour);
-
-
 
     if (meridiem >= 0) {
         targetComponents.assign("meridiem", meridiem);
