@@ -109,6 +109,34 @@ test("Test - Single Expression", function () {
     });
 });
 
+test("Test - 'this' week", function () {
+    testSingleCase(chrono.zh.hant, "我這個星期一要打遊戲", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("這個星期一");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
+        expect(result.start.get("weekday")).toBe(1);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 6, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "星期一", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("weekday")).toBe(1);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 8 - 1, 13, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
+
 test("Test - forward dates only option", function () {
     testSingleCase(chrono.zh.hant, "星期六-星期一", new Date(2016, 9 - 1, 2), { forwardDate: true }, (result) => {
         expect(result.index).toBe(0);
