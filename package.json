@@ -81,9 +81,7 @@
     "test": "jest --coverage",
     "test:silent": "jest --silent"
   },
-  "dependencies": {
-    "dayjs": "^1.10.0"
-  },
+  "dependencies": {},
   "eslintConfig": {
     "env": {
       "es6": true,

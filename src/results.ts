@@ -1,11 +1,8 @@
 import { Component, ParsedComponents, ParsedResult, ParsingReference, TimezoneAbbrMap } from "./types";
 
-import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import dayjs, { QUnitType } from "dayjs";
 import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/dates";
 import { toTimezoneOffset } from "./timezone";
 import { addDuration, Duration, EmptyDuration } from "./calculation/duration";
-dayjs.extend(quarterOfYear);
 
 export class ReferenceWithTimezone {
     readonly instant: Date;
@@ -254,10 +251,6 @@ export class ParsingComponents implements ParsedComponents {
             knownValues: ${JSON.stringify(this.knownValues)}, 
             impliedValues: ${JSON.stringify(this.impliedValues)}}, 
             reference: ${JSON.stringify(this.reference)}]`;
-    }
-
-    dayjs() {
-        return dayjs(this.dateWithoutTimezoneAdjustment());
     }
 
     date(): Date {
