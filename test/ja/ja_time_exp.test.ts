@@ -1,5 +1,6 @@
 import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
+import { Meridiem } from "../../src";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.ja, "私は午前6時13分に起きた", new Date(2012, 7, 10), (result) => {
@@ -165,28 +166,34 @@ test("Test - Date + Time Expression", function () {
 });
 
 test("Test - Time Expression's Meridiem imply", function () {
-    testSingleCase(chrono.ja, "午後1時から3時", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(0);
-        expect(result.text).toBe("午後1時から3時");
-
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(10);
+    testSingleCase(chrono.ja, "午後1時30分から3時10分", new Date(2012, 7, 10), (result) => {
         expect(result.start.get("hour")).toBe(13);
-        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("minute")).toBe(30);
         expect(result.start.get("second")).toBe(0);
-        expect(result.start.get("millisecond")).toBe(0);
-        expect(result.start.get("meridiem")).toBe(1);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
         expect(result.start.isCertain("meridiem")).toBe(true);
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 13, 30));
 
-        expect(result.end.get("year")).toBe(2012);
-        expect(result.end.get("month")).toBe(8);
-        expect(result.end.get("day")).toBe(10);
+        expect(result.end.get("hour")).toBe(15);
+        expect(result.end.get("minute")).toBe(10);
+        expect(result.end.get("second")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.end).toBeDate(new Date(2012, 8-1, 10, 15, 10));
+    });
+
+    testSingleCase(chrono.ja, "1時20分P.M.から3時", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("hour")).toBe(13);
+        expect(result.start.get("minute")).toBe(20);
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.start.isCertain("meridiem")).toBe(true);
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 13, 20));
+
         expect(result.end.get("hour")).toBe(15);
         expect(result.end.get("minute")).toBe(0);
         expect(result.end.get("second")).toBe(0);
-        expect(result.end.get("millisecond")).toBe(0);
-        expect(result.start.get("meridiem")).toBe(1);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.end).toBeDate(new Date(2012, 8-1, 10, 15, 0));
     });
 
     testSingleCase(chrono.ja, "午後６時半－１１時", new Date(2012, 7, 10), (result) => {
@@ -196,16 +203,45 @@ test("Test - Time Expression's Meridiem imply", function () {
         expect(result.start).not.toBeNull();
         expect(result.start.get("hour")).toBe(18);
         expect(result.start.get("minute")).toBe(30);
-        expect(result.start.get("meridiem")).toBe(1);
-
-        const resultDate = result.start.date();
-        const expectDate = new Date(2012, 7, 10, 18, 30);
-        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 18, 30));
 
         expect(result.end).not.toBeNull();
         expect(result.end.get("hour")).toBe(23);
         expect(result.end.get("minute")).toBe(0);
-        expect(result.end.get("meridiem")).toBe(1);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.end).toBeDate(new Date(2012, 8-1, 10, 23, 0));
+    });
+
+    testSingleCase(chrono.ja, "午後１１時半－１時", new Date(2012, 8-1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("午後１１時半－１時");
+
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 23, 30));
+
+
+        expect(result.end.get("hour")).toBe(1);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.AM);
+        expect(result.end).toBeDate(new Date(2012, 8-1, 11, 1, 0));
+    });
+
+    testSingleCase(chrono.ja, "23時20分から2時", new Date(2012, 8-1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("23時20分から2時");
+
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("minute")).toBe(20);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+        expect(result.start).toBeDate(new Date(2012, 8-1, 10, 23, 20));
+
+        expect(result.end.get("hour")).toBe(2);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("meridiem")).toBe(Meridiem.AM);
+        expect(result.end).toBeDate(new Date(2012, 8-1, 11, 2, 0));
     });
 });
 
@@ -241,4 +277,32 @@ test("Test - Random date + time expression", function () {
     testSingleCase(chrono.ja, "12時", new Date(2012, 7, 10), (result) => {
         expect(result.start.get("hour")).toBe(12);
     });
+});
+
+test("Test - Incorrect time expressions", () => {
+
+    testUnexpectedResult(chrono.ja, '午後１3時');
+
+    testUnexpectedResult(chrono.ja, '25時');
+
+    testUnexpectedResult(chrono.ja, '5時70分');
+
+    testUnexpectedResult(chrono.ja, '5時30分65秒');
+
+    testUnexpectedResult(chrono.ja, '23時-25時');
+
+    testUnexpectedResult(chrono.ja, '3時-5時70分');
+
+    testUnexpectedResult(chrono.ja, '3時-5時30分65秒');
+});
+
+test("Test - Non time expressions", () => {
+
+    testUnexpectedResult(chrono.ja, '1');
+    testUnexpectedResult(chrono.ja, '12');
+    testUnexpectedResult(chrono.ja, '12a');
+
+    testUnexpectedResult(chrono.ja, '1時間');
+
+    testUnexpectedResult(chrono.ja, '25時間');
 });
