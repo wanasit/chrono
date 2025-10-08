@@ -8,8 +8,8 @@ import { matchAnyPattern } from "../../../utils/pattern";
 const PATTERN = new RegExp(
     // Pattern 1: unit + modifier (pasado/pasada)
     `(?:(?:el|la)\\s+)?(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s+(pasado|pasada)(?=\\W|$)|` +
-    // Pattern 2: modifier + unit (próximo/último/este/esta)
-    `(?:(?:el|la)\\s+)?(próximo|proxima|próxima|siguiente|último|ultima|este|esta)\\s+(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\W|$)`,
+        // Pattern 2: modifier + unit (próximo/último/este/esta)
+        `(?:(?:el|la)\\s+)?(próximo|proxima|próxima|siguiente|último|ultima|este|esta)\\s+(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\W|$)`,
     "i"
 );
 
@@ -41,12 +41,7 @@ export default class ESRelativeDateFormatParser extends AbstractParserWithWordBo
         unitWord = unitWord.toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (
-            modifier == "próximo" ||
-            modifier == "proxima" ||
-            modifier == "próxima" ||
-            modifier == "siguiente"
-        ) {
+        if (modifier == "próximo" || modifier == "proxima" || modifier == "próxima" || modifier == "siguiente") {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
