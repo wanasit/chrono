@@ -11,12 +11,12 @@ import { matchAnyPattern } from "../../../utils/pattern";
  * - ماه گذشته (last month)
  * - سال آینده (next year)
  * - هفته پیش (last week)
- * - روز بعد (next day)
+ * Note: Excludes standalone "روز بعد" to avoid ambiguous parsing
  */
 const PATTERN = new RegExp(
-    `(این|گذشته|قبل|پیش|آینده|بعد)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})` +
+    `(این|گذشته|قبل|پیش|آینده)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})` +
         `|` +
-        `(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*(این|گذشته|قبل|پیش|آینده|بعد)` +
+        `(${matchAnyPattern(TIME_UNIT_DICTIONARY)})\\s*(این|گذشته|قبل|پیش|آینده)` +
         `(?=\\W|$)`,
     "i"
 );

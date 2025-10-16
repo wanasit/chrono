@@ -6,7 +6,7 @@ import { TIME_UNIT_DICTIONARY, NUMBER_PATTERN, parseDuration } from "../constant
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const TIME_UNITS_PATTERN = `(${NUMBER_PATTERN})\\s{0,5}(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
-const PATTERN = new RegExp(`(در|طی|ظرف)\\s{0,3}${TIME_UNITS_PATTERN}(?!\\s+آینده)(?=\\W|$)`, "i");
+const PATTERN = new RegExp(`(در|طی|ظرف)\\s{0,3}${TIME_UNITS_PATTERN}(?!\\s+(?:آینده|بعد|دیگر))(?=\\W|$)`, "i");
 
 export default class FATimeUnitWithinFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -20,6 +20,10 @@ export default class FATimeUnitWithinFormatParser extends AbstractParserWithWord
         if (!duration) {
             return null;
         }
-        return ParsingComponents.createRelativeFromReference(context.reference, duration);
+
+        // Return the result with proper text capture including the preposition
+        const result = ParsingComponents.createRelativeFromReference(context.reference, duration);
+        result.addTag("parser/FATimeUnitWithinFormatParser");
+        return result;
     }
 }

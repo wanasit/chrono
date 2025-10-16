@@ -18,9 +18,29 @@ export default class FAStrictModeRefiner implements Refiner {
                 return false;
             }
 
-            // Also check for relative date expressions that are too vague
+            // Check for standalone time expressions from casual time parser
+            if (result.start.tags().has("parser/FACasualTimeParser")) {
+                return false;
+            }
+
+            // Check for vague relative date expressions
             if (result.start.tags().has("result/relativeDate")) {
-                if (text === "روز بعد" || text === "بعد از" || text === "دیگر") {
+                // Filter out vague expressions like "روز بعد", "بعد از", "دیگر"
+                if (
+                    text === "روز بعد" ||
+                    text === "بعد از" ||
+                    text === "دیگر" ||
+                    text.match(/^(صبح|ظهر|بعدازظهر|عصر|شب)$/)
+                ) {
+                    return false;
+                }
+            }
+
+            // Check for results from parsers that should be filtered in strict mode
+            const tagsSet = result.start.tags();
+            if (tagsSet.has("parser/FARelativeDateFormatParser")) {
+                // Be more restrictive with relative date expressions
+                if (text.length < 5 || standaloneTimeWords.includes(text)) {
                     return false;
                 }
             }
