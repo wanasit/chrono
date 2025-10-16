@@ -7,11 +7,12 @@ import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays"
 
 /**
  * Persian weekday parser
- * Handles expressions like: یکشنبه (Sunday), دوشنبه گذشته (last Monday), جمعه آینده (next Friday)
+ * Handles expressions like: یکشنبه (Sunday), دوشنبه گذشته (last Monday), جمعه آینده (next Friday), این شنبه (this Saturday)
  */
 const PATTERN = new RegExp(
     "(?:(?:،|\\(|\\（)\\s*)?" +
         "(?:در\\s*)?" +
+        "(?:(گذشته|پیش|قبل|آینده|بعد|این)\\s+)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
         "(?:\\s*(?:،|\\)|\\）))?" +
         "(?:\\s*(گذشته|پیش|قبل|آینده|بعد|این))?" +
@@ -19,8 +20,9 @@ const PATTERN = new RegExp(
     "i"
 );
 
-const WEEKDAY_GROUP = 1;
-const MODIFIER_GROUP = 2;
+const PREFIX_MODIFIER_GROUP = 1;
+const WEEKDAY_GROUP = 2;
+const SUFFIX_MODIFIER_GROUP = 3;
 
 export default class FAWeekdayParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -28,7 +30,8 @@ export default class FAWeekdayParser extends AbstractParserWithWordBoundaryCheck
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
-        const modifierWord = match[MODIFIER_GROUP];
+        // Check both prefix and suffix modifier groups
+        const modifierWord = match[PREFIX_MODIFIER_GROUP] || match[SUFFIX_MODIFIER_GROUP];
         let modifier: "last" | "next" | "this" | null = null;
 
         if (modifierWord) {

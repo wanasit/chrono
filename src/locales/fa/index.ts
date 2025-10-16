@@ -17,6 +17,8 @@ import FATimeExpressionParser from "./parsers/FATimeExpressionParser";
 import FATimeUnitAgoFormatParser from "./parsers/FATimeUnitAgoFormatParser";
 import FATimeUnitLaterFormatParser from "./parsers/FATimeUnitLaterFormatParser";
 import FATimeUnitWithinFormatParser from "./parsers/FATimeUnitWithinFormatParser";
+import FARelativeDateFormatParser from "./parsers/FARelativeDateFormatParser";
+import FATimeUnitCasualRelativeFormatParser from "./parsers/FATimeUnitCasualRelativeFormatParser";
 import FAMergeDateTimeRefiner from "./refiners/FAMergeDateTimeRefiner";
 import FAMergeDateRangeRefiner from "./refiners/FAMergeDateRangeRefiner";
 
@@ -53,6 +55,8 @@ export function parseDate(text: string, ref?: ParsingReference | Date, option?: 
  */
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration(false);
+    option.parsers.unshift(new FARelativeDateFormatParser());
+    option.parsers.unshift(new FATimeUnitCasualRelativeFormatParser());
     option.parsers.unshift(new FACasualDateParser());
     option.parsers.unshift(new FACasualTimeParser());
     return option;
@@ -69,6 +73,7 @@ export function createConfiguration(strictMode = true): Configuration {
             parsers: [
                 new FAMonthNameLittleEndianParser(),
                 new FAWeekdayParser(),
+                new FARelativeDateFormatParser(),
                 new FATimeExpressionParser(),
                 new FATimeUnitAgoFormatParser(),
                 new FATimeUnitLaterFormatParser(),

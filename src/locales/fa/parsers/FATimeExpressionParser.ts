@@ -9,11 +9,11 @@ import { AbstractTimeExpressionParser } from "../../../common/parsers/AbstractTi
  */
 export default class FATimeExpressionParser extends AbstractTimeExpressionParser {
     primaryPrefix(): string {
-        return "(?:(?:در\\s*)?(?:ساعت|راس)\\s*)?";
+        return "(?:از\\s+)?(?:راس\\s+)?(?:(?:در\\s*)?ساعت\\s*)?";
     }
 
     primarySuffix(): string {
-        return "(?:\\s*(?:صبح|بعدازظهر|بعد‌از‌ظهر|عصر|شب))?(?=\\W|$)";
+        return "(?:\\s+و\\s+[۰-۹0-9]+\\s+دقیقه)?(?:\\s*(?:صبح|بعدازظهر|بعد‌از‌ظهر|عصر|شب))?(?=\\W|$)";
     }
 
     followingPhase(): string {
@@ -29,6 +29,16 @@ export default class FATimeExpressionParser extends AbstractTimeExpressionParser
         // Handle Persian time of day suffixes
         const matchText = match[0].toLowerCase();
         const hour = components.get("hour");
+
+        // Extract minutes from "و ... دقیقه" pattern
+        const minuteMatch = matchText.match(/و\s+([۰-۹0-9]+)\s+دقیقه/);
+        if (minuteMatch) {
+            const minuteStr = minuteMatch[1].replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
+            const minute = parseInt(minuteStr, 10);
+            if (!isNaN(minute) && minute >= 0 && minute <= 59) {
+                components.assign("minute", minute);
+            }
+        }
 
         if (matchText.includes("صبح")) {
             // Morning (AM)

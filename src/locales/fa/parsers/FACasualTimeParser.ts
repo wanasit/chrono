@@ -6,8 +6,9 @@ import { Meridiem } from "../../../types";
 /**
  * Persian casual time expressions parser
  * Handles: صبح (morning), ظهر (noon), بعدازظهر (afternoon), عصر (evening), شب (night)
+ * Can optionally have "این" prefix: این صبح (this morning)
  */
-const PATTERN = /(?:این|این‌)?\s{0,3}(صبح|صبح‌ها|ظهر|بعد‌از‌ظهر|بعدازظهر|بعداز ظهر|عصر|شب|شب‌ها|نیمه‌شب|نیمه شب)/i;
+const PATTERN = /(?:(این|این‌)\s{0,3})?(صبح|صبح‌ها|ظهر|بعد‌از‌ظهر|بعدازظهر|بعداز ظهر|عصر|شب|شب‌ها|نیمه‌شب|نیمه شب)/i;
 
 export default class FACasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(_context: ParsingContext): RegExp {
@@ -17,7 +18,7 @@ export default class FACasualTimeParser extends AbstractParserWithWordBoundaryCh
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
         const targetDate = context.reference.getDateWithAdjustedTimezone();
         const component = context.createParsingComponents();
-        const timeKeyword = match[1].toLowerCase();
+        const timeKeyword = match[2].toLowerCase();
 
         switch (timeKeyword) {
             case "صبح":
