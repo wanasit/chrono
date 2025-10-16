@@ -77,9 +77,12 @@
     "prettier": "npm run prettier:src && npm run prettier:test",
     "prettier:src": "prettier --write src --loglevel=warn",
     "prettier:test": "prettier --write test --loglevel=warn",
-    "watch": "TZ=UTC jest --watch",
-    "test": "TZ=UTC jest --coverage",
-    "test:silent": "TZ=UTC jest --silent"
+    "jest": "run-script-os",
+    "jest:nix": "TZ=UTC jest",
+    "jest:windows": "set TZ=UTC && jest",
+    "watch": "npm run jest --watch",
+    "test": "npm run jest --coverage",
+    "test:silent": "npm run jest --silent"
   },
   "dependencies": {}
 }
