@@ -42,21 +42,21 @@
   "sideEffects": false,
   "types": "dist/esm/index.d.ts",
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
+    "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
     "benny": "^3.7.1",
-    "eslint": "^9.27.0",
-    "eslint-config-prettier": "^10.1.5",
-    "husky": "^4.2.5",
-    "jest": "^29.7.0",
-    "prettier": "^3.5.3",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
     "run-script-os": "^1.1.6",
-    "ts-jest": "^29.4.4",
+    "ts-jest": "^29.4.5",
     "tsc-esm-fix": "^3.1.2",
-    "typedoc": "^0.28.4",
-    "typescript": "~5.8.3"
+    "typedoc": "^0.28.14",
+    "typescript": "~5.9.3"
   },
   "husky": {
     "hooks": {
@@ -81,43 +81,5 @@
     "test": "TZ=UTC jest --coverage",
     "test:silent": "TZ=UTC jest --silent"
   },
-  "dependencies": {},
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true
-    },
-    "ignorePatterns": [
-      "benchmark/*.js"
-    ],
-    "parserOptions": {
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "modules": true
-      },
-      "project": "./tsconfig.json"
-    },
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "prettier",
-      "prettier/@typescript-eslint"
-    ],
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "reportUnusedDisableDirectives": true,
-    "rules": {
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          "args": "none"
-        }
-      ],
-      "prefer-const": "warn"
-    }
-  }
+  "dependencies": {}
 }
