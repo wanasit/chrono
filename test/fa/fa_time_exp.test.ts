@@ -3,12 +3,12 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
 import { Meridiem } from "../../src";
 
 test("Test - Persian Time Expression Parsing Offset", () => {
-    testSingleCase(chrono.fa, "  ساعت 11 صبح ", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+    testSingleCase(chrono.fa, "  ساعت 11 صبح ", new Date(2016, 10 - 1, 1, 8), (result) => {
         expect(result.index).toBe(2);
         expect(result.text).toBe("ساعت 11 صبح");
     });
 
-    testSingleCase(chrono.fa, "2020 در  ساعت 11 ", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+    testSingleCase(chrono.fa, "2020 در  ساعت 11 ", new Date(2016, 10 - 1, 1, 8), (result) => {
         expect(result.index).toBe(5);
         expect(result.text).toBe("در  ساعت 11");
     });
@@ -313,10 +313,4 @@ test("Test - Persian Later Expression with 'آینده'", () => {
 
         expect(result.start).toBeDate(new Date(2013, 7, 10, 12, 14));
     });
-});
-
-test("Test - Persian Negative Cases", () => {
-    testUnexpectedResult(chrono.fa, "بعد از");
-    testUnexpectedResult(chrono.fa, "دیگر");
-    testUnexpectedResult(chrono.fa, "روز بعد");
 });

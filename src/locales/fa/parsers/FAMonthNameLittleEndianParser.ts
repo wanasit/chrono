@@ -24,7 +24,7 @@ const PATTERN = new RegExp(
         `(?:\\s{0,3}(?:سال)?\\s{0,3})` +
         `(${YEAR_PATTERN})` +
         ")?" +
-        "(?=\\W|$)",
+        "(?=\\s|$|[^‌ء-ی])", // Improved word boundary: not followed by Persian characters or ZWNJ
     "i"
 );
 

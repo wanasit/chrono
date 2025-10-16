@@ -3,44 +3,49 @@ import { ParsingResult } from "../../../results";
 
 /**
  * Persian strict mode refiner
- * Removes standalone time words and incomplete expressions in strict mode
+ * Aggressively removes standalone time words and vague expressions in strict mode
  */
 export default class FAStrictModeRefiner implements Refiner {
     refine(_context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
-        // List of words that should not be parsed standalone in strict mode
-        const standaloneTimeWords = ["صبح", "ظهر", "بعدازظهر", "بعد‌از‌ظهر", "عصر", "شب", "روز بعد", "بعد از", "دیگر"];
-
         return results.filter((result) => {
             const text = result.text.trim();
+            const tags = result.start.tags();
 
-            // Remove standalone time words in strict mode
-            if (standaloneTimeWords.includes(text)) {
+            // Block these exact expressions completely in strict mode
+            const forbiddenTexts = [
+                "صبح",
+                "ظهر",
+                "بعدازظهر",
+                "بعد‌از‌ظهر",
+                "عصر",
+                "شب",
+                "روز بعد",
+                "بعد از",
+                "دیگر",
+                "نیمه‌شب",
+                "نیمه شب",
+            ];
+
+            // Exact text match blocking
+            if (forbiddenTexts.includes(text)) {
                 return false;
             }
 
-            // Check for standalone time expressions from casual time parser
-            if (result.start.tags().has("parser/FACasualTimeParser")) {
+            // Block ALL casual time parser results in strict mode
+            if (tags.has("parser/FACasualTimeParser")) {
                 return false;
             }
 
-            // Check for vague relative date expressions
-            if (result.start.tags().has("result/relativeDate")) {
-                // Filter out vague expressions like "روز بعد", "بعد از", "دیگر"
-                if (
-                    text === "روز بعد" ||
-                    text === "بعد از" ||
-                    text === "دیگر" ||
-                    text.match(/^(صبح|ظهر|بعدازظهر|عصر|شب)$/)
-                ) {
+            // Block short or vague relative date expressions
+            if (tags.has("result/relativeDate")) {
+                if (text.length <= 8 || forbiddenTexts.includes(text)) {
                     return false;
                 }
             }
 
-            // Check for results from parsers that should be filtered in strict mode
-            const tagsSet = result.start.tags();
-            if (tagsSet.has("parser/FARelativeDateFormatParser")) {
-                // Be more restrictive with relative date expressions
-                if (text.length < 5 || standaloneTimeWords.includes(text)) {
+            // Block vague results from a relative date parser
+            if (tags.has("parser/FARelativeDateFormatParser")) {
+                if (text.length <= 6 || forbiddenTexts.includes(text)) {
                     return false;
                 }
             }

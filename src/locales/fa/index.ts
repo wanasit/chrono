@@ -40,7 +40,6 @@ export const casual = new Chrono(createCasualConfiguration());
  * Chrono object configured for parsing *strict* Persian (Farsi)
  */
 export const strict = new Chrono(createConfiguration(true));
-
 /**
  * A shortcut for fa.casual.parse()
  */
@@ -86,10 +85,10 @@ export function createConfiguration(strictMode = true): Configuration {
                 new FATimeUnitWithinFormatParser(),
                 new FAMonthNameLittleEndianParser(),
                 new FAWeekdayParser(),
-                new FARelativeDateFormatParser(),
                 new FATimeExpressionParser(),
                 new FATimeUnitAgoFormatParser(),
                 new FATimeUnitLaterFormatParser(),
+                new FARelativeDateFormatParser(),
             ],
             refiners: [
                 new FAMergeDateTimeRefiner(),

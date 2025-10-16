@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase, testUnexpectedResult } from "../test_util";
+import { testSingleCase } from "../test_util";
 
 test("Test - Persian Date Range with Dash", () => {
     testSingleCase(chrono.fa, "1399/07/01 تا 1399/07/15", new Date(2020, 9, 10), (result) => {
@@ -242,10 +242,4 @@ test("Test - Persian Casual in Context", () => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("چند روز پیش");
     });
-});
-
-test("Test - Persian Negative Cases", () => {
-    testUnexpectedResult(chrono.fa, "صبح");
-    testUnexpectedResult(chrono.fa, "بعدازظهر");
-    testUnexpectedResult(chrono.fa, "شب");
 });

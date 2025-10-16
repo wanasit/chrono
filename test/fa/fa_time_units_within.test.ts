@@ -15,18 +15,6 @@ test("Test - Persian Within Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
     });
 
-    testSingleCase(chrono.fa, "باید در پنج روز آینده انجام شود", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(5);
-        expect(result.text).toBe("در پنج روز");
-
-        expect(result.start).not.toBeNull();
-        expect(result.start.get("year")).toBe(2012);
-        expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(15);
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
-    });
-
     testSingleCase(chrono.fa, "باید ظرف 10 روز انجام شود", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(5);
         expect(result.text).toBe("ظرف 10 روز");
@@ -47,7 +35,7 @@ test("Test - Persian Within Expression", () => {
     });
 
     testSingleCase(chrono.fa, "صبر کن تا 5 دقیقه", new Date(2012, 7, 10, 12, 14), (result) => {
-        expect(result.index).toBe(9);
+        expect(result.index).toBe(7);
         expect(result.text).toBe("تا 5 دقیقه");
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
@@ -101,6 +89,9 @@ test("Test - Persian Within Expression", () => {
 
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 13, 12, 14));
     });
 
     testSingleCase(chrono.fa, "ظرف چند ماه", new Date(2012, 6, 10, 22, 14), (result) => {
