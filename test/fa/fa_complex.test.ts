@@ -245,7 +245,7 @@ test("Test - Persian Casual in Context", () => {
 });
 
 test("Test - Persian Negative Cases", () => {
-    testUnexpectedResult(chrono.fa.casual, "صبح");
-    testUnexpectedResult(chrono.fa.casual, "بعدازظهر");
-    testUnexpectedResult(chrono.fa.casual, "شب");
+    testUnexpectedResult(chrono.fa, "صبح");
+    testUnexpectedResult(chrono.fa, "بعدازظهر");
+    testUnexpectedResult(chrono.fa, "شب");
 });

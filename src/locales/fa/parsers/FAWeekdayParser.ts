@@ -83,9 +83,12 @@ export default class FAWeekdayParser extends AbstractParserWithWordBoundaryCheck
                 daysToAdd += 7;
             }
         } else {
-            // No modifier - find the closest occurrence (prefer backward for past weekdays)
+            // No modifier - find the closest occurrence (prefer current if same day)
             daysToAdd = weekday - refWeekday;
-            if (daysToAdd > 0) {
+            if (daysToAdd === 0) {
+                // Same weekday - stay on current day
+                daysToAdd = 0;
+            } else if (daysToAdd > 0) {
                 // Future weekday - check if we should go forward or backward
                 const daysBackward = daysToAdd - 7; // negative value
                 if (Math.abs(daysBackward) <= daysToAdd) {
@@ -97,21 +100,15 @@ export default class FAWeekdayParser extends AbstractParserWithWordBoundaryCheck
                 if (Math.abs(daysToAdd) > daysForward) {
                     daysToAdd = daysForward;
                 }
-            } else {
-                // Same day - check time to decide
-                const currentHour = refDate.getHours();
-                if (currentHour >= 12) {
-                    daysToAdd = 7; // Go to next week if after noon
-                }
             }
         }
 
         const components = new ParsingComponents(reference);
         const targetDate = new Date(refDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
 
-        components.assign("year", targetDate.getFullYear());
-        components.assign("month", targetDate.getMonth() + 1);
-        components.assign("day", targetDate.getDate());
+        components.imply("year", targetDate.getFullYear());
+        components.imply("month", targetDate.getMonth() + 1);
+        components.imply("day", targetDate.getDate());
         components.assign("weekday", weekday);
 
         return components;

@@ -13,6 +13,7 @@ import FACasualDateParser from "./parsers/FACasualDateParser";
 import FACasualTimeParser from "./parsers/FACasualTimeParser";
 import FACombinedCasualParser from "./parsers/FACombinedCasualParser";
 import FAWeekdayParser from "./parsers/FAWeekdayParser";
+import FAWeekdayRangeParser from "./parsers/FAWeekdayRangeParser";
 import FAMonthNameLittleEndianParser from "./parsers/FAMonthNameLittleEndianParser";
 import FATimeExpressionParser from "./parsers/FATimeExpressionParser";
 import FATimeUnitAgoFormatParser from "./parsers/FATimeUnitAgoFormatParser";
@@ -25,6 +26,7 @@ import FAComplexRangeParser from "./parsers/FAComplexRangeParser";
 import FAMergeDateTimeRefiner from "./refiners/FAMergeDateTimeRefiner";
 import FAMergeDateRangeRefiner from "./refiners/FAMergeDateRangeRefiner";
 import FAStrictModeRefiner from "./refiners/FAStrictModeRefiner";
+import FAMergeWeekdayDateRefiner from "./refiners/FAMergeWeekdayDateRefiner";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
@@ -80,6 +82,7 @@ export function createConfiguration(strictMode = true): Configuration {
             parsers: [
                 new FAComplexRangeParser(),
                 new FADateRangeParser(),
+                new FAWeekdayRangeParser(),
                 new FAMonthNameLittleEndianParser(),
                 new FAWeekdayParser(),
                 new FARelativeDateFormatParser(),
@@ -88,7 +91,12 @@ export function createConfiguration(strictMode = true): Configuration {
                 new FATimeUnitAgoFormatParser(),
                 new FATimeUnitLaterFormatParser(),
             ],
-            refiners: [new FAMergeDateTimeRefiner(), new FAMergeDateRangeRefiner(), new FAStrictModeRefiner()],
+            refiners: [
+                new FAMergeDateTimeRefiner(),
+                new FAMergeDateRangeRefiner(),
+                new FAMergeWeekdayDateRefiner(),
+                new FAStrictModeRefiner(),
+            ],
         },
         strictMode
     );
