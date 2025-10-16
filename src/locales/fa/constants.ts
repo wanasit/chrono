@@ -1,5 +1,6 @@
 import { matchAnyPattern, repeatedTimeunitPattern } from "../../utils/pattern";
 import { Timeunit } from "../../types";
+import { Duration } from "../../calculation/duration";
 
 /**
  * Persian (Farsi) weekday dictionary
@@ -95,12 +96,9 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "هفتاد": 70,
     "هشتاد": 80,
     "نود": 90,
-    "ده‌دوشت": 100,
-    "یازده‌دوشت": 200,
-    "دوازده‌دوشت": 300,
-    "سیزده‌دوشت": 400,
-    "چهارده‌دوشت": 500,
-    "پانزده‌دوشت": 600,
+    "صد": 100,
+    "دویست": 200,
+    "سیصد": 300,
 };
 
 /**
@@ -205,7 +203,7 @@ export function parseOrdinalNumberPattern(match: string): number {
  * Year pattern for Persian
  * Supports both Persian calendar years (1300-1500) and Gregorian years
  */
-export const YEAR_PATTERN = `(?:[۱-۱][۰-۹]{3}|[1-2][0-9]{3}|[5-9][0-9]|13[0-9]{2}|14[0-9]{2})`;
+export const YEAR_PATTERN = `(?:[۱۲][۰-۹]{3}|[1-2][0-9]{3}|[5-9][0-9])`;
 
 /**
  * Parses year patterns
@@ -242,8 +240,6 @@ export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
     SINGLE_TIME_UNIT_PATTERN,
     `\\s{0,5}(?:و)?\\s{0,5}`
 );
-
-import { Duration } from "../../calculation/duration";
 
 /**
  * Parses Persian duration text into a Duration object

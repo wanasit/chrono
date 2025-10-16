@@ -47,8 +47,11 @@ export default class FAMergeWeekdayDateRefiner implements Refiner {
     }
 
     private mergeResults(weekdayResult: ParsingResult, dateResult: ParsingResult): ParsingResult {
-        const mergedText = weekdayResult.text + " " + dateResult.text.trim();
-        const mergedResult = new ParsingResult(weekdayResult.reference, weekdayResult.index, mergedText);
+        // Use the original context text to preserve punctuation and spacing
+        const start = weekdayResult.index;
+        const end = dateResult.index + dateResult.text.length;
+        const mergedText = weekdayResult.text.slice(start, end);
+        const mergedResult = new ParsingResult(weekdayResult.reference, start, mergedText);
 
         // Combine the components
         mergedResult.start = dateResult.start.clone();

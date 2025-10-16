@@ -44,12 +44,6 @@ export default class FAMonthNameLittleEndianParser extends AbstractParserWithWor
         const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
         const day = parseOrdinalNumberPattern(match[DATE_GROUP]);
 
-        if (day > 31) {
-            // Invalid day
-            match.index = match.index + match[DATE_GROUP].length;
-            return null;
-        }
-
         result.start.assign("month", month);
         result.start.assign("day", day);
 

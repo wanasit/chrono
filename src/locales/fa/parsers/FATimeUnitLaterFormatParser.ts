@@ -8,7 +8,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
  * Handles expressions like: ۵ روز دیگر (5 days later), ۲ ساعت بعد (2 hours later)
  * Excludes patterns preceded by "تا" which should be handled by the within parser
  */
-const PATTERN = new RegExp(`(?<!تا\\s{0,3})(${TIME_UNITS_PATTERN})\\s{0,5}(?:دیگر|بعد|آینده)(?=\\W|$)`, "i");
+const PATTERN = new RegExp(`(${TIME_UNITS_PATTERN})\\s{0,5}(?:دیگر|بعد|آینده)(?=\\W|$)`, "i");
 
 export default class FATimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
