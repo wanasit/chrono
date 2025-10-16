@@ -217,7 +217,7 @@ test("Test - Persian Weekday Variations", () => {
 
 test("Test - Persian Weekday with Context", () => {
     testSingleCase(chrono.fa, "جلسه را در دوشنبه برگزار می‌کنیم", new Date(2012, 7, 9, 12), (result) => {
-        expect(result.index).toBe(10);
+        expect(result.index).toBe(8);
         expect(result.text).toBe("در دوشنبه");
         expect(result.start.get("weekday")).toBe(1);
     });

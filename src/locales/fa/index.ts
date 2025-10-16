@@ -11,6 +11,7 @@ import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Wee
 
 import FACasualDateParser from "./parsers/FACasualDateParser";
 import FACasualTimeParser from "./parsers/FACasualTimeParser";
+import FACombinedCasualParser from "./parsers/FACombinedCasualParser";
 import FAWeekdayParser from "./parsers/FAWeekdayParser";
 import FAMonthNameLittleEndianParser from "./parsers/FAMonthNameLittleEndianParser";
 import FATimeExpressionParser from "./parsers/FATimeExpressionParser";
@@ -19,8 +20,11 @@ import FATimeUnitLaterFormatParser from "./parsers/FATimeUnitLaterFormatParser";
 import FATimeUnitWithinFormatParser from "./parsers/FATimeUnitWithinFormatParser";
 import FARelativeDateFormatParser from "./parsers/FARelativeDateFormatParser";
 import FATimeUnitCasualRelativeFormatParser from "./parsers/FATimeUnitCasualRelativeFormatParser";
+import FADateRangeParser from "./parsers/FADateRangeParser";
+import FAComplexRangeParser from "./parsers/FAComplexRangeParser";
 import FAMergeDateTimeRefiner from "./refiners/FAMergeDateTimeRefiner";
 import FAMergeDateRangeRefiner from "./refiners/FAMergeDateRangeRefiner";
+import FAStrictModeRefiner from "./refiners/FAStrictModeRefiner";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
@@ -55,8 +59,11 @@ export function parseDate(text: string, ref?: ParsingReference | Date, option?: 
  */
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration(false);
+    // Remove strict mode refiner from casual configuration
+    option.refiners = option.refiners.filter((r) => !(r instanceof FAStrictModeRefiner));
     option.parsers.unshift(new FARelativeDateFormatParser());
     option.parsers.unshift(new FATimeUnitCasualRelativeFormatParser());
+    option.parsers.unshift(new FACombinedCasualParser());
     option.parsers.unshift(new FACasualDateParser());
     option.parsers.unshift(new FACasualTimeParser());
     return option;
@@ -71,15 +78,17 @@ export function createConfiguration(strictMode = true): Configuration {
     return includeCommonConfiguration(
         {
             parsers: [
+                new FAComplexRangeParser(),
+                new FADateRangeParser(),
                 new FAMonthNameLittleEndianParser(),
                 new FAWeekdayParser(),
                 new FARelativeDateFormatParser(),
                 new FATimeExpressionParser(),
+                new FATimeUnitWithinFormatParser(),
                 new FATimeUnitAgoFormatParser(),
                 new FATimeUnitLaterFormatParser(),
-                new FATimeUnitWithinFormatParser(),
             ],
-            refiners: [new FAMergeDateTimeRefiner(), new FAMergeDateRangeRefiner()],
+            refiners: [new FAMergeDateTimeRefiner(), new FAMergeDateRangeRefiner(), new FAStrictModeRefiner()],
         },
         strictMode
     );

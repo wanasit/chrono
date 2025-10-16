@@ -38,14 +38,13 @@ export default class FACasualDateParser extends AbstractParserWithWordBoundaryCh
                 break;
             case "دیشب":
                 const targetDate = context.reference.getDateWithAdjustedTimezone();
-                if (targetDate.getHours() > 6) {
-                    const previousDay = new Date(targetDate.getTime());
-                    previousDay.setDate(previousDay.getDate() - 1);
-                    component.assign("year", previousDay.getFullYear());
-                    component.assign("month", previousDay.getMonth() + 1);
-                    component.assign("day", previousDay.getDate());
-                }
-                component.imply("hour", 0);
+                const previousDay = new Date(targetDate.getTime());
+                previousDay.setDate(previousDay.getDate() - 1);
+                component.assign("year", previousDay.getFullYear());
+                component.assign("month", previousDay.getMonth() + 1);
+                component.assign("day", previousDay.getDate());
+                component.assign("hour", 22);
+                component.assign("minute", 0);
                 break;
         }
 

@@ -13,11 +13,15 @@ export default class FATimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     primarySuffix(): string {
-        return "(?:\\s+و\\s+[۰-۹0-9]+\\s+دقیقه)?(?:\\s*(?:صبح|بعدازظهر|بعد‌از‌ظهر|عصر|شب))?(?=\\W|$)";
+        return "(?:\\s+و\\s+[۰-۹0-9]+\\s+دقیقه)?(?:\\s*(?:صبح|بعدازظهر|بعد‌از‌ظهر|عصر|شب))?";
     }
 
     followingPhase(): string {
-        return "\\s*(?:\\-|\\–|\\~|\\〜|تا|الی)?\\s*";
+        return "\\s*(?:\\-|\\–|\\~|\\〜|تا|الی)\\s*";
+    }
+
+    primaryPatternLeftBoundary(): string {
+        return "(^|\\s|T)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
@@ -77,9 +81,39 @@ export default class FATimeExpressionParser extends AbstractTimeExpressionParser
         result: ParsingResult
     ): ParsingComponents | null {
         const followingComponents = super.extractFollowingTimeComponents(context, match, result);
-        if (followingComponents) {
-            followingComponents.addTag("parser/FATimeExpressionParser");
+        if (!followingComponents) {
+            return null;
         }
+
+        // Handle Persian time of day suffixes for the end time
+        const matchText = match[0].toLowerCase();
+        const hour = followingComponents.get("hour");
+
+        if (matchText.includes("صبح")) {
+            followingComponents.assign("meridiem", Meridiem.AM);
+            if (hour >= 0 && hour <= 11) {
+                followingComponents.assign("hour", hour);
+            }
+        } else if (matchText.includes("بعدازظهر") || matchText.includes("بعد‌از‌ظهر")) {
+            followingComponents.assign("meridiem", Meridiem.PM);
+            if (hour >= 0 && hour <= 11) {
+                followingComponents.assign("hour", hour + 12);
+            }
+        } else if (matchText.includes("عصر")) {
+            followingComponents.assign("meridiem", Meridiem.PM);
+            if (hour >= 0 && hour <= 11) {
+                followingComponents.assign("hour", hour + 12);
+            }
+        } else if (matchText.includes("شب")) {
+            followingComponents.assign("meridiem", Meridiem.PM);
+            if (hour >= 6 && hour < 12) {
+                followingComponents.assign("hour", hour + 12);
+            } else if (hour < 6) {
+                followingComponents.assign("meridiem", Meridiem.AM);
+            }
+        }
+
+        followingComponents.addTag("parser/FATimeExpressionParser");
         return followingComponents;
     }
 }

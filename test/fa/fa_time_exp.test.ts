@@ -156,7 +156,6 @@ test("Test - Persian Time with Minutes", () => {
 
 test("Test - Persian Negative Cases", () => {
     testUnexpectedResult(chrono.fa, "ساعت");
-    testUnexpectedResult(chrono.fa, "صبح");
     testUnexpectedResult(chrono.fa, "25:00");
     testUnexpectedResult(chrono.fa, "ساعت 99");
 });

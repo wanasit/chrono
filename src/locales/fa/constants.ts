@@ -67,6 +67,7 @@ export const MONTH_DICTIONARY: { [word: string]: number } = {
  * Maps Persian number words to their numeric values
  */
 export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
+    "اول": 1,
     "یک": 1,
     "دو": 2,
     "سه": 3,
@@ -90,6 +91,16 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "سی": 30,
     "چهل": 40,
     "پنجاه": 50,
+    "شصت": 60,
+    "هفتاد": 70,
+    "هشتاد": 80,
+    "نود": 90,
+    "ده‌دوشت": 100,
+    "یازده‌دوشت": 200,
+    "دوازده‌دوشت": 300,
+    "سیزده‌دوشت": 400,
+    "چهارده‌دوشت": 500,
+    "پانزده‌دوشت": 600,
 };
 
 /**
@@ -171,7 +182,7 @@ export function parseNumberPattern(match: string): number {
 /**
  * Pattern for ordinal numbers in Persian
  */
-export const ORDINAL_NUMBER_PATTERN = `(?:${PERSIAN_NUMBER_PATTERN}(?:م|ام|اُم|ین|مین)?|[0-9]+(?:st|nd|rd|th)?)`;
+export const ORDINAL_NUMBER_PATTERN = `(?:${matchAnyPattern(INTEGER_WORD_DICTIONARY)}(?:م|ام|اُم|ین|مین)?|${PERSIAN_NUMBER_PATTERN}(?:م|ام|اُم|ین|مین)?|[0-9]+(?:st|nd|rd|th)?)`;
 
 /**
  * Parses ordinal number patterns
@@ -180,6 +191,12 @@ export function parseOrdinalNumberPattern(match: string): number {
     let num = match.toLowerCase();
     // Remove Persian ordinal suffixes
     num = num.replace(/(?:م|ام|اُم|ین|مین|st|nd|rd|th)$/i, "");
+
+    // Check if it's a word number first
+    if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
+        return INTEGER_WORD_DICTIONARY[num];
+    }
+
     const westernNum = convertPersianNumberToWestern(num);
     return parseInt(westernNum);
 }
@@ -197,9 +214,9 @@ export function parseYear(match: string): number {
     const westernNum = convertPersianNumberToWestern(match);
     let yearNumber = parseInt(westernNum);
 
-    // Persian calendar years (1300-1500) convert to Gregorian
+    // For Persian calendar years (1300-1500), keep them as-is
     if (yearNumber >= 1300 && yearNumber <= 1500) {
-        yearNumber = yearNumber + 621; // Approximate conversion
+        return yearNumber; // Keep Persian years as-is
     } else if (yearNumber < 100) {
         if (yearNumber > 50) {
             yearNumber = yearNumber + 1900;
