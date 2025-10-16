@@ -14,9 +14,7 @@ export class ReferenceWithTimezone {
     }
 
     static fromDate(date: Date): ReferenceWithTimezone {
-        // Capture the system's timezone offset at the time of reference creation
-        const systemTimezoneOffset = -date.getTimezoneOffset();
-        return new ReferenceWithTimezone(date, systemTimezoneOffset);
+        return new ReferenceWithTimezone(date);
     }
 
     static fromInput(input?: ParsingReference | Date, timezoneOverrides?: TimezoneAbbrMap) {
@@ -92,7 +90,7 @@ export class ParsingComponents implements ParsedComponents {
         reference: ReferenceWithTimezone,
         duration: Duration = EmptyDuration
     ): ParsingComponents {
-        let date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
+        const date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
 
         const components = new ParsingComponents(reference);
         components.addTag("result/relativeDate");
