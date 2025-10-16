@@ -48,7 +48,7 @@
     "benny": "^3.7.1",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
-    "husky": "^9.1.7",
+    "husky": "^4.2.5",
     "jest": "^30.2.0",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
