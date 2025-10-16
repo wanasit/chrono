@@ -5,13 +5,13 @@ test("Test - BufferedDebugHandler", () => {
 
     const debugBlockA = jest.fn();
     debugHandler.debug(() => debugBlockA());
-    expect(debugBlockA).not.toBeCalled();
+    expect(debugBlockA).not.toHaveBeenCalled();
 
     const debugBlockB = jest.fn();
     debugHandler.debug(() => debugBlockB());
-    expect(debugBlockB).not.toBeCalled();
+    expect(debugBlockB).not.toHaveBeenCalled();
 
     debugHandler.executeBufferedBlocks();
-    expect(debugBlockA).toBeCalled();
-    expect(debugBlockB).toBeCalled();
+    expect(debugBlockA).toHaveBeenCalled();
+    expect(debugBlockB).toHaveBeenCalled();
 });
