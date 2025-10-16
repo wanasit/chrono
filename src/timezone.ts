@@ -113,7 +113,22 @@ export const TIMEZONE_ABBR_MAP: TimezoneAbbrMap = {
     IRDT: 270,
     IRKST: 540,
     IRKT: 540,
-    IRST: 210,
+    // Iran Standard Time / Iran Daylight Time
+    // Iran observes DST from March 21/22 (Nowruz) to September 21/22
+    IRST: {
+        timezoneOffsetDuringDst: 270, // UTC+4:30 during DST (IRDT)
+        timezoneOffsetNonDst: 210, // UTC+3:30 standard time (IRST)
+        dstStart: (year: number) => {
+            // DST starts on March 21 or 22 (Nowruz - Persian New Year) at midnight
+            // Using March 21 as an approximation
+            return new Date(year, Month.MARCH - 1, 21, 0);
+        },
+        dstEnd: (year: number) => {
+            // DST ends on September 21 or 22 at midnight
+            // Using September 21 as an approximation
+            return new Date(year, Month.SEPTEMBER - 1, 21, 0);
+        },
+    },
     IST: 330,
     JST: 540,
     KGT: 360,
