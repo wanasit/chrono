@@ -80,7 +80,7 @@ export class ParsingComponents implements ParsedComponents {
         this.imply("day", date.getDate());
         this.imply("month", date.getMonth() + 1);
         this.imply("year", date.getFullYear());
-        this.imply("hour", 12);
+        this.imply("hour", 0);
         this.imply("minute", 0);
         this.imply("second", 0);
         this.imply("millisecond", 0);
