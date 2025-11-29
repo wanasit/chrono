@@ -5,11 +5,11 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { reverseDuration } from "../../../calculation/duration";
 
 const PATTERN = new RegExp(
-    `(questo|questa|quest'|scorso|scorsa|prossimo|prossima|dopo|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    `(?:il\\s*|la\\s*|l'\\s*)?(questo|questa|quest'|scorso|scorsa|prossimo|prossima|dopo|\\+|-)\\s*(${TIME_UNITS_PATTERN})(?=\\W|$)`,
     "i"
 );
 const PATTERN_NO_ABBR = new RegExp(
-    `(questo|questa|quest'|scorso|scorsa|prossimo|prossima|dopo|\\+|-)\\s*(${TIME_UNITS_NO_ABBR_PATTERN})(?=\\W|$)`,
+    `(?:il\\s*|la\\s*|l'\\s*)?(questo|questa|quest'|scorso|scorsa|prossimo|prossima|dopo|\\+|-)\\s*(${TIME_UNITS_NO_ABBR_PATTERN})(?=\\W|$)`,
     "i"
 );
 

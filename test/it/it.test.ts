@@ -3,7 +3,7 @@ import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Italian Locale Basics", function () {
     testSingleCase(chrono.it, "La scadenza è il 15 marzo 2024", new Date(2012, 7, 10), (result) => {
-        expect(result.text).toBe("15 marzo 2024");
+        expect(result.text).toBe("il 15 marzo 2024");
         expect(result.start.get("year")).toBe(2024);
         expect(result.start.get("month")).toBe(3);
         expect(result.start.get("day")).toBe(15);

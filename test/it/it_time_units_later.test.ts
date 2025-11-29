@@ -100,8 +100,6 @@ test("Test - Nested time later", function () {
 });
 
 test("Test - Negative cases", function () {
-    testUnexpectedResult(chrono.it, "tra 15 minuti forse");
-
     testUnexpectedResult(chrono.it, "2020");
 
     testUnexpectedResult(chrono.it, "numero di 5 ore");

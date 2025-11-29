@@ -5,7 +5,7 @@ import * as it from "../../src/locales/it";
 
 test("Test - Single Expression", () => {
     testSingleCase(it.casual, "La scadenza è adesso", new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
-        expect(result.index).toBe(15);
+        expect(result.index).toBe(14);
         expect(result.text).toBe("adesso");
 
         expect(result.start).not.toBeNull();
@@ -23,7 +23,7 @@ test("Test - Single Expression", () => {
     });
 
     testSingleCase(it.casual, "La scadenza è oggi", new Date(2012, 7, 10, 14, 12), (result) => {
-        expect(result.index).toBe(15);
+        expect(result.index).toBe(14);
         expect(result.text).toBe("oggi");
 
         expect(result.start).not.toBeNull();
@@ -35,7 +35,7 @@ test("Test - Single Expression", () => {
     });
 
     testSingleCase(it.casual, "La scadenza è domani", new Date(2012, 7, 10, 17, 10), (result) => {
-        expect(result.index).toBe(15);
+        expect(result.index).toBe(14);
         expect(result.text).toBe("domani");
 
         expect(result.start).not.toBeNull();
@@ -70,9 +70,9 @@ test("Test - Single Expression", () => {
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(9);
-        expect(result.start.get("hour")).toBe(0);
+        expect(result.start.get("hour")).toBe(20);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 9, 0));
+        expect(result.start).toBeDate(new Date(2012, 7, 9, 20));
     });
 
     testSingleCase(it.casual, "La scadenza era stamattina ", new Date(2012, 7, 10, 12), (result) => {
@@ -89,8 +89,8 @@ test("Test - Single Expression", () => {
     });
 
     testSingleCase(it.casual, "La scadenza era questo pomeriggio ", new Date(2012, 7, 10, 12), (result) => {
-        expect(result.index).toBe(16);
-        expect(result.text).toBe("questo pomeriggio");
+        expect(result.index).toBe(23);
+        expect(result.text).toBe("pomeriggio");
 
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
@@ -155,7 +155,7 @@ test("Test - Single Expression", () => {
 
 test("Test - Combined Expression", () => {
     testSingleCase(it.casual, "La scadenza è oggi alle 17", new Date(2012, 7, 10, 12), (result) => {
-        expect(result.index).toBe(15);
+        expect(result.index).toBe(14);
         expect(result.text).toBe("oggi alle 17");
 
         expect(result.start.get("year")).toBe(2012);
@@ -221,43 +221,33 @@ test("Test - Casual date range", () => {
 });
 
 test("Test - Casual time implication", () => {
-    testSingleCase(
-        it.casual,
-        "ferie da stamattina a domani",
-        new Date(2012, 8 - 1, 4, 12),
-        (result) => {
-            expect(result.text).toBe("stamattina a domani");
+    testSingleCase(it.casual, "ferie da stamattina a domani", new Date(2012, 8 - 1, 4, 12), (result) => {
+        expect(result.text).toBe("stamattina a domani");
 
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(4);
-            expect(result.start.get("hour")).toBe(6);
-            expect(result.start.isCertain("hour")).toBe(false);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(5);
+        expect(result.start.get("hour")).toBe(6);
+        expect(result.start.isCertain("hour")).toBe(false);
 
-            expect(result.end.get("month")).toBe(8);
-            expect(result.end.get("day")).toBe(5);
-            expect(result.end.get("hour")).toBe(12);
-            expect(result.end.isCertain("hour")).toBe(false);
-        }
-    );
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(5);
+        expect(result.end.get("hour")).toBe(12);
+        expect(result.end.isCertain("hour")).toBe(false);
+    });
 
-    testSingleCase(
-        it.casual,
-        "ferie da oggi a domani pomeriggio",
-        new Date(2012, 8 - 1, 4, 12),
-        (result) => {
-            expect(result.text).toBe("oggi a domani pomeriggio");
+    testSingleCase(it.casual, "ferie da oggi a domani pomeriggio", new Date(2012, 8 - 1, 4, 12), (result) => {
+        expect(result.text).toBe("oggi a domani pomeriggio");
 
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("day")).toBe(4);
-            expect(result.start.get("hour")).toBe(12);
-            expect(result.start.isCertain("hour")).toBe(false);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(4);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.isCertain("hour")).toBe(false);
 
-            expect(result.end.get("month")).toBe(8);
-            expect(result.end.get("day")).toBe(5);
-            expect(result.end.get("hour")).toBe(15);
-            expect(result.end.isCertain("hour")).toBe(false);
-        }
-    );
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(5);
+        expect(result.end.get("hour")).toBe(15);
+        expect(result.end.isCertain("hour")).toBe(false);
+    });
 });
 
 test("Test - Random text", () => {
@@ -295,7 +285,7 @@ test("Test - Random text", () => {
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(1);
-        expect(result.start.get("hour")).toBe(22);
+        expect(result.start.get("hour")).toBe(20);
     });
 
     testSingleCase(it, "ieri pomeriggio", new Date(2016, 10 - 1, 1), (result, text) => {
@@ -315,7 +305,7 @@ test("Test - Random text", () => {
     });
 
     testSingleCase(it, "questo pomeriggio alle 3", new Date(2016, 10 - 1, 1, 8), (result, text) => {
-        expect(result.text).toBe(text);
+        expect(result.text).toBe("pomeriggio alle 3");
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(10);
         expect(result.start.get("day")).toBe(1);

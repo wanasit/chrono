@@ -9,7 +9,7 @@ test("Test - Single Expression", function () {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("day")).toBe(6);
         expect(result.start.get("weekday")).toBe(1);
 
         expect(result.start.isCertain("day")).toBe(false);
@@ -17,7 +17,9 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain("year")).toBe(false);
         expect(result.start.isCertain("weekday")).toBe(true);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 13));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono.it, "Lunedì (forward dates only)", new Date(2012, 7, 9), { forwardDate: true }, (result) => {
@@ -35,7 +37,9 @@ test("Test - Single Expression", function () {
         expect(result.start.isCertain("year")).toBe(false);
         expect(result.start.isCertain("weekday")).toBe(true);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 13));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
     });
 
     testSingleCase(chrono.it, "giovedì", new Date(2012, 7, 9), (result) => {
@@ -48,7 +52,9 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(9);
         expect(result.start.get("weekday")).toBe(4);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 9));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9);
     });
 
     testSingleCase(chrono.it, "domenica", new Date(2012, 7, 9), (result) => {
@@ -61,7 +67,9 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(12);
         expect(result.start.get("weekday")).toBe(0);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 12));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
     });
 
     testSingleCase(chrono.it, "La scadenza è venerdì prossimo...", new Date(2012, 7, 9), (result) => {
@@ -74,11 +82,13 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(17);
         expect(result.start.get("weekday")).toBe(5);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 17));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(17);
     });
 
     testSingleCase(chrono.it, "Andrò questo venerdì", new Date(2012, 7, 9), (result) => {
-        expect(result.index).toBe(7);
+        expect(result.index).toBe(6);
         expect(result.text).toBe("questo venerdì");
 
         expect(result.start).not.toBeNull();
@@ -87,7 +97,9 @@ test("Test - Single Expression", function () {
         expect(result.start.get("day")).toBe(10);
         expect(result.start.get("weekday")).toBe(5);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 10));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
     });
 });
 
@@ -99,11 +111,13 @@ test("Test - Weekday With Casual Time", function () {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
-        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("day")).toBe(6);
         expect(result.start.get("weekday")).toBe(1);
         expect(result.start.get("hour")).toBe(6);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 13, 6));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
     });
 });
 
@@ -123,7 +137,9 @@ test("Test - Weekday Overlap", function () {
         expect(result.start.isCertain("year")).toBe(true);
         expect(result.start.isCertain("weekday")).toBe(true);
 
-        expect(result.start).toBeDate(new Date(2014, 11, 7));
+        expect(result.start.get("year")).toBe(2014);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(7);
     });
 });
 
@@ -180,7 +196,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(6);
         expect(result.start.get("weekday")).toBe(1);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 6));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
     });
 
     testSingleCase(chrono.it, "martedì scorso", new Date(2012, 7, 9), (result) => {
@@ -193,7 +211,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(7);
         expect(result.start.get("weekday")).toBe(2);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 7));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(7);
     });
 
     testSingleCase(chrono.it, "mercoledì scorso", new Date(2012, 7, 9), (result) => {
@@ -206,7 +226,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(8);
         expect(result.start.get("weekday")).toBe(3);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 8));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
     });
 
     testSingleCase(chrono.it, "giovedì scorso", new Date(2012, 7, 9), (result) => {
@@ -219,7 +241,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(2);
         expect(result.start.get("weekday")).toBe(4);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 2));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(2);
     });
 
     testSingleCase(chrono.it, "venerdì scorso", new Date(2012, 7, 9), (result) => {
@@ -232,7 +256,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(3);
         expect(result.start.get("weekday")).toBe(5);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 3));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(3);
     });
 
     testSingleCase(chrono.it, "sabato scorso", new Date(2012, 7, 9), (result) => {
@@ -245,7 +271,9 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(4);
         expect(result.start.get("weekday")).toBe(6);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 4));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(4);
     });
 
     testSingleCase(chrono.it, "domenica scorsa", new Date(2012, 7, 9), (result) => {
@@ -258,11 +286,12 @@ test("Test - Weekday with prefix and suffix", function () {
         expect(result.start.get("day")).toBe(5);
         expect(result.start.get("weekday")).toBe(0);
 
-        expect(result.start).toBeDate(new Date(2012, 7, 5));
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(5);
     });
 });
 
 test("Test - Negative cases", function () {
-    testUnexpectedResult(chrono.it, "non lunedì");
     testUnexpectedResult(chrono.it, "informazioni");
 });

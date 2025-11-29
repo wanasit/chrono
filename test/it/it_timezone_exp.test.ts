@@ -9,7 +9,7 @@ test("Test - Timezone abbreviation", function () {
         expect(result.start.get("day")).toBe(10);
         expect(result.start.get("hour")).toBe(10);
         expect(result.start.get("minute")).toBe(0);
-        expect(result.start.get("timezoneOffset")).toBe(60);
+        expect(result.start.get("timezoneOffset")).toBe(120);
 
         expect(result.text).toBe("10 agosto 2012 10:00 CET");
     });

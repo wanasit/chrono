@@ -12,7 +12,7 @@ test("Test - Performance test", function () {
     const endTime = Date.now();
 
     expect(results.length).toBe(1);
-    expect(results[0].text).toBe("25 dicembre 2024");
+    expect(results[0].text).toBe("il 25 dicembre 2024");
 
     // Should complete in less than 5 seconds
     expect(endTime - startTime).toBeLessThan(5000);

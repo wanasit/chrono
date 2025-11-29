@@ -11,7 +11,7 @@ const PATTERN = new RegExp(
         "(?:(questo|questa|quest'|scorso|scorsa|prossimo|prossima)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)}|weekend|fine\\s*settimana)` +
         "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(questo|questa|quest'|scorso|scorsa|prossimo|prossima)\\s*(?:settimana))?" +
+        "(?:\\s*(scorso|scorsa|prossimo|prossima)(?:\\s*settimana)?)?" +
         "(?=\\W|$)",
     "i"
 );

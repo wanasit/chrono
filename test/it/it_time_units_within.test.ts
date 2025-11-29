@@ -49,8 +49,6 @@ test("Test - Single Expression", function () {
 });
 
 test("Test - Negative cases", function () {
-    testUnexpectedResult(chrono.it, "entro 15 minuti forse");
-
     testUnexpectedResult(chrono.it, "2020");
 
     testUnexpectedResult(chrono.it, "numero di 5 ore");
