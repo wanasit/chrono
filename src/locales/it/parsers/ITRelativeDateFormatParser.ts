@@ -5,9 +5,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { matchAnyPattern } from "../../../utils/pattern";
 
 const PATTERN = new RegExp(
-    `(questo|ultimo|scorso|prossimo|dopo\\s*questo|questa|ultima|scorsa|prossima\\s*questa)\\s*(${matchAnyPattern(
-        TIME_UNIT_DICTIONARY
-    )})(?=\\s*)` + "(?=\\W|$)",
+    `(questo|questa|quest'|scorso|scorsa|prossimo|prossima|dopo\\s*questo|dopo\\s*questa)\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\s*)` + "(?=\\W|$)",
     "i"
 );
 
@@ -24,13 +22,13 @@ export default class ITRelativeDateFormatParser extends AbstractParserWithWordBo
         const unitWord = match[RELATIVE_WORD_GROUP].toLowerCase();
         const timeunit = TIME_UNIT_DICTIONARY[unitWord];
 
-        if (modifier == "prossimo" || modifier.startsWith("dopo")) {
+        if (modifier == "prossimo" || modifier == "prossima" || modifier.startsWith("dopo")) {
             const timeUnits = {};
             timeUnits[timeunit] = 1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
         }
 
-        if (modifier == "prima" || modifier == "precedente") {
+        if (modifier == "scorso" || modifier == "scorsa") {
             const timeUnits = {};
             timeUnits[timeunit] = -1;
             return ParsingComponents.createRelativeFromReference(context.reference, timeUnits);
@@ -39,7 +37,7 @@ export default class ITRelativeDateFormatParser extends AbstractParserWithWordBo
         const components = context.createParsingComponents();
         let date = new Date(context.reference.instant.getTime());
 
-        // This week
+        // Questa settimana
         if (unitWord.match(/settimana/i)) {
             date.setDate(date.getDate() - date.getDay());
             components.imply("day", date.getDate());
@@ -47,7 +45,7 @@ export default class ITRelativeDateFormatParser extends AbstractParserWithWordBo
             components.imply("year", date.getFullYear());
         }
 
-        // This month
+        // Questo mese
         else if (unitWord.match(/mese/i)) {
             date.setDate(1);
             components.imply("day", date.getDate());
@@ -55,7 +53,7 @@ export default class ITRelativeDateFormatParser extends AbstractParserWithWordBo
             components.assign("month", date.getMonth() + 1);
         }
 
-        // This year
+        // Quest'anno
         else if (unitWord.match(/anno/i)) {
             date.setDate(1);
             date.setMonth(0);

@@ -6,17 +6,18 @@ import { YEAR_PATTERN, parseYear } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
+// prettier-ignore
 const PATTERN = new RegExp(
     `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:-|/|\\s*,?\\s*)" +
         `(${ORDINAL_NUMBER_PATTERN})(?!\\s*(?:am|pm))\\s*` +
         "(?:" +
-        "(?:al|\\-|\\alle|\\del|\\s)\\s*" +
-        `(${ORDINAL_NUMBER_PATTERN})\\s*` +
+            "(?:al|\\-)\\s*" +
+            `(${ORDINAL_NUMBER_PATTERN})\\s*` +
         ")?" +
         "(?:" +
-        "(?:-|/|\\s*,?\\s*)" +
-        `(${YEAR_PATTERN})` +
+            `(?:-|/|\\s*,\\s*|\\s+)` +
+            `(${YEAR_PATTERN})` +
         ")?" +
         "(?=\\W|$)(?!\\:\\d)",
     "i"
@@ -28,16 +29,24 @@ const DATE_TO_GROUP = 3;
 const YEAR_GROUP = 4;
 
 /**
- * The parser for parsing US's date format that begin with month's name.
- *  - January 13
- *  - January 13, 2012
- *  - January 13 - 15, 2012
+ * The parser for parsing date format that begin with month's name.
+ *  - Gennaio 13
+ *  - Gennaio 13, 2012
+ *  - Gennaio 13 - 15, 2012
  * Note: Watch out for:
- *  - January 12:00
- *  - January 12.44
- *  - January 1222344
+ *  - Gennaio 12:00
+ *  - Gennaio 12.44
+ *  - Gennaio 1222344
+ *  - Gennaio 21 (when shouldSkipYearLikeDate=true)
  */
-export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITMonthNameMiddleEndianParser extends AbstractParserWithWordBoundaryChecking {
+    shouldSkipYearLikeDate: boolean;
+
+    constructor(shouldSkipYearLikeDate: boolean) {
+        super();
+        this.shouldSkipYearLikeDate = shouldSkipYearLikeDate;
+    }
+
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -49,10 +58,18 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
             return null;
         }
 
-        const components = context.createParsingComponents({
-            day: day,
-            month: month,
-        });
+        // Skip the case where the day looks like a year (ex: Gennaio 21)
+        if (this.shouldSkipYearLikeDate) {
+            if (!match[DATE_TO_GROUP] && !match[YEAR_GROUP] && match[DATE_GROUP].match(/^2[0-5]$/)) {
+                return null;
+            }
+        }
+        const components = context
+            .createParsingComponents({
+                day: day,
+                month: month,
+            })
+            .addTag("parser/ITMonthNameMiddleEndianParser");
 
         if (match[YEAR_GROUP]) {
             const year = parseYear(match[YEAR_GROUP]);
@@ -61,12 +78,11 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
             const year = findYearClosestToRef(context.refDate, day, month);
             components.imply("year", year);
         }
-
         if (!match[DATE_TO_GROUP]) {
             return components;
         }
 
-        // Text can be 'range' value. Such as 'January 12 - 13, 2012'
+        // Text can be 'range' value. Such as 'Gennaio 12 - 13, 2012'
         const endDate = parseOrdinalNumberPattern(match[DATE_TO_GROUP]);
         const result = context.createParsingResult(match.index, match[0]);
         result.start = components;

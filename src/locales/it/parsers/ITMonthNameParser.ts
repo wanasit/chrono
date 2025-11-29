@@ -6,11 +6,11 @@ import { YEAR_PATTERN, parseYear } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `((?:in)\\s*)?` +
+    `((?:a|in|di|del)\\s*)?` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `\\s*` +
         `(?:` +
-        `[,-]?\\s*(${YEAR_PATTERN})?` +
+        `(?:,|-|del)?\\s*(${YEAR_PATTERN})?` +
         ")?" +
         "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
     "i"
@@ -22,12 +22,12 @@ const YEAR_GROUP = 3;
 
 /**
  * The parser for parsing month name and year.
- * - January, 2012
- * - January 2012
- * - January
- * (in) Jan
+ * - Gennaio, 2012
+ * - Gennaio 2012
+ * - Gennaio
+ * (a/in/di) Gen
  */
-export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITMonthNameParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -35,7 +35,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const monthName = match[MONTH_NAME_GROUP].toLowerCase();
 
-        // skip some unlikely words "jan", "mar", ..
+        // skip some unlikely words "gen", "mar", ..
         if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
             return null;
         }
@@ -45,6 +45,7 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
             match.index + match[0].length
         );
         result.start.imply("day", 1);
+        result.start.addTag("parser/ITMonthNameParser");
 
         const month = MONTH_DICTIONARY[monthName];
         result.start.assign("month", month);

@@ -2,12 +2,12 @@ import AbstractMergeDateTimeRefiner from "../../../common/refiners/AbstractMerge
 
 /**
  * Merging date-only result and time-only result (see. AbstractMergeDateTimeRefiner).
- * This implementation should provide English connecting phases
- * - 2020-02-13 [at] 6pm
- * - Tomorrow [after] 7am
+ * This implementation should provide Italian connecting phases
+ * - 2020-02-13 [alle] 18
+ * - Domani [dopo le] 7
  */
-export default class ENMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
+export default class ITMergeDateTimeRefiner extends AbstractMergeDateTimeRefiner {
     patternBetween(): RegExp {
-        return new RegExp("^\\s*(T|alle|dopo|prima|il|di|del|delle|,|-)?\\s*$");
+        return new RegExp("^\\s*(T|alle?|dopo\\s*le|prima\\s*delle?|,|-|\\.|∙|:)?\\s*$");
     }
 }
