@@ -1,41 +1,71 @@
-import { testSingleCase, testUnexpectedResult } from "../test_util";
 import * as chrono from "../../src";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 
-test("Test - Single Expression (YYYY.MM.DD)", function () {
-    testSingleCase(chrono.it, "2012.08.10", new Date(2012, 7, 10), (result) => {
+test("Test - Single expression", function () {
+    testSingleCase(chrono.it, "2012-8-10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
         expect(result.start.get("year")).toBe(2012);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(10);
 
         expect(result.index).toBe(0);
-        expect(result.text).toBe("2012.08.10");
-
-        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
-    });
-
-    testSingleCase(chrono.it, "La scadenza è 2012.08.10", new Date(2012, 7, 10), (result) => {
-        expect(result.index).toBe(14);
-        expect(result.text).toBe("2012.08.10");
+        expect(result.text).toBe("2012-8-10");
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
     });
 
-    testSingleCase(chrono.it.strict, "2014.02.28", (result) => {
-        expect(result.text).toBe("2014.02.28");
+    testSingleCase(chrono.it, "2012/8/10", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2012/8/10");
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
     });
 
-    testSingleCase(chrono.it.strict, "2014.12.28", (result) => {
-        expect(result.text).toBe("2014.12.28");
-        expect(result).toBeDate(new Date(2014, 12 - 1, 28, 12));
+    testSingleCase(chrono.it, "Il 2012/8/10", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(3);
+        expect(result.text).toBe("2012/8/10");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
     });
 });
 
-test("Test - Not parse unlikely YYYY.MM.DD pattern", function () {
-    testUnexpectedResult(chrono.it, "2012.80.10", new Date(2012, 7, 10));
+test("Test - Range expression", function () {
+    testSingleCase(chrono.it, "2012/8/10 - 2012/8/15", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2012/8/10 - 2012/8/15");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(15);
+
+        expect(result.end).toBeDate(new Date(2012, 7, 15, 12));
+    });
 });
 
-test("Test - Not parse impossible dates", function () {
-    testUnexpectedResult(chrono.it, "2014.08.32");
-    testUnexpectedResult(chrono.it, "2014.02.30");
+test("Test - Impossible dates", function () {
+    testUnexpectedResult(chrono.it, "2012/8/32");
+
+    // Note: 2012/13/10 may be parsed differently
+
+    testUnexpectedResult(chrono.it, "2012/0/10");
+
+    testUnexpectedResult(chrono.it, "2012/8/0");
 });

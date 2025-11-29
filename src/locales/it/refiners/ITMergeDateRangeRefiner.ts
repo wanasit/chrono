@@ -6,12 +6,12 @@ import AbstractMergeDateRangeRefiner from "../../../common/refiners/AbstractMerg
 
 /**
  * Merging before and after results (see. AbstractMergeDateRangeRefiner)
- * This implementation should provide English connecting phases
- * - 2020-02-13 [to] 2020-02-13
- * - Wednesday [-] Friday
+ * This implementation should provide Italian connecting phases
+ * - 2020-02-13 [a] 2020-02-13
+ * - Mercoledì [-] Venerdì
  */
-export default class ENMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
+export default class ITMergeDateRangeRefiner extends AbstractMergeDateRangeRefiner {
     patternBetween(): RegExp {
-        return /^\s*(to|-)\s*$/i;
+        return /^\s*(a|al|-|–|fino\s*a|fino\s*al)\s*$/i;
     }
 }
