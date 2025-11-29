@@ -10,8 +10,7 @@ const PATTERN_WITH_OPTIONAL_PREFIX = new RegExp(
 );
 
 const PATTERN_WITH_PREFIX = new RegExp(
-    `(?:entro|tra|fra|in|per)\\s*` +
-        `(?:(?:circa|approssimativamente)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
+    `(?:entro|tra|fra|in|per)\\s*` + `(?:(?:circa|approssimativamente)\\s*(?:~\\s*)?)?(${TIME_UNITS_PATTERN})(?=\\W|$)`,
     "i"
 );
 
