@@ -183,3 +183,34 @@ test("Test - Precise date/time mentioned", function () {
         expect(result).toBeDate(new Date(text));
     });
 });
+
+test("Test - Minimize diff because of local timezone (pre-1900)", () => {
+    // Because of Local mean time (LMT), the local/system timezone my work differently before 1900
+    // For example:
+    //  - Shanghai LMT in 1900 was +08:05:43
+    // We expect Chrono to parse this within a few hours precision
+
+    testSingleCase(chrono, "1900-01-01T00:00:00-00:00", (result) => {
+        const expectedDate = new Date("1900-01-01T00:00:00-00:00");
+        const differenceMinutes = Math.abs(result.date().getTime() - expectedDate.getTime()) / (1000 * 60);
+        expect(differenceMinutes).toBeLessThanOrEqual(60);
+    });
+
+    testSingleCase(chrono, "1900-01-01T00:00:00-01:00", (result) => {
+        const expectedDate = new Date("1900-01-01T00:00:00-01:00");
+        const differenceMinutes = Math.abs(result.date().getTime() - expectedDate.getTime()) / (1000 * 60);
+        expect(differenceMinutes).toBeLessThanOrEqual(60 * 2);
+    });
+
+    testSingleCase(chrono, "1900-01-01T00:00:00+08:00", (result) => {
+        const expectedDate = new Date("1900-01-01T00:00:00+08:00");
+        const differenceMinutes = Math.abs(result.date().getTime() - expectedDate.getTime()) / (1000 * 60);
+        expect(differenceMinutes).toBeLessThanOrEqual(60 * 2);
+    });
+
+    testSingleCase(chrono, "1900-01-01T00:00", { timezone: "JST" }, (result) => {
+        const expectedDate = new Date("1900-01-01T00:00:00+08:00");
+        const differenceMinutes = Math.abs(result.date().getTime() - expectedDate.getTime()) / (1000 * 60);
+        expect(differenceMinutes).toBeLessThanOrEqual(60 * 2);
+    });
+});

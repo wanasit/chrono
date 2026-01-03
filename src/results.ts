@@ -44,9 +44,7 @@ export class ReferenceWithTimezone {
      * @param overrideTimezoneOffset
      */
     getSystemTimezoneAdjustmentMinute(date?: Date, overrideTimezoneOffset?: number): number {
-        if (!date || date.getTime() < 0) {
-            // Javascript date timezone calculation got effect when the time epoch < 0
-            // e.g. new Date('Tue Feb 02 1300 00:00:00 GMT+0900 (JST)') => Tue Feb 02 1300 00:18:59 GMT+0918 (JST)
+        if (!date) {
             date = new Date();
         }
 
