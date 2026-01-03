@@ -416,3 +416,33 @@ test("Test - Impossible Dates (Strict Mode)", function () {
 
     testUnexpectedResult(chrono.strict, "29 February", new Date(2013, 7, 10));
 });
+
+test("Test - Year 3000+ support (Issue #636)", () => {
+    testSingleCase(chrono, "Jan 1 3000, 9:30", (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("Jan 1 3000, 9:30");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(3000);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(30);
+
+        expect(result.start).toBeDate(new Date(3000, 1 - 1, 1, 9, 30));
+    });
+
+    testSingleCase(chrono, "Jan 1 2025, 9:30", (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("Jan 1 2025, 9:30");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2025);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(30);
+
+        expect(result.start).toBeDate(new Date(2025, 1 - 1, 1, 9, 30));
+    });
+});

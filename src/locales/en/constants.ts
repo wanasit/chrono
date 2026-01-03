@@ -230,7 +230,7 @@ export function parseOrdinalNumberPattern(match: string): number {
 
 //-----------------------------
 
-export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s{0,2}(?:BE|AD|BC|BCE|CE)|[1-2][0-9]{3}|[5-9][0-9]|2[0-5])`;
+export const YEAR_PATTERN = `(?:[1-9][0-9]{0,3}\\s{0,2}(?:BE|AD|BC|BCE|CE)|[1-9][0-9]{3}|[5-9][0-9]|2[0-5])`;
 export function parseYear(match: string): number {
     if (/BE/i.test(match)) {
         // Buddhist Era
