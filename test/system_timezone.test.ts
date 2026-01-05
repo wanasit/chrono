@@ -214,3 +214,71 @@ test("Test - Minimize diff because of local timezone (pre-1900)", () => {
         expect(differenceMinutes).toBeLessThanOrEqual(60 * 2);
     });
 });
+
+test("Test - Timezone DST transitions", function () {
+    // CT (Central Time) transitions:
+    // - DST starts: 2nd Sunday of March at 2am
+    // - DST ends: 1st Sunday of November at 2am
+    testSingleCase(chrono, "2022-03-12 23:00 CT", (result, text) => {
+        // Before DST transition, expected: -360
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-6 * 60);
+    });
+    testSingleCase(chrono, "2022-03-13 23:00 CT", (result, text) => {
+        // Within DST, expect -300 minutes
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-5 * 60);
+    });
+    testSingleCase(chrono, "2022-11-06 23:00 CT", (result, text) => {
+        // After DST transition, expected: -360
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-6 * 60);
+    });
+
+    // MT (Mountain Time) transitions:
+    // - DST starts: 2nd Sunday of March at 2am
+    // - DST ends: 1st Sunday of November at 2am
+    testSingleCase(chrono, "2022-03-12 23:00 MT", (result, text) => {
+        // Before DST transition, expected: -420
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-7 * 60);
+    });
+    testSingleCase(chrono, "2022-03-13 23:00 MT", (result, text) => {
+        // Within DST, expected: -360
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-6 * 60);
+    });
+    testSingleCase(chrono, "2022-11-06 23:00 MT", (result, text) => {
+        // After DST transition, expected: -420
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-7 * 60);
+    });
+
+    // PT (Pacific Time) transitions:
+    // - DST starts: 2nd Sunday of March at 2am
+    // - DST ends: 1st Sunday of November at 2am
+    testSingleCase(chrono, "2022-03-12 23:00 PT", (result, text) => {
+        // Before DST transition, expected: -480
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-8 * 60);
+    });
+    testSingleCase(chrono, "2022-03-13 23:00 PT", (result, text) => {
+        // Within DST, expected: -420
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-7 * 60);
+    });
+    testSingleCase(chrono, "2022-11-06 23:00 PT", (result, text) => {
+        // After DST transition, expected: -480
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(23);
+        expect(result.start.get("timezoneOffset")).toBe(-8 * 60);
+    });
+});
