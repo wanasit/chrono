@@ -106,3 +106,15 @@ test("Test - de - relative date", function () {
         expect(result.start.isCertain("second")).toBeFalsy();
     });
 });
+
+test("Test - de - false positive prevention for single-letter time units", function () {
+    // Test that "Letzte A" in "Letzte Aktualisierun" doesn't match as "letzte a" (last year)
+    // The word boundary check should prevent "A" from matching the time unit "a"
+    testSingleCase(chrono.de, "Letzte Aktualisierun 03/12/2025", (result) => {
+        expect(result.text).toBe("03/12/2025");
+        expect(result.start.get("year")).toBe(2025);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(3);
+        expect(result).toBeDate(new Date(2025, 12 - 1, 3, 12));
+    });
+});

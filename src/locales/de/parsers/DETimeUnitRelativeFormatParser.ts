@@ -15,7 +15,7 @@ export default class DETimeUnitAgoFormatParser extends AbstractParserWithWordBou
             `(?:\\s*((?:nächste|kommende|folgende|letzte|vergangene|vorige|vor(?:her|an)gegangene)(?:s|n|m|r)?|vor|in)\\s*)?` +
                 `(${NUMBER_PATTERN})?` +
                 `(?:\\s*(nächste|kommende|folgende|letzte|vergangene|vorige|vor(?:her|an)gegangene)(?:s|n|m|r)?)?` +
-                `\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`,
+                `\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})(?=\\W|$)`,
             "i"
         );
     }
