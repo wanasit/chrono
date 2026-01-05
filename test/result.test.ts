@@ -87,6 +87,14 @@ test("Test - Create & manipulate parsing results", () => {
     expect(result.toString()).toContain(text);
     expect(result.toString()).toContain("custom/testing_start_component_tag");
     expect(result.toString()).toContain("custom/testing_end_component_tag");
+
+    // The result's addTag() and addTags() should add the tags to both start/end components
+    result.addTag("custom/testing_result_tag1");
+    result.addTags(["custom/testing_result_tag2"]);
+    expect(startComponents.tags()).toContain("custom/testing_result_tag1");
+    expect(startComponents.tags()).toContain("custom/testing_result_tag2");
+    expect(endComponents.tags()).toContain("custom/testing_result_tag1");
+    expect(endComponents.tags()).toContain("custom/testing_result_tag2");
 });
 
 test("Test - Calendar checking with implied components", () => {
