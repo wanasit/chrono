@@ -260,3 +260,242 @@ test("Test - YYYY-MM-DD HH:mm:ss format", function () {
         expect(result.start.get("second")).toBe(0);
     });
 });
+
+test("Test - Range Expression with days", function () {
+    testSingleCase(chrono.zh.hans, "今晚10点 - 明天早上6点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(22);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(6);
+    });
+
+    testSingleCase(chrono.zh.hans, "今天早上9点 - 后天凌晨3点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(9);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(12);
+        expect(result.end.get("hour")).toBe(3);
+    });
+
+    testSingleCase(chrono.zh.hans, "今晚10点 - 明早6点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(22);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(6);
+    });
+});
+
+test("Test - Range Expression with seconds", function () {
+    testSingleCase(chrono.zh.hans, "9:00:00 - 9:00:30", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.get("second")).toBe(0);
+
+        expect(result.end.get("hour")).toBe(9);
+        expect(result.end.get("minute")).toBe(0);
+        expect(result.end.get("second")).toBe(30);
+    });
+});
+
+test("Test - Range Expression with AM/PM variations", function () {
+    testSingleCase(chrono.zh.hans, "下午2点 - 晚上8点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(14);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(10);
+        expect(result.end.get("hour")).toBe(20);
+    });
+
+    testSingleCase(chrono.zh.hans, "3点 - 5点PM", new Date(2012, 7, 10, 12), (result) => {
+        // Context is 12:00, so 3 is likely 15:00 (3PM)
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(15);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(10);
+        expect(result.end.get("hour")).toBe(17);
+    });
+});
+
+test("Test - Range Expression with days variations", function () {
+    // "Yesterday" (昨)
+    testSingleCase(chrono.zh.hans, "今晚10点 - 昨晚10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(9);
+    });
+
+    // "Day before yesterday" (前)
+    testSingleCase(chrono.zh.hans, "今晚10点 - 前天晚上10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(8);
+    });
+
+    // "Day before day before yesterday" (大前)
+    testSingleCase(chrono.zh.hans, "今晚10点 - 大前天晚上10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(7);
+    });
+
+    // "Day after tomorrow" (后)
+    testSingleCase(chrono.zh.hans, "今晚10点 - 后天晚上10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(12);
+    });
+
+    // "Day after day after tomorrow" (大后)
+    testSingleCase(chrono.zh.hans, "今晚10点 - 大后天晚上10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(13);
+    });
+});
+
+test("Test - Range Expression with specific AM/PM variations", function () {
+    // AM variations: 早, 上, 凌
+    testSingleCase(chrono.zh.hans, "今早10点 - 明早10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(10);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(10);
+    });
+
+    testSingleCase(chrono.zh.hans, "今早10点 - 明天上午10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(10);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(10);
+    });
+
+    testSingleCase(chrono.zh.hans, "今早10点 - 明天凌晨2点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(10);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(2);
+    });
+
+    testSingleCase(chrono.zh.hans, "下午2点 - 明天下午3点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(14);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(15);
+    });
+
+    // Cross-day implied PM to AM (10pm - 2am)
+    testSingleCase(chrono.zh.hans, "晚上10点 - 2点", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(22);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(2);
+    });
+});
+
+test("Test - Range Expression with short day-time variations", function () {
+    // "Day before yesterday" (前) + "Evening" (晚) -> 前晚
+    testSingleCase(chrono.zh.hans, "今晚10点 - 前晚10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(8);
+        expect(result.end.get("hour")).toBe(22);
+    });
+
+    // "Day before day before yesterday" (大前) + "Evening" (晚) -> 大前晚
+    testSingleCase(chrono.zh.hans, "今晚10点 - 大前晚10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(7);
+        expect(result.end.get("hour")).toBe(22);
+    });
+
+    // "Day after tomorrow" (后) + "Morning" (早) -> 后早
+    testSingleCase(chrono.zh.hans, "今晚10点 - 后早10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(12);
+        expect(result.end.get("hour")).toBe(10);
+    });
+
+    // "Day after day after tomorrow" (大后) + "Morning" (早) -> 大后早
+    testSingleCase(chrono.zh.hans, "今晚10点 - 大后早10点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(13);
+        expect(result.end.get("hour")).toBe(10);
+    });
+});
