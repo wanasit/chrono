@@ -17,7 +17,7 @@ export default class ENTimeExpressionParser extends AbstractTimeExpressionParser
     }
 
     primarySuffix(): string {
-        return "(?:\\s*(?:o\\W*in punto|alle\\s*sera|in\\s*del\\s*(?:mattina|pomeriggio)))?(?!/)(?=\\W|$)";
+        return "(?:\\s*(?:in punto|o\\W*in punto|(?:di|del|della|in|al|alla|alle)\\s*(?:mattina|pomeriggio|sera)))?(?!/)(?=\\W|$)";
     }
 
     extractPrimaryTimeComponents(context: ParsingContext, match: RegExpMatchArray): null | ParsingComponents {
