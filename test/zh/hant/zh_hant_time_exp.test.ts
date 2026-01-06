@@ -161,6 +161,36 @@ test("Test - Time Expression's Meridiem imply", function () {
     });
 });
 
+test("Test - Cantonese Combined Expressions", function () {
+    testSingleCase(chrono.zh.hant, "大後日下晝5點", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("大後日下晝5點");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("minute")).toBe(0);
+    });
+
+    testSingleCase(chrono.zh.hant, "聽晚10點到聽晚11點", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("聽晚10點到聽晚11點");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(22);
+        expect(result.start.get("minute")).toBe(0);
+
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(23);
+        expect(result.end.get("minute")).toBe(0);
+    });
+});
+
 test("Test - Random date + time expression", function () {
     testSingleCase(chrono.zh.hant, "2014年, 3月5日晏晝 6 點至 7 點", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("2014年, 3月5日晏晝 6 點至 7 點");

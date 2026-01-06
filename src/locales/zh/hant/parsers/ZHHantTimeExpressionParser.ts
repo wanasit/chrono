@@ -63,6 +63,12 @@ const SECOND_GROUP = 8;
 const AM_PM_HOUR_GROUP = 9;
 
 export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBoundaryChecking {
+    patternLeftBoundary(): string {
+        // Return a capturing group to ensure that the match index is correct in the base class
+        // while avoiding matching CJK characters as word boundaries.
+        return "()";
+    }
+
     innerPattern(): RegExp {
         return FIRST_REG_PATTERN;
     }
@@ -74,7 +80,7 @@ export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBo
         }
 
         const result = context.createParsingResult(match.index, match[0]);
-        const startMoment = new Date(context.refDate.getTime());
+        const startMoment = new Date(context.reference.instant.getTime());
 
         // ----- Day
         if (match[DAY_GROUP_1]) {
@@ -240,7 +246,13 @@ export default class ZHHantTimeExpressionParser extends AbstractParserWithWordBo
             return result;
         }
 
-        const endMoment = new Date(startMoment.getTime());
+        let endMoment = new Date(startMoment.getTime());
+        if (secondMatch[DAY_GROUP_1] || secondMatch[DAY_GROUP_3]) {
+            // If the end time expression has a relative day specified (e.g. "Tomorrow"),
+            // we should reset the end date to the reference date to calculate the relative date correctly.
+            endMoment = new Date(context.reference.instant.getTime());
+        }
+
         result.end = context.createParsingComponents();
 
         // ----- Day
