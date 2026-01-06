@@ -223,13 +223,12 @@ test("Test - Random date + time expression", function () {
         expect(result.start.get("hour")).toBe(15);
     });
 
-    // TODO: This test fails because of a bug in the parser.
     // "大后天" is parsed as "后天"
-    // testSingleCase(chrono.zh.hans, "大后天晚上9点30分", new Date(2012, 7, 10), (result) => {
-    //     expect(result.start.get("day")).toBe(13);
-    //     expect(result.start.get("hour")).toBe(21);
-    //     expect(result.start.get("minute")).toBe(30);
-    // });
+    testSingleCase(chrono.zh.hans, "大后天晚上9点30分", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("day")).toBe(13);
+        expect(result.start.get("hour")).toBe(21);
+        expect(result.start.get("minute")).toBe(30);
+    });
 
     testSingleCase(chrono.zh.hans, "三点", new Date(2012, 7, 10, 1), (result) => {
         expect(result.start.get("hour")).toBe(3);
@@ -387,6 +386,14 @@ test("Test - Range Expression with days variations", function () {
         expect(result.end.get("year")).toBe(2012);
         expect(result.end.get("month")).toBe(8);
         expect(result.end.get("day")).toBe(13);
+    });
+
+    testSingleCase(chrono.zh.hans, "明天10点到明天11点", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("明天10点到明天11点");
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.end.get("day")).toBe(11);
+        expect(result.end.get("hour")).toBe(11);
     });
 });
 
