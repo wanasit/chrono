@@ -37,7 +37,7 @@ const chrono = require('chrono-node');
 ### What's changed in the v2
 For Users
 * Chrono’s default now handles only international English. While in the previous version, it tried to parse with all known languages.
-* The current fully supported languages are `en`, `ja`, `fr`, `nl`, `ru` and `uk` (`de`, `es`, `pt`, and `zh.hant` are partially supported). 
+* The current fully supported languages are `en`, `ja`, `fr`, `nl`, `ru`, `fa`(Persian) and `uk` (`de`, `es`, `pt`, and `zh.hant` are partially supported). 
 
 For contributors and advanced users
 * The project is rewritten in TypeScript
@@ -210,9 +210,10 @@ chrono.en.parseDate('6/10/2018');       // June 10th, 2018
 chrono.en.GB.parseDate('6/10/2018');    // October 6th, 2018
 
 chrono.ja.parseDate('昭和６４年１月７日'); 
+chrono.fa.parseDate('فردا ساعت 3 بعدازظهر'); 
 ```
 
-Current supported locale options are: `en`, `ja`, `fr`, `nl`, `ru` and `uk` (`de`, `pt`, and `zh.hant` are partially supported).
+Current supported locale options are: `en`, `ja`, `fr`, `nl`, `ru`, `fa` (Persian) and `uk` (`de`, `pt`, and `zh.hant` are partially supported).
 
 #### Importing specific locales
 

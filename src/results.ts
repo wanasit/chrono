@@ -88,7 +88,7 @@ export class ParsingComponents implements ParsedComponents {
         reference: ReferenceWithTimezone,
         duration: Duration = EmptyDuration
     ): ParsingComponents {
-        let date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
+        const date = addDuration(reference.getDateWithAdjustedTimezone(), duration);
 
         const components = new ParsingComponents(reference);
         components.addTag("result/relativeDate");

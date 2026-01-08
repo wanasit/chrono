@@ -18,8 +18,9 @@ import * as es from "./locales/es";
 import * as uk from "./locales/uk";
 import * as it from "./locales/it";
 import * as sv from "./locales/sv";
+import * as fa from "./locales/fa";
 
-export { de, fr, ja, pt, nl, zh, ru, es, uk, it, sv };
+export { de, fr, ja, pt, nl, zh, ru, es, uk, it, sv, fa };
 
 /**
  * A shortcut for {@link en | chrono.en.strict}
