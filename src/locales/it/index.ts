@@ -22,7 +22,7 @@ import ENCasualTimeParser from "./parsers/ITCasualTimeParser";
 import ENWeekdayParser from "./parsers/ITWeekdayParser";
 import ITRelativeDateFormatParser from "./parsers/ITRelativeDateFormatParser";
 
-import { ParsedResult, ParsingOption } from "../../index";
+import { ParsedResult, ParsingOption, ParsingReference } from "../../index";
 import { Chrono, Configuration } from "../../chrono";
 import SlashDateFormatParser from "../../common/parsers/SlashDateFormatParser";
 import ENTimeUnitCasualRelativeFormatParser from "./parsers/ITTimeUnitCasualRelativeFormatParser";
@@ -46,14 +46,14 @@ export const GB = new Chrono(createConfiguration(false, true));
 /**
  * A shortcut for en.casual.parse()
  */
-export function parse(text: string, ref?: Date, option?: ParsingOption): ParsedResult[] {
+export function parse(text: string, ref?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
     return casual.parse(text, ref, option);
 }
 
 /**
  * A shortcut for en.casual.parseDate()
  */
-export function parseDate(text: string, ref?: Date, option?: ParsingOption): Date {
+export function parseDate(text: string, ref?: ParsingReference | Date, option?: ParsingOption): Date {
     return casual.parseDate(text, ref, option);
 }
 
