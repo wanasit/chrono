@@ -64,9 +64,14 @@ export function mergeDateTimeComponent(
         dateTimeComponent.assign("timezoneOffset", timeComponent.get("timezoneOffset"));
     }
 
+    const dateHasMeaningfulMeridiem =
+        dateComponent.get("meridiem") != null &&
+        (dateComponent.isCertain("meridiem") || Array.from(dateComponent.tags()).some((t) => t.startsWith("casualReference/")));
+
     if (timeComponent.isCertain("meridiem")) {
         dateTimeComponent.assign("meridiem", timeComponent.get("meridiem"));
-    } else if (timeComponent.get("meridiem") != null && dateTimeComponent.get("meridiem") == null) {
+    } else if (timeComponent.get("meridiem") != null && !dateHasMeaningfulMeridiem) {
+        // Let the time component guide meridiem only when the date part doesn't already carry a meaningful (certain or casual) hint.
         dateTimeComponent.imply("meridiem", timeComponent.get("meridiem"));
     }
 
