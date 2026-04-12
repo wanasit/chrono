@@ -8,18 +8,36 @@ test("Test - full weekday names", () => {
     testSingleCase(chrono.vi, "H\u1ecdn v\u00e0o th\u1ee9 hai", REF, (r) => {
         expect(r.start.get("weekday")).toBe(1);
     });
-    testSingleCase(chrono.vi, "th\u1ee9 ba", REF, (r) => { expect(r.start.get("weekday")).toBe(2); });
-    testSingleCase(chrono.vi, "th\u1ee9 t\u01b0", REF, (r) => { expect(r.start.get("weekday")).toBe(3); });
-    testSingleCase(chrono.vi, "th\u1ee9 n\u0103m", REF, (r) => { expect(r.start.get("weekday")).toBe(4); });
-    testSingleCase(chrono.vi, "th\u1ee9 s\u00e1u", REF, (r) => { expect(r.start.get("weekday")).toBe(5); });
-    testSingleCase(chrono.vi, "th\u1ee9 b\u1ea3y", REF, (r) => { expect(r.start.get("weekday")).toBe(6); });
-    testSingleCase(chrono.vi, "ch\u1ee7 nh\u1eadt", REF, (r) => { expect(r.start.get("weekday")).toBe(0); });
+    testSingleCase(chrono.vi, "th\u1ee9 ba", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(2);
+    });
+    testSingleCase(chrono.vi, "th\u1ee9 t\u01b0", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(3);
+    });
+    testSingleCase(chrono.vi, "th\u1ee9 n\u0103m", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(4);
+    });
+    testSingleCase(chrono.vi, "th\u1ee9 s\u00e1u", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(5);
+    });
+    testSingleCase(chrono.vi, "th\u1ee9 b\u1ea3y", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(6);
+    });
+    testSingleCase(chrono.vi, "ch\u1ee7 nh\u1eadt", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(0);
+    });
 });
 
 test("Test - abbreviations t2-t7 / cn", () => {
-    testSingleCase(chrono.vi, "H\u1ecdn t2", REF, (r) => { expect(r.start.get("weekday")).toBe(1); });
-    testSingleCase(chrono.vi, "t7", REF, (r) => { expect(r.start.get("weekday")).toBe(6); });
-    testSingleCase(chrono.vi, "cn", REF, (r) => { expect(r.start.get("weekday")).toBe(0); });
+    testSingleCase(chrono.vi, "H\u1ecdn t2", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(1);
+    });
+    testSingleCase(chrono.vi, "t7", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(6);
+    });
+    testSingleCase(chrono.vi, "cn", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(0);
+    });
 });
 
 test("Test - weekday implies a date", () => {

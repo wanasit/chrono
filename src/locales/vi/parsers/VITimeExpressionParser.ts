@@ -6,11 +6,11 @@ import { Meridiem } from "../../../types";
 // l\u00fac 7 gi\u1edd 30 ph\u00fat  |  7 gi\u1edd s\u00e1ng  |  7 gi\u1edd  |  15:30
 const PATTERN = new RegExp(
     "(?:l\u00fac\\s*|v\u00e0o\\s*)?" +
-    "([0-9]{1,2})" +
-    "(?:\\s*gi\u1edd\\s*([0-9]{1,2})?\\s*(?:ph\u00fat\\s*)?" +
+        "([0-9]{1,2})" +
+        "(?:\\s*gi\u1edd\\s*([0-9]{1,2})?\\s*(?:ph\u00fat\\s*)?" +
         "(s\u00e1ng|tr\u01b0a|chi\u1ec1u|t\u1ed1i|\u0111\u00eam)?" +
-    "|:([0-9]{2}))" +
-    "(?=\\W|$)",
+        "|:([0-9]{2}))" +
+        "(?=\\W|$)",
     "i"
 );
 
@@ -20,7 +20,9 @@ const MERIDIEM_GROUP = 3;
 const MINUTE_COLON_GROUP = 4;
 
 export default class VITimeExpressionParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp { return PATTERN; }
+    innerPattern(): RegExp {
+        return PATTERN;
+    }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         const hour = parseInt(match[HOUR_GROUP]);
@@ -31,7 +33,9 @@ export default class VITimeExpressionParser extends AbstractParserWithWordBounda
 
         const minute = match[MINUTE_COLON_GROUP]
             ? parseInt(match[MINUTE_COLON_GROUP])
-            : match[MINUTE_GIO_GROUP] ? parseInt(match[MINUTE_GIO_GROUP]) : 0;
+            : match[MINUTE_GIO_GROUP]
+              ? parseInt(match[MINUTE_GIO_GROUP])
+              : 0;
         result.start.assign("minute", minute);
 
         const meridiem = match[MERIDIEM_GROUP]?.toLowerCase();

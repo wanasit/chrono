@@ -7,11 +7,13 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 // ngày 15 tháng 3 năm 1975  |  15 tháng 3 năm 1975  |  15 tháng 3
 const PATTERN = new RegExp(
     "(?:ng\u00e0y\\s*)?" +
-    "([0-9]{1,2})" +
-    "\\s*th\u00e1ng\\s*" +
-    "([0-9]{1,2})" +
-    "(?:\\s*n\u0103m\\s*(" + YEAR_PATTERN + "))?" +
-    "(?=\\W|$)",
+        "([0-9]{1,2})" +
+        "\\s*th\u00e1ng\\s*" +
+        "([0-9]{1,2})" +
+        "(?:\\s*n\u0103m\\s*(" +
+        YEAR_PATTERN +
+        "))?" +
+        "(?=\\W|$)",
     "i"
 );
 
@@ -20,7 +22,9 @@ const MONTH_GROUP = 2;
 const YEAR_GROUP = 3;
 
 export default class VIStandardParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp { return PATTERN; }
+    innerPattern(): RegExp {
+        return PATTERN;
+    }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         const day = parseInt(match[DAY_GROUP]);

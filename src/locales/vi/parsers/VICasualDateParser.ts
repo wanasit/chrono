@@ -8,7 +8,9 @@ import { addDuration } from "../../../calculation/duration";
 const PATTERN = /\b(hôm nay|hôm qua|ngày mai|ngày kia|bây giờ|lúc này)(?=\W|$)/i;
 
 export default class VICasualDateParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp { return PATTERN; }
+    innerPattern(): RegExp {
+        return PATTERN;
+    }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         const targetDate = context.reference.getDateWithAdjustedTimezone();

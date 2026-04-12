@@ -92,7 +92,8 @@ export function parseYear(match: string): number {
     return findMostLikelyADYear(num);
 }
 
-const SINGLE_TIME_UNIT_PATTERN = "(" + NUMBER_PATTERN + ")\\s{0,5}(" + matchAnyPattern(TIME_UNIT_DICTIONARY) + ")\\s{0,5}";
+const SINGLE_TIME_UNIT_PATTERN =
+    "(" + NUMBER_PATTERN + ")\\s{0,5}(" + matchAnyPattern(TIME_UNIT_DICTIONARY) + ")\\s{0,5}";
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, "i");
 
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern("", SINGLE_TIME_UNIT_PATTERN);

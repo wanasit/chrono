@@ -4,16 +4,15 @@ import { YEAR_PATTERN, parseYear } from "../constants";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 // năm 1975  |  năm 43 TCN
-const PATTERN = new RegExp(
-    "\\bnăm\\s*(" + YEAR_PATTERN + ")(?:\\s*(TCN))?(?=\\W|$)",
-    "i"
-);
+const PATTERN = new RegExp("\\bnăm\\s*(" + YEAR_PATTERN + ")(?:\\s*(TCN))?(?=\\W|$)", "i");
 
 const YEAR_GROUP = 1;
 const BC_GROUP = 2;
 
 export default class VIYearParser extends AbstractParserWithWordBoundaryChecking {
-    innerPattern(): RegExp { return PATTERN; }
+    innerPattern(): RegExp {
+        return PATTERN;
+    }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
         let yearText = match[YEAR_GROUP];
