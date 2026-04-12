@@ -5,6 +5,7 @@
   ],
   "compilerOptions": {
     "outDir": "dist/cjs",
-    "module": "commonjs"
+    "module": "commonjs",
+    "typeRoots": ["./node_modules/@types"]
   }
 }
