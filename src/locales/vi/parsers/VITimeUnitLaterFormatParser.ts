@@ -8,16 +8,13 @@ const PATTERN = new RegExp(
     "(" + TIME_UNITS_PATTERN + ")" + "\\s{0,5}(?:sau|n\u1eefa|t\u1edbi|ti\u1ebfp)(?=\\W|$)",
     "i"
 );
-// VI has no unit abbreviations, so strict and casual patterns are identical.
-// STRICT_PATTERN is kept for API consistency with other locales (e.g. EN).
-const STRICT_PATTERN = PATTERN;
-
 export default class VITimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor(private strictMode = false) {
         super();
     }
     innerPattern(): RegExp {
-        return this.strictMode ? STRICT_PATTERN : PATTERN;
+        // VI has no unit abbreviations, so strict and casual patterns are identical.
+        return PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
