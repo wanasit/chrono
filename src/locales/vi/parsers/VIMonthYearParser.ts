@@ -6,9 +6,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 
 // tháng 3 năm 1975  |  tháng ba năm 1975  |  tháng chạp  |  tháng giêng/1975
 const PATTERN = new RegExp(
-    "(" + matchAnyPattern(MONTH_DICTIONARY) + ")" +
-        "(?:\\s*(?:năm|/)\\s*(" + YEAR_PATTERN + "))?" +
-        "(?=\\W|$)",
+    "(" + matchAnyPattern(MONTH_DICTIONARY) + ")" + "(?:\\s*(?:năm|/)\\s*(" + YEAR_PATTERN + "))?" + "(?=\\W|$)",
     "i"
 );
 

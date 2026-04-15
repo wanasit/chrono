@@ -6,7 +6,9 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
 const PATTERN = new RegExp(
-    "(" + matchAnyPattern(WEEKDAY_DICTIONARY) + ")" +
+    "(" +
+        matchAnyPattern(WEEKDAY_DICTIONARY) +
+        ")" +
         // 'sau khi' is a conjunction ("after when") — exclude via negative lookahead
         "(?:\\s*(này|tới|sau(?!\\s*khi)|qua))?" +
         "(?=\\W|$)",
