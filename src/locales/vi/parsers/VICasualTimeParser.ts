@@ -35,7 +35,7 @@ export default class VICasualTimeParser extends AbstractParserWithWordBoundaryCh
             case "tr\u01b0a":
                 component.imply("hour", 12);
                 component.imply("minute", 0);
-                component.imply("meridiem", Meridiem.AM);
+                component.imply("meridiem", Meridiem.PM); // noon = 12:00 PM in chrono's 12-hour convention
                 break;
             case "chi\u1ec1u":
                 component.imply("hour", 15);
