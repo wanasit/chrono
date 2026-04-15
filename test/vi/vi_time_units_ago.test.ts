@@ -36,3 +36,20 @@ test("Test - qua variant (1 tháng qua)", () => {
         expect(r.start.get("year")).toBe(2012);
     });
 });
+
+test("Test - number-word durations (hai/ba/một)", () => {
+    testSingleCase(chrono.vi, "hai tuần trước", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("day")).toBe(27);
+        expect(r.start.get("month")).toBe(7);
+    });
+
+    testSingleCase(chrono.vi, "ba ngày trước", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("day")).toBe(7);
+        expect(r.start.get("month")).toBe(8);
+    });
+
+    testSingleCase(chrono.vi, "một tháng qua", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("month")).toBe(7);
+        expect(r.start.get("year")).toBe(2012);
+    });
+});

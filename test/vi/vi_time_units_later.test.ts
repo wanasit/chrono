@@ -28,3 +28,15 @@ test("Test - N n\u0103m sau", () => {
         expect(r.start.get("year")).toBe(2022);
     });
 });
+
+test("Test - number-word durations (ba/hai)", () => {
+    testSingleCase(chrono.vi, "ba ngày sau", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("day")).toBe(13);
+        expect(r.start.get("month")).toBe(8);
+    });
+
+    testSingleCase(chrono.vi, "hai tuần nữa", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("day")).toBe(24);
+        expect(r.start.get("month")).toBe(8);
+    });
+});

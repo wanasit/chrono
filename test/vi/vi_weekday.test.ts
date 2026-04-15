@@ -46,3 +46,23 @@ test("Test - weekday implies a date", () => {
         expect(r.start.isCertain("day")).toBe(false); // implied, not certain
     });
 });
+
+test("Test - next weekday modifiers (tới/sau)", () => {
+    // REF is Thu 2012-08-09; next Monday = 2012-08-13
+    testSingleCase(chrono.vi, "th\u1ee9 hai t\u1edbi", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(1);
+        expect(r.start.get("day")).toBe(13);
+    });
+    testSingleCase(chrono.vi, "th\u1ee9 hai sau", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(1);
+        expect(r.start.get("day")).toBe(13);
+    });
+});
+
+test("Test - last weekday modifier (qua)", () => {
+    // REF is Thu 2012-08-09; last Monday = 2012-08-06
+    testSingleCase(chrono.vi, "th\u1ee9 hai qua", REF, (r) => {
+        expect(r.start.get("weekday")).toBe(1);
+        expect(r.start.get("day")).toBe(6);
+    });
+});
