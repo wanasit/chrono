@@ -58,3 +58,11 @@ test("Test - b\u00e2y gi\u1edd / l\u00fac n\u00e0y (now)", () => {
         expect(r.start.get("hour")).toBe(8);
     });
 });
+
+test("Test - hôm kia (day before yesterday, -2)", () => {
+    testSingleCase(chrono.vi, "hôm kia", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.get("year")).toBe(2012);
+        expect(r.start.get("month")).toBe(8);
+        expect(r.start.get("day")).toBe(8); // 10 - 2
+    });
+});

@@ -66,3 +66,10 @@ test("Test - last weekday modifier (qua)", () => {
         expect(r.start.get("day")).toBe(6);
     });
 });
+
+test("Test - 'sau khi' conjunction not parsed as weekday modifier", () => {
+    const results = chrono.vi.parse("thứ hai sau khi chiến tranh kết thúc", new Date(2012, 7, 10, 12));
+    // Should parse 'thứ hai' (Monday) without consuming 'sau' from 'sau khi'
+    expect(results.length).toBe(1);
+    expect(results[0].text).toBe("thứ hai"); // 'sau' not included
+});

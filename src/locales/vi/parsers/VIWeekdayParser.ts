@@ -6,7 +6,10 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
 const PATTERN = new RegExp(
-    "(" + matchAnyPattern(WEEKDAY_DICTIONARY) + ")" + "(?:\\s*(n\u00e0y|t\u1edbi|sau|qua))?" + "(?=\\W|$)",
+    "(" + matchAnyPattern(WEEKDAY_DICTIONARY) + ")" +
+        // 'sau khi' is a conjunction ("after when") — exclude via negative lookahead
+        "(?:\\s*(này|tới|sau(?!\\s*khi)|qua))?" +
+        "(?=\\W|$)",
     "i"
 );
 
@@ -27,7 +30,7 @@ export default class VIWeekdayParser extends AbstractParserWithWordBoundaryCheck
         let modifierType: "this" | "next" | "last" | null = null;
         if (modifier) {
             const m = modifier.toLowerCase();
-            if (m.includes("t\u1edbi") || m.includes("sau")) modifierType = "next";
+            if (m.includes("tới") || m.includes("sau")) modifierType = "next";
             else if (m.includes("qua")) modifierType = "last";
         }
 

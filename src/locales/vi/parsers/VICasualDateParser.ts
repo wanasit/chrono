@@ -1,11 +1,9 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
-import { addDuration } from "../../../calculation/duration";
 
-const PATTERN = /\b(hôm nay|hôm qua|ngày mai|ngày kia|bây giờ|lúc này)(?=\W|$)/i;
+const PATTERN = /\b(hôm nay|hôm qua|hôm kia|ngày mai|ngày kia|bây giờ|lúc này)(?=\W|$)/i;
 
 export default class VICasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
@@ -13,29 +11,21 @@ export default class VICasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
-        const targetDate = context.reference.getDateWithAdjustedTimezone();
-        const keyword = match[1].toLowerCase();
-        const component = context.createParsingComponents();
-
-        switch (keyword) {
+        switch (match[1].toLowerCase()) {
             case "bây giờ":
             case "lúc này":
                 return references.now(context.reference);
             case "hôm nay":
                 return references.today(context.reference);
             case "hôm qua":
-                assignSimilarDate(component, addDuration(targetDate, { day: -1 }));
-                implySimilarTime(component, targetDate);
-                break;
+                return references.yesterday(context.reference);
+            case "hôm kia":
+                return references.theDayBefore(context.reference, 2);
             case "ngày mai":
-                assignSimilarDate(component, addDuration(targetDate, { day: 1 }));
-                implySimilarTime(component, targetDate);
-                break;
+                return references.tomorrow(context.reference);
             case "ngày kia":
-                assignSimilarDate(component, addDuration(targetDate, { day: 2 }));
-                implySimilarTime(component, targetDate);
-                break;
+                return references.theDayAfter(context.reference, 2);
         }
-        return component;
+        return context.createParsingComponents();
     }
 }

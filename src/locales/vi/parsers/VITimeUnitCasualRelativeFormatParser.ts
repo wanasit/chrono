@@ -1,17 +1,21 @@
-import { TIME_UNITS_PATTERN, parseDuration } from "../constants";
+import { TIME_UNIT_DICTIONARY, NUMBER_PATTERN, parseDuration } from "../constants";
 import { ParsingContext } from "../../../chrono";
 import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { reverseDuration } from "../../../calculation/duration";
+import { matchAnyPattern } from "../../../utils/pattern";
 
-// tu\u1ea7n n\u00e0y  |  th\u00e1ng tr\u01b0\u1edbc  |  n\u0103m sau  |  tu\u1ea7n t\u1edbi
+// tuần này  |  tháng trước  |  năm sau  |  tuần tới  |  2 tuần trước
+// NUMBER is optional so bare unit words ("tuần này") are matched
+const CASUAL_UNIT_PATTERN = "(?:" + NUMBER_PATTERN + "\\s{0,5})?(?:" + matchAnyPattern(TIME_UNIT_DICTIONARY) + ")";
+
 const PATTERN = new RegExp(
-    "(n\u00e0y|n\u00e0y|tr\u01b0\u1edbc|qua|sau|t\u1edbi|ti\u1ebfp)\\s*(" +
-        TIME_UNITS_PATTERN +
+    "(này|trước|qua|sau|tới|tiếp)\\s*(" +
+        CASUAL_UNIT_PATTERN +
         ")" +
         "|(" +
-        TIME_UNITS_PATTERN +
-        ")\\s*(n\u00e0y|tr\u01b0\u1edbc|qua|sau|t\u1edbi|ti\u1ebfp)" +
+        CASUAL_UNIT_PATTERN +
+        ")\\s*(này|trước|qua|sau|tới|tiếp)" +
         "(?=\\W|$)",
     "i"
 );
@@ -22,13 +26,19 @@ export default class VITimeUnitCasualRelativeFormatParser extends AbstractParser
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
-        // prefix form (tr\u01b0\u1edbc tu\u1ea7n) or suffix form (tu\u1ea7n tr\u01b0\u1edbc)
+        // prefix form (trước tuần) or suffix form (tuần trước)
         const modifier = (match[1] || match[4] || "").toLowerCase();
-        const unitText = match[2] || match[3] || "";
-        let duration = parseDuration(unitText);
-        if (!duration) return null;
+        const unitText = (match[2] || match[3] || "").toLowerCase();
 
-        if (modifier === "tr\u01b0\u1edbc" || modifier === "qua") {
+        let duration = parseDuration(unitText);
+        if (Object.keys(duration).length === 0) {
+            // bare unit word with no number — implies 1
+            const unit = TIME_UNIT_DICTIONARY[unitText];
+            if (!unit) return null;
+            duration = { [unit]: 1 };
+        }
+
+        if (modifier === "trước" || modifier === "qua") {
             duration = reverseDuration(duration);
         }
         return ParsingComponents.createRelativeFromReference(context.reference, duration);

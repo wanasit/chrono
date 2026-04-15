@@ -1,10 +1,16 @@
 import { ParsingContext } from "../../../chrono";
 import { ParsingResult } from "../../../results";
-import { YEAR_PATTERN, parseYear } from "../constants";
+import { MONTH_DICTIONARY, YEAR_PATTERN, parseYear } from "../constants";
+import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
-// tháng 3 năm 1975  |  tháng 3/1975
-const PATTERN = new RegExp("tháng\\s*([0-9]{1,2})" + "(?:\\s*(?:năm|/)\\s*(" + YEAR_PATTERN + "))?" + "(?=\\W|$)", "i");
+// tháng 3 năm 1975  |  tháng ba năm 1975  |  tháng chạp  |  tháng giêng/1975
+const PATTERN = new RegExp(
+    "(" + matchAnyPattern(MONTH_DICTIONARY) + ")" +
+        "(?:\\s*(?:năm|/)\\s*(" + YEAR_PATTERN + "))?" +
+        "(?=\\W|$)",
+    "i"
+);
 
 const MONTH_GROUP = 1;
 const YEAR_GROUP = 2;
@@ -15,8 +21,8 @@ export default class VIMonthYearParser extends AbstractParserWithWordBoundaryChe
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingResult {
-        const month = parseInt(match[MONTH_GROUP]);
-        if (month > 12) return null;
+        const month = MONTH_DICTIONARY[match[MONTH_GROUP].toLowerCase()];
+        if (!month) return null;
 
         const result = context.createParsingResult(match.index, match[0]);
         result.start.assign("month", month);

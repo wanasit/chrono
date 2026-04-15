@@ -60,3 +60,27 @@ test("Test - meridiem: s\u00e1ng/chi\u1ec1u/t\u1ed1i/\u0111\u00eam", () => {
         expect(r.start.get("hour")).toBe(22);
     });
 });
+
+test("Test - trưa meridiem: X giờ trưa → PM (hour + 12)", () => {
+    // trưa = noon/midday — times expressed with trưa are PM
+    testSingleCase(chrono.vi, "1 giờ trưa", REF, (r) => {
+        expect(r.start.get("hour")).toBe(13);
+        expect(r.start.get("meridiem")).toBe(1); // PM
+    });
+    testSingleCase(chrono.vi, "11 giờ trưa", REF, (r) => {
+        expect(r.start.get("hour")).toBe(23);
+        expect(r.start.get("meridiem")).toBe(1); // PM
+    });
+    // 12 giờ trưa = noon, no offset applied (12 < 12 is false)
+    testSingleCase(chrono.vi, "12 giờ trưa", REF, (r) => {
+        expect(r.start.get("hour")).toBe(12);
+        expect(r.start.get("meridiem")).toBe(1); // PM
+    });
+});
+
+test("Test - 12 giờ sáng = midnight (00:00)", () => {
+    testSingleCase(chrono.vi, "12 giờ sáng", REF, (r) => {
+        expect(r.start.get("hour")).toBe(0);
+        expect(r.start.get("meridiem")).toBe(0); // AM
+    });
+});

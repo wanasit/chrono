@@ -39,9 +39,11 @@ export default class VITimeExpressionParser extends AbstractParserWithWordBounda
         result.start.assign("minute", minute);
 
         const meridiem = match[MERIDIEM_GROUP]?.toLowerCase();
-        if (meridiem === "s\u00e1ng" || meridiem === "tr\u01b0a") {
+        if (meridiem === "sáng") {
+            // "12 giờ sáng" = midnight (00:00), matching EN convention
             result.start.assign("meridiem", Meridiem.AM);
-        } else if (meridiem === "chi\u1ec1u" || meridiem === "t\u1ed1i" || meridiem === "\u0111\u00eam") {
+            if (hour === 12) result.start.assign("hour", 0);
+        } else if (meridiem === "trưa" || meridiem === "chiều" || meridiem === "tối" || meridiem === "đêm") {
             result.start.assign("meridiem", Meridiem.PM);
             if (hour < 12) result.start.assign("hour", hour + 12);
         }
