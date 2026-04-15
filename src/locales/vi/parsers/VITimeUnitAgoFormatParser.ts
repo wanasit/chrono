@@ -6,13 +6,16 @@ import { reverseDuration } from "../../../calculation/duration";
 
 // 2 ng\u00e0y tr\u01b0\u1edbc  |  3 th\u00e1ng qua  |  1 n\u0103m tr\u01b0\u1edbc
 const PATTERN = new RegExp("(" + TIME_UNITS_PATTERN + ")" + "\\s{0,5}(?:tr\u01b0\u1edbc|qua)(?=\\W|$)", "i");
+// VI has no unit abbreviations, so strict and casual patterns are identical.
+// STRICT_PATTERN is kept for API consistency with other locales (e.g. EN).
+const STRICT_PATTERN = PATTERN;
 
 export default class VITimeUnitAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
     constructor(private strictMode = false) {
         super();
     }
     innerPattern(): RegExp {
-        return PATTERN;
+        return this.strictMode ? STRICT_PATTERN : PATTERN;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
