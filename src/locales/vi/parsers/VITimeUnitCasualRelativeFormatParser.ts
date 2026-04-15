@@ -23,7 +23,7 @@ export default class VITimeUnitCasualRelativeFormatParser extends AbstractParser
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
         // prefix form (tr\u01b0\u1edbc tu\u1ea7n) or suffix form (tu\u1ea7n tr\u01b0\u1edbc)
-        const modifier = (match[1] || match[5] || "").toLowerCase();
+        const modifier = (match[1] || match[4] || "").toLowerCase();
         const unitText = match[2] || match[3] || "";
         let duration = parseDuration(unitText);
         if (!duration) return null;
