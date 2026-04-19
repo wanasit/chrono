@@ -25,115 +25,116 @@ export const EmptyDuration = {
  * @param duration
  */
 export function addDuration(ref: Date, duration: Duration): Date {
-    let date = new Date(ref);
+    const date = new Date(ref);
 
-    // Replace short timeunit keys with full timeunit keys
-    if (duration["y"]) {
-        duration["year"] = duration["y"];
-        delete duration["y"];
+    // Replace short timeunit keys with full timeunit keys (without mutating input)
+    const normalizedDuration: Duration = { ...duration };
+    if (normalizedDuration["y"]) {
+        normalizedDuration["year"] = normalizedDuration["y"];
+        delete normalizedDuration["y"];
     }
-    if (duration["mo"]) {
-        duration["month"] = duration["mo"];
-        delete duration["mo"];
+    if (normalizedDuration["mo"]) {
+        normalizedDuration["month"] = normalizedDuration["mo"];
+        delete normalizedDuration["mo"];
     }
-    if (duration["M"]) {
-        duration["month"] = duration["M"];
-        delete duration["M"];
+    if (normalizedDuration["M"]) {
+        normalizedDuration["month"] = normalizedDuration["M"];
+        delete normalizedDuration["M"];
     }
-    if (duration["w"]) {
-        duration["week"] = duration["w"];
-        delete duration["w"];
+    if (normalizedDuration["w"]) {
+        normalizedDuration["week"] = normalizedDuration["w"];
+        delete normalizedDuration["w"];
     }
-    if (duration["d"]) {
-        duration["day"] = duration["d"];
-        delete duration["d"];
+    if (normalizedDuration["d"]) {
+        normalizedDuration["day"] = normalizedDuration["d"];
+        delete normalizedDuration["d"];
     }
-    if (duration["h"]) {
-        duration["hour"] = duration["h"];
-        delete duration["h"];
+    if (normalizedDuration["h"]) {
+        normalizedDuration["hour"] = normalizedDuration["h"];
+        delete normalizedDuration["h"];
     }
-    if (duration["m"]) {
-        duration["minute"] = duration["m"];
-        delete duration["m"];
+    if (normalizedDuration["m"]) {
+        normalizedDuration["minute"] = normalizedDuration["m"];
+        delete normalizedDuration["m"];
     }
-    if (duration["s"]) {
-        duration["second"] = duration["s"];
-        delete duration["s"];
+    if (normalizedDuration["s"]) {
+        normalizedDuration["second"] = normalizedDuration["s"];
+        delete normalizedDuration["s"];
     }
-    if (duration["ms"]) {
-        duration["millisecond"] = duration["ms"];
-        delete duration["ms"];
+    if (normalizedDuration["ms"]) {
+        normalizedDuration["millisecond"] = normalizedDuration["ms"];
+        delete normalizedDuration["ms"];
     }
 
-    if ("year" in duration) {
-        const floor = Math.floor(duration["year"]);
+    if ("year" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["year"]);
         date.setFullYear(date.getFullYear() + floor);
-        const remainingFraction = duration["year"] - floor;
+        const remainingFraction = normalizedDuration["year"] - floor;
         if (remainingFraction > 0) {
-            duration.month = duration?.month ?? 0;
-            duration.month += remainingFraction * 12;
+            normalizedDuration.month = normalizedDuration?.month ?? 0;
+            normalizedDuration.month += remainingFraction * 12;
         }
     }
-    if ("quarter" in duration) {
-        const floor = Math.floor(duration["quarter"]);
+    if ("quarter" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["quarter"]);
         date.setMonth(date.getMonth() + floor * 3);
     }
-    if ("month" in duration) {
-        const floor = Math.floor(duration["month"]);
+    if ("month" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["month"]);
         date.setMonth(date.getMonth() + floor);
-        const remainingFraction = duration["month"] - floor;
+        const remainingFraction = normalizedDuration["month"] - floor;
         if (remainingFraction > 0) {
-            duration.week = duration?.week ?? 0;
-            duration.week += remainingFraction * 4;
+            normalizedDuration.week = normalizedDuration?.week ?? 0;
+            normalizedDuration.week += remainingFraction * 4;
         }
     }
-    if ("week" in duration) {
-        const floor = Math.floor(duration["week"]);
+    if ("week" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["week"]);
         date.setDate(date.getDate() + floor * 7);
-        const remainingFraction = duration["week"] - floor;
+        const remainingFraction = normalizedDuration["week"] - floor;
         if (remainingFraction > 0) {
-            duration.day = duration?.day ?? 0;
-            duration.day += Math.round(remainingFraction * 7);
+            normalizedDuration.day = normalizedDuration?.day ?? 0;
+            normalizedDuration.day += Math.round(remainingFraction * 7);
         }
     }
-    if ("day" in duration) {
-        const floor = Math.floor(duration["day"]);
+    if ("day" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["day"]);
         date.setDate(date.getDate() + floor);
-        const remainingFraction = duration["day"] - floor;
+        const remainingFraction = normalizedDuration["day"] - floor;
         if (remainingFraction > 0) {
-            duration.hour = duration?.hour ?? 0;
-            duration.hour += Math.round(remainingFraction * 24);
+            normalizedDuration.hour = normalizedDuration?.hour ?? 0;
+            normalizedDuration.hour += Math.round(remainingFraction * 24);
         }
     }
-    if ("hour" in duration) {
-        const floor = Math.floor(duration["hour"]);
+    if ("hour" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["hour"]);
         date.setHours(date.getHours() + floor);
-        const remainingFraction = duration["hour"] - floor;
+        const remainingFraction = normalizedDuration["hour"] - floor;
         if (remainingFraction > 0) {
-            duration.minute = duration?.minute ?? 0;
-            duration.minute += Math.round(remainingFraction * 60);
+            normalizedDuration.minute = normalizedDuration?.minute ?? 0;
+            normalizedDuration.minute += Math.round(remainingFraction * 60);
         }
     }
-    if ("minute" in duration) {
-        const floor = Math.floor(duration["minute"]);
+    if ("minute" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["minute"]);
         date.setMinutes(date.getMinutes() + floor);
-        const remainingFraction = duration["minute"] - floor;
+        const remainingFraction = normalizedDuration["minute"] - floor;
         if (remainingFraction > 0) {
-            duration.second = duration?.second ?? 0;
-            duration.second += Math.round(remainingFraction * 60);
+            normalizedDuration.second = normalizedDuration?.second ?? 0;
+            normalizedDuration.second += Math.round(remainingFraction * 60);
         }
     }
-    if ("second" in duration) {
-        const floor = Math.floor(duration["second"]);
+    if ("second" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["second"]);
         date.setSeconds(date.getSeconds() + floor);
-        const remainingFraction = duration["second"] - floor;
+        const remainingFraction = normalizedDuration["second"] - floor;
         if (remainingFraction > 0) {
-            duration.millisecond = duration?.millisecond ?? 0;
-            duration.millisecond += Math.round(remainingFraction * 1000);
+            normalizedDuration.millisecond = normalizedDuration?.millisecond ?? 0;
+            normalizedDuration.millisecond += Math.round(remainingFraction * 1000);
         }
     }
-    if ("millisecond" in duration) {
-        const floor = Math.floor(duration["millisecond"]);
+    if ("millisecond" in normalizedDuration) {
+        const floor = Math.floor(normalizedDuration["millisecond"]);
         date.setMilliseconds(date.getMilliseconds() + floor);
     }
     return date;

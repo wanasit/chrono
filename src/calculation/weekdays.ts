@@ -72,18 +72,18 @@ export function getDaysToWeekdayClosest(refDate: Date, weekday: Weekday): number
 
 export function getDaysForwardToWeekday(refDate: Date, weekday: Weekday): number {
     const refWeekday = refDate.getDay();
-    let forwardCount = weekday - refWeekday;
+    const forwardCount = weekday - refWeekday;
     if (forwardCount < 0) {
-        forwardCount += 7;
+        return forwardCount + 7;
     }
     return forwardCount;
 }
 
 export function getBackwardDaysToWeekday(refDate: Date, weekday: Weekday): number {
     const refWeekday = refDate.getDay();
-    let backwardCount = weekday - refWeekday;
+    const backwardCount = weekday - refWeekday;
     if (backwardCount >= 0) {
-        backwardCount -= 7;
+        return backwardCount - 7;
     }
     return backwardCount;
 }
