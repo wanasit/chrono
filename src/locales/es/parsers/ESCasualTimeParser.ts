@@ -15,16 +15,19 @@ export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryCh
             case "tarde":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 15);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "noche":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 22);
+                component.addTag("casualReference/evening");
                 break;
 
             case "mañana":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 6);
+                component.addTag("casualReference/morning");
                 break;
 
             case "medianoche":
@@ -35,12 +38,14 @@ export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 0);
                 component.imply("minute", 0);
                 component.imply("second", 0);
+                component.addTag("casualReference/midnight");
                 break;
 
             case "mediodia":
             case "mediodía":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 12);
+                component.addTag("casualReference/noon");
                 break;
         }
 

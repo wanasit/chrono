@@ -26,12 +26,14 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
             case "'s namiddags":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 15);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "avond":
             case "'s avonds'":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 20);
+                component.addTag("casualReference/evening");
                 break;
 
             case "middernacht":
@@ -42,18 +44,21 @@ export default class NLCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 0);
                 component.imply("minute", 0);
                 component.imply("second", 0);
+                component.addTag("casualReference/midnight");
                 break;
 
             case "ochtend":
             case "'s ochtends":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 6);
+                component.addTag("casualReference/morning");
                 break;
 
             case "middag":
             case "'s middags":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 12);
+                component.addTag("casualReference/noon");
                 break;
         }
 

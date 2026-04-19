@@ -145,6 +145,17 @@ test("Test - Minus '-' sign", () => {
         expect(result.start.get("hour")).toBe(9);
         expect(result.start.get("minute")).toBe(55);
     });
+
+    testSingleCase(chrono, "-5d 00", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(26);
+        expect(result.start.get("hour")).toBe(0);
+        expect(result.start.get("minute")).toBe(0);
+
+        expect(result.start).toBeDate(new Date(2016, 9 - 1, 26, 0, 0));
+    });
 });
 
 test("Test - Without custom parser without abbreviations", function () {
