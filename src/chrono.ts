@@ -79,7 +79,7 @@ export class Chrono {
     parse(text: string, referenceDate?: ParsingReference | Date, option?: ParsingOption): ParsedResult[] {
         const context = new ParsingContext(text, referenceDate, option);
 
-        let results = [];
+        let results: ParsingResult[] = [];
         this.parsers.forEach((parser) => {
             const parsedResults = Chrono.executeParser(context, parser);
             results = results.concat(parsedResults);
@@ -89,7 +89,7 @@ export class Chrono {
             return a.index - b.index;
         });
 
-        this.refiners.forEach(function (refiner) {
+        this.refiners.forEach((refiner) => {
             results = refiner.refine(context, results);
         });
 
