@@ -36,6 +36,7 @@ export default class VITimeExpressionParser extends AbstractParserWithWordBounda
             : match[MINUTE_GIO_GROUP]
               ? parseInt(match[MINUTE_GIO_GROUP])
               : 0;
+        if (minute >= 60) return null;
         result.start.assign("minute", minute);
 
         const meridiem = match[MERIDIEM_GROUP]?.toLowerCase();

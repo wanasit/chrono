@@ -27,6 +27,15 @@ test("Test - forwardDate: slash date without year rolls to next year", () => {
     });
 });
 
+test("Test - forwardDate: same weekday as ref stays on same day", () => {
+    // REF = Thursday Aug 9, 2012; "thứ năm" (Thursday) = same day → stays on Aug 9 (not past)
+    testSingleCase(chrono.vi, "th\u1ee9 n\u0103m", new Date(2012, 7, 9, 12), { forwardDate: true }, (r) => {
+        expect(r.start.get("weekday")).toBe(4);
+        expect(r.start.get("day")).toBe(9);
+        expect(r.start.get("month")).toBe(8);
+    });
+});
+
 test("Test - forwardDate: month without year rolls to next year", () => {
     // "th\u00e1ng 3" = March; ref is Aug 10 \u2192 next March = 2013
     testSingleCase(chrono.vi, "th\u00e1ng 3", new Date(2012, 7, 10, 12), { forwardDate: true }, (r) => {

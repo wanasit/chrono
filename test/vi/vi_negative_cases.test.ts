@@ -54,4 +54,7 @@ test("Test - URL-encoded strings not parsed as dates", () => {
     testUnexpectedResult(chrono.vi, "%e7%b7%8a", REF);
 });
 
-
+test("Test - impossible minute rejected", () => {
+    testUnexpectedResult(chrono.vi, "7 giờ 61 phút", REF);
+    testUnexpectedResult(chrono.vi, "7 giờ 99 phút", REF);
+});

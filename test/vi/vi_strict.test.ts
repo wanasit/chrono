@@ -41,6 +41,19 @@ test("Test - Strict accepts standard full dates and times", () => {
     });
 });
 
+test("Test - Strict accepts slash dates", () => {
+    testSingleCase(chrono.vi.strict, "30/4/1975", REF, (r) => {
+        expect(r.start.get("day")).toBe(30);
+        expect(r.start.get("month")).toBe(4);
+        expect(r.start.get("year")).toBe(1975);
+    });
+
+    testSingleCase(chrono.vi.strict, "15/3", REF, (r) => {
+        expect(r.start.get("day")).toBe(15);
+        expect(r.start.get("month")).toBe(3);
+    });
+});
+
 test("Test - Strict accepts explicit time unit expressions", () => {
     testSingleCase(chrono.vi.strict, "3 ng\u00e0y tr\u01b0\u1edbc", REF, (r) => {
         expect(r.start.get("day")).toBe(7);

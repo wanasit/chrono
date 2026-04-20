@@ -8,6 +8,7 @@ test("Test - h\u00f4m nay (today)", () => {
         expect(r.start.get("year")).toBe(2012);
         expect(r.start.get("month")).toBe(8);
         expect(r.start.get("day")).toBe(10);
+        expect(r.start).toBeDate(new Date(2012, 7, 10, 12));
     });
 });
 
@@ -18,6 +19,7 @@ test("Test - h\u00f4m qua (yesterday)", () => {
         expect(r.start.get("year")).toBe(2012);
         expect(r.start.get("month")).toBe(8);
         expect(r.start.get("day")).toBe(9);
+        expect(r.start).toBeDate(new Date(2012, 7, 9, 12));
     });
 
     testSingleCase(chrono.vi, "h\u00f4m qua", new Date(2012, 7, 1, 12), (r) => {
@@ -32,6 +34,7 @@ test("Test - ng\u00e0y mai (tomorrow)", () => {
         expect(r.text).toBe("ng\u00e0y mai");
         expect(r.start.get("day")).toBe(11);
         expect(r.start.get("month")).toBe(8);
+        expect(r.start).toBeDate(new Date(2012, 7, 11, 12));
     });
 
     testSingleCase(chrono.vi, "ng\u00e0y mai", new Date(2012, 7, 31, 12), (r) => {
@@ -55,6 +58,7 @@ test("Test - b\u00e2y gi\u1edd / l\u00fac n\u00e0y (now)", () => {
         expect(r.start.get("hour")).toBe(8);
         expect(r.start.get("minute")).toBe(9);
         expect(r.start.get("second")).toBe(10);
+        expect(r.start).toBeDate(new Date(2012, 7, 10, 8, 9, 10, 11));
     });
 
     testSingleCase(chrono.vi, "l\u00fac n\u00e0y", new Date(2012, 7, 10, 8, 9, 10, 11), (r) => {
