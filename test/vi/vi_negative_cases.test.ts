@@ -26,3 +26,32 @@ test("Test - bare 4-digit number without năm prefix is not a year", () => {
 test("Test - phone number not parsed as date", () => {
     testUnexpectedResult(chrono.vi, "0912345678", REF);
 });
+
+test("Test - bare numbers not parsed as dates", () => {
+    testUnexpectedResult(chrono.vi, "3", REF);
+    testUnexpectedResult(chrono.vi, "11", REF);
+    testUnexpectedResult(chrono.vi, "0.5", REF);
+    testUnexpectedResult(chrono.vi, "35.49", REF);
+    testUnexpectedResult(chrono.vi, "12.53%", REF);
+});
+
+test("Test - currency and measurement not parsed as dates", () => {
+    testUnexpectedResult(chrono.vi, "$1,194.09", REF);
+    testUnexpectedResult(chrono.vi, "at 6.5 kilograms", REF);
+});
+
+test("Test - version numbers not parsed as dates", () => {
+    testUnexpectedResult(chrono.vi, "1.1.3", REF);
+    testUnexpectedResult(chrono.vi, "1.10.30", REF);
+});
+
+test("Test - hyphenated number ranges not parsed as dates", () => {
+    testUnexpectedResult(chrono.vi, "1-2", REF);
+    testUnexpectedResult(chrono.vi, "1-2-3", REF);
+});
+
+test("Test - URL-encoded strings not parsed as dates", () => {
+    testUnexpectedResult(chrono.vi, "%e7%b7%8a", REF);
+});
+
+

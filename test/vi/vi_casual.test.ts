@@ -69,3 +69,12 @@ test("Test - hôm kia (day before yesterday, -2)", () => {
         expect(r.start.get("day")).toBe(8); // 10 - 2
     });
 });
+
+test("Test - isCertain: casual date sets day/month/year certain, hour not", () => {
+    testSingleCase(chrono.vi, "hôm nay", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.start.isCertain("day")).toBe(true);
+        expect(r.start.isCertain("month")).toBe(true);
+        expect(r.start.isCertain("year")).toBe(true);
+        expect(r.start.isCertain("hour")).toBe(false);
+    });
+});

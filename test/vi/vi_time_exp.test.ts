@@ -85,3 +85,15 @@ test("Test - 12 giờ sáng = midnight (00:00)", () => {
         expect(r.start.get("meridiem")).toBe(0); // AM
     });
 });
+
+test("Test - isCertain: hour and meridiem certainty", () => {
+    testSingleCase(chrono.vi, "lúc 7 giờ", REF, (r) => {
+        expect(r.start.isCertain("hour")).toBe(true);
+        expect(r.start.isCertain("meridiem")).toBe(false);
+    });
+
+    testSingleCase(chrono.vi, "7 giờ sáng", REF, (r) => {
+        expect(r.start.isCertain("hour")).toBe(true);
+        expect(r.start.isCertain("meridiem")).toBe(true);
+    });
+});

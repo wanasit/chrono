@@ -12,6 +12,9 @@ test("Test - ng\u00e0y D th\u00e1ng M n\u0103m YYYY (full with ng\u00e0y prefix)
             expect(r.start.get("year")).toBe(1975);
             expect(r.start.get("month")).toBe(4);
             expect(r.start.get("day")).toBe(30);
+            expect(r.start.isCertain("year")).toBe(true);
+            expect(r.start.isCertain("month")).toBe(true);
+            expect(r.start.isCertain("day")).toBe(true);
         }
     );
 
@@ -58,6 +61,8 @@ test("Test - Date without year implies closest year", () => {
         expect(r.start.get("day")).toBe(15);
         expect(r.start.get("month")).toBe(3);
         expect(r.start.isCertain("year")).toBe(false);
+        expect(r.start.isCertain("day")).toBe(true);
+        expect(r.start.isCertain("month")).toBe(true);
     });
 });
 
