@@ -3,6 +3,7 @@ import { testSingleCase } from "../test_util";
 
 test("Test - h\u00f4m nay (today)", () => {
     testSingleCase(chrono.vi, "Cu\u1ed9c h\u1ecdn h\u00f4m nay.", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.index).toBe(9);
         expect(r.text).toBe("h\u00f4m nay");
         expect(r.start.get("year")).toBe(2012);
         expect(r.start.get("month")).toBe(8);
@@ -12,6 +13,7 @@ test("Test - h\u00f4m nay (today)", () => {
 
 test("Test - h\u00f4m qua (yesterday)", () => {
     testSingleCase(chrono.vi, "H\u1ed9i ngh\u1ecb h\u00f4m qua.", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.index).toBe(9);
         expect(r.text).toBe("h\u00f4m qua");
         expect(r.start.get("year")).toBe(2012);
         expect(r.start.get("month")).toBe(8);
@@ -26,6 +28,7 @@ test("Test - h\u00f4m qua (yesterday)", () => {
 
 test("Test - ng\u00e0y mai (tomorrow)", () => {
     testSingleCase(chrono.vi, "L\u1ecbch ng\u00e0y mai.", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.index).toBe(5);
         expect(r.text).toBe("ng\u00e0y mai");
         expect(r.start.get("day")).toBe(11);
         expect(r.start.get("month")).toBe(8);

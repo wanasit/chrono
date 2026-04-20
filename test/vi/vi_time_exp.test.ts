@@ -5,6 +5,7 @@ const REF = new Date(2012, 7, 10, 12);
 
 test("Test - X gi\u1edd", () => {
     testSingleCase(chrono.vi, "Cu\u1ed9c h\u1ecdn l\u00fac 7 gi\u1edd.", REF, (r) => {
+        expect(r.index).toBe(9);
         expect(r.text).toBe("l\u00fac 7 gi\u1edd");
         expect(r.start.get("hour")).toBe(7);
         expect(r.start.get("minute")).toBe(0);

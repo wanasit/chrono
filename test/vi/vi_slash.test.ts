@@ -5,12 +5,14 @@ const REF = new Date(2012, 7, 10, 12);
 
 test("Test - DD/MM/YYYY (little-endian)", () => {
     testSingleCase(chrono.vi, "Ng\u00e0y 30/04/1975.", REF, (r) => {
+        expect(r.index).toBe(5);
         expect(r.start.get("day")).toBe(30);
         expect(r.start.get("month")).toBe(4);
         expect(r.start.get("year")).toBe(1975);
     });
 
     testSingleCase(chrono.vi, "H\u1ed9i ngh\u1ecb 01/01/1954", REF, (r) => {
+        expect(r.index).toBe(9);
         expect(r.start.get("day")).toBe(1);
         expect(r.start.get("month")).toBe(1);
         expect(r.start.get("year")).toBe(1954);

@@ -6,6 +6,7 @@ const REF = new Date(2012, 7, 9);
 
 test("Test - full weekday names", () => {
     testSingleCase(chrono.vi, "H\u1ecdn v\u00e0o th\u1ee9 hai", REF, (r) => {
+        expect(r.index).toBe(8);
         expect(r.start.get("weekday")).toBe(1);
     });
     testSingleCase(chrono.vi, "th\u1ee9 ba", REF, (r) => {
@@ -30,6 +31,7 @@ test("Test - full weekday names", () => {
 
 test("Test - abbreviations t2-t7 / cn", () => {
     testSingleCase(chrono.vi, "H\u1ecdn t2", REF, (r) => {
+        expect(r.index).toBe(4);
         expect(r.start.get("weekday")).toBe(1);
     });
     testSingleCase(chrono.vi, "t7", REF, (r) => {

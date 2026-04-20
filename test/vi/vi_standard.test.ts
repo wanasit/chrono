@@ -67,6 +67,7 @@ test("Test - index position is correct", () => {
         "S\u1ef1 ki\u1ec7n ng\u00e0y 30 th\u00e1ng 4 n\u0103m 1975 quan tr\u1ecdng.",
         REF,
         (r) => {
+            expect(r.index).toBe(8);
             expect(r.text).toBe("ng\u00e0y 30 th\u00e1ng 4 n\u0103m 1975");
             expect(r.start.get("year")).toBe(1975);
         }

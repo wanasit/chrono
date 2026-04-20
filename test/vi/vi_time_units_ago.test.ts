@@ -3,6 +3,7 @@ import { testSingleCase } from "../test_util";
 
 test("Test - N ng\u00e0y tr\u01b0\u1edbc", () => {
     testSingleCase(chrono.vi, "S\u1ef1 ki\u1ec7n 3 ng\u00e0y tr\u01b0\u1edbc.", new Date(2012, 7, 10, 12), (r) => {
+        expect(r.index).toBe(8);
         expect(r.text).toBe("3 ng\u00e0y tr\u01b0\u1edbc");
         expect(r.start.get("year")).toBe(2012);
         expect(r.start.get("month")).toBe(8);
