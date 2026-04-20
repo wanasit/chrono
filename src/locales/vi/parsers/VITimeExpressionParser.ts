@@ -43,7 +43,17 @@ export default class VITimeExpressionParser extends AbstractParserWithWordBounda
             // "12 giờ sáng" = midnight (00:00), matching EN convention
             result.start.assign("meridiem", Meridiem.AM);
             if (hour === 12) result.start.assign("hour", 0);
-        } else if (meridiem === "trưa" || meridiem === "chiều" || meridiem === "tối" || meridiem === "đêm") {
+        } else if (meridiem === "trưa") {
+            // "trưa" = noon/midday (~11 AM - 1 PM)
+            // "1 giờ trưa" = 13:00, but "11 giờ trưa" = 11:00 (approaching noon)
+            if (hour < 10) {
+                result.start.assign("meridiem", Meridiem.PM);
+                result.start.assign("hour", hour + 12);
+            } else {
+                // 10-12: keep as-is (AM for 10-11, PM for 12)
+                result.start.assign("meridiem", hour >= 12 ? Meridiem.PM : Meridiem.AM);
+            }
+        } else if (meridiem === "chiều" || meridiem === "tối" || meridiem === "đêm") {
             result.start.assign("meridiem", Meridiem.PM);
             if (hour < 12) result.start.assign("hour", hour + 12);
         }

@@ -6,7 +6,7 @@ import { implySimilarTime } from "../../../utils/dates";
 
 // bu\u1ed5i s\u00e1ng  |  bu\u1ed5i tr\u01b0a  |  bu\u1ed5i chi\u1ec1u  |  bu\u1ed5i t\u1ed1i  |  n\u1eeda \u0111\u00eam
 const PATTERN =
-    /\b(bu\u1ed5i\s*)?(s\u00e1ng s\u1edbm|s\u00e1ng|tr\u01b0a|chi\u1ec1u|t\u1ed1i|\u0111\u00eam|n\u1eeda \u0111\u00eam|b\u00ecnh minh)(?=\W|$)/i;
+    /(buổi\s*)?(sáng sớm|sáng|trưa|chiều|tối|đêm|nửa đêm|bình minh)(?=\W|$)/i;
 
 export default class VICasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {

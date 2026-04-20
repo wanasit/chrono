@@ -69,8 +69,8 @@ test("Test - trưa meridiem: X giờ trưa → PM (hour + 12)", () => {
         expect(r.start.get("meridiem")).toBe(1); // PM
     });
     testSingleCase(chrono.vi, "11 giờ trưa", REF, (r) => {
-        expect(r.start.get("hour")).toBe(23);
-        expect(r.start.get("meridiem")).toBe(1); // PM
+        expect(r.start.get("hour")).toBe(11);
+        expect(r.start.get("meridiem")).toBe(0); // AM — 11 giờ trưa = approaching noon
     });
     // 12 giờ trưa = noon, no offset applied (12 < 12 is false)
     testSingleCase(chrono.vi, "12 giờ trưa", REF, (r) => {

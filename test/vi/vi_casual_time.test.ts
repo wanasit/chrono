@@ -38,9 +38,13 @@ test("Test - tối (evening, PM)", () => {
 });
 
 test("Test - đêm (late night, PM)", () => {
-    // "đêm" requires buổi prefix or punctuation following — Vietnamese chars are not
-    // \w in JS regex, so bare \b lookahead behaves unexpectedly without a prefix.
     testSingleCase(chrono.vi, "buổi đêm", REF, (r) => {
+        expect(r.start.get("hour")).toBe(22);
+        expect(r.start.get("meridiem")).toBe(1); // PM
+    });
+
+    // Standalone "đêm" without "buổi" prefix — works after removing \b from pattern
+    testSingleCase(chrono.vi, "đêm", REF, (r) => {
         expect(r.start.get("hour")).toBe(22);
         expect(r.start.get("meridiem")).toBe(1); // PM
     });
