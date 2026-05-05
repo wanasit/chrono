@@ -342,6 +342,116 @@ test("Test - Weekday range", () => {
     });
 });
 
+test("Test - Weekday 'of next/last/this week' connector", function () {
+    // Ref date is a Tuesday — the same weekday as most test targets below.
+    // Before the fix, 'Tuesday of next week' silently dropped the modifier and
+    // resolved to today (0 days forward) instead of +7 days.
+    const refDate = new Date("Tue Aug 2 2022");
+
+    // --- of next week ---
+
+    testSingleCase(chrono.casual, "Tuesday of next week", refDate, (result) => {
+        expect(result.text).toBe("Tuesday of next week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9); // Aug 9 — NOT today (Aug 2)
+        expect(result.start.get("weekday")).toBe(2);
+        expect(result.start).toBeDate(new Date(2022, 7, 9, 12));
+    });
+
+    testSingleCase(chrono.casual, "Friday of next week", refDate, (result) => {
+        expect(result.text).toBe("Friday of next week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12); // Aug 12
+        expect(result.start.get("weekday")).toBe(5);
+        expect(result.start).toBeDate(new Date(2022, 7, 12, 12));
+    });
+
+    testSingleCase(chrono.casual, "Monday of next week", refDate, (result) => {
+        expect(result.text).toBe("Monday of next week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8); // Aug 8
+        expect(result.start.get("weekday")).toBe(1);
+        expect(result.start).toBeDate(new Date(2022, 7, 8, 12));
+    });
+
+    // --- of last week ---
+
+    testSingleCase(chrono.casual, "Tuesday of last week", refDate, (result) => {
+        expect(result.text).toBe("Tuesday of last week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(26); // Jul 26
+        expect(result.start.get("weekday")).toBe(2);
+        expect(result.start).toBeDate(new Date(2022, 6, 26, 12));
+    });
+
+    testSingleCase(chrono.casual, "Friday of last week", refDate, (result) => {
+        expect(result.text).toBe("Friday of last week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(29); // Jul 29
+        expect(result.start.get("weekday")).toBe(5);
+        expect(result.start).toBeDate(new Date(2022, 6, 29, 12));
+    });
+
+    // --- of this week ---
+
+    testSingleCase(chrono.casual, "Wednesday of this week", refDate, (result) => {
+        expect(result.text).toBe("Wednesday of this week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(3); // Aug 3
+        expect(result.start.get("weekday")).toBe(3);
+        expect(result.start).toBeDate(new Date(2022, 7, 3, 12));
+    });
+
+    testSingleCase(chrono.casual, "Tuesday of this week", refDate, (result) => {
+        expect(result.text).toBe("Tuesday of this week");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(2); // Aug 2 — same day as ref
+        expect(result.start.get("weekday")).toBe(2);
+        expect(result.start).toBeDate(new Date(2022, 7, 2, 12));
+    });
+
+    // --- with time: merges into a single result (the original bug produced two) ---
+
+    testSingleCase(chrono.casual, "Tuesday of next week after 2pm", refDate, (result) => {
+        expect(result.text).toBe("Tuesday of next week after 2pm");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9); // Aug 9
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start).toBeDate(new Date(2022, 7, 9, 14));
+    });
+
+    testSingleCase(chrono.casual, "Friday of next week at 9am", refDate, (result) => {
+        expect(result.text).toBe("Friday of next week at 9am");
+        expect(result.start.get("year")).toBe(2022);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12); // Aug 12
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start).toBeDate(new Date(2022, 7, 12, 9));
+    });
+
+    // --- in sentence context ---
+
+    testSingleCase(
+        chrono.casual,
+        "Let's sync on Tuesday of next week",
+        refDate,
+        (result) => {
+            expect(result.text).toBe("on Tuesday of next week");
+            expect(result.start.get("day")).toBe(9);
+            expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("year")).toBe(2022);
+        }
+    );
+});
+
 test("Test - forward dates only option", () => {
     testSingleCase(
         chrono.casual,
