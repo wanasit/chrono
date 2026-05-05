@@ -12,7 +12,7 @@ const PATTERN = new RegExp(
         "(?:(this|last|past|next)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)}|weekend|weekday)` +
         "(?:\\s*(?:\\,|\\)|\\）))?" +
-        "(?:\\s*(this|last|past|next)\\s*week)?" +
+        "(?:\\s*(?:of\\s*)?(this|last|past|next)\\s*week)?" +
         "(?=\\W|$)",
     "i"
 );
