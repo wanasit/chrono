@@ -557,4 +557,23 @@ test("Test - forward dates only option", () => {
             expect(result.end.get("day")).toBe(21);
         }
     );
+
+    testSingleCase(
+        chrono.casual,
+        "timeoff monday 7 to 9am",
+        new Date("thursday 13 June 2019"),
+        { forwardDate: true },
+        (result) => {
+            expect(result.text).toBe("monday 7 to 9am");
+
+            expect(result.start.get("year")).toBe(2019);
+            expect(result.start.get("month")).toBe(6);
+            expect(result.start.get("day")).toBe(17);
+
+
+            expect(result.end.get("year")).toBe(2019);
+            expect(result.end.get("month")).toBe(6);
+            expect(result.end.get("day")).toBe(17);
+        }
+    );
 });

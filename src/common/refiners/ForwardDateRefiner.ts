@@ -9,6 +9,7 @@ import { ParsingResult } from "../../results";
 import * as dates from "../../utils/dates";
 import { implySimilarDate } from "../../utils/dates";
 import { addDuration } from "../../calculation/duration";
+import { getDaysForwardToWeekday } from "../../calculation/weekdays";
 
 export default class ForwardDateRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
@@ -40,24 +41,17 @@ export default class ForwardDateRefiner implements Refiner {
             }
 
             if (result.start.isOnlyWeekdayComponent() && refDate > result.start.date()) {
-                let daysToAdd = result.start.get("weekday") - refDate.getDay();
-                if (daysToAdd <= 0) {
-                    daysToAdd += 7;
-                }
-                refDate = addDuration(refDate, { day: daysToAdd });
-                implySimilarDate(result.start, refDate);
+                let daysToAdd = getDaysForwardToWeekday(refDate, result.start.get("weekday")) || 7;
+                const forwardedWeekday = addDuration(refDate, { day: daysToAdd });
+                implySimilarDate(result.start, forwardedWeekday);
                 context.debug(() => {
                     console.log(`${this.constructor.name} adjusted ${result} weekday (${result.start})`);
                 });
 
-                if (result.end && result.end.isOnlyWeekdayComponent()) {
-                    // Adjust date to the coming week
-                    let daysToAdd = result.end.get("weekday") - refDate.getDay();
-                    if (daysToAdd <= 0) {
-                        daysToAdd += 7;
-                    }
-                    refDate = addDuration(refDate, { day: daysToAdd });
-                    implySimilarDate(result.end, refDate);
+                if (result.end && result.start.date() > result.end.date()) {
+                    let daysToAdd = getDaysForwardToWeekday(refDate, result.start.get("weekday")) || 7;
+                    const forwardedWeekday = addDuration(refDate, { day: daysToAdd });
+                    implySimilarDate(result.end, forwardedWeekday);
                     context.debug(() => {
                         console.log(`${this.constructor.name} adjusted ${result} weekday (${result.end})`);
                     });
