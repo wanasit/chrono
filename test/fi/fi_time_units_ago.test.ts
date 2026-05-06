@@ -44,19 +44,14 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 0, 14));
     });
 
-    testSingleCase(
-        chrono.fi,
-        "12 tuntia sitten tapahtui jotain",
-        new Date(2012, 7, 10, 12, 14),
-        (result) => {
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("12 tuntia sitten");
-            expect(result.start.get("hour")).toBe(0);
-            expect(result.start.get("minute")).toBe(14);
+    testSingleCase(chrono.fi, "12 tuntia sitten tapahtui jotain", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("12 tuntia sitten");
+        expect(result.start.get("hour")).toBe(0);
+        expect(result.start.get("minute")).toBe(14);
 
-            expect(result.start).toBeDate(new Date(2012, 7, 10, 0, 14));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 0, 14));
+    });
 });
 
 test("Test - Single Expression (Casual)", function () {
@@ -84,20 +79,15 @@ test("Test - Single Expression (Casual)", function () {
         expect(result.start).toBeDate(new Date(2007, 8 - 1, 10, 22, 22));
     });
 
-    testSingleCase(
-        chrono.fi,
-        "yksi viikkoa sitten tehtiin jotain",
-        new Date(2012, 8 - 1, 3, 8, 34),
-        (result) => {
-            expect(result.start).not.toBeNull();
-            expect(result.start.get("year")).toBe(2012);
-            expect(result.start.get("month")).toBe(7);
-            expect(result.start.get("day")).toBe(27);
+    testSingleCase(chrono.fi, "yksi viikkoa sitten tehtiin jotain", new Date(2012, 8 - 1, 3, 8, 34), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(27);
 
-            expect(result.index).toBe(0);
-            expect(result.text).toBe("yksi viikkoa sitten");
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("yksi viikkoa sitten");
 
-            expect(result.start).toBeDate(new Date(2012, 7 - 1, 27, 8, 34));
-        }
-    );
+        expect(result.start).toBeDate(new Date(2012, 7 - 1, 27, 8, 34));
+    });
 });

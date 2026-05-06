@@ -66,7 +66,8 @@ export function mergeDateTimeComponent(
 
     const dateHasMeaningfulMeridiem =
         dateComponent.get("meridiem") != null &&
-        (dateComponent.isCertain("meridiem") || Array.from(dateComponent.tags()).some((t) => t.startsWith("casualReference/")));
+        (dateComponent.isCertain("meridiem") ||
+            Array.from(dateComponent.tags()).some((t) => t.startsWith("casualReference/")));
 
     if (timeComponent.isCertain("meridiem")) {
         dateTimeComponent.assign("meridiem", timeComponent.get("meridiem"));

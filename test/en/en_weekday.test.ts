@@ -439,17 +439,12 @@ test("Test - Weekday 'of next/last/this week' connector", function () {
 
     // --- in sentence context ---
 
-    testSingleCase(
-        chrono.casual,
-        "Let's sync on Tuesday of next week",
-        refDate,
-        (result) => {
-            expect(result.text).toBe("on Tuesday of next week");
-            expect(result.start.get("day")).toBe(9);
-            expect(result.start.get("month")).toBe(8);
-            expect(result.start.get("year")).toBe(2022);
-        }
-    );
+    testSingleCase(chrono.casual, "Let's sync on Tuesday of next week", refDate, (result) => {
+        expect(result.text).toBe("on Tuesday of next week");
+        expect(result.start.get("day")).toBe(9);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("year")).toBe(2022);
+    });
 });
 
 test("Test - forward dates only option", () => {
@@ -569,7 +564,6 @@ test("Test - forward dates only option", () => {
             expect(result.start.get("year")).toBe(2019);
             expect(result.start.get("month")).toBe(6);
             expect(result.start.get("day")).toBe(17);
-
 
             expect(result.end.get("year")).toBe(2019);
             expect(result.end.get("month")).toBe(6);
