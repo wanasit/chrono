@@ -20,6 +20,9 @@
     "source": "./src",
     "test": "./test"
   },
+  "files": [
+    "dist"
+  ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
