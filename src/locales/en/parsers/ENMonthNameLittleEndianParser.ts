@@ -12,7 +12,7 @@ const PATTERN = new RegExp(
     `(?:on\\s{0,3})?` +
         `(${ORDINAL_NUMBER_PATTERN})` +
         `(?:` +
-            `\\s{0,3}(?:to|\\-|\\–|until|through|till)?\\s{0,3}` +
+            `(?:\\s{0,3}(?:to|\\-|\\–|until|through|till)\\s{0,3}|\\s{1,3})` +
             `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
         `(?:-|/|\\s{0,3}(?:of)?\\s{0,3})` +

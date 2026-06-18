@@ -7,6 +7,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 
 const PATTERN = new RegExp(
     `((?:in)\\s*)?` +
+        `(?:([0-9]{4})\\s*[-.\\/]?\\s*)?` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `\\s*` +
         `(?:` +
@@ -17,13 +18,16 @@ const PATTERN = new RegExp(
 );
 
 const PREFIX_GROUP = 1;
-const MONTH_NAME_GROUP = 2;
-const YEAR_GROUP = 3;
+const LEADING_YEAR_GROUP = 2;
+const MONTH_NAME_GROUP = 3;
+const YEAR_GROUP = 4;
 
 /**
  * The parser for parsing month name and year.
  * - January, 2012
  * - January 2012
+ * - 2012 January
+ * - 2012-Jan
  * - January
  * (in) Jan
  */
@@ -35,8 +39,13 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
         const monthName = match[MONTH_NAME_GROUP].toLowerCase();
 
-        // skip some unlikely words "jan", "mar", ..
+        // skip some unlikely words "jan", "mar", .. (unless qualified by a year)
         if (match[0].length <= 3 && !FULL_MONTH_NAME_DICTIONARY[monthName]) {
+            return null;
+        }
+
+        // "2012 January" and "January 2012" cannot both supply a year.
+        if (match[LEADING_YEAR_GROUP] && match[YEAR_GROUP]) {
             return null;
         }
 
@@ -50,8 +59,9 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
         const month = MONTH_DICTIONARY[monthName];
         result.start.assign("month", month);
 
-        if (match[YEAR_GROUP]) {
-            const year = parseYear(match[YEAR_GROUP]);
+        const yearMatch = match[LEADING_YEAR_GROUP] || match[YEAR_GROUP];
+        if (yearMatch) {
+            const year = parseYear(yearMatch);
             result.start.assign("year", year);
         } else {
             const year = findYearClosestToRef(context.refDate, 1, month);
