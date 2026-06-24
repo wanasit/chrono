@@ -48,3 +48,22 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2022, 2 - 1, 13, 12));
     });
 });
+
+// A parsed result must be internally self-consistent: if it reports a certain weekday,
+// that weekday has to match the day-of-week of the date it computed. "[weekday] in N weeks"
+// used to merge the leading weekday onto a relative-offset date, keeping the original weekday
+// while computing the date purely from the offset, so the reported weekday contradicted the
+// date (e.g. weekday=Saturday on a date that is a Wednesday).
+test("Test - Weekday does not contradict a relative-offset date", () => {
+    // Ref date is a Wednesday so "+ N weeks" lands on a Wednesday, never the named weekday.
+    const refWednesday = new Date(2026, 6 - 1, 24, 12);
+
+    const cases = ["Saturday in 3 weeks", "Monday in 2 weeks"];
+    for (const text of cases) {
+        for (const result of chrono.parse(text, refWednesday)) {
+            if (result.start.isCertain("weekday")) {
+                expect(result.start.get("weekday")).toBe(result.start.date().getDay());
+            }
+        }
+    }
+});
