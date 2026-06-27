@@ -179,32 +179,40 @@ test("Test - Calendar Checking", () => {
     }
 });
 
-test("Test - Checking non-existing date during DST skip", () => {
-    // Only CET (or CEST) timezones where the DST starts on "Sunday, March 27, 2022" at "02:00 (2 am) local time"
-    const dateDstPre = new Date(2022, 3 - 1, 27, 2);
-    const dateDstPost = new Date(2022, 3 - 1, 27, 3);
-    if (dateDstPre.getTime() == dateDstPost.getTime()) {
-        const reference = new ReferenceWithTimezone(new Date());
+test("Test - DST-gap times resolve consistently on hosts that observe the gap", () => {
+    // Jest cannot change the process timezone mid-run (assigning process.env.TZ does not invalidate
+    // V8's cached zone). US zones spring forward on 2022-03-13, CET on 2022-03-27.
+    const reference = new ReferenceWithTimezone(new Date());
 
-        // On "Sunday, March 27, 2022" at "02:00 local time", the clock is moved forward to "03:00 local time".
-        // Thus, the time between "02:00 and 02:59:59" does not exist.
-        expect(
-            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 0 }).isValidDate()
-        ).toBe(false);
-        expect(
-            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 1 }).isValidDate()
-        ).toBe(false);
-        expect(
-            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 2, minute: 59 }).isValidDate()
-        ).toBe(false);
+    for (const { month, day } of [
+        { month: 3, day: 13 },
+        { month: 3, day: 27 },
+    ]) {
+        // "02:00" local time is skipped only if the host springs forward on this date.
+        const hostSkipsGap =
+            new Date(2022, month - 1, day, 2).getTime() === new Date(2022, month - 1, day, 3).getTime();
+        if (!hostSkipsGap) continue;
 
-        // Otherwise, it
-        expect(
-            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 1, minute: 59 }).isValidDate()
-        ).toBe(true);
-        expect(
-            new ParsingComponents(reference, { year: 2022, month: 3, day: 27, hour: 3, minute: 0 }).isValidDate()
-        ).toBe(true);
+        // A time in the gap is still a valid calendar date. Before the fix it was rejected on these
+        // hosts, which dropped the result via UnlikelyFormatFilter (see #465).
+        expect(new ParsingComponents(reference, { year: 2022, month, day, hour: 2, minute: 30 }).isValidDate()).toBe(
+            true
+        );
+
+        // With an explicit offset the instant is fully determined and must not depend on the host's
+        // gap: "02:30 +00:00" is 02:30Z. Before the fix this shifted by an hour on these hosts.
+        const inGap = new ParsingComponents(reference, {
+            year: 2022,
+            month,
+            day,
+            hour: 2,
+            minute: 30,
+            second: 0,
+            millisecond: 0,
+            timezoneOffset: 0,
+        });
+        const expected = `2022-03-${String(day).padStart(2, "0")}T02:30:00.000Z`;
+        expect(inGap.date().toISOString()).toBe(expected);
     }
 });
 

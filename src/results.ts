@@ -232,13 +232,26 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     isValidDate(): boolean {
-        const date = this.dateWithoutTimezoneAdjustment();
+        // Check calendar validity in UTC. The local Date constructor would wrongly reject real
+        // times falling in the system timezone's DST gap, making validity depend on where it runs.
+        const date = new Date(
+            Date.UTC(
+                this.get("year"),
+                this.get("month") - 1,
+                this.get("day"),
+                this.get("hour"),
+                this.get("minute"),
+                this.get("second"),
+                this.get("millisecond")
+            )
+        );
+        date.setUTCFullYear(this.get("year"));
 
-        if (date.getFullYear() !== this.get("year")) return false;
-        if (date.getMonth() !== this.get("month") - 1) return false;
-        if (date.getDate() !== this.get("day")) return false;
-        if (this.get("hour") != null && date.getHours() != this.get("hour")) return false;
-        if (this.get("minute") != null && date.getMinutes() != this.get("minute")) return false;
+        if (date.getUTCFullYear() !== this.get("year")) return false;
+        if (date.getUTCMonth() !== this.get("month") - 1) return false;
+        if (date.getUTCDate() !== this.get("day")) return false;
+        if (this.get("hour") != null && date.getUTCHours() != this.get("hour")) return false;
+        if (this.get("minute") != null && date.getUTCMinutes() != this.get("minute")) return false;
 
         return true;
     }
@@ -252,9 +265,27 @@ export class ParsingComponents implements ParsedComponents {
     }
 
     date(): Date {
-        const date = this.dateWithoutTimezoneAdjustment();
-        const timezoneAdjustment = this.reference.getSystemTimezoneAdjustmentMinute(date, this.get("timezoneOffset"));
-        return new Date(date.getTime() + timezoneAdjustment * 60000);
+        const timezoneOffset = this.get("timezoneOffset") ?? this.reference.timezoneOffset;
+        if (timezoneOffset === null || timezoneOffset === undefined) {
+            // No timezone known: interpret the components as system-local time.
+            return this.dateWithoutTimezoneAdjustment();
+        }
+
+        // The offset fully determines the instant, so build it from UTC. The local Date constructor
+        // would be ambiguous for wall-clock times in the system timezone's DST gap/overlap.
+        const date = new Date(
+            Date.UTC(
+                this.get("year"),
+                this.get("month") - 1,
+                this.get("day"),
+                this.get("hour"),
+                this.get("minute"),
+                this.get("second"),
+                this.get("millisecond")
+            )
+        );
+        date.setUTCFullYear(this.get("year"));
+        return new Date(date.getTime() - timezoneOffset * 60000);
     }
 
     addTag(tag: string): ParsingComponents {
