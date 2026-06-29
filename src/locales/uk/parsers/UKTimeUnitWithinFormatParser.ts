@@ -12,7 +12,7 @@ export default class UKTimeUnitWithinFormatParser extends AbstractParserWithWord
 
     innerPattern(context: ParsingContext): RegExp {
         return context.option.forwardDate
-            ? new RegExp(PATTERN, "i")
+            ? new RegExp(PATTERN, REGEX_PARTS.flags)
             : new RegExp(`(?:протягом|на протязі|протягом|упродовж|впродовж)\\s*${PATTERN}`, REGEX_PARTS.flags);
     }
 
