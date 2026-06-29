@@ -320,3 +320,17 @@ test("Test - Random negative text", function () {
 
     testUnexpectedResult(chrono.de, "ljetztlich");
 });
+
+test("Test - Casual time keeps its meridiem when merged with an explicit time", () => {
+    testSingleCase(chrono.de, "nachmittag um 5", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+
+    testSingleCase(chrono.de, "abend um 5", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+});

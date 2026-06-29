@@ -18,12 +18,14 @@ export default class ITCasualTimeParser extends AbstractParserWithWordBoundaryCh
             case "pomeriggio":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 15);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "sera":
             case "notte":
                 component.imply("meridiem", Meridiem.PM);
                 component.imply("hour", 20);
+                component.addTag("casualReference/evening");
                 break;
 
             case "mezzanotte":
@@ -34,16 +36,19 @@ export default class ITCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 0);
                 component.imply("minute", 0);
                 component.imply("second", 0);
+                component.addTag("casualReference/midnight");
                 break;
 
             case "mattina":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 6);
+                component.addTag("casualReference/morning");
                 break;
 
             case "mezzogiorno":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 12);
+                component.addTag("casualReference/noon");
                 break;
         }
 

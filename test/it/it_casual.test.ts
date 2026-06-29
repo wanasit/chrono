@@ -42,3 +42,17 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 11, 17, 10));
     });
 });
+
+test("Test - Casual time keeps its meridiem when merged with an explicit time", () => {
+    testSingleCase(chrono.it, "pomeriggio alle 5", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+
+    testSingleCase(chrono.it, "sera alle 8", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+});
