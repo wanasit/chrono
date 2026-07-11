@@ -24,6 +24,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/morning");
                 break;
 
             case "vormittag":
@@ -31,6 +32,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/morning");
                 break;
 
             case "mittag":
@@ -39,6 +41,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/noon");
                 break;
 
             case "nachmittag":
@@ -46,6 +49,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "abend":
@@ -53,6 +57,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/evening");
                 break;
 
             case "nacht":
@@ -60,6 +65,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/evening");
                 break;
 
             case "mitternacht":
@@ -71,6 +77,7 @@ export default class DECasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/midnight");
                 break;
         }
         return component;

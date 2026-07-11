@@ -298,3 +298,17 @@ test("Test - Combined Expression", function () {
 //     expect(results.length).toBe(0);
 //
 // });
+
+test("Test - Casual time keeps its meridiem when merged with an explicit time", () => {
+    testSingleCase(chrono.fr, "après-midi à 5", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+
+    testSingleCase(chrono.fr, "soir à 8", new Date(2016, 7, 10, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(20);
+        expect(result.start.get("meridiem")).toBe(1);
+    });
+});

@@ -18,29 +18,34 @@ export default class FRCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("hour", 14);
                 component.imply("minute", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "soir":
                 component.imply("hour", 18);
                 component.imply("minute", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/evening");
                 break;
 
             case "matin":
                 component.imply("hour", 8);
                 component.imply("minute", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/morning");
                 break;
 
             case "a midi":
                 component.imply("hour", 12);
                 component.imply("minute", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/noon");
                 break;
 
             case "à minuit":
                 component.imply("hour", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/midnight");
                 break;
         }
 

@@ -25,6 +25,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/morning");
                 break;
 
             case "aamupäivällä":
@@ -32,6 +33,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/morning");
                 break;
 
             case "päivällä":
@@ -39,6 +41,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/noon");
                 break;
 
             case "iltapäivällä":
@@ -46,6 +49,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/afternoon");
                 break;
 
             case "illalla":
@@ -53,6 +57,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/evening");
                 break;
 
             case "yöllä":
@@ -60,6 +65,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.PM);
+                component.addTag("casualReference/evening");
                 break;
 
             case "keskiyöllä":
@@ -71,6 +77,7 @@ export default class FICasualTimeParser extends AbstractParserWithWordBoundaryCh
                 component.imply("minute", 0);
                 component.imply("second", 0);
                 component.imply("meridiem", Meridiem.AM);
+                component.addTag("casualReference/midnight");
                 break;
         }
         return component;
