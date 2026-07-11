@@ -89,6 +89,56 @@ test("Test - Month-Year expression", function () {
     });
 });
 
+test("Test - Year-Month expression (year before month)", function () {
+    testSingleCase(chrono, "2024 Aug", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2024 Aug");
+
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2024, 8 - 1, 1, 12));
+    });
+
+    testSingleCase(chrono, "2024 August", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2024 August");
+
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+    });
+
+    testSingleCase(chrono, "2024-Aug", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2024-Aug");
+
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+    });
+
+    testSingleCase(chrono, "2012 January", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2012 January");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+
+        expect(result.start).toBeDate(new Date(2012, 1 - 1, 1, 12));
+    });
+});
+
 test("Test - Month-Only expression", function () {
     testSingleCase(chrono, "In January", new Date(2020, 11 - 1, 22), (result) => {
         expect(result.text).toContain("January");
