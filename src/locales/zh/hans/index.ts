@@ -10,6 +10,7 @@ import { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Wee
 import ZHHansCasualDateParser from "./parsers/ZHHansCasualDateParser";
 import ZHHansDateParser from "./parsers/ZHHansDateParser";
 import ZHHansDeadlineFormatParser from "./parsers/ZHHansDeadlineFormatParser";
+import ZHHansAgoFormatParser from "./parsers/ZHHansAgoFormatParser";
 import ZHHansRelationWeekdayParser from "./parsers/ZHHansRelationWeekdayParser";
 import ZHHansTimeExpressionParser from "./parsers/ZHHansTimeExpressionParser";
 import ZHHansWeekdayParser from "./parsers/ZHHansWeekdayParser";
@@ -53,6 +54,7 @@ export function createConfiguration(): Configuration {
             new ZHHansWeekdayParser(),
             new ZHHansTimeExpressionParser(),
             new ZHHansDeadlineFormatParser(),
+            new ZHHansAgoFormatParser(),
         ],
         refiners: [new ZHHansMergeDateRangeRefiner(), new ZHHansMergeDateTimeRefiner()],
     });
