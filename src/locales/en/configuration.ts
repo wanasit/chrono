@@ -5,6 +5,7 @@ import ENMonthNameLittleEndianParser from "./parsers/ENMonthNameLittleEndianPars
 import ENMonthNameMiddleEndianParser from "./parsers/ENMonthNameMiddleEndianParser";
 import ENMonthNameParser from "./parsers/ENMonthNameParser";
 import ENYearMonthDayParser from "./parsers/ENYearMonthDayParser";
+import ENYearMonthNameParser from "./parsers/ENYearMonthNameParser";
 import ENSlashMonthFormatParser from "./parsers/ENSlashMonthFormatParser";
 import ENTimeExpressionParser from "./parsers/ENTimeExpressionParser";
 import ENTimeUnitAgoFormatParser from "./parsers/ENTimeUnitAgoFormatParser";
@@ -61,6 +62,7 @@ export default class ENDefaultConfiguration {
                     new ENTimeExpressionParser(strictMode),
                     new ENTimeUnitAgoFormatParser(strictMode),
                     new ENTimeUnitLaterFormatParser(strictMode),
+                    new ENYearMonthNameParser(),
                 ],
                 refiners: [new ENMergeDateTimeRefiner()],
             },

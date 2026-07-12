@@ -293,3 +293,47 @@ test("Test - Month only in different context", () => {
     testUnexpectedResult(chrono.casual, "The mountain may not move");
     testUnexpectedResult(chrono.casual, "May not be correct");
 });
+
+test("Test - Year Month expression", () => {
+    testSingleCase(chrono, "2024 Aug", (result) => {
+        expect(result.text).toBe("2024 Aug");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(false);
+    });
+
+    testSingleCase(chrono, "2024 August", (result) => {
+        expect(result.text).toBe("2024 August");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+    });
+
+    testSingleCase(chrono, "2023 Sept", (result) => {
+        expect(result.text).toBe("2023 Sept");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(1);
+    });
+
+    testSingleCase(chrono, "2024-August", (result) => {
+        expect(result.text).toBe("2024-August");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+    });
+
+    testSingleCase(chrono, "2024/August", (result) => {
+        expect(result.text).toBe("2024/August");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+    });
+
+    testSingleCase(chrono, "2024 AD August", (result) => {
+        expect(result.text).toBe("2024 AD August");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+    });
+});
