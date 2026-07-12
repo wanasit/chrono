@@ -106,3 +106,9 @@ test("Test - fr - relative date", function () {
         expect(result.start.isCertain("second")).toBeFalsy();
     });
 });
+
+test("Test - fr - false positive prevention for single-letter time units", function () {
+    // Test that "la derniere h" in "la derniere homme" doesn't match as "la derniere h" (last hour)
+    // The word boundary check should prevent "h" from matching the time unit "h"
+    testUnexpectedResult(chrono.fr, "la derniere homme");
+});

@@ -16,7 +16,8 @@ export default class FRTimeUnitAgoFormatParser extends AbstractParserWithWordBou
                 `(${NUMBER_PATTERN})?` +
                 `(?:\\s*(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?))?` +
                 `\\s*(${matchAnyPattern(TIME_UNIT_DICTIONARY)})` +
-                `(?:\\s*(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?))?`,
+                `(?:\\s*(prochaine?s?|derni[eè]re?s?|pass[ée]e?s?|pr[ée]c[ée]dents?|suivante?s?))?` +
+                `(?=\\W|$)`,
             "i"
         );
     }
