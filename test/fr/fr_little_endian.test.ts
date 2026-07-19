@@ -318,3 +318,40 @@ test("Test - Impossible Dates", function () {
 
     testUnexpectedResult(chrono.fr, "29 Fevrier", new Date(2013, 7, 10));
 });
+
+test("Test - French Month Abbreviated/Short Names", function () {
+    testSingleCase(chrono.fr, "12 juil. 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(12);
+        expect(result.text).toBe("12 juil. 2012");
+    });
+
+    testSingleCase(chrono.fr, "15 déc. 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(15);
+        expect(result.text).toBe("15 déc. 2012");
+    });
+
+    testSingleCase(chrono.fr, "15 déc 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(15);
+        expect(result.text).toBe("15 déc 2012");
+    });
+
+    testSingleCase(chrono.fr, "1 janv. 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.text).toBe("1 janv. 2012");
+    });
+
+    testSingleCase(chrono.fr, "22 févr. 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(2);
+        expect(result.start.get("day")).toBe(22);
+        expect(result.text).toBe("22 févr. 2012");
+    });
+});
