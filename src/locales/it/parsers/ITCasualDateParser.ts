@@ -4,7 +4,7 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /(ora|oggi|stasera|questa sera|domani|dmn|ieri\s*sera)(?=\W|$)/i;
+const PATTERN = /(adesso|ora|oggi|stasera|stanotte|domani|dopodomani|ieri|ieri\s*sera|ieri\s*notte)(?=\W|$)/i;
 
 export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -14,28 +14,37 @@ export default class ITCasualDateParser extends AbstractParserWithWordBoundaryCh
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
         let targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
-        const component = context.createParsingComponents();
+        let component = context.createParsingComponents();
 
         switch (lowerText) {
+            case "adesso":
             case "ora":
-                return references.now(context.reference);
+                component = references.now(context.reference);
+                break;
 
             case "oggi":
-                return references.today(context.reference);
+                component = references.today(context.reference);
+                break;
 
             case "ieri":
-                return references.yesterday(context.reference);
+                component = references.yesterday(context.reference);
+                break;
 
             case "domani":
-            case "dmn":
-                return references.tomorrow(context.reference);
+                component = references.tomorrow(context.reference);
+                break;
 
             case "stasera":
-            case "questa sera":
-                return references.tonight(context.reference);
+            case "stanotte":
+                component = references.tonight(context.reference);
+                break;
+
+            case "dopodomani":
+                component = references.theDayAfter(context.reference, 2);
+                break;
 
             default:
-                if (lowerText.match(/ieri\s*sera/)) {
+                if (lowerText.match(/ieri\s*sera/) || lowerText.match(/ieri\s*notte/)) {
                     if (targetDate.getHours() > 6) {
                         const previousDay = new Date(targetDate.getTime());
                         previousDay.setDate(previousDay.getDate() - 1);
@@ -45,10 +54,9 @@ export default class ITCasualDateParser extends AbstractParserWithWordBoundaryCh
                     assignSimilarDate(component, targetDate);
                     component.imply("hour", 0);
                 }
-
                 break;
         }
-
+        component.addTag("parser/ITCasualDateParser");
         return component;
     }
 }

@@ -4,19 +4,19 @@ import { parseDuration } from "../constants";
 import { reverseDuration } from "../../../calculation/duration";
 
 function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
-    return result.text.match(/\s+(prima|dal)$/i) != null;
+    return result.text.match(/\s+(prima|da)$/i) != null;
 }
 
 function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
-    return result.text.match(/\s+(dopo|dal|fino)$/i) != null;
+    return result.text.match(/\s+(dopo|dal?)$/i) != null;
 }
 
 /**
- * Merges an absolute date with a relative date.
- * - 2 weeks before 2020-02-13
- * - 2 days after next Friday
+ * Merges a relative data/time that follow by an absolute date.
+ * - [2 settimane prima] [2020-02-13]
+ * - [2 giorni dopo] [venerdì prossimo]
  */
-export default class ENMergeRelativeDateRefiner extends MergingRefiner {
+export default class ITMergeRelativeFollowByDateRefiner extends MergingRefiner {
     patternBetween(): RegExp {
         return /^\s*$/i;
     }
@@ -28,7 +28,7 @@ export default class ENMergeRelativeDateRefiner extends MergingRefiner {
         }
 
         // Check if any relative tokens were swallowed by the first date.
-        // E.g. [<relative_date1> from] [<date2>]
+        // E.g. [<relative_date1> da] [<date2>]
         if (!hasImpliedEarlierReferenceDate(currentResult) && !hasImpliedLaterReferenceDate(currentResult)) {
             return false;
         }
@@ -38,14 +38,14 @@ export default class ENMergeRelativeDateRefiner extends MergingRefiner {
     }
 
     mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): ParsingResult {
-        let timeUnits = parseDuration(currentResult.text);
+        let duration = parseDuration(currentResult.text);
         if (hasImpliedEarlierReferenceDate(currentResult)) {
-            timeUnits = reverseDuration(timeUnits);
+            duration = reverseDuration(duration);
         }
 
         const components = ParsingComponents.createRelativeFromReference(
             ReferenceWithTimezone.fromDate(nextResult.start.date()),
-            timeUnits
+            duration
         );
 
         return new ParsingResult(

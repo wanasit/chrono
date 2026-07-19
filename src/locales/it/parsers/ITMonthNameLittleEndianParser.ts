@@ -9,17 +9,17 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 
 // prettier-ignore
 const PATTERN = new RegExp(
-    `(?:on\\s{0,3})?` +
+    `(?:il\\s{0,3})?` +
         `(${ORDINAL_NUMBER_PATTERN})` +
         `(?:` +
-            `\\s{0,3}(?:al|\\-|\\–|fino|alle|allo)?\\s{0,3}` +
+            `\\s{0,3}(?:al|\\-|\\–|fino\\s*al?)?\\s{0,3}` +
             `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
-        `(?:-|/|\\s{0,3}(?:dal)?\\s{0,3})` +
+        `(?:-|/|\\s{0,3}(?:di)?\\s{0,3})` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         "(?:" +
             `(?:-|/|,?\\s{0,3})` +
-            `(${YEAR_PATTERN}(?![^\\s]\\d))` +
+            `(${YEAR_PATTERN}(?!\\w))` +
         ")?" +
         "(?=\\W|$)",
     "i"
@@ -30,7 +30,7 @@ const DATE_TO_GROUP = 2;
 const MONTH_NAME_GROUP = 3;
 const YEAR_GROUP = 4;
 
-export default class ENMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
+export default class ITMonthNameLittleEndianParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(): RegExp {
         return PATTERN;
     }
@@ -41,7 +41,7 @@ export default class ENMonthNameLittleEndianParser extends AbstractParserWithWor
         const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
         const day = parseOrdinalNumberPattern(match[DATE_GROUP]);
         if (day > 31) {
-            // e.g. "[96 Aug]" => "9[6 Aug]", we need to shift away from the next number
+            // e.g. "[96 Ago]" => "9[6 Ago]", we need to shift away from the next number
             match.index = match.index + match[DATE_GROUP].length;
             return null;
         }
