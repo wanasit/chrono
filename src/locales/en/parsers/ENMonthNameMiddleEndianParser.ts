@@ -60,7 +60,7 @@ export default class ENMonthNameMiddleEndianParser extends AbstractParserWithWor
 
         // Skip the case where the day looks like a year (ex: January 21)
         if (this.shouldSkipYearLikeDate) {
-            if (!match[DATE_TO_GROUP] && !match[YEAR_GROUP] && match[DATE_GROUP].match(/^2[0-5]$/)) {
+            if (!match[DATE_TO_GROUP] && !match[YEAR_GROUP] && match[DATE_GROUP].match(/^\d{2}$/)) {
                 return null;
             }
         }

@@ -133,6 +133,21 @@ test("Test - Single expression with separators", () => {
         expect(result.text).toBe(text);
         expect(result).toBeDate(new Date(2012, 8 - 1, 10, 12, 0));
     });
+
+    testSingleCase(chrono, "09-JAN-2017", new Date(2017, 7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2017, 1 - 1, 9, 12, 0));
+    });
+
+    testSingleCase(chrono, "09/JAN/2017", new Date(2017, 7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2017, 1 - 1, 9, 12, 0));
+    });
+
+    testSingleCase(chrono, "21-APR-16", new Date(2017, 7, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2016, 4 - 1, 21, 12, 0));
+    });
 });
 
 test("Test - Range expression", () => {
