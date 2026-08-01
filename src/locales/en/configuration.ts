@@ -28,6 +28,7 @@ import ENExtractYearSuffixRefiner from "./refiners/ENExtractYearSuffixRefiner";
 import ENUnlikelyFormatFilter from "./refiners/ENUnlikelyFormatFilter";
 import ENEndOfMonthRefiner from "./refiners/ENEndOfMonthRefiner";
 import ENEndOfCurrentMonthParser from "./parsers/ENEndOfCurrentMonthParser";
+import ENEndOfRelativePeriodParser from "./parsers/ENEndOfRelativePeriodParser";
 
 export default class ENDefaultConfiguration {
     /**
@@ -39,6 +40,7 @@ export default class ENDefaultConfiguration {
         option.parsers.push(new ENCasualDateParser());
         option.parsers.push(new ENCasualTimeParser());
         option.parsers.push(new ENEndOfCurrentMonthParser());
+        option.parsers.push(new ENEndOfRelativePeriodParser());
         option.parsers.push(new ENMonthNameParser());
         option.parsers.push(new ENRelativeDateFormatParser());
         option.parsers.push(new ENTimeUnitCasualRelativeFormatParser());

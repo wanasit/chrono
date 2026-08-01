@@ -301,6 +301,16 @@ test("Test - End of named month", () => {
         expect(result.text).toBe(text);
         expect(result.start).toBeDate(new Date(2024, 1, 29, 12));
     });
+
+    testSingleCase(chrono, "end of October next year", new Date(2024, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2025, 9, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of october 2032", new Date(2024, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2032, 9, 31, 12));
+    });
 });
 
 test("Test - Month only in different context", () => {
