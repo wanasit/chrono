@@ -36,6 +36,28 @@ test("Test - 'This' expressions", () => {
     });
 });
 
+test("Test - End of current month", () => {
+    testSingleCase(chrono, "end of the month", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 31, 12));
+    });
+
+    testSingleCase(chrono, "last day of the month", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of month", new Date(2012, 8, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 8, 30, 12));
+    });
+
+    testSingleCase(chrono, "last day of month", new Date(2012, 1, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 1, 29, 12));
+    });
+});
+
 test("Test - Past relative expressions", () => {
     testSingleCase(chrono, "last week", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);

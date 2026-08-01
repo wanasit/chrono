@@ -274,11 +274,33 @@ test("Test - Month should not have timezone", () => {
         "People visiting Buñol towards the end of August get a good chance to participate in La Tomatina (under normal circumstances)",
         new Date(2012, 7, 10),
         (result) => {
-            expect(result.text).toBe("August");
+            expect(result.text).toBe("end of August");
             expect(result.start.get("year")).toBe(2012);
             expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(31);
         }
     );
+});
+
+test("Test - End of named month", () => {
+    testSingleCase(chrono, "end of July", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "last day of July", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of July", new Date(2024, 0, 15), (result) => {
+        expect(result.start).toBeDate(new Date(2023, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of February 2024", new Date(2023, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2024, 1, 29, 12));
+    });
 });
 
 test("Test - Month only in different context", () => {
