@@ -46,6 +46,12 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 11, 1));
     });
 
+    testSingleCase(chrono.es, "La fecha límite es MANANA", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(19);
+        expect(result.text).toBe("MANANA");
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 12));
+    });
+
     testSingleCase(chrono.es, "La fecha límite fue ayer", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(20);
         expect(result.text).toBe("ayer");
@@ -84,6 +90,12 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 6));
     });
 
+    testSingleCase(chrono.es, "La fecha límite fue esta manana ", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(20);
+        expect(result.text).toBe("esta manana");
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6));
+    });
+
     testSingleCase(chrono.es, "La fecha límite fue esta tarde ", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(20);
         expect(result.text).toBe("esta tarde");
@@ -110,6 +122,54 @@ test("Test - Combined Expression", function () {
         expect(result.start.get("hour")).toBe(17);
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 17));
+    });
+
+    testSingleCase(chrono.es, "manana a las 9", new Date(2012, 7, 10, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 9));
+    });
+
+    const morningExpressions = [
+        "mañana a la mañana",
+        "manana a la manana",
+        "mañana en la mañana",
+        "manana en la manana",
+        "MANANA A LA MANANA",
+        "Mañana En La Mañana",
+    ];
+    morningExpressions.forEach((expression) => {
+        testSingleCase(chrono.es, expression, new Date(2012, 7, 10, 12), (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2012, 7, 11, 6));
+        });
+    });
+
+    testSingleCase(chrono.es, "Recordatorio: manana en la manana, por favor", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(14);
+        expect(result.text).toBe("manana en la manana");
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 6));
+    });
+});
+
+test("Test - Morning connector context", function () {
+    testSingleCase(chrono.es, "a la mañana", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(5);
+        expect(result.text).toBe("mañana");
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6));
+    });
+
+    testSingleCase(chrono.es, "en la manana", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(6);
+        expect(result.text).toBe("manana");
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 6));
+    });
+
+    ["para la mañana", "España la mañana"].forEach((expression) => {
+        testSingleCase(chrono.es, expression, new Date(2012, 7, 10, 12), (result) => {
+            expect(result.index).toBe(expression.lastIndexOf("mañana"));
+            expect(result.text).toBe("mañana");
+            expect(result.start).toBeDate(new Date(2012, 7, 11, 12));
+        });
     });
 });
 
@@ -166,6 +226,10 @@ test("Test - Random negative text", function () {
     testUnexpectedResult(chrono.es, "nohoy");
 
     testUnexpectedResult(chrono.es, "hymañana");
+
+    testUnexpectedResult(chrono.es, "hymanana");
+
+    testUnexpectedResult(chrono.es, "mananan");
 
     testUnexpectedResult(chrono.es, "xayer");
 
