@@ -114,3 +114,43 @@ test("Test - Range Expression", function () {
         }
     });
 });
+
+test("Test - Date expression at the beginning of the text", function () {
+    // The leading Chinese numeral must not be consumed as a word boundary.
+    testSingleCase(chrono.zh.hant, "十一月十日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十一月十日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(10);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 11 - 1, 10, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "十二月十日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十二月十日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(10);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 12 - 1, 10, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "十月十日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十月十日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(10);
+    });
+});

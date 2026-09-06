@@ -7,6 +7,12 @@ const MONTH_GROUP = 2;
 const DAY_GROUP = 3;
 
 export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChecking {
+    patternLeftBoundary(): string {
+        // Return a capturing group to ensure that the match index is correct in the base class
+        // while avoiding matching CJK characters as word boundaries.
+        return "()";
+    }
+
     innerPattern() {
         // prettier-ignore
         return new RegExp(

@@ -134,3 +134,33 @@ test("Test - Single Expression", function () {
         expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
     });
 });
+
+test("Test - Deadline expression at the beginning of the text", function () {
+    // The leading Chinese numeral must not be consumed as a word boundary.
+    testSingleCase(chrono.zh.hant, "十五天後", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十五天後");
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 25, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "二十天後", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("二十天後");
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 30, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "十天後", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十天後");
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 7, 20, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
