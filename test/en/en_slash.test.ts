@@ -140,6 +140,46 @@ test("Test - Single Expression Shorten (mm/yyyy)", () => {
     });
 });
 
+test.each(["casual", "strict", "GB"] as const)("Test - Skip month/year suffix of an invalid date (%s)", (mode) => {
+    const parser = chrono.en[mode];
+    const refDate = new Date(2018, 0, 1);
+    for (const text of ["50/6/2018", "99/06/2018", "The deadline is 123/6/2018"]) {
+        testUnexpectedResult(parser, text, refDate);
+    }
+});
+
+test.each(["casual", "strict", "GB"] as const)("Test - Preserve complete slash dates and month/year (%s)", (mode) => {
+    const parser = chrono.en[mode];
+    const refDate = new Date(2018, 0, 1);
+    for (const text of ["6/2018", "Scheduled (6/2018)", "Published: 6/2018"]) {
+        testSingleCase(parser, text, refDate, (result) => {
+            expect(result.index).toBe(text.indexOf("6/2018"));
+            expect(result.text).toBe("6/2018");
+            expect(result.start.get("year")).toBe(2018);
+            expect(result.start.get("month")).toBe(6);
+            expect(result.start.get("day")).toBe(1);
+            expect(result.start.isCertain("day")).toBe(false);
+        });
+    }
+
+    testSingleCase(parser, "16/6/2018", refDate, (result) => {
+        expect(result.text).toBe("16/6/2018");
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.isCertain("day")).toBe(true);
+    });
+
+    const text = "50/6/2018; next date: 7/2019";
+    testSingleCase(parser, text, refDate, (result) => {
+        expect(result.index).toBe(text.indexOf("7/2019"));
+        expect(result.text).toBe("7/2019");
+        expect(result.start.get("year")).toBe(2019);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(1);
+    });
+});
+
 test("Test - Single Expression Shorten (dd/mm)", () => {
     testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();

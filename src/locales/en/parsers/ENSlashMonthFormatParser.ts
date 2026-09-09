@@ -17,7 +17,13 @@ export default class ENSlashMonthFormatParser extends AbstractParserWithWordBoun
         return PATTERN;
     }
 
-    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents {
+    innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | null {
+        // Do not extract a month/year suffix from an invalid numeric date (e.g. "50/6/2018").
+        // Parsing can also resume within a rejected match, so check the original text.
+        if (/\d\/?$/.test(context.text.substring(0, match.index))) {
+            return null;
+        }
+
         const year = parseInt(match[YEAR_GROUP]);
         const month = parseInt(match[MONTH_GROUP]);
 
