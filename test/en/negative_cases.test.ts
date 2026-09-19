@@ -80,9 +80,12 @@ test("Test - Skip version number pattern", () => {
     testUnexpectedResult(chrono, "Version: 1.10.30");
 });
 
-test("Test - Skip incorrect reference", () => {
-    testUnexpectedResult(chrono, "for the year");
-});
+test.each(["for the year", "For the year", "FOR THE YEAR", "for The Year"])(
+    "Test - Skip incorrect reference (%s)",
+    (text) => {
+        testUnexpectedResult(chrono, text, new Date(2025, 0, 1));
+    }
+);
 
 test("Test - Date with version number pattern", () => {
     testSingleCase(chrono.en, "1.5.3 - 2015-09-24", (result) => {
