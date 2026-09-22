@@ -89,6 +89,15 @@ test("Test - Month-Year expression", function () {
     });
 });
 
+test("Test - Month-Year expression after uppercase non-date text", () => {
+    const text = "STATEMENT OF COMPREHENSIVE INCOME FOR THE YEAR ENDED Dec. 2021";
+    testSingleCase(chrono, text, new Date(2025, 0, 1), (result) => {
+        expect(result.index).toBe(53);
+        expect(result.text).toBe("Dec. 2021");
+        expect(result.start).toBeDate(new Date(2021, 11, 1, 12));
+    });
+});
+
 test("Test - Month-Only expression", function () {
     testSingleCase(chrono, "In January", new Date(2020, 11 - 1, 22), (result) => {
         expect(result.text).toContain("January");
