@@ -2,12 +2,21 @@
   
 */
 
-import { ParsingResult } from "../../results";
+import { ParsingComponents, ParsingResult } from "../../results";
+import { Component } from "../../types";
 import { MergingRefiner } from "../abstractRefiners";
 import { addDuration } from "../../calculation/duration";
 
 export default abstract class AbstractMergeDateRangeRefiner extends MergingRefiner {
     abstract patternBetween(): RegExp;
+
+    /**
+     * Whether one side of the range takes a component that only the other side states ("Aug 10 - 15" gives
+     * "15" its month).
+     */
+    protected shouldCopyComponent(key: Component, target: ParsingComponents): boolean {
+        return !target.isCertain(key);
+    }
 
     shouldMergeResults(textBetween, currentResult, nextResult): boolean {
         return !currentResult.end && !nextResult.end && textBetween.match(this.patternBetween()) != null;
@@ -16,13 +25,13 @@ export default abstract class AbstractMergeDateRangeRefiner extends MergingRefin
     mergeResults(textBetween, fromResult, toResult): ParsingResult {
         if (!fromResult.start.isOnlyWeekdayComponent() && !toResult.start.isOnlyWeekdayComponent()) {
             toResult.start.getCertainComponents().forEach((key) => {
-                if (!fromResult.start.isCertain(key)) {
+                if (this.shouldCopyComponent(key, fromResult.start)) {
                     fromResult.start.imply(key, toResult.start.get(key));
                 }
             });
 
             fromResult.start.getCertainComponents().forEach((key) => {
-                if (!toResult.start.isCertain(key)) {
+                if (this.shouldCopyComponent(key, toResult.start)) {
                     toResult.start.imply(key, fromResult.start.get(key));
                 }
             });

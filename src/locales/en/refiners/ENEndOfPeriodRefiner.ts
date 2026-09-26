@@ -1,6 +1,5 @@
 import { ParsingContext, Refiner } from "../../../chrono";
 import { ParsingResult } from "../../../results";
-import { findYearClosestToRef } from "../../../calculation/years";
 
 const PREFIX_PATTERN = /\b(?:last\s+day|end)\s+of\s+(?:the\s+)?$/i;
 const RELATIVE_PERIOD_PATTERN = /^(this|last|past|next)\s*(week|month|year)$/i;
@@ -14,7 +13,9 @@ function modifierOffset(modifier: string): number {
  * Moves a result preceded by "end of" or "last day of" to the last day of its period.
  * A relative period ("next week", "this year") comes from the relative parsers. Its end follows from the reference
  * date and the modifier alone, so it is computed from those rather than from the day the relative parser picked.
- * A named month ("July", "February 2024") has a certain month and no certain day.
+ * A named month ("July", "February 2024") has a certain month and no certain day, and keeps the year its parser chose.
+ * The day is implied: the text names a period, not a day, and a range ("from July to end of August") must not copy it
+ * into the other end.
  */
 export default class ENEndOfPeriodRefiner implements Refiner {
     refine(context: ParsingContext, results: ParsingResult[]): ParsingResult[] {
@@ -70,7 +71,8 @@ export default class ENEndOfPeriodRefiner implements Refiner {
             lastDay = new Date(referenceDate.getFullYear() + offset, 11, 31);
         }
 
-        result.start.assign("day", lastDay.getDate());
+        result.start.delete("day");
+        result.start.imply("day", lastDay.getDate());
         result.start.assign("month", lastDay.getMonth() + 1);
         result.start.assign("year", lastDay.getFullYear());
         result.start.delete("weekday");
@@ -90,12 +92,6 @@ export default class ENEndOfPeriodRefiner implements Refiner {
             result.text += suffix[0];
         }
 
-        if (!result.start.isCertain("year")) {
-            const lastDayInReferenceYear = new Date(year, month, 0).getDate();
-            year = findYearClosestToRef(context.reference.getDateWithAdjustedTimezone(), lastDayInReferenceYear, month);
-            result.start.imply("year", year);
-        }
-
-        result.start.assign("day", new Date(year, month, 0).getDate());
+        result.start.imply("day", new Date(year, month, 0).getDate());
     }
 }

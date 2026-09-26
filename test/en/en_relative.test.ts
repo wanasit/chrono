@@ -121,6 +121,22 @@ test("Test - End of relative period", () => {
     });
 });
 
+test("Test - End of relative period in a range", () => {
+    testSingleCase(chrono, "from this week to end of next week", new Date(2024, 8 - 1, 7, 15), (result) => {
+        expect(result.text).toBe("this week to end of next week");
+        expect(result.start.get("day")).toBe(4);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.end).toBeDate(new Date(2024, 8 - 1, 17, 12));
+    });
+
+    testSingleCase(chrono, "from next month to end of next year", new Date(2024, 8 - 1, 7, 15), (result) => {
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.end).toBeDate(new Date(2025, 12 - 1, 31, 12));
+    });
+});
+
 test("Test - Past relative expressions", () => {
     testSingleCase(chrono, "last week", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);
