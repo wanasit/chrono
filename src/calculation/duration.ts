@@ -65,9 +65,11 @@ export function addDuration(ref: Date, duration: Duration): Date {
         delete duration["ms"];
     }
 
+    // Years, quarters, and months are added in one step, so only the final month limits the day
+    let months = 0;
     if ("year" in duration) {
         const floor = Math.floor(duration["year"]);
-        date.setFullYear(date.getFullYear() + floor);
+        months += floor * 12;
         const remainingFraction = duration["year"] - floor;
         if (remainingFraction > 0) {
             duration.month = duration?.month ?? 0;
@@ -76,16 +78,19 @@ export function addDuration(ref: Date, duration: Duration): Date {
     }
     if ("quarter" in duration) {
         const floor = Math.floor(duration["quarter"]);
-        date.setMonth(date.getMonth() + floor * 3);
+        months += floor * 3;
     }
     if ("month" in duration) {
         const floor = Math.floor(duration["month"]);
-        date.setMonth(date.getMonth() + floor);
+        months += floor;
         const remainingFraction = duration["month"] - floor;
         if (remainingFraction > 0) {
             duration.week = duration?.week ?? 0;
             duration.week += remainingFraction * 4;
         }
+    }
+    if (months !== 0) {
+        addMonthsWithinTargetMonth(date, months);
     }
     if ("week" in duration) {
         const floor = Math.floor(duration["week"]);
@@ -137,6 +142,22 @@ export function addDuration(ref: Date, duration: Duration): Date {
         date.setMilliseconds(date.getMilliseconds() + floor);
     }
     return date;
+}
+
+/**
+ * Adds `months` to `date` in place, keeping the day within the target month (Jan 31 + 1 month is Feb 28, not Mar 3).
+ * Month and day change in one call, so the time never passes through a day where it falls in a DST gap.
+ */
+function addMonthsWithinTargetMonth(date: Date, months: number) {
+    const targetMonth = date.getMonth() + months;
+    date.setMonth(targetMonth, Math.min(date.getDate(), daysInMonth(date.getFullYear(), targetMonth)));
+}
+
+function daysInMonth(year: number, month: number): number {
+    // UTC has no DST, and setUTCFullYear keeps years below 100 as they are
+    const lastDay = new Date(0);
+    lastDay.setUTCFullYear(year, month + 1, 0);
+    return lastDay.getUTCDate();
 }
 
 /**

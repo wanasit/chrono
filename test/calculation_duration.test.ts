@@ -99,6 +99,66 @@ test("Test - Adding Duration w/ multiple timeunits", () => {
     }
 });
 
+test("Test - Adding Duration w/ months past the end of the target month", () => {
+    {
+        const reference = new Date("Tue, Jan 31 2023 12:52:11");
+        const output = addDuration(reference, { "month": 1 });
+        expect(output).toStrictEqual(new Date("Tue, Feb 28 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Wed, Jan 31 2024 12:52:11");
+        const output = addDuration(reference, { "month": 1 });
+        expect(output).toStrictEqual(new Date("Thu, Feb 29 2024 12:52:11"));
+    }
+    {
+        const reference = new Date("Sun, Dec 31 2023 12:52:11");
+        const output = addDuration(reference, { "month": -1 });
+        expect(output).toStrictEqual(new Date("Thu, Nov 30 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Thu, Aug 31 2023 12:52:11");
+        const output = addDuration(reference, { "quarter": 1 });
+        expect(output).toStrictEqual(new Date("Thu, Nov 30 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Thu, Feb 29 2024 12:52:11");
+        const output = addDuration(reference, { "year": 1 });
+        expect(output).toStrictEqual(new Date("Fri, Feb 28 2025 12:52:11"));
+    }
+    {
+        const reference = new Date("Thu, Feb 29 2024 12:52:11");
+        const output = addDuration(reference, { "year": 1, "month": 1 });
+        expect(output).toStrictEqual(new Date("Sat, Mar 29 2025 12:52:11"));
+    }
+    {
+        const reference = new Date("Tue, Jan 31 2023 12:52:11");
+        const output = addDuration(reference, { "month": 1, "day": 1 });
+        expect(output).toStrictEqual(new Date("Wed, Mar 1 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Sun, May 31 2023 12:52:11");
+        const output = addDuration(reference, { "quarter": -1 });
+        expect(output).toStrictEqual(new Date("Tue, Feb 28 2023 12:52:11"));
+    }
+    {
+        const reference = new Date("Thu, Feb 29 2024 12:52:11");
+        const output = addDuration(reference, { "year": -1 });
+        expect(output).toStrictEqual(new Date("Tue, Feb 28 2023 12:52:11"));
+    }
+    {
+        // The fraction becomes 2 weeks, added after the day is capped to Feb 28
+        const reference = new Date("Tue, Jan 31 2023 12:52:11");
+        const output = addDuration(reference, { "month": 1.5 });
+        expect(output).toStrictEqual(new Date("Tue, Mar 14 2023 12:52:11"));
+    }
+    {
+        // US timezones skipped 02:00 to 03:00 on Apr 1, 2001, so the time must not pass through that day
+        const reference = new Date("Thu, Mar 15 2001 02:30:00");
+        expect(addDuration(reference, { "month": 1 })).toStrictEqual(new Date("Sun, Apr 15 2001 02:30:00"));
+        expect(addDuration(new Date("Sun, Apr 15 2001 02:30:00"), { "month": -1 })).toStrictEqual(reference);
+    }
+});
+
 test("Test - Adding Duration w/ fractions", () => {
     {
         // 0.5 year (aka. half year) => 6 months
