@@ -306,14 +306,14 @@ test("Test - Relative date components' certainty", () => {
     });
 
     testSingleCase(chrono, "next month", refDate, (result, text) => {
-        //const expectedDate = new Date(2016, 11, 7, 12);
+        const expectedDate = new Date(2016, 11 - 1, 7, 12);
 
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
         expect(result.start.get("month")).toBe(11);
         expect(result.start.get("day")).toBe(7);
         expect(result.start.get("hour")).toBe(12);
-        //expect(result.start.get("timezoneOffset")).toBe(-expectedDate.getTimezoneOffset());
+        expect(result.start).toBeDate(expectedDate);
 
         expect(result.start.isCertain("year")).toBe(true);
         expect(result.start.isCertain("month")).toBe(true);
@@ -399,6 +399,42 @@ test("Test - Relative date when the timezone is relevant but unknown", () => {
     expect(result.start.get("month")).toBe(11);
     expect(result.start.get("day")).toBe(30);
     expect(result.start.get("hour")).toBe(17);
+});
+
+test("Test - Relative date across a DST change in the system timezone", () => {
+    // Mid-January to mid-July crosses a DST change in both hemispheres, so these only fail on a system timezone with DST
+    const refDate = new Date(2024, 1 - 1, 15, 12);
+
+    testSingleCase(chrono, "in 6 months", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 7 - 1, 15, 12));
+    });
+
+    testSingleCase(chrono, "6 months ago", new Date(2024, 7 - 1, 15, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 1 - 1, 15, 12));
+    });
+
+    testSingleCase(chrono, "in 6 months at 9am", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 7 - 1, 15, 9));
+    });
+
+    testSingleCase(chrono, "in 26 weeks", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 7 - 1, 15, 12));
+    });
+
+    testSingleCase(chrono, "in 180 days", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 7 - 1, 13, 12));
+    });
+
+    // Hours count elapsed time, so the local time shifts by the DST change
+    testSingleCase(chrono, "in 4380 hours", refDate, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(refDate.getTime() + 4380 * 60 * 60 * 1000));
+    });
 });
 
 test("Test - Relative date when the timezone is relevant and known", () => {
