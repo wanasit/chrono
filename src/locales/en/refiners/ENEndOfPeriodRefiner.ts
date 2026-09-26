@@ -12,8 +12,8 @@ function modifierOffset(modifier: string): number {
 
 /**
  * Moves a result preceded by "end of" or "last day of" to the last day of its period.
- * A relative period ("next week", "this year") comes from the relative parsers. Its end is computed from the
- * reference date, because the relative parsers add months with overflow ("next month" on Jan 31 is Mar 3).
+ * A relative period ("next week", "this year") comes from the relative parsers. Its end follows from the reference
+ * date and the modifier alone, so it is computed from those rather than from the day the relative parser picked.
  * A named month ("July", "February 2024") has a certain month and no certain day.
  */
 export default class ENEndOfPeriodRefiner implements Refiner {
