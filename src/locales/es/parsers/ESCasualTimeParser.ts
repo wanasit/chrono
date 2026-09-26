@@ -5,7 +5,7 @@ import { assignSimilarDate, implySimilarTime } from "../../../utils/dates";
 
 export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern() {
-        return /(?:esta\s*)?(mañana|tarde|medianoche|mediodia|mediodía|noche)(?=\W|$)/i;
+        return /(?:esta\s*)?(mañana|manana|tarde|medianoche|mediodia|mediodía|noche)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray) {
@@ -25,6 +25,7 @@ export default class ESCasualTimeParser extends AbstractParserWithWordBoundaryCh
                 break;
 
             case "mañana":
+            case "manana":
                 component.imply("meridiem", Meridiem.AM);
                 component.imply("hour", 6);
                 component.addTag("casualReference/morning");
