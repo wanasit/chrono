@@ -26,9 +26,8 @@ import ENMergeRelativeFollowByDateRefiner from "./refiners/ENMergeRelativeFollow
 import OverlapRemovalRefiner from "../../common/refiners/OverlapRemovalRefiner";
 import ENExtractYearSuffixRefiner from "./refiners/ENExtractYearSuffixRefiner";
 import ENUnlikelyFormatFilter from "./refiners/ENUnlikelyFormatFilter";
-import ENEndOfMonthRefiner from "./refiners/ENEndOfMonthRefiner";
+import ENEndOfPeriodRefiner from "./refiners/ENEndOfPeriodRefiner";
 import ENEndOfCurrentMonthParser from "./parsers/ENEndOfCurrentMonthParser";
-import ENEndOfRelativePeriodParser from "./parsers/ENEndOfRelativePeriodParser";
 
 export default class ENDefaultConfiguration {
     /**
@@ -40,11 +39,10 @@ export default class ENDefaultConfiguration {
         option.parsers.push(new ENCasualDateParser());
         option.parsers.push(new ENCasualTimeParser());
         option.parsers.push(new ENEndOfCurrentMonthParser());
-        option.parsers.push(new ENEndOfRelativePeriodParser());
         option.parsers.push(new ENMonthNameParser());
         option.parsers.push(new ENRelativeDateFormatParser());
         option.parsers.push(new ENTimeUnitCasualRelativeFormatParser());
-        option.refiners.unshift(new ENEndOfMonthRefiner());
+        option.refiners.unshift(new ENEndOfPeriodRefiner());
         option.refiners.push(new ENUnlikelyFormatFilter());
         return option;
     }
