@@ -77,6 +77,11 @@ export function addDuration(ref: Date, duration: Duration): Date {
     if ("quarter" in duration) {
         const floor = Math.floor(duration["quarter"]);
         date.setMonth(date.getMonth() + floor * 3);
+        const remainingFraction = duration["quarter"] - floor;
+        if (remainingFraction > 0) {
+            duration.month = duration?.month ?? 0;
+            duration.month += remainingFraction * 3;
+        }
     }
     if ("month" in duration) {
         const floor = Math.floor(duration["month"]);
