@@ -25,10 +25,15 @@ export default class MergeWeekdayComponentRefiner extends MergingRefiner {
     }
 
     shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
+        // A relative-offset date (e.g. "in 3 weeks") already resolves its own day-of-week from
+        // the computed date, so stamping the leading weekday onto it would contradict that date
+        // (e.g. weekday=Saturday on a date that is a Wednesday). Only merge the weekday into an
+        // explicitly stated date, where the user-supplied weekday is meant to label/disambiguate.
         const weekdayThenNormalDate =
             currentResult.start.isOnlyWeekdayComponent() &&
             !currentResult.start.isCertain("hour") &&
-            nextResult.start.isCertain("day");
+            nextResult.start.isCertain("day") &&
+            !nextResult.start.tags().has("result/relativeDate");
         return weekdayThenNormalDate && textBetween.match(/^,?\s*$/) != null;
     }
 }
