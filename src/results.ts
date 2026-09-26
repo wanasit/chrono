@@ -8,13 +8,24 @@ export class ReferenceWithTimezone {
     readonly instant: Date;
     readonly timezoneOffset?: number | null;
 
-    constructor(instant?: Date, timezoneOffset?: number) {
+    constructor(instant?: Date, timezoneOffset?: number | null) {
         this.instant = instant ?? new Date();
         this.timezoneOffset = timezoneOffset ?? null;
     }
 
     static fromDate(date: Date): ReferenceWithTimezone {
         return new ReferenceWithTimezone(date);
+    }
+
+    /**
+     * A reference at the result's date, in the timezone the result states or else the one it was parsed with,
+     * so a relative date counted from it ("2 weeks after ...") follows that timezone instead of the system's.
+     */
+    static fromResult(result: ParsingResult): ReferenceWithTimezone {
+        const timezoneOffset = result.start.isCertain("timezoneOffset")
+            ? result.start.get("timezoneOffset")
+            : result.reference.timezoneOffset;
+        return new ReferenceWithTimezone(result.start.date(), timezoneOffset);
     }
 
     static fromInput(input?: ParsingReference | Date, timezoneOverrides?: TimezoneAbbrMap) {
@@ -99,7 +110,11 @@ export class ParsingComponents implements ParsedComponents {
             components.assign("timezoneOffset", reference.getTimezoneOffset());
         } else {
             implySimilarTime(components, date);
-            components.imply("timezoneOffset", reference.getTimezoneOffset());
+            // Days and longer keep the local time. Without a reference timezone the offset stays open, so the result
+            // takes the system's offset at its own date and time, not the reference's, across a DST change.
+            if (reference.timezoneOffset !== null) {
+                components.imply("timezoneOffset", reference.timezoneOffset);
+            }
 
             if ("day" in duration) {
                 components.assign("day", date.getDate());
