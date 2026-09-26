@@ -132,6 +132,38 @@ test("Test - Time expression before date", () => {
     });
 });
 
+test("Test - A bare number followed by a colon should not merge backwards over the date that follows", () => {
+    // "24:" here is a stray label, not "24:00" written with a colon and no minutes. Before the fix,
+    // this bare hour would greedily merge with "July 23, 2026" across the colon, produce an invalid
+    // 24 o'clock result, and get dropped entirely, taking the date with it and leaving only "at 3:30 PM".
+    testSingleCase(chrono.strict, "24: July 23, 2026 at 3:30 PM", new Date(2026, 7 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe("July 23, 2026 at 3:30 PM");
+        expect(text).not.toBe(result.text);
+
+        expect(result.start.get("year")).toBe(2026);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(23);
+
+        expect(result.start.get("hour")).toBe(15);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    // The forward direction ("date:time", no space) must keep working, since that's the case the
+    // colon connector was added for in the first place.
+    testSingleCase(chrono, "05/31/2024:14:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(5);
+        expect(result.start.get("day")).toBe(31);
+
+        expect(result.start.get("hour")).toBe(14);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.get("meridiem")).toBe(Meridiem.PM);
+    });
+});
+
 test("Test - Time range expression", function () {
     testSingleCase(chrono, "10:00:00 - 21:45:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
