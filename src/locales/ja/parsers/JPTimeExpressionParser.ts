@@ -1,6 +1,6 @@
 import { ParsingContext } from "../../../chrono";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
-import { Meridiem, ParsedComponents } from "../../../types";
+import { Meridiem } from "../../../types";
 import { NUMBER, jaStringToNumber, toHankaku } from "../constants";
 import { ParsingComponents } from "../../../results";
 

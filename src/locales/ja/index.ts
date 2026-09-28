@@ -7,10 +7,18 @@
 import JPStandardParser from "./parsers/JPStandardParser";
 import JPMergeDateRangeRefiner from "./refiners/JPMergeDateRangeRefiner";
 import JPCasualDateParser from "./parsers/JPCasualDateParser";
+import JPDayPartParser from "./parsers/JPDayPartParser";
 import JPWeekdayParser from "./parsers/JPWeekdayParser";
 import JPSlashDateFormatParser from "./parsers/JPSlashDateFormatParser";
 import JPTimeExpressionParser from "./parsers/JPTimeExpressionParser";
+import JPHolidayParser from "./parsers/JPHolidayParser";
+import JPMonthNameParser from "./parsers/JPMonthNameParser";
+import JPRelativeDateFormatParser from "./parsers/JPRelativeDateFormatParser";
 import JPMergeDateTimeRefiner from "./refiners/JPMergeDateTimeRefiner";
+import JPMergeMonthYearRefiner from "./refiners/JPMergeMonthYearRefiner";
+import JPMergeDayPartRefiner from "./refiners/JPMergeDayPartRefiner";
+import JPBlockDoubleYearFilter from "./refiners/JPBlockDoubleYearFilter";
+import JPBlockDatePartStrictFilter from "./refiners/JPBlockDatePartStrictFilter";
 
 import { Chrono, Configuration, Parser, Refiner } from "../../chrono";
 import { ParsingResult, ParsingComponents, ReferenceWithTimezone } from "../../results";
@@ -41,6 +49,8 @@ export function parseDate(text: string, ref?: ParsingReference | Date, option?: 
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration(false);
     option.parsers.unshift(new JPCasualDateParser());
+    option.parsers.unshift(new JPHolidayParser());
+    option.parsers.unshift(new JPRelativeDateFormatParser());
     return option;
 }
 
@@ -52,15 +62,21 @@ export function createConfiguration(strictMode = true): Configuration {
         {
             parsers: [
                 new JPStandardParser(),
+                new JPMonthNameParser(strictMode),
                 new JPWeekdayParser(),
                 new JPWeekdayWithParenthesesParser(),
                 new JPSlashDateFormatParser(),
+                new JPDayPartParser(strictMode),
                 new JPTimeExpressionParser(),
             ],
             refiners: [
                 new JPMergeWeekdayComponentRefiner(), // Note: should be before JPMergeDateTimeRefiner and JPMergeDateRangeRefiner
+                new JPMergeMonthYearRefiner(),
+                new JPMergeDayPartRefiner(),
+
                 new JPMergeDateTimeRefiner(),
                 new JPMergeDateRangeRefiner(),
+                new JPBlockDoubleYearFilter(),
             ],
         },
         strictMode
@@ -70,6 +86,9 @@ export function createConfiguration(strictMode = true): Configuration {
     configuration.refiners = configuration.refiners.filter(
         (refiner) => !(refiner instanceof MergeWeekdayComponentRefiner)
     );
+    if (strictMode) {
+        configuration.refiners.push(new JPBlockDatePartStrictFilter());
+    }
 
     return configuration;
 }
