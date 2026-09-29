@@ -20,8 +20,9 @@ import * as it from "./locales/it";
 import * as sv from "./locales/sv";
 import * as fi from "./locales/fi";
 import * as vi from "./locales/vi";
+import * as id from "./locales/id";
 
-export { de, fr, ja, pt, nl, zh, ru, es, uk, it, sv, fi, vi };
+export { de, fr, ja, pt, nl, zh, ru, es, uk, it, sv, fi, vi, id };
 
 /**
  * A shortcut for {@link en | chrono.en.strict}
