@@ -13,6 +13,7 @@ import IDCasualDateParser from "./parsers/IDCasualDateParser";
 import IDCasualTimeParser from "./parsers/IDCasualTimeParser";
 import IDMonthNameLittleEndianParser from "./parsers/IDMonthNameLittleEndianParser";
 import IDMonthNameParser from "./parsers/IDMonthNameParser";
+import IDMonthNameMiddleEndianParser from "./parsers/IDMonthNameMiddleEndianParser";
 import IDWeekdayParser from "./parsers/IDWeekdayParser";
 import IDTimeExpressionParser from "./parsers/IDTimeExpressionParser";
 import IDTimeUnitAgoFormatParser from "./parsers/IDTimeUnitAgoFormatParser";
@@ -62,6 +63,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
             parsers: [
                 new SlashDateFormatParser(littleEndian),
                 new IDMonthNameLittleEndianParser(),
+                new IDMonthNameMiddleEndianParser(),
                 new IDWeekdayParser(),
                 new IDTimeExpressionParser(strictMode),
                 new IDTimeUnitWithinFormatParser(),

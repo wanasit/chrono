@@ -63,6 +63,44 @@ test("Test - Day and month name range", () => {
     });
 });
 
+test("Test - Month name and day", () => {
+    testSingleCase(chrono.id, "September 23, 2026", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("September 23, 2026");
+        expect(result.start.get("year")).toBe(2026);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(23);
+        expect(result.start).toBeDate(new Date(2026, 8, 23, 12));
+    });
+
+    testSingleCase(chrono.id, "Rapatnya Januari 5 2024 di kantor", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(9);
+        expect(result.text).toBe("Januari 5 2024");
+        expect(result.start).toBeDate(new Date(2024, 0, 5, 12));
+    });
+
+    testSingleCase(chrono.id, "Acaranya Nov 10", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(9);
+        expect(result.text).toBe("Nov 10");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.isCertain("year")).toBe(false);
+        expect(result.start).toBeDate(new Date(2012, 10, 10, 12));
+    });
+});
+
+test("Test - Month name and day range", () => {
+    testSingleCase(chrono.id, "Januari 5 - 7, 2024", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("Januari 5 - 7, 2024");
+        expect(result.start).toBeDate(new Date(2024, 0, 5, 12));
+        expect(result.end).toBeDate(new Date(2024, 0, 7, 12));
+    });
+
+    testSingleCase(chrono.id, "Maret 1 sampai 3", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("Maret 1 sampai 3");
+        expect(result.start).toBeDate(new Date(2012, 2, 1, 12));
+        expect(result.end).toBeDate(new Date(2012, 2, 3, 12));
+    });
+});
+
 test("Test - Month name and year", () => {
     testSingleCase(chrono.id, "Januari 2024", new Date(2012, 7, 10), (result) => {
         expect(result.text).toBe("Januari 2024");
@@ -100,6 +138,15 @@ test("Test - Slash format", () => {
 
 test("Test - Negative cases", () => {
     testUnexpectedResult(chrono.id, "Jan pergi ke pasar");
+});
+
+test("Test - Month name followed by a time is not taken as a day", () => {
+    for (const text of ["Januari 12:00", "Januari 12.30"]) {
+        const results = chrono.id.parse(text, new Date(2012, 7, 10));
+        for (const result of results) {
+            expect(result.start.isCertain("day")).toBe(false);
+        }
+    }
 });
 
 test("Test - Out of range day is not taken as a day", () => {

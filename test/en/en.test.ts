@@ -115,6 +115,12 @@ test("Test - Random text", function () {
         expect(result.start.get("hour")).toBe(2);
         expect(result.start.get("meridiem")).toBe(Meridiem.AM);
     });
+
+    testSingleCase(chrono, "September 23, 2026", new Date(2017, 7 - 1, 7), (result) => {
+        expect(result.start.get("day")).toBe(23);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("year")).toBe(2026);
+    });
 });
 
 test("Test - Wikipedia Texts", function () {
@@ -182,7 +188,7 @@ test("Test - Customize by removing time extraction", () => {
 
     custom.parse("Thursday 9AM");
 
-    testSingleCase(custom, "Thursday 9AM", new Date(2020, 11 - 1, 29), (result, text) => {
+    testSingleCase(custom, "Thursday 9AM", new Date(2020, 11 - 1, 29), (result) => {
         expect(result.text).toBe("Thursday");
         expect(result.start.get("year")).toBe(2020);
         expect(result.start.get("month")).toBe(11);
