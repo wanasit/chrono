@@ -1,5 +1,5 @@
 import * as chrono from "../../src";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.es, "Tenemos que hacer algo en 5 días.", new Date(2012, 7, 10), (result) => {
@@ -116,4 +116,61 @@ test("Test - Single Expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 19));
     });
+});
+
+test("Test - ASCII unit aliases", function () {
+    const reference = new Date(2012, 7, 10, 12, 14);
+    const cases = [
+        ["en 3 días", new Date(2012, 7, 13, 12, 14)],
+        ["en 3 dias", new Date(2012, 7, 13, 12, 14)],
+        ["en un año", new Date(2013, 7, 10, 12, 14)],
+        ["en un ano", new Date(2013, 7, 10, 12, 14)],
+    ] as const;
+
+    cases.forEach(([expression, expectedDate]) => {
+        testSingleCase(chrono.es, expression, reference, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(expectedDate);
+        });
+        testSingleCase(chrono.es.strict, expression, reference, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(expectedDate);
+        });
+    });
+});
+
+test("Test - Forward date option", function () {
+    const reference = new Date(2012, 7, 10, 12, 14);
+    const cases = [
+        ["3 días", new Date(2012, 7, 13, 12, 14), true],
+        ["3 dias", new Date(2012, 7, 13, 12, 14), true],
+        ["2 horas", new Date(2012, 7, 10, 14, 14), true],
+        ["una semana", new Date(2012, 7, 17, 12, 14), true],
+        ["un año", new Date(2013, 7, 10, 12, 14), false],
+        ["un ano", new Date(2013, 7, 10, 12, 14), false],
+        ["1 dia 2 horas", new Date(2012, 7, 11, 14, 14), true],
+    ] as const;
+
+    cases.forEach(([expression, expectedDate, isDateCertain]) => {
+        testSingleCase(chrono.es, expression, reference, { forwardDate: true }, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.tags()).toContain("result/relativeDate");
+            expect(result.start).toBeDate(expectedDate);
+            expect(result.start.isCertain("year")).toBeTruthy();
+            expect(result.start.isCertain("month")).toBe(isDateCertain);
+            expect(result.start.isCertain("day")).toBe(isDateCertain);
+        });
+    });
+});
+
+test("Test - Bare durations require casual forward date", function () {
+    const reference = new Date(2012, 7, 10, 12, 14);
+    const expressions = ["3 días", "3 dias", "2 horas", "una semana", "un año", "un ano"];
+
+    expressions.forEach((expression) => {
+        testUnexpectedResult(chrono.es, expression, reference);
+        testUnexpectedResult(chrono.es.strict, expression, reference, { forwardDate: true });
+    });
+
+    testUnexpectedResult(chrono.es, "El proyecto dura 3 días", reference);
 });

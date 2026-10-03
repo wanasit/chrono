@@ -93,6 +93,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     "horas": "hour",
     "día": "day",
     "días": "day",
+    "dia": "day",
+    "dias": "day",
     "semana": "week",
     "semanas": "week",
     "mes": "month",
@@ -101,6 +103,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     "cuartos": "quarter",
     "año": "year",
     "años": "year",
+    "ano": "year",
+    "anos": "year",
 };
 
 //-----------------------------
