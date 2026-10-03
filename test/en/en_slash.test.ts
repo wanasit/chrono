@@ -140,6 +140,61 @@ test("Test - Single Expression Shorten (mm/yyyy)", () => {
     });
 });
 
+test("Test - Skip month/year suffix of an invalid date", () => {
+    const refDate = new Date(2018, 0, 1);
+
+    testUnexpectedResult(chrono, "50/6/2018", refDate);
+    testUnexpectedResult(chrono, "99/06/2018", refDate);
+    testUnexpectedResult(chrono, "The deadline is 123/6/2018", refDate);
+});
+
+test("Test - Preserve complete slash dates and month/year", () => {
+    const refDate = new Date(2018, 0, 1);
+
+    testSingleCase(chrono, "6/2018", refDate, (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("6/2018");
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("day")).toBe(false);
+    });
+
+    testSingleCase(chrono, "Scheduled (6/2018)", refDate, (result) => {
+        expect(result.index).toBe(11);
+        expect(result.text).toBe("6/2018");
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("day")).toBe(false);
+    });
+
+    testSingleCase(chrono, "Published: 6/2018", refDate, (result) => {
+        expect(result.index).toBe(11);
+        expect(result.text).toBe("6/2018");
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("day")).toBe(false);
+    });
+
+    testSingleCase(chrono, "16/6/2018", refDate, (result) => {
+        expect(result.text).toBe("16/6/2018");
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("year")).toBe(2018);
+        expect(result.start.isCertain("day")).toBe(true);
+    });
+
+    testSingleCase(chrono, "50/6/2018; next date: 7/2019", refDate, (result) => {
+        expect(result.index).toBe(22);
+        expect(result.text).toBe("7/2019");
+        expect(result.start.get("year")).toBe(2019);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(1);
+    });
+});
+
 test("Test - Single Expression Shorten (dd/mm)", () => {
     testSingleCase(chrono, "8/10", new Date(2012, 7, 10), (result) => {
         expect(result.start).not.toBeNull();
