@@ -89,6 +89,25 @@ test("Test - The normal within expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 12, 44));
     });
 
+    testSingleCase(chrono, "in half a quarter", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("in half a quarter");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(9);
+        expect(result.start.get("day")).toBe(24);
+        expect(result.start.get("hour")).toBe(12);
+        expect(result.start.get("minute")).toBe(14);
+
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start.isCertain("day")).toBe(true);
+        expect(result.start.isCertain("hour")).toBe(false);
+        expect(result.start.isCertain("minute")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2012, 9 - 1, 24, 12, 14));
+    });
+
     testSingleCase(chrono, "within two weeks", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("within two weeks");
@@ -383,6 +402,12 @@ test("Test - Strict mode", () => {
     testSingleCase(chrono, "in 2hour", new Date(2016, 10 - 1, 1, 14, 52), (result, text) => {
         expect(result.start.get("hour")).toBe(16);
         expect(result.start.get("minute")).toBe(52);
+    });
+
+    testSingleCase(chrono.strict, "in half a quarter", new Date(2012, 7, 10, 12, 14), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("in half a quarter");
+        expect(result.start).toBeDate(new Date(2012, 9 - 1, 24, 12, 14));
     });
 
     testUnexpectedResult(chrono.strict, "in 15m");
