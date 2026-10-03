@@ -5,11 +5,11 @@ import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { createParsingComponentsAtWeekday } from "../../../calculation/weekdays";
 
-// Senin  |  hari Senin  |  Jumat depan  |  Rabu lalu  |  Senin minggu depan  |  hari Minggu ini
+// Senin  |  hari Senin  |  Jumat depan  |  Senin mendatang  |  Rabu lalu  |  Senin minggu depan  |  hari Minggu ini
 const PATTERN = new RegExp(
     "(?:pada\\s+)?(hari\\s+)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)})` +
-        "(?:\\s+(?:(?:minggu|pekan)\\s+)?(ini|depan|berikutnya|yang\\s+lalu|lalu|kemarin))?" +
+        "(?:\\s+(?:(?:minggu|pekan)\\s+)?(ini|depan|berikutnya|mendatang|yang\\s+lalu|lalu|kemarin))?" +
         "(?=\\W|$)",
     "i"
 );
@@ -37,7 +37,7 @@ export default class IDWeekdayParser extends AbstractParserWithWordBoundaryCheck
         let modifier: "this" | "next" | "last" | null = null;
         if (modifierWord === "ini") {
             modifier = "this";
-        } else if (modifierWord === "depan" || modifierWord === "berikutnya") {
+        } else if (modifierWord === "depan" || modifierWord === "berikutnya" || modifierWord === "mendatang") {
             modifier = "next";
         } else if (modifierWord === "lalu" || modifierWord === "yang lalu" || modifierWord === "kemarin") {
             modifier = "last";

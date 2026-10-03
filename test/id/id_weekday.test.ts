@@ -38,6 +38,11 @@ test("Test - Weekday with modifier", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
     });
 
+    testSingleCase(chrono.id, "Senin mendatang", REF, (result) => {
+        expect(result.text).toBe("Senin mendatang");
+        expect(result.start).toBeDate(new Date(2012, 7, 13, 12));
+    });
+
     testSingleCase(chrono.id, "Rabu lalu", REF, (result) => {
         expect(result.text).toBe("Rabu lalu");
         expect(result.start).toBeDate(new Date(2012, 7, 8, 12));

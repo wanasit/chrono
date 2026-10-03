@@ -80,8 +80,12 @@ test("Test - Casual time", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 13, 58));
     });
 
-    testSingleCase(chrono.id, "sore", new Date(2012, 7, 10, 8), (result) => {
-        expect(result.start).toBeDate(new Date(2012, 7, 10, 15));
+    testSingleCase(chrono.id, "malam", new Date(2012, 7, 10, 8), (result) => {
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 20));
+    });
+
+    testSingleCase(chrono.id, "tengah malam", new Date(2012, 7, 10, 8), (result) => {
+        expect(result.start).toBeDate(new Date(2012, 7, 11, 0));
     });
 });
 
