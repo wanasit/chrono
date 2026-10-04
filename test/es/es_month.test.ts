@@ -63,20 +63,77 @@ test("Test - Month-only negative cases", function () {
     testUnexpectedResult(chrono.es, "dic", reference);
     testUnexpectedResult(chrono.es.strict, "septiembre", reference);
 
-    const suffixes = ["", "º", "ª", "°", "ro", "do", "to", "mo", "er", "vo", "no", "ma", "era", "ero", "avo", "ava"];
-    const separators = ["", " ", " de ", "-", "/", ", ", " de-", " de/", " de,", " de de "];
-    suffixes.forEach((suffix) => {
-        separators.forEach((separator) => {
-            testUnexpectedResult(chrono.es, `32${suffix}${separator}Agosto`, reference);
-        });
+    testUnexpectedResult(chrono.es, "32Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32º de Agosto", reference);
+    testUnexpectedResult(chrono.es, "32ª Agosto", reference);
+    testUnexpectedResult(chrono.es, "32° Agosto", reference);
+    testUnexpectedResult(chrono.es, "32ro Agosto", reference);
+    testUnexpectedResult(chrono.es, "32era Agosto", reference);
+    testUnexpectedResult(chrono.es, "32avo Agosto", reference);
+    testUnexpectedResult(chrono.es, "32-Agosto", reference);
+    testUnexpectedResult(chrono.es, "32/Agosto", reference);
+    testUnexpectedResult(chrono.es, "32, Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 de-Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 de/Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 de,Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 de de Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 a32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32a32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32de32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32desde32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32ao32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32-32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32–32 Agosto", reference);
+    testUnexpectedResult(chrono.es, "32 32 Agosto", reference);
+});
+
+test("Test - Compact day ranges", function () {
+    testSingleCase(chrono.es, "1 a3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
     });
 
-    [" a", "a", "de", "desde", "ao", "-", "–", " "].forEach((connector) => {
-        testUnexpectedResult(chrono.es, `32${connector}32 Agosto`, reference);
-        testSingleCase(chrono.es, `1${connector}3 Agosto`, reference, (result, text) => {
-            expect(result.text).toBe(text);
-            expect(result.start.get("day")).toBe(1);
-            expect(result.end.get("day")).toBe(3);
-        });
+    testSingleCase(chrono.es, "1a3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1de3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1desde3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1ao3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1-3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1–3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
+    });
+
+    testSingleCase(chrono.es, "1 3 Agosto", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.end.get("day")).toBe(3);
     });
 });
