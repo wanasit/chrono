@@ -54,7 +54,7 @@ export default class ARCasualTimeParser extends AbstractParserWithLeftRightBound
         }
 
         if (lowerText === "الليل" || lowerText === "ليلاً" || lowerText === "ليلا") {
-            return references.tonight(context.reference);
+            return references.evening(context.reference, 22);
         }
 
         return component;

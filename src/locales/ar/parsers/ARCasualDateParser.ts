@@ -5,7 +5,7 @@ import { AbstractParserWithLeftRightBoundaryChecking } from "./AbstractParserWit
 
 export default class ARCasualDateParser extends AbstractParserWithLeftRightBoundaryChecking {
     innerPatternString(context: ParsingContext): string {
-        return `(الآن|الان|حالياً|حاليا|اليوم|أول\\s*أمس|اول\\s*امس|أول\\s*البارحة|اول\\s*البارحة|قبل\\s*أمس|قبل\\s*امس|أمس|امس|البارحة|بعد\\s*غد(?:اً|ا)?|بعد\\s*بكر[ةا]|غداً|غدا|بكر[ةا])`;
+        return `(الآن|الان|حالياً|حاليا|اليوم|أول\\s*(?:من\\s*)?أمس|اول\\s*(?:من\\s*)?امس|أول\\s*(?:من\\s*)?البارحة|اول\\s*(?:من\\s*)?البارحة|قبل\\s*(?:من\\s*)?أمس|قبل\\s*(?:من\\s*)?امس|أمس|امس|البارحة|بعد\\s*غد(?:اً|ا)?|بعد\\s*بكر[ةا]|غداً|غدا|بكر[ةا])`;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
@@ -21,12 +21,12 @@ export default class ARCasualDateParser extends AbstractParserWithLeftRightBound
         }
 
         if (
-            lowerText.match(/أول\s*أمس/) ||
-            lowerText.match(/اول\s*امس/) ||
-            lowerText.match(/أول\s*البارحة/) ||
-            lowerText.match(/اول\s*البارحة/) ||
-            lowerText.match(/قبل\s*أمس/) ||
-            lowerText.match(/قبل\s*امس/)
+            lowerText.match(/أول\s*(?:من\s*)?أمس/) ||
+            lowerText.match(/اول\s*(?:من\s*)?امس/) ||
+            lowerText.match(/أول\s*(?:من\s*)?البارحة/) ||
+            lowerText.match(/اول\s*(?:من\s*)?البارحة/) ||
+            lowerText.match(/قبل\s*(?:من\s*)?أمس/) ||
+            lowerText.match(/قبل\s*(?:من\s*)?امس/)
         ) {
             return references.theDayBefore(context.reference, 2);
         }

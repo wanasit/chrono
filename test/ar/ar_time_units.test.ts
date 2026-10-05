@@ -115,3 +115,65 @@ test("Test - Arabic Relative Date Expressions (الشهر القادم / الأ�
         expect(result.start.get("year")).toBe(2024);
     });
 });
+
+test("Test - Arabic Feminine Counts (ثماني)", () => {
+    const refDate = new Date(2023, 5, 15, 12, 0);
+
+    testSingleCase(chrono.ar.casual, "منذ ثماني ساعات", refDate, (result) => {
+        expect(result.text).toBe("منذ ثماني ساعات");
+        expect(result.start.get("hour")).toBe(4);
+    });
+});
+
+test("Test - Arabic Accusative Units (11-99)", () => {
+    const refDate = new Date(2023, 5, 15, 12, 0); // June 15, 2023
+
+    testSingleCase(chrono.ar.casual, "بعد 15 يوماً", refDate, (result) => {
+        expect(result.text).toBe("بعد 15 يوماً");
+        expect(result.start.get("day")).toBe(30);
+    });
+
+    testSingleCase(chrono.ar.casual, "بعد 15 يوما", refDate, (result) => {
+        expect(result.text).toBe("بعد 15 يوما");
+        expect(result.start.get("day")).toBe(30);
+    });
+
+    testSingleCase(chrono.ar.casual, "بعد 11 شهراً", refDate, (result) => {
+        expect(result.text).toBe("بعد 11 شهراً");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(5);
+    });
+
+    testSingleCase(chrono.ar.casual, "منذ 25 عاماً", refDate, (result) => {
+        expect(result.text).toBe("منذ 25 عاماً");
+        expect(result.start.get("year")).toBe(1998);
+    });
+});
+
+test("Test - Arabic Compound Durations with و", () => {
+    const refDate = new Date(2023, 5, 15, 12, 0); // June 15, 2023 12:00
+
+    testSingleCase(chrono.ar.casual, "بعد يومان و3 ساعات", refDate, (result) => {
+        expect(result.text).toBe("بعد يومان و3 ساعات");
+        expect(result.start.get("day")).toBe(17);
+        expect(result.start.get("hour")).toBe(15);
+    });
+
+    testSingleCase(chrono.ar.casual, "بعد ساعة ونصف", refDate, (result) => {
+        expect(result.text).toBe("بعد ساعة ونصف");
+        expect(result.start.get("hour")).toBe(13);
+        expect(result.start.get("minute")).toBe(30);
+    });
+
+    testSingleCase(chrono.ar.casual, "منذ ساعتين ونصف", refDate, (result) => {
+        expect(result.text).toBe("منذ ساعتين ونصف");
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("minute")).toBe(30);
+    });
+
+    testSingleCase(chrono.ar.casual, "خلال يوم ونصف", refDate, (result) => {
+        expect(result.text).toBe("خلال يوم ونصف");
+        expect(result.start.get("day")).toBe(17);
+        expect(result.start.get("hour")).toBe(0);
+    });
+});

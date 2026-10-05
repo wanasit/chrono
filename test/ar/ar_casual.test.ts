@@ -38,6 +38,12 @@ test("Test - Casual Date Expressions", () => {
         expect(result.start).toBeDate(new Date(2023, 0, 8, 17, 10));
     });
 
+    testSingleCase(chrono.ar.casual, "الموعد أول من أمس", new Date(2023, 0, 10, 17, 10), (result) => {
+        expect(result.index).toBe(7);
+        expect(result.text).toBe("أول من أمس");
+        expect(result.start).toBeDate(new Date(2023, 0, 8, 17, 10));
+    });
+
     testSingleCase(chrono.ar.casual, "الموعد الآن", new Date(2023, 0, 10, 8, 9, 10), (result) => {
         expect(result.index).toBe(7);
         expect(result.text).toBe("الآن");
@@ -85,6 +91,30 @@ test("Test - Combined Casual Date and Time", () => {
         expect(result.start.get("day")).toBe(11);
         expect(result.start.get("hour")).toBe(17);
         expect(result.start.get("minute")).toBe(0);
+    });
+
+    testSingleCase(chrono.ar.casual, "غداً ليلاً", new Date(2023, 0, 10, 12, 0), (result) => {
+        expect(result.text).toBe("غداً ليلاً");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("hour")).toBe(22);
+    });
+
+    testSingleCase(chrono.ar.casual, "15 يناير ليلاً", new Date(2023, 0, 10, 12, 0), (result) => {
+        expect(result.text).toBe("15 يناير ليلاً");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(15);
+        expect(result.start.get("hour")).toBe(22);
+    });
+
+    testSingleCase(chrono.ar.casual, "هذه الليلة", new Date(2023, 0, 10, 12, 0), (result) => {
+        expect(result.text).toBe("هذه الليلة");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(10);
+        expect(result.start.get("hour")).toBe(22);
     });
 });
 

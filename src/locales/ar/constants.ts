@@ -99,6 +99,7 @@ export const INTEGER_WORD_DICTIONARY: { [word: string]: number } = {
     "سبعة": 7,
     "سبع": 7,
     "ثمانية": 8,
+    "ثماني": 8,
     "ثمان": 8,
     "تسعة": 9,
     "تسع": 9,
@@ -202,40 +203,54 @@ export const ORDINAL_WORD_DICTIONARY: { [word: string]: number } = {
 export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     // Second
     "ثانية": "second",
+    "ثانيةً": "second",
     "ثواني": "second",
     "ثوان": "second",
     "ثوانٍ": "second",
 
     // Minute
     "دقيقة": "minute",
+    "دقيقةً": "minute",
     "دقائق": "minute",
 
     // Hour
     "ساعة": "hour",
+    "ساعةً": "hour",
     "ساعات": "hour",
 
     // Day
     "يوم": "day",
+    "يوماً": "day",
+    "يوما": "day",
     "أيام": "day",
     "ايام": "day",
 
     // Week
     "أسبوع": "week",
     "اسبوع": "week",
+    "أسبوعاً": "week",
+    "أسبوعا": "week",
+    "اسبوعاً": "week",
+    "اسبوعا": "week",
     "أسابيع": "week",
     "اسابيع": "week",
 
     // Month
     "شهر": "month",
+    "شهراً": "month",
+    "شهرا": "month",
     "أشهر": "month",
     "اشهر": "month",
     "شهور": "month",
 
     // Year
     "سنة": "year",
+    "سنةً": "year",
     "سنوات": "year",
     "سنين": "year",
     "عام": "year",
+    "عاماً": "year",
+    "عاما": "year",
     "أعوام": "year",
     "اعوام": "year",
 };
@@ -314,21 +329,26 @@ export function parseYear(match: string): number {
 
 const DUAL_UNIT_PATTERN = `(${matchAnyPattern(DUAL_TIME_UNIT_DICTIONARY)})`;
 const NUMBER_WITH_UNIT_PATTERN = `(?:(${NUMBER_PATTERN})\\s{0,3})?(${matchAnyPattern(TIME_UNIT_DICTIONARY)})`;
+const HALF_UNIT_PATTERN = `(?:و\\s*)?(نصف|نص|ربع)`;
 
-const SINGLE_TIME_UNIT_PATTERN = `(?:${DUAL_UNIT_PATTERN}|${NUMBER_WITH_UNIT_PATTERN})`;
+const SINGLE_TIME_UNIT_PATTERN = `(?:${DUAL_UNIT_PATTERN}|${NUMBER_WITH_UNIT_PATTERN}|${HALF_UNIT_PATTERN})`;
 const SINGLE_TIME_UNIT_REGEX = new RegExp(SINGLE_TIME_UNIT_PATTERN, REGEX_PARTS.flags);
+
+export const TIME_UNIT_CONNECTOR_PATTERN = `\\s{0,5},?(?:\\s*و)?\\s{0,5}`;
 
 export const TIME_UNITS_PATTERN = repeatedTimeunitPattern(
     `(?:(?:خلال|في غضون|في خلال|حوالي|تقريباً|تقريبا)\\s{0,3})?`,
-    SINGLE_TIME_UNIT_PATTERN
+    SINGLE_TIME_UNIT_PATTERN,
+    TIME_UNIT_CONNECTOR_PATTERN
 );
 
 export function parseDuration(timeunitText: string): Duration {
     const fragments: { [c in Timeunit]?: number } = {};
     let remainingText = timeunitText;
     let match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
+    let lastUnit: Timeunit | undefined;
     while (match) {
-        collectDateTimeFragment(fragments, match);
+        lastUnit = collectDateTimeFragment(fragments, match, lastUnit);
         remainingText = remainingText.substring(match.index + match[0].length).trim();
         if (!remainingText) break;
         match = SINGLE_TIME_UNIT_REGEX.exec(remainingText);
@@ -336,13 +356,18 @@ export function parseDuration(timeunitText: string): Duration {
     return fragments as Duration;
 }
 
-function collectDateTimeFragment(fragments: { [c in Timeunit]?: number }, match: RegExpMatchArray) {
+function collectDateTimeFragment(
+    fragments: { [c in Timeunit]?: number },
+    match: RegExpMatchArray,
+    lastUnit?: Timeunit
+): Timeunit | undefined {
     if (match[1]) {
         // Dual form (e.g. يومين, ساعتين)
         const dualWord = match[1].trim();
         const unit = DUAL_TIME_UNIT_DICTIONARY[dualWord];
         if (unit) {
-            fragments[unit] = 2;
+            fragments[unit] = (fragments[unit] || 0) + 2;
+            return unit;
         }
     } else if (match[3]) {
         // Standard form (e.g. 3 أيام, ساعة)
@@ -351,7 +376,17 @@ function collectDateTimeFragment(fragments: { [c in Timeunit]?: number }, match:
         const unitWord = match[3].trim();
         const unit = TIME_UNIT_DICTIONARY[unitWord];
         if (unit) {
-            fragments[unit] = num;
+            fragments[unit] = (fragments[unit] || 0) + num;
+            return unit;
+        }
+    } else if (match[4]) {
+        // Half / Fraction form (e.g. ونصف, نصف, ربع)
+        const fracWord = match[4].trim();
+        const frac = fracWord === "ربع" ? 0.25 : 0.5;
+        if (lastUnit) {
+            fragments[lastUnit] = (fragments[lastUnit] || 0) + frac;
+            return lastUnit;
         }
     }
+    return lastUnit;
 }
