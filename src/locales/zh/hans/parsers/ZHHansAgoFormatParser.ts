@@ -17,6 +17,12 @@ const NUMBER_GROUP = 1;
 const UNIT_GROUP = 2;
 
 export default class ZHHansAgoFormatParser extends AbstractParserWithWordBoundaryChecking {
+    patternLeftBoundary(): string {
+        // Return a capturing group to ensure that the match index is correct in the base class
+        // while avoiding matching CJK characters as word boundaries.
+        return "()";
+    }
+
     innerPattern(): RegExp {
         return PATTERN;
     }

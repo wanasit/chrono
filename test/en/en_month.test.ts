@@ -89,6 +89,15 @@ test("Test - Month-Year expression", function () {
     });
 });
 
+test("Test - Month-Year expression after uppercase non-date text", () => {
+    const text = "STATEMENT OF COMPREHENSIVE INCOME FOR THE YEAR ENDED Dec. 2021";
+    testSingleCase(chrono, text, new Date(2025, 0, 1), (result) => {
+        expect(result.index).toBe(53);
+        expect(result.text).toBe("Dec. 2021");
+        expect(result.start).toBeDate(new Date(2021, 11, 1, 12));
+    });
+});
+
 test("Test - Month-Only expression", function () {
     testSingleCase(chrono, "In January", new Date(2020, 11 - 1, 22), (result) => {
         expect(result.text).toContain("January");
@@ -274,11 +283,43 @@ test("Test - Month should not have timezone", () => {
         "People visiting Buñol towards the end of August get a good chance to participate in La Tomatina (under normal circumstances)",
         new Date(2012, 7, 10),
         (result) => {
-            expect(result.text).toBe("August");
+            expect(result.text).toBe("end of August");
             expect(result.start.get("year")).toBe(2012);
             expect(result.start.get("month")).toBe(8);
+            expect(result.start.get("day")).toBe(31);
         }
     );
+});
+
+test("Test - End of named month", () => {
+    testSingleCase(chrono, "end of July", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "last day of July", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of July", new Date(2024, 0, 15), (result) => {
+        expect(result.start).toBeDate(new Date(2023, 6, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of February 2024", new Date(2023, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2024, 1, 29, 12));
+    });
+
+    testSingleCase(chrono, "end of October next year", new Date(2024, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2025, 9, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of october 2032", new Date(2024, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2032, 9, 31, 12));
+    });
 });
 
 test("Test - Month only in different context", () => {
@@ -295,7 +336,7 @@ test("Test - Month only in different context", () => {
 });
 
 test("Test - Year Month expression", () => {
-    testSingleCase(chrono, "2024 Aug", (result) => {
+    testSingleCase(chrono, "2024 Aug", new Date(2024, 1 - 1, 15), (result) => {
         expect(result.text).toBe("2024 Aug");
         expect(result.start.get("year")).toBe(2024);
         expect(result.start.get("month")).toBe(8);
@@ -303,13 +344,34 @@ test("Test - Year Month expression", () => {
         expect(result.start.isCertain("year")).toBe(true);
         expect(result.start.isCertain("month")).toBe(true);
         expect(result.start.isCertain("day")).toBe(false);
+        expect(result.start).toBeDate(new Date(2024, 8 - 1, 1, 12));
     });
 
-    testSingleCase(chrono, "2024 August", (result) => {
+    testSingleCase(chrono, "2024 August", new Date(2024, 1 - 1, 15), (result) => {
         expect(result.text).toBe("2024 August");
         expect(result.start.get("year")).toBe(2024);
         expect(result.start.get("month")).toBe(8);
         expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+    });
+
+    testSingleCase(chrono, "2024-Aug", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2024-Aug");
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("year")).toBe(true);
+    });
+
+    testSingleCase(chrono, "2012 January", new Date(2024, 1 - 1, 15), (result) => {
+        expect(result.text).toBe("2012 January");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.isCertain("year")).toBe(true);
+        expect(result.start.isCertain("month")).toBe(true);
+        expect(result.start).toBeDate(new Date(2012, 1 - 1, 1, 12));
     });
 
     testSingleCase(chrono, "2023 Sept", (result) => {

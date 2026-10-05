@@ -36,6 +36,91 @@ test("Test - 'This' expressions", () => {
     });
 });
 
+test("Test - End of current month", () => {
+    testSingleCase(chrono, "end of the month", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 31, 12));
+    });
+
+    testSingleCase(chrono, "last day of the month", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of month", new Date(2012, 8, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 8, 30, 12));
+    });
+
+    testSingleCase(chrono, "last day of month", new Date(2012, 1, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 1, 29, 12));
+    });
+
+    testSingleCase(chrono, "end of next week", new Date(2022, 7, 2), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2022, 7, 13, 12));
+    });
+
+    testSingleCase(chrono, "end of next month", new Date(2016, 9, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2016, 10, 30, 12));
+    });
+
+    testSingleCase(chrono, "last day of next month", new Date(2023, 0, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2023, 1, 28, 12));
+    });
+
+    testSingleCase(chrono, "end of next year", new Date(2020, 10, 22), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2021, 11, 31, 12));
+    });
+});
+
+test("Test - End of relative period", () => {
+    testSingleCase(chrono, "end of this week", new Date(2022, 7, 2, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2022, 7, 6, 12));
+        expect(result.start.get("weekday")).toBe(6);
+    });
+
+    testSingleCase(chrono, "last day of last week", new Date(2022, 7, 2, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2022, 6, 30, 12));
+    });
+
+    testSingleCase(chrono, "end of the next week", new Date(2022, 11, 28, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2023, 0, 7, 12));
+    });
+
+    testSingleCase(chrono, "end of last month", new Date(2024, 2, 15, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2024, 1, 29, 12));
+    });
+
+    testSingleCase(chrono, "end of next month", new Date(2023, 0, 31, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2023, 1, 28, 12));
+    });
+
+    testSingleCase(chrono, "end of last month", new Date(2023, 11, 31, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2023, 10, 30, 12));
+    });
+
+    testSingleCase(chrono, "end of this year", new Date(2020, 10, 22, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2020, 11, 31, 12));
+    });
+
+    testSingleCase(chrono, "end of the past year", new Date(2020, 10, 22, 15), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2019, 11, 31, 12));
+    });
+});
+
 test("Test - Past relative expressions", () => {
     testSingleCase(chrono, "last week", new Date(2016, 10 - 1, 1, 12), (result, text) => {
         expect(result.text).toBe(text);

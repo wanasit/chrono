@@ -8,6 +8,11 @@ test("Test - Adding Duration w/ single timeunit", () => {
     }
     {
         const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "quarter": 1 });
+        expect(output).toStrictEqual(new Date("Sun, Nov 27 2022 12:52:11"));
+    }
+    {
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
         const output = addDuration(reference, { "month": 1 });
         expect(output).toStrictEqual(new Date("Wed, Sep 27 2022 12:52:11"));
     }
@@ -105,6 +110,12 @@ test("Test - Adding Duration w/ fractions", () => {
         const reference = new Date("Sat, Aug 27 2022 12:52:11");
         const output = addDuration(reference, { "year": 0.5 });
         expect(output).toStrictEqual(new Date("Mon, Feb 27 2023 12:52:11"));
+    }
+    {
+        // 0.5 quarter (aka. half quarter) => 1.5 months => 1 month + 2 weeks
+        const reference = new Date("Sat, Aug 27 2022 12:52:11");
+        const output = addDuration(reference, { "quarter": 0.5 });
+        expect(output).toStrictEqual(new Date("Tue, Oct 11 2022 12:52:11"));
     }
     {
         // 0.5 month => 2 weeks

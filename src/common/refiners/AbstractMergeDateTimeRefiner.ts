@@ -10,11 +10,19 @@ export default abstract class AbstractMergeDateTimeRefiner extends MergingRefine
     abstract patternBetween(): RegExp;
 
     shouldMergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): boolean {
-        return (
-            ((currentResult.start.isOnlyDate() && nextResult.start.isOnlyTime()) ||
-                (nextResult.start.isOnlyDate() && currentResult.start.isOnlyTime())) &&
-            textBetween.match(this.patternBetween()) != null
-        );
+        const isDateThenTime = currentResult.start.isOnlyDate() && nextResult.start.isOnlyTime();
+        const isTimeThenDate = currentResult.start.isOnlyTime() && nextResult.start.isOnlyDate();
+
+        // A bare ":" between a time-only result and a date-only result is only a real connector
+        // in the "date:time" direction (e.g. "05/31/2024:14:15"). In the reverse direction, a lone
+        // number like "24" immediately followed by ":" is far more likely to be a stray label or
+        // count (e.g. "24: July 23, 2026") than someone writing a time using a colon with no minutes,
+        // so don't let it swallow the date that follows.
+        if (isTimeThenDate && textBetween.trim() === ":") {
+            return false;
+        }
+
+        return (isDateThenTime || isTimeThenDate) && textBetween.match(this.patternBetween()) != null;
     }
 
     mergeResults(textBetween: string, currentResult: ParsingResult, nextResult: ParsingResult): ParsingResult {
