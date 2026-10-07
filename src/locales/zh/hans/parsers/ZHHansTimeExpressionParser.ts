@@ -424,8 +424,8 @@ export default class ZHHansTimeExpressionParser extends AbstractParserWithWordBo
             }
         }
 
-        if (result.end.date().getTime() < result.start.date().getTime()) {
-            result.end.imply("day", result.end.get("day") + 1);
+        if (result.end.date().getTime() < result.start.date().getTime() && !result.end.isCertain("day")) {
+            result.end.addDurationAsImplied({ day: 1 });
         }
 
         return result;

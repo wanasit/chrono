@@ -282,7 +282,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
                 if (hour == 12) {
                     hour = 0;
                     if (!components.isCertain("day")) {
-                        components.imply("day", components.get("day") + 1);
+                        components.addDurationAsImplied({ day: 1 });
                     }
                 }
             }
@@ -332,7 +332,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         }
 
         if (components.date().getTime() < result.start.date().getTime()) {
-            components.imply("day", components.get("day") + 1);
+            components.addDurationAsImplied({ day: 1 });
         }
 
         return components;

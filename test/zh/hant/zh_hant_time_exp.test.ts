@@ -159,6 +159,12 @@ test("Test - Time Expression's Meridiem imply", function () {
         expect(result.end.get("millisecond")).toBe(0);
         expect(result.end.isCertain("meridiem")).toBe(false);
     });
+
+    testSingleCase(chrono.zh.hant, "1點pm到3點", new Date(2012, 8 - 1, 31), (result) => {
+        expect(result.text).toBe("1點pm到3點");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 31, 13));
+        expect(result.end).toBeDate(new Date(2012, 9 - 1, 1, 3));
+    });
 });
 
 test("Test - Cantonese Combined Expressions", function () {

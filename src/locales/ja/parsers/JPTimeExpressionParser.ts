@@ -107,7 +107,7 @@ export default class JPTimeExpressionParser extends AbstractParserWithWordBounda
             }
         }
         if (result.end.date().getTime() < result.start.date().getTime()) {
-            result.end.imply("day", result.end.get("day") + 1);
+            result.end.addDurationAsImplied({ day: 1 });
         }
         return result;
     }
