@@ -67,3 +67,17 @@ test("Test - Weekday does not contradict a relative-offset date", () => {
         }
     }
 });
+
+test("Test - Relative date after a date keeps the reference timezone", () => {
+    // Mar 1 to Mar 15, 2024 crosses the US DST change, so these only fail on a US system timezone
+    const reference = { instant: new Date("2024-02-20T12:00:00Z"), timezone: "JST" };
+    testSingleCase(chrono, "2 weeks after 2024-03-01", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date("2024-03-15T12:00:00+09:00"));
+    });
+
+    testSingleCase(chrono, "2 weeks after 2024-03-01", new Date(2024, 2 - 1, 20, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 3 - 1, 15, 12));
+    });
+});
