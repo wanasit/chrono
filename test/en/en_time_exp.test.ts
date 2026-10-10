@@ -440,6 +440,18 @@ test("Test - Time range to the next day", () => {
         expect(result.start.get("hour")).toBe(22);
         expect(result.start.get("meridiem")).toBe(Meridiem.PM);
     });
+
+    testSingleCase(chrono, "10pm to 2am", new Date(2024, 1 - 1, 31, 12), (result) => {
+        expect(result.text).toBe("10pm to 2am");
+        expect(result.start).toBeDate(new Date(2024, 1 - 1, 31, 22));
+        expect(result.end).toBeDate(new Date(2024, 2 - 1, 1, 2));
+    });
+
+    testSingleCase(chrono, "11pm - 12am", new Date(2023, 12 - 1, 31, 12), (result) => {
+        expect(result.text).toBe("11pm - 12am");
+        expect(result.start).toBeDate(new Date(2023, 12 - 1, 31, 23));
+        expect(result.end).toBeDate(new Date(2024, 1 - 1, 1, 0));
+    });
 });
 
 test("Test - Parsing causal positive cases", function () {

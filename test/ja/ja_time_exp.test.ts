@@ -242,6 +242,12 @@ test("Test - Time Expression's Meridiem imply", function () {
         expect(result.end.get("meridiem")).toBe(Meridiem.AM);
         expect(result.end).toBeDate(new Date(2012, 8 - 1, 11, 2, 0));
     });
+
+    testSingleCase(chrono.ja, "23時20分から2時", new Date(2012, 8 - 1, 31), (result) => {
+        expect(result.text).toBe("23時20分から2時");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 31, 23, 20));
+        expect(result.end).toBeDate(new Date(2012, 9 - 1, 1, 2, 0));
+    });
 });
 
 test("Test - Random date + time expression", function () {
