@@ -17,6 +17,7 @@ import ESMonthNameLittleEndianParser from "./parsers/ESMonthNameLittleEndianPars
 import ESCasualDateParser from "./parsers/ESCasualDateParser";
 import ESCasualTimeParser from "./parsers/ESCasualTimeParser";
 import ESTimeUnitWithinFormatParser from "./parsers/ESTimeUnitWithinFormatParser";
+import ESMonthNameParser from "./parsers/ESMonthNameParser";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
@@ -40,6 +41,7 @@ export function createCasualConfiguration(littleEndian = true): Configuration {
     const option = createConfiguration(false, littleEndian);
     option.parsers.push(new ESCasualDateParser());
     option.parsers.push(new ESCasualTimeParser());
+    option.parsers.push(new ESMonthNameParser());
     return option;
 }
 

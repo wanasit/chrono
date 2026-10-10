@@ -206,6 +206,157 @@ test("Test - Combined expression", function () {
 
         expect(result.start).toBeDate(new Date(2012, 7 - 1, 12, 19, 0));
     });
+
+    testSingleCase(chrono.es, "duodécimo de julio a las 19:00", new Date(2012, 7, 10), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7 - 1, 12, 19));
+    });
+});
+
+test("Test - Ordinal words", function () {
+    testSingleCase(chrono.es, "primero de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "primera de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "séptimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "septima de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(7);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "undécimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(11);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "duodecimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(12);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "decimoséptimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(17);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "vigésimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(20);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "vigesimo primero de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(21);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "vigésimo séptimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(27);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "trigésimo de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(30);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "trigésimo primero de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(chrono.es, "trigesimo primero de diciembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("month")).toBe(12);
+    });
+
+    testSingleCase(
+        chrono.es,
+        "vigésimo primero a vigésimo tercero de diciembre",
+        new Date(2012, 1 - 1, 1),
+        (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start.get("day")).toBe(21);
+            expect(result.end.get("day")).toBe(23);
+        }
+    );
+
+    testSingleCase(chrono.es, "La fecha es primero de septiembre.", new Date(2012, 1 - 1, 1), (result) => {
+        expect(result.index).toBe(12);
+        expect(result.text).toBe("primero de septiembre");
+    });
+});
+
+test("Test - Numeric ordinal suffixes", function () {
+    testSingleCase(chrono.es, "1 de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1º de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1ª de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1° de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1ro de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1er de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1era de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
+
+    testSingleCase(chrono.es, "1avo de septiembre", new Date(2012, 1 - 1, 1), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("month")).toBe(9);
+    });
 });
 
 test("Test - Impossible Dates (Strict Mode)", function () {
@@ -214,4 +365,6 @@ test("Test - Impossible Dates (Strict Mode)", function () {
     testUnexpectedResult(chrono.es.strict, "29 Febrero 2014", new Date(2012, 7, 10));
 
     testUnexpectedResult(chrono.es.strict, "32 Agosto", new Date(2012, 7, 10));
+
+    testUnexpectedResult(chrono.es.strict, "trigésimo primero de febrero", new Date(2012, 7, 10));
 });
