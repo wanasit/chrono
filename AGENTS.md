@@ -70,10 +70,16 @@ src/
    Inherit from `AbstractParserWithWordBoundaryChecking` (or `AbstractParserWithLeftBoundaryChecking`) to inherit word boundary detection and clean regex boundary matching.
 
 5. **Testing Conventions**:
+   - **Spell out test cases individually**: Do NOT use loops (`for`, `forEach`), shared case tables, or `test.each`. Every test case should be in an explicit `test(...)` block using `testSingleCase(...)` (or `testUnexpectedResult(...)`). This ensures that test failure messages immediately highlight the exact broken input, line number, and expected vs actual values.
    - Always pass a clear reference date (`refDate`) to `testSingleCase` to ensure deterministic execution of relative time tests.
    - Assert the matched index (`result.index`) and text boundaries (`result.text`) to check for correct extraction when the text is embedded within sentences.
    - The `result.index` check can be skipped if it is trivial (e.g., the input string is exactly equal to the expected matched text `result.text`).
    - The `result.text` check may also be intentionally omitted on vague edge cases.
+
+6. **Commit & PR Scoping, and Design Philosophy**:
+   - **Chrono relies on human maintainer review; simplicity and consistency with existing patterns take precedence.**
+   - **Keep commits and PRs focused and incremental**: Avoid committing or bundling multiple unrelated changes together, both locally in git commits and in pull requests (e.g., mixing eras, holidays, and relative time expressions). If a change touches multiple concepts or features, break them down into separate, incremental commits and PRs. This keeps changes easy to review, simplifies regression analysis, and makes bug bisecting possible.
+   - **Avoid premature over-abstraction**: Do not introduce custom interfaces or heavy abstractions (e.g., per-locale holiday definitions, period managers) inside a single locale. Abstractions should be rare, conceptually solid, designed to work across all or most locales, and—most importantly—introduced on their own rather than bundled with specific feature implementations.
 
 ---
 
