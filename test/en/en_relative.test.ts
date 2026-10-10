@@ -287,6 +287,36 @@ test("Test - Future relative expressions", () => {
     });
 });
 
+test("Test - Relative month and year past the end of the target month", () => {
+    testSingleCase(chrono, "next month", new Date(2023, 1 - 1, 31, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(2);
+        expect(result.start.get("day")).toBe(28);
+    });
+
+    testSingleCase(chrono, "last month", new Date(2023, 12 - 1, 31, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.start.get("day")).toBe(30);
+    });
+
+    testSingleCase(chrono, "in 1 month", new Date(2024, 1 - 1, 30, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2024);
+        expect(result.start.get("month")).toBe(2);
+        expect(result.start.get("day")).toBe(29);
+    });
+
+    testSingleCase(chrono, "next year", new Date(2024, 2 - 1, 29, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2025);
+        expect(result.start.get("month")).toBe(2);
+        expect(result.start.get("day")).toBe(28);
+    });
+});
+
 test("Test - Relative date components' certainty", () => {
     const refDate = new Date(2016, 10 - 1, 7, 12);
 
