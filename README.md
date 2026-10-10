@@ -212,7 +212,7 @@ chrono.en.GB.parseDate('6/10/2018');    // October 6th, 2018
 chrono.ja.parseDate('昭和６４年１月７日'); 
 ```
 
-In addition to English, Chrono supports the following languages: `fi`, `fr`, `id`, `it`, `ja`, `nl`, `ru`, `uk`, and `vi`. We also have partial support for `de`, `es`, `pt`, `sv`, `zh.hans`, and `zh.hant`.
+In addition to English, Chrono supports the following languages: `ar`, `fi`, `fr`, `id`, `it`, `ja`, `nl`, `ru`, `uk`, and `vi`. We also have partial support for `de`, `es`, `pt`, `sv`, `zh.hans`, and `zh.hant`.
 
 #### Importing specific locales
 
