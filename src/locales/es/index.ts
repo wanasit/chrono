@@ -54,7 +54,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
                 new ESWeekdayParser(),
                 new ESTimeExpressionParser(),
                 new ESMonthNameLittleEndianParser(),
-                new ESTimeUnitWithinFormatParser(),
+                new ESTimeUnitWithinFormatParser(strictMode),
             ],
             refiners: [new ESMergeDateTimeRefiner(), new ESMergeDateRangeRefiner()],
         },
