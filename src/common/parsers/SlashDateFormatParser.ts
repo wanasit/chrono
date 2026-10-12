@@ -94,7 +94,7 @@ export default class SlashDateFormatParser implements Parser {
             const year = findMostLikelyADYear(rawYearNumber);
             result.start.assign("year", year);
         } else {
-            const year = findYearClosestToRef(context.refDate, day, month);
+            const year = findYearClosestToRef(context.reference.getDateWithAdjustedTimezone(), day, month);
             result.start.imply("year", year);
         }
 

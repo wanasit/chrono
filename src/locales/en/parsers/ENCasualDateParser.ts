@@ -12,7 +12,7 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
-        let targetDate = context.refDate;
+        let targetDate = context.reference.getDateWithAdjustedTimezone();
         const lowerText = match[0].toLowerCase();
         let component = context.createParsingComponents();
 
