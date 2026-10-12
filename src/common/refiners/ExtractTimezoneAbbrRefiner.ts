@@ -32,7 +32,11 @@ export default class ExtractTimezoneAbbrRefiner implements Refiner {
                 );
             });
 
-            const currentTimezoneOffset = result.start.get("timezoneOffset");
+            // A relative date without a reference timezone has no offset of its own. Compare with the reference's offset,
+            // so a lowercase word after it ("in 2 days at 5pm get eggs") is not taken as a timezone.
+            const currentTimezoneOffset =
+                result.start.get("timezoneOffset") ??
+                (result.start.tags().has("result/relativeDate") ? result.reference.getTimezoneOffset() : null);
             if (currentTimezoneOffset !== null && extractedTimezoneOffset != currentTimezoneOffset) {
                 // We may already have extracted the timezone offset e.g. "11 am GMT+0900 (JST)"
                 // - if they are equal, we also want to take the abbreviation text into result

@@ -390,7 +390,13 @@ test("Test - Parsing timezone from relative date when valid", function () {
 
     testSingleCase(chrono, "in 1 day get eggs and milk", refDate, (result, text) => {
         expect(result.text).toBe("in 1 day");
-        expect(result.start.get("timezoneOffset")).toBe(-refDate.getTimezoneOffset());
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+        expect(result.start).toBeDate(new Date(2020, 11 - 1, 15, 13, 48, 22));
+    });
+
+    testSingleCase(chrono, "in 2 days at 5pm get eggs and milk", refDate, (result, text) => {
+        expect(result.text).toBe("in 2 days at 5pm");
+        expect(result.start).toBeDate(new Date(2020, 11 - 1, 16, 17));
     });
 
     testSingleCase(chrono, "in 1 day GET", refDate, (result, text) => {
