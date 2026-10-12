@@ -59,6 +59,9 @@ export default class FRSpecificTimeExpressionParser implements Parser {
             result.end = FRSpecificTimeExpressionParser.extractTimeComponent(result.start.clone(), secondMatch);
             if (result.end) {
                 result.text += secondMatch[0];
+                if (result.end.date().getTime() < result.start.date().getTime() && !result.end.isCertain("day")) {
+                    result.end.addDurationAsImplied({ day: 1 });
+                }
             }
         }
 
