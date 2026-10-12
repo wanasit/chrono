@@ -2,6 +2,54 @@ import * as chrono from "../../src";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 import { Meridiem } from "../../src";
 
+describe.each([
+    ["casual", chrono.casual],
+    ["strict", chrono.strict],
+])("Time-expression fractional seconds (%s)", (_, parser) => {
+    test("converts fractional seconds at the end of a range", () => {
+        const text = "12:34:56.123 - 13:45:57.57";
+        testSingleCase(parser, text, new Date(2024, 7, 7, 10), (result) => {
+            expect(result.text).toBe(text);
+            expect(result.start.get("millisecond")).toBe(123);
+            expect(result.end.get("millisecond")).toBe(570);
+            expect(result.end.date().getTime()).toBe(new Date(2024, 7, 7, 13, 45, 57, 570).getTime());
+        });
+    });
+
+    test.each([
+        ["0", 0],
+        ["001", 1],
+        ["123", 123],
+        ["999", 999],
+        ["1", 100],
+        ["01", 10],
+        ["57", 570],
+        ["1234", 123],
+        ["9999", 999],
+        ["0001", 0],
+        ["12345", 123],
+        ["123456", 123],
+    ])("converts .%s to %i milliseconds", (fraction, millisecond) => {
+        const start = `12:34:56.${fraction}`;
+        const end = `13:45:57.${fraction}`;
+        for (const text of [start, `${start} - ${end}`]) {
+            const prefix = "Recorded: ";
+            testSingleCase(parser, `${prefix}${text}.`, new Date(2024, 7, 7, 10), (result) => {
+                expect(result.index).toBe(prefix.length);
+                expect(result.text).toBe(text);
+                expect(result.start.get("millisecond")).toBe(millisecond);
+                expect(result.start.isCertain("millisecond")).toBe(true);
+                expect(result.start.date().getTime()).toBe(new Date(2024, 7, 7, 12, 34, 56, millisecond).getTime());
+                if (text !== start) {
+                    expect(result.end.get("millisecond")).toBe(millisecond);
+                    expect(result.end.isCertain("millisecond")).toBe(true);
+                    expect(result.end.date().getTime()).toBe(new Date(2024, 7, 7, 13, 45, 57, millisecond).getTime());
+                }
+            });
+        }
+    });
+});
+
 test("Test - Parsing text offset", function () {
     testSingleCase(chrono, "  11 AM ", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.index).toBe(2);

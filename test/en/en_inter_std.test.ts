@@ -1,6 +1,42 @@
 import * as chrono from "../../src/";
 import { testSingleCase } from "../test_util";
 
+describe.each([
+    ["casual", chrono.casual],
+    ["strict", chrono.strict],
+    ["ja", chrono.ja.casual],
+    ["zh.hans", chrono.zh.hans.casual],
+    ["zh.hant", chrono.zh.hant.casual],
+])("ISO fractional seconds (%s)", (_, parser) => {
+    test.each([
+        ["0", 0],
+        ["001", 1],
+        ["123", 123],
+        ["999", 999],
+        ["1", 100],
+        ["01", 10],
+        ["57", 570],
+        ["1234", 123],
+        ["9999", 999],
+        ["0001", 0],
+    ])("converts .%s to %i milliseconds", (fraction, millisecond) => {
+        for (const timezone of ["Z", "+05:30", "-05:30", ""]) {
+            const timestamp = `2024-08-07T12:34:56.${fraction}${timezone}`;
+            const prefix = "Recorded at ";
+            const refDate = new Date(2024, 7, 1);
+            testSingleCase(parser, `${prefix}${timestamp}.`, refDate, (result) => {
+                expect(result.index).toBe(prefix.length);
+                expect(result.text).toBe(timestamp);
+                expect(result.start.get("second")).toBe(56);
+                expect(result.start.get("millisecond")).toBe(millisecond);
+                expect(result.start.isCertain("millisecond")).toBe(true);
+                expect(result.start.isCertain("timezoneOffset")).toBe(timezone !== "");
+                expect(result.start.date().getTime()).toBe(new Date(timestamp).getTime());
+            });
+        }
+    });
+});
+
 test("Test - Single Expression", function () {
     testSingleCase(chrono, "Let's finish this before this 2013-2-7.", new Date(2012, 7, 8), (result) => {
         expect(result.start).not.toBeNull();
