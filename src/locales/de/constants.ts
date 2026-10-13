@@ -289,7 +289,14 @@ export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
-    } else if (num === "ein" || num === "einer" || num === "einem" || num === "einen" || num === "eine" || num === "eines") {
+    } else if (
+        num === "ein" ||
+        num === "einer" ||
+        num === "einem" ||
+        num === "einen" ||
+        num === "eine" ||
+        num === "eines"
+    ) {
         return 1;
     } else if (num.match(/wenige/)) {
         return 3;

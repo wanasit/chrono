@@ -130,4 +130,3 @@ test("Test - From now Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 10, 14, 10));
     });
 });
-
