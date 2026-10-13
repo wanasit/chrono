@@ -271,3 +271,16 @@ test("Test - Combined expression", function () {
 test("Test - Impossible Dates (Casual Mode)", function () {
     testUnexpectedResult(chrono.de, "32. Oktober 2015");
 });
+
+test("Test - Ordinal day names", function () {
+    testSingleCase(chrono.de, "am dritten Oktober", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("am dritten Oktober");
+        expect(result.start.get("day")).toBe(3);
+        expect(result.start.get("month")).toBe(10);
+    });
+
+    testSingleCase(chrono.de, "zehnter jänner 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("zehnter jänner 2012");
+        expect(result.start).toBeDate(new Date(2012, 1 - 1, 10, 12));
+    });
+});
