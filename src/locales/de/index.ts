@@ -14,6 +14,7 @@ import DECasualTimeParser from "./parsers/DECasualTimeParser";
 import DEMonthNameLittleEndianParser from "./parsers/DEMonthNameLittleEndianParser";
 import DETimeUnitRelativeFormatParser from "./parsers/DETimeUnitRelativeFormatParser";
 import DETimeUnitWithinFormatParser from "./parsers/DETimeUnitWithinFormatParser";
+import DEISOCalendarWeekParser from "./parsers/DEISOCalendarWeekParser";
 
 export { Chrono, Parser, Refiner, ParsingResult, ParsingComponents, ReferenceWithTimezone };
 export { Component, ParsedResult, ParsingOption, ParsingReference, Meridiem, Weekday };
@@ -44,6 +45,7 @@ export function createConfiguration(strictMode = true, littleEndian = true): Con
             parsers: [
                 new ISOFormatParser(),
                 new SlashDateFormatParser(littleEndian),
+                new DEISOCalendarWeekParser(),
                 new DETimeExpressionParser(),
                 new DESpecificTimeExpressionParser(),
                 new DEMonthNameLittleEndianParser(),
