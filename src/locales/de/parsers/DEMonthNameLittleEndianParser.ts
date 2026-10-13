@@ -3,14 +3,18 @@ import { ParsingResult } from "../../../results";
 import { findYearClosestToRef } from "../../../calculation/years";
 import { MONTH_DICTIONARY } from "../constants";
 import { YEAR_PATTERN, parseYear } from "../constants";
+import { ORDINAL_NUMBER_PATTERN, parseOrdinalNumberPattern } from "../constants";
 import { matchAnyPattern } from "../../../utils/pattern";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
     "(?:am\\s*?)?" +
         "(?:den\\s*?)?" +
-        `([0-9]{1,2})\\.` +
-        `(?:\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\s)\\s*([0-9]{1,2})\\.?)?\\s*` +
+        `(${ORDINAL_NUMBER_PATTERN})` +
+        `(?:` +
+        `\\s*(?:bis(?:\\s*(?:am|zum))?|\\-|\\–|\\s)?\\s*` +
+        `(${ORDINAL_NUMBER_PATTERN})` +
+        ")?\\s*" +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `(?:(?:-|/|,?\\s*)(${YEAR_PATTERN}(?![^\\s]\\d)))?` +
         `(?=\\W|$)`,
@@ -31,7 +35,7 @@ export default class DEMonthNameLittleEndianParser extends AbstractParserWithWor
         const result = context.createParsingResult(match.index, match[0]);
 
         const month = MONTH_DICTIONARY[match[MONTH_NAME_GROUP].toLowerCase()];
-        const day = parseInt(match[DATE_GROUP]);
+        const day = parseOrdinalNumberPattern(match[DATE_GROUP]);
         if (day > 31) {
             // e.g. "[96 Aug]" => "9[6 Aug]", we need to shift away from the next number
             match.index = match.index + match[DATE_GROUP].length;
@@ -50,7 +54,7 @@ export default class DEMonthNameLittleEndianParser extends AbstractParserWithWor
         }
 
         if (match[DATE_TO_GROUP]) {
-            const endDate = parseInt(match[DATE_TO_GROUP]);
+            const endDate = parseOrdinalNumberPattern(match[DATE_TO_GROUP]);
 
             result.end = result.start.clone();
             result.end.assign("day", endDate);
