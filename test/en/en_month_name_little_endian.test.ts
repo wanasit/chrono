@@ -461,3 +461,48 @@ test("Test - Year 3000+ support (Issue #636)", () => {
         expect(result.start).toBeDate(new Date(2025, 1 - 1, 1, 9, 30));
     });
 });
+
+test("Test - Day number followed by a dot (Issue #283)", () => {
+    testSingleCase(chrono, "5. March 2019, 03:26 PM EDT", new Date(2019, 2, 1), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("5. March 2019, 03:26 PM EDT");
+
+        expect(result.start.get("year")).toBe(2019);
+        expect(result.start.get("month")).toBe(3);
+        expect(result.start.get("day")).toBe(5);
+        expect(result.start.get("hour")).toBe(15);
+        expect(result.start.get("minute")).toBe(26);
+        expect(result.start.get("timezoneOffset")).toBe(-240);
+    });
+
+    testSingleCase(chrono, "23. October 2026", new Date(2026, 9, 17), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("23. October 2026");
+
+        expect(result.start.get("year")).toBe(2026);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(23);
+        expect(result.start.isCertain("hour")).toBe(false);
+
+        expect(result.start).toBeDate(new Date(2026, 10 - 1, 23, 12));
+    });
+
+    testSingleCase(chrono, "The Deadline is 10. August", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(16);
+        expect(result.text).toBe("10. August");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+    });
+
+    testSingleCase(chrono, "10. - 22. August 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10. - 22. August 2012");
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+        expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
+    });
+});
