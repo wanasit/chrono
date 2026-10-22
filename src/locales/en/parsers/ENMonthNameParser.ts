@@ -51,6 +51,13 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
         result.start.assign("month", month);
 
         if (match[YEAR_GROUP]) {
+            // Skip the case where the two-digit "year" is an out-of-range day followed by
+            // the real year (ex: May 32, 2021)
+            const nextText = context.text.substring(match.index + match[0].length);
+            if (/^\d{2}$/.test(match[YEAR_GROUP]) && /^\s*,\s*\d{4}(?!\d)/.test(nextText)) {
+                return null;
+            }
+
             const year = parseYear(match[YEAR_GROUP]);
             result.start.assign("year", year);
         } else {
