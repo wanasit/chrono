@@ -158,6 +158,8 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
     weken: "week",
     maand: "month",
     maanden: "month",
+    kwartaal: "quarter",
+    kwartalen: "quarter",
     jaar: "year",
     jr: "year",
     jaren: "year",
