@@ -61,7 +61,12 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
             } else {
                 weekday = refWeekday - 1;
                 weekday = modifier == "last" ? weekday - 1 : weekday + 1;
-                weekday = (weekday % 5) + 1;
+                weekday = ((weekday + 5) % 5) + 1;
+            }
+            // The weekday above is already the adjacent working day. Use "this" to count forward to it,
+            // because "next" would skip to the following week (e.g. "next Tuesday" on Monday).
+            if (modifier == "next") {
+                modifier = "this";
             }
         } else {
             return null;
