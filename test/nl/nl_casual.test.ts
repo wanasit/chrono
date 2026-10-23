@@ -61,6 +61,18 @@ test("Test - Single Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 7, 9, 12));
     });
 
+    testSingleCase(chrono.nl, "De deadline was gister", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.index).toBe(16);
+        expect(result.text).toBe("gister");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(9);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 9, 12));
+    });
+
     testSingleCase(chrono.nl, "De Deadline was deze ochtend", new Date(2012, 7, 10, 12), (result) => {
         expect(result.index).toBe(16);
         expect(result.text).toBe("deze ochtend");
