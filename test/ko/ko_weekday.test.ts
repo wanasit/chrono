@@ -49,6 +49,18 @@ test("Test - Weekday in a relative week", function () {
         expect(result.text).toBe("담주 월 2시");
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 13, 2));
     });
+
+    // "다음주 금에 보자" = "see you on Fri next week" (에 = on)
+    testSingleCase(chrono.ko, "다음주 금에 보자", new Date(2012, 8 - 1, 10, 12), (result) => {
+        expect(result.text).toBe("다음주 금");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 17, 12));
+    });
+
+    // "다음주 수, 목 가능" = "Wed or Thu next week works"
+    testSingleCase(chrono.ko, "다음주 수, 목 가능", new Date(2012, 8 - 1, 10, 12), (result) => {
+        expect(result.text).toBe("다음주 수");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 15, 12));
+    });
 });
 
 test("Test - Negative cases", function () {
@@ -56,4 +68,14 @@ test("Test - Negative cases", function () {
     testUnexpectedResult(chrono.ko, "일정 공유");
     // "월급" = "monthly salary"; a bare 월 means "month", not Monday
     testUnexpectedResult(chrono.ko, "월급");
+    // After a week word, a bare weekday character must not start another word:
+    // "다음주 일정" = next week's schedule, "이번주 목표" = this week's goal, "지난주 토론" = last week's discussion
+    testUnexpectedResult(chrono.ko, "다음주 일정 공유");
+    testUnexpectedResult(chrono.ko, "이번주 목표");
+    testUnexpectedResult(chrono.ko, "지난주 토론 정리");
+    // ... even with a space: "다음주 일 많아" = lots of work next week, "이번주 목 아파" = sore throat this week,
+    // "다음주 화 났어" = got angry next week (화 = anger)
+    testUnexpectedResult(chrono.ko, "다음주 일 많아");
+    testUnexpectedResult(chrono.ko, "이번주 목 아파");
+    testUnexpectedResult(chrono.ko, "다음주 화 났어");
 });

@@ -11,10 +11,22 @@ import { WEEK_OFFSET, WEEKDAY_OFFSET } from "../constants";
  *   e.g. on Friday, "다음주 월요일" is 3 days later and "지난주 수요일" is 9 days earlier.
  *
  * A weekday must end with "요일" (or the casual "욜"). A single character such as "월" also means "month",
- * so it is only accepted right after a week word ("다음주 월").
+ * so it is only accepted right after a week word ("다음주 월") and only when followed by the end of text,
+ * punctuation, a time ("다음주 월 2시", "담주 금 저녁" = Fri evening), another weekday ("수, 목" = Wed, Thu),
+ * or a particle ("금에" = on Fri, "월까지" = until Mon).
+ * Otherwise the character starts another word: "다음주 일정" (next week's schedule), "다음주 일 많아"
+ * (lots of work next week), "이번주 목 아파" (sore throat this week).
  */
+const DAY_ALONE =
+    "(?=\\s*$|\\s*[,.!?~～)]|\\s*(?:\\d|오전|오후|새벽|아침|점심|낮(?!잠)|저녁|밤(?!새)|[일월화수목금토](?![가-힣]))" +
+    "|(?:에|엔|은|는|도|나|이나|쯤)(?![가-힣])|에는|까지|부터)";
+
 const PATTERN = new RegExp(
-    "(?:(?<week>지난|저번|이번|다다음|다음|담)\\s*주\\s*)?" + "(?<weekday>[일월화수목금토])" + "(?<suffix>요일|욜)?",
+    "(?:(?<week>지난|저번|이번|다다음|다음|담)\\s*주\\s*)?" +
+        "(?<weekday>[일월화수목금토])" +
+        "(?:(?<suffix>요일|욜)|" +
+        DAY_ALONE +
+        ")",
     "i"
 );
 
