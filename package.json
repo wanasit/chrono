@@ -31,6 +31,10 @@
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js"
     },
+    "./en": {
+      "require": "./dist/cjs/locales/en/index.js",
+      "import": "./dist/esm/locales/en/index.js"
+    },
     "./*": {
       "require": "./dist/cjs/locales/*/index.js",
       "import": "./dist/esm/locales/*/index.js"
