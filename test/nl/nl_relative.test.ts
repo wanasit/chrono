@@ -67,6 +67,15 @@ test("Test - Past relative expressions", () => {
         expect(result.start.get("day")).toBe(24);
         expect(result.start.get("hour")).toBe(12);
     });
+
+    // last quarter
+    testSingleCase(chrono.nl, "afgelopen kwartaal", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(7);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(12);
+    });
 });
 
 test("Test - Future relative expressions", () => {
@@ -123,6 +132,15 @@ test("Test - Future relative expressions", () => {
         expect(result.start.isCertain("month")).toBe(true);
         expect(result.start.isCertain("day")).toBe(false);
         expect(result.start.isCertain("hour")).toBe(false);
+    });
+
+    // next quarter
+    testSingleCase(chrono.nl, "volgend kwartaal", new Date(2016, 10 - 1, 1, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2017);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(12);
     });
 
     // next year

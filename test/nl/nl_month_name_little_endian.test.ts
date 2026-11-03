@@ -179,6 +179,82 @@ test("Test - Range expression", () => {
         expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
     });
 
+    testSingleCase(chrono.nl, "10 t/m 22 augustus 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10 t/m 22 augustus 2012");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(22);
+
+        expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
+    });
+
+    testSingleCase(chrono.nl, "10 tot en met 22 augustus 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10 tot en met 22 augustus 2012");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(8);
+        expect(result.end.get("day")).toBe(22);
+
+        expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
+    });
+
+    testSingleCase(chrono.nl, "10 augustus t/m 12 september", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10 augustus t/m 12 september");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(9);
+        expect(result.end.get("day")).toBe(12);
+
+        expect(result.end).toBeDate(new Date(2012, 9 - 1, 12, 12));
+    });
+
+    testSingleCase(chrono.nl, "10 augustus tot en met 12 september", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10 augustus tot en met 12 september");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+
+        expect(result.end).not.toBeNull();
+        expect(result.end.get("year")).toBe(2012);
+        expect(result.end.get("month")).toBe(9);
+        expect(result.end.get("day")).toBe(12);
+
+        expect(result.end).toBeDate(new Date(2012, 9 - 1, 12, 12));
+    });
+
     testSingleCase(chrono.nl, "10 augustus - 12 september", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("10 augustus - 12 september");

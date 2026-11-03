@@ -174,6 +174,19 @@ test("Test - From now Expression", () => {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 15));
     });
 
+    // 2 Quarters from now, we did something
+    testSingleCase(chrono.nl, "Over 2 kwartalen hebben we iets gedaan", new Date(2012, 7, 10), (result) => {
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2013);
+        expect(result.start.get("month")).toBe(2);
+        expect(result.start.get("day")).toBe(10);
+
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("Over 2 kwartalen");
+
+        expect(result.start).toBeDate(new Date(2013, 2 - 1, 10));
+    });
+
     // half An hour from now
     testSingleCase(chrono.nl, "   half uur vanaf nu", new Date(2012, 7, 10, 12, 14), (result) => {
         expect(result.index).toBe(3);

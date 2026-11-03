@@ -10,7 +10,7 @@ const PATTERN = new RegExp(
     "(?:on\\s*?)?" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         "(?:\\s*" +
-        "(?:tot|\\-|\\–|until|through|till|\\s)\\s*" +
+        "(?:tot en met|t\\/m|tot|\\-|\\–|until|through|till|\\s)\\s*" +
         `(${ORDINAL_NUMBER_PATTERN})` +
         ")?" +
         "(?:-|/|\\s*(?:of)?\\s*)" +
