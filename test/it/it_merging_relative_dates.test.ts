@@ -39,3 +39,22 @@ test("Test - A bare number followed by a colon should not merge backwards over t
         expect(result.start.get("minute")).toBe(30);
     });
 });
+
+test("Test - Relative date after a date keeps the reference timezone", () => {
+    // Mar 1 to Mar 15, 2024 crosses the US DST change, so these only fail on a US system timezone
+    const reference = { instant: new Date("2024-02-20T12:00:00Z"), timezone: "JST" };
+    testSingleCase(chrono.it, "2 settimane dopo 2024-03-01", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date("2024-03-15T12:00:00+09:00"));
+    });
+
+    testSingleCase(chrono.it, "2024-03-01 + 2 settimane", reference, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date("2024-03-15T12:00:00+09:00"));
+    });
+
+    testSingleCase(chrono.it, "2 settimane dopo 2024-03-01", new Date(2024, 2 - 1, 20, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result).toBeDate(new Date(2024, 3 - 1, 15, 12));
+    });
+});
