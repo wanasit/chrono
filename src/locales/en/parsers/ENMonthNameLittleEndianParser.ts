@@ -10,10 +10,10 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 // prettier-ignore
 const PATTERN = new RegExp(
     `(?:on\\s{0,3})?` +
-        `(${ORDINAL_NUMBER_PATTERN})` +
+        `(${ORDINAL_NUMBER_PATTERN})\\.?` +
         `(?:` +
             `\\s{0,3}(?:to|\\-|\\–|until|through|till)\\s{0,3}` +
-            `(${ORDINAL_NUMBER_PATTERN})` +
+            `(${ORDINAL_NUMBER_PATTERN})\\.?` +
         ")?" +
         `(?:-|/|\\s{0,3}(?:of)?\\s{0,3})` +
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
