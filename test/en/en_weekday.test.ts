@@ -250,6 +250,28 @@ test("Test - Casual 'weekday' mentioning", () => {
         });
     }
     {
+        const refDateOnMonday = new Date(2024, 10 - 1, 21, 12, 0);
+        testSingleCase(chrono.casual, "last weekday", refDateOnMonday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 18, 12)); // Friday
+        });
+        testSingleCase(chrono.casual, "next weekday", refDateOnMonday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 22, 12)); // Tuesday
+        });
+    }
+    {
+        const refDateOnWednesday = new Date(2024, 10 - 1, 23, 12, 0);
+        testSingleCase(chrono.casual, "last weekday", refDateOnWednesday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 22, 12)); // Tuesday
+        });
+        testSingleCase(chrono.casual, "next weekday", refDateOnWednesday, (result, text) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2024, 10 - 1, 24, 12)); // Thursday
+        });
+    }
+    {
         const refDateOnSaturday = new Date(2024, 10 - 1, 19, 12, 0);
         testSingleCase(chrono.casual, "last weekday", refDateOnSaturday, (result, text) => {
             expect(result.text).toBe(text);
