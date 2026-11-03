@@ -384,3 +384,17 @@ test("Test - Impossible Dates (Strict Mode)", () => {
 
     testUnexpectedResult(chrono.strict, "February 151998", new Date(2014, 7, 10));
 });
+
+test("Test - Impossible Dates (Casual Mode)", () => {
+    testUnexpectedResult(chrono, "January 32, 2021", new Date(2020, 0, 1));
+
+    testUnexpectedResult(chrono, "May 32, 2021", new Date(2020, 0, 1));
+
+    testUnexpectedResult(chrono, "May 99, 2021", new Date(2020, 0, 1));
+
+    testUnexpectedResult(chrono, "May 33,2021", new Date(2020, 0, 1));
+
+    testSingleCase(chrono, "The event is on May 32, 2021 now", new Date(2020, 0, 1), (result) => {
+        expect(result.text).toBe("now");
+    });
+});
