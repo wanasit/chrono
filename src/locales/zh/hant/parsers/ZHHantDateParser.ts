@@ -34,7 +34,7 @@ export default class ZHHantDateParser extends AbstractParserWithWordBoundaryChec
             "(?:\\s*)" +
             "(" + 
                 "\\d{1,2}|" +
-                "[" + Object.keys(NUMBER).join("") + "]{1,2}" +
+                "[" + Object.keys(NUMBER).join("") + "]{1,3}" +
             ")?" +
             "(?:\\s*)" +
             "(?:日|號)?"

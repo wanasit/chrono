@@ -154,3 +154,33 @@ test("Test - Date expression at the beginning of the text", function () {
         expect(result.start.get("day")).toBe(10);
     });
 });
+
+test("Test - Date expression with a three-character Chinese numeral day", function () {
+    testSingleCase(chrono.zh.hant, "十月二十四日", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("十月二十四日");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(10);
+        expect(result.start.get("day")).toBe(24);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2012, 10 - 1, 24, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+
+    testSingleCase(chrono.zh.hant, "雞二零一六年十二月三十一號全部都係雞", new Date(2012, 8 - 1, 10), (result) => {
+        expect(result.index).toBe(1);
+        expect(result.text).toBe("二零一六年十二月三十一號");
+
+        expect(result.start).not.toBeNull();
+        expect(result.start.get("year")).toBe(2016);
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(31);
+
+        const resultDate = result.start.date();
+        const expectDate = new Date(2016, 12 - 1, 31, 12);
+        expect(expectDate.getTime()).toBeCloseTo(resultDate.getTime());
+    });
+});
