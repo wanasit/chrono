@@ -155,6 +155,22 @@ test("Test - Range expression", function () {
         expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
     });
 
+    testSingleCase(chrono.es, "10 al 22 de agosto de 2012", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("10 al 22 de agosto de 2012");
+
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 10, 12));
+        expect(result.end).toBeDate(new Date(2012, 8 - 1, 22, 12));
+    });
+
+    testSingleCase(chrono.es, "del 3 al 5 de marzo", new Date(2012, 7, 10), (result) => {
+        expect(result.index).toBe(4);
+        expect(result.text).toBe("3 al 5 de marzo");
+
+        expect(result.start).toBeDate(new Date(2012, 3 - 1, 3, 12));
+        expect(result.end).toBeDate(new Date(2012, 3 - 1, 5, 12));
+    });
+
     testSingleCase(chrono.es, "10 Agosto - 12 Septiembre", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("10 Agosto - 12 Septiembre");
