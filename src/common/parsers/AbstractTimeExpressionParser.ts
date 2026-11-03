@@ -210,7 +210,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
         // ----- Millisecond
         if (match[MILLI_SECOND_GROUP] != null) {
-            const millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
+            const millisecond = parseInt(match[MILLI_SECOND_GROUP].padEnd(3, "0").substring(0, 3));
             if (millisecond >= 1000) return null;
 
             components.assign("millisecond", millisecond);
@@ -236,7 +236,7 @@ export abstract class AbstractTimeExpressionParser implements Parser {
 
         // ----- Millisecond
         if (match[MILLI_SECOND_GROUP] != null) {
-            const millisecond = parseInt(match[MILLI_SECOND_GROUP].substring(0, 3));
+            const millisecond = parseInt(match[MILLI_SECOND_GROUP].padEnd(3, "0").substring(0, 3));
             if (millisecond >= 1000) return null;
 
             components.assign("millisecond", millisecond);
