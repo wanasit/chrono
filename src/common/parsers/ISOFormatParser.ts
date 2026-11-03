@@ -16,7 +16,7 @@ const PATTERN = new RegExp(
     "(?:T" + //..
         "([0-9]{1,2}):([0-9]{1,2})" + // hh:mm
         "(?:" +
-            ":([0-9]{1,2})(?:\\.(\\d{1,4}))?" +
+            ":([0-9]{1,2})(?:\\.(\\d+))?" +
         ")?" + // :ss.s
         "(" +
             "Z|([+-]\\d{2}):?(\\d{2})?" +
@@ -57,7 +57,7 @@ export default class ISOFormatParser extends AbstractParserWithWordBoundaryCheck
             }
 
             if (match[MILLISECOND_NUMBER_GROUP] != null) {
-                components.assign("millisecond", parseInt(match[MILLISECOND_NUMBER_GROUP]));
+                components.assign("millisecond", parseInt(match[MILLISECOND_NUMBER_GROUP].padEnd(3, "0").slice(0, 3)));
             }
             if (match[TZD_GROUP] != null) {
                 // The Zulu time zone (Z) is equivalent to UTC

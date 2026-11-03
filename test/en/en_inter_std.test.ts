@@ -116,3 +116,33 @@ test("Test - Single Expression with local timezeon", function () {
         expect(result.start).toBeDate(new Date("2015-07-31T12:00:00"));
     });
 });
+
+test("Test - ISO 8601 with 6 fractional-second digits and a positive offset", function () {
+    testSingleCase(chrono, "2024-03-10T10:00:00.123456+05:30", new Date(2012, 7, 8), (result) => {
+        expect(result.text).toBe("2024-03-10T10:00:00.123456+05:30");
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("millisecond")).toBe(123);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+        expect(result.start).toBeDate(new Date("2024-03-10T04:30:00.123Z"));
+    });
+});
+
+test("Test - ISO 8601 with 5 fractional-second digits and a negative offset", function () {
+    testSingleCase(chrono, "2024-03-10T10:00:00.12345-05:00", new Date(2012, 7, 8), (result) => {
+        expect(result.text).toBe("2024-03-10T10:00:00.12345-05:00");
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("millisecond")).toBe(123);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+        expect(result.start).toBeDate(new Date("2024-03-10T15:00:00.123Z"));
+    });
+});
+
+test("Test - ISO 8601 with 9 fractional-second digits and Z", function () {
+    testSingleCase(chrono, "2024-03-10T10:00:00.123456789Z", new Date(2012, 7, 8), (result) => {
+        expect(result.text).toBe("2024-03-10T10:00:00.123456789Z");
+        expect(result.start.get("second")).toBe(0);
+        expect(result.start.get("millisecond")).toBe(123);
+        expect(result.start.isCertain("timezoneOffset")).toBe(true);
+        expect(result.start).toBeDate(new Date("2024-03-10T10:00:00.123Z"));
+    });
+});
