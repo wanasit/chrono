@@ -36,6 +36,31 @@ test("Test - 'This' expressions", () => {
     });
 });
 
+test("Test - 'This' and year-less expressions use the calendar of the reference timezone", () => {
+    // The reference timezone is 3 hours ahead of the system timezone, whatever the system timezone is.
+    // The system clock reads `local`, and the clock in the reference timezone reads 3 hours later.
+    const cases = [
+        { phrase: "this month", local: new Date(2012, 7 - 1, 31, 22), expected: [2012, 8, 1] },
+        { phrase: "this year", local: new Date(2012, 12 - 1, 31, 22), expected: [2013, 1, 1] },
+        { phrase: "this week", local: new Date(2012, 8 - 1, 4, 22), expected: [2012, 8, 5] },
+        { phrase: "last night", local: new Date(2012, 8 - 1, 1, 4), expected: [2012, 7, 31] },
+        { phrase: "Feb 15", local: new Date(2021, 8 - 1, 16, 22), expected: [2022, 2, 15] },
+        { phrase: "15 Feb", local: new Date(2021, 8 - 1, 16, 22), expected: [2022, 2, 15] },
+        { phrase: "2/15", local: new Date(2021, 8 - 1, 16, 22), expected: [2022, 2, 15] },
+        { phrase: "February", local: new Date(2021, 8 - 1, 2, 22), expected: [2022, 2, 1] },
+    ];
+
+    for (const { phrase, local, expected } of cases) {
+        const reference = { instant: local, timezone: -local.getTimezoneOffset() + 180 };
+        testSingleCase(chrono, "Deadline is " + phrase, reference, (result) => {
+            expect(result.index).toBe(12);
+            expect(result.text).toBe(phrase);
+            const { start } = result;
+            expect([phrase, start.get("year"), start.get("month"), start.get("day")]).toEqual([phrase, ...expected]);
+        });
+    }
+});
+
 test("Test - End of current month", () => {
     testSingleCase(chrono, "end of the month", new Date(2012, 7, 10), (result, text) => {
         expect(result.text).toBe(text);
