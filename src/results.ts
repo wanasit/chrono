@@ -4,6 +4,16 @@ import { assignSimilarDate, assignSimilarTime, implySimilarTime } from "./utils/
 import { toTimezoneOffset } from "./timezone";
 import { addDuration, Duration, EmptyDuration } from "./calculation/duration";
 
+function isDate(input: unknown): input is Date {
+    try {
+        // The intrinsic accepts Dates from any realm, including invalid Dates.
+        Date.prototype.getTime.call(input);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 export class ReferenceWithTimezone {
     readonly instant: Date;
     readonly timezoneOffset?: number | null;
@@ -18,7 +28,7 @@ export class ReferenceWithTimezone {
     }
 
     static fromInput(input?: ParsingReference | Date, timezoneOverrides?: TimezoneAbbrMap) {
-        if (input instanceof Date) {
+        if (isDate(input)) {
             return ReferenceWithTimezone.fromDate(input);
         }
         const instant: Date = input?.instant ?? new Date();
