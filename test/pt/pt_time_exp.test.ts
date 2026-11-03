@@ -1,5 +1,5 @@
 import * as chrono from "../../src/";
-import { testSingleCase } from "../test_util";
+import { testSingleCase, testUnexpectedResult } from "../test_util";
 
 test("Test - Single Expression", function () {
     testSingleCase(chrono.pt, "Ficaremos às 6.13 AM", new Date(2012, 7, 10), (result) => {
@@ -171,5 +171,22 @@ test("Test - Random date + time expression", function () {
 
     testSingleCase(chrono.pt, "às 12", (result, text) => {
         expect(result.text).toBe(text);
+    });
+});
+
+test("Test - A number followed by a duration unit is not a time", function () {
+    testUnexpectedResult(chrono.pt, "Volto daqui a 2 semanas");
+    testUnexpectedResult(chrono.pt, "O prazo de 3 dias");
+    testUnexpectedResult(chrono.pt, "Uma pausa de 5 minutos");
+    testUnexpectedResult(chrono.pt, "Um contrato de 12 meses");
+
+    testSingleCase(chrono.pt, "às 2 horas", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("às 2");
+        expect(result.start.get("hour")).toBe(2);
+    });
+
+    testSingleCase(chrono.pt, "de 6 a 8 de agosto", new Date(2012, 7, 10), (result) => {
+        expect(result.start.get("day")).toBe(6);
+        expect(result.end.get("day")).toBe(8);
     });
 });
