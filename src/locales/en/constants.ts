@@ -13,6 +13,8 @@ export const WEEKDAY_DICTIONARY: { [word: string]: Weekday } = {
     tuesday: 2,
     tue: 2,
     "tue.": 2,
+    tues: 2,
+    "tues.": 2,
     wednesday: 3,
     wed: 3,
     "wed.": 3,

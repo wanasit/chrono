@@ -329,6 +329,17 @@ test("Test - Random text", () => {
         expect(result.start.get("weekday")).toBe(4);
     });
 
+    testSingleCase(chrono, "tues", (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("weekday")).toBe(2);
+    });
+
+    testSingleCase(chrono, "Tues. at 3pm", new Date(2026, 11 - 1, 4, 12), (result) => {
+        expect(result.text).toBe("Tues. at 3pm");
+        expect(result.start.get("weekday")).toBe(2);
+        expect(result.start.get("hour")).toBe(15);
+    });
+
     testSingleCase(chrono, "this evening", new Date(2016, 10 - 1, 1), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
