@@ -577,3 +577,55 @@ test("Test - Test - Forward time calculation 'forwardDate' flag in different tim
         }
     );
 });
+
+test("Test - Time after a date and a dash is not a timezone offset", function () {
+    testSingleCase(chrono, "06/16/2022-05:00 PM", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("month")).toBe(6);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.get("minute")).toBe(0);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
+
+    testSingleCase(chrono, "05/31/2024-13:15", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(31);
+        expect(result.start.get("hour")).toBe(13);
+        expect(result.start.get("minute")).toBe(15);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
+
+    testSingleCase(chrono, "June 16, 2022-05:00 PM", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("hour")).toBe(17);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+    });
+});
+
+test("Test - Timezone offset still applies to a date when it can't be a time", function () {
+    testSingleCase(chrono, "June 16, 2022 -0500", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("timezoneOffset")).toBe(-300);
+    });
+
+    testSingleCase(chrono, "06/16/2022 -05:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("timezoneOffset")).toBe(-300);
+    });
+
+    testSingleCase(chrono, "06/16/2022 +05:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("timezoneOffset")).toBe(300);
+    });
+
+    testSingleCase(chrono, "June 16, 2022 GMT-05:00", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(16);
+        expect(result.start.get("timezoneOffset")).toBe(-300);
+    });
+});

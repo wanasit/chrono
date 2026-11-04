@@ -19,6 +19,11 @@ export default class ExtractTimezoneOffsetRefiner implements Refiner {
                 return;
             }
 
+            // Directly after a date with no time, "-05:00" is the time itself, as in "06/16/2022-05:00 PM".
+            if (!result.start.isCertain("hour") && /^-\d{1,2}:\d{2}/.test(match[0])) {
+                return;
+            }
+
             context.debug(() => {
                 console.log(`Extracting timezone: '${match[0]}' into : ${result}`);
             });
