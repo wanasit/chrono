@@ -81,8 +81,7 @@ export class Chrono {
 
         let results = [];
         this.parsers.forEach((parser) => {
-            const parsedResults = Chrono.executeParser(context, parser);
-            results = results.concat(parsedResults);
+            Chrono.executeParser(context, parser, results);
         });
 
         results.sort((a, b) => {
@@ -96,8 +95,7 @@ export class Chrono {
         return results;
     }
 
-    private static executeParser(context: ParsingContext, parser: Parser) {
-        const results = [];
+    private static executeParser(context: ParsingContext, parser: Parser, results: ParsingResult[]) {
         const pattern = parser.pattern(context);
 
         const originalText = context.text;
@@ -137,8 +135,6 @@ export class Chrono {
             remainingText = originalText.substring(parsedIndex + parsedText.length);
             match = pattern.exec(remainingText);
         }
-
-        return results;
     }
 }
 
