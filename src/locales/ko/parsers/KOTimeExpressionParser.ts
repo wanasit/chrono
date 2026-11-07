@@ -7,11 +7,12 @@ import { HOUR_WORD, parseHour } from "../constants";
  *
  * - 시 = hour, 분 = minute, 반 = half (30 minutes)
  * - 오전 = AM, 오후 = PM
- * - Time-of-day words: 새벽 (early morning) and 아침 (morning) are AM; 낮 (daytime), 저녁 (evening) and 밤 (night) are PM.
- *   "밤 12시" (12 at night) is midnight.
+ * - Time-of-day words: 새벽 (early morning) and 아침 (morning) are AM; 점심 (lunchtime), 낮 (daytime),
+ *   저녁 (evening) and 밤 (night) are PM. "밤 12시" (12 at night) is midnight.
+ * - Without any of these, the hour is kept as written and the meridiem is only implied ("3시" = 3:00 AM, implied).
  */
 const PATTERN = new RegExp(
-    "(?:(?<period>오전|오후|새벽|아침|낮|저녁|밤)\\s*)?" +
+    "(?:(?<period>오전|오후|새벽|아침|점심|낮|저녁|밤)\\s*)?" +
         "(?<hour>\\d{1,2}|" +
         Object.keys(HOUR_WORD)
             .sort((a, b) => b.length - a.length)
@@ -48,7 +49,11 @@ export default class KOTimeExpressionParser implements Parser {
             }
             components.assign("meridiem", hour >= 12 ? Meridiem.PM : Meridiem.AM);
         } else if (hour > 12) {
+            // 15시 = 15:00 (24-hour notation): PM is certain
             components.assign("meridiem", Meridiem.PM);
+        } else {
+            // 3시, 12시: no AM/PM word. Imply one, as the other locales do, so a refiner can still override it
+            components.imply("meridiem", hour === 12 ? Meridiem.PM : Meridiem.AM);
         }
 
         components.assign("hour", hour === 24 ? 0 : hour);
