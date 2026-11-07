@@ -4,11 +4,11 @@ import { parseDuration } from "../constants";
 import { reverseDuration } from "../../../calculation/duration";
 
 function hasImpliedEarlierReferenceDate(result: ParsingResult): boolean {
-    return result.text.match(/\s+(before|from)$/i) != null;
+    return result.text.match(/\s+before$/i) != null;
 }
 
 function hasImpliedLaterReferenceDate(result: ParsingResult): boolean {
-    return result.text.match(/\s+(after|since)$/i) != null;
+    return result.text.match(/\s+(after|since|from)$/i) != null;
 }
 
 /**
