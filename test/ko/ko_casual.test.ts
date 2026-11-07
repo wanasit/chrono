@@ -16,6 +16,20 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 12));
     });
 
+    // "회의는 내일 오후 3시에 시작합니다" = "The meeting starts tomorrow at 3 PM": the date sits mid-sentence
+    testSingleCase(chrono.ko, "회의는 내일 오후 3시에 시작합니다", new Date(2012, 8 - 1, 10, 12), (result) => {
+        expect(result.index).toBe(4);
+        expect(result.text).toBe("내일 오후 3시");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 11, 15));
+    });
+
+    // "다음 미팅은 모레 10시로 잡혔어요" = "The next meeting is set for 10 the day after tomorrow"
+    testSingleCase(chrono.ko, "다음 미팅은 모레 10시로 잡혔어요", new Date(2012, 8 - 1, 10, 12), (result) => {
+        expect(result.index).toBe(7);
+        expect(result.text).toBe("모레 10시");
+        expect(result.start).toBeDate(new Date(2012, 8 - 1, 12, 10));
+    });
+
     // 모레 = the day after tomorrow
     testSingleCase(chrono.ko, "모레", new Date(2012, 8 - 1, 10, 12), (result) => {
         expect(result.start).toBeDate(new Date(2012, 8 - 1, 12, 12));
