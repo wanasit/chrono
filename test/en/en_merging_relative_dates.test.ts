@@ -18,6 +18,17 @@ test("Test - Single Expression", function () {
         expect(result.start).toBeDate(new Date(2022, 2 - 1, 15, 0));
     });
 
+    testSingleCase(chrono.casual, "a week from tomorrow", new Date(2022, 2 - 1, 2), (result) => {
+        expect(result.text).toBe("a week from tomorrow");
+        expect(result.start).toBeDate(new Date(2022, 2 - 1, 10, 0));
+    });
+
+    testSingleCase(chrono.casual, "10 days from Dec 1", new Date(2022, 2 - 1, 2), (result) => {
+        expect(result.text).toBe("10 days from Dec 1");
+        expect(result.start.get("month")).toBe(12);
+        expect(result.start.get("day")).toBe(11);
+    });
+
     testSingleCase(chrono.casual, "2 months before 02/02", new Date(2022, 2 - 1, 2), (result) => {
         expect(result.text).toBe("2 months before 02/02");
 

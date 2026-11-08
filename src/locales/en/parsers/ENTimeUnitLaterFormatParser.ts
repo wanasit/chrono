@@ -4,11 +4,11 @@ import { ParsingComponents } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 
 const PATTERN = new RegExp(
-    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:later|after|from now|henceforth|forward|out)` + "(?=(?:\\W|$))",
+    `(${TIME_UNITS_PATTERN})\\s{0,5}(?:later|after|from now|from|henceforth|forward|out)` + "(?=(?:\\W|$))",
     "i"
 );
 
-const STRICT_PATTERN = new RegExp(`(${TIME_UNITS_NO_ABBR_PATTERN})\\s{0,5}(later|after|from now)(?=\\W|$)`, "i");
+const STRICT_PATTERN = new RegExp(`(${TIME_UNITS_NO_ABBR_PATTERN})\\s{0,5}(later|after|from now|from)(?=\\W|$)`, "i");
 const GROUP_NUM_TIMEUNITS = 1;
 
 export default class ENTimeUnitLaterFormatParser extends AbstractParserWithWordBoundaryChecking {
