@@ -9,7 +9,7 @@ import { Weekday } from "../../../types";
 const PATTERN = new RegExp(
     "(?:(?:\\,|\\(|\\（)\\s*)?" +
         "(?:on\\s*?)?" +
-        "(?:(this|last|past|next)\\s*)?" +
+        "(?:(this\\s+coming|coming|this|last|past|next)\\s*)?" +
         `(${matchAnyPattern(WEEKDAY_DICTIONARY)}|weekend|weekday)` +
         "(?:\\s*(?:\\,|\\)|\\）))?" +
         "(?:\\s*(?:of\\s*)?(this|last|past|next)\\s*week)?" +
@@ -31,14 +31,14 @@ export default class ENWeekdayParser extends AbstractParserWithWordBoundaryCheck
         const postfix = match[POSTFIX_GROUP];
         let modifierWord = prefix || postfix;
         modifierWord = modifierWord || "";
-        modifierWord = modifierWord.toLowerCase();
+        modifierWord = modifierWord.toLowerCase().replace(/\s+/g, " ");
 
         let modifier = null;
         if (modifierWord == "last" || modifierWord == "past") {
             modifier = "last";
         } else if (modifierWord == "next") {
             modifier = "next";
-        } else if (modifierWord == "this") {
+        } else if (modifierWord == "this" || modifierWord == "coming" || modifierWord == "this coming") {
             modifier = "this";
         }
 
