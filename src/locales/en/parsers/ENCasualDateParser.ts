@@ -3,8 +3,13 @@ import { ParsingComponents, ParsingResult } from "../../../results";
 import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/AbstractParserWithWordBoundary";
 import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
+import { NUMBER_PATTERN } from "../constants";
 
-const PATTERN = /(now|today|tonight|tomorrow|overmorrow|tmr|tmrw|yesterday|last\s*night)(?=\W|$)/i;
+const PATTERN =
+    /(now|today|tonight|day\s+before\s+yesterday|day\s+after\s+tomorrow|tomorrow|overmorrow|tmr|tmrw|yesterday|last\s*night)(?=\W|$)/i;
+
+// "2 day before yesterday" and "the day after tomorrow" are relative expressions for the time unit parsers
+const COUNT_BEFORE_PATTERN = new RegExp(`${NUMBER_PATTERN}\\s+$`, "i");
 
 export default class ENCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -44,7 +49,14 @@ export default class ENCasualDateParser extends AbstractParserWithWordBoundaryCh
                 break;
 
             default:
-                if (lowerText.match(/last\s*night/)) {
+                if (lowerText.startsWith("day") && COUNT_BEFORE_PATTERN.test(context.text.substring(0, match.index))) {
+                    return null;
+                }
+                if (lowerText.match(/day\s+before\s+yesterday/)) {
+                    component = references.theDayBefore(context.reference, 2);
+                } else if (lowerText.match(/day\s+after\s+tomorrow/)) {
+                    component = references.theDayAfter(context.reference, 2);
+                } else if (lowerText.match(/last\s*night/)) {
                     if (targetDate.getHours() > 6) {
                         const previousDay = new Date(targetDate.getTime());
                         previousDay.setDate(previousDay.getDate() - 1);

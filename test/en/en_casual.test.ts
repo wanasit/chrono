@@ -2,6 +2,18 @@ import * as chrono from "../../src/";
 import { testSingleCase, testUnexpectedResult } from "../test_util";
 import { Meridiem } from "../../src/";
 
+test("Test - day before yesterday and day after tomorrow without 'the'", () => {
+    testSingleCase(chrono.casual, "We met day before yesterday", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("day before yesterday");
+        expect(result.start).toBeDate(new Date(2012, 7, 8, 12));
+    });
+
+    testSingleCase(chrono.casual, "Due day after tomorrow", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("day after tomorrow");
+        expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
+    });
+});
+
 test("Test - Single Expression", () => {
     testSingleCase(chrono.casual, "The Deadline is now", new Date(2012, 7, 10, 8, 9, 10, 11), (result) => {
         expect(result.index).toBe(16);
