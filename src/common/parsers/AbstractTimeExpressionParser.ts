@@ -299,12 +299,15 @@ export abstract class AbstractTimeExpressionParser implements Parser {
                     if (result.start.get("hour") == 12) {
                         result.start.assign("hour", 0);
                     }
-                } else {
+                } else if (result.start.get("hour") == 12) {
                     result.start.imply("meridiem", Meridiem.PM);
-
-                    if (result.start.get("hour") != 12) {
-                        result.start.assign("hour", result.start.get("hour") + 12);
-                    }
+                } else if ((result.start.get("hour") + 12) * 60 + result.start.get("minute") <= hour * 60 + minute) {
+                    // e.g. "8 - 11pm"
+                    result.start.imply("meridiem", Meridiem.PM);
+                    result.start.assign("hour", result.start.get("hour") + 12);
+                } else {
+                    // e.g. "9 - 5pm", the start would be after the end in PM
+                    result.start.imply("meridiem", Meridiem.AM);
                 }
             }
         }
