@@ -42,6 +42,7 @@ export function parseDate(text: string, ref?: ParsingReference | Date, option?: 
 export function createCasualConfiguration(): Configuration {
     const option = createConfiguration();
     option.parsers.unshift(new ZHHantCasualDateParser());
+    option.parsers.unshift(new ZHHansCasualDateParser());
     return option;
 }
 

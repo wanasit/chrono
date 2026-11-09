@@ -7,7 +7,7 @@ import * as references from "../../../common/casualReferences";
 
 export default class FRCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(maintenant|aujourd'hui|demain|hier|cette\s*nuit|la\s*veille)(?=\W|$)/i;
+        return /(maintenant|aujourd'hui|après(?:\s|-)+demain|demain|hier|avant(?:\s|-)+hier|cette\s*nuit|la\s*veille)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
@@ -29,6 +29,14 @@ export default class FRCasualDateParser extends AbstractParserWithWordBoundaryCh
                 return references.tomorrow(context.reference);
 
             default:
+                if (lowerText.match(/après(?:\s|-)+demain/)) {
+                    return references.theDayAfter(context.reference, 2);
+                }
+
+                if (lowerText.match(/avant(?:\s|-)+hier/)) {
+                    return references.theDayBefore(context.reference, 2);
+                }
+
                 if (lowerText.match(/cette\s*nuit/)) {
                     assignSimilarDate(component, targetDate);
                     component.imply("hour", 22);

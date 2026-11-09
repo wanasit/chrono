@@ -34,3 +34,17 @@ test("Test - Default Zh setting combine both hans/hant", () => {
         expect(result.start.get("hour")).toBe(8);
     });
 });
+
+test("Test - Default Zh setting parses simplified 后天", () => {
+    testSingleCase(chrono.zh, "后天", new Date(2012, 8 - 1, 8, 12), (result) => {
+        expect(result.text).toBe("后天");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(10);
+    });
+
+    testSingleCase(chrono.zh, "大后天", new Date(2012, 8 - 1, 8, 12), (result) => {
+        expect(result.text).toBe("大后天");
+        expect(result.start.get("day")).toBe(11);
+    });
+});
