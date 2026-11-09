@@ -418,3 +418,12 @@ test("Test - Random negative text", () => {
 
     testUnexpectedResult(chrono.nl, "knowledge");
 });
+
+test("Test - Eergisteren (day before yesterday)", () => {
+    testSingleCase(chrono.nl, "We zagen elkaar eergisteren", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("eergisteren");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+});

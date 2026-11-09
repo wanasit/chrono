@@ -330,3 +330,17 @@ test("Test - Random negative text", () => {
 
     testUnexpectedResult(it.casual, "domaniX");
 });
+
+test("Test - L'altro ieri (day before yesterday)", () => {
+    testSingleCase(chrono.it, "Ci siamo visti l'altro ieri", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("l'altro ieri");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono.it, "Ci siamo visti altro ieri", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("altro ieri");
+        expect(result.start.get("day")).toBe(8);
+    });
+});
