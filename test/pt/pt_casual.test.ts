@@ -173,3 +173,17 @@ test("Test - Random negative text", function () {
 
     testUnexpectedResult(chrono.pt, "agoraxsd");
 });
+
+test("Test - Anteontem (day before yesterday)", () => {
+    testSingleCase(chrono.pt, "Vimos-nos anteontem", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("anteontem");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono.pt, "Vimos-nos antes de ontem", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("antes de ontem");
+        expect(result.start.get("day")).toBe(8);
+    });
+});

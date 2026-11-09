@@ -4,7 +4,8 @@ import { AbstractParserWithWordBoundaryChecking } from "../../../common/parsers/
 import { assignSimilarDate } from "../../../utils/dates";
 import * as references from "../../../common/casualReferences";
 
-const PATTERN = /(adesso|ora|oggi|stasera|stanotte|domani|dopodomani|ieri|ieri\s*sera|ieri\s*notte)(?=\W|$)/i;
+const PATTERN =
+    /(adesso|ora|oggi|stasera|stanotte|domani|dopodomani|(?:l['’]\s*)?altro\s*ieri|ieri|ieri\s*sera|ieri\s*notte)(?=\W|$)/i;
 
 export default class ITCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
@@ -15,6 +16,10 @@ export default class ITCasualDateParser extends AbstractParserWithWordBoundaryCh
         let targetDate = context.refDate;
         const lowerText = match[0].toLowerCase();
         let component = context.createParsingComponents();
+
+        if (lowerText.match(/altro\s*ieri/)) {
+            return references.theDayBefore(context.reference, 2);
+        }
 
         switch (lowerText) {
             case "adesso":

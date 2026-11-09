@@ -256,3 +256,17 @@ test("Test - Random negative text", function () {
 
     testUnexpectedResult(chrono.es, "ahoraxsd");
 });
+
+test("Test - Anteayer (day before yesterday)", () => {
+    testSingleCase(chrono.es, "Nos vimos anteayer", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("anteayer");
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+    });
+
+    testSingleCase(chrono.es, "Nos vimos antes de ayer", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("antes de ayer");
+        expect(result.start.get("day")).toBe(8);
+    });
+});

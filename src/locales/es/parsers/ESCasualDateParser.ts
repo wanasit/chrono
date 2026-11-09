@@ -5,7 +5,7 @@ import * as references from "../../../common/casualReferences";
 
 export default class ESCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(ahora|hoy|mañana|manana|ayer)(?=\W|$)/i;
+        return /(ahora|hoy|mañana|manana|antes\s+de\s+ayer|anteayer|ayer)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult | null {
@@ -19,6 +19,10 @@ export default class ESCasualDateParser extends AbstractParserWithWordBoundaryCh
             return null;
         }
 
+        if (lowerText.match(/antes\s+de\s+ayer/)) {
+            return references.theDayBefore(context.reference, 2);
+        }
+
         switch (lowerText) {
             case "ahora":
                 return references.now(context.reference);
@@ -29,6 +33,9 @@ export default class ESCasualDateParser extends AbstractParserWithWordBoundaryCh
             case "mañana":
             case "manana":
                 return references.tomorrow(context.reference);
+
+            case "anteayer":
+                return references.theDayBefore(context.reference, 2);
 
             case "ayer":
                 return references.yesterday(context.reference);
