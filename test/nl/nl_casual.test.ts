@@ -418,3 +418,15 @@ test("Test - Random negative text", () => {
 
     testUnexpectedResult(chrono.nl, "knowledge");
 });
+
+test("Test - Overmorgen", () => {
+    testSingleCase(chrono.nl, "De deadline is overmorgen", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("overmorgen");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
+    });
+});

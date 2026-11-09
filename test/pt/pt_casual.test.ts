@@ -173,3 +173,15 @@ test("Test - Random negative text", function () {
 
     testUnexpectedResult(chrono.pt, "agoraxsd");
 });
+
+test("Test - Depois de amanhã", () => {
+    testSingleCase(chrono.pt, "O prazo é depois de amanhã", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("depois de amanhã");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
+    });
+});

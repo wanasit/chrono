@@ -312,3 +312,31 @@ test("Test - Casual time keeps its meridiem when merged with an explicit time", 
         expect(result.start.get("meridiem")).toBe(1);
     });
 });
+
+test("Test - Day after tomorrow and day before yesterday", () => {
+    testSingleCase(chrono.fr, "La deadline est après-demain", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("après-demain");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(12);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 12, 12));
+    });
+
+    testSingleCase(chrono.fr, "La deadline est après demain", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("après demain");
+
+        expect(result.start.get("day")).toBe(12);
+    });
+
+    testSingleCase(chrono.fr, "On s'est vus avant-hier", new Date(2012, 7, 10, 12), (result) => {
+        expect(result.text).toBe("avant-hier");
+
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(8);
+
+        expect(result.start).toBeDate(new Date(2012, 7, 8, 12));
+    });
+});

@@ -5,11 +5,16 @@ import * as references from "../../../common/casualReferences";
 
 export default class PTCasualDateParser extends AbstractParserWithWordBoundaryChecking {
     innerPattern(context: ParsingContext): RegExp {
-        return /(agora|hoje|amanha|amanhã|ontem)(?=\W|$)/i;
+        return /(agora|hoje|depois\s+de\s+amanh[aã]|amanha|amanhã|ontem)(?=\W|$)/i;
     }
 
     innerExtract(context: ParsingContext, match: RegExpMatchArray): ParsingComponents | ParsingResult {
         const lowerText = match[0].toLowerCase();
+
+        if (lowerText.match(/depois\s+de\s+amanh[aã]/)) {
+            return references.theDayAfter(context.reference, 2);
+        }
+
         const component = context.createParsingComponents();
 
         switch (lowerText) {
