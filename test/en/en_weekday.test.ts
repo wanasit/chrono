@@ -593,3 +593,14 @@ test("Test - forward dates only option", () => {
         }
     );
 });
+
+test("Test - 'this coming' weekday looks forward", () => {
+    const refDate = new Date(2026, 11 - 1, 9, 15);
+
+    for (const text of ["this coming Friday", "coming Friday"]) {
+        testSingleCase(chrono.casual, text, refDate, (result) => {
+            expect(result.text).toBe(text);
+            expect(result.start).toBeDate(new Date(2026, 11 - 1, 13, 12));
+        });
+    }
+});
