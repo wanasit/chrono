@@ -592,4 +592,17 @@ test("Test - forward dates only option", () => {
             expect(result.end.get("day")).toBe(17);
         }
     );
+
+    testSingleCase(chrono.casual, "last Monday", new Date(2012, 7, 9), { forwardDate: true }, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("year")).toBe(2012);
+        expect(result.start.get("month")).toBe(8);
+        expect(result.start.get("day")).toBe(6);
+        expect(result.start.get("weekday")).toBe(1);
+    });
+
+    testSingleCase(chrono.casual, "last Monday at 9am", new Date(2012, 7, 9), { forwardDate: true }, (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start).toBeDate(new Date(2012, 7, 6, 9));
+    });
 });

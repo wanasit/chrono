@@ -20,6 +20,10 @@ export function createParsingComponentsAtWeekday(
     let components = new ParsingComponents(reference);
     components = components.addDurationAsImplied({ day: daysToWeekday });
     components.assign("weekday", weekday);
+    if (modifier == "last") {
+        // e.g. "last Friday", which should not be moved to the future (by the forwardDate option)
+        components.addTag("result/lastWeekday");
+    }
 
     return components;
 }
