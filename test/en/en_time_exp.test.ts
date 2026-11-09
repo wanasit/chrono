@@ -318,6 +318,29 @@ test("Test - Time range's meridiem handling", function () {
         expect(result.end.get("meridiem")).toBe(Meridiem.PM);
     });
 
+    testSingleCase(chrono, "9 to 5pm", new Date(2016, 10 - 1, 1, 8), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(9);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("day")).toBe(1);
+        expect(result.end.get("hour")).toBe(17);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+    });
+
+    testSingleCase(chrono, "from 11:30 to 1pm", new Date(2016, 10 - 1, 1, 8), (result) => {
+        expect(result.text).toBe("from 11:30 to 1pm");
+        expect(result.start.get("day")).toBe(1);
+        expect(result.start.get("hour")).toBe(11);
+        expect(result.start.get("minute")).toBe(30);
+        expect(result.start.get("meridiem")).toBe(Meridiem.AM);
+
+        expect(result.end.get("day")).toBe(1);
+        expect(result.end.get("hour")).toBe(13);
+        expect(result.end.get("meridiem")).toBe(Meridiem.PM);
+    });
+
     testSingleCase(chrono, "7 - 8", new Date(2016, 10 - 1, 1, 8), (result, text) => {
         expect(result.text).toBe(text);
         expect(result.start.get("year")).toBe(2016);
