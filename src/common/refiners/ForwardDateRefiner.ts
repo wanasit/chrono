@@ -40,7 +40,11 @@ export default class ForwardDateRefiner implements Refiner {
                 }
             }
 
-            if (result.start.isOnlyWeekdayComponent() && refDate > result.start.date()) {
+            if (
+                result.start.isOnlyWeekdayComponent() &&
+                !result.start.tags().has("result/lastWeekday") &&
+                refDate > result.start.date()
+            ) {
                 let daysToAdd = getDaysForwardToWeekday(refDate, result.start.get("weekday")) || 7;
                 const forwardedWeekday = addDuration(refDate, { day: daysToAdd });
                 implySimilarDate(result.start, forwardedWeekday);
