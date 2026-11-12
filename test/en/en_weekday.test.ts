@@ -593,3 +593,29 @@ test("Test - forward dates only option", () => {
         }
     );
 });
+
+test("Test - forward weekday before the reference time", () => {
+    testSingleCase(
+        chrono.casual,
+        "Friday at 3pm",
+        { instant: new Date("2026-10-09T23:00:00Z"), timezone: -420 },
+        { forwardDate: true },
+        (result) => {
+            expect(result.text).toBe("Friday at 3pm");
+            expect(result.start).toBeDate(new Date("2026-10-16T22:00:00Z"));
+        }
+    );
+});
+
+test("Test - forward weekday after the reference time", () => {
+    testSingleCase(
+        chrono.casual,
+        "Friday at 5pm",
+        { instant: new Date("2026-10-09T23:00:00Z"), timezone: -420 },
+        { forwardDate: true },
+        (result) => {
+            expect(result.text).toBe("Friday at 5pm");
+            expect(result.start).toBeDate(new Date("2026-10-10T00:00:00Z"));
+        }
+    );
+});

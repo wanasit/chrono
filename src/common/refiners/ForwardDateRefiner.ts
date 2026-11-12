@@ -40,7 +40,7 @@ export default class ForwardDateRefiner implements Refiner {
                 }
             }
 
-            if (result.start.isOnlyWeekdayComponent() && refDate > result.start.date()) {
+            if (result.start.isOnlyWeekdayComponent() && context.reference.instant > result.start.date()) {
                 let daysToAdd = getDaysForwardToWeekday(refDate, result.start.get("weekday")) || 7;
                 const forwardedWeekday = addDuration(refDate, { day: daysToAdd });
                 implySimilarDate(result.start, forwardedWeekday);
@@ -60,8 +60,8 @@ export default class ForwardDateRefiner implements Refiner {
 
             // In case where we know the month, but not which year (e.g. "in December", "25th December"),
             // try move to another year (up-to 3 times)
-            if (result.start.isDateWithUnknownYear() && refDate > result.start.date()) {
-                for (let i = 0; i < 3 && refDate > result.start.date(); i++) {
+            if (result.start.isDateWithUnknownYear() && context.reference.instant > result.start.date()) {
+                for (let i = 0; i < 3 && context.reference.instant > result.start.date(); i++) {
                     result.start.imply("year", result.start.get("year") + 1);
                     context.debug(() => {
                         console.log(`${this.constructor.name} adjusted ${result} year (${result.start})`);
