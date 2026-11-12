@@ -422,6 +422,20 @@ test("Test - Forward Option", () => {
     });
 });
 
+test("Test - forward date with unknown year uses the reference instant", () => {
+    testSingleCase(
+        chrono.casual,
+        "9 October at 5pm",
+        { instant: new Date("2026-10-09T23:00:00Z"), timezone: -420 },
+        { forwardDate: true },
+        (result) => {
+            expect(result.text).toBe("9 October at 5pm");
+            expect(result.start.get("year")).toBe(2026);
+            expect(result.start).toBeDate(new Date("2026-10-10T00:00:00Z"));
+        }
+    );
+});
+
 test("Test - Impossible Dates (Strict Mode)", function () {
     testUnexpectedResult(chrono.strict, "32 August 2014", new Date(2012, 7, 10));
 
