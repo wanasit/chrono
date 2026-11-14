@@ -192,12 +192,16 @@ export const TIME_UNIT_DICTIONARY: { [word: string]: Timeunit } = {
 
 //-----------------------------
 
-export const NUMBER_PATTERN = `(?:${matchAnyPattern(
+export const NUMBER_PATTERN = `(?:(?:${matchAnyPattern(
     INTEGER_WORD_DICTIONARY
-)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|the|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
+)}|[0-9]+)\\s{1,2}and\\s{1,2}an?\\s{1,2}half|${matchAnyPattern(INTEGER_WORD_DICTIONARY)}|[0-9]+|[0-9]+\\.[0-9]+|half(?:\\s{0,2}an?)?|an?\\b(?:\\s{0,2}few)?|few|several|the|a?\\s{0,2}couple\\s{0,2}(?:of)?)`;
 
 export function parseNumberPattern(match: string): number {
     const num = match.toLowerCase();
+    const andAHalfMatch = num.match(/^(\S+)\s+and\s+an?\s+half$/);
+    if (andAHalfMatch) {
+        return parseNumberPattern(andAHalfMatch[1]) + 0.5;
+    }
     if (INTEGER_WORD_DICTIONARY[num] !== undefined) {
         return INTEGER_WORD_DICTIONARY[num];
     } else if (num === "a" || num === "an" || num == "the") {

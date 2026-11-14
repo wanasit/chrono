@@ -252,6 +252,20 @@ test("Test - From now Expression", () => {
     });
 });
 
+test("Test - Number and a half", function () {
+    testSingleCase(chrono, "two and a half days from now", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("two and a half days from now");
+        expect(result.start).toBeDate(new Date(2024, 2, 13, 0, 0));
+    });
+
+    testSingleCase(chrono, "2 and a half hours later", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2 and a half hours later");
+        expect(result.start).toBeDate(new Date(2024, 2, 10, 14, 30));
+    });
+});
+
 test("Test - The later expression with multiple time units", function () {
     testSingleCase(chrono, "in 1d 2hr 5min", new Date(2012, 7, 10, 12, 40), (result) => {
         expect(result.index).toBe(0);

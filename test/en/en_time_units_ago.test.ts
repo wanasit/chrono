@@ -184,6 +184,32 @@ test("Test - Single Expression", function () {
     });
 });
 
+test("Test - Number and a half", function () {
+    testSingleCase(chrono, "2 and a half hours ago", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("2 and a half hours ago");
+        expect(result.start).toBeDate(new Date(2024, 2, 10, 9, 30));
+    });
+
+    testSingleCase(chrono, "one and a half hours ago", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("one and a half hours ago");
+        expect(result.start).toBeDate(new Date(2024, 2, 10, 10, 30));
+    });
+
+    testSingleCase(chrono, "two and a half days ago", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(0);
+        expect(result.text).toBe("two and a half days ago");
+        expect(result.start).toBeDate(new Date(2024, 2, 8, 0, 0));
+    });
+
+    testSingleCase(chrono, "We met 3 and a half days ago at the office", new Date(2024, 2, 10, 12, 0), (result) => {
+        expect(result.index).toBe(7);
+        expect(result.text).toBe("3 and a half days ago");
+        expect(result.start).toBeDate(new Date(2024, 2, 7, 0, 0));
+    });
+});
+
 test("Test - Single Expression (Casual)", function () {
     testSingleCase(chrono, "5 months ago, we did something", new Date(2012, 10 - 1, 10), (result) => {
         expect(result.start).not.toBeNull();
