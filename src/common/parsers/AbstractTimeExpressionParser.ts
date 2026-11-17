@@ -42,6 +42,14 @@ function followingTimePatten(followingPhase: string, followingSuffix: string) {
     );
 }
 
+function isAttachedTimezoneOffset(text: string): boolean {
+    const match = text.match(/^-(\d{2})(?::(\d{2}))?$/);
+    if (!match) {
+        return false;
+    }
+    return parseInt(match[1]) * 60 + parseInt(match[2] || "0") <= 14 * 60;
+}
+
 const HOUR_GROUP = 2;
 const MINUTE_GROUP = 3;
 const SECOND_GROUP = 4;
@@ -115,7 +123,9 @@ export abstract class AbstractTimeExpressionParser implements Parser {
         if (
             !followingMatch ||
             // Pattern "YY.YY -XXXX" is more like timezone offset
-            followingMatch[0].match(/^\s*([+-])\s*\d{3,4}$/)
+            followingMatch[0].match(/^\s*([+-])\s*\d{3,4}$/) ||
+            // Pattern "HH:MM:SS-HH:MM" or "HH:MM:SS-HH" (e.g. Python or PostgreSQL output) is timezone offset
+            (match[SECOND_GROUP] != null && isAttachedTimezoneOffset(followingMatch[0]))
         ) {
             return this.checkAndReturnWithoutFollowingPattern(result);
         }
