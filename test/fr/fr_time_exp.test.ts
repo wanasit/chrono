@@ -199,6 +199,18 @@ test("Test - Single Expression", function () {
         expect(result.end).toBeDate(new Date(2012, 7, 10, 15, 0));
     });
 
+    testSingleCase(chrono.fr, "22h00 - 02h00", new Date(2012, 7, 10), (result) => {
+        expect(result.text).toBe("22h00 - 02h00");
+        expect(result.start).toBeDate(new Date(2012, 7, 10, 22, 0));
+        expect(result.end).toBeDate(new Date(2012, 7, 11, 2, 0));
+    });
+
+    testSingleCase(chrono.fr, "22h à 2h", new Date(2012, 7, 31), (result) => {
+        expect(result.text).toBe("22h à 2h");
+        expect(result.start).toBeDate(new Date(2012, 7, 31, 22, 0));
+        expect(result.end).toBeDate(new Date(2012, 8, 1, 2, 0));
+    });
+
     testSingleCase(chrono.fr, "13-15h", new Date(2012, 7, 10), (result) => {
         expect(result.index).toBe(0);
         expect(result.text).toBe("13-15h");
