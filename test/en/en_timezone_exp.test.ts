@@ -49,6 +49,49 @@ test("Test - Parsing date/time with numeric offset", () => {
     });
 });
 
+test("Test - Parsing date/time with seconds and an attached negative offset", () => {
+    testSingleCase(chrono, "2026-11-17 10:00:00-08:00", new Date(2026, 10, 17, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("hour")).toBe(10);
+        expect(result.start.get("timezoneOffset")).toBe(-8 * 60);
+        expect(result.end).toBeNull();
+        expect(result.start.date().toISOString()).toBe("2026-11-17T18:00:00.000Z");
+    });
+});
+
+test("Test - Parsing date/time with fractional seconds and an attached negative offset", () => {
+    testSingleCase(chrono, "2026-11-17 10:00:00.123456-03:30", new Date(2026, 10, 17, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("millisecond")).toBe(123);
+        expect(result.start.get("timezoneOffset")).toBe(-(3 * 60 + 30));
+        expect(result.end).toBeNull();
+    });
+});
+
+test("Test - Parsing date/time with seconds and an attached negative hour-only offset", () => {
+    testSingleCase(chrono, "2026-11-17 10:00:00-08", new Date(2026, 10, 17, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.get("timezoneOffset")).toBe(-8 * 60);
+        expect(result.end).toBeNull();
+    });
+});
+
+test("Test - Time with seconds followed by a dash and a full time is still a range", () => {
+    testSingleCase(chrono, "10:00:00-11:00:00", new Date(2026, 10, 17, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+        expect(result.end.get("hour")).toBe(11);
+    });
+});
+
+test("Test - Time with seconds followed by a dash and an hour over 14 is still a range", () => {
+    testSingleCase(chrono, "10:00:00-15:00", new Date(2026, 10, 17, 12), (result, text) => {
+        expect(result.text).toBe(text);
+        expect(result.start.isCertain("timezoneOffset")).toBe(false);
+        expect(result.end.get("hour")).toBe(15);
+    });
+});
+
 test("Test - Parsing date/time with GMT offset", function () {
     testSingleCase(chrono, "wednesday, september 16, 2020 at 11 am GMT -08:45 ", (result, text) => {
         expect(result.text).toBe("wednesday, september 16, 2020 at 11 am GMT -08:45");
