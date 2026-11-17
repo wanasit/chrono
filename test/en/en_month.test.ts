@@ -189,6 +189,59 @@ test("Test - Month-Only Range expression", () => {
     });
 });
 
+test("Test - Month-Only Range expression with spaced hyphen", () => {
+    testSingleCase(chrono, "November - December 2026", new Date(2026, 11 - 1, 17), (result) => {
+        expect(result.text).toBe("November - December 2026");
+        expect(result.start.get("year")).toBe(2026);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.end.get("year")).toBe(2026);
+        expect(result.end.get("month")).toBe(12);
+    });
+});
+
+test("Test - Month-Only Range expression with spaced hyphen and short names", () => {
+    testSingleCase(chrono, "Nov - Dec 2026", new Date(2026, 11 - 1, 17), (result) => {
+        expect(result.text).toBe("Nov - Dec 2026");
+        expect(result.start.get("year")).toBe(2026);
+        expect(result.start.get("month")).toBe(11);
+        expect(result.end.get("year")).toBe(2026);
+        expect(result.end.get("month")).toBe(12);
+    });
+});
+
+test("Test - Month-Only Range expression with spaced hyphen and no year", () => {
+    testSingleCase(chrono, "January - March", new Date(2023, 4 - 1, 9), (result) => {
+        expect(result.text).toBe("January - March");
+        expect(result.start.get("year")).toBe(2023);
+        expect(result.start.get("month")).toBe(1);
+        expect(result.end.get("year")).toBe(2023);
+        expect(result.end.get("month")).toBe(3);
+    });
+});
+
+test("Test - Month-Only expression does not take a trailing comma", () => {
+    testSingleCase(chrono, "We met in November, then again later", new Date(2026, 11 - 1, 17), (result) => {
+        expect(result.index).toBe(10);
+        expect(result.text).toBe("November");
+        expect(result.start.get("month")).toBe(11);
+    });
+});
+
+test("Test - Month-Only expression does not take a trailing 'of'", () => {
+    testSingleCase(chrono, "in November of", new Date(2026, 11 - 1, 17), (result) => {
+        expect(result.index).toBe(3);
+        expect(result.text).toBe("November");
+        expect(result.start.get("month")).toBe(11);
+    });
+});
+
+test("Test - Month-Only expression does not take trailing whitespace", () => {
+    testSingleCase(chrono, "November (2026)", new Date(2026, 11 - 1, 17), (result) => {
+        expect(result.text).toBe("November");
+        expect(result.start.get("month")).toBe(11);
+    });
+});
+
 test("Test - Month with farward date option", () => {
     testSingleCase(chrono, "in December", new Date(2023, 4 - 1, 9), { forwardDate: true }, (result) => {
         expect(result.start.get("year")).toBe(2023);

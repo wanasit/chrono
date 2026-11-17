@@ -10,7 +10,7 @@ const PATTERN = new RegExp(
         `(${matchAnyPattern(MONTH_DICTIONARY)})` +
         `\\s*` +
         `(?:` +
-        `(?:,|-|of)?\\s*(${YEAR_PATTERN})?` +
+        `(?:,|-|of)?\\s*(${YEAR_PATTERN})` +
         ")?" +
         "(?=[^\\s\\w]|\\s+[^0-9]|\\s+$|$)",
     "i"
@@ -40,9 +40,10 @@ export default class ENMonthNameParser extends AbstractParserWithWordBoundaryChe
             return null;
         }
 
+        // The pattern may end on whitespace before punctuation (e.g. "Nov - Dec"); keep it out of the text.
         const result = context.createParsingResult(
             match.index + (match[PREFIX_GROUP] || "").length,
-            match.index + match[0].length
+            match.index + match[0].trimEnd().length
         );
         result.start.imply("day", 1);
         result.start.addTag("parser/ENMonthNameParser");
