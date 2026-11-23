@@ -53,6 +53,8 @@ export function mergeDateTimeComponent(
             dateTimeComponent.imply("second", timeComponent.get("second"));
             dateTimeComponent.imply("millisecond", timeComponent.get("millisecond"));
         }
+
+        dateTimeComponent.imply("timezoneOffset", null);
     } else {
         dateTimeComponent.imply("hour", timeComponent.get("hour"));
         dateTimeComponent.imply("minute", timeComponent.get("minute"));
