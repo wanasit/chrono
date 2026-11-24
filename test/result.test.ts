@@ -38,6 +38,33 @@ test("Test - Create & manipulate parsing components", () => {
     expect(components.toString()).toContain("custom/testing_component_tag");
 });
 
+test("Test - Cloning components preserves independent tags", () => {
+    const reference = ReferenceWithTimezone.fromDate(new Date(2024, 6, 1, 12));
+    const components = ParsingComponents.createRelativeFromReference(reference, { hour: 1 });
+    components.addTag("custom/original");
+
+    const clone = components.clone();
+    expect(clone.tags()).toEqual(components.tags());
+    expect(clone.date()).toEqual(components.date());
+
+    clone.addTag("custom/clone");
+    expect(components.tags()).not.toContain("custom/clone");
+    components.addTag("custom/source");
+    expect(clone.tags()).not.toContain("custom/source");
+});
+
+test("Test - Cloning results preserves both endpoints' tags", () => {
+    const reference = ReferenceWithTimezone.fromDate(new Date(2024, 6, 1, 12));
+    const start = ParsingComponents.createRelativeFromReference(reference, { hour: 1 }).addTag("custom/start");
+    const end = ParsingComponents.createRelativeFromReference(reference, { hour: 2 }).addTag("custom/end");
+    const result = new ParsingResult(reference, 0, "1 - 2 hours later", start, end);
+
+    const clone = result.clone();
+    expect(clone.start.tags()).toEqual(start.tags());
+    expect(clone.end.tags()).toEqual(end.tags());
+    expect(clone.tags()).toEqual(result.tags());
+});
+
 test("Test - Creating component from reference date (and duration)", () => {
     {
         const reference = ReferenceWithTimezone.fromDate(new Date("Sat, Aug 27 2022 12:52:11"));

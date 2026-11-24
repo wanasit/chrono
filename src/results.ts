@@ -201,6 +201,7 @@ export class ParsingComponents implements ParsedComponents {
         const component = new ParsingComponents(this.reference);
         component.knownValues = {};
         component.impliedValues = {};
+        component._tags = new Set(this._tags);
 
         for (const key in this.knownValues) {
             component.knownValues[key as Component] = this.knownValues[key as Component];
