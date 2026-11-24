@@ -104,6 +104,16 @@ test("Test - Single Expression", function () {
     );
 });
 
+test("Test - Merging a weekday preserves the date parser's tags", () => {
+    testSingleCase(chrono.casual, "Meeting: Monday, July 22, 2024.", new Date(2024, 6, 1), (result) => {
+        expect(result.index).toBe(9);
+        expect(result.text).toBe("Monday, July 22, 2024");
+        expect(result.start).toBeDate(new Date(2024, 6, 22, 12));
+        expect(result.start.get("weekday")).toBe(1);
+        expect(result.tags()).toContain("parser/ENMonthNameMiddleEndianParser");
+    });
+});
+
 test("Test - Weekday casual `This` guessing", function () {
     testSingleCase(chrono.casual, "This Saturday", new Date("Tue Aug 2 2022"), (result) => {
         expect(result.start.get("day")).toBe(6);
